@@ -26,14 +26,12 @@ using System;
 namespace NCDK.IO.CML
 {
     /// <summary>
-    /// TestCase for the {@link CMLModuleStack} class.
-    ///
-    // @cdk.module test-io
+    /// TestCase for the <see cref="CMLModuleStack"/> class.
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public class CMLModuleStackTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestPush_String()
         {

@@ -32,9 +32,8 @@ namespace NCDK.IO.CML
     /// TestCase for reading CML files using a few test files
     /// in data/cmltest as found in the Jmol distribution
     /// (<see href="http://www.jmol.org/">http://www.jmol.org/</see>).
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public class JmolTest : CDKTestCase
     {
@@ -44,7 +43,7 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Special CML characteristics:
-        /// <ul><item> &lt;crystal></item></ul>
+        /// <ul><item> &lt;crystal&gt;</item></ul>
         /// </summary>
         [TestMethod()]
         public void TestEstron()

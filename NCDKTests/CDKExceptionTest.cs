@@ -20,19 +20,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace NCDK.Exceptions
+namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of the CDKException class.
-    ///
-    // @cdk.module test-core
-    ///
-    /// <seealso cref="CDKException"/>
     /// </summary>
+    /// <seealso cref="CDKException"/>
+    // @cdk.module test-core
     [TestClass()]
     public class CDKExceptionTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestCDKException_String()
         {

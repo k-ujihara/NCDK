@@ -25,15 +25,11 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-group
-    ///
-    /// </summary>
     [TestClass()]
     public class PermutationGroupTest : CDKTestCase
     {
-
         // the first 7 factorials
         private readonly static int[] lookup = { 1, 1, 2, 6, 24, 120, 720, 5040 };
 

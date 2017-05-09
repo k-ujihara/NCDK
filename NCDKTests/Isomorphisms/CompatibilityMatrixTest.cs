@@ -24,17 +24,13 @@
 
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class CompatibilityMatrixTest
     {
-
         [TestMethod()]
         public void AccessAndModify()
         {

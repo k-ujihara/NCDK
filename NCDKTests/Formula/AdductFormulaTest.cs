@@ -23,21 +23,14 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the AdductFormula.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="AdductFormula"/>
     /// </summary>
+    /// <seealso cref="AdductFormula"/>
+    // @cdk.module test-data
     [TestClass()]
     public class AdductFormulaTest : AbstractAdductFormulaTest
     {
         protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestAdductFormula()
         {
@@ -45,11 +38,6 @@ namespace NCDK.Formula
             Assert.IsNotNull(mfS);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestAdductFormula_IMolecularFormula()
         {

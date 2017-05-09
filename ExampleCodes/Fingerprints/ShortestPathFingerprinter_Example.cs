@@ -3,7 +3,7 @@ using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass]
     public class ShortestPathFingerprinter_Example

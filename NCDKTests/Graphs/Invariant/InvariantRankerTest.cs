@@ -30,10 +30,8 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class InvariantRankerTest
     {
@@ -62,7 +60,6 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Rank_all_equiv()
         {
-
             InvariantRanker ranker = new InvariantRanker(6);
             long[] prev = new long[] { 1, 1, 1, 1, 1, 1 };
             long[] curr = new long[] { 42, 42, 42, 42, 42, 42 };
@@ -85,7 +82,6 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void Rank_all_unique()
         {
-
             InvariantRanker ranker = new InvariantRanker(7);
             long[] prev = new long[] { 1, 1, 1, 1, 1, 1, 1 };
             long[] curr = new long[] { 7, 3, 1, 0, 91, 32, 67 };
@@ -108,7 +104,6 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void MergeSort()
         {
-
             int n = 100;
 
             // random (unique) values in random order
@@ -135,7 +130,6 @@ namespace NCDK.Graphs.Invariant
         [TestMethod()]
         public void MergeSort_range()
         {
-
             int n = 100;
 
             // random (unique) values in random order

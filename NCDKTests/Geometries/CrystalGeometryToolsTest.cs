@@ -25,17 +25,14 @@ namespace NCDK.Geometries
 {
     /// <summary>
     /// This class defines regression tests that should ensure that the source code
-    /// of the org.openscience.cdk.geometry.CrystalGeometryTools is not broken.
-    /// All methods that start with test are regression tests, e.g.
-    /// <code>TestNotionalToCartesian()</code>.
-    ///
+    /// of the <see cref="CrystalGeometryTools"/> is not broken.
+    /// All methods that start with test are regression tests, e.g. 
+    /// <pre>TestNotionalToCartesian()</pre>.
+    /// </summary>
+    /// <seealso cref="CrystalGeometryTools"/>
     // @cdk.module test-standard
-    ///
     // @author     Egon Willighagen
     // @cdk.created    2003-08-19
-    ///
-    // @see org.openscience.cdk.geometry.CrystalGeometryTools
-    /// </summary>
     [TestClass()]
     public class CrystalGeometryToolsTest : CDKTestCase
     {
@@ -47,7 +44,7 @@ namespace NCDK.Geometries
         /// <summary>
         /// This method tests the conversion of notional coordinates to
         /// cartesian coordinates. The test assumes that the
-        /// <code>CrystalGeometryTools.NotionalToCartesian()</code> methods
+        /// <see cref="CrystalGeometryTools.NotionalToCartesian(double, double, double, double, double, double)"/>  methods
         /// places the a axis on the x axis and the b axis in the xy plane.
         /// </summary>
         [TestMethod()]
@@ -164,8 +161,8 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// This method tests the calculation of axis lengths too, like
-        /// <code>TestCalcAxisLength()</code>.
+        /// This method tests the calculation of axis lengths too, like 
+        /// <see cref="TestCalcAxisLength()"/>.
         /// </summary>
         [TestMethod()]
         public void TestCalcAxisLength2()

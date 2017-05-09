@@ -31,14 +31,12 @@ namespace NCDK.Hash.Stereo
     /// Some isolated test of the cumulative encoder factory, check out {@link
     /// org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
     /// allene and cumulene.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class GeometricCumulativeDoubleBondFactoryTest
     {
-
         private static IAtom CarbonAt(double x, double y)
         {
             IAtom atom = new Atom("C");

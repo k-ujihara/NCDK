@@ -20,7 +20,7 @@ using NCDK.Config.AtomType;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NCDK.AtomTypes.Mapper
+namespace NCDK.AtomTypes.Mappers
 {
     /// <summary>
     /// An <see cref="AtomTypeMapper"/> allows the mapping of atom types between atom type
@@ -41,7 +41,7 @@ namespace NCDK.AtomTypes.Mapper
         private AtomTypeMapper(string mappingFile)
         {
             this.mappingFile = mappingFile;
-            Stream stream = ResourceLoader.GetAsStream(this.GetType(), mappingFile);
+            Stream stream = ResourceLoader.GetAsStream(mappingFile);
             OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
             mappings = reader.ReadAtomTypeMappings();
         }

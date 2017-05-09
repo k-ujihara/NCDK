@@ -6,17 +6,13 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     public class SuppressedAtomHashGeneratorTest
     {
-
         [TestMethod()]
         public void TestGenerate()
         {
-
             var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
@@ -34,7 +30,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestGenerate_ZeroDepth()
         {
-
             var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 

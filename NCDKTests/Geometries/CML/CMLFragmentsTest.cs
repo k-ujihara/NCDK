@@ -30,16 +30,13 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// Atomic tests for reading CML documents. All tested CML strings are valid CML 2,
-    /// as can be determined in cdk/src/org.openscience.cdk/io/cml/cmlTestFramework.xml.
-    ///
-    // @cdk.module test-io
-    ///
-    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// as can be determined in NCDK.IO.CML.cml/cmlTestFramework.xml.
     /// </summary>
+    // @cdk.module test-io
+    // @author Egon Willighagen <egonw@sci.kun.nl>
     [TestClass()]
     public class CMLFragmentsTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestAtomId()
         {

@@ -28,11 +28,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the reading MDL RXN files using one test file.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.MDLRXNReader
     /// </summary>
+    /// <seealso cref="MDLRXNReader"/>
+    // @cdk.module test-io
     [TestClass()]
     public class MDLRXNV2000ReaderTest : SimpleChemObjectReaderTest
     {
@@ -49,9 +47,7 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }
 
-        /// <summary>
         // @cdk.bug 1849923
-        /// </summary>
         [TestMethod()]
         public void TestReadReactions1()
         {
@@ -77,9 +73,7 @@ namespace NCDK.IO
 
         }
 
-        /// <summary>
         // @cdk.bug 1851202
-        /// </summary>
         [TestMethod()]
         public void TestBug1851202()
         {

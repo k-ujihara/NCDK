@@ -2,7 +2,7 @@
 using NCDK.Templates;
 using System;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass]
     public class FingerprinterTool_Example

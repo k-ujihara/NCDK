@@ -33,11 +33,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the writer MDL SD file writer.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.SDFWriter
     /// </summary>
+    /// <seealso cref="SDFWriter"/>
+    // @cdk.module test-io
     [TestClass()]
     public class SDFWriterTest : ChemObjectWriterTest
     {
@@ -74,9 +72,7 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("bar") != -1);
         }
 
-        /// <summary>
         // @cdk.bug 2827745
-        /// </summary>
         [TestMethod()]
         public void TestWrite_IAtomContainerSet()
         {
@@ -182,9 +178,7 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("$$$$") != -1);
         }
 
-        /// <summary>
         // @cdk.bug 3392485
-        /// </summary>
         [TestMethod()]
         public void TestIOPropPropagation()
         {

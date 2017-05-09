@@ -20,13 +20,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class ToleranceRangeRuleTest : FormulaRuleTest
     {
-
         private static IChemObjectBuilder builder;
 
         [TestInitialize()]
@@ -36,29 +33,16 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(ToleranceRangeRule));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestToleranceRangeRule()
         {
-
             IRule rule = new ToleranceRangeRule();
             Assert.IsNotNull(rule);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
-
             IRule rule = new ToleranceRangeRule();
             var objects = rule.Parameters;
             Assert.AreEqual(2, objects.Length);
@@ -67,18 +51,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, mass, 0.00001);
             double tolerance = (double)objects[1];
             Assert.AreEqual(0.05, tolerance, 0.00001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
-
             IRule rule = new ToleranceRangeRule();
 
             object[] parameters = new object[2];
@@ -94,18 +71,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(133.0, mass, 0.00001);
             double tolerance = (double)objects[1];
             Assert.AreEqual(0.00005, tolerance, 0.00001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
-
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();
@@ -119,15 +89,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
         {
-
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();
@@ -146,15 +110,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
-
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();

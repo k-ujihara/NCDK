@@ -19,7 +19,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.IO.Iterator;
@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Helper class that help setup a template library of CDK's Builder3D.

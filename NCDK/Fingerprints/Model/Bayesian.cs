@@ -35,7 +35,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace NCDK.Fingerprint.Model
+namespace NCDK.Fingerprints.Model
 {
     /// <summary>
     /// Bayesian models using fingerprints: provides model creation, analysis, prediction and serialisation.

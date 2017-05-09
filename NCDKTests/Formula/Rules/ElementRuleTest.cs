@@ -21,13 +21,10 @@ using NCDK.Default;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class ElementRuleTest : FormulaRuleTest
     {
-
         private static IChemObjectBuilder builder;
 
         [TestInitialize()]
@@ -37,29 +34,16 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(ElementRule));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestElementRule()
         {
-
             IRule rule = new ElementRule();
             Assert.IsNotNull(rule);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
-
             IRule rule = new ElementRule();
             var objects = rule.Parameters;
 
@@ -79,14 +63,8 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(93, mfRange.Count);
             Assert.AreEqual(0, mfRange.GetIsotopeCountMin(new Isotope("C")));
             Assert.AreEqual(50, mfRange.GetIsotopeCountMax(new Isotope("C")));
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
@@ -107,15 +85,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(mfRange.GetIsotopeCountMax(new Isotope("C")), mfRange2.GetIsotopeCountMax(new Isotope("C")));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
-
             IRule rule = new ElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
@@ -125,11 +97,6 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
         {
@@ -148,15 +115,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
-
             IRule rule = new ElementRule();
 
             IMolecularFormula formula = new MolecularFormula();

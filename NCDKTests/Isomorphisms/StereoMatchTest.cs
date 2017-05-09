@@ -30,10 +30,9 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// Some simple isolated tests on functionality.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class StereoMatchTest
     {
@@ -48,7 +47,7 @@ namespace NCDK.Isomorphisms
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
 
-        /*
+        /// </summary>
         /// Query does not have an element but the target does - the query therefore
         /// is a valid mapping.
         /// </summary>
@@ -57,7 +56,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
@@ -67,9 +66,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            query.AddStereoElement(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
+            query.StereoElements.Add(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
                 query.Atoms[2], query.Atoms[3], query.Atoms[4]}, TetrahedralStereo.Clockwise));
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
@@ -79,14 +78,14 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            query.AddStereoElement(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
+            query.StereoElements.Add(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
                 query.Atoms[2], query.Atoms[3], query.Atoms[4]}, TetrahedralStereo.Clockwise));
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
 
-        /*
+        /// <summary>
         /// Map to different atom order which means the clockwise and anticlockwise
         /// match
         /// </summary>
@@ -95,9 +94,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            query.AddStereoElement(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
+            query.StereoElements.Add(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
                 query.Atoms[2], query.Atoms[3], query.Atoms[4]}, TetrahedralStereo.Clockwise));
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 3, 2, 4 }));
         }

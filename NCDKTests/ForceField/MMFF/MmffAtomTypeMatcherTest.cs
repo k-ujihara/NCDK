@@ -34,7 +34,7 @@ namespace NCDK.ForceField.MMFF
     /// <summary>
     /// Unit tests for MMFF symbolic atom types. This class primarily tests preconditions and some
     /// failing cases from old implementations. The atom types of the MMFF validation suite is tested by
-    /// {@link MmffAtomTypeValidationSuiteTest}.
+    /// <see cref="MmffAtomTypeValidationSuiteTest"/> .
     /// </summary>
     [TestClass()]
     public class MmffAtomTypeMatcherTest
@@ -83,9 +83,8 @@ namespace NCDK.ForceField.MMFF
         /// <summary>
         /// This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
         /// 'NC=O' and we see this is the case. SMILES: CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O
-        ///
-        // @cdk.bug #3523240
         /// </summary>
+        // @cdk.bug #3523240
         [TestMethod()]
         public void Bug3523240IsResolved()
         {
@@ -202,9 +201,8 @@ namespace NCDK.ForceField.MMFF
         /// <summary>
         /// This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
         /// 'NO2', it was previously assigned 'N2OX'. SMILES: CC[N+](=O)[O-]
-        ///
-        // @cdk.bug #3524734
         /// </summary>
+        // @cdk.bug #3524734
         [TestMethod()]
         public void Bug3524734IsResolved()
         {

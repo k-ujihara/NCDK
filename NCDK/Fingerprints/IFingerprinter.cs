@@ -24,7 +24,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Interface for fingerprint calculators.

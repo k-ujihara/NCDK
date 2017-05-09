@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.Fragment;
+using NCDK.Fragments;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 

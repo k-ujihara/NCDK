@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Place aliphatic <b>chains</b> with Z matrix method. Please use <see cref="ModelBuilder3D"/> 

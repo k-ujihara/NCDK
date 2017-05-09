@@ -30,10 +30,8 @@ using System.Collections;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class MatchingTest
     {

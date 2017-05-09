@@ -504,7 +504,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles(delocalised);
             Graph h = Localise.GenerateLocalise(g);
-            Assert.AreEqual(localised, h.ToSmiles());   //fixed CDK
+            Assert.AreEqual(localised, h.ToSmiles());   //fixed Beam
         }
     }
 }

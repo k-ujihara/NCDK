@@ -26,10 +26,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
      [TestClass()]
     public class VFSubstructureTest : SubstructureTest
     {

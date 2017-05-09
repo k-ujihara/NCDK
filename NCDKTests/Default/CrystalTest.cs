@@ -21,12 +21,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Default
 {
-
     /// <summary>
     /// Checks the functionality of the Crystal.
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class CrystalTest : AbstractCrystalTest
     {

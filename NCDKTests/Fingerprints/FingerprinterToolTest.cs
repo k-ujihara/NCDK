@@ -21,24 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using System.Collections.Generic;
 using System.Collections;
 using NCDK.Templates;
-using NCDK.Common.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class FingerprinterToolTest : CDKTestCase
     {
-
         public FingerprinterToolTest() : base()
         { }
-
 
         [TestMethod()]
         public void TestIsSubSet_BitSet_BitSet()

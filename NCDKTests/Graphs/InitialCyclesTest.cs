@@ -174,12 +174,12 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void Cycles_anthracene()
         {
-            // fixed CDK's bug
             InitialCycles initial = new InitialCycles(Anthracene);
             var cycles = initial.GetCycles();
             Assert.AreEqual(3, cycles.Count());
 
-            int[][] expecteds = new int[][] {
+            int[][] expecteds = new int[][]
+            {
                 new int[] { 5, 0, 1, 2, 3, 4, 5 },
                 new int[] { 9, 6, 5, 4, 7, 8, 9 },
                 new int[] { 9, 8, 10, 11, 12, 13, 9 },

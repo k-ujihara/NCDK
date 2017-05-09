@@ -24,7 +24,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     ///  Class stores hose code patterns to identify mm2 force field atom types.

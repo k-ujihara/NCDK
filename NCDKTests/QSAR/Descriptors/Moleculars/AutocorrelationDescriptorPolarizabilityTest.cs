@@ -18,7 +18,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public void IgnoreCalculate_IAtomContainer()
         {
-            string filename = "NCDK.Data.MDL.clorobenzene.mol";
+            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());

@@ -22,9 +22,8 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the AtomContainer.
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class AtomContainerTest
         : AbstractAtomContainerTest
@@ -33,7 +32,6 @@ namespace NCDK.Default
         {
             return new AtomContainer();
         }
-
 
         [TestMethod()]
         public virtual void TestAtomContainer()

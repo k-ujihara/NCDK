@@ -24,7 +24,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     ///  Class stores hose code patterns to identify mm2 force field atom types
@@ -35,7 +35,6 @@ namespace NCDK.Modeling.Builder3D
     // @cdk.githash
     public class MMFF94BasedAtomTypePattern
     {
-
         private List<Regex> atomTypePatterns = new List<Regex>();
 
         /// <summary>
@@ -160,7 +159,7 @@ namespace NCDK.Modeling.Builder3D
             //cdk.bug 3515122 fixed
             atomTypePatterns.Add(new Regex(@"N\-[1-3]\;[CHN]{1,3}.{1}[A-Z]{0,3}[\,]?\=O[CNXO].*", RegexOptions.Compiled));
             //NC=0 amid
-            atomTypePatterns.Add(new Regex(@"N\-[1-2]\;[CH]{1}\=S[\(].*", RegexOptions.Compiled));   // fixed CDK's bug
+            atomTypePatterns.Add(new Regex(@"N\-[1-2]\;[CH]{1}\=S[\(].*", RegexOptions.Compiled)); 
             //NSO (50)
             atomTypePatterns.Add(new Regex(@"N\-[1-3][\+]\;[H]{0,2}\=[A-Za-z]{1,3}[\(].*", RegexOptions.Compiled));
             //n N+=

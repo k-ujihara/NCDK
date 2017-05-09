@@ -28,11 +28,10 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /// <summary>@cdk.module test-sdg</summary>
+    // @cdk.module test-sdg
     [TestClass()]
     public class HydrogenPlacerTest : CDKTestCase
     {
-
         public bool standAlone = false;
 
         [TestMethod()]

@@ -27,13 +27,11 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the MolecularFormulaGenerator.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public class MolecularFormulaGeneratorTest : CDKTestCase
     {
-
         private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder
                 .Instance;
 
@@ -43,7 +41,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetNextFormula()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -63,7 +60,6 @@ namespace NCDK.Formula
                     minMass, maxMass, mfRange);
             IMolecularFormula f = gen.GetNextFormula();
             Assert.IsNotNull(f);
-
         }
 
         /// <summary>
@@ -72,7 +68,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetAllFormulas()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -102,7 +97,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestGetFinishedPercentage()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -138,7 +132,6 @@ namespace NCDK.Formula
             // The final value must be 1
             finishedPerc = gen.GetFinishedPercentage();
             Assert.AreEqual(1d, finishedPerc, 0.0001);
-
         }
 
 
@@ -190,7 +183,6 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test empty molecular formula range
-        ///
         /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
@@ -218,12 +210,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test if the generator respects minimal element counts
-        ///
         /// </summary>
         [TestMethod()]
         public void TestMinCounts()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -253,17 +243,14 @@ namespace NCDK.Formula
                     Assert.IsTrue(count >= 5);
                 }
             }
-
         }
 
         /// <summary>
         /// Test if the generator respects maximal element counts
-        ///
         /// </summary>
         [TestMethod()]
         public void TestMaxCounts()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -301,7 +288,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSingleCarbon()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
 
@@ -326,7 +312,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestCarbons()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
 
@@ -352,7 +337,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestWater()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");

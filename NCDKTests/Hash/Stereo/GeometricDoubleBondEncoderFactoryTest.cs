@@ -23,24 +23,19 @@
  */
 
 using NCDK.Common.Base;
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Default;
 using NCDK.Numerics;
 using System.Reflection;
 using static NCDK.Hash.Stereo.GeometricDoubleBondEncoderFactory;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class GeometricDoubleBondEncoderFactoryTest
     {
-
         [TestMethod()]
         public void TestCreate()
         {
@@ -121,7 +116,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_NoCoordinates()
         {
-
             var m_mol = new Mock<IAtomContainer>(); var mol = m_mol.Object;
 
             // a       d    0       3
@@ -276,7 +270,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestAccept_Hybridization()
         {
-
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_a = new Mock<IBond>(); var a = m_a.Object;
             var m_b = new Mock<IBond>(); var b = m_b.Object;
@@ -295,7 +288,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestAccept_QueryBond()
         {
-
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_a = new Mock<IBond>(); var a = m_a.Object;
             var m_b = new Mock<IBond>(); var b = m_b.Object;
@@ -315,7 +307,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestAccept_CumulatedDoubleBond()
         {
-
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_a = new Mock<IBond>(); var a = m_a.Object;
             var m_b = new Mock<IBond>(); var b = m_b.Object;
@@ -333,7 +324,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestAccept_NoSubstituents()
         {
-
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_a = new Mock<IBond>(); var a = m_a.Object;
 

@@ -4,13 +4,11 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Class testing the IsotopePattern class.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public class IsotopePatternTest : CDKTestCase
     {
-
         public IsotopePatternTest()
             : base()
         { }
@@ -22,25 +20,14 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoP);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetMonoIsotope_IsotopeContainer()
         {
             IsotopePattern isoP = new IsotopePattern();
             isoP.SetMonoIsotope(new IsotopeContainer());
             Assert.IsNotNull(isoP);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestAddIsotope_IsotopeContainer()
         {
@@ -49,11 +36,6 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoP);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetMonoIsotope()
         {
@@ -63,15 +45,9 @@ namespace NCDK.Formula
             Assert.AreEqual(isoC, isoP.GetMonoIsotope());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetIsotopes()
         {
-
             IsotopePattern isoP = new IsotopePattern();
             IsotopeContainer iso1 = new IsotopeContainer();
             isoP.SetMonoIsotope(iso1);
@@ -81,15 +57,9 @@ namespace NCDK.Formula
             Assert.AreEqual(iso2, isoP.Isotopes[1]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetIsotope_int()
         {
-
             IsotopePattern isoP = new IsotopePattern();
             IsotopeContainer iso1 = new IsotopeContainer();
             isoP.SetMonoIsotope(iso1);
@@ -99,11 +69,6 @@ namespace NCDK.Formula
             Assert.AreEqual(iso2, isoP.Isotopes[1]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetNumberOfIsotopes()
         {
@@ -115,38 +80,21 @@ namespace NCDK.Formula
             Assert.AreEqual(2, isoP.Isotopes.Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetCharge_Double()
         {
             IsotopePattern isoP = new IsotopePattern();
             isoP.Charge = 1.0;
             Assert.AreEqual(1.0, isoP.Charge, 0.000001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetCharge()
         {
             IsotopePattern isoP = new IsotopePattern();
             Assert.AreEqual(0, isoP.Charge, 0.000001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestClone()
         {

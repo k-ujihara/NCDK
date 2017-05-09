@@ -26,10 +26,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class DoubleBond2DParityTest
     {

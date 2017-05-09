@@ -23,22 +23,15 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the MolecularFormula.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="MolecularFormula"/>
     /// </summary>
+    /// <seealso cref="MolecularFormula"/>
+    // @cdk.module test-data
     [TestClass()]
     public class MolecularFormulaTest : AbstractMolecularFormulaTest
     {
         protected override IChemObjectBuilder Builder
             => Default.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMolecularFormula() {
 

@@ -28,17 +28,16 @@ using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 using System.IO;
-using System;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
     /// <summary>
-    /// Unit testing for the {@link MCSPlusHandler} class.
+    /// Unit testing for the <see cref="MCSPlusHandler"/> class.
+    /// </summary>
     // @author     Syed Asad Rahman
     // @author     egonw
     // @cdk.module test-smsd
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class MCSPlusHandlerTest : AbstractMCSAlgorithmTest
     {
         protected override AbstractMCSAlgorithm algorithm { get; } = new MCSPlusHandler();
@@ -71,7 +70,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of set method, of class MCSPlusHandler.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
@@ -90,8 +88,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of set method, of class MCSPlusHandler.
-        /// <exception cref="CDKException"></exception>
-        // @throws IOException
         /// </summary>
         [TestMethod()]
         public void TestSet_String_String()
@@ -117,7 +113,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of set method, of class MCSPlusHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
@@ -136,7 +131,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of getAllAtomMapping method, of class MCSPlusHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         //[TestMethod()]
         //@Ignore("Failing but not going to be fixed")
@@ -161,7 +155,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of getAllMapping method, of class MCSPlusHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         //[TestMethod()]
         //@Ignore("Failing but not going to be fixed")
@@ -207,7 +200,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of getFirstMapping method, of class MCSPlusHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
@@ -223,7 +215,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             smsd1.SearchMCS(true);
             Assert.IsNotNull(smsd1.GetFirstMapping());
 
-            Assert.AreEqual(7, smsd1.GetFirstMapping().Count);
+            Assert.AreEqual(7, smsd1.GetFirstAtomMapping().Count);
         }
     }
 }

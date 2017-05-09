@@ -49,7 +49,7 @@ namespace NCDK.Reactions.Types
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency
         ///  from the class tools.HydrogenAdder.
         /// </summary>
-        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <exception cref="CDKException">Description of the Exception</exception>
         /// <param name="reactants">reactants of the reaction.</param>
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)

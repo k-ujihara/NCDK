@@ -30,10 +30,9 @@ namespace NCDK.IO.Iterator
 {
     /// <summary>
     /// TestCase for the reading SMILES mol files using one test file.
-    ///
+    /// </summary>
     // @cdk.module test-smiles
     // @see org.openscience.cdk.io.SMILESReader
-    /// </summary>
     [TestClass()]
     public class IteratingSMILESReaderTest : CDKTestCase
     {

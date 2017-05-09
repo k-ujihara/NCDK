@@ -23,7 +23,7 @@
  */
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// This code returns a sorted set of atoms for a container according to its

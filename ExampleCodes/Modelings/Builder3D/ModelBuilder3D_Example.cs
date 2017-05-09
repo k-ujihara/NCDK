@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     class ModelBuilder3D_Example
     {

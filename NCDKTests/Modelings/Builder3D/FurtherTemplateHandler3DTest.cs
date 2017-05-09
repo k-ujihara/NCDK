@@ -27,7 +27,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Reflection;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Test class for <see cref="TemplateHandler3D"/>.

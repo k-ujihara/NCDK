@@ -27,11 +27,8 @@ using System.Linq;
 
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-group
-    ///
-    /// </summary>
     [TestClass()]
     public class PartitionTest : CDKTestCase
     {

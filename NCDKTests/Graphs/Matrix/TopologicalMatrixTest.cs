@@ -12,7 +12,7 @@ namespace NCDK.Graphs.Matrix
         [TestMethod()]
         public void TestTopologicalMatrix_IAtomContainer()
         {
-            string filename = "NCDK.Data.MDL.clorobenzene.mol";
+            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer container = (IAtomContainer)reader.Read(new AtomContainer());

@@ -1,13 +1,7 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
-
-namespace NCDK.Graphs
+﻿namespace NCDK.Graphs
 {
-    [TestClass]
     public class Cycles_Example1
     {
-        [TestMethod]
         public void Main()
         {
 			{

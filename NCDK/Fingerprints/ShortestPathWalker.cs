@@ -30,7 +30,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @author Syed Asad Rahman (2012)
     // @author John May (2013)

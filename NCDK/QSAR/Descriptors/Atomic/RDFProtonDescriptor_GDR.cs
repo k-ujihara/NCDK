@@ -146,7 +146,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                             aA = new Vector3(goodAtom1P.X, goodAtom1P.Y, goodAtom1P.Z);
                             aB = new Vector3(goodAtom0P.X, goodAtom0P.Y, goodAtom0P.Z);
                         }
-                        bA = new Vector3(middlePoint.X, middlePoint.Y, middlePoint.Z);  // fixed CDK's bug
+                        bA = new Vector3(middlePoint.X, middlePoint.Y, middlePoint.Z);
                         bB = new Vector3(atomP.X, atomP.Y, atomP.Z);
                         angle = CalculateAngleBetweenTwoLines(aA, aB, bA, bB);
                         partial = ((1 / (Math.Pow(values[0], 2))) * Math.Exp(smooth * (Math.Pow((ghd - angle), 2))));

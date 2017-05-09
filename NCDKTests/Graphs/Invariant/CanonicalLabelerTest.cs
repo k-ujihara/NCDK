@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Default;
@@ -27,16 +26,13 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.IO;
 using System.Text;
-using static NCDK.Graphs.GraphUtil;
-
 
 namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Checks the functionality of the CanonicalLabeler.
-    ///
-    // @cdk.module test-standard
     /// </summary>
+    // @cdk.module test-standard
     // CanonicalLabeler is deprecated (slow)
     [TestClass()]
     public class CanonicalLabelerTest : CDKTestCase
@@ -49,6 +45,7 @@ namespace NCDK.Graphs.Invariant
         { }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCanonicalLabeler()
         {
             // assume setup worked
@@ -56,6 +53,7 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCanonLabel_IAtomContainer()
         {
             IAtomContainer molecule = parser.ParseSmiles("CC(=O)CBr");
@@ -76,11 +74,9 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// Ordering of original should not matter, so the same SMILES
         /// with a different atom order as the test above.
-        ///
-        // @
-        // @see TestSomeMolecule()
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSomeMoleculeWithDifferentStartingOrder()
         {
             IAtomContainer molecule = parser.ParseSmiles("O=C(C)CBr");
@@ -96,10 +92,9 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CANONICAL_LABEL));
         }
 
-        /// <summary>
         // @cdk.bug 1014344
-        /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestStabilityAfterRoundtrip()
         {
             string filename = "NCDK.Data.MDL.bug1014344-1.mol";
@@ -132,10 +127,8 @@ namespace NCDK.Graphs.Invariant
         /// Convenience method that perceives atom types (CDK scheme) and
         /// adds implicit hydrogens accordingly. It does not create 2D or 3D
         /// coordinates for the new hydrogens.
-        ///
-        /// <param name="container">to which implicit hydrogens are added.</param>
         /// </summary>
-
+        /// <param name="container">to which implicit hydrogens are added.</param>
         protected override void AddImplicitHydrogens(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -148,10 +141,9 @@ namespace NCDK.Graphs.Invariant
             hAdder.AddImplicitHydrogens(container);
         }
 
-        /// <summary>
         // @cdk.bug 2944519
-        /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBug2944519()
         {
             IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();

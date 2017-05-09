@@ -23,7 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.FaulonSignatures;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     // @cdk.module test-signature
     // @author maclean

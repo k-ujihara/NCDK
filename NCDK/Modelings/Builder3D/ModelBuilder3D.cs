@@ -34,14 +34,14 @@ using System.IO;
 using NCDK.Numerics;
 using System.Linq;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     ///  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
     /// </summary>
     /// <example>
     ///  Its use looks like:
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Modeling.Builder3D.ModelBuilder3D_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Modelings.Builder3D.ModelBuilder3D_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// Standing problems:

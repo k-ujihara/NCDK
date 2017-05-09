@@ -13,7 +13,6 @@ namespace NCDK.Isomorphisms
         void Main()
         {
             UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-            // fixed CDK's mistake CC is ethylene
             #region
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride

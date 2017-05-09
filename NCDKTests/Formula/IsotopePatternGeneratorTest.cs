@@ -205,9 +205,7 @@ namespace NCDK.Formula
 
         }
 
-        /// <summary>
         // @cdk.bug 3273205
-        /// </summary>
         [TestMethod()]
         public void TestCalculateIsotopesMn()
         {

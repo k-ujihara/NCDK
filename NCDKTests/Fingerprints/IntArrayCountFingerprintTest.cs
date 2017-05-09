@@ -2,12 +2,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass()]
     public class IntArrayCountFingerprintTest
     {
-
         [TestMethod()]
         public void TestMerge()
         {

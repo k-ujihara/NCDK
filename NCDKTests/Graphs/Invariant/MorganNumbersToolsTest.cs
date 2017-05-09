@@ -29,13 +29,11 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Checks the functionality of the MorganNumberTools.
-    ///
-    // @cdk.module test-standard
     /// </summary>
+    // @cdk.module test-standard
     [TestClass()]
     public class MorganNumbersToolsTest : CDKTestCase
     {
-
         public MorganNumbersToolsTest()
                 : base()
         {
@@ -73,9 +71,7 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /// <summary>
         // @cdk.bug 2846213
-        /// </summary>
         [TestMethod()]
         public void TestBug2846213()
         {

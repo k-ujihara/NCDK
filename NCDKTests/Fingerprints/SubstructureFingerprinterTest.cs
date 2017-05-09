@@ -25,11 +25,9 @@ using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class SubstructureFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {

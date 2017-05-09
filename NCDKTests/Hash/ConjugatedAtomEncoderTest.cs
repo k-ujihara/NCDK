@@ -28,13 +28,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     public class ConjugatedAtomEncoderTest
     {
-
         [TestMethod()]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void TestConstruction_Null()

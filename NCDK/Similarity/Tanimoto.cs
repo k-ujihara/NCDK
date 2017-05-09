@@ -22,7 +22,7 @@
  *
  */
 using NCDK.Common.Collections;
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using System;
 using System.Collections;
 using System.Collections.Generic;

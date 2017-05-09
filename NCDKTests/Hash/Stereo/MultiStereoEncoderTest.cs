@@ -28,14 +28,11 @@ using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class MultiStereoEncoderTest
     {
-
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_Empty()
@@ -46,7 +43,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestEncode()
         {
-
             var m_a = new Mock<IStereoEncoder>(); var a = m_a.Object;
             var m_b = new Mock<IStereoEncoder>(); var b = m_b.Object;
 
@@ -66,7 +62,6 @@ namespace NCDK.Hash.Stereo
 
             m_a.Verify(n => n.Encode(current, next), Times.Exactly(1));
             m_b.Verify(n => n.Encode(current, next), Times.Exactly(1));
-
         }
 
         [TestMethod()]

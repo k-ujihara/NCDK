@@ -31,12 +31,9 @@ using NCDK.Tools.Diff;
 using System.Collections;
 using System.Collections.Generic;
 
-
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class ExtendedFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {

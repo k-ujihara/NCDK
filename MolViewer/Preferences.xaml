@@ -7,13 +7,11 @@
         mc:Ignorable="d"
         Title="Preferences" Height="186.556" Width="300" Loaded="Window_Loaded">
     <Grid>
-        <CheckBox x:Name="checkShowExplicitMethylGroup" Content="Show Explicit Methyl Group" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top">
-        </CheckBox>
-        <CheckBox IsChecked="{Binding Path=ShowExplicitHydrogens}" x:Name="checkShowExplicitHydrogens" Content="Show Explicit Hydrogens" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top">
-        </CheckBox>
+        <CheckBox IsChecked="{Binding Path=ShowEndCarbons}" x:Name="checkShowEndCarbons" Content="Show End Carbons" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
+        <CheckBox IsChecked="{Binding Path=ShowExplicitHydrogens}" x:Name="checkShowExplicitHydrogens" Content="Show Explicit Hydrogens" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding Path=CompactAtom}" x:Name="checkCompactAtom" Content="Compact Atom" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonOK" Content="OK" HorizontalAlignment="Left" Margin="127,0,0,9.667" VerticalAlignment="Bottom" Width="75" Click="buttonOK_Click"/>
-        <Button x:Name="buttonCancel" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,11.333,9.667" VerticalAlignment="Bottom" Width="75"/>
+        <CheckBox IsChecked="{Binding Path=KekuleStructure}" x:Name="checkKekuleStructure" Content="Kekule Structure" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonOK" Content="OK" HorizontalAlignment="Left" Margin="208,0,0,10.333" VerticalAlignment="Bottom" Width="75" Click="buttonOK_Click"/>
 
     </Grid>
 </Window>

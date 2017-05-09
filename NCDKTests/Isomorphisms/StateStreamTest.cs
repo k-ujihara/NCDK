@@ -30,14 +30,11 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class StateStreamTest
     {
-
         [TestMethod()]
         public void HasNext()
         {

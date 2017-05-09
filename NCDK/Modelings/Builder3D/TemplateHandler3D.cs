@@ -23,7 +23,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Primitives;
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using NCDK.IO.Iterator;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
@@ -36,7 +36,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Helper class for ModelBuilder3D. Handles templates. This is
@@ -90,7 +90,7 @@ namespace NCDK.Modeling.Builder3D
 
             try
             {
-                ins = ResourceLoader.GetAsStream("NCDK.Modeling.Builder3D.Data.ringTemplateStructures.sdf.gz");
+                ins = ResourceLoader.GetAsStream("NCDK.Modelings.Builder3D.Data.ringTemplateStructures.sdf.gz");
                 fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
                 imdl = new IteratingSDFReader(fin, builder);
             }
@@ -113,7 +113,7 @@ namespace NCDK.Modeling.Builder3D
             //Debug.WriteLine("TEMPLATE Finger");
             try
             {
-                ins = ResourceLoader.GetAsStream("NCDK.Modeling.Builder3D.Data.ringTemplateFingerprints.txt.gz");
+                ins = ResourceLoader.GetAsStream("NCDK.Modelings.Builder3D.Data.ringTemplateFingerprints.txt.gz");
                 fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
             }
             catch (Exception exc3)

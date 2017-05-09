@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are
@@ -44,7 +44,7 @@ namespace NCDK.Fingerprint
     /// </summary>
     /// <example>
     /// A fingerprint is generated for an AtomContainer with this code:
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.HybridizationFingerprinter_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprints.HybridizationFingerprinter_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// The FingerPrinter assumes that hydrogens are explicitly given!

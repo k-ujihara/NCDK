@@ -78,7 +78,7 @@ namespace NCDK.IO
         /// <inheritdoc/>
         public override void SetReader(TextReader reader)
         {
-            this.input = reader; // fixed CDK's bug
+            this.input = reader;
         }
 
         /// <inheritdoc/>

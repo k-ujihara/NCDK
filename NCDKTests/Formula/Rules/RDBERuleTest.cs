@@ -21,13 +21,10 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class RDBERuleTest : FormulaRuleTest
     {
-
         private static IChemObjectBuilder builder;
 
         [TestInitialize()]
@@ -49,7 +46,6 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestDefault()
         {
-
             IRule rule = new RDBERule();
             var objects = rule.Parameters;
             Assert.AreEqual(2, objects.Length);
@@ -58,13 +54,11 @@ namespace NCDK.Formula.Rules
             double max = (double)objects[1];
             Assert.AreEqual(-0.5, min, 0.00001);
             Assert.AreEqual(30, max, 0.00001);
-
         }
 
         [TestMethod()]
         public void TestSetParameters()
         {
-
             IRule rule = new RDBERule();
             object[] parameters = new object[2];
 
@@ -79,13 +73,11 @@ namespace NCDK.Formula.Rules
             double max = (double)objects[1];
             Assert.AreEqual(0.0, min, 0.00001);
             Assert.AreEqual(10.0, max, 0.00001);
-
         }
 
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
-
             IRule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C2H4", builder);
@@ -95,13 +87,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit.C2H11N4O4
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("CH2F10S2", builder);
@@ -118,15 +107,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
-
             IRule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C1H4", builder);
@@ -135,15 +118,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetRDBEValue_IMolecularFormula()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C2H4", builder);
@@ -151,15 +128,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.GetRDBEValue(formula)[0], 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestValidate_IMolecularFormula_Double()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C2H4", builder);
@@ -169,13 +140,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit.C3H8O3S2
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void Test1()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C3H8O3S2", builder);
@@ -188,13 +156,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit.C4H8O3S1
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void Test2()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C4H8O3S1", builder);
@@ -204,13 +169,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit.NH4+
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_1()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("NH4", builder);
@@ -221,13 +183,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit.NH4+
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_2()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("NH4", builder);
@@ -237,15 +196,11 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit for lipid PC.
-        ///
-        // @cdk.bug 2322906
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.bug 2322906
         [TestMethod()]
         public void TestPCCharged()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C42H85NO8P", builder);
@@ -256,13 +211,10 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// A unit test suite for JUnit for B.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestB()
         {
-
             RDBERule rule = new RDBERule();
 
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C6H9BNO2", builder);

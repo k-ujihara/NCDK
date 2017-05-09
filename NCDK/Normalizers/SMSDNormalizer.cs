@@ -24,7 +24,7 @@
 using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
 
-namespace NCDK.Normalize
+namespace NCDK.Normalizers
 {
     /// <summary>
     /// This class containes set of modules required to clean a molecule

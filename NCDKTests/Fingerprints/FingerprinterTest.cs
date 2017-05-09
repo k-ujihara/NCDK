@@ -32,12 +32,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class FingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -139,9 +136,7 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(1024, bs.Count); // actual bit set size
         }
 
-        /// <summary>
         // @cdk.bug 1851202
-        /// </summary>
         [TestMethod()]
         public void TestBug1851202()
         {
@@ -177,10 +172,7 @@ namespace NCDK.Fingerprint
             Assert.IsNotNull(fingerprinter.GetBitFingerprint(mol));
         }
 
-        /// <summary>
         // @cdk.bug 2819557
-        /// <exception cref="CDKException"></exception>
-        /// </summary>
         [TestMethod()]
         public void TestBug2819557()
         {

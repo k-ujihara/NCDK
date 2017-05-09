@@ -24,11 +24,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Isotope class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.Isotope
     /// </summary>
+    // @cdk.module test-data
+    // @see org.openscience.cdk.Isotope
     [TestClass()]
     public class IsotopeTest
         : AbstractIsotopeTest

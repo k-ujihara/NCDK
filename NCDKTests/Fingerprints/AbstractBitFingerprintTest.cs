@@ -23,7 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass()]
     public abstract class AbstractBitFingerprintTest : CDKTestCase

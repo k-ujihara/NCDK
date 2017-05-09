@@ -29,7 +29,7 @@ using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @cdk.module test-fingerprint
     [TestClass()]

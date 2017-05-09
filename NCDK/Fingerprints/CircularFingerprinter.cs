@@ -34,7 +34,7 @@ using System.IO;
 using System.Linq;
 using NCDK.Numerics;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     ///  <para>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6

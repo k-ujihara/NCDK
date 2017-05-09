@@ -27,7 +27,7 @@ using NCDK.Smiles;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// An implementation of the LINGO fingerprint <token>cdk-cite-Vidal2005</token>.

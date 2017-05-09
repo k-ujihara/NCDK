@@ -22,7 +22,7 @@
  */
 using System.Collections.Generic;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// An interface for classes implementing fragmentation algorithms.

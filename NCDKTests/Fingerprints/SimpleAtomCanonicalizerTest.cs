@@ -3,12 +3,10 @@ using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class SimpleAtomCanonicalizerTest
     {

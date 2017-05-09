@@ -32,10 +32,9 @@ namespace NCDK.Isomorphisms
     /// <summary>
     /// These are isolated tests - really difficult to isolate the behaviour here
     /// but will add.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class VFSubStateTest
     {

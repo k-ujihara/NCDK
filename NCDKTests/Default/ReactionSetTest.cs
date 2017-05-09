@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the ReactionSet class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.ReactionSet
     /// </summary>
+    // @cdk.module test-data
+    // @see org.openscience.cdk.ReactionSet
     [TestClass()]
     public class ReactionSetTest
         : AbstractReactionSetTest

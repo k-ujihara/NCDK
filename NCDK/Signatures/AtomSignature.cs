@@ -23,7 +23,7 @@
 using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     /// <summary>
     /// The signature <token>cdk-cite-FAU03</token>; <token>cdk-cite-FAU04</token> for a molecule rooted at a particular atom.
@@ -36,9 +36,9 @@ namespace NCDK.Signature
     /// be written out as a string, for example ethane:
     /// </para>
     ///
-    /// <para>
+    /// <pre>
     ///   [C]([C]([H][H][H])[H][H][H])
-    /// </para>
+    /// </pre>
     ///
     /// <para>
     /// where each atom is represented by an atom symbol in square brackets. The
@@ -46,9 +46,9 @@ namespace NCDK.Signature
     /// cycle, the signature string will have numbers after the atom symbol, like:
     /// </para>
     ///
-    /// <para>
+    /// <pre>
     /// [C]([C]([C,0])[C]([C,0]))
-    /// </para>
+    /// </pre>
     ///
     /// <para>
     /// these are known as 'colors' and indicate ring closures, in a roughly similar

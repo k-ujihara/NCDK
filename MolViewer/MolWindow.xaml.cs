@@ -1,16 +1,40 @@
-﻿using Microsoft.Win32;
+﻿/*
+ * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+using Microsoft.Win32;
 using NCDK.Default;
 using NCDK.Geometries;
+using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Layout;
+using NCDK.Numerics;
 using NCDK.Renderers;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Generators.Standards;
 using NCDK.Renderers.Visitors;
 using NCDK.Smiles;
+using NCDK.Tools.Manipulator;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -30,6 +54,9 @@ namespace NCDK.MolViewer
         private IAtomContainer mol = null;
         private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
 
+        private static FormatFactory formatFactory = new FormatFactory();
+        private static ReaderFactory readerFactory = new ReaderFactory();
+
         class MolWindowListener : Events.ICDKChangeListener
         {
             MolWindow parent;
@@ -44,34 +71,25 @@ namespace NCDK.MolViewer
             }
         }
 
-        ChemModelRenderer ren;
-
         public MolWindow()
         {
             InitializeComponent();
-
+           
             sdg.BondLength = 40;
+            sdg.UseIdentityTemplates = false;
             Model = new RendererModel();
-            Model.RegisterParameters(new BasicGenerator());
-
             molgen = new BasicGenerator();
             Model.RegisterParameters(molgen);
             Model.Listeners.Add(new MolWindowListener(this));
         }
 
-        public static IAtomContainer Layout(StructureDiagramGenerator structureGenerator, IAtomContainer molecule)
+        public static IAtomContainer Layout(StructureDiagramGenerator structureGenerator, IAtomContainer mol)
         {
-            structureGenerator.Molecule = molecule;
-            try
-            {
-                structureGenerator.GenerateCoordinates();
-            }
-            catch (Exception e)
-            {
-                Trace.TraceError(e.Message);
-                return molecule;
-            }
-            return structureGenerator.Molecule;
+            structureGenerator.Molecule = mol;
+            structureGenerator.GenerateCoordinates();
+            mol = structureGenerator.Molecule;
+
+            return mol;
         }
 
         private void MenuItem_PasteAsInchi_Click(object sender, RoutedEventArgs e)
@@ -163,7 +181,7 @@ namespace NCDK.MolViewer
                 {
                     var fn = openFileDialog.FileName;
                     using (var srm = new FileStream(fn, FileMode.Open))
-                    using (var reader = new MDLV2000Reader(srm))
+                    using (var reader = readerFactory.CreateReader(srm))
                     {
                         mol = reader.Read(new AtomContainer());
                     }
@@ -179,7 +197,6 @@ namespace NCDK.MolViewer
 
             if (!GeometryUtil.Has2DCoordinates(mol))
                 mol = Layout(sdg, mol);
-
 
             this.mol = mol;
             Render();

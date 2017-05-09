@@ -18,18 +18,16 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.AtomTypes.Mapper
+namespace NCDK.AtomTypes.Mappers
 {
     /// <summary>
     /// This class tests the mapper that maps CDK atom types to other atom type
     /// schemes.
-    ///
-    // @cdk.module test-atomtype
     /// </summary>
+    // @cdk.module test-atomtype
     [TestClass()]
     public class AtomTypeMapperTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestGetInstance_String()
         {

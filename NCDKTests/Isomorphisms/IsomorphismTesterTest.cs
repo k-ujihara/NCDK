@@ -28,13 +28,11 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// Checks the functionality of the IsomorphismTester
-    ///
-    // @cdk.module test-standard
     /// </summary>
+    // @cdk.module test-standard
     [TestClass()]
     public class IsomorphismTesterTest : CDKTestCase
     {
-
         IAtomContainer pinene_1 = null, pinene_2 = null, pinene_non = null;
 
         public IsomorphismTesterTest()

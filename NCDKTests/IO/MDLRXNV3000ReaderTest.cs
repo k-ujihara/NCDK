@@ -47,9 +47,7 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }
 
-        /// <summary>
         // @cdk.bug 1849925
-        /// </summary>
         [TestMethod()]
         public void TestReadReactions1()
         {

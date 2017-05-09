@@ -21,10 +21,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Default
 {
     /// <summary>
-    /// Checks the functionality of the {@link Substance} class.
-    ///
-    // @cdk.module test-data
+    /// Checks the functionality of the <see cref="Substance"/> class.
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class SubstanceTest : AbstractSubstanceTest
     {

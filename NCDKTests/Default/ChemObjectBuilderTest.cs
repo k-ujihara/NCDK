@@ -22,10 +22,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the <see cref="IChemObjectBuilder"/>
-    /// {@link Silent.ChemObjectBuilder} implementation.
-    ///
-    // @cdk.module test-data
+    /// <see cref="Silent.ChemObjectBuilder"/> implementation.
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class ChemObjectBuilderTest : AbstractChemObjectBuilderTest
     {

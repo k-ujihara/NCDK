@@ -39,22 +39,42 @@ namespace NCDK.Default
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
+	    /// <summary>
+		/// List of ChemSquences.
+		/// </summary>
         protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
+		/// <summary>
+		///  Constructs an empty ChemFile.
+		/// </summary>
         public ChemFile()
             : base()
         { }
 
+        /// <summary>
+        /// The ChemSequence at position <paramref name="number"/> in the container.
+        /// </summary>
+        /// <param name="number">The position of the ChemSequence</param>
+        /// <returns>The ChemSequence at position <paramref name="number"/>.</returns>
+        /// <seealso cref="Add(IChemSequence)"/>
         public IChemSequence this[int number]
         {
             get { return chemSequences[number]; }
             set { chemSequences[number] = value; }
         }
 
-        public int Count => chemSequences.Count;
+        /// <summary>
+        /// The number of ChemSequences in this Container.
+        /// </summary>
+		public int Count => chemSequences.Count;
 
         public bool IsReadOnly => chemSequences.IsReadOnly;
         
+        /// <summary>
+        ///  Adds a ChemSequence to this container.
+        /// </summary>
+        /// <param name="chemSequence">The chemSequence to be added to this container</param>
+        /// <seealso cref="this[int]"/>
         public void Add(IChemSequence chemSequence)
         {
  
@@ -109,10 +129,16 @@ namespace NCDK.Default
             return ret;
         }
 
-        public void RemoveAt(int index)
+        /// <summary>
+        /// Removes a ChemSequence from this container.
+        /// </summary>
+        /// <param name="pos">The position from which to remove</param>
+        /// <seealso cref="chemSequences"/>
+        /// <seealso cref="Add(IChemSequence)"/>
+        public void RemoveAt(int pos)
         {
-            chemSequences[index].Listeners.Remove(this);
-            chemSequences.RemoveAt(index);
+            chemSequences[pos].Listeners.Remove(this);
+            chemSequences.RemoveAt(pos);
  
             NotifyChanged(); 
         }
@@ -148,7 +174,12 @@ namespace NCDK.Default
             return clone;
         }
 
-        public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
+		public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
     }
@@ -166,22 +197,42 @@ namespace NCDK.Silent
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
+	    /// <summary>
+		/// List of ChemSquences.
+		/// </summary>
         protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
+		/// <summary>
+		///  Constructs an empty ChemFile.
+		/// </summary>
         public ChemFile()
             : base()
         { }
 
+        /// <summary>
+        /// The ChemSequence at position <paramref name="number"/> in the container.
+        /// </summary>
+        /// <param name="number">The position of the ChemSequence</param>
+        /// <returns>The ChemSequence at position <paramref name="number"/>.</returns>
+        /// <seealso cref="Add(IChemSequence)"/>
         public IChemSequence this[int number]
         {
             get { return chemSequences[number]; }
             set { chemSequences[number] = value; }
         }
 
-        public int Count => chemSequences.Count;
+        /// <summary>
+        /// The number of ChemSequences in this Container.
+        /// </summary>
+		public int Count => chemSequences.Count;
 
         public bool IsReadOnly => chemSequences.IsReadOnly;
         
+        /// <summary>
+        ///  Adds a ChemSequence to this container.
+        /// </summary>
+        /// <param name="chemSequence">The chemSequence to be added to this container</param>
+        /// <seealso cref="this[int]"/>
         public void Add(IChemSequence chemSequence)
         {
             chemSequences.Add(chemSequence);
@@ -223,9 +274,15 @@ namespace NCDK.Silent
             return ret;
         }
 
-        public void RemoveAt(int index)
+        /// <summary>
+        /// Removes a ChemSequence from this container.
+        /// </summary>
+        /// <param name="pos">The position from which to remove</param>
+        /// <seealso cref="chemSequences"/>
+        /// <seealso cref="Add(IChemSequence)"/>
+        public void RemoveAt(int pos)
         {
-            chemSequences.RemoveAt(index);
+            chemSequences.RemoveAt(pos);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -259,7 +316,12 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
+		public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
     }

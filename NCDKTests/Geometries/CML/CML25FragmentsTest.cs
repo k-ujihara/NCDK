@@ -70,8 +70,6 @@ namespace NCDK.IO.CML
         /// <summary>
         /// Tests whether the file is indeed a single molecule file
         /// </summary>
-        /// <param name="chemFile"></param>
-        /// <returns></returns>
         private IAtomContainer CheckForSingleMoleculeFile(IChemFile chemFile)
         {
             return CheckForXMoleculeFile(chemFile, 1);

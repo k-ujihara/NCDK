@@ -55,8 +55,8 @@ namespace NCDK.Graphs
             AllCycles ac = new AllCycles(RegularPathGraphTest.CompleteGraphOfSize(4), 4, 1000);
             Assert.IsTrue(Compares.AreDeepEqual(
                 new int[][]{
-                    new[]{2, 1, 0, 2}, new[]{3, 1, 0, 3}, new[]{3, 2, 0, 3}, new[]{3, 2, 1, 3}, new[]{3, 2, 1, 0, 3},
-                    new[]{3, 2, 0, 1, 3}, new[]{3, 0, 2, 1, 3}},
+                    new[] {2, 1, 0, 2}, new[] {3, 1, 0, 3}, new[] {3, 2, 0, 3}, new[] {3, 2, 1, 3}, new[] {3, 2, 1, 0, 3},
+                    new[] {3, 2, 0, 1, 3}, new[] {3, 0, 2, 1, 3}},
                 ac.GetPaths()));
         }
 

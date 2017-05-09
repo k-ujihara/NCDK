@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using NCDK.Tools;
@@ -51,7 +50,7 @@ namespace NCDK.Config
         /// <summary>
         /// A singleton instance of this class.
         /// </summary>
-        /// <exception cref="IOException">when reading of the data file did not work</exception>
+        /// <exception cref="System.IO.IOException">when reading of the data file did not work</exception>
         public static Isotopes Instance
         {
             get

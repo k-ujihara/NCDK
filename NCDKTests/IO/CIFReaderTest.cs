@@ -23,7 +23,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 
-
 namespace NCDK.IO
 {
     /// <summary>

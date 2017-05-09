@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -15,28 +15,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Exceptions
+namespace NCDK
 {
-    /// <summary>
-    /// Checks the functionality of the NoSuchAtomTypeException class.
-    ///
-    // @cdk.module test-core
-    ///
-    /// <seealso cref="NoSuchAtomTypeException"/>
-    /// </summary>
+    // @cdk.module test-standard
     [TestClass()]
-    public class NoSuchAtomTypeExceptionTest : CDKTestCase
+    public class UnsupportedChemObjectExceptionTest : CDKTestCase
     {
+        public UnsupportedChemObjectExceptionTest()
+            : base()
+        { }
 
         [TestMethod()]
-        public void TestNoSuchAtomTypeException_String()
+        public void TestUnsupportedChemObjectException_String()
         {
-            string EXPLANATION = "Buckybull is not an atom type!";
-            NoSuchAtomTypeException exception = new NoSuchAtomTypeException(EXPLANATION);
+            string EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
+            UnsupportedChemObjectException exception = new UnsupportedChemObjectException(EXPLANATION);
             Assert.IsNotNull(exception);
             Assert.AreEqual(EXPLANATION, exception.Message);
         }

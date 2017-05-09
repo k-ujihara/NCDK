@@ -29,10 +29,8 @@ using System;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class AllPairsShortestPathsTest
     {
@@ -46,7 +44,6 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestConstruction_Empty()
         {
-
             AllPairsShortestPaths asp = new AllPairsShortestPaths(new AtomContainer());
 
             // all vs all fro -10 -> 10
@@ -68,7 +65,6 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestFrom_Atom_Benzene()
         {
-
             IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
             AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 
@@ -115,13 +111,11 @@ namespace NCDK.Graphs
                 IAtom[] actual = asp.From(c5).GetAtomsTo(c1);
                 Assert.IsTrue(Compares.AreEqual(expected, actual));
             }
-
         }
 
         [TestMethod()]
         public virtual void TestFrom_Int_Benzene()
         {
-
             IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
             AllPairsShortestPaths asp = new AllPairsShortestPaths(benzene);
 

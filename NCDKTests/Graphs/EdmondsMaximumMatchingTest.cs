@@ -34,10 +34,9 @@ namespace NCDK.Graphs
     /// Maximum matching is not specific to kekulisation but it serves as a good
     /// demonstration. The provission of a subset to the matching inicates the atom
     /// indicies we know must be adjacent to a pi bond.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public sealed class EdmondsMaximumMatchingTest
     {

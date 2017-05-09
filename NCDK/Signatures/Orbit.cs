@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-namespace NCDK.Signature {
+namespace NCDK.Signatures {
     /// <summary>
     /// A list of atom indices, and the label of the orbit.
     /// </summary>

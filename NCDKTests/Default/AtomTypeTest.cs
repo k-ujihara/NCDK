@@ -22,11 +22,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the AtomType class.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="AtomType"/>
     /// </summary>
+    /// <seealso cref="AtomType"/>
+    // @cdk.module test-data
     [TestClass()]
     public class AtomTypeTest
         : AbstractAtomTypeTest

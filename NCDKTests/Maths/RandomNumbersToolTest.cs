@@ -22,13 +22,10 @@ using System;
 
 namespace NCDK.Maths
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class RandomNumbersToolTest : CDKTestCase
     {
-
         public RandomNumbersToolTest()
             : base()
         { }

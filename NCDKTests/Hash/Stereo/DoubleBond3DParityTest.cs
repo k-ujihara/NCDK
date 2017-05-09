@@ -22,20 +22,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class DoubleBond3DParityTest
     {
-
         private const int Opposite = +1;
         private const int Together = -1;
 

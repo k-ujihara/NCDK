@@ -1,4 +1,4 @@
-using NCDK.Signature;
+using NCDK.Signatures;
 
 namespace NCDK.SMSD.Labelling
 {

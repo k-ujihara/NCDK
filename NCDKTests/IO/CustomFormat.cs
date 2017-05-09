@@ -25,7 +25,7 @@ using NCDK.IO.Formats;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Dummy class to test the {@link WriterFactory} registerWriter functionality.
+    /// Dummy class to test the <see cref="WriterFactory"/> registerWriter functionality.
     /// This is why only the WriterClassName is implemented.
     /// </summary>
     // @cdk.module test-io

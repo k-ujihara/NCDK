@@ -26,9 +26,8 @@ namespace NCDK.Default
 {
     /// <summary>
     /// TestCase for the Reaction class.
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class ReactionTest : AbstractReactionTest
     {

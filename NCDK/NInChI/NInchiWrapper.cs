@@ -238,7 +238,7 @@ namespace NCDK.NInChI
         [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         static extern void Free_std_inchi_Input([In] ref Inchi_Input pInp);
         [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        static extern int CheckINCHI(string szINCHI, int strict);
+        static extern int CheckINCHI([In] string szINCHI, int strict);
 
         [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         static extern int GetINCHIKeyFromINCHI([In] string szINCHISource,

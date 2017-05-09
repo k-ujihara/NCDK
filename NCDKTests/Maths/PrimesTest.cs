@@ -21,9 +21,7 @@ using System;
 
 namespace NCDK.Maths
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class PrimesTest : CDKTestCase
     {

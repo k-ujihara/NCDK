@@ -128,11 +128,14 @@ namespace NCDK.Graphs.InChI
             bool all2d = true;
             foreach (var atom in atomContainer.Atoms)
             {
-                // fixed CDK's bug
-                if (all3d && !atom.Point3D.HasValue)
+                if (all3d && atom.Point3D == null)
+                {
                     all3d = false;
-                if (all2d && !atom.Point2D.HasValue)
+                }
+                if (all2d && atom.Point2D == null)
+                {
                     all2d = false;
+                }
             }
 
             // Process atoms
@@ -181,7 +184,7 @@ namespace NCDK.Graphs.InChI
                 atomMap[atom] = iatom;
 
                 // Check if charged
-                int charge = atom.FormalCharge ?? 0;    // fixed CDK's bug
+                int charge = atom.FormalCharge.Value;
                 if (charge != 0)
                 {
                     iatom.Charge = charge;

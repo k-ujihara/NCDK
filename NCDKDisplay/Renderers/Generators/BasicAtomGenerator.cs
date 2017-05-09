@@ -113,7 +113,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>If true, atoms are displayed as 'compact' symbols, not text.</summary>
         private IGeneratorParameter<bool?> isCompact = new CompactAtom();
 
-        /// <summary> Determines whether structures should be drawn as Kekule structures, thus
+        /// <summary>Determines whether structures should be drawn as Kekule structures, thus
         /// giving each carbon element explicitly, instead of not displaying the
         /// element symbol. Example C-C-C instead of /\.
         /// </summary>

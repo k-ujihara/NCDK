@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Aromaticities;
-using NCDK.AtomTypes.Mapper;
+using NCDK.AtomTypes.Mappers;
 using NCDK.Config;
 
 using System.Collections.Generic;

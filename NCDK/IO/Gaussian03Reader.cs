@@ -75,7 +75,7 @@ namespace NCDK.IO
 
         public override void SetReader(TextReader reader)
         {
-            this.input = reader;    // fixed CDK's bug
+            this.input = reader; 
         }
 
         public override void SetReader(Stream input)

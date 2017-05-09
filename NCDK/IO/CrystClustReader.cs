@@ -34,7 +34,7 @@ namespace NCDK.IO
         private TextReader input;
 
         public CrystClustReader()
-            : this(new StringReader(""))    // fixed CDK's bug
+            : this(new StringReader(""))
         { }
 
         public CrystClustReader(TextReader input)

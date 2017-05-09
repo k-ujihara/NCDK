@@ -26,9 +26,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /// <summary>
     // @cdk.module test-cip
-    /// </summary>
     [TestClass()]
     public class CIPLigandRuleTest : CDKTestCase
     {
@@ -118,7 +116,7 @@ namespace NCDK.Geometries.CIP.Rules
 
         /// <summary>
         /// Test that verifies the branching of the side chains determines precedence for ties,
-        /// but unlike {@link #TestSideChains()}, the tie only gets resolved after recursion.
+        /// but unlike <see cref="TestSideChains()"/>, the tie only gets resolved after recursion.
         /// </summary>
         [TestMethod()]
         public void TestSideChains_Recursive()

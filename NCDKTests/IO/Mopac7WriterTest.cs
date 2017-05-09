@@ -28,9 +28,7 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /// <summary>
     // @cdk.module test-io
-    /// </summary>
     [TestClass()]
     public class Mopac7WriterTest : ChemObjectWriterTest
     {

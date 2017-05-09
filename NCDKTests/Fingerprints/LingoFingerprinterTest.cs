@@ -25,11 +25,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-smiles
-    /// </summary>
     [TestClass()]
     public class LingoFingerprinterTest : AbstractFingerprinterTest
     {

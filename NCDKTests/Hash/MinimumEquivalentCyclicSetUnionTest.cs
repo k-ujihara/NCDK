@@ -28,14 +28,11 @@ using NCDK.Default;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class MinimumEquivalentCyclicSetUnionTest
     {
-
         [TestMethod()]
         public void TestFind()
         {
@@ -82,7 +79,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestScenario()
         {
-
             IAtomContainer cid4433798 = CID44333798();
             IAtomContainer cid57170558 = CID57170558();
 
@@ -99,9 +95,8 @@ namespace NCDK.Hash
 
         /// <summary>
         /// CC1=CC=C(C=C1)N2C3CCC2CC3
-        ///
-        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
         /// </summary>
+        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
         private IAtomContainer CID44333798()
         {
             IAtomContainer m = new AtomContainer();
@@ -120,9 +115,8 @@ namespace NCDK.Hash
 
         /// <summary>
         /// CC1=CC=C(C=C1)N(C2CC2)C3CC3
-        ///
-        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
         /// </summary>
+        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
         private IAtomContainer CID57170558()
         {
             IAtomContainer m = new AtomContainer();

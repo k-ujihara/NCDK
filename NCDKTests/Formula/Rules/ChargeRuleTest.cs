@@ -20,9 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class ChargeRuleTest : FormulaRuleTest
     {
@@ -35,11 +33,6 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(ChargeRule));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestChargeRule()
         {
@@ -48,29 +41,17 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
-
             IRule rule = new ChargeRule();
             object[] objects = rule.Parameters;
             Assert.AreEqual(1, objects.Length);
 
             double charge = (double)objects[0];
             Assert.AreEqual(0.0, charge, 0.00001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
@@ -87,7 +68,6 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
-
             IRule rule = new ChargeRule();
 
             IMolecularFormula formula = new MolecularFormula();

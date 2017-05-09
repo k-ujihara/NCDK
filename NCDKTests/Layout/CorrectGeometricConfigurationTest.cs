@@ -30,10 +30,8 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-sdg
-    /// </summary>
     [TestClass()]
     public class CorrectGeometricConfigurationTest
     {

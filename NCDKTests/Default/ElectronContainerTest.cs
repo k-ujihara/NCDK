@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the {@link ElectronContainer} class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.ElectronContainer
     /// </summary>
+    /// <seealso cref="ElectronContainer"/>
+    // @cdk.module test-data
     [TestClass()]
     public class ElectronContainerTest : AbstractElectronContainerTest
     {

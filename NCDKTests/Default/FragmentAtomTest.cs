@@ -22,9 +22,8 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the FragmentAtom.
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class FragmentAtomTest : AbstractFragmentAtomTest
     {

@@ -18,23 +18,21 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Exceptions
+namespace NCDK
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
-    public class UnsupportedChemObjectExceptionTest : CDKTestCase
+    public class InvalidSmilesExceptionTest : CDKTestCase
     {
-        public UnsupportedChemObjectExceptionTest()
+        public InvalidSmilesExceptionTest()
             : base()
         { }
 
         [TestMethod()]
-        public void TestUnsupportedChemObjectException_String()
+        public void TestInvalidSmilesException_String()
         {
             string EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
-            UnsupportedChemObjectException exception = new UnsupportedChemObjectException(EXPLANATION);
+            InvalidSmilesException exception = new InvalidSmilesException(EXPLANATION);
             Assert.IsNotNull(exception);
             Assert.AreEqual(EXPLANATION, exception.Message);
         }

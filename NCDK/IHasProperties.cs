@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
+// This file is under LGPL-2.1 
+
+
 namespace NCDK
 {
 	using System.Collections.Generic;

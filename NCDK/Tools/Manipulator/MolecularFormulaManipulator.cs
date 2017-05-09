@@ -478,7 +478,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMolecularFormula(string, bool, IChemObjectBuilder)"/>
         private static IMolecularFormula GetMolecularFormula(string stringMF, IMolecularFormula formula, bool assumeMajorIsotope)
         {
-            if (stringMF.Contains(".") || stringMF.Contains("(") || (stringMF.Length > 0 && stringMF[0] >= '0' && stringMF[0] <= '9')) // fixed CDK bug
+            if (stringMF.Contains(".") || stringMF.Contains("(") || (stringMF.Length > 0 && stringMF[0] >= '0' && stringMF[0] <= '9')) 
                 stringMF = SimplifyMolecularFormula(stringMF);
 
             // Extract charge from string when contains []X- format

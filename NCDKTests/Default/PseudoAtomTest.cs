@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 
@@ -25,9 +24,8 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the AtomTypeFactory
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class PseudoAtomTest
         : AbstractPseudoAtomTest

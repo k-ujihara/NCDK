@@ -1,4 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
 using System.Collections.Generic;
@@ -298,9 +316,6 @@ namespace NCDK.Config
 
         private void AssertValidCML(string atomTypeList, string shortcut)
         {
-            ///加情報:セキュリティ上の理由から、DTD はこの XML ドキュメントでは使用できません。
-            ///DTD 処理を有効にするには、XmlReaderSettings の DtdProcessing プロパティを Parse
-            ///に設定し、XmlReader.Create メソッドにその設定を渡してください。
             using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, atomTypeList))
             {
                 var tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema.FullName).AbsolutePath);
@@ -308,6 +323,7 @@ namespace NCDK.Config
                 var doc = new XmlDocument();
                 doc.Load(tmpInput.FullName);
 #if ENABLE_NOT_IMPLEMENTED
+                // Used DTD is not included in .NET Framework.
                 doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
 #endif
             }

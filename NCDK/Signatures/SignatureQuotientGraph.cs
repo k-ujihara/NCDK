@@ -22,7 +22,7 @@
  */
 using NCDK.FaulonSignatures;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     /// <summary>
     /// A signature quotient graph has a vertex for every signature symmetry class

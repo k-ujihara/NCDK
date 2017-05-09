@@ -24,9 +24,8 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the AtomTypeFactory
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class AtomTest
             : AbstractAtomTest
@@ -37,7 +36,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Method to test the Atom(string symbol) method.
+        /// Method to test the <see cref="Atom()"/>  method.
         /// </summary>
         [TestMethod()]
         public virtual void TestAtom()
@@ -55,7 +54,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Method to test the Atom(string symbol) method.
+        /// Method to test the <see cref="Atom(string)"/> method.
         /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String()
@@ -68,7 +67,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
+        /// Method to test the <see cref="Atom.Atom(string, Vector3)"/> method.
         /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String_Point3d()
@@ -83,7 +82,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
+        /// Method to test the <see cref="Atom.Atom(string, Vector2)"/> method.
         /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String_Point2d()
@@ -98,7 +97,7 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        /// Method to test the Compare() method.
+        /// Method to test the <see cref="Atom.Compare(object)"/> method.
         /// </summary>
         [TestMethod()]
         public override void TestCompare_Object()

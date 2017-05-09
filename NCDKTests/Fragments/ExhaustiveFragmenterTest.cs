@@ -22,17 +22,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System.Linq;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// Test exhaustive fragmenter.
-    ///
-    // @cdk.module test-fragment
     /// </summary>
+    // @cdk.module test-fragment
     [TestClass()]
     public class ExhaustiveFragmenterTest : CDKTestCase
     {
-
         static ExhaustiveFragmenter fragmenter;
         static SmilesParser smilesParser;
 

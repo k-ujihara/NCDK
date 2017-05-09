@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Default
 {
     /// <summary>
-    /// Checks the functionality of the {@link ChemFile} class.
-    ///
-    // @cdk.module test-data
+    /// Checks the functionality of the <see cref="ChemFile"/> class.
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class ChemFileTest : AbstractChemFileTest
     {

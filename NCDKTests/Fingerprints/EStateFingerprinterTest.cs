@@ -27,11 +27,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class EStateFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {

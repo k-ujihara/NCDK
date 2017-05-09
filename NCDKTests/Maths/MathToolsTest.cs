@@ -18,13 +18,10 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace NCDK.Maths
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class MathToolsTest : CDKTestCase
     {

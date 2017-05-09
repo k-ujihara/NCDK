@@ -26,13 +26,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /// <summary>
     // @cdk.module test-cip
-    /// </summary>
     [TestClass()]
     public class CombinedAtomicMassNumberRuleTest : CDKTestCase
     {
-
         static SmilesParser smiles = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         static IAtomContainer molecule = smiles.ParseSmiles("CC(Br)([13C])[H]");
 

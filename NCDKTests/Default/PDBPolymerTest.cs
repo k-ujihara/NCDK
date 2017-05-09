@@ -24,11 +24,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the PDBPolymer class.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="PDBPolymer"/>
     /// </summary>
+    /// <seealso cref="PDBPolymer"/>
+    // @cdk.module test-data
     [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {

@@ -24,11 +24,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the ChemModel class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.ChemModel
     /// </summary>
+    /// <seealso cref="ChemModel"/>
+    // @cdk.module test-data
     [TestClass()]
     public class ChemModelTest : AbstractChemModelTest
     {
@@ -72,7 +70,7 @@ namespace NCDK.Default
             IChemModel model2 = new ChemModel();
             mol.Atoms.Add(atom);
             IRingSet ringset = new RingSet();
-            ringset.AddRange(mset.Cast<IRing>());  // NCDK does not allow to add AtomContainer to Ring directly
+            ringset.AddRange(mset.Cast<IRing>());  // NCDK does not allow to add AtomContainer to RingSet directly
             model2.RingSet = ringset;
             Assert.IsFalse(model2.IsEmpty());
             mol.Atoms.Remove(atom);

@@ -5,13 +5,11 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Class testing the IsotopePatternSimilarity class.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public class IsotopePatternSimilarityTest : CDKTestCase
     {
-
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public IsotopePatternSimilarityTest()
@@ -33,11 +31,6 @@ namespace NCDK.Formula
             Assert.IsNotNull(is_);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetTolerance()
         {
@@ -48,8 +41,6 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Histidine example
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestCompare_IsotopePattern_IsotopePattern()
@@ -72,8 +63,6 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Histidine example
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestSelectingMF()
@@ -110,13 +99,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Real example. Lipid PC
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestExperiment()
         {
-
             IsotopePattern spExp = new IsotopePattern();
             spExp.SetMonoIsotope(new IsotopeContainer(762.6006, 124118304));
             spExp.Isotopes.Add(new IsotopeContainer(763.6033, 57558840));

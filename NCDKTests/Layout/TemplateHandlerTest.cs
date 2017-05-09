@@ -25,12 +25,9 @@ using System.IO;
 
 namespace NCDK.Layout
 {
-    /// <summary>
     // @cdk.module  test-sdg
     // @author      steinbeck
     // @cdk.created September 4, 2003
-    // @cdk.require java1.4+
-    /// </summary>
     [TestClass()]
     public class TemplateHandlerTest : CDKTestCase
     {
@@ -45,11 +42,6 @@ namespace NCDK.Layout
             sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <exception cref="Exception"> Description of the Exception</exception>
-        /// </summary>
         [TestMethod()]
         public void TestInit()
         {

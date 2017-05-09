@@ -32,19 +32,17 @@ using System.Reflection;
 namespace NCDK.Hash.Stereo
 {
     /// <summary>
-    /// See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
+    /// See <see cref="HashCodeScenariosTest"/> for examples.
+    /// </summary>
+    /// <seealso cref="HashCodeScenariosTest"/>
     // @author John May
     // @cdk.module test-hash
-    // @see org.openscience.cdk.hash.HashCodeScenariosTest
-    /// </summary>
     [TestClass()]
     public class TetrahedralElementEncoderFactoryTest
     {
-
         [TestMethod()]
         public void CreateExplicitH()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -76,7 +74,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void CreateImplicitH_back()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
             var m_c1 = new Mock<IAtom>(); var c1 = m_c1.Object;
@@ -106,7 +103,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void CreateImplicitH_front()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
             var m_c1 = new Mock<IAtom>(); var c1 = m_c1.Object;
@@ -138,7 +134,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void CreateImplicitH_middle()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
             var m_c1 = new Mock<IAtom>(); var c1 = m_c1.Object;

@@ -71,6 +71,5 @@ namespace NCDK.NInChI
             Inchi = inchi;
             Options = NInchiWrapper.CheckOptions(opts);
         }
-
     }
 }

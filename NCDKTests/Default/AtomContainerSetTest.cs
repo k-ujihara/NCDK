@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the MoleculeSet class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.MoleculeSet
     /// </summary>
+    /// <seealso cref="AtomContainerSet{T}"/>
+    // @cdk.module test-data
     [TestClass()]
     public class AtomContainerSetTest
         :  AbstractAtomContainerSetTest<IAtomContainer>
@@ -49,6 +47,5 @@ namespace NCDK.Default
             Assert.IsNotNull(som);
             Assert.AreEqual(0, som.Count);
         }
-
     }
 }

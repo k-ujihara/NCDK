@@ -23,19 +23,15 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Hash.Stereo;
 using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
      [TestClass()]
     public class BasicPermutationParityTest
     {
-
         BasicPermutationParity permutationParity = new BasicPermutationParity(new int[] { 0, 1, 2, 3 });
 
         [TestMethod()]

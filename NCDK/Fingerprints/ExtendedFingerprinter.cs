@@ -26,7 +26,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates an extended fingerprint for a given <see cref="IAtomContainer"/>, that

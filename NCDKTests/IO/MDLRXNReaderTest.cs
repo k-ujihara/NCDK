@@ -31,8 +31,8 @@ namespace NCDK.IO
     /// <summary>
     /// TestCase for the reading MDL RXN files using one test file.
     /// </summary>
+    /// <seealso cref="MDLRXNReader"/>
     // @cdk.module test-io
-    // @see org.openscience.cdk.io.MDLRXNReader
     [TestClass()]
     public class MDLRXNReaderTest : SimpleChemObjectReaderTest
     {

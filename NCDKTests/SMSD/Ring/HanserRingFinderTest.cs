@@ -49,7 +49,7 @@ namespace NCDK.SMSD.Ring
 
         private HanserRingFinder finder = new HanserRingFinder();
 
-        [TestMethod()] // fixed CDK bug
+        [TestMethod()]
         public void TestItShoudFindOneRingInBenzene()
         {
             IAtomContainer benzene = Molecules.CreateBenzene();
@@ -58,7 +58,7 @@ namespace NCDK.SMSD.Ring
             Assert.AreEqual(1, rings.Count());
         }
 
-        [TestMethod()] // fixed CDK bug
+        [TestMethod()]
         public void TestItShouldFindThreeRingsInNaphthalene()
         {
             IAtomContainer naphthalene = Molecules.CreateNaphthalene();
@@ -67,7 +67,7 @@ namespace NCDK.SMSD.Ring
             Assert.AreEqual(3, rings.Count());
         }
 
-        [TestMethod()] // fixed CDK bug
+        [TestMethod()] 
         public void TestItShouldFind28RingsInCubane()
         {
             IAtomContainer cubane = Molecules.CreateCubane();

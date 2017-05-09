@@ -2,7 +2,7 @@
 
 namespace NCDK.Renderers
 {
-    internal static class WPFUtil
+    public static class WPFUtil
     {
         public static double GetCenterX(this Rect rect)
         {

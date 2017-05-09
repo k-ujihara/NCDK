@@ -28,20 +28,16 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the reading INChI files using one test file.
-    ///
-    // @cdk.module test-extra
-    ///
-    // @see org.openscience.cdk.io.INChIReader
-    // @cdk.require java1.4+
     /// </summary>
+    /// <seealso cref="InChIReader"/>
+    // @cdk.module test-extra
     [TestClass()]
     public class InChIReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.InChI.guanine.inchi.xml";
         static readonly InChIReader simpleReader = new InChIReader();
         protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
-
-
+        
         [TestMethod()]
         public void TestAccepts()
         {

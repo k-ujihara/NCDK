@@ -6,7 +6,6 @@ using NCDK.Templates;
 using System.Collections.Generic;
 using static NCDK.Templates.TestMoleculeFactory;
 
-
 namespace NCDK.Graphs
 {
     /// <summary>

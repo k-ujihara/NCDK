@@ -27,10 +27,8 @@ using System.IO;
 
 namespace NCDK.IO.Iterator
 {
-    /// <summary>
     // @cdk.module test-io
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class IteratingPCSubstancesXMLReaderTest : CDKTestCase
     {
         [TestMethod()]

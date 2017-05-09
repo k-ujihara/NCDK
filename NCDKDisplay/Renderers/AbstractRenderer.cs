@@ -152,15 +152,15 @@ namespace NCDK.Renderers
         /// <returns>the equivalent point in model space, or (0,0) if there is an error</returns>
         public virtual Point ToModelCoordinates(double screenX, double screenY)
         {
-            try
-            {
-                Matrix inv = transform.Value;
+            Matrix inv = transform.Value;
+            if (inv.HasInverse)
+            { 
                 inv.Invert();
                 var src = new Point(screenX, screenY);
                 var dest = inv.Transform(src);
                 return dest;
             }
-            catch (Exception)
+            else
             {
                 return new Point(0, 0);
             }

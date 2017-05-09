@@ -5,7 +5,7 @@
  *
  *  The content of this file is released as domain.
  */
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// SMARTS based substructure fingerprint based on <emph>Chemical substructures

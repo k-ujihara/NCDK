@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Element class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.Element
     /// </summary>
+    /// <seealso cref="Element"/>
+    // @cdk.module test-data
     [TestClass()]
     public class ElementTest : AbstractElementTest
     {

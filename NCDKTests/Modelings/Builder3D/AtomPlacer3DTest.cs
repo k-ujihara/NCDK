@@ -18,7 +18,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
@@ -29,26 +28,22 @@ using System.IO;
 using System.Linq;
 using NCDK.Numerics;
 
-
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Tests for AtomPlacer3D
-    ///
+    /// </summary>
     // @cdk.module test-builder3d
     // @cdk.githash
-    /// </summary>
     [TestClass()]
     public class AtomPlacer3DTest : CDKTestCase
     {
-
         bool standAlone = false;
 
         /// <summary>
         ///  Sets the standAlone attribute
-        ///
-        /// <param name="standAlone">The new standAlone value</param>
         /// </summary>
+        /// <param name="standAlone">The new standAlone value</param>
         public void SetStandAlone(bool standAlone)
         {
             this.standAlone = standAlone;
@@ -57,9 +52,8 @@ namespace NCDK.Modeling.Builder3D
         /// <summary>
         /// Create a test molecule (alpha-pinene).
         /// This code has been inlined from MoleculeFactory.java
-        ///
-        /// <returns>the created test molecule</returns>
         /// </summary>
+        /// <returns>the created test molecule</returns>
         private IAtomContainer MakeAlphaPinene()
         {
             IAtomContainer mol = new Silent.AtomContainer();
@@ -158,9 +152,8 @@ namespace NCDK.Modeling.Builder3D
         }
 
         /// <summary>
-        /// Demonstrate bug where AtomPlacer3D().NumberOfUnplacedHeavyAtoms() counts
+        /// Demonstrate bug where <see cref="AtomPlacer3D.NumberOfUnplacedHeavyAtoms(IAtomContainer)"/> counts
         /// explicit hydrogens as heavy atoms.
-        ///
         /// </summary>
         [TestMethod()]
         public virtual void TestNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens()
@@ -254,7 +247,6 @@ namespace NCDK.Modeling.Builder3D
         [TestMethod()]
         public void TestIsPlacedHeavyAtom()
         {
-
             IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
             IAtom carbon = ac.Atoms[0];
             IAtom hydrogen = ac.Atoms[1];
@@ -277,7 +269,6 @@ namespace NCDK.Modeling.Builder3D
         [TestMethod()]
         public void TestIsAliphaticHeavyAtom()
         {
-
             IAtomContainer ac = MakeMethaneWithExplicitHydrogens();
             IAtom carbon = ac.Atoms[0];
             IAtom hydrogen = ac.Atoms[1];

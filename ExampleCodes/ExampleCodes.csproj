@@ -52,11 +52,11 @@
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\Elements_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />
-    <Compile Include="Fingerprint\FingerprinterTool_Example.cs" />
-    <Compile Include="Fingerprint\ShortestPathFingerprinter_Example.cs" />
-    <Compile Include="Fingerprint\PubchemFingerprinter_Example.cs" />
-    <Compile Include="Fingerprint\HybridizationFingerprinter_Example.cs" />
-    <Compile Include="Fingerprint\Fingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\FingerprinterTool_Example.cs" />
+    <Compile Include="Fingerprints\ShortestPathFingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\PubchemFingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\HybridizationFingerprinter_Example.cs" />
+    <Compile Include="Fingerprints\Fingerprinter_Example.cs" />
     <Compile Include="ForceField\MMFF\MmffAtomTypeMatcher_Example.cs" />
     <Compile Include="ForceField\MMFF\Mmff_Example.cs" />
     <Compile Include="Formula\MolecularFormulaGenerator_Example.cs" />
@@ -103,7 +103,7 @@
     <Compile Include="Isomorphisms\VentoFoggia_Example.cs" />
     <Compile Include="Layout\HydrogenPlacer_Example.cs" />
     <Compile Include="Layout\StructureDiagramGenerator_Example.cs" />
-    <Compile Include="Modeling\Builder3D\ModelBuilder3D_Example.cs" />
+    <Compile Include="Modelings\Builder3D\ModelBuilder3D_Example.cs" />
     <Compile Include="Pharmacophore\PharmacophoreMatcher_Example.cs" />
     <Compile Include="Pharmacophore\PharmacophoreUtils_Example.cs" />
     <Compile Include="Program.cs" />
@@ -112,7 +112,7 @@
     <Compile Include="QSAR\DescriptorEngine_Example.cs" />
     <Compile Include="RingSearches\AllRingsFinder_Example.cs" />
     <Compile Include="RingSearches\RingSearch_Example.cs" />
-    <Compile Include="Signature\MoleculeSignature_Example.cs" />
+    <Compile Include="Signatures\MoleculeSignature_Example.cs" />
     <Compile Include="Similarity\Tanimoto_Example.cs" />
     <Compile Include="Smiles\CDKToBeam_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParser_Example.cs" />

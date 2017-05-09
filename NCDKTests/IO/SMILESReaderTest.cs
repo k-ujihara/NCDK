@@ -30,11 +30,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the reading MDL mol files using one test file.
-    ///
-    // @cdk.module test-smiles
-    ///
-    // @see org.openscience.cdk.io.MDLReader
     /// </summary>
+    /// <seealso cref="MDLReader"/>
+    // @cdk.module test-smiles
     [TestClass()]
     public class SMILESReaderTest : SimpleChemObjectReaderTest
     {

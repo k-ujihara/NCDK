@@ -21,13 +21,10 @@ using NCDK.Default;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AtomContainerBondPermutorTest : CDKTestCase
     {
-
         public AtomContainerBondPermutorTest()
                 : base()
         { }

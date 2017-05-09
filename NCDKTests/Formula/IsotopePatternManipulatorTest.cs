@@ -4,9 +4,8 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Class testing the IsotopePatternManipulator class.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public class IsotopePatternManipulatorTest : CDKTestCase
     {
@@ -42,11 +41,6 @@ namespace NCDK.Formula
 
         }
 
-        /// <summary>
-        /// Junit test
-        ///
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestSortByIntensity_IsotopePattern()
         {
@@ -74,11 +68,6 @@ namespace NCDK.Formula
             Assert.AreEqual(1, isoNorma.Charge, 0.00001);
         }
 
-        /// <summary>
-        /// Junit test
-        ///
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestSortAndNormalizedByIntensity_IsotopePattern()
         {
@@ -106,11 +95,6 @@ namespace NCDK.Formula
             Assert.AreEqual(1, isoNorma.Charge, 0.001);
         }
 
-        /// <summary>
-        /// Junit test
-        ///
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestSortByMass_IsotopePattern()
         {

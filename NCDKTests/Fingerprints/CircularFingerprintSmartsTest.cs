@@ -24,9 +24,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.SMARTS;
 using NCDK.Smiles;
 using System.Collections.Generic;
-using static NCDK.Fingerprint.CircularFingerprinter;
+using static NCDK.Fingerprints.CircularFingerprinter;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @cdk.module test-standard 
     [TestClass()]

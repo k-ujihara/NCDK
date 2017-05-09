@@ -30,14 +30,11 @@ using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class GeometryEncoderTest
     {
-
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_Empty()
@@ -88,13 +85,11 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15543053, 1 }, result));
-
         }
 
         [TestMethod()]
         public void TestEncode_Clockwise_Alt()
         {
-
             var m_permutation = new Mock<PermutationParity>(); var permutation = m_permutation.Object;
             var m_geometric = new Mock<GeometricParity>(); var geometric = m_geometric.Object;
 
@@ -112,13 +107,11 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15543053, 1 }, result));
-
         }
 
         [TestMethod()]
         public void TestEncode_Clockwise_Two()
         {
-
             var m_permutation = new Mock<PermutationParity>(); var permutation = m_permutation.Object;
             var m_geometric = new Mock<GeometricParity>(); var geometric = m_geometric.Object;
 
@@ -136,13 +129,11 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15543053, 1, 15543053, 1, 1 }, result));
-
         }
 
         [TestMethod()]
         public void TestEncode_Anticlockwise()
         {
-
             var m_permutation = new Mock<PermutationParity>(); var permutation = m_permutation.Object;
             var m_geometric = new Mock<GeometricParity>(); var geometric = m_geometric.Object;
 
@@ -160,13 +151,11 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15521419, 1 }, result));
-
         }
 
         [TestMethod()]
         public void TestEncode_Anticlockwise_Alt()
         {
-
             var m_permutation = new Mock<PermutationParity>(); var permutation = m_permutation.Object;
             var m_geometric = new Mock<GeometricParity>(); var geometric = m_geometric.Object;
 
@@ -184,13 +173,11 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15521419, 1 }, result));
-
         }
 
         [TestMethod()]
         public void TestEncode_Anticlockwise_Two()
         {
-
             var m_permutation = new Mock<PermutationParity>(); var permutation = m_permutation.Object;
             var m_geometric = new Mock<GeometricParity>(); var geometric = m_geometric.Object;
 
@@ -208,7 +195,6 @@ namespace NCDK.Hash.Stereo
 
             // check only the value at index '1' was changed
             Assert.IsTrue(Compares.AreDeepEqual(new long[] { 1, 15521419, 1, 15521419, 1, 1 }, result));
-
         }
 
         [TestMethod()]

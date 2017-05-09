@@ -24,13 +24,11 @@ namespace NCDK.Geometries.Volume
 {
     /// <summary>
     /// Values in the paper are inaccurate. The spreadsheet from the SI is better.
-    ///
-    // @cdk.module test-standard
     /// </summary>
+    // @cdk.module test-standard
     [TestClass()]
     public class VABCVolumeTest
     {
-
         private static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
 
         [TestMethod()]

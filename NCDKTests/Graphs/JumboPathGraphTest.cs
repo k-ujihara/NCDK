@@ -206,7 +206,7 @@ namespace NCDK.Graphs
             Assert.IsTrue(e.Disjoint(f));
             Assert.IsTrue(f.Disjoint(e));
             Assert.IsFalse(e.Disjoint(e));
-            Assert.IsFalse(f.Disjoint(f));  // fixed CDK's bug
+            Assert.IsFalse(f.Disjoint(f));
         }
 
         [TestMethod()]

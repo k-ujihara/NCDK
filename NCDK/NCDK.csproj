@@ -283,6 +283,7 @@
       <LastGenOutput>CMLElementDefines.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
+    <None Include="Numerics\LICENSE.txt" />
     <Content Include="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
@@ -317,7 +318,7 @@
     <Compile Include="Graphs\Invariant\MatrixNotInvertibleException.cs" />
     <Compile Include="Graphs\Invariant\GIMatrix.cs" />
     <Compile Include="Graphs\Invariant\HuLuIndexTool.cs" />
-    <Compile Include="Indices\CASNumber.cs" />
+    <Compile Include="Indexes\CASNumber.cs" />
     <Content Include="Numerics\ConstantHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConstantHelper1.cs</LastGenOutput>
@@ -423,6 +424,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemObject.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Xml\XContentHandler.cs" />
     <Compile Include="Validate\AbstractValidator.cs" />
     <Compile Include="Validate\BasicValidator.cs" />
     <Compile Include="Validate\CDKValidator.cs" />
@@ -767,7 +769,7 @@
       <DependentUpon>Substance.tt</DependentUpon>
     </Compile>
     <Compile Include="ServiceLoader.cs" />
-    <Compile Include="Util\Xml\XReader.cs" />
+    <Compile Include="Utils\Xml\XReader.cs" />
     <Content Include="BondOrder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BondOrder1.cs</LastGenOutput>
@@ -1076,9 +1078,9 @@
     <Compile Include="Graphs\SpanningTree.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fingerprint\IBitFingerprint.cs" />
-    <Compile Include="Fingerprint\ICountFingerprint.cs" />
-    <Compile Include="Fingerprint\IFingerprinter.cs" />
+    <Compile Include="Fingerprints\IBitFingerprint.cs" />
+    <Compile Include="Fingerprints\ICountFingerprint.cs" />
+    <Compile Include="Fingerprints\IFingerprinter.cs" />
     <Compile Include="AtomTypes\CDKAtomTypeMatcher.cs" />
     <Compile Include="AtomTypes\IAtomTypeMatcher.cs" />
     <Compile Include="ChemObjectChangeEventArgs.cs" />
@@ -1090,7 +1092,7 @@
     <Compile Include="Aromaticities\PiBondModel.cs" />
     <Compile Include="AtomTypes\EStateAtomTypeMatcher.cs" />
     <Compile Include="AtomTypes\IAtomTypeGuesser.cs" />
-    <Compile Include="AtomTypes\Mapper\AtomTypeMapper.cs" />
+    <Compile Include="AtomTypes\Mappers\AtomTypeMapper.cs" />
     <Compile Include="AtomTypes\StructGenAtomTypeGuesser.cs" />
     <Compile Include="AtomTypes\StructGenMatcher.cs" />
     <Compile Include="AtomTypes\SybylAtomTypeMatcher.cs" />
@@ -1124,34 +1126,34 @@
     <Compile Include="Events\ICDKSelectionChangeListener.cs" />
     <Compile Include="InvalidSmilesException.cs" />
     <Compile Include="UnsupportedChemObjectException.cs" />
-    <Compile Include="Fingerprint\BitSetFingerprint.cs" />
-    <Compile Include="Fingerprint\CircularFingerprinter.cs" />
-    <EmbeddedResource Include="Fingerprint\Data\maccs.txt" />
-    <EmbeddedResource Include="Fingerprint\Data\SMARTS_InteLigand.txt" />
-    <Compile Include="Fingerprint\EStateFingerprinter.cs" />
-    <Compile Include="Fingerprint\ExtendedFingerprinter.cs" />
-    <Compile Include="Fingerprint\Fingerprinter.cs" />
-    <Compile Include="Fingerprint\FingerprinterTool.cs" />
-    <Compile Include="Fingerprint\GraphOnlyFingerprinter.cs" />
-    <Compile Include="Fingerprint\HybridizationFingerprinter.cs" />
-    <Compile Include="Fingerprint\IntArrayCountFingerprint.cs" />
-    <Compile Include="Fingerprint\IntArrayFingerprint.cs" />
-    <Compile Include="Fingerprint\KlekotaRothFingerprinter.cs" />
-    <Compile Include="Fingerprint\LingoFingerprinter.cs" />
-    <Compile Include="Fingerprint\MACCSFingerprinter.cs" />
-    <Compile Include="Fingerprint\Model\Bayesian.cs" />
-    <Compile Include="Fingerprint\PubchemFingerprinter.cs" />
-    <Compile Include="Fingerprint\RandomNumber.cs" />
-    <Compile Include="Fingerprint\ShortestPathFingerprinter.cs" />
-    <Compile Include="Fingerprint\ShortestPathWalker.cs" />
-    <Compile Include="Fingerprint\SimpleAtomCanonicalizer.cs" />
-    <Compile Include="Fingerprint\SimpleAtomComparator.cs" />
-    <Compile Include="Fingerprint\StandardSubstructureSets.cs" />
-    <Compile Include="Fingerprint\SubstructureFingerprinter.cs" />
+    <Compile Include="Fingerprints\BitSetFingerprint.cs" />
+    <Compile Include="Fingerprints\CircularFingerprinter.cs" />
+    <EmbeddedResource Include="Fingerprints\Data\maccs.txt" />
+    <EmbeddedResource Include="Fingerprints\Data\SMARTS_InteLigand.txt" />
+    <Compile Include="Fingerprints\EStateFingerprinter.cs" />
+    <Compile Include="Fingerprints\ExtendedFingerprinter.cs" />
+    <Compile Include="Fingerprints\Fingerprinter.cs" />
+    <Compile Include="Fingerprints\FingerprinterTool.cs" />
+    <Compile Include="Fingerprints\GraphOnlyFingerprinter.cs" />
+    <Compile Include="Fingerprints\HybridizationFingerprinter.cs" />
+    <Compile Include="Fingerprints\IntArrayCountFingerprint.cs" />
+    <Compile Include="Fingerprints\IntArrayFingerprint.cs" />
+    <Compile Include="Fingerprints\KlekotaRothFingerprinter.cs" />
+    <Compile Include="Fingerprints\LingoFingerprinter.cs" />
+    <Compile Include="Fingerprints\MACCSFingerprinter.cs" />
+    <Compile Include="Fingerprints\Model\Bayesian.cs" />
+    <Compile Include="Fingerprints\PubchemFingerprinter.cs" />
+    <Compile Include="Fingerprints\RandomNumber.cs" />
+    <Compile Include="Fingerprints\ShortestPathFingerprinter.cs" />
+    <Compile Include="Fingerprints\ShortestPathWalker.cs" />
+    <Compile Include="Fingerprints\SimpleAtomCanonicalizer.cs" />
+    <Compile Include="Fingerprints\SimpleAtomComparator.cs" />
+    <Compile Include="Fingerprints\StandardSubstructureSets.cs" />
+    <Compile Include="Fingerprints\SubstructureFingerprinter.cs" />
     <Compile Include="Formula\AdductFormula.cs" />
     <Compile Include="Formula\MolecularFormula.cs" />
     <Compile Include="Formula\MolecularFormulaSet.cs" />
-    <Compile Include="Fingerprint\SignatureFingerprinter.cs" />
+    <Compile Include="Fingerprints\SignatureFingerprinter.cs" />
     <Compile Include="ForceField\MMFF\Mmff.cs" />
     <Compile Include="ForceField\MMFF\MmffAromaticTypeMapping.cs" />
     <Compile Include="ForceField\MMFF\MmffAtomTypeMatcher.cs" />
@@ -1172,10 +1174,10 @@
     <Compile Include="Formula\Rules\NitrogenRule.cs" />
     <Compile Include="Formula\Rules\RDBERule.cs" />
     <Compile Include="Formula\Rules\ToleranceRangeRule.cs" />
-    <Compile Include="Fragment\ExhaustiveFragmenter.cs" />
-    <Compile Include="Fragment\FragmentUtils.cs" />
-    <Compile Include="Fragment\IFragmenter.cs" />
-    <Compile Include="Fragment\MurckoFragmenter.cs" />
+    <Compile Include="Fragments\ExhaustiveFragmenter.cs" />
+    <Compile Include="Fragments\FragmentUtils.cs" />
+    <Compile Include="Fragments\IFragmenter.cs" />
+    <Compile Include="Fragments\MurckoFragmenter.cs" />
     <Compile Include="Geometries\BondTools.cs" />
     <Compile Include="Geometries\CrystalGeometryTools.cs" />
     <Compile Include="Geometries\GeometryUtil.cs" />
@@ -1568,18 +1570,18 @@
     <Compile Include="Maths\MathTools.cs" />
     <Compile Include="Maths\Primes.cs" />
     <Compile Include="Maths\RandomNumbersTool.cs" />
-    <Compile Include="Modeling\Builder3D\AtomPlacer3D.cs" />
-    <Compile Include="Modeling\Builder3D\AtomTetrahedralLigandPlacer3D.cs" />
-    <Compile Include="Modeling\Builder3D\ForceFieldConfigurator.cs" />
-    <Compile Include="Modeling\Builder3D\MM2BasedAtomTypePattern.cs" />
-    <Compile Include="Modeling\Builder3D\MM2BasedParameterSetReader.cs" />
-    <Compile Include="Modeling\Builder3D\MMFF94BasedAtomTypePattern.cs" />
-    <Compile Include="Modeling\Builder3D\MMFF94BasedParameterSetReader.cs" />
-    <Compile Include="Modeling\Builder3D\MMFF94ParametersCall.cs" />
-    <Compile Include="Modeling\Builder3D\ModelBuilder3D.cs" />
-    <Compile Include="Modeling\Builder3D\TemplateExtractor.cs" />
-    <Compile Include="Modeling\Builder3D\TemplateHandler3D.cs" />
-    <Compile Include="Normalize\Normalizer.cs" />
+    <Compile Include="Modelings\Builder3D\AtomPlacer3D.cs" />
+    <Compile Include="Modelings\Builder3D\AtomTetrahedralLigandPlacer3D.cs" />
+    <Compile Include="Modelings\Builder3D\ForceFieldConfigurator.cs" />
+    <Compile Include="Modelings\Builder3D\MM2BasedAtomTypePattern.cs" />
+    <Compile Include="Modelings\Builder3D\MM2BasedParameterSetReader.cs" />
+    <Compile Include="Modelings\Builder3D\MMFF94BasedAtomTypePattern.cs" />
+    <Compile Include="Modelings\Builder3D\MMFF94BasedParameterSetReader.cs" />
+    <Compile Include="Modelings\Builder3D\MMFF94ParametersCall.cs" />
+    <Compile Include="Modelings\Builder3D\ModelBuilder3D.cs" />
+    <Compile Include="Modelings\Builder3D\TemplateExtractor.cs" />
+    <Compile Include="Modelings\Builder3D\TemplateHandler3D.cs" />
+    <Compile Include="Normalizers\Normalizer.cs" />
     <Content Include="TT\PDBAtom.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBAtom1.cs</LastGenOutput>
@@ -1596,7 +1598,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBStructure1.cs</LastGenOutput>
     </Content>
-    <Compile Include="Normalize\SMSDNormalizer.cs" />
+    <Compile Include="Normalizers\SMSDNormalizer.cs" />
     <Compile Include="Pharmacophore\PharmacophoreAngleBond.cs" />
     <Compile Include="Pharmacophore\PharmacophoreAtom.cs" />
     <Compile Include="Pharmacophore\PharmacophoreBond.cs" />
@@ -1768,11 +1770,11 @@
     <Compile Include="QSAR\IDescriptor.cs" />
     <Compile Include="QSAR\IMolecularDescriptor.cs" />
     <Compile Include="QSAR\Descriptors\Proteins\TaeAminoAcidDescriptor.cs" />
-    <Compile Include="Signature\AtomSignature.cs" />
-    <Compile Include="Signature\MoleculeFromSignatureBuilder.cs" />
-    <Compile Include="Signature\MoleculeSignature.cs" />
-    <Compile Include="Signature\Orbit.cs" />
-    <Compile Include="Signature\SignatureQuotientGraph.cs" />
+    <Compile Include="Signatures\AtomSignature.cs" />
+    <Compile Include="Signatures\MoleculeFromSignatureBuilder.cs" />
+    <Compile Include="Signatures\MoleculeSignature.cs" />
+    <Compile Include="Signatures\Orbit.cs" />
+    <Compile Include="Signatures\SignatureQuotientGraph.cs" />
     <Compile Include="Similarity\DistanceMoment.cs" />
     <Compile Include="Similarity\LingoSimilarity.cs" />
     <Compile Include="Similarity\Tanimoto.cs" />
@@ -1945,16 +1947,16 @@
     <EmbeddedResource Include="ForceField\MMFF\MMFFPBCI.PAR" />
     <EmbeddedResource Include="ForceField\MMFF\MMFFPROP.PAR" />
     <EmbeddedResource Include="ForceField\MMFF\MMFFSYMB.sma" />
-    <EmbeddedResource Include="Modeling\ForceField\Data\mm2.prm" />
-    <EmbeddedResource Include="Modeling\ForceField\Data\mmff94.prm" />
-    <EmbeddedResource Include="Modeling\ForceField\Data\mmffdfsb.par" />
-    <EmbeddedResource Include="Modeling\ForceField\Data\mmffvdw.prm" />
+    <EmbeddedResource Include="Modelings\ForceField\Data\mm2.prm" />
+    <EmbeddedResource Include="Modelings\ForceField\Data\mmff94.prm" />
+    <EmbeddedResource Include="Modelings\ForceField\Data\mmffdfsb.par" />
+    <EmbeddedResource Include="Modelings\ForceField\Data\mmffvdw.prm" />
     <None Include="Beam\LICENSE" />
     <None Include="Beam\README.md" />
     <None Include="FaulonSignatures\README" />
     <None Include="ForceField\MMFF\README" />
-    <EmbeddedResource Include="Modeling\Builder3D\Data\ringTemplateFingerprints.txt.gz" />
-    <EmbeddedResource Include="Modeling\Builder3D\Data\ringTemplateStructures.sdf.gz" />
+    <EmbeddedResource Include="Modelings\Builder3D\Data\ringTemplateFingerprints.txt.gz" />
+    <EmbeddedResource Include="Modelings\Builder3D\Data\ringTemplateStructures.sdf.gz" />
     <EmbeddedResource Include="Templates\Data\list_aminoacids.cml" />
     <EmbeddedResource Include="QSAR\IAtomPairDescriptor" />
     <EmbeddedResource Include="QSAR\IMolecularDescriptor" />

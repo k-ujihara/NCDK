@@ -24,13 +24,24 @@ using NCDK.Common.Primitives;
 using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.Graphs.InChI
 {
     public class JniInChIInputAdapter : NInchiInput
     {
-        public const string FIVE_SECOND_TIMEOUT = "-W5";
+        /// <summary>
+        /// Flag indicating windows or linux.
+        /// </summary>
+        private static readonly bool IS_WINDOWS = Environment.OSVersion.Platform < PlatformID.Unix;
+
+        /// <summary>
+        /// Switch character for passing options. / in windows, - on other systems.
+        /// </summary>
+        private static readonly string FLAG_CHAR = IS_WINDOWS ? "/" : "-";
+
+        public static readonly string FIVE_SECOND_TIMEOUT = FLAG_CHAR + "W5";
 
         public JniInChIInputAdapter(string options)
         {
@@ -68,85 +79,62 @@ namespace NCDK.Graphs.InChI
 
             bool hasUserSpecifiedTimeout = false;
 
-            var tok = Strings.Tokenize(ops).GetEnumerator();
-            while (tok.MoveNext())
-            {
-                string op = tok.Current;
-                if (op.StartsWith("-") || op.StartsWith("/"))
+            var tok = Strings.Tokenize(ops);
+            string options = string.Join(" ", tok.Select(n =>
                 {
-                    op = op.Substring(1);
-                }
+                    string op = n;
+                    if (op.StartsWith("-") || op.StartsWith("/"))
+                    {
+                        op = op.Substring(1);
+                    }
 
-                INCHI_OPTION option = INCHI_OPTION.ValueOfIgnoreCase(op);
-                if (option != null)
-                {
-                    sbOptions.Append('-').Append(option.Name);
-                    if (tok.MoveNext())
+                    INCHI_OPTION option = INCHI_OPTION.ValueOfIgnoreCase(op);
+                    if (option != null)
                     {
-                        sbOptions.Append(" ");
+                        return FLAG_CHAR + option.Name;
                     }
-                }
-                else if (IsTimeoutOptions(op))
-                {
-                    sbOptions.Append('-').Append(op);
-                    hasUserSpecifiedTimeout = true;
-                    if (tok.MoveNext())
+                    else if (IsTimeoutOptions(op))
                     {
-                        sbOptions.Append(" ");
+                        hasUserSpecifiedTimeout = true;
+                        return FLAG_CHAR + op;
                     }
-                }
-                // 1,5 tautomer option
-                else if ("15T".Equals(op))
-                {
-                    sbOptions.Append('-').Append("15T");
-                    if (tok.MoveNext())
+                    // 1,5 tautomer option
+                    else if ("15T".Equals(op))
                     {
-                        sbOptions.Append(" ");
+                        return FLAG_CHAR + "15T";
                     }
-                }
-                // keto-enol tautomer option
-                else if ("KET".Equals(op))
-                {
-                    sbOptions.Append('-').Append("KET");
-                    if (tok.MoveNext())
+                    // keto-enol tautomer option
+                    else if ("KET".Equals(op))
                     {
-                        sbOptions.Append(" ");
+                        return FLAG_CHAR + "KET";
                     }
-                }
-                else
-                {
-                    throw new NInchiException("Unrecognised InChI option");
-                }
-            }
+                    else
+                    {
+                        throw new NInchiException("Unrecognised InChI option");
+                    }
+                }));
 
             if (!hasUserSpecifiedTimeout)
             {
-                if (sbOptions.Length > 0)
-                    sbOptions.Append(' ');
-                sbOptions.Append(FIVE_SECOND_TIMEOUT);
+                if (options.Length > 0)
+                    options += " ";
+                options += FIVE_SECOND_TIMEOUT;
             }
-
-            return sbOptions.ToString();
+            return options;
         }
 
         private static string CheckOptions(IList<INCHI_OPTION> ops)
         {
             if (ops == null)
             {
-                throw new ArgumentException("Null options");
+                throw new ArgumentNullException(nameof(ops), "Null options");
             }
-            StringBuilder sbOptions = new StringBuilder();
+            string options = string.Join(" ", ops.Select(op => FLAG_CHAR + op.Name));
+            if (options.Length > 0)
+                options += " ";
+            options += FIVE_SECOND_TIMEOUT;
 
-            foreach (INCHI_OPTION op in ops)
-            {
-                sbOptions.Append('-').Append(op.Name).Append(" ");
-            }
-
-            if (sbOptions.Length > 0)
-                sbOptions.Append(' ');
-            sbOptions.Append(FIVE_SECOND_TIMEOUT);
-
-            return sbOptions.ToString();
+            return options;
         }
     }
 }

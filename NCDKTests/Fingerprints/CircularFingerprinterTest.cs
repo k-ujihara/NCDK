@@ -29,7 +29,6 @@ using NCDK.Common.Collections;
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-
 using NCDK.IO;
 using NCDK.Smiles;
 using System;
@@ -39,12 +38,9 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
-
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class CircularFingerprinterTest : CDKTestCase
     {
@@ -309,9 +305,7 @@ namespace NCDK.Fingerprint
             Assert.IsNotNull(circ.GetBitFingerprint(pyrazole));
         }
 
-        /// <summary>
         // @cdk.bug 1357
-        /// </summary>
         [TestMethod()]
         public void PartialCoordinatesDontCauseNPE()
         {

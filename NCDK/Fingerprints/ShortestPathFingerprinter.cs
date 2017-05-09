@@ -32,7 +32,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are one-dimensional bit arrays, where bits
@@ -43,7 +43,7 @@ namespace NCDK.Fingerprint
     /// <example>
     /// A fingerprint is generated for an AtomContainer with this code:
     /// It is recommended to use atomtyped container before generating the fingerprints. 
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.ShortestPathFingerprinter_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprints.ShortestPathFingerprinter_Example.cs"]/*' />
     ///</example>
     ///<remarks>
     /// <para>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account

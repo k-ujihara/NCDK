@@ -102,7 +102,7 @@
                 IIsotope major = factory.GetMajorIsotope("H");
 </code>
   </Codes>
-  <Codes id="NCDK.Fingerprint.FingerprinterTool_Example.cs+IsSubset">
+  <Codes id="NCDK.Fingerprints.FingerprinterTool_Example.cs+IsSubset">
     <code>                var mol = TestMoleculeFactory.MakeIndole();
                 var fingerprinter = new Fingerprinter();
                 var bs = fingerprinter.GetBitFingerprint(mol);
@@ -114,28 +114,28 @@
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Fingerprint.Fingerprinter_Example.cs">
+  <Codes id="NCDK.Fingerprints.Fingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 var fingerprinter = new Fingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
                 Console.WriteLine(fingerprint.Count); // returns 1024 by default
 </code>
   </Codes>
-  <Codes id="NCDK.Fingerprint.HybridizationFingerprinter_Example.cs">
+  <Codes id="NCDK.Fingerprints.HybridizationFingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 var fingerprinter = new HybridizationFingerprinter();
                 var fingerprint = fingerprinter.GetBitFingerprint(molecule);
                 Console.WriteLine(fingerprint.Count); // returns 1024 by default
 </code>
   </Codes>
-  <Codes id="NCDK.Fingerprint.PubchemFingerprinter_Example.cs">
+  <Codes id="NCDK.Fingerprints.PubchemFingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 IFingerprinter fingerprinter = new PubchemFingerprinter(Silent.ChemObjectBuilder.Instance);
                 IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(molecule);
                 Console.WriteLine(fingerprint.Count); // returns 881
 </code>
   </Codes>
-  <Codes id="NCDK.Fingerprint.ShortestPathFingerprinter_Example.cs">
+  <Codes id="NCDK.Fingerprints.ShortestPathFingerprinter_Example.cs">
     <code>                var molecule = new AtomContainer();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
                 var fingerprinter = new ShortestPathFingerprinter();
@@ -1385,7 +1385,7 @@ namespace NCDK.Graphs
             IAtomContainer layedOutMol = sdg.Molecule;
 </code>
   </Codes>
-  <Codes id="NCDK.Modeling.Builder3D.ModelBuilder3D_Example.cs">
+  <Codes id="NCDK.Modelings.Builder3D.ModelBuilder3D_Example.cs">
     <code>            ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
             IAtomContainer molecule = mb3d.Generate3DCoordinates(mol, false);
 </code>
@@ -1562,7 +1562,7 @@ namespace NCDK.Graphs
                 Console.WriteLine(fused[2].Length); // e.g. 7 vertices in the third system
 </code>
   </Codes>
-  <Codes id="NCDK.Signature.MoleculeSignature_Example.cs">
+  <Codes id="NCDK.Signatures.MoleculeSignature_Example.cs">
     <code>             IAtomContainer diamantane = TestMoleculeFactory.MakeBenzene();
              MoleculeSignature moleculeSignature = new MoleculeSignature(diamantane);
              string canonicalSignature = moleculeSignature.ToCanonicalString();

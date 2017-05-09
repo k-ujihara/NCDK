@@ -33,12 +33,10 @@ namespace NCDK.IO
     /// <summary>
     /// TestCase for the reading MDL mol files using one test file.
     /// A test case for SDF files is available as separate Class.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.MDLReader
-    // @see org.openscience.cdk.io.SDFReaderTest
     /// </summary>
+    /// <seealso cref="MDLReader"/>
+    /// <seealso cref="SDFReaderTest"/>
+    // @cdk.module test-io
     [TestClass()]
     public class MDLReaderTest : SimpleChemObjectReaderTest
     {
@@ -91,9 +89,7 @@ namespace NCDK.IO
             Assert.AreEqual(9, m.Bonds.Count);
         }
 
-        /// <summary>
         // @cdk.bug 1542467
-        /// </summary>
         [TestMethod()]
         public void TestBug1542467()
         {
@@ -219,9 +215,7 @@ namespace NCDK.IO
             Assert.IsNull(molOne.Atoms[0].Point2D);
         }
 
-        /// <summary>
         // @cdk.bug 3485634
-        /// </summary>
         [TestMethod()]
         public void TestMissingAtomProperties()
         {
@@ -233,9 +227,7 @@ namespace NCDK.IO
             Assert.AreEqual(9, molecule.Atoms.Count);
         }
 
-        /// <summary>
         // @cdk.bug 1356
-        /// </summary>
         [TestMethod()]
         public void Properties()
         {

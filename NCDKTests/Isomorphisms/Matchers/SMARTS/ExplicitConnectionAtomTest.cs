@@ -27,10 +27,8 @@ using Moq;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public class ExplicitConnectionAtomTest
     {

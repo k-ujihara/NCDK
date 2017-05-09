@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are
@@ -51,7 +51,7 @@ namespace NCDK.Fingerprint
     /// </summary>
     /// <example>
     /// A fingerprint is generated for an <see cref="IAtomContainer"/> with this code: 
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.Fingerprinter_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprints.Fingerprinter_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// <note type="warning">
@@ -206,7 +206,6 @@ namespace NCDK.Fingerprint
                     else
                     {
                         int atnum = PeriodicTable.GetAtomicNumber(x.Symbol);
-                        // fixed CDK bug
                         if (atnum != 0)
                             sb.Append(ConvertSymbol(x.Symbol));
                         else

@@ -29,14 +29,11 @@ using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 using System.Linq;
 
-
 namespace NCDK.IO.CML {
     /// <summary>
     /// TestCase for reading CML 2 files using a few test files in data/cmltest.
     /// </summary>
     // @cdk.module  test-libiocml
-    // @cdk.require xom-1.0.jar
-    // @cdk.require java1.5+
     [TestClass()]
     public class CMLRoundTripTest : CDKTestCase
     {

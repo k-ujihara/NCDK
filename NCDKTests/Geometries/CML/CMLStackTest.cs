@@ -27,13 +27,11 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// TestCase for the CMLStack class.
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public class CMLStackTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestPush_String()
         {

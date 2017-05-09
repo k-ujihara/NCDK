@@ -23,19 +23,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using NCDK.Default;
-using System.Diagnostics;
-using NCDK.Tools.Manipulator;
-using System.Linq;
-using System.IO;
-using NCDK.IO.Listener;
-using System.Collections.Specialized;
-using NCDK.Geometries;
-using NCDK.Isomorphisms.Matchers;
-using System.Text;
 using Moq;
+using NCDK.Default;
+using NCDK.Geometries;
+using NCDK.IO.Listener;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.SGroups;
+using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace NCDK.IO
 {

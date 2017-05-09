@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Interface for bit fingerprint representations.

@@ -27,14 +27,11 @@ using System.Linq;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class EdgeShortCyclesTest
     {
-
         [TestMethod()]
         public virtual void Paths_norbornane()
         {

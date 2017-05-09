@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// Helper methods for fragmentation algorithms.

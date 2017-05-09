@@ -24,7 +24,7 @@ using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// This class is for testing the MMFF94 based parameter reading in CDK.

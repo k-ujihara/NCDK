@@ -31,14 +31,11 @@ using static NCDK.Graphs.InitialCycles;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class GreedyBasisTest
     {
-
         [TestMethod()]
         public virtual void Add()
         {
@@ -87,7 +84,7 @@ namespace NCDK.Graphs
             var c2 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             var c3 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             c1.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("111000000000"));
-            c2.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("000111000000"));    // fixed CDK's bug
+            c2.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("000111000000"));
             c3.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("011110000000"));
             c1.SetupGet(c => c.Length).Returns(3);
             c2.SetupGet(c => c.Length).Returns(3);

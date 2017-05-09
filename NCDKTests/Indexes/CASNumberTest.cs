@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Indices
+namespace NCDK.Indexes
 {
     /// <summary>
     /// Tests CDK's CAS Number class.

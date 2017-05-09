@@ -21,8 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static NCDK.Isomorphisms.AbstractVFState;
 using NCDK.Common.Base;
@@ -30,14 +28,11 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class AbstractVFStateTest
     {
-
         // size = 0, always the first vertex
         [TestMethod()]
         public void NextNAt0()

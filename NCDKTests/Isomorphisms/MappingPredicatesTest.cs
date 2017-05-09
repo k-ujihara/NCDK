@@ -29,10 +29,8 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public class MappingPredicatesTest
     {

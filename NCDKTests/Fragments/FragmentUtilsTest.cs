@@ -24,13 +24,12 @@ using NCDK.Smiles;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// Test fragment utils
-    ///
-    // @cdk.module test-fragment
     /// </summary>
+    // @cdk.module test-fragment
     [TestClass()]
     public class FragmentUtilsTest : CDKTestCase
     {
@@ -72,7 +71,6 @@ namespace NCDK.Fragment
         [TestMethod()]
         public void TestMakeAtomContainer()
         {
-
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
             IAtom atom = builder.CreateAtom("C");
@@ -102,7 +100,6 @@ namespace NCDK.Fragment
         [TestMethod()]
         public void TestTraversal_Chain()
         {
-
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
             IAtom[] atoms = new IAtom[]{builder.CreateAtom("C"), builder.CreateAtom("C"),

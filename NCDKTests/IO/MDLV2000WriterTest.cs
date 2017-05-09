@@ -38,11 +38,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the writer MDL mol files using one test file.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.MDLV2000Writer
     /// </summary>
+    /// <seealso cref="MDLV2000Writer"/>
+    // @cdk.module test-io
     [TestClass()]
     public class MDLV2000WriterTest : ChemObjectIOTest
     {
@@ -58,10 +56,8 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /// <summary>
         // @cdk.bug 890456
         // @cdk.bug 1524466
-        /// </summary>
         [TestMethod()]
         public void TestBug890456()
         {
@@ -77,9 +73,7 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("M  END") != -1);
         }
 
-        /// <summary>
         // @cdk.bug 1212219
-        /// </summary>
         [TestMethod()]
         public void TestBug1212219()
         {
@@ -192,9 +186,8 @@ namespace NCDK.IO
         /// This was fixed with letting PseudoAtom have a default label of '*'.
         ///
         /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-        ///
-        // @cdk.bug 1778479
         /// </summary>
+        // @cdk.bug 1778479
         [TestMethod()]
         public void TestBug1778479()
         {
@@ -388,18 +381,15 @@ namespace NCDK.IO
 
             Assert.IsTrue(writer.ToString().IndexOf("V    1 Oxygen comment") != -1);
             Assert.IsTrue(writer.ToString().IndexOf("V    2 Carbon comment") != -1);
-
         }
 
         /// <summary>
         /// Test option to write aromatic bonds with bond type "4".
         /// Please note: bond type values 4 through 8 are for SSS queries only.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestAromaticBondType4()
         {
-
             IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
             foreach (var atom in benzene.Atoms)
             {
@@ -444,7 +434,6 @@ namespace NCDK.IO
 
             Assert.IsTrue(sw.ToString().Contains(
                     "   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));
-
         }
 
         [TestMethod()]
@@ -466,14 +455,10 @@ namespace NCDK.IO
             Assert.IsTrue(output.IndexOf("Leu") != -1);
         }
 
-        /// <summary>
         // @cdk.bug 1263
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestWritePseudoAtoms_LongLabel()
         {
-
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer container = builder.CreateAtomContainer();
 
@@ -492,7 +477,6 @@ namespace NCDK.IO
 
             Assert.IsTrue(output.Contains("A    2"));
             Assert.IsTrue(output.Contains("tRNA"));
-
         }
 
         /// <summary>
@@ -501,7 +485,6 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWritePseudoAtoms_nullLabel()
         {
-
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer container = builder.CreateAtomContainer();
 
@@ -519,17 +502,14 @@ namespace NCDK.IO
 
             string output = sw.ToString();
             Assert.IsTrue(output.Contains("R"));
-
         }
 
         /// <summary>
         /// When there are more then 16 R Groups these should be wrapped
-        // @
         /// </summary>
         [TestMethod()]
         public void TestRGPLine_Multiline()
         {
-
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer container = builder.CreateAtomContainer();
 
@@ -545,13 +525,11 @@ namespace NCDK.IO
             Assert.IsTrue(output.Contains("M  RGP  8   1   1   2   2   3   3   4   4   5   5   6   6   7   7   8   8"));
             Assert.IsTrue(output.Contains("M  RGP  8   9   9  10  10  11  11  12  12  13  13  14  14  15  15  16  16"));
             Assert.IsTrue(output.Contains("M  RGP  3  17  17  18  18  19  19"));
-
         }
 
         [TestMethod()]
         public void TestAlias_TruncatedLabel()
         {
-
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer container = builder.CreateAtomContainer();
 
@@ -586,7 +564,6 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSingleSingletRadical()
         {
-
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
@@ -607,7 +584,6 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSingleDoubletRadical()
         {
-
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
@@ -623,7 +599,6 @@ namespace NCDK.IO
 
             Assert.AreEqual(9, lines.Length, "incorrect file length");
             Assert.AreEqual("M  RAD  1   2   2", lines[7], "incorrect radical output");
-
         }
 
         // XXX: information loss, CDK does not distinquish between divalence
@@ -631,7 +606,6 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSingleTripletRadical()
         {
-
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
@@ -652,7 +626,6 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultipleRadicals()
         {
-
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
@@ -670,7 +643,6 @@ namespace NCDK.IO
             Assert.AreEqual("M  RAD  8   1   2   2   2   3   2   4   2   5   2   6   2   7   2   8   2",
                 lines[21], "incorrect radical output on line 22");
             Assert.AreEqual("M  RAD  1   9   2", lines[22], "incorrect radical output on line 23");
-
         }
 
         [TestMethod()]

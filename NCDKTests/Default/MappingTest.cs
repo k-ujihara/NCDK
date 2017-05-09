@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Mapping class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.Mapping
     /// </summary>
+    /// <seealso cref="Mapping"/>
+    // @cdk.module test-data
     [TestClass()]
     public class MappingTest : AbstractMappingTest
     {

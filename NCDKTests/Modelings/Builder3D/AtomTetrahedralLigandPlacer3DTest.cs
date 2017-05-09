@@ -21,18 +21,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Numerics;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// Tests for AtomPlacer3D
-    ///
+    /// </summary>
     // @cdk.module test-builder3d
     // @cdk.githash
-    /// </summary>
     [TestClass()]
     public class AtomTetrahedralLigandPlacer3DTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer()
         {

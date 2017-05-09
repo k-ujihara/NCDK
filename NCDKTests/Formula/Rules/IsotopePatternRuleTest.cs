@@ -22,9 +22,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class IsotopePatternRuleTest : FormulaRuleTest
     {
@@ -39,18 +37,11 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(IsotopePatternRule));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsotopePatternRule()
         {
-
             IRule rule = new IsotopePatternRule();
             Assert.IsNotNull(rule);
-
         }
 
         [TestMethod()]
@@ -62,15 +53,9 @@ namespace NCDK.Formula.Rules
             Assert.IsNull(objects[0]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
-
             IRule rule = new IsotopePatternRule();
 
             object[] parameters = new object[2];
@@ -85,15 +70,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(2, objects.Length);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestValid_Bromine()
         {
-
             List<double[]> spectrum = new List<double[]>();
             spectrum.Add(new double[] { 157.8367, 51.399 });
             spectrum.Add(new double[] { 159.8346, 100.00 });
@@ -113,15 +92,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 5);
             formula.Add(ifac.GetMajorIsotope("H"), 13);

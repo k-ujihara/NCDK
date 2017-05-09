@@ -142,9 +142,9 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// <p>Convenience method to generate 2D coordinates for a reaction. If atom-atom
-        /// maps are present on a reaction, the substructures are automatically aligned.</p>
-        /// <p>This feature can be disabled by changing the <see cref="SetAlignMappedReaction(bool)"/></p>
+        /// <para>Convenience method to generate 2D coordinates for a reaction. If atom-atom
+        /// maps are present on a reaction, the substructures are automatically aligned.</para>
+        /// <para>This feature can be disabled by changing the <see cref="SetAlignMappedReaction(bool)"/>.</para>
         /// </summary>
         /// <param name="reaction">reaction to layout</param>
         /// <exception cref="CDKException">problem with layout</exception>
@@ -551,7 +551,6 @@ namespace NCDK.Layout
 
             if (!isSubLayout)
                 AssignStereochem(molecule);
-
         }
 
         /// <summary>
@@ -631,12 +630,12 @@ namespace NCDK.Layout
                                 }
                                 foreach (var ring in placed)
                                     unplaced.Remove(ring);
+                            }
 
-                                if (AllPlaced(rset))
-                                {
-                                    rset.IsPlaced = true;
-                                    ringPlacer.PlaceRingSubstituents(rset, BondLength);
-                                }
+                            if (AllPlaced(rset))
+                            {
+                                rset.IsPlaced = true;
+                                ringPlacer.PlaceRingSubstituents(rset, BondLength);
                             }
                         }
                     }
@@ -1474,7 +1473,6 @@ namespace NCDK.Layout
 
             foreach (var container in new[] { skeletonStub, skeleton, anonymous })
             {
-
                 if (!anon && container == anonymous)
                     continue;
 
@@ -1555,8 +1553,8 @@ namespace NCDK.Layout
                 // attempt ring peeling and retemplate
                 IRingSet core = GetRingSetCore(rs);
                 if (core.Count > 0 &&
-          core.Count < rs.Count &&
-          LookupRingSystem(core, molecule, !macro || rs.Count > 1))
+                  core.Count < rs.Count &&
+                  LookupRingSystem(core, molecule, !macro || rs.Count > 1))
                 {
                     foreach (var container in core)
                         container.IsPlaced = true;
@@ -1737,7 +1735,6 @@ namespace NCDK.Layout
 
                     if (longestUnplacedChain.Atoms.Count > 1)
                     {
-
                         if (placedAtoms.Atoms.Count > 1)
                         {
                             Debug.WriteLine("More than one atoms placed already");
@@ -1763,7 +1760,6 @@ namespace NCDK.Layout
                             longestUnplacedChain.Atoms[f].IsPlaced = false;
                         }
                         atomPlacer.PlaceLinearChain(longestUnplacedChain, direction, BondLength);
-
                     }
                     else
                     {

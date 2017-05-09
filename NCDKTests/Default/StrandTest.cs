@@ -28,10 +28,9 @@ namespace NCDK.Default
     /// <summary>
     /// TODO To change the template for this generated type comment go to
     /// Window - Preferences - Java - Code Style - Code Templates
-    ///
+    /// </summary>
     // @author     Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.module test-data
-    /// </summary>
     [TestClass()]
     public class StrandTest : AbstractStrandTest
     {

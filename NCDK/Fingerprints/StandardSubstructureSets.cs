@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Default sets of atom containers aimed for use with the substructure.
@@ -25,7 +25,7 @@ namespace NCDK.Fingerprint
         {
             if (smarts != null) return smarts;
 
-            string filename = "NCDK.Fingerprint.Data.SMARTS_InteLigand.txt";
+            string filename = "NCDK.Fingerprints.Data.SMARTS_InteLigand.txt";
             Stream ins = ResourceLoader.GetAsStream(filename);
             TextReader reader = new StreamReader(ins);
 

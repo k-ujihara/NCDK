@@ -4,10 +4,8 @@ using NCDK.Hash.Stereo;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class CombinedPermutationParityTest
     {

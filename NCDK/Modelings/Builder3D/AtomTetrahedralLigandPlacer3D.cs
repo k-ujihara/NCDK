@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     ///  A set of static utility classes for geometric calculations on Atoms.

@@ -24,14 +24,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class XorshiftTest
     {
-
         private readonly Xorshift generator = new Xorshift();
 
         [TestMethod()]

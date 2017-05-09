@@ -20,7 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
@@ -29,14 +28,11 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-sdg
-    /// </summary>
     [TestClass()]
     public class AtomPlacerTest : CDKTestCase
     {
-
         [TestMethod()]
         public void EmptyAtomsListTest()
         {

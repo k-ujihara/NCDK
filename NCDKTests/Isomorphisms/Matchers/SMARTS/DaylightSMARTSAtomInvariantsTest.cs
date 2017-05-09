@@ -6,14 +6,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <summary>
     /// Sets the computation of SMARTSAtomInvariants using the Daylight ring
     /// values.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class DaylightSMARTSAtomInvariantsTest
     {
-
         [TestMethod()]
         public void TargetTest()
         {
@@ -142,8 +140,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// of size six and one ring of size 5. When we count the ring sizes (can be
         /// verities on depict match) there are only 4 atoms in a 6 member ring. This
         /// is because 2 atoms are shared with the smalled 5 member ring.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void RingSize_imidazole() {
@@ -163,7 +159,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// Shows that the exterior ring of the SSSR (size 12) is not
-        // @
         /// </summary>
         [TestMethod()]
         public void RingSize_cyclophane()

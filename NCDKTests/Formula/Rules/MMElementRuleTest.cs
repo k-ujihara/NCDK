@@ -20,9 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
 {
-    /// <summary>
     // @cdk.module test-formula
-    /// </summary>
     [TestClass()]
     public class MMElementRuleTest : FormulaRuleTest
     {
@@ -35,46 +33,26 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(MMElementRule));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMMElementRule()
         {
-
             IRule rule = new MMElementRule();
             Assert.IsNotNull(rule);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
-
             IRule rule = new MMElementRule();
             object[] objects = rule.Parameters;
 
             Assert.AreSame(MMElementRule.Database.WILEY, objects[0]);
             Assert.AreSame(MMElementRule.RangeMass.Minus500, objects[1]);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
-
             IRule rule = new MMElementRule();
 
             object[] params_ = new object[2];
@@ -89,15 +67,9 @@ namespace NCDK.Formula.Rules
             Assert.AreSame(MMElementRule.RangeMass.Minus1000, objects[1]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
-
             IRule rule = new MMElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
@@ -107,15 +79,9 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
-
             IRule rule = new MMElementRule();
 
             IMolecularFormula formula = new MolecularFormula();

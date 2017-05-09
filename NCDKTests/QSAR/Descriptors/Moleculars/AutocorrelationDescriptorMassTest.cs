@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void Test1()
         {
-            string filename = "NCDK.Data.MDL.clorobenzene.mol";
+            string filename = "NCDK.Data.MDL.chlorobenzene.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());

@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the SingleElectron class.
-    ///
-    // @see org.openscience.cdk.SingleElectron
-    ///
-    // @cdk.module test-data
     /// </summary>
+    // @see org.openscience.cdk.SingleElectron
+    // @cdk.module test-data
     [TestClass()]
     public class SingleElectronTest : AbstractSingleElectronTest
     {

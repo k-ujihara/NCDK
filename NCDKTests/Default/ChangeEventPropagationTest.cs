@@ -23,11 +23,9 @@ namespace NCDK.Default
     /// <summary>
     /// Checks the propagation of ChangeEvents through a
     /// nested set of objects.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.ChemFile
     /// </summary>
+    /// <seealso cref="ChemFile"/>
+    // @cdk.module test-data
     [TestClass()]
     public class ChangeEventPropagationTest : CDKTestCase
     {

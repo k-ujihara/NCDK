@@ -26,10 +26,9 @@ using System.IO;
 namespace NCDK.IO
 {
     /// <summary>
-    /// TestCase for {@link IChemObjectWriter} implementations.
-    ///
-    // @cdk.module test-io
+    /// TestCase for <see cref="IChemObjectWriter"/> implementations.
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public abstract class ChemObjectWriterTest : ChemObjectIOTest
     {

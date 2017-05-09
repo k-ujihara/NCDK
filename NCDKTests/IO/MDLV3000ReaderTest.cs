@@ -31,12 +31,10 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the reading MDL V3000 mol files using one test file.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.MDLReader
-    // @see org.openscience.cdk.io.SDFReaderTest
     /// </summary>
+    /// <seealso cref="MDLReader"/>
+    /// <seealso cref="SDFReaderTest"/>
+    // @cdk.module test-io
     [TestClass()]
     public class MDLV3000ReaderTest : SimpleChemObjectReaderTest
     {
@@ -51,9 +49,7 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /// <summary>
         // @cdk.bug 1571207
-        /// </summary>
         [TestMethod()]
         public void TestBug1571207()
         {

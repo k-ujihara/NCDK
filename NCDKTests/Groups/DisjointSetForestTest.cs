@@ -25,10 +25,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class DisjointSetForestTest
     {

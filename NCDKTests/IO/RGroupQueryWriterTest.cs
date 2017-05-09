@@ -33,10 +33,9 @@ namespace NCDK.IO
     /// Idea: read the test RGfiles into an object model, then writes the
     /// same model out as an RGfile again without changing anything. Then
     /// check that the original inputfile and the outputfile have the same content.
-    ///
+    /// </summary>
     // @cdk.module test-io
     // @author Mark Rijnbeek
-    /// </summary>
     [TestClass()]
     public class RGroupQueryWriterTest : ChemObjectIOTest
     {

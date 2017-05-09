@@ -24,9 +24,7 @@ using NCDK.Smiles;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ConnectionMatrixTest : CDKTestCase
     {

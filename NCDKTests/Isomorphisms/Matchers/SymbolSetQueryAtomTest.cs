@@ -24,9 +24,8 @@ namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
     /// Checks the functionality of the IsomorphismTester
-    ///
-    // @cdk.module test-isomorphism
     /// </summary>
+    // @cdk.module test-isomorphism
     [TestClass()]
     public class SymbolSetQueryAtomTest : CDKTestCase
     {

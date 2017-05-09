@@ -31,7 +31,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// An implementation of the Murcko fragmenation method <token>cdk-cite-MURCKO96</token>.

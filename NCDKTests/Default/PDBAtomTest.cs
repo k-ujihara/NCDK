@@ -24,10 +24,9 @@ using NCDK.Numerics;
 namespace NCDK.Default
 {
     /// <summary>
-    /// Checks the functionality of the {@link PDBAtom} class.
-    ///
-    // @cdk.module test-data
+    /// Checks the functionality of the <see cref="PDBAtom"/> class.
     /// </summary>
+    // @cdk.module test-data
     [TestClass()]
     public class PDBAtomTest : AbstractPDBAtomTest
     {

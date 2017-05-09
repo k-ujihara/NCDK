@@ -37,13 +37,11 @@ namespace NCDK.Hash
     /// <summary>
     /// This test class provides several scenario tests for the {@literal cdk-hash}
     /// module.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     public class HashCodeScenariosTest
     {
-
         /// <summary>
         /// Two molecules with identical Racid identification numbers, these hash
         /// codes should be different.
@@ -51,7 +49,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure2a()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-2a.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -72,7 +69,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure2b()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-2b.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -114,7 +110,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure3()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-3.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -136,7 +131,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure7()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-7.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -180,7 +174,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure11()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-11.sdf", 1);
 
             IAtomContainer molecule = mols[0];
@@ -238,7 +231,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure13a()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-13a.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -279,7 +271,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure14()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-14.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -301,7 +292,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure15()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-15.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -328,7 +318,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure16a()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-16a.sdf", 2);
 
             IAtomContainer a = mols[0];
@@ -371,7 +360,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Figure16b()
         {
-
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-16b.sdf", 4);
 
             IAtomContainer a = mols[0];
@@ -405,7 +393,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Aminotetracosanone()
         {
-
             List<IAtomContainer> aminotetracosanones = ExtractSDF("aminotetracosanones.sdf", 2);
 
             IAtomContainer a = aminotetracosanones[0];
@@ -426,7 +413,6 @@ namespace NCDK.Hash
                     Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b) + " at depth " + depth);
                 }
             }
-
         }
 
         /// <summary>
@@ -437,7 +423,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Inositols()
         {
-
             List<IAtomContainer> inositols = ExtractSDF("inositols.sdf", 9);
 
             // non-stereo non-perturbed hash generator
@@ -477,13 +462,11 @@ namespace NCDK.Hash
             }
 
             Assert.AreEqual(9, hashes.Count, "all inositol isomers should hash to different values");
-
         }
 
         [TestMethod()]
         public void AllenesWithImplicitHydrogens()
         {
-
             List<IAtomContainer> allenes = ExtractSDF("allene-implicit_-h.sdf", 2);
 
             IAtomContainer mAllene = allenes[0];
@@ -520,7 +503,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void AllenesWithExplicitHydrogens()
         {
-
             List<IAtomContainer> allenes = ExtractSDF("allene-explicit-h.sdf", 2);
 
             IAtomContainer mAllene = allenes[0];
@@ -556,7 +538,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Allenes2Dand3D()
         {
-
             List<IAtomContainer> allenes2D = ExtractSDF("allene-explicit-h.sdf", 2);
             List<IAtomContainer> allenes3D = ExtractSDF("allene-explicit-3d-h.sdf", 2);
 
@@ -611,7 +592,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Cumulenes()
         {
-
             List<IAtomContainer> cumulenes = ExtractSDF("cumulenes.sdf", 2);
 
             IAtomContainer eCumulene = cumulenes[0];
@@ -629,7 +609,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void SuppressedHydrogens()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("butan-2-ols.sdf", 2);
             List<IAtomContainer> explicits = ExtractSDF("butan-2-ols-explicit-hydrogens.sdf", 2);
 
@@ -646,7 +625,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void SuppressedHydrogens_chiral()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("butan-2-ols.sdf", 2);
             List<IAtomContainer> explicits = ExtractSDF("butan-2-ols-explicit-hydrogens.sdf", 2);
 
@@ -674,7 +652,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Inositols_suppressedHydrogens()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("inositols.sdf", 9);
             List<IAtomContainer> explicits = ExtractSDF("inositols-explicit-hydrogens.sdf", 9);
 
@@ -698,7 +675,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Inositols_suppressedHydrogens_chiral()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("inositols.sdf", 9);
             List<IAtomContainer> explicits = ExtractSDF("inositols-explicit-hydrogens.sdf", 9);
 
@@ -730,7 +706,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void SuppressedHydrogens_dicholorethenes()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("dichloroethenes.sdf", 2);
             List<IAtomContainer> explicits = ExtractSDF("dichloroethenes-explicit-hydrogens.sdf", 2);
 
@@ -741,7 +716,6 @@ namespace NCDK.Hash
             // explicit_ hydrogens
             for (int d = 0; d < 4; d++)
             {
-
                 IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
                         .Molecular();
 
@@ -749,7 +723,6 @@ namespace NCDK.Hash
                         .SuppressHydrogens().Perturbed().Molecular();
                 for (int i = 0; i < implicits.Count; i++)
                 {
-
                     IAtomContainer implicit_ = implicits[i];
                     IAtomContainer explicit_ = explicits[i];
 
@@ -762,7 +735,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void SuppressedHydrogens_allenes()
         {
-
             List<IAtomContainer> implicits = ExtractSDF("allene-implicit_-h.sdf", 2);
             List<IAtomContainer> explicits = ExtractSDF("allene-explicit-h.sdf", 2);
 
@@ -773,7 +745,6 @@ namespace NCDK.Hash
             // explicit_ hydrogens
             for (int d = 0; d < 4; d++)
             {
-
                 IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
                         .Molecular();
 
@@ -781,14 +752,12 @@ namespace NCDK.Hash
                         .SuppressHydrogens().Perturbed().Molecular();
                 for (int i = 0; i < implicits.Count; i++)
                 {
-
                     IAtomContainer implicit_ = implicits[i];
                     IAtomContainer explicit_ = explicits[i];
 
                     Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
                     Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
-
                 }
             }
         }
@@ -796,7 +765,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Butan2ol_UsingStereoElement()
         {
-
             // C[CH](O)CC
             IAtomContainer butan2ol = new AtomContainer();
             butan2ol.Atoms.Add(new Atom("C"));
@@ -859,13 +827,11 @@ namespace NCDK.Hash
 
             // check 'S' configuration was encoded
             Assert.AreEqual(generator.Generate(butan2ol), generator.Generate(butan2ols[1]));
-
         }
 
         [TestMethod()]
         public void Dichloroethenes_stereoElements()
         {
-
             // CLC=CCL
             IAtomContainer dichloroethene = new AtomContainer();
             dichloroethene.Atoms.Add(new Atom("Cl"));
@@ -907,7 +873,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Dichloroethenes_stereoElements_explicitH()
         {
-
             // CLC=CCL
             IAtomContainer dichloroethene = new AtomContainer();
             dichloroethene.Atoms.Add(new Atom("Cl")); // Cl1
@@ -1006,7 +971,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void Dichloroethenes_stereoElements_explicitH_suppressed()
         {
-
             // CLC=CCL
             IAtomContainer dichloroethene = new AtomContainer();
             dichloroethene.Atoms.Add(new Atom("Cl")); // Cl1
@@ -1114,11 +1078,10 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Utility for loading SDFs into a List.
-        ///
+        /// </summary>
         /// <param name="path">absolute path to SDF (classpath)</param>
         /// <param name="exp">expected number of structures</param>
         /// <returns>list of structures</returns>
-        /// </summary>
         private List<IAtomContainer> ExtractSDF(string path, int exp)
         {
             Stream ins = ResourceLoader.GetAsStream(path);

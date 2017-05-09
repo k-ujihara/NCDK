@@ -24,11 +24,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Moq;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test
-    /// </summary>
     [TestClass()]
     public abstract class AbstractFingerprinterTest : CDKTestCase
     {

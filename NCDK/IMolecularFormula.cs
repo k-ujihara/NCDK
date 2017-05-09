@@ -32,7 +32,6 @@ namespace NCDK
     /// </list>
     /// </para>
     /// </summary>
-    // fixed CDK bug  (sup --> sub)
     // @cdk.module  interfaces
     // @author      miguelrojasch
     // @cdk.created 2007-11-20

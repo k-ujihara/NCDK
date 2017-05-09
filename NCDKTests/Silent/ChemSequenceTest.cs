@@ -22,7 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link ChemSequence}.
+    /// Checks the functionality of the <see cref="ChemSequence"/>.
     ///
     // @cdk.module test-silent
     /// </summary>

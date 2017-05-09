@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
 
-                if (maxIterations != -1) pepe.MaxGasteigerIterations = maxIterations;   // fixed CDK's mistake
+                if (maxIterations != -1) pepe.MaxGasteigerIterations = maxIterations;
                 if (maxResonStruc != -1) pepe.MaxResonanceStructures = maxResonStruc;
 
                 try

@@ -151,7 +151,7 @@ namespace NCDK.Common.Util
             WordChars('a', 'z');
             WordChars('A', 'Z');
             WordChars(128 + 32, 255);
-            WhitespaceChars(0, ' ');
+            WhiteSpaceChars(0, ' ');
             CommentChar('/');
             QuoteChar('"');
             QuoteChar('\'');
@@ -218,7 +218,7 @@ namespace NCDK.Common.Util
         /// </summary>
         /// <param name="low">the low end of the range.</param>
         /// <param name="hi">the high end of the range.</param>
-        public void WhitespaceChars(int low, int hi)
+        public void WhiteSpaceChars(int low, int hi)
         {
             if (low < 0)
             {

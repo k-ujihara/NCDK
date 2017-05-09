@@ -28,12 +28,11 @@ using System.Collections.Generic;
 namespace NCDK.RingSearches
 {
     /// <summary>
-    /// Mocking for {@link RingSearch}. Please refer to RingSearchTest_* for
+    /// Mocking for <see cref="RingSearch"/>. Please refer to RingSearchTest_* for
     /// situation unit tests.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class RingSearchTest
     {
@@ -164,7 +163,8 @@ namespace NCDK.RingSearches
             mock_cyclicSearch.Verify(n => n.Cyclic(42, 43), Times.Once());
         }
 
-        [TestMethod()][ExpectedException(typeof(NoSuchAtomException))]
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
         public void TestCyclic_Atom_NotFound()  {
 
             CyclicVertexSearch cyclicSearch = new Mock<CyclicVertexSearch>().Object;

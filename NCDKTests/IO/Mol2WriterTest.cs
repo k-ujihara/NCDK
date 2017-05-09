@@ -32,11 +32,10 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the writer MOL2 writer.
-    ///
-    // @cdk.module test-io
+    /// </summary>
     /// <seealso cref="Mol2Writer"/>
     /// <seealso cref="SMILES2Mol2WriterTest"/>
-    /// </summary>
+    /// <seealso cref="Mol2Writer"/>
     [TestClass()]
     public class Mol2WriterTest : ChemObjectIOTest
     {
@@ -50,11 +49,7 @@ namespace NCDK.IO
             Assert.IsTrue(writer.Accepts(typeof(AtomContainer)));
         }
 
-        /// <summary>
-        // @
-        // @
         // @cdk.bug 2675188
-        /// </summary>
         //@Ignore("moved to SMILES2Mol2WriterTest")
         public void TestWriter1()
         {
@@ -109,9 +104,8 @@ namespace NCDK.IO
         /// This test just ensures that Mol2Writer does not throw an NPE.
         ///
         /// It does not test whether the output is correct or not.
-        // @
-        // @cdk.bug 3315503
         /// </summary>
+        // @cdk.bug 3315503
         [TestMethod()]
         public void TestMissingAtomType()
         {

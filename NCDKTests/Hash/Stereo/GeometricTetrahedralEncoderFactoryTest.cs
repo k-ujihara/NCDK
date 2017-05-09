@@ -33,18 +33,14 @@ using System.Reflection;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class GeometricTetrahedralEncoderFactoryTest
     {
-
         [TestMethod()]
         public void TestCreate_2D()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -111,7 +107,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_2D_Implicit()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(4);
 
@@ -173,7 +168,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_3D()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -242,7 +236,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_3D_Implicit()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(4);
 
@@ -303,7 +296,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_NonSP3()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -359,7 +351,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_NoStereoBonds()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -416,7 +407,6 @@ namespace NCDK.Hash.Stereo
         [TestMethod()]
         public void TestCreate_WrongDegree()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             m_container.SetupGet(n => n.Atoms.Count).Returns(5);
 
@@ -467,7 +457,6 @@ namespace NCDK.Hash.Stereo
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
             Assert.AreEqual(StereoEncoder.Empty, encoder);
-
         }
 
         private static Vector2[] Coords2D(GeometricParity parity)

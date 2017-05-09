@@ -29,14 +29,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-
 namespace NCDK.IO.CML
 {
     /// <summary>
     /// TestCase for the reading CML 2 files using a few test files in data/cmltest.
     /// </summary>
     // @cdk.module test-libiocml
-    // @cdk.require java1.5+
     [TestClass()]
     public class CML2Test : CDKTestCase
     {

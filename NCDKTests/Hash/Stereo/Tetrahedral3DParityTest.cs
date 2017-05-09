@@ -29,14 +29,11 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class Tetrahedral3DParityTest
     {
-
         private static int Clockwise = -1;
         private static int AntiClockwise = +1;
 

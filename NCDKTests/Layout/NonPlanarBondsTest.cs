@@ -29,14 +29,11 @@ using NCDK.Stereo;
 
 namespace NCDK.Layout
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-sdg
-    /// </summary>
     [TestClass()]
     public class NonPlanarBondsTest
     {
-
         // [C@H](C)(N)O
         [TestMethod()]
         public void Clockwise_implH_1()
@@ -325,9 +322,7 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C4H8O/c1-3-4(2)5/h3H2,1-2H3
-        /// </summary>
         [TestMethod()]
         public void DontMarkTerminalBonds()
         {
@@ -347,9 +342,7 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.None, m.Bonds[2].Stereo);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3
-        /// </summary>
         [TestMethod()]
         public void MarkBut2eneWithWavyBond()
         {
@@ -365,9 +358,7 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.UpOrDown, m.Bonds[0].Stereo);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C8H12/c1-3-5-7-8-6-4-2/h3-8H,1-2H3/b5-3+,6-4+,8-7?
-        /// </summary>
         [TestMethod()]
         public void UseCrossedBondIfNeeded()
         {
@@ -403,9 +394,7 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.EOrZ, m.Bonds[3].Stereo);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
-        /// </summary>
         [TestMethod()]
         public void DontMarkTetrahedralCentresWithDoubleBondsAsUnspecified()
         {
@@ -455,7 +444,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// {@code SMILES: *CN=C(N)N}
+        /// SMILES: *CN=C(N)N
         /// </summary>
         [TestMethod()]
         public void DontMarkGuanidineAsUnspecified()
@@ -478,7 +467,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// {@code SMILES: *CN=C(CCC)CCC[H]}
+        /// SMILES: *CN=C(CCC)CCC[H]
         /// </summary>
         [TestMethod()]
         public void DontUnspecifiedDueToHRepresentation()
@@ -511,7 +500,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// {@code SMILES: *CN=C(CCC)CCC}
+        /// SMILES: *CN=C(CCC)CCC
         /// </summary>
         [TestMethod()]
         public void DontMarkUnspecifiedForLinearEqualChains()
@@ -542,7 +531,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// {@code SMILES: *CN=C1CCCCC1}
+        /// SMILES: *CN=C1CCCCC1
         /// </summary>
         [TestMethod()]
         public void MarkUnspecifiedForCyclicLigands()
@@ -576,7 +565,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// {@code SMILES: *CN=C(CCC)CCN}
+        /// SMILES: *CN=C(CCC)CCN
         /// </summary>
         [TestMethod()]
         public void UnspecifiedMarkedOnDifferentLigands()

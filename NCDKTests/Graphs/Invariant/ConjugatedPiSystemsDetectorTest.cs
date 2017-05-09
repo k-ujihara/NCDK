@@ -31,9 +31,8 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Checks the functionality of the ConjugatedPiSystemsCalculator.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class ConjugatedPiSystemsDetectorTest : CDKTestCase
     {
@@ -445,7 +444,7 @@ namespace NCDK.Graphs.Invariant
 
         }
 
-        /// with [H]C([H])=C([H])[C+]([H])[H]
+        // with [H]C([H])=C([H])[C+]([H])[H]
         [TestMethod()]
         public void TestChargeWithProtonExplicit()
         {
@@ -473,7 +472,7 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /// with  [H]C([H])=C([H])[C+]([H])[H]
+        // with  [H]C([H])=C([H])[C+]([H])[H]
         [TestMethod()]
         public void TestChargeWithProtonImplicit()
         {

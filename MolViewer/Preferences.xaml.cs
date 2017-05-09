@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace NCDK.MolViewer
 {
-    /// <summary>
-    /// Window1.xaml の相互作用ロジック
-    /// </summary>
     public partial class PreferenceWindow : Window
     {
         MolWindow root;
@@ -32,7 +29,6 @@ namespace NCDK.MolViewer
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
-
             this.Close();
         }
 
@@ -41,13 +37,34 @@ namespace NCDK.MolViewer
             DataContext = new Item(root);
         }
 
-        public class Item : INotifyPropertyChanged
+        public class Item
+            : INotifyPropertyChanged
         {
             MolWindow root;
 
             public Item(MolWindow root)
             {
                 this.root = root;
+            }
+
+            public bool? ShowEndCarbons
+            {
+                get { return root.Model.GetV<bool>(typeof(BasicAtomGenerator.ShowEndCarbons)); }
+                set
+                {
+                    root.Model.SetV(typeof(BasicAtomGenerator.ShowEndCarbons), value ?? false);
+                    OnPropertyChanged(nameof(ShowEndCarbons));
+                }
+            }
+
+            public bool? KekuleStructure
+            {
+                get { return root.Model.GetV<bool>(typeof(BasicAtomGenerator.KekuleStructure)); }
+                set
+                {
+                    root.Model.SetV(typeof(BasicAtomGenerator.KekuleStructure), value ?? false);
+                    OnPropertyChanged(nameof(KekuleStructure));
+                }
             }
 
             public bool? ShowExplicitHydrogens

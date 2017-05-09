@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using NCDK.Tools.Manipulator;
 using System.Linq;
 
 namespace NCDK.Reactions.Types
@@ -46,10 +47,8 @@ namespace NCDK.Reactions.Types
         /// <inheritdoc/>
         public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            // fixed CDK's bug: "if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)" should be atomj
-            // The next statement is removed from base.SetActiveCenters. 
-            // if (AtomContainerManipulator.GetTotalNegativeFormalCharge(reactant) != 0) return;
             return base.Initiate(reactants, agents,
+                reactant => AtomContainerManipulator.GetTotalNegativeFormalCharge(reactant) == 0,
                 (mol, atom) => mol.GetConnectedSingleElectrons(atom).Count() == 1,
                 atom => (atom.FormalCharge ?? 0) == 0);
         }

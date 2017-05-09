@@ -170,7 +170,7 @@ namespace NCDK.RingSearches
         {
             int i = container.Atoms.IndexOf(atom);
             if (i < 0)
-                throw new NoSuchAtomException("no such atom"); // fixed CDK's bug
+                throw new NoSuchAtomException("no such atom");
             return Cyclic(i);
         }
 

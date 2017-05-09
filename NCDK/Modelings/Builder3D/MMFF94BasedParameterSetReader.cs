@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// AtomType list configurator that uses the ParameterSet originally defined in
@@ -43,19 +43,19 @@ namespace NCDK.Modeling.Builder3D
     // @cdk.keyword atom type, mmff94
     public class MMFF94BasedParameterSetReader
     {
-        private string configFile = "NCDK.Modeling.ForceField.Data.mmff94.prm";
+        private string configFile = "NCDK.Modelings.ForceField.Data.mmff94.prm";
         private Stream ins = null;
         private IDictionary<string, object> parameterSet;
         private List<IAtomType> atomTypes;
         private IEnumerator<string> st;
         private string sid;
 
-        private string configFilevdW = "NCDK.Modeling.ForceField.Data.mmffvdw.prm";
+        private string configFilevdW = "NCDK.Modelings.ForceField.Data.mmffvdw.prm";
         private Stream insvdW = null;
         private IEnumerator<string> stvdW;
         private string sidvdW;
 
-        private string configFileDFSB = "NCDK.Modeling.ForceField.Data.mmffdfsb.par";
+        private string configFileDFSB = "NCDK.Modelings.ForceField.Data.mmffdfsb.par";
         private Stream insDFSB;
         private IEnumerator<string> stDFSB;
 

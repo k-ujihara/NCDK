@@ -28,14 +28,11 @@ using NCDK.Default;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class AllEquivalentCyclicSetTest
     {
-
         [TestMethod()]
         public void TestFind()
         {
@@ -56,7 +53,6 @@ namespace NCDK.Hash
             Assert.IsTrue(set.Contains(3));
             Assert.IsTrue(set.Contains(4));
             Assert.IsTrue(set.Contains(5));
-
         }
 
         [TestMethod()]
@@ -83,7 +79,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestScenario()
         {
-
             IAtomContainer cid138898 = CID138898();
             IAtomContainer cid241107 = CID241107();
 
@@ -96,14 +91,12 @@ namespace NCDK.Hash
 
             // complex equivalence method can tell these apart
             Assert.AreNotEqual(cmplx.Generate(cid138898), cmplx.Generate(cid241107));
-
         }
 
         /// <summary>
         /// PubChem-Compound CID 241107 CC12CC3(SC(S3)(CC(S1)(S2)C)C)C
-        ///
-        // @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-10(4,14-8)6-9(3,11-7)12-7/h5-6H2,1-4H3
         /// </summary>
+        // @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-10(4,14-8)6-9(3,11-7)12-7/h5-6H2,1-4H3
         private IAtomContainer CID241107()
         {
             IAtomContainer m = new AtomContainer();
@@ -122,9 +115,8 @@ namespace NCDK.Hash
 
         /// <summary>
         /// PubChem-Compound CID 138898 CC12CC3(SC(S1)(CC(S2)(S3)C)C)C
-        ///
-        // @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-9(3,11-7)6-10(4,12-7)14-8/h5-6H2,1-4H3
         /// </summary>
+        // @cdk.inchi InChI=1S/C10H16S4/c1-7-5-8(2)13-9(3,11-7)6-10(4,12-7)14-8/h5-6H2,1-4H3
         private IAtomContainer CID138898()
         {
             IAtomContainer m = new AtomContainer();

@@ -23,11 +23,10 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Molecule class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.Molecule
     /// </summary>
+    /// <seealso cref="AtomContainer"/>  
+    // @cdk.module test-data
+    // @see org.openscience.cdk.Molecule
     [TestClass()]
     public class MoleculeTest : AbstractMoleculeTest
     {

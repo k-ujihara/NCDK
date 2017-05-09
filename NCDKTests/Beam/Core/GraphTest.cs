@@ -132,7 +132,7 @@ namespace NCDK.Beam
                 new[] {
                     new Edge(0, 1, Bond.Implicit),
                     new Edge(1, 2, Bond.Implicit) },
-                g.GetEdges(1)));    // fixed Beam's bug
+                g.GetEdges(1)));    // fixed Beam
         }
 
         [TestMethod()]
@@ -153,7 +153,7 @@ namespace NCDK.Beam
                 new[] {
                     new Edge(0, 1, Bond.Implicit),
                     new Edge(1, 2, Bond.Implicit) },
-                g.GetEdges(1)));    // fixed Beam's bug
+                g.GetEdges(1)));    // fixed Beam
         }
 
         [TestMethod()]
@@ -273,7 +273,7 @@ namespace NCDK.Beam
                 new[] {
                     new Edge(0, 1, Bond.Implicit),
                     new Edge(1, 2, Bond.Implicit) },
-                g.GetEdges(1)));    // fixed Beam's bug
+                g.GetEdges(1)));    // fixed Beam
 
             g.Clear();
             Assert.AreEqual(g.Order, 0);

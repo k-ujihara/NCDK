@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the MolecularFormulaSet class.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="ReactionScheme"/>
     /// </summary>
+    /// <seealso cref="ReactionScheme"/>
+    // @cdk.module test-data
     [TestClass()]
     public class ReactionSchemeTest : AbstractReactionSchemeTest
     {

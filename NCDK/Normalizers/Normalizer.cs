@@ -29,7 +29,7 @@ using NCDK.Smiles;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace NCDK.Normalize
+namespace NCDK.Normalizers
 {
     /// <summary>
     /// Adjusts parts of an AtomContainer to the configuration of a fragment.

@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     // @cdk.module test-signature
     // @author maclean

@@ -26,9 +26,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for CDK IO classes.
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public abstract class SimpleChemObjectReaderTest : ChemObjectReaderTest
     {

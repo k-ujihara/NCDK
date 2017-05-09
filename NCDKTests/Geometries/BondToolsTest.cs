@@ -21,16 +21,12 @@ using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
 
-
 namespace NCDK.Geometries
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class BondToolsTest : CDKTestCase
     {
-
         public BondToolsTest()
             : base()
         { }
@@ -248,9 +244,7 @@ namespace NCDK.Geometries
                     BondTools.GiveAngleFromMiddle(mol.Atoms[0], mol.Atoms[2], mol.Atoms[3]), 0.2);
         }
 
-        /// <summary>
         // @cdk.bug 2831420
-        /// </summary>
         [TestMethod()]
         public void TestBug2831420()
         {

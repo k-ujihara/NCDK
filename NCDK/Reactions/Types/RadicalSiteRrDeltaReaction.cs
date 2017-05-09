@@ -39,7 +39,6 @@ namespace NCDK.Reactions.Types
         /// <inheritdoc/>
         public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            // fixed CDK's bug 5 is correct not 4
             return base.Initiate(reactants, agents, 5, true, atom => (atom.FormalCharge ?? 0) == 0);
         }
     }

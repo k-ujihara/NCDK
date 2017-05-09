@@ -28,8 +28,6 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 <#    foreach (var ns in namespaces) 
 {

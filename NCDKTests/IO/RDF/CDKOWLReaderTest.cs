@@ -33,7 +33,7 @@ namespace NCDK.IO.RDF
     public class CDKOWLReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.OWL.molecule.n3";
-        static readonly CDKOWLReader simpleReader = new CDKOWLReader();
+        static readonly CDKOWLReader simpleReader = new CDKOWLReader(new StringReader(""));
         protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
 
         [TestMethod()]

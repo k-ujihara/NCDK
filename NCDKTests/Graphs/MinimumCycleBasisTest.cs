@@ -29,10 +29,8 @@ using static NCDK.Graphs.InitialCyclesTest;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class MinimumCycleBasisTest
     {

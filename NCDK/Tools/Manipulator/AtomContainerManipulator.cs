@@ -291,7 +291,7 @@ namespace NCDK.Tools.Manipulator
             int charge = 0;
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
-                int chargeI = atomContainer.Atoms[i].FormalCharge.Value; // fixed CDK's bug. double -> int
+                int chargeI = atomContainer.Atoms[i].FormalCharge.Value;
                 if (chargeI < 0) charge += chargeI;
             }
             return charge;
@@ -307,7 +307,7 @@ namespace NCDK.Tools.Manipulator
             int charge = 0;
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
-                int chargeI = atomContainer.Atoms[i].FormalCharge.Value; // fixed CDK's bug. double -> int
+                int chargeI = atomContainer.Atoms[i].FormalCharge.Value;
                 if (chargeI > 0) charge += chargeI;
             }
             return charge;

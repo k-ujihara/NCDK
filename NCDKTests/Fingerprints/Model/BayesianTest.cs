@@ -35,7 +35,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace NCDK.Fingerprint.Model
+namespace NCDK.Fingerprints.Model
 {
     /// <summary>
     /// Validation test for the Bayesian model building & serialisation.
@@ -523,7 +523,6 @@ namespace NCDK.Fingerprint.Model
         private bool DblEqual(double v1, double v2)
         {
             return v1 == v2 || Math.Abs(v1 - v2) <= 1E-7 * Math.Max(Math.Abs(v1), Math.Abs(v2));   
-                // fixed CDK's bug. Add Math.Abs to Math.Max
                 // 1E-14 to 1E-7 because of precision difference between double and float.
         }
 

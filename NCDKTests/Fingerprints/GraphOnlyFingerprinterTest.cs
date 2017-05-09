@@ -30,11 +30,9 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class GraphOnlyFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -67,15 +65,9 @@ namespace NCDK.Fingerprint
         /// as a subset of each other by Fingerprint.IsSubset(), for the GetBitFingerprint(),
         /// despite the fact that they are a sub graph of each other according to the
         /// UniversalIsomorphismTester.IsSubgraph().
-        ///
-        // @author  Hugo Lafayette <hugo.lafayette@laposte.net>
-        ///
-        // @throws  CloneNotSupportedException
-        // @throws  Exception
-        ///
-        // @cdk.bug 1626894
-        ///
         /// </summary>
+        // @author  Hugo Lafayette <hugo.lafayette@laposte.net>
+        // @cdk.bug 1626894
         [TestMethod()]
         public void TestFingerPrint()
         {

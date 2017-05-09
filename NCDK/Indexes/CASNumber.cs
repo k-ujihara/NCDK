@@ -22,7 +22,7 @@
  */
 using System.Text.RegularExpressions;
 
-namespace NCDK.Indices
+namespace NCDK.Indexes
 {
     /// <summary>
     /// Tools to work with CAS registry numbers.

@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     // @cdk.module test-signature
     // @author maclean

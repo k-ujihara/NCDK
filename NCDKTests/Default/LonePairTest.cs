@@ -24,16 +24,13 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the LonePair class.
-    ///
-    // @see org.openscience.cdk.LonePair
-    ///
-    // @cdk.module test-data
     /// </summary>
+    /// <seealso cref="LonePair"/>
+    // @cdk.module test-data
     [TestClass()]
     public class LonePairTest
         : AbstractLonePairTest
     {
-
         public override IChemObject NewChemObject()
         {
             return new LonePair();
@@ -56,6 +53,5 @@ namespace NCDK.Default
             Assert.AreEqual(atom, lp.Atom);
             Assert.IsTrue(lp.Contains(atom));
         }
-
     }
 }

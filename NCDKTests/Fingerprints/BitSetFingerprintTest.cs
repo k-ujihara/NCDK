@@ -22,7 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass()]
     public class BitSetFingerprintTest : AbstractBitFingerprintTest

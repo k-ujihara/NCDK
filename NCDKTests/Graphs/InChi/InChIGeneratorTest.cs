@@ -20,10 +20,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-using NCDK.Stereo;
 using NCDK.NInChI;
 using NCDK.Numerics;
 using NCDK.Smiles;
+using NCDK.Stereo;
 
 namespace NCDK.Graphs.InChI
 {
@@ -865,7 +865,7 @@ namespace NCDK.Graphs.InChI
             }
         }
 
-        //[TestMethod()]
+        [TestMethod()]
         public void Timeout()
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;

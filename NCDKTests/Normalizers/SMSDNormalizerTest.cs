@@ -23,22 +23,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System;
 
-namespace NCDK.Normalize
+namespace NCDK.Normalizers
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class SMSDNormalizerTest
     {
-
         public SMSDNormalizerTest() { }
 
         /// <summary>
         /// Test of makeDeepCopy method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestMakeDeepCopy()
@@ -59,12 +54,10 @@ namespace NCDK.Normalize
                 Assert.AreEqual(result.Atoms[i].Symbol, container.Atoms[i].Symbol);
                 Assert.AreEqual(result.Atoms[i].Id, container.Atoms[i].Id);
             }
-
         }
 
         /// <summary>
         /// Test of aromatizeMolecule method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestAromatizeMolecule()
@@ -86,12 +79,10 @@ namespace NCDK.Normalize
 
         /// <summary>
         /// Test of getExplicitHydrogenCount method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetExplicitHydrogenCount()
         {
-
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
@@ -112,12 +103,10 @@ namespace NCDK.Normalize
 
         /// <summary>
         /// Test of getImplicitHydrogenCount method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetImplicitHydrogenCount()
         {
-
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
@@ -162,7 +151,6 @@ namespace NCDK.Normalize
 
         /// <summary>
         /// Test of removeHydrogensAndPreserveAtomID method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensAndPreserveAtomID()
@@ -197,7 +185,6 @@ namespace NCDK.Normalize
 
         /// <summary>
         /// Test of convertExplicitToImplicitHydrogens method, of class SMSDNormalizer.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestConvertExplicitToImplicitHydrogens()
@@ -212,7 +199,6 @@ namespace NCDK.Normalize
 
         /// <summary>
         /// Test of percieveAtomTypesAndConfigureAtoms method, of class SMSDNormalizer.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestPercieveAtomTypesAndConfigureAtoms()

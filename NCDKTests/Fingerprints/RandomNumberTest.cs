@@ -24,14 +24,13 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
-    /// Unit tests for the {@link RandomNumber}.
-    ///
+    /// Unit tests for the <see cref="RandomNumber"/>.
+    /// </summary>
     // @author John May
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class RandomNumberTest
     {

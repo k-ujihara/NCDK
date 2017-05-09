@@ -31,21 +31,15 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the writer MOL2 writer from smiles.
-    ///
-    // @cdk.module test-smiles
-    // @see org.openscience.cdk.io.Mol2Writer
     /// </summary>
+    /// <seealso cref="Mol2Writer"/>
+    // @cdk.module test-smiles
     [TestClass()]
     public class SMILES2Mol2WriterTest
     {
-
         private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        /// <exception cref="CDKException"></exception>
-        // @throws IOException
         // @cdk.bug 2675188
-        /// </summary>
         [TestMethod()]
         public void TestWriter1()
         {

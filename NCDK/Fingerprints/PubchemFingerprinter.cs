@@ -27,7 +27,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates a Pubchem fingerprint for a molecule.
@@ -39,7 +39,7 @@ namespace NCDK.Fingerprint
     /// </summary>
     /// <example>
     /// A fingerprint is generated for an <see cref="IAtomContainer"/> with this code: 
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.PubchemFingerprinter_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprints.PubchemFingerprinter_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// <note type="note">

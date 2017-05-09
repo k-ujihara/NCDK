@@ -38,7 +38,6 @@ namespace NCDK.IO.CML
     /// TestCase for the reading CML 2 files using a few test files in data/cmltest.
     /// </summary>
     // @cdk.module test-libiocml
-    // @cdk.require java1.5+
     [TestClass()]
     public class CML2WriterTest : CDKTestCase
     {

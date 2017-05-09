@@ -31,11 +31,9 @@ using NCDK.Tools.Manipulator;
 using System.Collections;
 using NCDK.Smiles;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public abstract class AbstractFixedLengthFingerprinterTest : AbstractFingerprinterTest
     {
@@ -47,9 +45,7 @@ namespace NCDK.Fingerprint
             return c;
         }
 
-        /// <summary>
         // @cdk.bug 706786
-        /// </summary>
         [TestMethod()]
         public virtual void TestBug706786()
         {
@@ -71,9 +67,7 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(subBS, And(superBS, subBS)));
         }
 
-        /// <summary>
         // @cdk.bug 853254
-        /// </summary>
         [TestMethod()]
         public void TestBug853254()
         {
@@ -104,9 +98,8 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Fingerprint not subset.
-        ///
-        // @cdk.bug 934819
         /// </summary>
+        // @cdk.bug 934819
         [TestMethod()]
         public virtual void TestBug934819()
         {
@@ -129,9 +122,8 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Problems with different aromaticity concepts.
-        ///
-        // @cdk.bug 771485
         /// </summary>
+        // @cdk.bug 771485
         [TestMethod()]
         public void TestBug771485()
         {
@@ -174,10 +166,9 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Fingerprinter gives different fingerprints for same molecule.
-        ///
+        /// </summary>
         // @cdk.bug 931608
         // @cdk.bug 934819
-        /// </summary>
         [TestMethod()]
         public void TestBug931608()
         {
@@ -208,10 +199,10 @@ namespace NCDK.Fingerprint
         }
 
         /// <summary>
-        /// data/mdl/bug70786-1.mol
+        /// NCDK.Data.MDL.bug70786-1.mol
         /// CC(=O)C1=CC2=C(OC(C)(C)[C@@H](O)[C@@H]2O)C=C1
-        // @cdk.inchi InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
         public static IAtomContainer Bug706786_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -310,10 +301,10 @@ namespace NCDK.Fingerprint
         }
 
         /// <summary>
-        /// data/mdl/bug706786-2.mol
+        /// NCDK.Data.MDL.bug706786-2.mol
         /// C1COC2=CC=CC=C2C1
-        // @cdk.inchi InChI=1/C9H10O/c1-2-6-9-8(4-1)5-3-7-10-9/h1-2,4,6H,3,5,7H2
         /// </summary>
+        // @cdk.inchi InChI=1/C9H10O/c1-2-6-9-8(4-1)5-3-7-10-9/h1-2,4,6H,3,5,7H2
         public static IAtomContainer Bug706786_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -378,8 +369,8 @@ namespace NCDK.Fingerprint
         /// <summary>
         /// /data/mdl/bug934819_1.mol
         /// [O-][N+](=O)C1=CC=CS1
-        // @cdk.inchi InChI=1/C4H3NO2S/c6-5(7)4-2-1-3-8-4/h1-3H
         /// </summary>
+        // @cdk.inchi InChI=1/C4H3NO2S/c6-5(7)4-2-1-3-8-4/h1-3H
         public static IAtomContainer Bug934819_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -434,8 +425,8 @@ namespace NCDK.Fingerprint
         /// <summary>
         /// /data/mdl/bug934819-2.mol
         /// CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O
-        // @cdk.inchi InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
         /// </summary>
+        // @cdk.inchi InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
         public static IAtomContainer Bug934819_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;

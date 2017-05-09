@@ -22,19 +22,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
-using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
+using NCDK.Common.Base;
+using NCDK.Common.Collections;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System.Collections;
 using System;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @cdk.module test-fingerprint
     [TestClass()]

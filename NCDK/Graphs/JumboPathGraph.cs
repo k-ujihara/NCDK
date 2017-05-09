@@ -269,7 +269,7 @@ namespace NCDK.Graphs
             /// <param name="v">anOther endpoint</param>
             /// <param name="size"></param>
             public SimpleEdge(int u, int v, int size)
-                : base(u, v, new BitArray(size)) // fixed CDK's bug. EMPTY_SET is not value type.
+                : base(u, v, new BitArray(size)) // last parameter will be cloned in Union method.
             {
             }
 

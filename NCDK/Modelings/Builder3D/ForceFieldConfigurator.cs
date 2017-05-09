@@ -30,7 +30,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     ///  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
@@ -120,7 +120,7 @@ namespace NCDK.Modeling.Builder3D
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2");
                     //f = new File(mm2File);
                     //ReadFile(f);
-                    ins = ResourceLoader.GetAsStream("NCDK.Modeling.ForceField.Data.mm2.prm");
+                    ins = ResourceLoader.GetAsStream("NCDK.Modelings.ForceField.Data.mm2.prm");
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2 ... READY");
                     mm2 = new MM2BasedParameterSetReader();
                     mm2.SetInputStream(ins);
@@ -139,7 +139,7 @@ namespace NCDK.Modeling.Builder3D
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mmff94");
                     //f = new File(mmff94File);
                     //ReadFile(f);
-                    ins = ResourceLoader.GetAsStream("NCDK.Modeling.ForceField.Data.mmff94.prm");
+                    ins = ResourceLoader.GetAsStream("NCDK.Modelings.ForceField.Data.mmff94.prm");
                     mmff94 = new MMFF94BasedParameterSetReader();
 
                     mmff94.SetInputStream(ins);
@@ -307,20 +307,19 @@ namespace NCDK.Modeling.Builder3D
             string bondType;
             foreach (var bond in molecule.Bonds)
             {
-
                 //Debug.WriteLine("bond[" + i + "] properties : " + molecule.Bonds[i].GetProperties());
                 bondType = "0";
                 if (bond.Order == BondOrder.Single)
                 {
                     if ((bond.Atoms[0].AtomTypeName.Equals("Csp2"))
-                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) | (bond.Atoms[1].AtomTypeName
+                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) || (bond.Atoms[1].AtomTypeName
                                     .Equals("C="))))
                     {
                         bondType = "1";
                     }
 
                     if ((bond.Atoms[0].AtomTypeName.Equals("C="))
-                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) | (bond.Atoms[1].AtomTypeName
+                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) || (bond.Atoms[1].AtomTypeName
                                     .Equals("C="))))
                     {
                         bondType = "1";
@@ -416,7 +415,7 @@ namespace NCDK.Modeling.Builder3D
         }
 
         /// <summary>
-        ///  Configures an atom to a mm2 based atom type
+        /// Configures an atom to a mm2 based atom type
         /// </summary>
         /// <param name="atom">atom to be configured</param>
         /// <param name="hoseCode">the 4 sphere hose code of the atom</param>
@@ -443,7 +442,6 @@ namespace NCDK.Modeling.Builder3D
                 "HN+", "OR", "Car", "HE", "NE", "AR", "KR", "XE", "", "", "", "MG", "PTET", "FE", "FE", "NI", "NI",
                 "CO", "CO", "", "", "OX", "OK", "C++", "N=C", "NPD+", "N+=", "N2OX"};
 
-            // fixed CDK's & --> &&
             for (int j = 0; j < atomTypePattern.Count; j++)
             {
                 Regex p = atomTypePattern[j];

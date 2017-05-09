@@ -24,7 +24,7 @@ using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     // @cdk.module test-signature
     // @author maclean

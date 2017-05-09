@@ -20,11 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Xml.Linq;
 
-namespace NCDK.Normalize
+namespace NCDK.Normalizers
 {
-    /// <summary>
     // @cdk.module test-smiles
-    /// </summary>
     [TestClass()]
     public class NormalizerTest : CDKTestCase
     {

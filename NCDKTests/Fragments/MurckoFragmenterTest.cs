@@ -25,7 +25,7 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Linq;
 
-namespace NCDK.Fragment
+namespace NCDK.Fragments
 {
     /// <summary>
     /// Test Murcko fragmenter.

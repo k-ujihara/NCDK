@@ -23,7 +23,7 @@
 using System;
 using System.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Specialized version of the <see cref="Fingerprinter"/> which does not take bond orders

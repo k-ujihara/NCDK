@@ -74,7 +74,6 @@ namespace NCDK.Formula.Rules
                 // return the parameters as used for the rule validation
                 var parameters = new object[]
                 {
-                    // fixed CDK
                     pattern == null ? (IList<double[]>)null : pattern.Isotopes.Select(n => new double[] { n.Mass, n.Intensity }).ToList(),
                     toleranceMass
                 };

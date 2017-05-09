@@ -38,14 +38,10 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @cdk.module test-standard
-    // @cdk.require java1.4+
-    /// </summary>
     [TestClass()]
     public class UniversalIsomorphismTesterTest : CDKTestCase
     {
-
         bool standAlone = false;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
@@ -70,9 +66,7 @@ namespace NCDK.Isomorphisms
 
         }
 
-        /// <summary>
         // @cdk.bug 1708336
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1708336()
         {
@@ -211,9 +205,7 @@ namespace NCDK.Isomorphisms
 
         }
 
-        /// <summary>
         // @cdk.bug 1110537
-        /// </summary>
         [TestMethod()]
         public void TestGetOverlaps_IAtomContainer_IAtomContainer()
         {
@@ -236,9 +228,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(11, ((AtomContainer)list[0]).Atoms.Count);
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestBug2944080()
         {
@@ -255,9 +245,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(9, list[0].Atoms.Count);
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestGetSubgraphAtomsMap_2944080()
         {
@@ -271,9 +259,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(9, maplist.Count);
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestGetSubgraphMap_2944080()
         {
@@ -287,9 +273,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(8, maplist.Count);
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestSearchNoConditions_2944080()
         {
@@ -304,9 +288,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(1, maplist.Count);
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestSearch_2944080()
         {
@@ -332,9 +314,7 @@ namespace NCDK.Isomorphisms
             }
         }
 
-        /// <summary>
         // @cdk.bug 2944080
-        /// </summary>
         [TestMethod()]
         public void TestGetSubgraphAtomsMaps_2944080()
         {
@@ -386,9 +366,7 @@ namespace NCDK.Isomorphisms
             }
         }
 
-        /// <summary>
         // @cdk.bug 999330
-        /// </summary>
         [TestMethod()]
         public void TestSFBug999330()
         {
@@ -455,9 +433,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(uiTester.IsIsomorph(target, query), "C1CCCC1 should be a isomorph of O1C=CC=C1");
         }
 
-        /// <summary>
         // @cdk.bug 1633201
-        /// </summary>
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
@@ -505,10 +481,7 @@ namespace NCDK.Isomorphisms
             Assert.IsFalse(tester.IsIsomorph(query, target), "Single nitrogen and carbon should not match");
         }
 
-        /// <summary>
         // @cdk.bug 2888845
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
@@ -527,10 +500,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(matches, atomMappings);
         }
 
-        /// <summary>
         // @cdk.bug 2888845
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
@@ -556,9 +526,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(matches, atomMappings);
         }
 
-        /// <summary>
         // @cdk.bug 2912627
-        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching3()
         {
@@ -618,10 +586,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(duration < 2000 * 10000);  // 1 msec = 10000 ticks
         }
 
-        /// <summary>
         // @cdk.bug 3513335
-        // @
-        /// </summary>
         [TestMethod()]
         public void TestUITSymmetricMatch()
         {

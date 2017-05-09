@@ -24,10 +24,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Tools;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
-    /// Checks the functionality of {@link #ForceFieldConfigurator}.
+    /// Checks the functionality of <see cref="forceFieldConfigurator"/>.
     /// </summary>
     // @author danielszisz
     // @version 09/05/2012

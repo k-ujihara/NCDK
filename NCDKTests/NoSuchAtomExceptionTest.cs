@@ -19,19 +19,16 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Exceptions
+namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of the NoSuchAtomException class.
-    ///
-    // @cdk.module test-core
-    ///
-    /// <seealso cref="NoSuchAtomException"/>
     /// </summary>
+    /// <seealso cref="NoSuchAtomException"/>
+    // @cdk.module test-core
     [TestClass()]
     public class NoSuchAtomExceptionTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestNoSuchAtomException_String()
         {

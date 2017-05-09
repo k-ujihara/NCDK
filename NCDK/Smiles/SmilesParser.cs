@@ -652,7 +652,7 @@ namespace NCDK.Smiles
                         case "ran":
                             sgroup.Type = SgroupType.CtabCopolymer;
                             sgroup.PutValue(SgroupKey.CtabSubType, "RAN");
-                            break;  // fixed CDK's bug
+                            break;
                         case "blk":
                             sgroup.Type = SgroupType.CtabCopolymer;
                             sgroup.PutValue(SgroupKey.CtabSubType, "BLO");

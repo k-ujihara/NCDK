@@ -4,10 +4,8 @@ using System.Collections;
 
 namespace NCDK.Graphs
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class PermutorTest
     {

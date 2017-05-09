@@ -33,8 +33,6 @@ namespace NCDK.IO.CML
     /// Helper tool for round tripping CDK classes via CML.
     /// </summary>
     // @cdk.module  test-libiocml
-    // @cdk.require xom-1.0.jar
-    // @cdk.require java1.5+
     public class CMLRoundTripTool : CDKTestCase
     {
         /// <summary>

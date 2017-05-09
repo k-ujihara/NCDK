@@ -28,10 +28,8 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Graphs.Invariant
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class CanonTest
     {
@@ -56,9 +54,8 @@ namespace NCDK.Graphs.Invariant
         /// has a carbons/sulphurs which experience the same environment. We must
         /// consider that they are different (due to their initial label) but not
         /// their environment.
-        ///
-        // @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
         /// </summary>
+        // @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
         [TestMethod()]
         public void Lenthionine_symmetry()
         {

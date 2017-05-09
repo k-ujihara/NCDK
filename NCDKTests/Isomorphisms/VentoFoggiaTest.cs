@@ -31,10 +31,9 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// Simple tests for exact and non exact matching.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class VentoFoggiaTest
     {

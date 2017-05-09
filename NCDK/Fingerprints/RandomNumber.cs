@@ -25,7 +25,7 @@
 using System;
 using NCDK.Maths;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates pseudorandom numbers using the MersenneTwister method from commons-math.

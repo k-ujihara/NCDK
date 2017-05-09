@@ -30,8 +30,6 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace NCDK.Default
 {
@@ -206,7 +204,7 @@ namespace NCDK.Default
             if (this.properties == null)
                 return defaultValue;
             object property;
-            if (properties.TryGetValue(description, out property))
+            if (properties.TryGetValue(description, out property) && property != null)
                 return (T)property;
             return defaultValue;
         }
@@ -445,7 +443,7 @@ namespace NCDK.Silent
             if (this.properties == null)
                 return defaultValue;
             object property;
-            if (properties.TryGetValue(description, out property))
+            if (properties.TryGetValue(description, out property) && property != null)
                 return (T)property;
             return defaultValue;
         }

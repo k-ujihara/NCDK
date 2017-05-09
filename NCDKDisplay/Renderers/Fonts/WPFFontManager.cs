@@ -35,9 +35,6 @@ namespace NCDK.Renderers.Fonts
         /// </summary>
         public Typeface Typeface { get; private set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public double Size { get; private set; }
 
         /// <summary>

@@ -33,10 +33,9 @@ namespace NCDK.IO.Iterator
 {
     /// <summary>
     /// TestCase for the reading MDL mol files using one test file.
-    ///
-    // @cdk.module test-io
-    // @see org.openscience.cdk.io.MDLReader
     /// </summary>
+    /// <seealso cref="MDLReader"/>
+    // @cdk.module test-io
     [TestClass()]
     public class IteratingSDFReaderTest : CDKTestCase
     {
@@ -203,9 +202,7 @@ namespace NCDK.IO.Iterator
             reader.Close();
         }
 
-        /// <summary>
         // @cdk.bug 2692107
-        /// </summary>
         [TestMethod()]
         public void TestZeroZCoordinates()
         {

@@ -1,7 +1,7 @@
 ﻿using NCDK.Templates;
 using System.Collections.Generic;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     class MoleculeSignature_Example
     {

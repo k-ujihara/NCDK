@@ -103,12 +103,7 @@ namespace NCDK.Graphs.InChI
 
             try
             {
-                // fixed CDK's bug
-                var sb = new StringBuilder();
-                foreach (var o in options)
-                    if (o != null)
-                        sb.Append(options).Append(" ");
-                input = new NInchiInputInchi(inchi, sb.ToString());
+                input = new NInchiInputInchi(inchi, options.Select(n => INCHI_OPTION.ValueOfIgnoreCase(n)).ToList());
             }
             catch (NInchiException jie)
             {

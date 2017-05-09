@@ -28,9 +28,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the writing files.
-    ///
-    // @cdk.module test-libiocml
     /// </summary>
+    // @cdk.module test-libiocml
     [TestClass()]
     public class CMLWriterFactoryTest
     {

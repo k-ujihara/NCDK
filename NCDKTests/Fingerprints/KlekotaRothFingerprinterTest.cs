@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @cdk.module test-fingerprint
     [TestClass()]

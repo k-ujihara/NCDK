@@ -30,7 +30,7 @@ using System.Diagnostics;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using NCDK.Util.Xml;
+using NCDK.Utils.Xml;
 
 namespace NCDK.IO
 {

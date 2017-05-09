@@ -147,7 +147,6 @@ namespace NCDK.Layout
                 Molecule.GetBond(atom, placedNeighbours.Atoms[0]).IsInRing &&
                 Molecule.GetBond(atom, placedNeighbours.Atoms[1]).IsInRing)
             {
-
                 int numTerminal = 0;
                 foreach (var unplaced in unplacedNeighbours.Atoms)
                     if (Molecule.GetConnectedAtoms(unplaced).Count() == 1)
@@ -213,10 +212,10 @@ namespace NCDK.Layout
             {
                 try
                 {
-                    Debug.WriteLine("distributePartners->sortedAtoms[0]: ", (Molecule.Atoms.IndexOf(sortedAtoms[0]) + 1));
-                    Debug.WriteLine("distributePartners->sortedAtoms[1]: ", (Molecule.Atoms.IndexOf(sortedAtoms[1]) + 1));
-                    Debug.WriteLine("distributePartners->angle1: ", Vectors.RadianToDegree(angle1));
-                    Debug.WriteLine("distributePartners->angle2: ", Vectors.RadianToDegree(angle2));
+                    Debug.WriteLine($"distributePartners->sortedAtoms[0]: {(Molecule.Atoms.IndexOf(sortedAtoms[0]) + 1)}");
+                    Debug.WriteLine($"distributePartners->sortedAtoms[1]: {(Molecule.Atoms.IndexOf(sortedAtoms[1]) + 1)}");
+                    Debug.WriteLine($"distributePartners->angle1: {Vectors.RadianToDegree(angle1)}");
+                    Debug.WriteLine($"distributePartners->angle2: {Vectors.RadianToDegree(angle2)}");
                 }
                 catch (Exception exc)
                 {
@@ -236,7 +235,6 @@ namespace NCDK.Layout
                     // 12 o'clock is between the two vectors
                     startAtom = sortedAtoms[0];
                 }
-
             }
             else
             {
@@ -256,16 +254,15 @@ namespace NCDK.Layout
             {
                 try
                 {
-                    Debug.WriteLine("distributePartners->startAtom: " + (Molecule.Atoms.IndexOf(startAtom) + 1));
-                    Debug.WriteLine("distributePartners->remainingAngle: " + Vectors.RadianToDegree(remainingAngle));
-                    Debug.WriteLine("distributePartners->addAngle: " + Vectors.RadianToDegree(addAngle));
-                    Debug.WriteLine("distributePartners-> partners.Atoms.Count: " + unplacedNeighbours.Atoms.Count);
+                    Debug.WriteLine($"distributePartners->startAtom: {(Molecule.Atoms.IndexOf(startAtom) + 1)}");
+                    Debug.WriteLine($"distributePartners->remainingAngle: {Vectors.RadianToDegree(remainingAngle)}");
+                    Debug.WriteLine($"distributePartners->addAngle: {Vectors.RadianToDegree(addAngle)}");
+                    Debug.WriteLine($"distributePartners-> partners.Atoms.Count: {unplacedNeighbours.Atoms.Count}");
                 }
                 catch (Exception exc)
                 {
                     Debug.WriteLine(exc);
                 }
-
             }
             for (int f = 0; f < unplacedNeighbours.Atoms.Count; f++)
             {
@@ -274,7 +271,7 @@ namespace NCDK.Layout
             radius = bondLength;
             startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - atom.Point2D.Value.X, startAtom.Point2D.Value.Y
                     - atom.Point2D.Value.Y);
-            Debug.WriteLine("Before check: distributePartners->startAngle: " + startAngle);
+            Debug.WriteLine($"Before check: distributePartners->startAngle: {startAngle}");
             //        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
             //            -0.001))
             //        {
@@ -728,7 +725,6 @@ namespace NCDK.Layout
             {
                 ac.Atoms[f].IsPlaced = false;
             }
-
         }
 
         /// <summary>

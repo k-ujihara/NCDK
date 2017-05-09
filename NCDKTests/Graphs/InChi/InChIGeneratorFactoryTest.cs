@@ -30,13 +30,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs.InChI
 {
-    /// <summary>
     // @cdk.module test-inchi
-    /// </summary>
     [TestClass()]
     public class InChIGeneratorFactoryTest
     {
-
         [TestMethod()]
         public void TestInstance()
         {
@@ -158,7 +155,6 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestSMILESConversion_TopologicalCentre()
         {
-
             // (2R,3R,4S,5R,6S)-3,5-dimethylheptane-2,4,6-triol
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.ParseSmiles("C[C@@H](O)[C@@H](C)[C@@H](O)[C@H](C)[C@H](C)O");
@@ -178,7 +174,6 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestInChIGenerator_AromaticBonds()
         {
-
             try
             {
                 // create a fairly complex aromatic molecule

@@ -29,7 +29,7 @@ using System.Xml.Schema;
 using NCDK.IO.InChI;
 using System.Diagnostics;
 using System.Xml.Linq;
-using NCDK.Util.Xml;
+using NCDK.Utils.Xml;
 
 namespace NCDK.IO
 {

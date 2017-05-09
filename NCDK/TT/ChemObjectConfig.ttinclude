@@ -109,7 +109,7 @@
             if (this.properties == null)
                 return defaultValue;
             object property;
-            if (properties.TryGetValue(description, out property))
+            if (properties.TryGetValue(description, out property) && property != null)
                 return (T)property;
             return defaultValue;
         }

@@ -4,10 +4,8 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public class TotalHCountAtomTest
     {

@@ -24,15 +24,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// Checks the functionality of the IsomorphismTester
-    ///
-    // @cdk.module test-smarts
     /// </summary>
+    // @cdk.module test-smarts
     [TestClass()]
     public class AnyOrderQueryBondTest : CDKTestCase
     {
-        /// <summary>
         // @cdk.bug 1305
-        /// </summary>
         [TestMethod()]
         public void TestMatches()
         {

@@ -36,10 +36,11 @@ namespace NCDK.Reactions.Types
         /// <inheritdoc/>
         public abstract IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents);
 
-        internal delegate bool CheckReactantAtom(IAtomContainer mol, IAtom atom);
+        internal delegate bool CheckReactant(IAtomContainer reactant);
+        internal delegate bool CheckReactantAtom(IAtomContainer reactant, IAtom atom);
         internal delegate bool CheckAtom(IAtom atom);
         
-        internal IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
+        internal IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents, CheckReactant checkReactant, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
         {
             CheckInitiateParams(reactants, agents);
 
@@ -48,7 +49,7 @@ namespace NCDK.Reactions.Types
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant, checkReatantAtom, checkAtom);
+            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant, checkReactant, checkReatantAtom, checkAtom);
 
             foreach (var atomi in reactant.Atoms)
             {
@@ -102,8 +103,10 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
         
-        private void SetActiveCenters(IAtomContainer reactant, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
+        private void SetActiveCenters(IAtomContainer reactant, CheckReactant checkReatant, CheckReactantAtom checkReatantAtom, CheckAtom checkAtom)
         {
+            if (checkReatant != null && !checkReatant(reactant)) return;
+
             foreach (var atomi in reactant.Atoms)
             {
                 if (checkReatantAtom(reactant, atomi))

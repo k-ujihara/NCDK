@@ -25,9 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.ForceField.MMFF
 {
-    /// <summary>
     // @author John May
-    /// </summary>
     [TestClass()]
     public class MmffParamSetTest
     {

@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     // @author jonalv
     // @cdk.module     standard

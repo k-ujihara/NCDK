@@ -3,14 +3,11 @@ using Moq;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class SeedGeneratorTest
     {
-
         [TestMethod()]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void TestConstruct_Null()
@@ -21,7 +18,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestGenerate()
         {
-
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
             var m_encoder = new Mock<IAtomEncoder>(); var encoder = m_encoder.Object;
@@ -64,7 +60,6 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestGenerate_SizeSeeding()
         {
-
             var m_m1 = new Mock<IAtomContainer>(); var m1 = m_m1.Object;
             var m_m2 = new Mock<IAtomContainer>(); var m2 = m_m2.Object;
 

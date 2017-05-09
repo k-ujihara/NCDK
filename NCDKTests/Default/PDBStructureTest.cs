@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the PDBStructure class.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="PDBStructure"/>
     /// </summary>
+    /// <seealso cref="PDBStructure"/>
+    // @cdk.module test-data
     [TestClass()]
     public class PDBStructureTest : AbstractPDBStructureTest
     {

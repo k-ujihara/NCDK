@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Ring class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.Ring
     /// </summary>
+    // @cdk.module test-data
+    // @see org.openscience.cdk.Ring
     [TestClass()]
     public class RingTest
         : AbstractRingTest
@@ -46,7 +44,8 @@ namespace NCDK.Default
         }
 
         //[TestMethod()]
-        //public void TestRing_int() {
+        //public void TestRing_int()
+        //{
         //    IRing r = new Ring(5); // This does not create a ring!
         //    Assert.AreEqual(0, r.Atoms.Count);
         //    Assert.AreEqual(0, r.Bonds.Count);

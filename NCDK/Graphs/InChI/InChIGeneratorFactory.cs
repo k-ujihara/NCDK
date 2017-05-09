@@ -114,7 +114,7 @@ namespace NCDK.Graphs.InChI
         /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
         public InChIGenerator GetInChIGenerator(IAtomContainer container, IList<INCHI_OPTION> options)
         {
-            if (options == null) throw new ArgumentException("Null options");
+            if (options == null) throw new ArgumentNullException(nameof(options));
             return (new InChIGenerator(container, options, IgnoreAromaticBonds));
         }
 

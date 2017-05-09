@@ -24,7 +24,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-
 using System;
 using System.IO;
 using System.Linq;
@@ -34,9 +33,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for reading CML files.
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public class CMLReaderTest : SimpleChemObjectReaderTest
     {
@@ -61,9 +59,8 @@ namespace NCDK.IO
         /// <summary>
         /// Ensure stereoBond content is read if the usual "dictRef" attribute is not
         /// supplied
-        ///
-        // @cdk.bug 1248
         /// </summary>
+        // @cdk.bug 1248
         [TestMethod()]
         public void TestBug1248()
         {
@@ -97,9 +94,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Ensure correct atomic numbers are read and does not default to 1
-        ///
-        // @cdk.bug 1245
         /// </summary>
+        // @cdk.bug 1245
         [TestMethod()]
         public void TestBug1245()
         {
@@ -126,7 +122,6 @@ namespace NCDK.IO
                         atom.AtomicNumber,
                         "Incorrect atomic number");
                 }
-
             }
             finally
             {
@@ -138,8 +133,7 @@ namespace NCDK.IO
         /// Ensures that when multiple stereo is set the dictRef is favoured
         /// and the charContent is not used. Here is an example of what we expect
         /// to read.
-        ///
-        /// <pre>{@code
+        /// <pre>
         /// <bond atomRefs2="a1 a4" order="1">
         ///     <bondStereo dictRef="cml:W"/> <!-- should be W -->
         /// </bond>
@@ -155,11 +149,10 @@ namespace NCDK.IO
         /// <bond atomRefs2="a1 a4" order="1">
         ///    <bondStereo dictRef="cml:W">H</bondStereo> <!-- should be W -->
         /// </bond>
-        /// }</pre>
-        ///
-        // @cdk.bug 1274
-        /// <seealso cref="TestBug1248"/>
+        /// </pre>
         /// </summary>
+        /// <seealso cref="TestBug1248"/>
+        // @cdk.bug 1274
         [TestMethod()]
         public void TestBug1274()
         {
@@ -184,7 +177,6 @@ namespace NCDK.IO
                 Assert.AreEqual(BondStereo.None, container.Bonds[0].Stereo, "expected non-stereo bond");
                 Assert.AreEqual(BondStereo.Down, container.Bonds[1].Stereo, "expected Hatch (Down) Bond");
                 Assert.AreEqual(BondStereo.None, container.Bonds[2].Stereo, "expected non-stereo bond");
-
             }
             finally
             {
@@ -193,14 +185,12 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Ensures that {@code <bondStereo dictRef="cml:"/>} doesn't cause an exception
-        ///
-        // @cdk.bug 1275
+        /// Ensures that <pre><bondStereo dictRef="cml:"/></pre> doesn't cause an exception
         /// </summary>
+        // @cdk.bug 1275
         [TestMethod()]
         public void TestBug1275()
         {
-
             var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
             CMLReader reader = new CMLReader(ins);
             try

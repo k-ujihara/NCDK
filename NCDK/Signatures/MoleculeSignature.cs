@@ -23,7 +23,7 @@
 using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     /// <summary>
     /// <para>
@@ -56,7 +56,7 @@ namespace NCDK.Signature
     /// </remarks>
     /// <example>
     /// So, for example, to get the canonical signature for a molecule:
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Signature.MoleculeSignature_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Signatures.MoleculeSignature_Example.cs"]/*' />
     /// it is also possible to get AtomSignatures using the <see cref="SignatureForVertex(int)"/> method
     /// - which is just a convenience method equivalent to calling the constructor of
     /// an <see cref="AtomSignature"/> class.

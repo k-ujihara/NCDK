@@ -47,6 +47,7 @@ namespace NCDK.Reactions.Types
         public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
             return base.Initiate(reactants, agents,
+                null,
                 (mol, atom) => (atom.FormalCharge ?? 0) == 0 && mol.GetConnectedLonePairs(atom).Any(),
                 atom => (atom.FormalCharge ?? 0) >= 0);
         }

@@ -39,10 +39,6 @@ namespace NCDK.Graphs.Invariant
     [TestClass()]
     public class EquivalentClassPartitionerTest : CDKTestCase
     {
-        AtomContainer C40C3V = null;
-        AtomContainer C24D6D = null;
-        AtomContainer C28TD = null;
-
         [TestMethod()]
         public void TestEquivalent()
         {

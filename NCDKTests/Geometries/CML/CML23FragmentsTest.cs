@@ -34,12 +34,10 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
-    /// as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
-    ///
-    // @cdk.module test-io
-    ///
-    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// as can be determined in NCDK.IO.CML.cml23TestFramework.xml.
     /// </summary>
+    // @cdk.module test-io
+    // @author Egon Willighagen <egonw@sci.kun.nl>
     [TestClass()]
     public class CML23FragmentsTest : CDKTestCase
     {
@@ -374,9 +372,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.Title));
         }
 
-        /// <summary>
         // @cdk.bug 2142400
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount1()
         {
@@ -392,9 +388,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(4, atom.ImplicitHydrogenCount.Value);
         }
 
-        /// <summary>
         // @cdk.bug 2142400
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount2()
         {
@@ -416,9 +410,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, atom.ImplicitHydrogenCount.Value);
         }
 
-        /// <summary>
         // @cdk.bug 2142400
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount3()
         {

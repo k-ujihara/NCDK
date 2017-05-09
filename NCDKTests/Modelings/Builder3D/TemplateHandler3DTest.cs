@@ -20,7 +20,7 @@
 using NCDK.Common.Base;
 using NCDK.Common.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.RingSearches;
 using NCDK.Templates;
@@ -29,7 +29,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     // @cdk.module test-builder3d
     // @author      chhoppe

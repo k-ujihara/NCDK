@@ -18,7 +18,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Fragment;
+using NCDK.Fragments;
 using NCDK.QSAR.Result;
 using System.Linq;
 

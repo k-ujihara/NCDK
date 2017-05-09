@@ -27,12 +27,10 @@ namespace NCDK.Default
 {
     /// <summary>
     /// TestCase for the AminoAcid class.
-    ///
+    /// </summary>
     // @cdk.module test-data
-    ///
     // @author  Edgar Luttman <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-09
-    /// </summary>
     [TestClass()]
     public class AminoAcidTest
         : AbstractAminoAcidTest

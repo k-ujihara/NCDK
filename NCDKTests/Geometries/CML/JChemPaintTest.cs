@@ -31,9 +31,8 @@ namespace NCDK.IO.CML
     /// TestCase for reading CML files using a few test files
     /// in data/cmltest as found in the JChemPaint distribution
     /// (http://jchempaint.sf.org/).
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public class JChemPaintTest : CDKTestCase
     {

@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link PDBAtom}.
+    /// Checks the functionality of the <see cref="PDBAtom"/>.
     ///
     // @cdk.module test-silent
     /// </summary>

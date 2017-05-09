@@ -109,10 +109,10 @@ namespace NCDK.Numerics
         {
             Matrix3x2 result;
 
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
+            result.M11 = 1;
+            result.M12 = 0;
+            result.M21 = 0;
+            result.M22 = 1;
 
             result.M31 = position.X;
             result.M32 = position.Y;
@@ -130,10 +130,10 @@ namespace NCDK.Numerics
         {
             Matrix3x2 result;
 
-            result.M11 = 1.0f;
-            result.M12 = 0.0f;
-            result.M21 = 0.0f;
-            result.M22 = 1.0f;
+            result.M11 = 1;
+            result.M12 = 0;
+            result.M21 = 0;
+            result.M22 = 1;
 
             result.M31 = xPosition;
             result.M32 = yPosition;
@@ -152,11 +152,11 @@ namespace NCDK.Numerics
             Matrix3x2 result;
 
             result.M11 = xScale;
-            result.M12 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0;
+            result.M21 = 0;
             result.M22 = yScale;
-            result.M31 = 0.0f;
-            result.M32 = 0.0f;
+            result.M31 = 0;
+            result.M32 = 0;
 
             return result;
         }
@@ -176,8 +176,8 @@ namespace NCDK.Numerics
             double ty = centerPoint.Y * (1 - yScale);
 
             result.M11 = xScale;
-            result.M12 = 0.0f;
-            result.M21 = 0.0f;
+            result.M12 = 0;
+            result.M21 = 0;
             result.M22 = yScale;
             result.M31 = tx;
             result.M32 = ty;

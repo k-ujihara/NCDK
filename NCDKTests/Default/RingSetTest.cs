@@ -23,11 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the RingSet class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.RingSet
     /// </summary>
+    // @cdk.module test-data
+    // @see org.openscience.cdk.RingSet
     [TestClass()]
     public class RingSetTest : AbstractRingSetTest
     {

@@ -23,7 +23,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;

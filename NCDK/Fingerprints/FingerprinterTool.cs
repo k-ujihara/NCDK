@@ -26,7 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Tool with helper methods for IFingerprint.
@@ -44,7 +44,7 @@ namespace NCDK.Fingerprint
         /// substructure of bs1. 
         /// </summary>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.FingerprinterTool_Example.cs+IsSubset"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprints.FingerprinterTool_Example.cs+IsSubset"]/*' />
         /// </example>
         /// <param name="bs1">The reference <see cref="BitArray"/></param>
         /// <param name="bs2">The <see cref="BitArray"/> which is compared with bs1</param>

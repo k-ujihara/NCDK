@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Version 1.0.3.0 was released on 2017-05-08.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Changes in This Release</title>
+      <content>
+
+        <list class="bullet">
+          <listItem>
+            <para>Fixed InChI bugs.</para>
+          </listItem>
+          <listItem>
+            <para>Cleanup.</para>
+          </listItem>
+
+        </list>
+
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+    </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>

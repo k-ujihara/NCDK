@@ -2,7 +2,7 @@
 using NCDK.Silent;
 using System;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
     [TestClass]
     public class PubchemFingerprinter_Example

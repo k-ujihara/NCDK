@@ -20,7 +20,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
@@ -35,19 +34,15 @@ namespace NCDK.Geometries
 {
     /// <summary>
     /// This class defines regression tests that should ensure that the source code
-    /// of the {@link org.openscience.cdk.geometry.GeometryUtil} is not broken.
-    ///
+    /// of the <see cref="GeometryUtil"/> is not broken.
+    /// </summary>
+    /// <seealso cref="GeometryUtil"/>
     // @cdk.module test-standard
-    ///
     // @author     Egon Willighagen
     // @cdk.created    2004-01-30
-    ///
-    // @see org.openscience.cdk.geometry.GeometryUtil
-    /// </summary>
     [TestClass()]
     public class GeometryUtilTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestHas2DCoordinates_IAtomContainer()
         {
@@ -91,9 +86,7 @@ namespace NCDK.Geometries
             Assert.IsFalse(GeometryUtil.Has2DCoordinates(container));
         }
 
-        /// <summary>
         // @cdk.bug 2936440
-        /// </summary>
         [TestMethod()]
         public void TestHas2DCoordinates_With000()
         {
@@ -117,7 +110,6 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void Get2DCoordinateCoverage_Partial()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -132,13 +124,11 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get2DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
         public void Get2DCoordinateCoverage_Full()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -154,13 +144,11 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get2DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
         public void Get2DCoordinateCoverage_None_3D()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -176,7 +164,6 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
@@ -273,7 +260,7 @@ namespace NCDK.Geometries
             Assert.AreEqual(minmax[3], 1d, .1);
         }
 
-        /// <summary>@cdk.bug 2094881</summary>
+        // @cdk.bug 2094881
         [TestMethod()]
         public void TestGetMinMax2()
         {
@@ -493,7 +480,6 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void Get3DCoordinateCoverage_Partial()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -508,13 +494,11 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get3DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
         public void Get3DCoordinateCoverage_Full()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -530,13 +514,11 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get3DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
         public void Get3DCoordinateCoverage_None_2D()
         {
-
             IAtomContainer container = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
@@ -552,7 +534,6 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom3);
 
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(container));
-
         }
 
         [TestMethod()]
@@ -665,9 +646,8 @@ namespace NCDK.Geometries
         /// <summary>
         /// Unit tests that tests the situation where two vertical two-atom
         /// molecules are with the same x coordinates.
-        ///
-        // @ Thrown when the cloning failed.
         /// </summary>
+        // @ Thrown when the cloning failed.
         [TestMethod()]
         public void TestShiftContainerHorizontal_Two_vertical_molecules()
         {
@@ -780,9 +760,8 @@ namespace NCDK.Geometries
         /// <summary>
         /// Unit tests that tests the situation where two horizontal two-atom
         /// molecules are with the same y coordinates.
-        ///
-        // @ Thrown when the cloning failed.
         /// </summary>
+        // @ Thrown when the cloning failed.
         [TestMethod()]
         public void TestShiftReactionVertical_Two_horizontal_molecules()
         {

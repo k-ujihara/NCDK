@@ -29,7 +29,13 @@ namespace NCDK.Tools.Manipulator
     /// Class with convenience methods that provide methods to manipulate 
     /// <see cref="IAtomContainer"/>'s <see cref="IBond"/>. 
     /// </summary>
-    // fixed CDK's invalid comment
+    /// <example>
+    /// <code>
+    /// AtomContainerManipulator.ReplaceAtomByAtom(container, atom1, atom2);
+    /// </code>
+    /// will replace the Atom in the AtomContainer, but in all the ElectronContainer's
+    /// it participates too.
+    /// </example>
     // @cdk.module  core
     // @cdk.githash
     // @author  Egon Willighagen
@@ -44,7 +50,7 @@ namespace NCDK.Tools.Manipulator
             IAtom[] ret = new IAtom[container.Atoms.Count];
             for (int i = 0; i < ret.Length; ++i)
                 ret[i] = container.Atoms[i];
-            return ret;
+            return ret; 
         }
 
         /// <summary>

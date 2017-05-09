@@ -22,7 +22,7 @@
  */
 using NCDK.FaulonSignatures;
 
-namespace NCDK.Signature
+namespace NCDK.Signatures
 {
     /// <summary>
     /// Builds a molecule from a signature.

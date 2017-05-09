@@ -68,7 +68,7 @@ namespace NCDK.Reactions
         {
             get
             {
-                if (!hashMapChain.ContainsValue(position)) return null; // fixed CDK's bug
+                if (!hashMapChain.ContainsValue(position)) return null;
 
                 foreach (var entry in hashMapChain)
                 {

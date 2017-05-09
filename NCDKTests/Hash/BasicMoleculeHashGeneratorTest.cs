@@ -24,26 +24,29 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace NCDK.Hash {
-    /// <summary>
+namespace NCDK.Hash
+{
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
-    public class BasicMoleculeHashGeneratorTest {
-
-        [TestMethod()][ExpectedException(typeof(System.ArgumentNullException))]
-        public void TestConstruct_Null() {
+    public class BasicMoleculeHashGeneratorTest
+    {
+        [TestMethod()]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void TestConstruct_Null()
+        {
             new BasicMoleculeHashGenerator(null);
         }
 
-        [TestMethod()][ExpectedException(typeof(System.ArgumentNullException))]
-        public void TestConstruct_NullPRNG() {
+        [TestMethod()]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void TestConstruct_NullPRNG()
+        {
             new BasicMoleculeHashGenerator(new Mock<IAtomHashGenerator>().Object, null);
         }
 
         [TestMethod()]
-        public void TestGenerate() {
-
+        public void TestGenerate()
+        {
             var m_atomGenerator = new Mock<IAtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
             var m_prng = new Mock<Pseudorandom>(); var prng = m_prng.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
@@ -63,12 +66,11 @@ namespace NCDK.Hash {
             long expected = 2147483647L ^ 1L ^ 1L ^ 1L ^ 1L;
 
             Assert.AreEqual(expected, hashCode);
-
         }
 
         [TestMethod()]
-        public void TestGenerate_Rotation() {
-
+        public void TestGenerate_Rotation()
+        {
             var m_atomGenerator = new Mock<IAtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
             Xorshift xorshift = new Xorshift();
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;

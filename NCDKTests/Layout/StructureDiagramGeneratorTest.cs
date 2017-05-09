@@ -38,8 +38,8 @@ namespace NCDK.Layout
     ///  A set of test cases for the StructureDiagramGenerator
     /// </summary>
     // @cdk.module test-sdg
-    ///@author     steinbeck
-    ///@cdk.created    August 29, 2003
+    // @author     steinbeck
+    // @cdk.created    August 29, 2003
     [TestClass()]
     public class StructureDiagramGeneratorTest : CDKTestCase
     {
@@ -70,10 +70,6 @@ namespace NCDK.Layout
 
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
-        /// <exception cref="Exception">thrown if something goes wrong</exception>
         // @cdk.bug 1670871
         [TestMethod()]
         [Timeout(5000)]
@@ -179,7 +175,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <exception cref="Exception"> thrown if something goes wrong</exception>
         // @cdk.bug 1670871
         [TestMethod()]
         [Timeout(5000)]
@@ -581,9 +576,7 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /// <summary>
         // @cdk.bug 1750968
-        /// </summary>
         public IAtomContainer MakeBug1750968()
         {
             string filename = "NCDK.Data.MDL.bug_1750968.mol";
@@ -613,8 +606,8 @@ namespace NCDK.Layout
         ///   at org.openscience.cdk.layout.StructureDiagramGenerator.GenerateCoordinates(StructureDiagramGenerator.java:445)
         ///
         /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-        // @cdk.bug 1772609
         /// </summary>
+        // @cdk.bug 1772609
         [TestMethod()]
         [Timeout(5000)]
         public void TestNPEWithBridgedRingsBug1772609()
@@ -648,9 +641,8 @@ namespace NCDK.Layout
         /// Fixed by correcting the safteyCounter check.
         ///
         /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-        /// <exception cref="Exception">is thown if something goes wrong</exception>
-        // @cdk.bug 1784850
         /// </summary>
+        // @cdk.bug 1784850
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1784850InfiniteLoop()
@@ -672,10 +664,8 @@ namespace NCDK.Layout
         /// <summary>
         /// For the SMILES compound below (the largest molecule in Chembl) a
         /// handful of atoms had invalid (NaN) Double coordinates.
-        ///
-        /// <exception cref="Exception">if the test failed</exception>
-        // @cdk.bug 2842445
         /// </summary>
+        // @cdk.bug 2842445
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug2843445NaNCoords()
@@ -711,10 +701,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// The following SMILES compound gets null cordinates.
-        ///
+        /// </summary>
         /// <exception cref="Exception">if the test failed</exception>
         // @cdk.bug 1234
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
@@ -735,19 +724,16 @@ namespace NCDK.Layout
                 }
             }
             Assert.AreEqual(0, invalidCoordCount, "No 2d coordinates should be null");
-
         }
 
         /// <summary>
         /// Tests case where calling generateExperimentalCoordinates threw an NPE.
-        ///
-        // @cdk.bug 1269
         /// </summary>
+        // @cdk.bug 1269
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1269()
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string smiles = "O=C(O)[C@H](N)C"; // L-alanine, but any [C@H] will do
             IAtomContainer mol = sp.ParseSmiles(smiles);
@@ -758,14 +744,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Does the SDG handle non-connected molecules?
-        ///
-        // @cdk.bug 1279
         /// </summary>
+        // @cdk.bug 1279
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1279()
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string smiles = "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
 
@@ -779,7 +763,6 @@ namespace NCDK.Layout
         [TestMethod()]
         public void AlleneWithImplHDoesNotCauseNPE()
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string smiles = "CC=[C@]=CC";
 
@@ -791,7 +774,6 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PyrroleWithIdentityTemplate()
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string smiles = "C1=CNC=C1";
 
@@ -815,7 +797,6 @@ namespace NCDK.Layout
         [TestMethod()]
         public void PyrroleWithoutIdentityTemplate()
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             string smiles = "C1=CNC=C1";
 

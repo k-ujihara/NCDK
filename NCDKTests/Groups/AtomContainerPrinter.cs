@@ -5,13 +5,10 @@ using System.Text;
 
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-group
-    /// </summary>
     public class AtomContainerPrinter
     {
-
         public static void Print(IAtomContainer atomContainer)
         {
             Console.Out.WriteLine(AtomContainerPrinter.ToString(atomContainer));

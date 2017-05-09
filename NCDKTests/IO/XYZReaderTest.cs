@@ -28,11 +28,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for the reading XYZ files using a test file.
-    ///
-    // @cdk.module test-io
-    ///
-    // @see org.openscience.cdk.io.XYZReader
     /// </summary>
+    /// <seealso cref="XYZReader"/>
+    // @cdk.module test-io
     [TestClass()]
     public class XYZReaderTest : SimpleChemObjectReaderTest
     {

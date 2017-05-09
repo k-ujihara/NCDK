@@ -30,13 +30,12 @@ using System.IO;
 using System.Linq;
 using NCDK.Numerics;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
    /// <summary>
     /// Description of the Class
     /// </summary>
     // @cdk.module test-builder3d
-    /// 
     // @author chhoppe
     // @cdk.created    2004-11-04
     [TestClass()]

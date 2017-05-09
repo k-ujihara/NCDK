@@ -28,10 +28,7 @@ using NCDK.Templates;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @cdk.module  test-smarts
-    // @cdk.require java1.4+
-    /// </summary>
     [TestClass()]
     public class SMARTSTest : CDKTestCase
     {

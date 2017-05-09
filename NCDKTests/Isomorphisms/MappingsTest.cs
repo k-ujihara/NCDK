@@ -30,10 +30,8 @@ using NCDK.Common.Base;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public class MappingsTest
     {

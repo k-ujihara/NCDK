@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NCDK.Modeling.Builder3D
+namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
     /// AtomType list configurator that uses the ParameterSet originally
@@ -44,7 +44,7 @@ namespace NCDK.Modeling.Builder3D
     // @cdk.keyword    atom type, MM2
     public class MM2BasedParameterSetReader
     {
-        private string configFile = "NCDK.Modeling.ForceField.Data.mm2.prm";
+        private string configFile = "NCDK.Modelings.ForceField.Data.mm2.prm";
         private Stream ins = null;
         private IDictionary<string, object> parameterSet;
         public IList<IAtomType> AtomTypes { get; private set; }

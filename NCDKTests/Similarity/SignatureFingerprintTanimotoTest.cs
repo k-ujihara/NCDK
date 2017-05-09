@@ -23,7 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Fingerprint;
+using NCDK.Fingerprints;
 using NCDK.Similarity;
 using NCDK.Smiles;
 using NCDK.Templates;

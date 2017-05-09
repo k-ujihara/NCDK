@@ -21,16 +21,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System.IO;
 
 namespace NCDK.IO
 {
     /// <summary>
     /// TestCase for CDK IO classes.
-    ///
-    // @cdk.module test-io
     /// </summary>
+    // @cdk.module test-io
     [TestClass()]
     public abstract class ChemObjectReaderTest : ChemObjectIOTest
     {

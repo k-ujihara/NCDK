@@ -21,13 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using NCDK.IO.Formats;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
-using System.Collections.Generic;
-using System.Linq;
-using NCDK.Numerics;
-using NCDK.IO.Formats;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO
 {

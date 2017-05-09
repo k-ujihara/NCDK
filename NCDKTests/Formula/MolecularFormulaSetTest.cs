@@ -23,32 +23,20 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the MolecularFormulaSet class.
-    ///
-    // @cdk.module test-data
-    ///
-    /// <seealso cref="MolecularFormulaSet"/>
     /// </summary>
+    /// <seealso cref="MolecularFormulaSet"/>
+    // @cdk.module test-data
     [TestClass()]
     public class MolecularFormulaSetTest : AbstractMolecularFormulaSetTest
     {
         protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaSet() {
             IMolecularFormulaSet mfS = new MolecularFormulaSet();
             Assert.IsNotNull(mfS);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaSet_IMolecularFormula() {
             IMolecularFormulaSet mfS = new MolecularFormulaSet(Builder.CreateMolecularFormula());

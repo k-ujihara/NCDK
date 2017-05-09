@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Substance} class.
+    /// Checks the functionality of the <see cref="Substance"/> class.
     ///
     // @cdk.module test-silent
     /// </summary>

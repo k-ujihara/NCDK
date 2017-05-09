@@ -25,7 +25,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Diagnostics;
 
-
 namespace NCDK.IO
 {
     /// <summary>

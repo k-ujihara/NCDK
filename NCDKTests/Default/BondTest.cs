@@ -23,10 +23,9 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Checks the functionality of the Bond class.
-    ///
-    // @cdk.module test-data
-    // @see org.openscience.cdk.Bond
     /// </summary>
+    /// <seealso cref="Bond"/>
+    // @cdk.module test-data
     [TestClass()]
     public class BondTest : AbstractBondTest
     {

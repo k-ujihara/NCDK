@@ -33,11 +33,10 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// Some simple isolated tests on functionality.
-    ///
-    // @author John May
-    // @cdk.module test-smarts
     /// </summary>
     [TestClass()]
+    // @author John May
+    // @cdk.module test-smarts
     public class SmartsStereoMatchTest
     {
         /* target does not have an element */
@@ -49,7 +48,7 @@ namespace NCDK.Isomorphisms
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
 
-        /*
+        /// <summary>
         /// Query does not have an element but the target does - the query therefore
         /// is a valid mapping.
         /// </summary>
@@ -58,7 +57,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Sma("[C@@](C)(C)(C)C");
             IAtomContainer target = Dimethylpropane();
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
@@ -68,7 +67,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Sma("[C@@](C)(C)(C)C"); ;
             IAtomContainer target = Dimethylpropane();
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
@@ -78,12 +77,12 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Sma("[C@@](C)(C)(C)C");
             IAtomContainer target = Dimethylpropane();
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
 
-        /*
+        /// <summary>
         /// Map to different atom order which means the clockwise and anticlockwise
         /// match
         /// </summary>
@@ -92,7 +91,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Sma("[C@@](C)(C)(C)C");
             IAtomContainer target = Dimethylpropane();
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 3, 2, 4 }));
         }

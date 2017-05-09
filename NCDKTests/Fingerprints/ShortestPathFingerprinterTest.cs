@@ -32,12 +32,10 @@ using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections;
 
-namespace NCDK.Fingerprint
+namespace NCDK.Fingerprints
 {
-    /// <summary>
     // @author Syed Asad Rahman (2012)
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class ShortestPathFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -72,10 +70,8 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Test of ShortestPathFingerprinter method
-        ///
-        // @throws InvalidSmilesException
-        // @
         /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
         [TestMethod()]
         public void TestGenerateFingerprint()
         {
@@ -93,10 +89,8 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Test of ShortestPathFingerprinter method
-        ///
-        // @throws InvalidSmilesException
-        // @
         /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
         [TestMethod()]
         public void TestGenerateFingerprintIsSubset()
         {
@@ -120,21 +114,16 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// Test of ShortestPathFingerprinter method
-        ///
-        // @throws InvalidSmilesException
-        // @
-        // @throws FileNotFoundException
         /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
         [TestMethod()]
         public void TestGenerateFingerprintIsNotASubSet1()
         {
-
             string smilesT = "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
             string smilesQ = "OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(O)=O";
             SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             smilesParser.Kekulise(false);
             IAtomContainer moleculeQ = smilesParser.ParseSmiles(smilesQ);
-
             IAtomContainer moleculeT = smilesParser.ParseSmiles(smilesT);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeQ);
@@ -151,7 +140,6 @@ namespace NCDK.Fingerprint
         [TestMethod()]
         public void TestGenerateFingerprintAnthracene()
         {
-
             string smiles = "C1=CC2=CC3=CC=CC=C3C=C2C=C1";
             SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
@@ -180,7 +168,6 @@ namespace NCDK.Fingerprint
         [TestMethod()]
         public void TestGenerateFingerprintMultiphtalene()
         {
-
             string smiles = "C1=CC2=CC=C3C4=CC5=CC6=CC=CC=C6C=C5C=C4C=CC3=C2C=C1";
             SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
@@ -262,11 +249,8 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(1024, bs.Count); // actual bit set size
         }
 
-        /// <summary>
-        // @cdk.bug 2819557
-        ///
         /// <exception cref="CDKException"></exception>
-        /// </summary>
+        // @cdk.bug 2819557
         [TestMethod()]
         public void TestBug2819557()
         {
@@ -277,7 +261,6 @@ namespace NCDK.Fingerprint
             BitArray b1 = fp.GetBitFingerprint(butane).AsBitSet();
             BitArray b2 = fp.GetBitFingerprint(propylAmine).AsBitSet();
 
-            //Assert.IsFalse(FingerprinterTool.IsSubset(b2, b1)); // fixed CDK's mistake
             Assert.IsFalse(FingerprinterTool.IsSubset(b2, b1), "butane should not be a substructure of propylamine");
         }
 
