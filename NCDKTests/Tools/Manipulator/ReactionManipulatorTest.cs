@@ -85,8 +85,6 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// A unit test suite for JUnit. Test of mapped IAtoms
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IAtom()
@@ -115,8 +113,6 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// A unit test suite for JUnit. Test of mapped IBond
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IBond()
@@ -222,7 +218,6 @@ namespace NCDK.Tools.Manipulator
 
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(0, mol.Bonds.Count);
-
         }
 
         [TestMethod()]

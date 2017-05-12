@@ -24,13 +24,11 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IReactionSet"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractReactionSetTest : AbstractChemObjectTest
     {
-
         [TestMethod()]
 
         public override void TestClone()
@@ -184,7 +182,6 @@ namespace NCDK
 
             listener.Reset();
             Assert.IsFalse(listener.Changed);
-
         }
 
         [TestMethod()]
@@ -232,7 +229,6 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestIsEmpty()
         {
-
             IReactionSet set = (IReactionSet)NewChemObject();
 
             Assert.IsTrue(set.IsEmpty(), "new reaction set should be empty");
@@ -244,8 +240,6 @@ namespace NCDK
             set.Clear();
 
             Assert.IsTrue(set.IsEmpty(), "reaction set with all reactions removed should be empty");
-
         }
-
     }
 }

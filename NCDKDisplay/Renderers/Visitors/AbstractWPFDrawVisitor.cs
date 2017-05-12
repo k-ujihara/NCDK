@@ -55,7 +55,6 @@ namespace NCDK.Renderers.Visitors
         /// </summary>
         /// <param name="text">the text string</param>
         /// <param name="coord">the world x-coordinate of where the text should be placed</param>
-        /// <param name="graphics">the graphics to which the text is outputted</param>
         /// <returns>the screen coordinates</returns>
         protected internal Rect GetTextBounds(string text, WPF::Point coord, Typeface typeface, double emSize)
         {
@@ -81,7 +80,6 @@ namespace NCDK.Renderers.Visitors
         /// </summary>
         /// <param name="text">the text string</param>
         /// <param name="coord">the world coordinate of where the text should be placed</param>
-        /// <param name="graphics">the graphics to which the text is outputted</param>
         /// <returns>the screen coordinates</returns>
         protected internal Point GetTextBasePoint(string text, Point coord, Typeface typeface, double emSize)
         {
@@ -100,9 +98,8 @@ namespace NCDK.Renderers.Visitors
         /// graphics environment.
         /// </summary>
         /// <param name="text">the text to obtain the bounds of</param>
-        /// <param name="g2">the graphic environment</param>
         /// <returns>bounds of the text</returns>
-        /// <seealso cref="TextLayout"/>
+        /// <seealso cref="Typeface"/>
         protected internal Rect GetTextBounds(string text, Typeface typeface, double emSize)
         {
             var ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);

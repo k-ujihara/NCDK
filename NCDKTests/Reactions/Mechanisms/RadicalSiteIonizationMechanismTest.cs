@@ -22,9 +22,8 @@ namespace NCDK.Reactions.Mechanisms
 {
     /// <summary>
     /// Tests for RadicalSiteIonizationMechanism implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class RadicalSiteIonizationMechanismTest : ReactionMechanismTest
     {
@@ -41,12 +40,6 @@ namespace NCDK.Reactions.Mechanisms
             Assert.IsNotNull(mechanism);
         }
 
-        /// <summary>
-        /// Junit test.
-        /// TODDO: REACT: add an example
-        ///
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()
         {

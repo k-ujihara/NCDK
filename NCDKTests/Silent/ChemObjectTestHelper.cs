@@ -23,12 +23,10 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Helper class to test the functionality of the NNChemObject.
-    ///
-    // @cdk.module test-silent
     /// </summary>
+    // @cdk.module test-silent
     public class ChemObjectTestHelper
     {
-
         public static void TestNotifyChanged(IChemObject chemObject)
         {
             ChemObjectListener listener = new ChemObjectListener();

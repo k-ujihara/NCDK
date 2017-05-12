@@ -28,13 +28,12 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// TestCase for {@link IPolymer} implementations.
-    ///
+    /// TestCase for <see cref="IPolymer"/> implementations.
+    /// </summary>
     // @author      Edgar Luttmann <edgar@uni-paderborn.de>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.created 2001-08-09
     // @cdk.module  test-interfaces
-    /// </summary>
     [TestClass()]
     public abstract class AbstractPolymerTest : AbstractMoleculeTest
     {
@@ -169,7 +168,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IPolymer polymer = (IPolymer)NewChemObject();
@@ -196,13 +194,11 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IPolymer polymer = (IPolymer)NewChemObject();
             object clone = polymer.Clone();
             Assert.IsTrue(clone is IPolymer);
         }
-
     }
 }

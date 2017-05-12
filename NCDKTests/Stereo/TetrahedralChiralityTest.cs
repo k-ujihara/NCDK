@@ -23,17 +23,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
-    /// <summary>
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class TetrahedralChiralityTest : CDKTestCase
     {
-
         private static IAtomContainer molecule;
         private static IAtom[] ligands;
 

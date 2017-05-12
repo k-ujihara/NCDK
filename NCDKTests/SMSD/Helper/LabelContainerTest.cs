@@ -24,15 +24,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.SMSD.Helper
 {
     /// <summary>
-    /// Unit testing for the {@link LabelContainer} class.
-    ///
+    /// Unit testing for the <see cref="LabelContainer"/> class.
+    /// </summary>
     // @author     Syed Asad Rahman
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class LabelContainerTest
     {
-
         [TestMethod()]
         public void TestInstance()
         {

@@ -26,17 +26,13 @@ using System.Threading;
 
 namespace NCDK.SMSD.Tools
 {
-    /// <summary>
     // @author Asad
     // @cdk.module test-smsd
-    /// </summary>
-    //[TestCategory("SlowTest")]
-    // test uses Thread.sleep...
-    [TestClass()]
+    [TestClass()]  // test uses Thread.sleep...
     public class TimeManagerTest : CDKTestCase
     {
-
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestTimeManager()
         {
             TimeManager tMan = new TimeManager();
@@ -47,6 +43,7 @@ namespace NCDK.SMSD.Tools
         /// Test of getElapsedTimeInHours method, of class TimeManager.
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetElapsedTimeInHours()
         {
             TimeManager instance = new TimeManager();
@@ -60,6 +57,7 @@ namespace NCDK.SMSD.Tools
         /// Test of getElapsedTimeInMinutes method, of class TimeManager.
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetElapsedTimeInMinutes()
         {
             TimeManager instance = new TimeManager();
@@ -73,6 +71,7 @@ namespace NCDK.SMSD.Tools
         /// Test of getElapsedTimeInSeconds method, of class TimeManager.
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetElapsedTimeInSeconds()
         {
             TimeManager instance = new TimeManager();
@@ -86,6 +85,7 @@ namespace NCDK.SMSD.Tools
         /// Test of getElapsedTimeInMilliSeconds method, of class TimeManager.
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetElapsedTimeInMilliSeconds()
         {
             TimeManager instance = new TimeManager();

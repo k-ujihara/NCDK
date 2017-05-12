@@ -26,11 +26,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// Tests the functionality of {@link ICDKObject} implementations.
-    ///
+    /// Tests the functionality of <see cref="ICDKObject"/> implementations.
+    /// </summary>
     // @cdk.module  test-interfaces
     // @cdk.created 2010-10-22
-    /// </summary>
     [TestClass()]
     public abstract class AbstractCDKObjectTest : CDKTestCase
     {

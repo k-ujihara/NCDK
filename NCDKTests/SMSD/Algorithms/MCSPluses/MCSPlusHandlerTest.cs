@@ -21,7 +21,6 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.SMSD.Tools;

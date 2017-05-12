@@ -32,8 +32,6 @@ namespace NCDK.SMSD
 {
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    //[TestCategory("SlowTest")]
     [TestClass()]
     public class SMSDBondSensitiveTest
     {
@@ -42,6 +40,7 @@ namespace NCDK.SMSD
         private static IAtomContainer Benzene { get; } = Molecules.CreateBenzene();
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSubgraph()
         {
             Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
@@ -54,6 +53,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestMatchCount()
         {
             Isomorphism smsd = new Isomorphism(Algorithm.VFLibMCS, true);
@@ -73,6 +73,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestVFLib()
         {
             Isomorphism sbf = new Isomorphism(Algorithm.VFLibMCS, true);
@@ -82,6 +83,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSubStructure()
         {
             Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
@@ -91,6 +93,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCDKMCS()
         {
             Isomorphism ebimcs = new Isomorphism(Algorithm.CDKMCS, true);
@@ -101,6 +104,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestMCSPlus()
         {
             Isomorphism ebimcs = new Isomorphism(Algorithm.MCSPlus, false);
@@ -116,6 +120,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSD()
         {
             //        Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
@@ -150,6 +155,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSDCyclohexaneBenzeneSubgraph()
         {
             //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(Cyclohexane);
@@ -161,6 +167,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSDBondSensitive()
         {
             Isomorphism ebimcs3 = new Isomorphism(Algorithm.CDKMCS, true);
@@ -195,6 +202,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSDChemicalFilters()
         {
             Isomorphism ebimcs1 = new Isomorphism(Algorithm.Default, true);
@@ -235,6 +243,7 @@ namespace NCDK.SMSD
         /// frag is a subgraph of the het mol
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSDAdpAtpSubgraph()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -268,6 +277,7 @@ namespace NCDK.SMSD
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSMSDLargeSubgraph()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);

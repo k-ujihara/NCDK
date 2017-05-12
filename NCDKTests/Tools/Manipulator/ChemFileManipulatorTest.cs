@@ -19,16 +19,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ChemFileManipulatorTest : CDKTestCase
     {

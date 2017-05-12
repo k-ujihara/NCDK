@@ -28,9 +28,6 @@ namespace NCDK.Types.Parameters
     [TestClass()]
     public class ParameterReactTest : CDKTestCase
     {
-        /// <summary>
-        ///  Constructor for the ParameterReactTest object.
-        /// </summary>
         public ParameterReactTest()
             : base()
         { }

@@ -23,15 +23,13 @@ using System.Collections.Generic;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IMapping} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IMapping"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractMappingTest
         : AbstractChemObjectTest
     {
-
         /// <summary>
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
@@ -45,7 +43,6 @@ namespace NCDK
                 Assert.IsTrue(description[i] != '\r');
             }
         }
-
 
         public override void TestClone()
         {

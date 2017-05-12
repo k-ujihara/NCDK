@@ -27,9 +27,7 @@ using System.Linq;
 
 namespace NCDK.StructGen
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     [TestClass()]
     public class RandomStructureGeneratorTest : CDKTestCase
     {

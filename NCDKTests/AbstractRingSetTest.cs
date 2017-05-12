@@ -386,10 +386,8 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public virtual void TestIsEmpty()
         {
-
             IRingSet ringSet = (IRingSet)NewChemObject();
 
             Assert.IsTrue(ringSet.IsEmpty(), "new ringset should be empty");
@@ -401,7 +399,6 @@ namespace NCDK
             ringSet.Clear();
             
             Assert.IsTrue(ringSet.IsEmpty(), "ringset with removed atom containers should be empty");
-
         }
     }
 }

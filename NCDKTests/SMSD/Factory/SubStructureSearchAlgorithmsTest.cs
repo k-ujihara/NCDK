@@ -27,15 +27,14 @@ using NCDK.Tools.Manipulator;
 namespace NCDK.SMSD.Factory
 {
     /// <summary>
-    /// Unit testing for the {@link SubStructureSearchAlgorithms} class.
+    /// Unit testing for the <see cref="SubStructureSearchAlgorithms"/> class.
+    /// </summary>
     // @author     Syed Asad Rahman
     // @author     egonw
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class SubStructureSearchAlgorithmsTest
     {
-
         /// <summary>
         /// Tests if the CDKMCS can be instantiated without throwing exceptions.
         /// </summary>
@@ -48,8 +47,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of init method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_1()
@@ -67,8 +64,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of init method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_2()
@@ -86,7 +81,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of init method, of class SubStructureSearchAlgorithms.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_3()
@@ -102,13 +96,10 @@ namespace NCDK.SMSD.Factory
             smsd1.SetChemFilters(true, false, false);
             Assert.IsNotNull(smsd1.ReactantMolecule);
             Assert.IsNotNull(smsd1.ProductMolecule);
-
         }
 
         /// <summary>
         /// Test of setChemFilters method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSetChemFilters()
@@ -125,8 +116,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getFragmentSize method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFragmentSize()
@@ -144,8 +133,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getStereoScore method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetStereoScore()
@@ -163,8 +150,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getEnergyScore method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetEnergyScore()
@@ -182,8 +167,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getFirstMapping method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
@@ -201,8 +184,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getAllMapping method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
@@ -225,8 +206,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getFirstAtomMapping method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
@@ -244,8 +223,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getAllAtomMapping method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
@@ -268,8 +245,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getReactantMolecule method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetReactantMolecule()
@@ -287,8 +262,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getProductMolecule method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetProductMolecule()
@@ -306,7 +279,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getTanimotoSimilarity method, of class SubStructureSearchAlgorithms.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestGetTanimotoSimilarity()
@@ -325,8 +297,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of isStereoMisMatch method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestIsStereoMisMatch()
@@ -343,7 +313,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of isSubgraph method, of class SubStructureSearchAlgorithms.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestIsSubgraph()
@@ -360,7 +329,6 @@ namespace NCDK.SMSD.Factory
 
         /// <summary>
         /// Test of getEuclideanDistance method, of class SubStructureSearchAlgorithms.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestGetEuclideanDistance()

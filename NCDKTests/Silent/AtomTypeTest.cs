@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link AtomType}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="AtomType"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class AtomTypeTest : AbstractAtomTypeTest
     {
@@ -84,56 +83,48 @@ namespace NCDK.Silent
         }
 
         [TestMethod()]
-
         public override void TestStateChanged_IChemObjectChangeEvent()
         {
             ChemObjectTestHelper.TestStateChanged_IChemObjectChangeEvent(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestClone_ChemObjectListeners()
         {
             ChemObjectTestHelper.TestClone_ChemObjectListeners(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestAddListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestAddListener_IChemObjectListener(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestGetListenerCount()
         {
             ChemObjectTestHelper.TestGetListenerCount(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestRemoveListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestRemoveListener_IChemObjectListener(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestSetNotification_true()
         {
             ChemObjectTestHelper.TestSetNotification_true(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_SetProperty()
         {
             ChemObjectTestHelper.TestNotifyChanged_SetProperty(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_RemoveProperty()
         {
             ChemObjectTestHelper.TestNotifyChanged_RemoveProperty(NewChemObject());

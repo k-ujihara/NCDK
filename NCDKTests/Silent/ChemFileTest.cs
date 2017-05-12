@@ -23,9 +23,8 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Checks the functionality of the <see cref="ChemFile"/>.
-    ///
-    // @cdk.module test-silent
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ChemFileTest : AbstractChemFileTest
     {
@@ -92,28 +91,24 @@ namespace NCDK.Silent
         }
 
         [TestMethod()]
-
         public override void TestRemoveListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestRemoveListener_IChemObjectListener(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestSetNotification_true()
         {
             ChemObjectTestHelper.TestSetNotification_true(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_SetProperty()
         {
             ChemObjectTestHelper.TestNotifyChanged_SetProperty(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_RemoveProperty()
         {
             ChemObjectTestHelper.TestNotifyChanged_RemoveProperty(NewChemObject());

@@ -28,14 +28,12 @@ namespace NCDK
 {
     /// <summary>
     /// TestCase for <see cref="IReaction"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractReactionTest
         : AbstractChemObjectTest
     {
-
         [TestMethod()]
         public virtual void TestGetReactantCount()
         {

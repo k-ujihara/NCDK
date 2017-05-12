@@ -40,9 +40,6 @@ namespace NCDK.Reactions.Mechanisms
             Assert.IsNotNull(mechanism);
         }
 
-        /// <summary>
-        /// TODDO: REACT: add an example
-        /// </summary>
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()
         {

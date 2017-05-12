@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Ring}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Ring"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class RingTest : AbstractRingTest
     {

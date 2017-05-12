@@ -23,15 +23,11 @@ namespace NCDK.Types.Parameters
 {
     /// <summary>
     /// Tests for SetReactionCenter implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class SetReactionCenterTest : CDKTestCase
     {
-        /// <summary>
-        ///  Constructor for the SetReactionCenterTest object.
-        /// </summary>
         public SetReactionCenterTest()
             : base()
         { }

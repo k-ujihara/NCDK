@@ -19,7 +19,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,9 +26,7 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ChemModelManipulatorTest : CDKTestCase
     {
@@ -288,9 +285,7 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(10, uniq.Count);
         }
 
-        /// <summary>
         // @cdk.bug 3530861
-        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetRelevantAtomContainer_NonExistentAtom()

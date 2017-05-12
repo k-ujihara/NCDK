@@ -47,11 +47,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(bp);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void TestPrediction()
         {
@@ -73,11 +68,6 @@ namespace NCDK.Tools
 
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetConfidenceLimit()
         {

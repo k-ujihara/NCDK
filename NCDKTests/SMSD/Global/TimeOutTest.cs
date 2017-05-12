@@ -24,18 +24,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.SMSD.Global
 {
     /// <summary>
-    /// Unit testing for the {@link TimeOut} class.
-    ///
+    /// Unit testing for the <see cref="TimeOut"/> class.
+    /// </summary>
     // @author     egonw
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    /// </summary>
     [TestClass()]
     public class TimeOutTest
     {
-
         [TestMethod()]
         public void TestInstance()
         {

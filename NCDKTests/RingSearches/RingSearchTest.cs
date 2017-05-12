@@ -97,7 +97,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestCyclic_Int() {
+        public void TestCyclic_Int()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
@@ -109,7 +110,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestCyclic_IntInt()  {
+        public void TestCyclic_IntInt()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
@@ -121,7 +123,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestCyclic_Atom()  {
+        public void TestCyclic_Atom()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
@@ -139,7 +142,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestCyclic_Bond()  {
+        public void TestCyclic_Bond()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
@@ -165,7 +169,8 @@ namespace NCDK.RingSearches
 
         [TestMethod()]
         [ExpectedException(typeof(NoSuchAtomException))]
-        public void TestCyclic_Atom_NotFound()  {
+        public void TestCyclic_Atom_NotFound()
+        {
 
             CyclicVertexSearch cyclicSearch = new Mock<CyclicVertexSearch>().Object;
             var mock_container = new Mock<IAtomContainer>();
@@ -180,7 +185,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestIsolated()  {
+        public void TestIsolated()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
@@ -209,16 +215,17 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestRingFragments()  {
+        public void TestRingFragments()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
             var mock_atom = new Mock<IAtom>();
-            
+
             RingSearch ringSearch = new RingSearch(mock_container.Object, mock_cyclicSearch.Object);
 
-            mock_cyclicSearch.Setup(n => n.Cyclic()).Returns(new int[]{0, 1, 2});
-            mock_cyclicSearch.Setup(n => n.Isolated()).Returns(new int[][]{ new[] {0, 1, 2}});
+            mock_cyclicSearch.Setup(n => n.Cyclic()).Returns(new int[] { 0, 1, 2 });
+            mock_cyclicSearch.Setup(n => n.Isolated()).Returns(new int[][] { new[] { 0, 1, 2 } });
             mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[0][]);
             mock_container.Setup(n => n.Atoms.Count).Returns(3);
             mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
@@ -239,7 +246,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestIsolatedRingFragments() {
+        public void TestIsolatedRingFragments()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
@@ -265,9 +273,10 @@ namespace NCDK.RingSearches
             // builder was invoked
             mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
         }
-        
+
         [TestMethod()]
-        public void TestFusedRingFragments()  {
+        public void TestFusedRingFragments()
+        {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
@@ -295,7 +304,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void ConnectingEdge1() {
+        public void ConnectingEdge1()
+        {
             IAtomContainer mol = DiSpiroPentane();
             RingSearch rs = new RingSearch(mol);
             IAtomContainer frag = rs.RingFragments();
@@ -303,7 +313,8 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void ConnectingEdge2() {
+        public void ConnectingEdge2()
+        {
             IAtomContainer mol = TriSpiroPentane();
             RingSearch rs = new RingSearch(mol);
             IAtomContainer frag = rs.RingFragments();
@@ -312,10 +323,10 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Hypothetial molecule - C1C[C]11(CC1)[C]123CC1.C2C3
-        ///
-        // @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
         /// </summary>
-        public static IAtomContainer DiSpiroPentane() {
+        // @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
+        public static IAtomContainer DiSpiroPentane()
+        {
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.CreateAtomContainer();
@@ -380,10 +391,10 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Hypothetial molecule - C1C[C]1123CC1.C1C[C]211(CC1)C3
-        ///
-        // @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
         /// </summary>
-        public static IAtomContainer TriSpiroPentane() {
+        // @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
+        public static IAtomContainer TriSpiroPentane()
+        {
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.CreateAtomContainer();

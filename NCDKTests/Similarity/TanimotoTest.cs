@@ -31,13 +31,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Similarity
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class TanimotoTest : CDKTestCase
     {
-
         bool standAlone = false;
 
         [TestMethod()]

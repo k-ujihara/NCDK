@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Mapping}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Mapping"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class MappingTest : AbstractMappingTest
     {
@@ -50,9 +49,7 @@ namespace NCDK.Silent
             ChemObjectTestHelper.TestNotifyChanged_SetFlag(NewChemObject());
         }
 
-        /// <summary>
         // @cdk.bug 2992921
-        /// </summary>
         [TestMethod()]
         public void TestNotifyChanged_SetFlags()
         {

@@ -23,9 +23,7 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ReactionSchemeManipulatorTest : CDKTestCase
     {
@@ -70,7 +68,6 @@ namespace NCDK.Tools.Manipulator
                     2,
                     ReactionSchemeManipulator.GetAllAtomContainers(reactionScheme,
                             builder.CreateAtomContainerSet()).Count);
-
         }
 
         [TestMethod()]
@@ -88,7 +85,6 @@ namespace NCDK.Tools.Manipulator
             reactionScheme.Add(reaction2);
 
             Assert.AreEqual(3, ReactionSchemeManipulator.GetAllAtomContainers(reactionScheme).Count);
-
         }
 
         [TestMethod()]
@@ -120,7 +116,6 @@ namespace NCDK.Tools.Manipulator
             scheme1.Add(reaction11);
 
             Assert.AreEqual(5, ReactionSchemeManipulator.GetAllAtomContainers(scheme1).Count);
-
         }
 
         [TestMethod()]
@@ -160,7 +155,6 @@ namespace NCDK.Tools.Manipulator
             scheme1.Add(reaction11);
 
             Assert.AreEqual(6, ReactionSchemeManipulator.GetAllIDs(scheme1).Count());
-
         }
 
         [TestMethod()]

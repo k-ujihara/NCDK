@@ -24,17 +24,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Collections.Generic;
 
-namespace NCDK.RingSearches {
+namespace NCDK.RingSearches
+{
     /// <summary>
     /// ring search unit tests for a hexaphenylene (ChEBI:33157)
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Hexaphenylene
     {
-
         private readonly IAtomContainer hexaphenylene = Hexaphenylene();
 
         [TestMethod()]

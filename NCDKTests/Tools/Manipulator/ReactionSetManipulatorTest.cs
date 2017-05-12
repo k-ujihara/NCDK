@@ -23,13 +23,10 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ReactionSetManipulatorTest : CDKTestCase
     {
-
         private IChemObjectBuilder builder;
         private ReactionSet set;
 
@@ -181,7 +178,6 @@ namespace NCDK.Tools.Manipulator
 
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(0, mol.Bonds.Count);
-
         }
 
         [TestMethod()]
@@ -261,7 +257,6 @@ namespace NCDK.Tools.Manipulator
             IReactionSet reactionSet1 = ReactionSetManipulator.GetRelevantReactions(set, mol1a);
             Assert.AreEqual(1, reactionSet1.Count);
             Assert.AreEqual(reaction1, reactionSet1[0]);
-
         }
 
         [TestMethod()]
@@ -295,7 +290,6 @@ namespace NCDK.Tools.Manipulator
             IReactionSet reactionSet1 = ReactionSetManipulator.GetRelevantReactionsAsReactant(set, mol1a);
             Assert.AreEqual(1, reactionSet1.Count);
             Assert.AreEqual(reaction1, reactionSet1[0]);
-
         }
 
         [TestMethod()]
@@ -327,7 +321,6 @@ namespace NCDK.Tools.Manipulator
             IReactionSet reactionSet1 = ReactionSetManipulator.GetRelevantReactionsAsProduct(set, mol1a);
             Assert.AreEqual(1, reactionSet1.Count);
             Assert.AreEqual(reaction3, reactionSet1[0]);
-
         }
 
         [TestMethod()]

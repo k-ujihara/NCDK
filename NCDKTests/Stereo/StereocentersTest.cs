@@ -30,18 +30,15 @@ namespace NCDK.Stereo
 {
     /// <summary>
     /// Verifies the types of atoms accepted as exhibiting stereo chemistry.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class StereocentersTest
     {
-
         [TestMethod()]
         public void Boron_v4_anion()
         {
-
             CreateTetrahedral("[BH-](C)(N)O");
             CreateTetrahedral("[B-](C)(N)(O)CC");
 
@@ -62,7 +59,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Carbon_v4_neutral()
         {
-
             // accept Sp3 Carbons with < 2 hydrogens
             CreateTetrahedral("C(C)(N)(O)");
             CreateTetrahedral("C(C)(N)(O)CC");
@@ -169,7 +165,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void Nitrogen_v3_neutral()
         {
-
             // nitrogen inversion -> reject
             None("N");
             None("N(C)(N)(O)");
@@ -193,8 +188,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Nitrogen_v3_neutral_reject_H()
@@ -215,8 +208,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Nitrogen_v4_cation_reject_h()
@@ -231,8 +222,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Nitrogen_v4_cation_reject_h_on_terminal()
@@ -255,8 +244,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Nitrogen_v5_neutral_reject_h()
@@ -270,8 +257,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Nitrogen_v5_neutral_reject_h_on_terminal()
@@ -295,8 +280,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v3_neutral_reject_H()
@@ -310,8 +293,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v3_neutral_reject_h_on_terminal()
@@ -335,8 +316,6 @@ namespace NCDK.Stereo
         /// if it has - (a) A terminal H atom neighbor. Since InChI software v.
         /// 1.02-standard (2009), phosphines and arsines are always treated as
         /// stereogenic even with H atom neighbors
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v4_cation_Accept_h()
@@ -351,8 +330,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v4_cation_reject_h_on_terminal()
@@ -375,8 +352,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v5_neutral_reject_h()
@@ -390,8 +365,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Phosphorus_v5_neutral_reject_h_on_terminal()
@@ -417,8 +390,6 @@ namespace NCDK.Stereo
         /// if it has - (a) A terminal H atom neighbor. Since InChI software v.
         /// 1.02-standard (2009), phosphines and arsines are always treated as
         /// stereogenic even with H atom neighbors
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Arsenic_v4_cation_Accept_h()
@@ -433,8 +404,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Arsenic_v4_cation_reject_h_on_terminal()
@@ -456,8 +425,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_4v_neutral_reject_h()
@@ -470,8 +437,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_4v_neutral_reject_h_on_terminal()
@@ -501,8 +466,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_3v_cation_reject_h()
@@ -515,8 +478,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_3v_cation_reject_h_on_terminal()
@@ -541,8 +502,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_6v_neutral_reject_h()
@@ -555,8 +514,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_6v_neutral_reject_h_on_terminal()
@@ -587,8 +544,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_5v_cation_reject_h()
@@ -602,8 +557,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Sulphur_5v_cation_reject_h_on_terminal()
@@ -627,8 +580,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_4v_neutral_reject_h()
@@ -641,8 +592,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_4v_neutral_reject_h_on_terminal()
@@ -672,8 +621,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_3v_cation_reject_h()
@@ -686,8 +633,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_3v_cation_reject_h_on_terminal()
@@ -713,8 +658,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_6v_neutral_reject_h()
@@ -727,8 +670,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_6v_neutral_reject_h_on_terminal()
@@ -759,8 +700,6 @@ namespace NCDK.Stereo
         /// <summary>
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (a) A terminal H atom neighbor
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_5v_cation_reject_h()
@@ -774,8 +713,6 @@ namespace NCDK.Stereo
         /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
         /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
         /// connected by any kind of bond, where X is O, S, Se, Te, or N.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void Selenium_5v_cation_reject_h_on_terminal()
@@ -790,7 +727,6 @@ namespace NCDK.Stereo
         }
 
         /// <summary>Geometric.</summary>
-
         [TestMethod()]
         public void Carbon_neutral_geometric()
         {

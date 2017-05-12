@@ -29,16 +29,11 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.SMSD
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    /// </summary>
     [TestClass()]
     public class SMSDBondInsensitiveTest
     {
-
         private static IAtomContainer Napthalene;
         private static IAtomContainer Cyclohexane;
         private static IAtomContainer Benzene;
@@ -173,7 +168,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSingleMappingTesting()
         {
-
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("C");
 
@@ -199,12 +193,10 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// frag is a subgraph of the het mol
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSMSDFragHetSubgraph()
         {
-
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             string file1 = "O=C1NC(=O)C2=C(N1)NC(=O)C=N2";
             string file2 = "OC[C@@H](O)[C@@H](O)[C@@H](O)CN1C(O)C(CCC(O)O)NC2C(O)NC(O)NC12";
@@ -235,7 +227,6 @@ namespace NCDK.SMSD
 
             Assert.IsTrue(comparison.IsSubgraph());
             Assert.AreEqual(13, comparison.GetFirstMapping().Count);
-
         }
 
         private IAtomContainer Create4Toluene()

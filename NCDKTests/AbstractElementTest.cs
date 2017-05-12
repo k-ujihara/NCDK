@@ -24,16 +24,13 @@ using NCDK.Tools.Diff.Tree;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IElement} implementations.
-    ///
-    // @cdk.module test-interfaces
-    ///
-    // @see org.openscience.cdk.Element
+    /// Checks the functionality of <see cref="IElement"/> implementations.
     /// </summary>
+    /// <seealso cref="IElement"/>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractElementTest : AbstractChemObjectTest
     {
-
         // test methods
 
         [TestMethod()]

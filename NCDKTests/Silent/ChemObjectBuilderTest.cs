@@ -22,10 +22,9 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Checks the functionality of the <see cref="IChemObjectBuilder"/>
-    /// {@link Silent.ChemObjectBuilder} implementation.
-    ///
-    // @cdk.module test-silent
+    /// <see cref="ChemObjectBuilder"/> implementation.
     /// </summary>
+    // @cdk.module test-silent
     public class ChemObjectBuilderTest : AbstractChemObjectBuilderTest
     {
         public override IChemObject RootObject { get; } = new ChemObject();

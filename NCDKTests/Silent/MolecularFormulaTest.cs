@@ -22,10 +22,9 @@ using NCDK.Formula;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link MolecularFormula}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="MolecularFormula"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class MolecularFormulaTest : AbstractMolecularFormulaTest
     {

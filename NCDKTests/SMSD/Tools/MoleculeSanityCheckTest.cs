@@ -25,19 +25,15 @@ using NCDK.Smiles;
 
 namespace NCDK.SMSD.Tools
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author Asad
-    /// </summary>
     [TestClass()]
     public class MoleculeSanityCheckTest
     {
-
         public MoleculeSanityCheckTest() { }
 
         /// <summary>
         /// Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestCheckAndCleanMolecule()
@@ -52,7 +48,6 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of fixAromaticity method, of class MoleculeSanityCheck.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestFixAromaticity()

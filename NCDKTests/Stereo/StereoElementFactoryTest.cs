@@ -31,14 +31,11 @@ using System.Linq;
 
 namespace NCDK.Stereo
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class StereoElementFactoryTest
     {
-
         [TestMethod()]
         public void E_but2ene()
         {
@@ -269,9 +266,7 @@ namespace NCDK.Stereo
             Assert.IsNull(element);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m1/s1
-        /// </summary>
         [TestMethod()]
         public void R_methanesulfinylethane()
         {
@@ -291,9 +286,7 @@ namespace NCDK.Stereo
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, element.Stereo);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m0/s1
-        /// </summary>
         [TestMethod()]
         public void S_methanesulfinylethane()
         {
@@ -397,8 +390,8 @@ namespace NCDK.Stereo
         /// <summary>
         /// MetaCyc CPD-7272 D-dopachrome
         /// http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272
-        // @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
         /// </summary>
+        // @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
         [TestMethod()]
         public void Inverse_style_Downbond_dopachrome()
         {
@@ -727,8 +720,8 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// glyceraldehyde
-        // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
         [TestMethod()]
         public void OnlyInterpretFischerProjectionsWhenAsked()
         {
@@ -768,8 +761,8 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// beta-D-glucose
-        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         [TestMethod()]
         public void OnlyInterpretHaworthProjectionsWhenAsked()
         {
@@ -818,8 +811,8 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// beta-D-glucose
-        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         [TestMethod()]
         public void OnlyInterpretChairProjectionsWhenAsked()
         {

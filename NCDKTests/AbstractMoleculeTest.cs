@@ -22,9 +22,8 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IAtomContainer"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractMoleculeTest : AbstractAtomContainerTest
     {

@@ -23,17 +23,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link ILonePair} implementations.
-    ///
-    // @see org.openscience.cdk.LonePair
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="ILonePair"/> implementations.
     /// </summary>
+    // @see org.openscience.cdk.LonePair
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractLonePairTest
             : AbstractElectronContainerTest
     {
-
         [TestMethod()]
         public virtual void TestSetAtom_IAtom()
         {
@@ -54,7 +51,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestGetElectronCount()
         {
             ILonePair lp = (ILonePair)NewChemObject();
@@ -74,7 +70,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestClone()
         {
             ILonePair lp = (ILonePair)NewChemObject();
@@ -96,7 +91,6 @@ namespace NCDK
 
         /// <summary>Test for RFC #9</summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             ILonePair lp = (ILonePair)NewChemObject();
@@ -120,6 +114,5 @@ namespace NCDK
             ec.ElectronCount = null;
             Assert.AreEqual(2, ec.ElectronCount.Value);
         }
-
     }
 }

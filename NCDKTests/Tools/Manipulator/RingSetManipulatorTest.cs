@@ -29,13 +29,10 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class RingSetManipulatorTest : CDKTestCase
     {
-
         protected IChemObjectBuilder builder;
 
         private IRingSet ringset = null;

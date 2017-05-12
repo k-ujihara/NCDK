@@ -24,7 +24,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
-
 using NCDK.SMSD.Algorithms.VFLib.Map;
 using NCDK.SMSD.Algorithms.VFLib.Query;
 using NCDK.SMSD.Tools;
@@ -34,14 +33,13 @@ using System.Collections.Generic;
 namespace NCDK.SMSD.Algorithms.VFLib
 {
     /// <summary>
-    /// Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
+    /// Unit testing for the <see cref="VFMapper"/>, <see cref="VFState"/>, <see cref="Match"/> class.
+    /// </summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class VFLibTest : CDKTestCase
     {
-
         private static IAtomContainer hexane;
         private static IQuery hexaneQuery;
         private static IAtomContainer benzene;
@@ -198,9 +196,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(nextState.HasNextCandidate());
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestItShouldMatchHexaneToHexaneWhenUsingMolecule()
         {

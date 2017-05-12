@@ -23,10 +23,9 @@ using System.Linq;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link PDBPolymer}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="PDBPolymer"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {
@@ -121,14 +120,12 @@ namespace NCDK.Silent
         // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
-
         public override void TestNotifyChanged()
         {
             ChemObjectTestHelper.TestNotifyChanged(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_SetFlag()
         {
             ChemObjectTestHelper.TestNotifyChanged_SetFlag(NewChemObject());

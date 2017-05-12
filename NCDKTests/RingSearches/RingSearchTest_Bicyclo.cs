@@ -30,14 +30,12 @@ namespace NCDK.RingSearches
     /// <summary>
     /// Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged
     /// system) is found correctly.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Bicyclo
     {
-
         private static readonly IAtomContainer bicyclo = TestMoleculeFactory.MakeBicycloRings();
 
         [TestMethod()]
@@ -55,21 +53,18 @@ namespace NCDK.RingSearches
             RingSearch ringSearch = new RingSearch(bicyclo);
             for (int i = 0; i < n; i++)
                 Assert.IsTrue(ringSearch.Cyclic(i), "all atoms should be cyclic");
-
         }
 
         [TestMethod()]
         public void TestIsolated()
         {
             Assert.AreEqual(0, new RingSearch(bicyclo).Isolated().Length, "no isolated cycle should be found");
-
         }
 
         [TestMethod()]
         public void TestFused()
         {
             Assert.AreEqual(1, new RingSearch(bicyclo).Fused().Length, "one fused cycle should be found");
-
         }
 
         [TestMethod()]
@@ -80,7 +75,6 @@ namespace NCDK.RingSearches
             IAtomContainer fragment = new RingSearch(bicyclo).RingFragments();
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(bicyclo.Bonds.Count, fragment.Bonds.Count);
-
         }
 
         [TestMethod()]
@@ -90,19 +84,16 @@ namespace NCDK.RingSearches
 
             IList<IAtomContainer> fragments = new RingSearch(bicyclo).IsolatedRingFragments();
             Assert.IsTrue(fragments.Count == 0);
-
         }
 
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-
             IList<IAtomContainer> fragments = new RingSearch(bicyclo).FusedRingFragments();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(bicyclo.Bonds.Count, fragment.Bonds.Count);
-
         }
     }
 }

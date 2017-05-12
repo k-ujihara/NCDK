@@ -34,10 +34,7 @@ namespace NCDK.Stereo
     [TestClass()]
     public class FischerRecognitionTest
     {
-
-        /// <summary>
         // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
-        /// </summary>
         [TestMethod()]
         public void RecogniseRightHandedGlyceraldehyde()
         {
@@ -72,9 +69,7 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[4], m.Atoms[5], m.Atoms[6]);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/m1/s1
-        /// </summary>
         [TestMethod()]
         public void RecogniseLeftHandedGlyceraldehyde()
         {
@@ -109,9 +104,7 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[6], m.Atoms[5], m.Atoms[4]);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
-        /// </summary>
         [TestMethod()]
         public void RecogniseRightHandedGlyceraldehydeWithImplicitHydrogen()
         {
@@ -144,9 +137,7 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[4], m.Atoms[5], m.Atoms[1]);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4-,5-,6-/m1/s1
-        /// </summary>
         [TestMethod()]
         public void Mannitol()
         {
@@ -207,7 +198,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void ObtainCardinalBonds()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -238,7 +228,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void ObtainNonPerfectCardinalBonds()
         {
-
             IAtom focus = Atom("C", 0, -0.40d, 3.37d);
 
             IAtom north = Atom("C", 0, -0.43d, 4.18d);
@@ -265,7 +254,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateCenterWithFourNeighbors()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -293,7 +281,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateCenterWithThreeNeighbors_right()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -319,18 +306,18 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void CreateCenterWithThreeNeighbors_left()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
             IAtom south = Atom("C", 2, 0.80d, -0.41d);
             IAtom west = Atom("O", 1, -0.02d, 0.42d);
 
-            IBond[] bonds = new IBond[]{
-                new Bond(focus, south),
-                new Bond(focus, north),
-                new Bond(focus, west)
-        };
+            IBond[] bonds = new IBond[]
+                {
+                    new Bond(focus, south),
+                    new Bond(focus, north),
+                    new Bond(focus, west)
+                };
 
             ITetrahedralChirality element = FischerRecognition.NewTetrahedralCenter(focus,
                                                                                     bonds);
@@ -345,7 +332,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenNorthIsMissing()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom east = Atom("O", 1, 1.63d, 0.42d);
@@ -366,7 +352,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenSouthIsMissing()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -387,7 +372,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenNorthIsOffCenter()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 1d, 1.24d);
@@ -410,7 +394,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenSouthIsOffCenter()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -433,7 +416,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenEastIsOffCenter()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -457,7 +439,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenWestIsOffCenter()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -480,7 +461,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenEastAndWestAreMissing()
         {
-
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
 
             IAtom north = Atom("C", 0, 0.80d, 1.24d);
@@ -500,7 +480,6 @@ namespace NCDK.Stereo
         [TestMethod()]
         public void DoNotCreateCenterWhenRotated()
         {
-
             IAtom focus = Atom("C", 0, 0.44d, 3.30d);
 
             IAtom north = Atom("C", 3, -0.16d, 3.86d);
@@ -523,8 +502,8 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// asperaculin A (CHEBI:68202)
-        // @cdk.inchi InChI=1S/C15H20O5/c1-12(2)6-13(3)7-19-10(16)9-15(13)8(12)4-5-14(15,18)11(17)20-9/h8-9,18H,4-7H2,1-3H3/t8-,9+,13+,14+,15?/m0/s1 
         /// </summary>
+        // @cdk.inchi InChI=1S/C15H20O5/c1-12(2)6-13(3)7-19-10(16)9-15(13)8(12)4-5-14(15,18)11(17)20-9/h8-9,18H,4-7H2,1-3H3/t8-,9+,13+,14+,15?/m0/s1 
         [TestMethod()]
         public void IgnoreCyclicStereocenters()
         {
@@ -588,8 +567,8 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// atrolactic acid (CHEBI:50392)
-        // @cdk.inchi InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)
         /// </summary>
+        // @cdk.inchi InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)
         [TestMethod()]
         public void HorizontalBondsMustBeTerminal()
         {

@@ -23,15 +23,13 @@ using System;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IFragmentAtom} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IFragmentAtom"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractFragmentAtomTest
         : AbstractPseudoAtomTest
     {
-
         [TestMethod()]
         public virtual void TestGetFragment()
         {
@@ -105,7 +103,7 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Overwrites the {@link AbstractPseudoAtomTest} version.
+        /// Overwrites the <see cref="AbstractPseudoAtomTest"/> version.
         /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -121,6 +119,5 @@ namespace NCDK
             // do not test this, as the exact mass is a implicit
             // property calculated from the fragment
         }
-
     }
 }

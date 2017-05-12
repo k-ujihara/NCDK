@@ -26,16 +26,13 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Tests CDK's valency checker capabilities in terms of example molecules.
-    ///
+    /// </summary>
     // @cdk.module  test-valencycheck
-    ///
     // @author      Egon Willighagen <egonw@users.sf.net>
     // @cdk.created 2007-07-28
-    /// </summary>
     [TestClass()]
     public class CDKValencyCheckerTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestInstance()
         {

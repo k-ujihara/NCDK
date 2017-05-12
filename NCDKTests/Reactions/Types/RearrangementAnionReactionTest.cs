@@ -84,7 +84,6 @@ namespace NCDK.Reactions.Types
         /// Reaction: [C-]-C=C-C => C=C-[C-]-C
         /// Automatic search of the center active.
         /// </summary>
-        /// <returns>The test suite</returns>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {

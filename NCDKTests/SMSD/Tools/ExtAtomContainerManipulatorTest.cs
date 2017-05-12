@@ -26,19 +26,15 @@ using System;
 
 namespace NCDK.SMSD.Tools
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author Asad
-    /// </summary>
     [TestClass()]
     public class ExtAtomContainerManipulatorTest
     {
-
         public ExtAtomContainerManipulatorTest() { }
 
         /// <summary>
         /// Test of makeDeepCopy method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestMakeDeepCopy()
@@ -59,12 +55,10 @@ namespace NCDK.SMSD.Tools
                 Assert.AreEqual(result.Atoms[i].Symbol, container.Atoms[i].Symbol);
                 Assert.AreEqual(result.Atoms[i].Id, container.Atoms[i].Id);
             }
-
         }
 
         /// <summary>
         /// Test of aromatizeMolecule method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestAromatizeMolecule()
@@ -86,12 +80,10 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of getExplicitHydrogenCount method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetExplicitHydrogenCount()
         {
-
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
@@ -112,12 +104,10 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of getImplicitHydrogenCount method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetImplicitHydrogenCount()
         {
-
             string rawMolSmiles = "[H]POOSC(Br)C(Cl)C(F)I";
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles(rawMolSmiles);
@@ -138,7 +128,6 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of getHydrogenCount method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetHydrogenCount()
@@ -162,7 +151,6 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of removeHydrogensAndPreserveAtomID method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensAndPreserveAtomID()
@@ -197,7 +185,6 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of convertExplicitToImplicitHydrogens method, of class ExtAtomContainerManipulator.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestConvertExplicitToImplicitHydrogens()
@@ -212,7 +199,6 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Test of percieveAtomTypesAndConfigureAtoms method, of class ExtAtomContainerManipulator.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestPercieveAtomTypesAndConfigureAtoms()

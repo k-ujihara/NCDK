@@ -30,11 +30,9 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// unit tests for the small to medium graphs
-    ///
-    // @author John May
-    // @cdk.module test-core
     /// </summary>
-    [TestClass()]
+    // @author John May
+    // @cdk.module test-core    [TestClass()]
     public class RegularCyclicVertexSearchTest
     {
         [TestMethod()]

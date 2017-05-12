@@ -22,15 +22,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IChemFile} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IChemFile"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractChemFileTest
         : AbstractChemObjectTest
     {
-
         [TestMethod()]
         public virtual void TestAddChemSequence_IChemSequence()
         {

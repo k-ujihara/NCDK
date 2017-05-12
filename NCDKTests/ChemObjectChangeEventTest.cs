@@ -22,12 +22,10 @@ using NCDK.Default;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of the ChemObjectChangeEvent class.
-    ///
-    // @cdk.module test-data
-    ///
-    // @see org.openscience.cdk.event.ChemObjectChangeEvent
+    /// Checks the functionality of the <see cref="ChemObjectChangeEventArgs"/> class.
     /// </summary>
+    /// <seealso cref="ChemObjectChangeEventArgs."/>
+    // @cdk.module test-data
     [TestClass()]
     public class ChemObjectChangeEventTest : CDKTestCase
     {

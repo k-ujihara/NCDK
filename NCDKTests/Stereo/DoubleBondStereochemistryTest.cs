@@ -27,13 +27,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
-    /// <summary>
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class DoubleBondStereochemistryTest : CDKTestCase
     {
-
         private static IAtomContainer molecule;
         private static IBond[] ligands;
 

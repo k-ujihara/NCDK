@@ -25,16 +25,11 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Filters
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    /// </summary>
     [TestClass()]
     public class PostFilterTest
     {
-
         public PostFilterTest() { }
 
         /// <summary>
@@ -43,7 +38,6 @@ namespace NCDK.SMSD.Filters
         [TestMethod()]
         public void TestFilter()
         {
-
             List<int> l1 = new List<int>(6);
             l1.Add(1);
             l1.Add(2);

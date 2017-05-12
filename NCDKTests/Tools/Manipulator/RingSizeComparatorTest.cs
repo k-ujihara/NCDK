@@ -20,13 +20,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class RingSizeComparatorTest : CDKTestCase
     {
-
         public RingSizeComparatorTest()
             : base()
         { }

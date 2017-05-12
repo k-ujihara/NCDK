@@ -21,11 +21,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Templates;
 using System.Collections.Generic;
 
-namespace NCDK.RingSearches {
+namespace NCDK.RingSearches
+{
     /// <summary>
     /// ring search unit tests for a fused system
     /// </summary>

@@ -26,7 +26,6 @@ using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace NCDK.Tools
 {
     /// <summary>
@@ -641,10 +640,7 @@ namespace NCDK.Tools
             Assert.AreEqual(5, AtomContainerManipulator.GetTotalHydrogenCount(mol));
         }
 
-        /// <summary>
         // @cdk.bug 1727373
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestBug1727373()
         {
@@ -661,9 +657,7 @@ namespace NCDK.Tools
             Assert.AreEqual(2, molecule.Atoms[3].ImplicitHydrogenCount.Value);
         }
 
-        /// <summary>
         // @cdk.bug 1575269
-        /// </summary>
         [TestMethod()]
         public void TestBug1575269()
         {
@@ -757,9 +751,7 @@ namespace NCDK.Tools
             Assert.AreEqual(3, atomContainer_0.GetConnectedAtoms(sulfur).Count());
         }
 
-        /// <summary>
         // @cdk.bug 1627763
-        /// </summary>
         [TestMethod()]
         public void TestBug1627763()
         {

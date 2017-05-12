@@ -21,9 +21,7 @@ using NCDK.Smiles;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AminoAcidManipulatorTest : CDKTestCase
     {
@@ -44,9 +42,7 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(4, glycine.Atoms.Count);
         }
 
-        /// <summary>
         // @cdk.bug 1646861
-        /// </summary>
         [TestMethod()]
         public void TestAddAcidicOxygen_IAminoAcid()
         {

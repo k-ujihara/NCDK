@@ -30,26 +30,18 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// TestSuite that runs a test for the RadicalSiteRrAlphaReaction.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class RadicalSiteRrAlphaReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public RadicalSiteRrAlphaReactionTest()
         {
             SetReaction(typeof(RadicalSiteRrAlphaReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestRadicalSiteRrAlphaReaction()
         {
@@ -60,11 +52,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:
         /// Manually put of the center active.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             IReactionProcess type = new RadicalSiteRrAlphaReaction();
@@ -94,15 +83,12 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
         /// create the compound.
-        ///
-        /// <returns>The IAtomContainer</returns>
-        // @throws Exception
         /// </summary>
+        /// <returns>The IAtomContainer</returns>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -150,9 +136,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -199,11 +184,6 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -240,11 +220,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[0].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -284,10 +259,9 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
+        /// </summary>
         /// <param name="molecule">The IAtomContainer to analyze</param>
         /// <exception cref="CDKException"></exception>
-        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

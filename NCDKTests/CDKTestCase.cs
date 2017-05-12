@@ -249,7 +249,7 @@ namespace NCDK
 
         /// <summary>
         /// This test allows people to use the <see cref="TestMethodAttribute"/> annotation for
-        /// methods that are testing in other classes than identified with {@link TestClass}.
+        /// methods that are testing in other classes than identified with <see cref="TestClass"/>.
         /// Bit of a workaround for the current set up, but useful in situations where
         /// a methods is rather untestable, such as <see cref="NCDK.Utils.Xml.XContentHandler"/>'s <see cref="NCDK.Utils.Xml.XContentHandler.EndElement(System.Xml.Linq.XElement)"/> methods.
         /// <para>

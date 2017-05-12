@@ -20,13 +20,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.QSAR.Result
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class IntegerArrayResultTest : CDKTestCase
     {
-
         public IntegerArrayResultTest()
             : base()
         { }

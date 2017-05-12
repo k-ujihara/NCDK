@@ -24,10 +24,9 @@ using NCDK.Numerics;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IPDBAtom} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IPDBAtom"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractPDBAtomTest : AbstractAtomTest
     {

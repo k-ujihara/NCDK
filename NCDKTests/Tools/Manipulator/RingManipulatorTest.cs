@@ -25,13 +25,10 @@ using NCDK.Default;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class RingManipulatorTest : CDKTestCase
     {
-
         public RingManipulatorTest()
                 : base()
         { }

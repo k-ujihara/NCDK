@@ -21,10 +21,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link ReactionScheme}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="ReactionScheme"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ReactionSchemeTest : AbstractReactionSchemeTest
     {

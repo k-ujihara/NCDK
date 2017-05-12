@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link PDBMonomer}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="PDBMonomer"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class PDBMonomerTest : AbstractPDBMonomerTest
     {
@@ -94,7 +93,6 @@ namespace NCDK.Silent
         }
 
         [TestMethod()]
-
         public override void TestRemoveListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestRemoveListener_IChemObjectListener(NewChemObject());

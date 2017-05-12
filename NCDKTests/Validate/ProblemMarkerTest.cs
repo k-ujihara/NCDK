@@ -21,9 +21,7 @@ using NCDK.Default;
 
 namespace NCDK.Validate
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ProblemMarkerTest : CDKTestCase
     {

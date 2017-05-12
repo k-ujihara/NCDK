@@ -28,14 +28,11 @@ using static NCDK.Stereo.StereoTool;
 
 namespace NCDK.Stereo
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-standard
-    /// </summary>
-    [TestClass()]
+   [TestClass()]
     public class StereoToolTest : CDKTestCase
     {
-
         private static readonly Vector3 ORIGIN = Vector3.Zero;
         private static readonly Vector3 XAXIS = new Vector3(1, 0, 0);
         private static readonly Vector3 YAXIS = new Vector3(0, 1, 0);

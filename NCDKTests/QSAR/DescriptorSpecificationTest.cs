@@ -20,13 +20,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.QSAR
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class DescriptorSpecificationTest : CDKTestCase
     {
-
         public DescriptorSpecificationTest()
             : base()
         { }

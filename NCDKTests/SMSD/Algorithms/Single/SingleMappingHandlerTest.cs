@@ -28,13 +28,11 @@ using System.IO;
 namespace NCDK.SMSD.Algorithms.Single
 {
     /// <summary>
-    /// Unit testing for the {@link SingleMappingHandler} class.
-    ///
+    /// Unit testing for the <see cref="SingleMappingHandler"/> class.
+    /// </summary>
     // @author     egonw
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class SingleMappingHandlerTest : AbstractMCSAlgorithmTest
     {
@@ -42,7 +40,6 @@ namespace NCDK.SMSD.Algorithms.Single
 
         /// <summary>
         /// Test of set method, of class SingleMappingHandler.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
@@ -63,8 +60,6 @@ namespace NCDK.SMSD.Algorithms.Single
 
         /// <summary>
         /// Test of set method, of class SingleMappingHandler.
-        /// <exception cref="CDKException"></exception>
-        // @throws IOException
         /// </summary>
         [TestMethod()]
         public void TestSet_String_String()

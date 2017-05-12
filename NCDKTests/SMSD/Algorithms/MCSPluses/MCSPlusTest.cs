@@ -25,20 +25,16 @@ using NCDK.Default;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author Asad
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class MCSPlusTest
     {
-
         public MCSPlusTest() { }
 
         [TestMethod()]
         public void TestSomeMethod()
         {
-
             // TODO review the generated test code and remove the default call to fail.
             Assert.IsNotNull(new MCSPlus().GetOverlaps(new AtomContainer(), new AtomContainer(), true));
         }

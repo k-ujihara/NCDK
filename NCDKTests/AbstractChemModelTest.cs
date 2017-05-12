@@ -23,14 +23,12 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IChemModel"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractChemModelTest
         : AbstractChemObjectTest
     {
-
         [TestMethod()]
         public void TestSetMoleculeSet_IAtomContainerSet()
         {

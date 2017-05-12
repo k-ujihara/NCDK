@@ -22,7 +22,7 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Fonts
 {
     /// <summary>
-    /// AWT-specific font manager.
+    /// WPF-specific font manager.
     /// </summary>
     // @cdk.module renderbasic
     // @cdk.githash

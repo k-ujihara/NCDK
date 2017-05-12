@@ -29,13 +29,10 @@ using System;
 
 namespace NCDK.Stereo
 {
-    /// <summary>
     // @author John May
-    /// </summary>
     [TestClass()]
     public sealed class ExtendedTetrahedralTest
     {
-
         [TestMethod()]
         public void PeripheralsAreCopied()
         {

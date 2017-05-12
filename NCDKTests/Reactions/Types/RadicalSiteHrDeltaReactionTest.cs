@@ -31,26 +31,18 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest.
     /// Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class RadicalSiteHrDeltaReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public RadicalSiteHrDeltaReactionTest()
         {
             SetReaction(typeof(RadicalSiteHrDeltaReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestRadicalSiteHrDeltaReaction()
         {
@@ -61,13 +53,9 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
         /// Automatic search of the center active. hexan-3-one
-        ///
-        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             IReactionProcess type = new RadicalSiteHrDeltaReaction();
@@ -94,11 +82,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
         /// Automatic search of the center active. hexan-3-one
-        ///
-        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -130,11 +115,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// create the compound Hexan-3-one.
-        ///
-        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -179,8 +161,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
@@ -224,11 +204,6 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -263,11 +238,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[6].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -302,10 +272,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

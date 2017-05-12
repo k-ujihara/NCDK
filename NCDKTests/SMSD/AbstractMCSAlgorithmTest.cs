@@ -25,18 +25,17 @@ namespace NCDK.SMSD
 {
     /// <summary>
     /// Unit test class to be extended by test classes for classes that
-    /// implement the {@link AbstractMCSAlgorithm} interface.
-    ///
+    /// implement the <see cref="AbstractMCSAlgorithm"/> interface.
+    /// </summary>
     // @author     egonw
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public abstract class AbstractMCSAlgorithmTest
     {
         protected abstract AbstractMCSAlgorithm algorithm { get; }
 
         /// <summary>
-        /// Meta test that tests if #setMCSAlgorithm has been called.
+        /// Meta test that tests if <see cref="algorithm"/>  has been set.
         /// </summary>
         [TestMethod()]
         public void TestIsMCSAlgorithmSet()

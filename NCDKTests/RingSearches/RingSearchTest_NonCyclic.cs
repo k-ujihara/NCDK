@@ -21,58 +21,64 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Templates;
-using System.Collections.Generic;
 
-namespace NCDK.RingSearches {
+namespace NCDK.RingSearches
+{
     /// <summary>
     /// ring search unit tests for a branched aliphatic compounds
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
-    public sealed class RingSearchTest_NonCyclic {
-
+    public sealed class RingSearchTest_NonCyclic
+    {
         private readonly IAtomContainer nonCyclic = TestMoleculeFactory.MakeBranchedAliphatic();
 
-    [TestMethod()]
-        public void TestCyclic() {
+        [TestMethod()]
+        public void TestCyclic()
+        {
             Assert.AreEqual(0, new RingSearch(nonCyclic).Cyclic().Length);
         }
 
         [TestMethod()]
-        public void TestCyclic_Int() {
+        public void TestCyclic_Int()
+        {
             int n = nonCyclic.Atoms.Count;
             RingSearch ringSearch = new RingSearch(nonCyclic);
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 Assert.IsFalse(ringSearch.Cyclic(i));
             }
         }
 
         [TestMethod()]
-        public void TestIsolated() {
+        public void TestIsolated()
+        {
             Assert.AreEqual(0, new RingSearch(nonCyclic).Isolated().Length);
         }
 
         [TestMethod()]
-        public void TestFused() {
+        public void TestFused()
+        {
             Assert.AreEqual(0, new RingSearch(nonCyclic).Fused().Length);
         }
 
         [TestMethod()]
-        public void TestRingFragments() {
+        public void TestRingFragments()
+        {
             Assert.IsTrue(new RingSearch(nonCyclic).RingFragments().IsEmpty());
         }
 
         [TestMethod()]
-        public void TestIsolatedRingFragments() {
+        public void TestIsolatedRingFragments()
+        {
             Assert.IsTrue(new RingSearch(nonCyclic).IsolatedRingFragments().Count == 0);
         }
 
         [TestMethod()]
-        public void TestFusedRingFragments() {
+        public void TestFusedRingFragments()
+        {
             Assert.IsTrue(new RingSearch(nonCyclic).FusedRingFragments().Count == 0);
         }
     }

@@ -22,16 +22,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IElectronContainer} implementations.
-    ///
-    // @cdk.module test-interfaces
-    ///
-    // @see org.openscience.cdk.ElectronContainer
+    /// Checks the functionality of <see cref="IElectronContainer"/> implementations.
     /// </summary>
+    /// <seealso cref="IElectronContainer"/>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractElectronContainerTest : AbstractChemObjectTest
     {
-
         [TestMethod()]
         public virtual void TestSetElectronCount_Integer()
         {

@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link FragmentAtom}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="FragmentAtom"/>.
     /// </summary>
+    // @cdk.module test-silent
     public class FragmentAtomTest : AbstractFragmentAtomTest
     {
         public override IChemObject NewChemObject()

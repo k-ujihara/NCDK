@@ -34,17 +34,13 @@ using NCDK.SMSD.Tools;
 using NCDK.Templates;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-
 using System;
 using System.IO;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author     Syed Asad Rahman
-    // @cdk.require java1.5+
-    /// </summary>
     [TestClass()]
     public class CDKMCSTest : CDKTestCase
     {
@@ -72,13 +68,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             {
                 Assert.IsTrue(CDKMCS.IsSubgraph(mol, frag1, true));
             }
-
         }
 
-        /// <summary>
         // @cdk.bug 1708336
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1708336()
         {
@@ -261,10 +253,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(11, ((AtomContainer)list[0]).Atoms.Count);
         }
 
-        /// <summary>
         // @cdk.bug 999330
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSFBug999330()
         {
@@ -346,10 +335,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsTrue(CDKMCS.IsIsomorph(target, query, true), "C1CCCC1 should be a isomorph of O1C=CC=C1");
         }
 
-        /// <summary>
         // @cdk.bug 1633201
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
@@ -369,10 +355,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /// <summary>
         // @cdk.bug 2888845
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
@@ -391,10 +374,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(matches, atomMappings);
         }
 
-        /// <summary>
         // @cdk.bug 2888845
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {

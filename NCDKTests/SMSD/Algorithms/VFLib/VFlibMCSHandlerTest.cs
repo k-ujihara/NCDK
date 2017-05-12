@@ -21,7 +21,6 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.SMSD.Tools;
@@ -31,12 +30,10 @@ using System.IO;
 namespace NCDK.SMSD.Algorithms.VFLib
 {
     /// <summary>
-    /// Unit testing for the {@link VFlibMCSHandler} class.
-    // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
-    // @cdk.module test-smsd
-    // @cdk.require java1.6+
+    /// Unit testing for the <see cref="VFlibMCSHandler"/> class.
     /// </summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    // @cdk.module test-smsd
     [TestClass()]
     public class VFlibMCSHandlerTest : AbstractMCSAlgorithmTest
     {
@@ -80,7 +77,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of set method, of class VFlibMCSHandler.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
@@ -99,7 +95,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of set method, of class VFlibMCSHandler.
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSet_String_String()
@@ -127,7 +122,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of set method, of class VFlibMCSHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
@@ -146,7 +140,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of getAllAtomMapping method, of class VFlibMCSHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
@@ -167,7 +160,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of getAllMapping method, of class VFlibMCSHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
@@ -188,7 +180,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of getFirstAtomMapping method, of class VFlibMCSHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
@@ -209,7 +200,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of getFirstMapping method, of class VFlibMCSHandler.
-        // @throws InvalidSmilesException
         /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()

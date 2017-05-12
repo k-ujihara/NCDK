@@ -22,9 +22,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ChemSequenceManipulatorTest : CDKTestCase
     {

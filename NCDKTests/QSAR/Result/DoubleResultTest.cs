@@ -20,12 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.QSAR.Result
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     public class DoubleResultTest : CDKTestCase
     {
-
         public DoubleResultTest()
             : base()
         { }

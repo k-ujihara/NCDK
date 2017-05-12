@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of {@link Element}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of <see cref="Element"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ElementTest : AbstractElementTest
     {

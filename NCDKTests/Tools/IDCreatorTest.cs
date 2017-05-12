@@ -23,13 +23,10 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class IDCreatorTest : CDKTestCase
     {
-
         public IDCreatorTest()
             : base()
         { }
@@ -84,9 +81,7 @@ namespace NCDK.Tools
             Assert.AreEqual(3, ids.Count);
         }
 
-        /// <summary>
         // @cdk.bug 1455341
-        /// </summary>
         [TestMethod()]
         public void TestCallingTwice()
         {

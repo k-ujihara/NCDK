@@ -25,10 +25,8 @@ using NCDK.Default;
 
 namespace NCDK.SMSD.Tools
 {
-    /// <summary>
     // @author Asad
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public class BondEnergiesTest : CDKTestCase
     {

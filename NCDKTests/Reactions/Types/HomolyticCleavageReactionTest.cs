@@ -32,28 +32,20 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the HomolyticCleavageReactionTest.
     /// Generalized Reaction: A=B => [A*]-[B*]
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class HomolyticCleavageReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public HomolyticCleavageReactionTest()
         {
             SetReaction(typeof(HomolyticCleavageReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestHomolyticCleavageReaction()
         {
@@ -64,10 +56,7 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: propane.
         /// CC!-!C => C[C*] + [C*]
-        ///
-        // @cdk.inchi InChI=1/C3H8/c1-3-2/h3H2,1-2H3
-        ///
-        /// <returns>The test suite</returns>
+        /// </summary>
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -160,11 +149,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: Propene.
         /// C=C!-!C => C=[C*] + [C*]
-        ///
-        // @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         public void TestCsp2SingleB()
         {
@@ -243,17 +229,13 @@ namespace NCDK.Reactions.Types
             IAtomContainer product2 = setOfReactions[0].Products[1];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: Propyne.
         /// C#C!-!C => C#[C*] + [C*]
-        ///
-        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
         [TestMethod()]
         public void TestCspSingleB()
         {
@@ -329,11 +311,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: Propene.
         /// CC!=!C => C[C*][C*]
-        ///
-        // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         public void TestCsp2DoubleB()
         {
@@ -405,17 +384,13 @@ namespace NCDK.Reactions.Types
             IAtomContainer product1 = setOfReactions[0].Products[0];
             QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: Allene.
         /// C=C!=!C => C=[C*][C*]
-        ///
-        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1-2H2
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1-2H2
         [TestMethod()]
         public void TestCspDoubleB()
         {
@@ -485,11 +460,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: Propyne.
         /// CC#C => C[C*]=[C*]
-        ///
-        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
         [TestMethod()]
         public void TestCspTripleB()
         {
@@ -558,11 +530,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: dimethylamine.
         /// CN!-!C => C[N*] + [C*]
-        ///
-        // @cdk.inchi  InChI=1/C2H7N/c1-3-2/h3H,1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/C2H7N/c1-3-2/h3H,1-2H3
         [TestMethod()]
         public void TestNsp3SingleB()
         {
@@ -651,8 +620,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:.
         /// C[N+]!-!C => C[N*+] + [C*]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestNsp3ChargeSingleB()
@@ -702,17 +669,13 @@ namespace NCDK.Reactions.Types
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(0, setOfReactions.Count);
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: N-methylmethanimine.
         /// C=N!-!C =>[C*] +  C=[N*]
-        ///
-        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
         [TestMethod()]
         public void TestNsp2SingleB()
         {
@@ -793,8 +756,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:.
         /// C=[N+]!-!C => C=[N*+] + [C*]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestNsp2ChargeSingleB()
@@ -846,11 +807,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: N-methylmethanimine.
         /// CN!=!C => C[N*]-[C*]
-        ///
-        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
         [TestMethod()]
         public void TestNsp2DoubleB()
         {
@@ -924,8 +882,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: .
         /// C[N+]!=!C => C[N*+]-[C*]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestNsp2ChargeDoubleB()
@@ -971,17 +927,13 @@ namespace NCDK.Reactions.Types
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(0, setOfReactions.Count);
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: formonitrile.
         /// N!#!C => [N*]=[C*]
-        ///
-        // @cdk.inchi InChI=1/CHN/c1-2/h1H
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/CHN/c1-2/h1H
         [TestMethod()]
         public void TestNspTripleB()
         {
@@ -1035,8 +987,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:.
         /// [N+]!#!C => [N*+]=[C*]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestNspChargeTripleB()
@@ -1078,11 +1028,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:  methoxymethane.
         /// CO!-!C =>  C[O*] + [C*]
-        ///
-        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
         [TestMethod()]
         public void TestOsp2SingleB()
         {
@@ -1166,11 +1113,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction:  methoxymethane.
         /// C[O+]!-!C =>  C[O*+] + [C*]
-        ///
-        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
         [TestMethod()]
         public void TestOsp2ChargeSingleB()
         {
@@ -1217,17 +1161,13 @@ namespace NCDK.Reactions.Types
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(0, setOfReactions.Count);
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: formaldehyde.
         /// O!=!C => [O*][C*]
-        ///
-        // @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
         [TestMethod()]
         public void TestOspDoubleB()
         {
@@ -1285,8 +1225,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: .
         /// [O+]!=!C => [O*][C*+]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestOspChargeDoubleB()
@@ -1329,11 +1267,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: fluoromethane.
         /// F!-!C => [F*] + [C*]
-        ///
-        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestFspSingleB()
         {
@@ -1396,11 +1331,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -1434,11 +1364,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[0].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -1474,11 +1399,8 @@ namespace NCDK.Reactions.Types
         /// CCc1ccc(C=O)cc1  =>  C+ Cc1ccc(C=O)cc1
         /// CCc1ccc(C=O)cc1  =>  CC + c1ccc(C=O)cc1
         /// Automatic looking for active center.
-        ///
-        // @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
         [TestMethod()]
         public void TestEthylbenzaldehydeManual()
         {
@@ -1630,12 +1552,9 @@ namespace NCDK.Reactions.Types
         /// CCc1ccc(C=O)cc1  =>  C+ Cc1ccc(C=O)cc1
         /// CCc1ccc(C=O)cc1  =>  CC + c1ccc(C=O)cc1
         /// Automatically looks for the active center.
-        ///
-        // @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
-        ///
-        // @see       #TestEthylbenzaldehydeManual()
-        /// <returns>The test suite</returns>
         /// </summary>
+        /// <see cref="TestEthylbenzaldehydeManual()"/> 
+        // @cdk.inchi InChI=1/C9H10O/c1-2-8-3-5-9(7-10)6-4-8/h3-7H,2H2,1H3
         [TestMethod()]
         public void TestEthylbenzaldehydeMapping()
         {
@@ -1716,13 +1635,10 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
             foreach (var nextAtom in molecule.Atoms)
             {
@@ -1732,8 +1648,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the example set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -1764,8 +1678,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// TODO:reaction. Set the products
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {

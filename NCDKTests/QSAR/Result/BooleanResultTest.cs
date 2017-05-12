@@ -18,10 +18,9 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result {
-    /// <summary>
+namespace NCDK.QSAR.Result
+{
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class BooleanResultTest : CDKTestCase
     {

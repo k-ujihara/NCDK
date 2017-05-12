@@ -17,42 +17,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
-using NCDK.Default;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// TestSuite that runs a test for the TautomerizationReactionTest.
     /// Generalized Reaction: X=Y-Z-H => X(H)-Y=Z.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class TautomerizationReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public TautomerizationReactionTest()
         {
             SetReaction(typeof(TautomerizationReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestTautomerizationReaction()
         {
@@ -64,16 +52,11 @@ namespace NCDK.Reactions.Types
         /// A unit test suite for JUnit for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Automatic looking for active center.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-
             IReactionProcess type = new TautomerizationReaction();
 
             var setOfReactants = GetExampleReactants();
@@ -116,11 +99,8 @@ namespace NCDK.Reactions.Types
         /// A unit test suite for JUnit for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Manually putting for active center.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -179,13 +159,7 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule, queryAtom));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -229,13 +203,7 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[3].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -270,17 +238,14 @@ namespace NCDK.Reactions.Types
             mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
                     molecule.Atoms[4]);
             Assert.AreEqual(mappedProductA1, product.Atoms[4]);
-
         }
 
         /// <summary>
         /// Get the Acetaldehyde structure.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
+        /// </summary>
         /// <returns>The IAtomContainer</returns>
         /// <exception cref="CDKException"></exception>
-        /// </summary>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -314,10 +279,9 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

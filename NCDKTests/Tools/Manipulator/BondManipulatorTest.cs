@@ -24,13 +24,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class BondManipulatorTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestGetAtomArray_IBond()
         {

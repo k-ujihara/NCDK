@@ -26,13 +26,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// TestCase for {@link IMonomer} implementations.
-    ///
+    /// TestCase for <see cref="IMonomer"/> implementations.
+    /// </summary>
     // @cdk.module test-interfaces
-    ///
     // @author  Edgar Luttman <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-09
-    /// </summary>
     [TestClass()]
     public abstract class AbstractMonomerTest
         : AbstractAtomContainerTest
@@ -69,7 +67,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IMonomer oMonomer = (IMonomer)NewChemObject();
@@ -83,7 +80,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestClone()
         {
             IMonomer oMonomer = (IMonomer)NewChemObject();

@@ -28,14 +28,12 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// benzylbenzene ring search unit tests
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_BenzylBenzene
     {
-
         private readonly IAtomContainer benzylbenzene = Benzylbenzene();
 
         [TestMethod()]
@@ -62,7 +60,6 @@ namespace NCDK.RingSearches
             // single atom not in a ring
             Assert.AreEqual(1, acyclic);
             Assert.AreEqual(n - 1, cyclic);
-
         }
 
         [TestMethod()]
@@ -109,9 +106,7 @@ namespace NCDK.RingSearches
             Assert.AreEqual(0, fused.Count);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2
-        /// </summary>
         public static IAtomContainer Benzylbenzene()
         {
             IAtomContainer mol = new AtomContainer();

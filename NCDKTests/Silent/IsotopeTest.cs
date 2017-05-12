@@ -23,10 +23,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Isotope}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Isotope"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class IsotopeTest : AbstractIsotopeTest
     {

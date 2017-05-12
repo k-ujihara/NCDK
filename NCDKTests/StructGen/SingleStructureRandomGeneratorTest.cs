@@ -25,12 +25,9 @@ using System;
 
 namespace NCDK.StructGen
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     public class SingleStructureRandomGeneratorTest
     {
-
         string mf;
         SingleStructureRandomGenerator ssrg;
 

@@ -23,13 +23,10 @@ using System;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AtomTypeManipulatorTest : CDKTestCase
     {
-
         public AtomTypeManipulatorTest()
             : base()
         { }

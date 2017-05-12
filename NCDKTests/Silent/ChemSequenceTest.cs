@@ -23,9 +23,8 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Checks the functionality of the <see cref="ChemSequence"/>.
-    ///
-    // @cdk.module test-silent
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ChemSequenceTest : AbstractChemSequenceTest
     {

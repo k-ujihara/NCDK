@@ -27,26 +27,18 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// TestSuite that runs a test for the ElectronImpactSDBReactionTest.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class ElectronImpactSDBReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public ElectronImpactSDBReactionTest()
         {
             SetReaction(typeof(ElectronImpactSDBReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestElectronImpactSDBReaction()
         {
@@ -55,11 +47,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        ///  A unit test for JUnit.
-        ///
         ///  FIXME REAC: not recognized IAtomType =C*
-        ///
-        /// <returns>Description of the Return Value</returns>
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -121,13 +109,10 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
             foreach (var nextAtom in molecule.Atoms)
             {
@@ -137,8 +122,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the example set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -167,8 +150,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// TODO:reaction. Set the products
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {

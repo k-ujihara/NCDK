@@ -20,15 +20,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author     Syed Asad Rahman
-    // @cdk.require java1.5+
-    /// </summary>
     [TestClass()]
     public class CDKRMapTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestRMap_int_int()
         {

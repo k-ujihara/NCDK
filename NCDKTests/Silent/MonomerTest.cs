@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Monomer}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Monomer"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class MonomerTest : AbstractMonomerTest
     {
@@ -44,7 +43,6 @@ namespace NCDK.Silent
         // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
-
         public override void TestNotifyChanged()
         {
             ChemObjectTestHelper.TestNotifyChanged(NewChemObject());

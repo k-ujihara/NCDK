@@ -25,11 +25,9 @@ using NCDK.Default;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author Asad
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class GenerateCompatibilityGraphTest
     {
         public GenerateCompatibilityGraphTest() { }

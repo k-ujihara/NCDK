@@ -23,13 +23,10 @@ using NCDK.Tools;
 
 namespace NCDK.StructGen.Stochastic
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     [TestClass()]
     public class PartialFilledStructureMergerTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestGenerate_IAtomContainerSet()
         {

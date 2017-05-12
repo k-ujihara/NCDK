@@ -22,7 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Default
 {
     /// <summary>
-    /// Checks the functionality of the {@link ElectronContainer} class.
+    /// Checks the functionality of the <see cref="ElectronContainer"/> class.
     /// </summary>
     /// <seealso cref="ElectronContainer"/>
     // @cdk.module test-data

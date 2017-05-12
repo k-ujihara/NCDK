@@ -82,7 +82,6 @@ namespace NCDK.Reactions.Types
         /// Reaction: O-C=C-C => [O+]=C-[C-]-C
         /// Automatic search of the center active.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -112,7 +111,6 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>

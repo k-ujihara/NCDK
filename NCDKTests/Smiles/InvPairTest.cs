@@ -23,13 +23,10 @@ using System;
 
 namespace NCDK.Smiles
 {
-    /// <summary>
     // @cdk.module     test-standard
-    /// </summary>
     [TestClass()]
     public class InvPairTest : CDKTestCase
     {
-
         public InvPairTest()
                 : base()
         {
@@ -90,9 +87,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(pair.Atom);
         }
 
-        /// <summary>
         // @cdk.bug 2045574
-        /// </summary>
         [TestMethod()]
         public void TestGetPrime()
         {

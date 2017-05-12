@@ -25,10 +25,9 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IPDBPolymer} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IPDBPolymer"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractPDBPolymerTest : AbstractBioPolymerTest
     {

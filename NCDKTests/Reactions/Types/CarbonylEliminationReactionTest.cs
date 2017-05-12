@@ -31,13 +31,11 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the CarbonylEliminationReactionTest.
     /// Generalized Reaction: RC-C#[O+] => R[C] + |C#[O+]
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class CarbonylEliminationReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
@@ -49,9 +47,6 @@ namespace NCDK.Reactions.Types
             SetReaction(typeof(CarbonylEliminationReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestCarbonylEliminationReaction()
         {
@@ -62,13 +57,10 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-
             IReactionProcess type = new CarbonylEliminationReaction();
             /* [C*]-C-C */
             var setOfReactants = GetExampleReactants();
@@ -97,8 +89,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestManuallyPCentreActiveExample1()
@@ -140,8 +130,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestMappingExample1()
@@ -170,18 +158,14 @@ namespace NCDK.Reactions.Types
             IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
                     molecule.Atoms[4]);
             Assert.AreEqual(mappedProductA2, product2.Atoms[0]);
-
         }
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
             foreach (var nextAtom in molecule.Atoms)
             {
@@ -191,8 +175,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the example set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -230,8 +212,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {

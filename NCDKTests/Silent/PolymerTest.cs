@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Polymer}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Polymer"/>.
     /// </summary>
+    // @cdk.module test-silent
     public class PolymerTest : AbstractPolymerTest
     {
         public override IChemObject NewChemObject()

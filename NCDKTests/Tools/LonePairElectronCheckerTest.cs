@@ -28,21 +28,15 @@ namespace NCDK.Tools
     /// <summary>
     /// Tests CDK's Lone Pair Electron checking capabilities in terms of
     /// example molecules.
-    ///
+    /// </summary>
     // @cdk.module     test-standard
-    ///
     // @author         Miguel Rojas
     // @cdk.created    2006-04-01
-    /// </summary>
     [TestClass()]
     public class LonePairElectronCheckerTest : CDKTestCase
     {
-
         private static LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestAllSaturated_Formaldehyde()
         {
@@ -69,9 +63,6 @@ namespace NCDK.Tools
             Assert.IsTrue(lpcheck.AllSaturated(m));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestAllSaturated_Methanethiol()
         {
@@ -97,9 +88,6 @@ namespace NCDK.Tools
             Assert.IsFalse(lpcheck.AllSaturated(m));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_chloride()
         {
@@ -120,9 +108,6 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol()
         {
@@ -144,9 +129,6 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol_AddH()
         {
@@ -169,9 +151,6 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(m.Atoms[0]).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol_protonated()
         {
@@ -194,9 +173,6 @@ namespace NCDK.Tools
             Assert.AreEqual(1, m.GetConnectedLonePairs(o).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_methoxide_anion()
         {
@@ -218,9 +194,6 @@ namespace NCDK.Tools
             Assert.AreEqual(3, m.GetConnectedLonePairs(o).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Ammonia()
         {
@@ -237,9 +210,6 @@ namespace NCDK.Tools
             Assert.AreEqual(1, m.GetConnectedLonePairs(n).Count());
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_methylamine_radical_cation()
         {

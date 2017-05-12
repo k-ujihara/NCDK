@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Reaction}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Reaction"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ReactionTest : AbstractReactionTest
     {

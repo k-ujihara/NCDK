@@ -22,10 +22,9 @@ using System;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Helper class to test the functionality of the {@link ChemObjectListener}.
-    ///
-    // @cdk.module test-silent
+    /// Helper class to test the functionality of the <see cref="ChemObjectListener"/>.
     /// </summary>
+    // @cdk.module test-silent
     public class ChemObjectListener : IChemObjectListener
     {
         public bool Changed { get; set; }

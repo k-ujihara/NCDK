@@ -35,19 +35,16 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Tests the HOSECode generator.
-    ///
+    /// </summary>
     // @cdk.module  test-standard
     // @author      steinbeck
     // @cdk.created 2002-11-16
-    /// </summary>
     [TestClass()]
     public class HOSECodeGeneratorTest : CDKTestCase
     {
         static bool standAlone = false;
 
-        /// <summary>
         // @cdk.bug 968852
-        /// </summary>
         [TestMethod()]
         public void Test968852()
         {
@@ -77,11 +74,6 @@ namespace NCDK.Tools
             Assert.AreNotSame(code2, code1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void Test1Sphere()
         {

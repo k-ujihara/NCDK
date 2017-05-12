@@ -31,26 +31,18 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the RearrangementRadicalReactionTest.
     /// Generalized Reaction: [A*]-B-C => A=B + [c*].
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class RadicalSiteInitiationReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public RadicalSiteInitiationReactionTest()
         {
             SetReaction(typeof(RadicalSiteInitiationReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestRadicalSiteInitiationReaction()
         {
@@ -61,11 +53,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: [C*]-C-C => C=C +[C*]
         /// Automatic search of the center active.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             IReactionProcess type = new RadicalSiteInitiationReaction();
@@ -98,14 +87,8 @@ namespace NCDK.Reactions.Types
 
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -142,11 +125,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[1].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -185,12 +163,6 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /// <summary>
-        /// Get the IAtomContainer
-        ///
-        /// <returns>The IAtomContainer</returns>
-        // @throws Exception
-        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -229,8 +201,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
@@ -269,10 +239,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

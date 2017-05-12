@@ -30,28 +30,19 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the PiBondingMovementReactionTest.
     /// Generalized Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
-    ///
     /// FIXME: REACT: The tests fail if I don't put the smiles, strange
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class PiBondingMovementReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public PiBondingMovementReactionTest()
         {
             SetReaction(typeof(PiBondingMovementReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestPiBondingMovementReaction()
         {
@@ -65,8 +56,6 @@ namespace NCDK.Reactions.Types
         /// Automatic search of the center active.
         ///
         /// InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -118,8 +107,6 @@ namespace NCDK.Reactions.Types
         /// Automatic search of the center active.
         ///
         /// InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestAutomaticSearchCentreActiveExample1()
@@ -188,7 +175,6 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         static bool Matches(IAtomContainer a, IAtomContainer b)
@@ -204,8 +190,6 @@ namespace NCDK.Reactions.Types
         /// Automatic search of the center active.
         ///
         /// InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestDoubleRingConjugated()
@@ -275,8 +259,6 @@ namespace NCDK.Reactions.Types
         /// restricted the reaction center.
         ///
         /// InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestDoubleRingConjugated2()
@@ -312,14 +294,11 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
         /// Create one of the resonance for 2-methylnaphthalene.
         /// C1=CC(=CC2=C1C=CC=C2)C
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -369,8 +348,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules. 2-methylnaphthalene.
         /// C=1C=CC2=CC(=CC=C2(C=1))C
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
@@ -419,13 +396,10 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
             foreach (var nextAtom in molecule.Atoms)
             {

@@ -27,12 +27,8 @@ using System.Linq;
 
 namespace NCDK.SMSD.Filters
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    /// </summary>
     [TestClass()]
     public class ChemicalFiltersTest
     {
@@ -40,7 +36,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of sortResultsByStereoAndBondMatch method, of class ChemicalFilters.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSortResultsByStereoAndBondMatch()
@@ -62,8 +57,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of sortResultsByFragments method, of class ChemicalFilters.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSortResultsByFragments()
@@ -85,7 +78,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of sortResultsByEnergies method, of class ChemicalFilters.
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSortResultsByEnergies()
@@ -167,8 +159,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of getSortedEnergy method, of class ChemicalFilters.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetSortedEnergy()
@@ -186,8 +176,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of getSortedFragment method, of class ChemicalFilters.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetSortedFragment()
@@ -205,8 +193,6 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Test of getStereoMatches method, of class ChemicalFilters.
-        // @throws InvalidSmilesException
-        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetStereoMatches()

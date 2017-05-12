@@ -310,9 +310,8 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (2R)-butan-2-ol
-        ///
-        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         [TestMethod()]
         public void Test_2R_butan_2_ol()
         {
@@ -331,9 +330,8 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (2S)-butan-2-ol
-        ///
-        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         [TestMethod()]
         public void Test_2S_butan_2_ol()
         {
@@ -352,9 +350,8 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (4as,8as)-decahydronaphthalene-4a,8a-diol
-        ///
-        // @cdk.inchi InChI=1/C10H18O2/c11-9-5-1-2-6-10(9,12)8-4-3-7-9/h11-12H,1-8H2/t9-,10+
         /// </summary>
+        // @cdk.inchi InChI=1/C10H18O2/c11-9-5-1-2-6-10(9,12)8-4-3-7-9/h11-12H,1-8H2/t9-,10+
         [TestMethod()]
         public void TetrahedralRingClosure()
         {
@@ -394,13 +391,11 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (E)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         [TestMethod()]
         public void E_1_2_difluroethene()
         {
-
             IAtomContainer ac = Convert("F/C=C/F");
 
             IStereoElement se = ac.StereoElements.First();
@@ -415,9 +410,8 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (Z)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         [TestMethod()]
         public void Z_1_2_difluroethene()
         {
@@ -436,13 +430,11 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (E)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         [TestMethod()]
         public void E_1_2_difluroethene_explicit()
         {
-
             IAtomContainer ac = Convert("F/C([H])=C(\\[H])F");
 
             IStereoElement se = ac.StereoElements.First();
@@ -458,13 +450,11 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (Z)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         [TestMethod()]
         public void Z_1_2_difluroethene_explicit()
         {
-
             IAtomContainer ac = Convert("FC(\\[H])=C([H])/F");
 
             IStereoElement se = ac.StereoElements.First();

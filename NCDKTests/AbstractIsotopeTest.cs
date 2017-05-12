@@ -24,11 +24,9 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of the Isotope class.
-    ///
-    // @cdk.module test-interfaces
-    ///
-    // @see org.openscience.cdk.Isotope
     /// </summary>
+    /// <see cref="IIsotope"/> 
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractIsotopeTest : AbstractElementTest
     {
@@ -78,7 +76,6 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IIsotope iso = (IIsotope)NewChemObject();
@@ -150,6 +147,5 @@ namespace NCDK
                 Assert.IsTrue(description[i] != '\r');
             }
         }
-
     }
 }

@@ -23,10 +23,9 @@ using System.Collections.Generic;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IChemSequence} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IChemSequence"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractChemSequenceTest
         : AbstractChemObjectTest

@@ -27,11 +27,10 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// A test class for the AtomTypeAwereSaturationChecker-class
-    ///
+    /// </summary>
     // @author Klas J&ouml;nsson
     // @cdk.created 2012-04-18
     // @cdk.module  test-valencycheck
-    /// </summary>
     [TestClass()]
     public class ATASaturationCheckerTest : CDKTestCase
     {
@@ -42,7 +41,6 @@ namespace NCDK.Tools
         /// <summary>
         /// A test of DecideBondOrder(IAtomContainer) with a molecule we created
         /// from scratch.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestASimpleCarbonRing()
@@ -123,7 +121,6 @@ namespace NCDK.Tools
         /// <summary>
         /// A test of DecideBondOrder(IAtomContainer) with a molecule we created
         /// from a SMILES.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestQuinone()
@@ -173,7 +170,6 @@ namespace NCDK.Tools
         /// <summary>
         /// A test of DecideBondOrder(IAtomContainer) with a simple carbon ring we
         /// created from a SMILES.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestASimpleCarbonRing2()
@@ -195,7 +191,6 @@ namespace NCDK.Tools
         /// <summary>
         /// This method tests the AtomTypeAwareSaturnationChecker with a large ring
         /// system.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestALargeRingSystem()
@@ -217,7 +212,6 @@ namespace NCDK.Tools
         /// <summary>
         /// This do the same as the method above, but with five other large ring
         /// systems.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestLargeRingSystem1()
@@ -325,8 +319,6 @@ namespace NCDK.Tools
 
         /// <summary>
         /// From DeduceBondSystemToolTest
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestLargeBioclipseUseCase()

@@ -27,15 +27,13 @@ namespace NCDK.Tools
     /// This suite tests deduction from hybridization rich starting
     /// points, excluding, but optional, implicit or explicit
     /// hydrogen counts.
-    ///
+    /// </summary>
     // @author      egonw
     // @cdk.module  test-valencycheck
     // @cdk.created 2006-08-16
-    /// </summary>
     [TestClass()]
     public class DeduceBondOrderTestFromExplicitHydrogens : CDKTestCase
     {
-
         private IDeduceBondOrderTool dboTool = new SaturationChecker();
 
         /// <summary>

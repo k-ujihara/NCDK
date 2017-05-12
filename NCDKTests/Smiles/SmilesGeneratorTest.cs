@@ -76,10 +76,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CC1CCC", smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestAlanin()
         {
@@ -143,11 +139,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("N([C@@](F)(C([H])([H])[H])C(O[H])=O)([H])[H]", smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <exception cref="Exception"> Description of the Exception</exception>
-        /// </summary>
         [TestMethod()]
         public void TestCIsResorcinol()
         {
@@ -230,11 +221,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("O[C@H]1CCCC[C@H]1O", smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <exception cref="Exception"> Description of the Exception</exception>
-        /// </summary>
         [TestMethod()]
         public void TestCIsTransDecalin()
         {
@@ -319,11 +305,6 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(smiles3, smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <exception cref="Exception"> Description of the Exception</exception>
-        /// </summary>
         [TestMethod()]
         public void TestDoubleBondConfiguration()
         {
@@ -398,9 +379,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("S(/C(/F)=C(\\F)/S[H])[H]", smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestPartitioning()
         {
@@ -419,9 +397,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.IndexOf(".") != -1);
         }
 
-        /// <summary>
         // @cdk.bug 791091
-        /// </summary>
         [TestMethod()]
         public void TestBug791091()
         {
@@ -443,9 +419,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CCN1C", smiles);
         }
 
-        /// <summary>
         // @cdk.bug 590236
-        /// </summary>
         [TestMethod()]
         public void TestBug590236()
         {
@@ -464,9 +438,8 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// A bug reported for JChemPaint.
-        ///
-        // @cdk.bug 956923
         /// </summary>
+        // @cdk.bug 956923
         [TestMethod()]
         public void TestSFBug956923_aromatic()
         {
@@ -519,9 +492,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("[CH]1[CH][CH][CH][CH][CH]1", smiles);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestAtomPermutation()
         {
@@ -550,9 +520,6 @@ namespace NCDK.Smiles
             }
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestBondPermutation()
         {
@@ -579,7 +546,6 @@ namespace NCDK.Smiles
                 //Debug.WriteLine(smiles);
                 Assert.AreEqual(oldSmiles, smiles);
             }
-
         }
 
         private void FixCarbonHCount(IAtomContainer mol)
@@ -710,9 +676,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1=CCCCCCC1", moleculeSmile);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestCycloOcten()
         {
@@ -740,9 +703,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
         }
 
-        /// <summary>
         // @cdk.bug 1089770
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1089770_1()
         {
@@ -756,9 +717,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CCC2=C(C1)CCC2", moleculeSmile);
         }
 
-        /// <summary>
         // @cdk.bug 1089770
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1089770_2()
         {
@@ -772,9 +731,7 @@ namespace NCDK.Smiles
         Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
         }
 
-        /// <summary>
         // @cdk.bug 1014344
-        /// </summary>
         // MDL -> CML (slow) -> SMILES round tripping
         [TestMethod()]
         public void TestSFBug1014344()
@@ -800,10 +757,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(molSmiles, cmlSmiles);
         }
 
-
-        /// <summary>
         // @cdk.bug 1014344
-        /// </summary>
         [TestMethod()]
         public void TestTest()
         {
@@ -829,9 +783,7 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(moleculeSmile2, moleculeSmile1);
         }
 
-        /// <summary>
         // @cdk.bug 1535055
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1535055()
         {
@@ -857,9 +809,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol1SMILES.Contains("nH"));
         }
 
-        /// <summary>
         // @cdk.bug 1014344
-        /// </summary>
         [TestMethod()]
         public void TestSFBug1014344_1()
         {
@@ -888,9 +838,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(moleculeSmile1, moleculeSmile2);
         }
 
-        /// <summary>
         // @cdk.bug 1875946
-        /// </summary>
         [TestMethod()]
         public void TestPreservingFormalCharge()
         {
@@ -931,9 +879,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.IndexOf("[nH]") >= 0);
         }
 
-        /// <summary>
         // @cdk.bug 1300
-        /// </summary>
         [TestMethod()]
         public void TestDoubleBracketProblem()
         {
@@ -947,9 +893,7 @@ namespace NCDK.Smiles
             Assert.IsFalse(smiles.Contains("[[nH]-]"));
         }
 
-        /// <summary>
         // @cdk.bug 1300
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenOnChargedNitrogen()
         {
@@ -964,9 +908,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.Contains("[n-]"));
         }
 
-        /// <summary>
         // @cdk.bug 545
-        /// </summary>
         [TestMethod()]
         public void TestTimeOut()
         {
@@ -984,9 +926,7 @@ namespace NCDK.Smiles
             Console.Out.WriteLine(genSmiles);
         }
 
-        /// <summary>
         // @cdk.bug 2051597
-        /// </summary>
         [TestMethod()]
         public void TestSFBug2051597()
         {
@@ -1009,9 +949,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(cdkRoundTripMol);
         }
 
-        /// <summary>
         // @cdk.bug 2596061
-        /// </summary>
         [TestMethod()]
         public void TestRoundTripPseudoAtom()
         {
@@ -1023,9 +961,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(smiles, genSmiles);
         }
 
-        /// <summary>
         // @cdk.bug 2781199
-        /// </summary>
         [TestMethod()]
         public void TestBug2781199()
         {
@@ -1037,9 +973,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(genSmiles.IndexOf("H") == -1, "Generated SMILES should not have explicit H: " + genSmiles);
         }
 
-        /// <summary>
         // @cdk.bug 2898032
-        /// </summary>
         [TestMethod()]
         public void TestCanSmiWithoutConfiguredAtoms()
         {
@@ -1057,9 +991,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(o1.Equals(o2), "The two canonical SMILES should match");
         }
 
-        /// <summary>
         // @cdk.bug 2898032
-        /// </summary>
         [TestMethod()]
         public void TestCanSmiWithConfiguredAtoms()
         {
@@ -1081,9 +1013,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(o1.Equals(o2), "The two canonical SMILES should match");
         }
 
-        /// <summary>
         // @cdk.bug 3040273
-        /// </summary>
         [TestMethod()]
         public void TestBug3040273()
         {
@@ -1191,9 +1121,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic().WithAtomClasses().Create(ethanol));
         }
 
-        /// <summary>
         // @cdk.bug 328
-        /// </summary>
         [TestMethod()]
         public void Bug328()
         {

@@ -24,10 +24,9 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Checks the functionality of the <see cref="PDBAtom"/>.
-    ///
-    // @cdk.module test-silent
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-silent
+    [TestClass()]
     public class PDBAtomTest : AbstractPDBAtomTest
     {
         public override IChemObject NewChemObject()

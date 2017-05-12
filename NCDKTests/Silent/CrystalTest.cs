@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Crystal}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="Crystal"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class CrystalTest : AbstractCrystalTest
     {

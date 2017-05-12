@@ -20,17 +20,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Tools
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ElementComparatorTest : CDKTestCase
     {
-
         public ElementComparatorTest()
             : base()
         { }
-
 
         [TestMethod()]
         public void TestElementComparator()
@@ -39,9 +35,7 @@ namespace NCDK.Tools
             Assert.IsNotNull(comp);
         }
 
-        /// <summary>
         // @cdk.bug 1638375
-        /// </summary>
         [TestMethod()]
         public void TestCompare_Object_Object()
         {

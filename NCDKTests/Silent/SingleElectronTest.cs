@@ -22,11 +22,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link SingleElectron}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="SingleElectron"/>.
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-silent
+    [TestClass()]
     public class SingleElectronTest : AbstractSingleElectronTest
     {
         public override IChemObject NewChemObject()

@@ -20,19 +20,16 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
-using NCDK.Common.Mathematics;
 
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IPseudoAtom} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IPseudoAtom"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractPseudoAtomTest : AbstractAtomTest
     {
-
         [TestMethod()]
         public virtual void TestGetLabel()
         {
@@ -62,7 +59,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestSetFormalCharge_Integer()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
@@ -79,7 +75,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestSetCharge_Double()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
@@ -88,7 +83,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestSetExactMass_Double()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
@@ -126,7 +120,6 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
@@ -154,9 +147,8 @@ namespace NCDK
         /// We decided to let the pseudo atoms have a default label of '*'.
         ///
         /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-        ///
-        // @cdk.bug 1778479
         /// </summary>
+        // @cdk.bug 1778479
         [TestMethod()]
         public virtual void TestBug1778479DefaultLabel()
         {
@@ -166,11 +158,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Overwrite the method in {@link AbstractAtomTest} to always
+        /// Overwrite the method in <see cref="AbstractAtomTest"/> to always
         /// expect zero hydrogen counts.
         /// </summary>
         [TestMethod()]
-
         public override void TestClone_HydrogenCount()
         {
             IAtom atom = (IAtom)NewChemObject();
@@ -183,7 +174,7 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Overwrite the method in {@link AbstractAtomTest} to always
+        /// Overwrite the method in <see cref="AbstractAtomTest"/> to always
         /// expect zero hydrogen counts.
         /// </summary>
         [TestMethod()]
@@ -199,11 +190,10 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Overwrite the method in {@link AbstractAtomTypeTest} to always
+        /// Overwrite the method in <see cref="AbstractAtomTypeTest"/> to always
         /// expect zero stereo parity.
         /// </summary>
         [TestMethod()]
-
         public override void TestClone_StereoParity()
         {            
             IAtom atom = (IAtom)NewChemObject();

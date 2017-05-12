@@ -47,7 +47,6 @@ namespace NCDK.Silent
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_SetFlag()
         {
             ChemObjectTestHelper.TestNotifyChanged_SetFlag(NewChemObject());

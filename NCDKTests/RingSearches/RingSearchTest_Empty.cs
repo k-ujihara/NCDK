@@ -22,19 +22,17 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using System.Collections.Generic;
 
-namespace NCDK.RingSearches {
+namespace NCDK.RingSearches
+{
     /// <summary>
     /// ring search unit tests for an empty molecule
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Empty
     {
-
         private readonly IAtomContainer empty = new AtomContainer();
 
         [TestMethod()]

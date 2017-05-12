@@ -22,10 +22,9 @@ namespace NCDK.Reactions.Mechanisms
 {
     /// <summary>
     /// Tests for AdductionPBMechanism implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-reaction
+    [TestClass()]
     public class AdductionPBMechanismTest : ReactionMechanismTest
     {
         public AdductionPBMechanismTest()
@@ -41,12 +40,6 @@ namespace NCDK.Reactions.Mechanisms
             Assert.IsNotNull(mechanism);
         }
 
-        /// <summary>
-        /// Junit test.
-        /// TODDO: REACT: add an example
-        ///
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()
         {

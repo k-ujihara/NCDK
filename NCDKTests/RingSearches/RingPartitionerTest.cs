@@ -25,12 +25,10 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// This class tests the RingPartitioner class.
-    ///
+    /// </summary>
     // @cdk.module test-standard
-    ///
     // @author         kaihartmann
     // @cdk.created    2005-05-24
-    /// </summary>
     [TestClass()]
     public class RingPartitionerTest : CDKTestCase
     {
@@ -67,7 +65,6 @@ namespace NCDK.RingSearches
             ringSet = Cycles.FindSSSR(spiro).ToRingSet();
             list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(1, list.Count);
-
         }
     }
 }

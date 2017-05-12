@@ -31,18 +31,13 @@ namespace NCDK.Smiles.SMARTS
 {
     /// <summary>
     /// JUnit test routines for the SMARTS substructure search.
-    ///
+    /// </summary>
     // @author Rajarshi Guha
     // @cdk.module test-smarts
     // @cdk.require ant1.6
-    /// </summary>
     public class SMARTSQueryToolTest : CDKTestCase
     {
-
-        /// <summary>
-        /// <exception cref="CDKException"></exception>
         // @cdk.bug 2788357
-        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestLexicalError()
@@ -168,13 +163,11 @@ namespace NCDK.Smiles.SMARTS
         /// molecule obtained from the factory since the factory derived
         /// molecule does not have an explicit hydrogen, which it really should
         /// have.
-        ///
-        // @cdk.bug 1985811
         /// </summary>
+        // @cdk.bug 1985811
         [TestMethod()]
         public void TestIndoleAgainstItself()
         {
-
             IAtomContainer indole = TestMoleculeFactory.MakeIndole();
             AddImplicitHydrogens(indole);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(indole);
@@ -188,9 +181,7 @@ namespace NCDK.Smiles.SMARTS
             Assert.IsTrue(querytool.Matches(indole));
         }
 
-        /// <summary>
         // @cdk.bug 2149621
-        /// </summary>
         [TestMethod()]
         public void TestMethane()
         {
@@ -202,7 +193,6 @@ namespace NCDK.Smiles.SMARTS
             SMARTSQueryTool sqt = new SMARTSQueryTool("CC", Default.ChemObjectBuilder.Instance);
             bool matches = sqt.Matches(methane);
             Assert.IsFalse(matches);
-
         }
 
         [TestMethod()]

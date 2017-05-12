@@ -46,8 +46,10 @@
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <MissingTags>AutoDocumentCtors, AutoDocumentDispose</MissingTags>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\NCDK\bin\Release\NCDK.xml" />
-      <DocumentationSource sourceFile="..\NCDK\bin\Release\NCDK.dll" />
+      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\NCDK.xml" />
+      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\NCDK.dll" />
+      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\NCDKDisplay.dll" />
+      <DocumentationSource sourceFile="..\NCDKDisplay\bin\Release\NCDKDisplay.xml" />
     </DocumentationSources>
     <ProjectSummary>https://github.com/kazuyaujihara/NCDK
 </ProjectSummary>

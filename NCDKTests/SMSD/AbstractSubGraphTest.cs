@@ -27,11 +27,8 @@ using NCDK.SMSD.Tools;
 
 namespace NCDK.SMSD
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    /// </summary>
     [TestClass()]
     public abstract class AbstractSubGraphTest
     {
@@ -41,8 +38,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of isSubgraph method, of class AbstractSubGraph.
-        // @throws InvalidSmilesException
-        /// </summary>
+         /// </summary>
         [TestMethod()]
         public virtual void TestIsSubgraph()
         {
@@ -59,7 +55,6 @@ namespace NCDK.SMSD
 
         public class ISubGraphImpl : AbstractSubGraph
         {
-
             public override bool IsSubgraph(bool bondMatch)
             {
                 return false;

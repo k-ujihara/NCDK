@@ -21,38 +21,41 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Templates;
 using System.Collections.Generic;
 
-namespace NCDK.RingSearches {
+namespace NCDK.RingSearches
+{
     /// <summary>
     /// biphenyl ring search unit tests
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
-    public sealed class RingSearchTest_Biphenyl {
-
+    public sealed class RingSearchTest_Biphenyl
+    {
         private readonly IAtomContainer biphenyl = TestMoleculeFactory.MakeBiphenyl();
 
-    [TestMethod()]
-        public void TestCyclic() {
+        [TestMethod()]
+        public void TestCyclic()
+        {
             Assert.AreEqual(biphenyl.Atoms.Count, new RingSearch(biphenyl).Cyclic().Length);
         }
 
         [TestMethod()]
-        public void TestCyclic_Int() {
+        public void TestCyclic_Int()
+        {
             int n = biphenyl.Atoms.Count;
             RingSearch ringSearch = new RingSearch(biphenyl);
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 Assert.IsTrue(ringSearch.Cyclic(i));
             }
         }
 
         [TestMethod()]
-        public void TestIsolated() {
+        public void TestIsolated()
+        {
             RingSearch search = new RingSearch(biphenyl);
             int[][] isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
@@ -61,19 +64,22 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFused() {
+        public void TestFused()
+        {
             Assert.AreEqual(0, new RingSearch(biphenyl).Fused().Length);
         }
 
         [TestMethod()]
-        public void TestRingFragments() {
+        public void TestRingFragments()
+        {
             IAtomContainer fragment = new RingSearch(biphenyl).RingFragments();
             Assert.AreEqual(biphenyl.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(biphenyl.Bonds.Count - 1, fragment.Bonds.Count);
         }
 
         [TestMethod()]
-        public void TestIsolatedRingFragments() {
+        public void TestIsolatedRingFragments()
+        {
             RingSearch search = new RingSearch(biphenyl);
             IList<IAtomContainer> isolated = search.IsolatedRingFragments();
             Assert.AreEqual(2, isolated.Count);
@@ -84,7 +90,8 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFusedRingFragments() {
+        public void TestFusedRingFragments()
+        {
             RingSearch search = new RingSearch(biphenyl);
             IList<IAtomContainer> fused = search.FusedRingFragments();
             Assert.AreEqual(0, fused.Count);

@@ -47,9 +47,6 @@ namespace NCDK.Reactions.Types
             SetReaction(typeof(HeterolyticCleavagePBReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestHeterolyticCleavagePBReaction()
         {

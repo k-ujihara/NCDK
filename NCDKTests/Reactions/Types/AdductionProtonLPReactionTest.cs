@@ -56,7 +56,6 @@ namespace NCDK.Reactions.Types
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Automatically looks for the active centre.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -84,7 +83,6 @@ namespace NCDK.Reactions.Types
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Manually tests for active centre.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestManuallyCentreActive()
@@ -118,7 +116,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
@@ -164,7 +161,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestMapping()
@@ -192,7 +188,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the Acetaldehyde structure.
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -229,7 +224,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

@@ -28,31 +28,34 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// ring search unit tests for benzene
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
-     [TestClass()]
-    public sealed class RingSearchTest_Benzene {
-
+    [TestClass()]
+    public sealed class RingSearchTest_Benzene
+    {
         private readonly IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
         [TestMethod()]
-        public void TestCyclic() {
+        public void TestCyclic()
+        {
             Assert.AreEqual(benzene.Atoms.Count, new RingSearch(benzene).Cyclic().Length);
         }
 
         [TestMethod()]
-        public void TestCyclic_Int() {
+        public void TestCyclic_Int()
+        {
             int n = benzene.Atoms.Count;
             RingSearch ringSearch = new RingSearch(benzene);
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 Assert.IsTrue(ringSearch.Cyclic(i));
             }
         }
 
         [TestMethod()]
-        public void TestIsolated() {
+        public void TestIsolated()
+        {
             RingSearch search = new RingSearch(benzene);
             int[][] isolated = search.Isolated();
             Assert.AreEqual(1, isolated.Length);
@@ -60,19 +63,22 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFused() {
+        public void TestFused()
+        {
             Assert.AreEqual(0, new RingSearch(benzene).Fused().Length);
         }
 
         [TestMethod()]
-        public void TestRingFragments() {
+        public void TestRingFragments()
+        {
             IAtomContainer fragment = new RingSearch(benzene).RingFragments();
             Assert.AreEqual(benzene.Atoms.Count, fragment.Atoms.Count);
             Assert.AreEqual(benzene.Bonds.Count, fragment.Bonds.Count);
         }
 
         [TestMethod()]
-        public void TestIsolatedRingFragments() {
+        public void TestIsolatedRingFragments()
+        {
             RingSearch search = new RingSearch(benzene);
             IList<IAtomContainer> isolated = search.IsolatedRingFragments();
             Assert.AreEqual(1, isolated.Count);
@@ -81,11 +87,11 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFusedRingFragments() {
+        public void TestFusedRingFragments()
+        {
             RingSearch search = new RingSearch(benzene);
             IList<IAtomContainer> fused = search.FusedRingFragments();
             Assert.AreEqual(0, fused.Count);
         }
-
     }
 }

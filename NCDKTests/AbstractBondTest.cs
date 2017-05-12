@@ -18,10 +18,7 @@
  *
  */
 
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using NCDK.Numerics;

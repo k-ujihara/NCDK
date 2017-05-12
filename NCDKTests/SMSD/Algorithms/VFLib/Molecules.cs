@@ -55,10 +55,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
 {
     /// <summary>
     /// query and target molecules.
+    /// </summary>
     // @cdk.module test-smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class Molecules
     {
         public static IAtomContainer Create4Toluene()
@@ -705,7 +705,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Aromaticity.CDKLegacy.Apply(result);
 
             return result;
-
         }
 
         public static IAtomContainer CreateCyclopropane()

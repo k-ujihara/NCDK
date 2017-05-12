@@ -22,11 +22,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link ElectronContainer}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="ElectronContainer"/>.
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-silent
+    [TestClass()]
     public class ElectronContainerTest : AbstractElectronContainerTest
     {
         public override IChemObject NewChemObject()
@@ -45,14 +44,12 @@ namespace NCDK.Silent
         // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
-
         public override void TestNotifyChanged()
         {
             ChemObjectTestHelper.TestNotifyChanged(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_SetFlag()
         {
             ChemObjectTestHelper.TestNotifyChanged_SetFlag(NewChemObject());

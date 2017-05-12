@@ -23,13 +23,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AtomContainerComparatorTest : CDKTestCase
     {
-
         public AtomContainerComparatorTest()
             : base()
         { }

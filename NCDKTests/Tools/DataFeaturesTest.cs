@@ -24,11 +24,9 @@ namespace NCDK.Tools
     /// <summary>
     /// Included so that CoreCoverageTest won't complain. The class does not have
     /// methods, only constants, so there is nothing to test.
-    ///
-    // @cdk.module test-core
-    ///
-    // @see org.openscience.cdk.CDKConstants
     /// </summary>
+    /// <seealso cref="CDKPropertyName"/>
+    // @cdk.module test-core
     [TestClass()]
     public class DataFeaturesTest : CDKTestCase
     {

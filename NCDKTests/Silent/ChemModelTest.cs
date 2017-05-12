@@ -22,10 +22,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link ChemModel}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="ChemModel"/>.
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class ChemModelTest : AbstractChemModelTest
     {
@@ -44,56 +43,48 @@ namespace NCDK.Silent
         // Overwrite default methods: no notifications are expected!
 
         [TestMethod()]
-
         public override void TestNotifyChanged()
         {
             ChemObjectTestHelper.TestNotifyChanged(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestNotifyChanged_IChemObjectChangeEvent()
         {
             ChemObjectTestHelper.TestNotifyChanged_IChemObjectChangeEvent(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestStateChanged_IChemObjectChangeEvent()
         {
             ChemObjectTestHelper.TestStateChanged_IChemObjectChangeEvent(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestClone_ChemObjectListeners()
         {
             ChemObjectTestHelper.TestClone_ChemObjectListeners(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestAddListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestAddListener_IChemObjectListener(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestGetListenerCount()
         {
             ChemObjectTestHelper.TestGetListenerCount(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestRemoveListener_IChemObjectListener()
         {
             ChemObjectTestHelper.TestRemoveListener_IChemObjectListener(NewChemObject());
         }
 
         [TestMethod()]
-
         public override void TestSetNotification_true()
         {
             ChemObjectTestHelper.TestSetNotification_true(NewChemObject());
@@ -116,7 +107,6 @@ namespace NCDK.Silent
             crystal.Add(chemObject.Builder.CreateAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
-
 
         [TestMethod()]
         public override void TestStateChanged_EventPropagation_AtomContainerSet()
@@ -191,7 +181,6 @@ namespace NCDK.Silent
             crystal.Add(chemObject.Builder.CreateAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
-
 
         [TestMethod()]
         public override void TestStateChanged_ButNotAfterRemoval_AtomContainerSet()

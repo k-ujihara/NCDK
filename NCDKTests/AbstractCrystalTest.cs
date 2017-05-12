@@ -17,22 +17,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link ICrystal} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="ICrystal"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractCrystalTest
         : AbstractAtomContainerTest
     {
-
         [TestMethod()]
         public override void TestAdd_IAtomContainer()
         {
@@ -60,7 +57,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestAddAtom_IAtom()
         {
             ICrystal crystal = (ICrystal)NewChemObject();
@@ -173,7 +169,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             ICrystal crystal = (ICrystal)NewChemObject();
@@ -186,7 +181,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestClone()
         {
             ICrystal crystal = (ICrystal)NewChemObject();

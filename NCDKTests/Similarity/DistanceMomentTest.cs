@@ -8,9 +8,7 @@ using System.Linq;
 
 namespace NCDK.Similarity
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class DistanceMomentTest : CDKTestCase
     {

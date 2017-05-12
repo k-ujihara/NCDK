@@ -24,14 +24,12 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IRing"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractRingTest
         : AbstractAtomContainerTest
     {
-
         [TestMethod()]
         public virtual void TestGetBondOrderSum()
         {

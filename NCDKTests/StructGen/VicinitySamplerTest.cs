@@ -29,13 +29,10 @@ using NCDK.Templates;
 
 namespace NCDK.StructGen
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     [TestClass()]
     public class VicinitySamplerTest : CDKTestCase
     {
-
         private static SmilesParser parser;
 
         static VicinitySamplerTest()
@@ -63,9 +60,7 @@ namespace NCDK.StructGen
             Assert.AreEqual(37, count);
         }
 
-        /// <summary>
         // @cdk.bug 1632610
-        /// </summary>
         public void TestCycloButene()
         {
             IAtomContainer mol = parser.ParseSmiles("C=CC=C");

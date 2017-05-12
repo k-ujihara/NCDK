@@ -38,7 +38,6 @@ namespace NCDK.Stereo
     [TestClass()]
     public class CyclicCarbohydrateRecognitionTest
     {
-
         [TestMethod()]
         public void HaworthAnticlockwise()
         {

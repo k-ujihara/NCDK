@@ -33,14 +33,12 @@ namespace NCDK.Tautomers
 {
     /// <summary>
     /// Tests generation of tautomers.
-    // @author Mark Rijnbeek
-    ///
-    // @cdk.module test-tautomer
     /// </summary>
+    // @author Mark Rijnbeek
+    // @cdk.module test-tautomer
     [TestClass()]
     public class InChITautomerGeneratorTest : CDKTestCase
     {
-
         private SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         private InChITautomerGenerator tautomerGenerator = new InChITautomerGenerator();
 

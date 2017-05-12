@@ -33,9 +33,8 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Visitors
 {
     /// <summary>
-    /// Implementation of the <see cref="IDrawVisitor"/> interface for the AWT
-    /// widget toolkit, allowing molecules to be rendered with toolkits based on
-    /// AWT, like the Java reference graphics platform Swing.
+    /// Implementation of the <see cref="IDrawVisitor"/> interface for the WPF,
+    /// allowing molecules to be rendered with toolkits based on WPF.
     /// </summary>
     // @cdk.module renderawt
     // @cdk.githash

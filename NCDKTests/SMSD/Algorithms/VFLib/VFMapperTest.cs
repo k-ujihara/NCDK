@@ -46,23 +46,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using NCDK.SMSD.Algorithms.VFLib.Map;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /// <summary>
-    ///
     // @author Richard L. Apodaca <rapodaca at metamolecular.com>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
-    // @cdk.require java1.6+
-    /// </summary>
     [TestClass()]
     public class VFMapperTest
     {
-
         private IAtomContainer hexane;
         private IAtomContainer benzene;
         private IAtomContainer pyridine;
@@ -79,7 +72,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public VFMapperTest()
         {
-
         }
 
         [TestInitialize()]

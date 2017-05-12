@@ -30,27 +30,19 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the AdductionProtonPBReactionTest.
     /// Generalized Reaction: A=B + [H+] => [A+]-B-H.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class AdductionProtonPBReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public AdductionProtonPBReactionTest()
         {
             SetReaction(typeof(AdductionProtonPBReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestAdductionProtonPBReaction()
         {
@@ -62,15 +54,11 @@ namespace NCDK.Reactions.Types
         /// A unit test suite for JUnit for Ethene.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Automatic looking for active center.
-        ///
-        // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-
             IReactionProcess type = new AdductionProtonPBReaction();
 
             var setOfReactants = GetExampleReactants();
@@ -92,18 +80,14 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit for Ethene.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Manually putting for active center.
-        ///
-        // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -137,13 +121,7 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /// <summary>
-       /// A unit test suite for JUnit.
-       ///
-       // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-       ///
-       /// <returns>The test suite</returns>
-       /// </summary>
+        // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -175,13 +153,7 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[0].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
         // @cdk.inchi InChI=1/C2H4/c1-2/h1-2H2
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -216,10 +188,9 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the Ethene structure.
-        ///
+        /// </summary>
         /// <returns>The IAtomContainer</returns>
         /// <exception cref="CDKException"></exception>
-        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -251,9 +222,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

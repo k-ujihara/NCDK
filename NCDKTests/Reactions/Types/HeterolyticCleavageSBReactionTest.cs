@@ -32,9 +32,8 @@ namespace NCDK.Reactions.Types
     /// TestSuite that runs a test for the HeterolyticCleavageSBReactionTest.
     /// Generalized Reaction: A-B => |[A-] +[B+] // [A+] + |[B-]. Depending on the bond order
     /// the bond will be removed or simply the order decreased.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class HeterolyticCleavageSBReactionTest : ReactionProcessTest
     {
@@ -42,17 +41,11 @@ namespace NCDK.Reactions.Types
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public HeterolyticCleavageSBReactionTest()
         {
             SetReaction(typeof(HeterolyticCleavageSBReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestHeterolyticCleavageSBReaction()
         {
@@ -175,7 +168,6 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestCsp2ChargeSingleB()
         {
-
         }
 
         /// <summary>

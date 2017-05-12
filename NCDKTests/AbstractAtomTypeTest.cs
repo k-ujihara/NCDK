@@ -26,9 +26,8 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IAtomType"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractAtomTypeTest : AbstractIsotopeTest
     {

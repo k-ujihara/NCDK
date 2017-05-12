@@ -32,11 +32,6 @@ namespace NCDK
     {
         protected abstract IChemObjectBuilder Builder { get; }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount0()
         {

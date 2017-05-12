@@ -26,9 +26,7 @@ using System;
 
 namespace NCDK.RingSearches
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AllRingsFinderTest : CDKTestCase
     {
@@ -198,9 +196,7 @@ namespace NCDK.RingSearches
             Assert.AreEqual(3, ringSet.Count);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
-        /// </summary>
         [TestMethod()]
         public void TestBigMoleculeWithIsolatedRings()
         {

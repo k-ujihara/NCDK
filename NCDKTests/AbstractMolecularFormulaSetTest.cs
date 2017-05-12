@@ -24,19 +24,13 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IMolecularFormulaSet"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractMolecularFormulaSetTest : CDKTestCase
     {
         protected abstract IChemObjectBuilder Builder { get; }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestSize()
         {
@@ -45,13 +39,9 @@ namespace NCDK
             Assert.AreEqual(1, mfS.Count());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestAdd_IMolecularFormula() {
+        public virtual void TestAdd_IMolecularFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
@@ -60,13 +50,9 @@ namespace NCDK
             Assert.AreEqual(3, mfS.Count());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestIterator() {
+        public virtual void TestIterator()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
@@ -87,13 +73,9 @@ namespace NCDK
 #endif
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestMolecularFormulas() {
+        public virtual void TestMolecularFormulas()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
@@ -101,20 +83,17 @@ namespace NCDK
 
             Assert.AreEqual(3, mfS.Count());
             int count = 0;
-            foreach (var formula in mfS) {
+            foreach (var formula in mfS)
+            {
                 ++count;
                 Assert.IsNotNull(formula);
             }
             Assert.AreEqual(3, count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestAdd_IMolecularFormulaSet() {
+        public virtual void TestAdd_IMolecularFormulaSet()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
@@ -126,29 +105,21 @@ namespace NCDK
             Assert.AreEqual(3, tested.Count());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestGetMolecularFormula_int() {
+        public virtual void TestGetMolecularFormula_int()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
 
             Assert.IsNotNull(mfS[2]); // third molecule should exist
-                                                          //        Assert.IsNull(mfS[3]); // fourth molecule must not exist
+            //        Assert.IsNull(mfS[3]); // fourth molecule must not exist
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestAddMolecularFormula_IMolecularFormula() {
+        public virtual void TestAddMolecularFormula_IMolecularFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             mfS.Add(Builder.CreateMolecularFormula());
             mfS.Add(Builder.CreateMolecularFormula());
@@ -165,13 +136,9 @@ namespace NCDK
             Assert.AreEqual(7, mfS.Count());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestGetMolecularFormulas() {
+        public virtual void TestGetMolecularFormulas()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
 
             Assert.AreEqual(0, mfS.Count());
@@ -186,13 +153,9 @@ namespace NCDK
             Assert.IsNotNull(mfS[2]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestContains_IMolecularFormula() {
+        public virtual void TestContains_IMolecularFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
 
             IMolecularFormula mf = Builder.CreateMolecularFormula();
@@ -209,26 +172,18 @@ namespace NCDK
             Assert.IsTrue(mfS.Contains(mf));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestClone() {
+        public virtual void TestClone()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             object clone = mfS.Clone();
             Assert.IsTrue(clone is IMolecularFormulaSet);
             Assert.AreNotSame(mfS, clone);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestClone_IMolecualrFormula() {
+        public virtual void TestClone_IMolecualrFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IIsotope carb = Builder.CreateIsotope("C");
@@ -258,13 +213,9 @@ namespace NCDK
                     [1].Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestRemoveMolecularFormula_IMolecularFormula() {
+        public virtual void TestRemoveMolecularFormula_IMolecularFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IMolecularFormula mf2 = Builder.CreateMolecularFormula();
@@ -275,13 +226,9 @@ namespace NCDK
             Assert.AreEqual(mf2, mfS[0]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestRemoveAllMolecularFormulas() {
+        public virtual void TestRemoveAllMolecularFormulas()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IMolecularFormula mf2 = Builder.CreateMolecularFormula();
@@ -293,13 +240,9 @@ namespace NCDK
             Assert.AreEqual(0, mfS.Count());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestRemoveMolecularFormula_int() {
+        public virtual void TestRemoveMolecularFormula_int()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IMolecularFormula mf2 = Builder.CreateMolecularFormula();
@@ -310,13 +253,9 @@ namespace NCDK
             Assert.AreEqual(mf2, mfS[0]);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
-        public virtual void TestReplaceMolecularFormula_int_IMolecularFormula() {
+        public virtual void TestReplaceMolecularFormula_int_IMolecularFormula()
+        {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IMolecularFormula mf2 = Builder.CreateMolecularFormula();
@@ -330,7 +269,8 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestGetBuilder() {
+        public virtual void TestGetBuilder()
+        {
             IMolecularFormulaSet add = Builder.CreateMolecularFormulaSet();
             IChemObjectBuilder builder = add.Builder;
             Assert.IsNotNull(builder);

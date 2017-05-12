@@ -19,23 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.SGroups;
 using NCDK.Tools.Manipulator;
 using NCDK.Default;
 using NCDK.Config;
 
 namespace NCDK.Smiles
 {
-    /// <summary>
-    ///
     // @author         Rajarshi Guha
     // @cdk.created    2006-09-18
     // @cdk.module     test-smiles
-    /// </summary>
     [TestClass()]
     public class FixBondOrdersToolTest : CDKTestCase
     {
-
         private static FixBondOrdersTool fbot = new FixBondOrdersTool();
 
         [TestMethod()]
@@ -128,9 +123,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(13, doubleBondCount);
         }
 
-        /// <summary>
         // @cdk.bug 3506770
-        /// </summary>
         [TestMethod()]
         public void TestLargeBioclipseUseCase()
         {
@@ -154,9 +147,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(10, doubleBondCount);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-        /// </summary>
         [TestMethod()]
         public void XtestPyrrole()
         {
@@ -278,10 +269,8 @@ namespace NCDK.Smiles
                     + enol.Bonds[5].Order.Numeric); // around atom6
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
         // @cdk.bug   1931262
-        /// </summary>
         [TestMethod()]
         public void XtestBenzene()
         {
@@ -353,7 +342,6 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Just to ensure it doesn't throw exceptions
-        // @
         /// </summary>
         [TestMethod()]
         [Timeout(1000)]

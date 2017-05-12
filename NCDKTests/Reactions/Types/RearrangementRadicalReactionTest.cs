@@ -22,11 +22,9 @@ using NCDK.Default;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
