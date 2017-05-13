@@ -73,7 +73,7 @@ namespace NCDK.Reactions.Types
             foreach (var atomi in reactant.Atoms)
             {
                 if (atomi.IsReactiveCenter 
-					&& atomi.FormalCharge == 1)
+                    && atomi.FormalCharge == 1)
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
@@ -94,9 +94,9 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
-												&& !reactant.GetConnectedSingleElectrons(atomk).Any()
+                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
                                                 && atomk.Symbol.Equals("H")
-										)
+                                        )
                                         {
                                             var atomList = new List<IAtom>();
                                             atomList.Add(atomi);
@@ -156,9 +156,9 @@ namespace NCDK.Reactions.Types
                                     {
                                         IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
-												&& !reactant.GetConnectedSingleElectrons(atomk).Any()
+                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
                                                 && atomk.Symbol.Equals("H")
-										)
+                                        )
                                         {
                                             atomi.IsReactiveCenter = true;
                                             atomj.IsReactiveCenter = true;

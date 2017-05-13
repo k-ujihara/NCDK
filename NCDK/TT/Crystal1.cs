@@ -45,9 +45,9 @@ namespace NCDK.Default
         /// <summary>The a axis.</summary>
         private Vector3 a = Vector3.Zero;
 
-		/// <summary>
-		/// The A unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The A unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 A
         {
             get { return a; }
@@ -56,9 +56,9 @@ namespace NCDK.Default
 
         /// <summary>The b axis.</summary>
         private Vector3 b = Vector3.Zero;
-		/// <summary>
-		/// The B unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The B unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 B
         {
             get { return b; }
@@ -67,39 +67,39 @@ namespace NCDK.Default
 
         /// <summary>The c axis.</summary>
         private Vector3 c = Vector3.Zero;
-		/// <summary>
-		/// The C unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The C unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 C
         {
             get { return c; }
             set { c = value;  NotifyChanged();  }
         }
 
-		 /// <summary>Number of symmetry related atoms.</summary>
+         /// <summary>Number of symmetry related atoms.</summary>
         private string spaceGroup = "P1";
 
-		/// <summary>
-		/// The space group of this crystal.
-		/// </summary>
-		public string SpaceGroup
+        /// <summary>
+        /// The space group of this crystal.
+        /// </summary>
+        public string SpaceGroup
         {
             get { return spaceGroup; }
             set { spaceGroup = value;  NotifyChanged();  }
         }
 
-		/// <summary>Number of symmetry related atoms.</summary>
+        /// <summary>Number of symmetry related atoms.</summary>
         private int? z = 1;
-		/// <summary>
-		/// The number of asymmetric parts in the unit cell.
-		/// </summary>
+        /// <summary>
+        /// The number of asymmetric parts in the unit cell.
+        /// </summary>
         public int? Z
         {
             get { return z; }
             set { z = value;  NotifyChanged();  }
         }
 
-		/// <summary>
+        /// <summary>
         /// Constructs a new crystal with zero length cell axis.
         /// </summary>
         public Crystal()
@@ -107,19 +107,19 @@ namespace NCDK.Default
         {
         }
 
-		/// <summary>
-		/// Constructs a new crystal with zero length cell axis
-		/// and adds the atoms in the AtomContainer as cell content.
-		/// </summary>
-		/// <param name="container">the AtomContainer providing the atoms and bonds</param>
+        /// <summary>
+        /// Constructs a new crystal with zero length cell axis
+        /// and adds the atoms in the AtomContainer as cell content.
+        /// </summary>
+        /// <param name="container">the AtomContainer providing the atoms and bonds</param>
         public Crystal(IAtomContainer container)
             : base(container)
         {
         }
 
-		/// <summary>
-		/// Returns a string representation of this crystal.
-		/// </summary>
+        /// <summary>
+        /// Returns a string representation of this crystal.
+        /// </summary>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -156,9 +156,9 @@ namespace NCDK.Silent
         /// <summary>The a axis.</summary>
         private Vector3 a = Vector3.Zero;
 
-		/// <summary>
-		/// The A unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The A unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 A
         {
             get { return a; }
@@ -167,9 +167,9 @@ namespace NCDK.Silent
 
         /// <summary>The b axis.</summary>
         private Vector3 b = Vector3.Zero;
-		/// <summary>
-		/// The B unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The B unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 B
         {
             get { return b; }
@@ -178,39 +178,39 @@ namespace NCDK.Silent
 
         /// <summary>The c axis.</summary>
         private Vector3 c = Vector3.Zero;
-		/// <summary>
-		/// The C unit cell axes in Cartesian coordinates in a Euclidean space.
-		/// </summary>
+        /// <summary>
+        /// The C unit cell axes in Cartesian coordinates in a Euclidean space.
+        /// </summary>
         public Vector3 C
         {
             get { return c; }
             set { c = value;  }
         }
 
-		 /// <summary>Number of symmetry related atoms.</summary>
+         /// <summary>Number of symmetry related atoms.</summary>
         private string spaceGroup = "P1";
 
-		/// <summary>
-		/// The space group of this crystal.
-		/// </summary>
-		public string SpaceGroup
+        /// <summary>
+        /// The space group of this crystal.
+        /// </summary>
+        public string SpaceGroup
         {
             get { return spaceGroup; }
             set { spaceGroup = value;  }
         }
 
-		/// <summary>Number of symmetry related atoms.</summary>
+        /// <summary>Number of symmetry related atoms.</summary>
         private int? z = 1;
-		/// <summary>
-		/// The number of asymmetric parts in the unit cell.
-		/// </summary>
+        /// <summary>
+        /// The number of asymmetric parts in the unit cell.
+        /// </summary>
         public int? Z
         {
             get { return z; }
             set { z = value;  }
         }
 
-		/// <summary>
+        /// <summary>
         /// Constructs a new crystal with zero length cell axis.
         /// </summary>
         public Crystal()
@@ -218,19 +218,19 @@ namespace NCDK.Silent
         {
         }
 
-		/// <summary>
-		/// Constructs a new crystal with zero length cell axis
-		/// and adds the atoms in the AtomContainer as cell content.
-		/// </summary>
-		/// <param name="container">the AtomContainer providing the atoms and bonds</param>
+        /// <summary>
+        /// Constructs a new crystal with zero length cell axis
+        /// and adds the atoms in the AtomContainer as cell content.
+        /// </summary>
+        /// <param name="container">the AtomContainer providing the atoms and bonds</param>
         public Crystal(IAtomContainer container)
             : base(container)
         {
         }
 
-		/// <summary>
-		/// Returns a string representation of this crystal.
-		/// </summary>
+        /// <summary>
+        /// Returns a string representation of this crystal.
+        /// </summary>
         public override string ToString()
         {
             var sb = new StringBuilder();

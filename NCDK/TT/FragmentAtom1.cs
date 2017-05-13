@@ -37,7 +37,7 @@ namespace NCDK.Default
     /// </summary>
     // @cdk.githash 
     // @author egonw 
-	public class FragmentAtom 
+    public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
         public FragmentAtom()
@@ -87,7 +87,7 @@ namespace NCDK.Silent
     /// </summary>
     // @cdk.githash 
     // @author egonw 
-	public class FragmentAtom 
+    public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
         public FragmentAtom()

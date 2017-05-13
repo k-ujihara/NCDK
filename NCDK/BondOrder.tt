@@ -40,7 +40,7 @@ namespace NCDK
         true
     ); 
 #>
-	{
+    {
         /// <summary>
         /// A numeric value for the number of bonded electron pairs.
         /// </summary>

@@ -212,12 +212,12 @@ namespace NCDK.Renderers
             if (atomContainer.Bonds.Count > 0 || atomContainer.Atoms.Count == 1)
             {
                 rendererModel.GetParameter<double?>(typeof(Scale)).Value
-					= CalculateScaleForBondLength(GeometryUtil.GetBondLengthAverage(atomContainer));
+                    = CalculateScaleForBondLength(GeometryUtil.GetBondLengthAverage(atomContainer));
             }
             else if (atomContainer.Atoms.Count > 1)
             {
                 rendererModel.GetParameter<double?>(typeof(Scale)).Value
-					= CalculateScaleForBondLength(EstimatedBondLength(atomContainer));
+                    = CalculateScaleForBondLength(EstimatedBondLength(atomContainer));
             }
 
             // the diagram to draw

@@ -425,147 +425,147 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+AllFinder">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// handle error - note it is common that finding all simple cycles in chemical graphs is intractable
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // handle error - note it is common that finding all simple cycles in chemical graphs is intractable
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+MCB">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - MCB should never be intractable
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - MCB should never be intractable
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+Relevant">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - there may be an exponential number of cycles but this is not currently checked
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - there may be an exponential number of cycles but this is not currently checked
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+Essential">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - essential cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - essential cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+TripletShort">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - triple short cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - triple short cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+VertexShort">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - vertex short cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - vertex short cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+EdgeShort">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - edge short cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - edge short cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+CDKAromaticSetFinder">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - edge short cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - edge short cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+AllOrVertexShortFinder">
-    <code>				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// ignore error - edge short cycles do not check tractability
-					}
-				}
+    <code>                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // ignore error - edge short cycles do not check tractability
+                    }
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Cycles_Example.cs+Or6">

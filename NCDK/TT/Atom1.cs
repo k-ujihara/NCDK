@@ -57,12 +57,12 @@ namespace NCDK.Default
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-	[Serializable]
+    [Serializable]
     public class Atom
         : AtomType, IAtom
     {
-		// Let's keep this exact specification of what kind of point2d we're talking
-		// of here, since there are so many around in the java standard api
+        // Let's keep this exact specification of what kind of point2d we're talking
+        // of here, since there are so many around in the java standard api
 
         internal double? charge;
         internal int? implicitHydrogenCount;
@@ -303,12 +303,12 @@ namespace NCDK.Silent
     // @author     steinbeck
     // @cdk.created    2000-10-02
     // @cdk.keyword    atom
-	[Serializable]
+    [Serializable]
     public class Atom
         : AtomType, IAtom
     {
-		// Let's keep this exact specification of what kind of point2d we're talking
-		// of here, since there are so many around in the java standard api
+        // Let's keep this exact specification of what kind of point2d we're talking
+        // of here, since there are so many around in the java standard api
 
         internal double? charge;
         internal int? implicitHydrogenCount;

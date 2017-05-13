@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Renderers.Elements
 {
     // @cdk.module test-renderbasic
-	[TestClass()]
+    [TestClass()]
     public class ElementGroupTest : AbstractElementTest
     {
         static ElementGroupTest()

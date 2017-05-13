@@ -141,7 +141,7 @@ namespace NCDK.Renderers
             a2.ImplicitHydrogenCount = 3;
             a3.ImplicitHydrogenCount = 3;
 
-			var model = new RendererModel();
+            var model = new RendererModel();
             Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(a1, new[] { bond1, bond2 }, model));
         }
 

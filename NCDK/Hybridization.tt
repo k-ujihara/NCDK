@@ -44,7 +44,7 @@ namespace NCDK
         true
     ); 
 #>
-	{
+    {
         public string Name => ToString();
 
         public bool IsUnset => this.Ordinal == 0;

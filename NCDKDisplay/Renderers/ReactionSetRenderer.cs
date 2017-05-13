@@ -163,7 +163,7 @@ namespace NCDK.Renderers
         /// Set the scale for an IReactionSet. It calculates the average bond length
         /// of the model and calculates the multiplication factor to transform this
         /// to the bond length that is set in the RendererModel.
-		/// </summary>
+        /// </summary>
         /// <param name="reactionSet"></param>
         public void SetScale(IReactionSet reactionSet)
         {
@@ -245,7 +245,7 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public IList<IGenerator<IReactionSet>> GetGenerators()
         {
-            //	    return reactionRenderer.GetReactionGenerators();
+            //        return reactionRenderer.GetReactionGenerators();
             return null;
         }
     }

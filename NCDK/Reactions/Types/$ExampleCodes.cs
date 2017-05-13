@@ -20,7 +20,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class AdductionProtonLPReaction {}
+    public partial class AdductionProtonLPReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -40,7 +40,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class AdductionProtonPBReaction {}
+    public partial class AdductionProtonPBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -60,7 +60,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class AdductionSodiumLPReaction {}
+    public partial class AdductionSodiumLPReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -80,7 +80,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class CarbonylEliminationReaction {}
+    public partial class CarbonylEliminationReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -100,7 +100,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class ElectronImpactNBEReaction {}
+    public partial class ElectronImpactNBEReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -120,7 +120,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class ElectronImpactPDBReaction {}
+    public partial class ElectronImpactPDBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -140,7 +140,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class ElectronImpactSDBReaction {}
+    public partial class ElectronImpactSDBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -160,7 +160,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class HeterolyticCleavagePBReaction {}
+    public partial class HeterolyticCleavagePBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -180,7 +180,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class HeterolyticCleavageSBReaction {}
+    public partial class HeterolyticCleavageSBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -200,7 +200,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class HomolyticCleavageReaction {}
+    public partial class HomolyticCleavageReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -220,7 +220,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class HyperconjugationReaction {}
+    public partial class HyperconjugationReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -240,7 +240,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class PiBondingMovementReaction {}
+    public partial class PiBondingMovementReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -260,7 +260,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalChargeSiteInitiationHReaction {}
+    public partial class RadicalChargeSiteInitiationHReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -280,7 +280,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalChargeSiteInitiationReaction {}
+    public partial class RadicalChargeSiteInitiationReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -300,7 +300,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteHrAlphaReaction {}
+    public partial class RadicalSiteHrAlphaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -320,7 +320,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteHrBetaReaction {}
+    public partial class RadicalSiteHrBetaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -340,7 +340,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteHrDeltaReaction {}
+    public partial class RadicalSiteHrDeltaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -360,7 +360,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteHrGammaReaction {}
+    public partial class RadicalSiteHrGammaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -380,7 +380,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteInitiationHReaction {}
+    public partial class RadicalSiteInitiationHReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -400,7 +400,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteInitiationReaction {}
+    public partial class RadicalSiteInitiationReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -420,7 +420,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteRrAlphaReaction {}
+    public partial class RadicalSiteRrAlphaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -440,7 +440,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteRrBetaReaction {}
+    public partial class RadicalSiteRrBetaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -460,7 +460,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteRrDeltaReaction {}
+    public partial class RadicalSiteRrDeltaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -480,7 +480,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RadicalSiteRrGammaReaction {}
+    public partial class RadicalSiteRrGammaReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -500,7 +500,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RearrangementAnionReaction {}
+    public partial class RearrangementAnionReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -520,7 +520,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RearrangementCationReaction {}
+    public partial class RearrangementCationReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -540,7 +540,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RearrangementLonePairReaction {}
+    public partial class RearrangementLonePairReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -560,7 +560,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class RearrangementRadicalReaction {}
+    public partial class RearrangementRadicalReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -580,7 +580,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class SharingAnionReaction {}
+    public partial class SharingAnionReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -600,7 +600,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class SharingChargeDBReaction {}
+    public partial class SharingChargeDBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -620,7 +620,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class SharingChargeSBReaction {}
+    public partial class SharingChargeSBReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -640,7 +640,7 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class SharingLonePairReaction {}
+    public partial class SharingLonePairReaction {}
     /// <example>
     /// <code>
     /// var setOfReactants = ChemObjectBuilder.Instance.CreateAtomContainerSet&lt;IAtomContainer&gt;();
@@ -660,5 +660,5 @@ namespace NCDK.Reactions.Types
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-	public partial class TautomerizationReaction {}
+    public partial class TautomerizationReaction {}
 }

@@ -29,18 +29,18 @@ using System.Text;
 namespace NCDK.Default
 {
     /// <summary>
-	/// A sequence of ChemModels, which can, for example, be used to
-	/// store the course of a reaction. Each state of the reaction would be
-	/// stored in one ChemModel.    
-	/// </summary>
-	// @cdk.githash
-	// @cdk.keyword animation
-	// @cdk.keyword reaction
+    /// A sequence of ChemModels, which can, for example, be used to
+    /// store the course of a reaction. Each state of the reaction would be
+    /// stored in one ChemModel.    
+    /// </summary>
+    // @cdk.githash
+    // @cdk.keyword animation
+    // @cdk.keyword reaction
      [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
-		/// <summary>Array of ChemModels.</summary>
+        /// <summary>Array of ChemModels.</summary>
         private IList<IChemModel> chemModels = new List<IChemModel>();
 
         public ChemSequence()
@@ -48,7 +48,7 @@ namespace NCDK.Default
         {
         }
 
-		/// <summary>
+        /// <summary>
         /// Adds an chemModel to this container.
         /// </summary>
         /// <param name="chemModel">The chemModel to be added to this container</param>
@@ -128,18 +128,18 @@ namespace NCDK.Default
 namespace NCDK.Silent
 {
     /// <summary>
-	/// A sequence of ChemModels, which can, for example, be used to
-	/// store the course of a reaction. Each state of the reaction would be
-	/// stored in one ChemModel.    
-	/// </summary>
-	// @cdk.githash
-	// @cdk.keyword animation
-	// @cdk.keyword reaction
+    /// A sequence of ChemModels, which can, for example, be used to
+    /// store the course of a reaction. Each state of the reaction would be
+    /// stored in one ChemModel.    
+    /// </summary>
+    // @cdk.githash
+    // @cdk.keyword animation
+    // @cdk.keyword reaction
      [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
-		/// <summary>Array of ChemModels.</summary>
+        /// <summary>Array of ChemModels.</summary>
         private IList<IChemModel> chemModels = new List<IChemModel>();
 
         public ChemSequence()
@@ -147,7 +147,7 @@ namespace NCDK.Silent
         {
         }
 
-		/// <summary>
+        /// <summary>
         /// Adds an chemModel to this container.
         /// </summary>
         /// <param name="chemModel">The chemModel to be added to this container</param>

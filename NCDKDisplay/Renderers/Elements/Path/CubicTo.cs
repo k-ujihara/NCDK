@@ -47,7 +47,7 @@ namespace NCDK.Renderers.Elements.Path
         /// <param name="cp2">second control point in the cubic</param>
         /// <param name="ep">end point of the cubic</param>
         public CubicTo(Vector2 cp1, Vector2 cp2, Vector2 ep)
-			: this(ToPoint(cp1), ToPoint(cp2), ToPoint(ep))
+            : this(ToPoint(cp1), ToPoint(cp2), ToPoint(ep))
         { }
 
         /// <summary>

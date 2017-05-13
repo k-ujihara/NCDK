@@ -29,22 +29,22 @@ using NCDK.Numerics;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// A factory class to provide implementation independent <see cref="ICDKObject"/>s.
-	/// </summary>
-	/// <example>
-	/// <code>    
-	///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-	/// 
-	///     IAtom a = builder.CreateAtom();
-	///     IAtom c12 = builder.CreateAtom("C");
-	///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
-	/// </code>
-	/// </example>
-	// @author        egonw
-	// @author        john may
-	// @cdk.module    data
-	// @cdk.githash 
+    /// <summary>
+    /// A factory class to provide implementation independent <see cref="ICDKObject"/>s.
+    /// </summary>
+    /// <example>
+    /// <code>    
+    ///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
+    /// 
+    ///     IAtom a = builder.CreateAtom();
+    ///     IAtom c12 = builder.CreateAtom("C");
+    ///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
+    /// </code>
+    /// </example>
+    // @author        egonw
+    // @author        john may
+    // @cdk.module    data
+    // @cdk.githash 
     public sealed class ChemObjectBuilder
         : IChemObjectBuilder
     {
@@ -80,7 +80,7 @@ namespace NCDK.Default
         public IIsotope CreateIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
         public IIsotope CreateIsotope(IElement element) => new Isotope(element);
 
-		// electron containers
+        // electron containers
         public IBond CreateBond() => new Bond();
         public IBond CreateBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
         public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
@@ -93,10 +93,10 @@ namespace NCDK.Default
         public ISingleElectron CreateSingleElectron(IAtom atom) => new SingleElectron(atom);
         public ILonePair CreateLonePair() => new LonePair();
         public ILonePair CreateLonePair(IAtom atom) => new LonePair(atom);
-		
+        
         // atom containers
         public IAtomContainer CreateAtomContainer() => new AtomContainer();
-		public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
+        public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
         public IAtomContainer CreateAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
         public IRing CreateRing() => new Ring();
         public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
@@ -133,8 +133,8 @@ namespace NCDK.Default
         public IChemFile CreateChemFile() => new ChemFile();
         public IChemSequence CreateChemSequence() => new ChemSequence();
         public ISubstance CreateSubstance() => new Substance();
-		
-		// stereo components (requires some modification after instantiation)
+        
+        // stereo components (requires some modification after instantiation)
         public ITetrahedralChirality CreateTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
@@ -142,14 +142,14 @@ namespace NCDK.Default
             return o;
         }
 
-		public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
+        public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
             var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo);
             o.Builder = this;
             return o;
         }
 
-		// miscellaneous
+        // miscellaneous
         public IMapping CreateMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
         public IChemObject CreateChemObject() => new ChemObject();
         public IChemObject CreateChemObject(IChemObject chemObject) => new ChemObject(chemObject);
@@ -157,22 +157,22 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// A factory class to provide implementation independent <see cref="ICDKObject"/>s.
-	/// </summary>
-	/// <example>
-	/// <code>    
-	///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-	/// 
-	///     IAtom a = builder.CreateAtom();
-	///     IAtom c12 = builder.CreateAtom("C");
-	///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
-	/// </code>
-	/// </example>
-	// @author        egonw
-	// @author        john may
-	// @cdk.module    data
-	// @cdk.githash 
+    /// <summary>
+    /// A factory class to provide implementation independent <see cref="ICDKObject"/>s.
+    /// </summary>
+    /// <example>
+    /// <code>    
+    ///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
+    /// 
+    ///     IAtom a = builder.CreateAtom();
+    ///     IAtom c12 = builder.CreateAtom("C");
+    ///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
+    /// </code>
+    /// </example>
+    // @author        egonw
+    // @author        john may
+    // @cdk.module    data
+    // @cdk.githash 
     public sealed class ChemObjectBuilder
         : IChemObjectBuilder
     {
@@ -208,7 +208,7 @@ namespace NCDK.Silent
         public IIsotope CreateIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
         public IIsotope CreateIsotope(IElement element) => new Isotope(element);
 
-		// electron containers
+        // electron containers
         public IBond CreateBond() => new Bond();
         public IBond CreateBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
         public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
@@ -221,10 +221,10 @@ namespace NCDK.Silent
         public ISingleElectron CreateSingleElectron(IAtom atom) => new SingleElectron(atom);
         public ILonePair CreateLonePair() => new LonePair();
         public ILonePair CreateLonePair(IAtom atom) => new LonePair(atom);
-		
+        
         // atom containers
         public IAtomContainer CreateAtomContainer() => new AtomContainer();
-		public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
+        public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
         public IAtomContainer CreateAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
         public IRing CreateRing() => new Ring();
         public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
@@ -261,8 +261,8 @@ namespace NCDK.Silent
         public IChemFile CreateChemFile() => new ChemFile();
         public IChemSequence CreateChemSequence() => new ChemSequence();
         public ISubstance CreateSubstance() => new Substance();
-		
-		// stereo components (requires some modification after instantiation)
+        
+        // stereo components (requires some modification after instantiation)
         public ITetrahedralChirality CreateTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
@@ -270,14 +270,14 @@ namespace NCDK.Silent
             return o;
         }
 
-		public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
+        public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
             var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo);
             o.Builder = this;
             return o;
         }
 
-		// miscellaneous
+        // miscellaneous
         public IMapping CreateMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
         public IChemObject CreateChemObject() => new ChemObject();
         public IChemObject CreateChemObject(IChemObject chemObject) => new ChemObject(chemObject);

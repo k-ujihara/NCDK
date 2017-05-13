@@ -110,7 +110,7 @@ namespace NCDK.Default
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
         /// </summary>
-		/// <seealso cref="IPolymer.GetMonomerNames()"/>
+        /// <seealso cref="IPolymer.GetMonomerNames()"/>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
@@ -213,7 +213,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
         /// </summary>
-		/// <seealso cref="IPolymer.GetMonomerNames()"/>
+        /// <seealso cref="IPolymer.GetMonomerNames()"/>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original

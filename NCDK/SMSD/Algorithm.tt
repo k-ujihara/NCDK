@@ -56,7 +56,7 @@ namespace NCDK.SMSD
         true
     ); 
 #>
-	{
+    {
         private static string[] descriptions = new[] 
         {
             "Default SMSD algorithm",

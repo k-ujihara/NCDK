@@ -20,7 +20,7 @@ using System.Windows.Media;
 
 namespace NCDK.Renderers.Elements
 {
-	/// <summary>
+    /// <summary>
     /// An <see cref="IRenderingVisitor"/> is responsible of converting an abstract
     /// chemical drawing into a widget set specific drawing. This approach ensures
     /// that the rendering engine is widget toolkit independent. Current
@@ -36,7 +36,7 @@ namespace NCDK.Renderers.Elements
         /// <param name="element">abstract rendering element reflecting some part of the chemical drawing.</param>
         void Visit(IRenderingElement element);
 
-		/// <summary>
+        /// <summary>
         /// Sets the affine transformations used.
         /// </summary>
         /// <param name="transform">the affine transformation used.</param>

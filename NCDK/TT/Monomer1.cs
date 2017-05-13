@@ -31,22 +31,22 @@ using System.Text;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// A Monomer is an AtomContainer which stores additional monomer specific
-	/// informations for a group of Atoms.
-	/// </summary>
-	// @cdk.githash 
-	// @author     Edgar Luttmann <edgar@uni-paderborn.de>
-	// @cdk.created    2001-08-06 
-	// @cdk.keyword    monomer  
+    /// <summary>
+    /// A Monomer is an AtomContainer which stores additional monomer specific
+    /// informations for a group of Atoms.
+    /// </summary>
+    // @cdk.githash 
+    // @author     Edgar Luttmann <edgar@uni-paderborn.de>
+    // @cdk.created    2001-08-06 
+    // @cdk.keyword    monomer  
     [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {
-		/// <summary>The name of this monomer (e.g. Trp42).</summary>
+        /// <summary>The name of this monomer (e.g. Trp42).</summary>
         private string monomerName;
 
-		/// <summary>The type of this monomer (e.g. TRP).</summary>
+        /// <summary>The type of this monomer (e.g. TRP).</summary>
         private string monomerType;
 
         /// <summary>The name of this monomer (e.g. Trp42).</summary>
@@ -93,22 +93,22 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// A Monomer is an AtomContainer which stores additional monomer specific
-	/// informations for a group of Atoms.
-	/// </summary>
-	// @cdk.githash 
-	// @author     Edgar Luttmann <edgar@uni-paderborn.de>
-	// @cdk.created    2001-08-06 
-	// @cdk.keyword    monomer  
+    /// <summary>
+    /// A Monomer is an AtomContainer which stores additional monomer specific
+    /// informations for a group of Atoms.
+    /// </summary>
+    // @cdk.githash 
+    // @author     Edgar Luttmann <edgar@uni-paderborn.de>
+    // @cdk.created    2001-08-06 
+    // @cdk.keyword    monomer  
     [Serializable]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {
-		/// <summary>The name of this monomer (e.g. Trp42).</summary>
+        /// <summary>The name of this monomer (e.g. Trp42).</summary>
         private string monomerName;
 
-		/// <summary>The type of this monomer (e.g. TRP).</summary>
+        /// <summary>The type of this monomer (e.g. TRP).</summary>
         private string monomerType;
 
         /// <summary>The name of this monomer (e.g. Trp42).</summary>

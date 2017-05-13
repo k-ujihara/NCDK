@@ -3,7 +3,7 @@
 namespace NCDK.Renderers.Elements
 {
     public partial class TextGroupElement
-	{
+    {
         /// <summary>
         /// Compass-point positions for text element annotation children.
         /// </summary>
@@ -12,12 +12,12 @@ namespace NCDK.Renderers.Elements
             "Position", 
              new[]
             {
-				"NW", "SW", "SE", "NE", "S", "N", "W", "E",
+                "NW", "SW", "SE", "NE", "S", "N", "W", "E",
             },
             true
         ); 
 #>
-		{
-		}
-	}
+        {
+        }
+    }
 }

@@ -104,5 +104,5 @@ namespace NCDK.Formula
             foreach (var pair in properties)
                 this.properties[pair.Key] = pair.Value;
         }
-	}
+    }
 }

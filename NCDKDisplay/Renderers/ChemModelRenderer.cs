@@ -212,7 +212,7 @@ namespace NCDK.Renderers
             return new Rect(0, 0, 0, 0);
         }
 
-        //	public Rectangle PaintReactionSet(
+        //    public Rectangle PaintReactionSet(
         //            IReactionSet reactionSet, IDrawVisitor drawVisitor) {
         //        // total up the bounding boxes
         //        Rectangle2D totalBounds = CreateRectangle();
@@ -237,8 +237,8 @@ namespace NCDK.Renderers
         //        return this.ConvertToDiagramBounds(totalBounds);
         //    }
         //
-        //	public Rectangle PaintReaction(
-        //	        IReaction reaction, IDrawVisitor drawVisitor) {
+        //    public Rectangle PaintReaction(
+        //            IReaction reaction, IDrawVisitor drawVisitor) {
         //
         //        // calculate the bounds
         //        Rectangle2D modelBounds = BoundsCalculator.CalculateBounds(reaction);

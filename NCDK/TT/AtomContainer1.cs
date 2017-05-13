@@ -28,49 +28,49 @@ using System.Linq;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// Base class for all chemical objects that maintain a list of Atoms and
-	/// ElectronContainers. 
-	/// </summary>
-	/// <example>
-	/// Looping over all Bonds in the AtomContainer is typically done like: 
-	/// <code>
-	/// foreach (IBond aBond in atomContainer.Bonds)
-	/// {
-	///	     // do something
-	/// }
+    /// <summary>
+    /// Base class for all chemical objects that maintain a list of Atoms and
+    /// ElectronContainers. 
+    /// </summary>
+    /// <example>
+    /// Looping over all Bonds in the AtomContainer is typically done like: 
+    /// <code>
+    /// foreach (IBond aBond in atomContainer.Bonds)
+    /// {
+    ///         // do something
+    /// }
     /// </code>
-	/// </example>
-	// @cdk.githash 
-	// @author steinbeck
-	// @cdk.created 2000-10-02 
+    /// </example>
+    // @cdk.githash 
+    // @author steinbeck
+    // @cdk.created 2000-10-02 
     [Serializable]
     public class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
-		/// <summary>
-		/// Atoms contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Atoms contained by this object.
+        /// </summary>
         internal IList<IAtom> atoms;
 
-		/// <summary>
-		/// Bonds contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Bonds contained by this object.
+        /// </summary>
         internal IList<IBond> bonds;
 
-		/// <summary>
-		/// Lone pairs contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Lone pairs contained by this object.
+        /// </summary>
         internal IList<ILonePair> lonePairs;
 
-		/// <summary>
-		/// Single electrons contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Single electrons contained by this object.
+        /// </summary>
         internal IList<ISingleElectron> singleElectrons;
 
-		/// <summary>
-		/// Stereo elements contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Stereo elements contained by this object.
+        /// </summary>
         internal IList<IStereoElement> stereoElements;
 
         internal bool isAromatic;
@@ -125,9 +125,9 @@ namespace NCDK.Default
                   Array.Empty<IStereoElement>())
         { }
 
-		/// <summary>
-		///  Constructs an empty AtomContainer.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an empty AtomContainer.
+        /// </summary>
         public AtomContainer()
             : this(
                       Array.Empty<IAtom>(), 
@@ -137,12 +137,12 @@ namespace NCDK.Default
                       Array.Empty<IStereoElement>())
         { }
 
-		/// <summary>
-		/// Constructs an AtomContainer with a copy of the atoms and electronContainers
-		/// of another AtomContainer (A shallow copy, i.e., with the same objects as in
-		/// the original AtomContainer).
-		/// </summary>
-		/// <param name="container">An AtomContainer to copy the atoms and electronContainers from</param>
+        /// <summary>
+        /// Constructs an AtomContainer with a copy of the atoms and electronContainers
+        /// of another AtomContainer (A shallow copy, i.e., with the same objects as in
+        /// the original AtomContainer).
+        /// </summary>
+        /// <param name="container">An AtomContainer to copy the atoms and electronContainers from</param>
         public AtomContainer(IAtomContainer container)
             : this(
                   container.Atoms,
@@ -581,49 +581,49 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// Base class for all chemical objects that maintain a list of Atoms and
-	/// ElectronContainers. 
-	/// </summary>
-	/// <example>
-	/// Looping over all Bonds in the AtomContainer is typically done like: 
-	/// <code>
-	/// foreach (IBond aBond in atomContainer.Bonds)
-	/// {
-	///	     // do something
-	/// }
+    /// <summary>
+    /// Base class for all chemical objects that maintain a list of Atoms and
+    /// ElectronContainers. 
+    /// </summary>
+    /// <example>
+    /// Looping over all Bonds in the AtomContainer is typically done like: 
+    /// <code>
+    /// foreach (IBond aBond in atomContainer.Bonds)
+    /// {
+    ///         // do something
+    /// }
     /// </code>
-	/// </example>
-	// @cdk.githash 
-	// @author steinbeck
-	// @cdk.created 2000-10-02 
+    /// </example>
+    // @cdk.githash 
+    // @author steinbeck
+    // @cdk.created 2000-10-02 
     [Serializable]
     public class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
-		/// <summary>
-		/// Atoms contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Atoms contained by this object.
+        /// </summary>
         internal IList<IAtom> atoms;
 
-		/// <summary>
-		/// Bonds contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Bonds contained by this object.
+        /// </summary>
         internal IList<IBond> bonds;
 
-		/// <summary>
-		/// Lone pairs contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Lone pairs contained by this object.
+        /// </summary>
         internal IList<ILonePair> lonePairs;
 
-		/// <summary>
-		/// Single electrons contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Single electrons contained by this object.
+        /// </summary>
         internal IList<ISingleElectron> singleElectrons;
 
-		/// <summary>
-		/// Stereo elements contained by this object.
-		/// </summary>
+        /// <summary>
+        /// Stereo elements contained by this object.
+        /// </summary>
         internal IList<IStereoElement> stereoElements;
 
         internal bool isAromatic;
@@ -678,9 +678,9 @@ namespace NCDK.Silent
                   Array.Empty<IStereoElement>())
         { }
 
-		/// <summary>
-		///  Constructs an empty AtomContainer.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an empty AtomContainer.
+        /// </summary>
         public AtomContainer()
             : this(
                       Array.Empty<IAtom>(), 
@@ -690,12 +690,12 @@ namespace NCDK.Silent
                       Array.Empty<IStereoElement>())
         { }
 
-		/// <summary>
-		/// Constructs an AtomContainer with a copy of the atoms and electronContainers
-		/// of another AtomContainer (A shallow copy, i.e., with the same objects as in
-		/// the original AtomContainer).
-		/// </summary>
-		/// <param name="container">An AtomContainer to copy the atoms and electronContainers from</param>
+        /// <summary>
+        /// Constructs an AtomContainer with a copy of the atoms and electronContainers
+        /// of another AtomContainer (A shallow copy, i.e., with the same objects as in
+        /// the original AtomContainer).
+        /// </summary>
+        /// <param name="container">An AtomContainer to copy the atoms and electronContainers from</param>
         public AtomContainer(IAtomContainer container)
             : this(
                   container.Atoms,

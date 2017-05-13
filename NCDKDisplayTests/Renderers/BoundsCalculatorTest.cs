@@ -26,7 +26,7 @@ using System;
 namespace NCDK.Renderers
 {
     // @cdk.module test-renderbasic
-	[TestClass()]
+    [TestClass()]
     public class BoundsCalculatorTest
     {
         /// <summary>

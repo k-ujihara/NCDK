@@ -55,7 +55,7 @@ namespace NCDK.Default
         /// <summary>C-terminus atom.</summary>
         public IAtom CTerminus => cTerminus;
         
-		/// <summary>
+        /// <summary>
         /// Add an <see cref="IAtom"/> and makes it the N-terminus atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> that is the N-terminus</param>
@@ -65,7 +65,7 @@ namespace NCDK.Default
             nTerminus = atom;
         }
 
-		/// <summary>
+        /// <summary>
         /// Add an <see cref="IAtom"/> and makes it the C-terminus atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> that is the C-terminus</param>
@@ -129,7 +129,7 @@ namespace NCDK.Silent
         /// <summary>C-terminus atom.</summary>
         public IAtom CTerminus => cTerminus;
         
-		/// <summary>
+        /// <summary>
         /// Add an <see cref="IAtom"/> and makes it the N-terminus atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> that is the N-terminus</param>
@@ -139,7 +139,7 @@ namespace NCDK.Silent
             nTerminus = atom;
         }
 
-		/// <summary>
+        /// <summary>
         /// Add an <see cref="IAtom"/> and makes it the C-terminus atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> that is the C-terminus</param>

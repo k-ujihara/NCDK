@@ -33,8 +33,8 @@ namespace NCDK.Renderers.Generators.Standards
     /// Enumeration of hydrogen label position for 2D depictions. The best placement of the
     /// label can depend on a variety of factors. Currently, the {@link #Position(IAtom, List)}
     /// method decides the position based on the atom and neighbouring atom coordinates.
-	/// </summary>
-	// @author John May
+    /// </summary>
+    // @author John May
     public partial struct HydrogenPosition
     {
         /// <summary>

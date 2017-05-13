@@ -43,7 +43,7 @@ namespace NCDK.Stereo
         true
     ); 
 #>
-	{
+    {
         public bool IsUnset => this.Ordinal == 0;
     }
 }

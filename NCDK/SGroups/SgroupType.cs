@@ -1,5 +1,24 @@
-﻿// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
-// This file is under LGPL-2.1 
+﻿/*
+ * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 
 
@@ -267,39 +286,39 @@ namespace NCDK.SGroups
         }   	
 	}
 	public partial struct SgroupType 
-	{
-		private static Dictionary<string, int> map;
+    {
+        private static Dictionary<string, int> map;
 
-		private static string[] ctabKeys = new string[]
-		{
-			"",
-		   "SUP",
-		   "MUL",
-		   "SRU",
-		   "MON",
-		   "MOD", 
-		   "COP", 
-		   "MER", 
-		   "CRO",
-		   "GRA", 
-		   "ANY", 
-		   "COM",
-		   "MIX",
-		   "FOR",
-		   "DAT",
-		   "GEN", 
-		   "N/A",
-		};
+        private static string[] ctabKeys = new string[]
+        {
+            "",
+           "SUP",
+           "MUL",
+           "SRU",
+           "MON",
+           "MOD", 
+           "COP", 
+           "MER", 
+           "CRO",
+           "GRA", 
+           "ANY", 
+           "COM",
+           "MIX",
+           "FOR",
+           "DAT",
+           "GEN", 
+           "N/A",
+        };
 
         static SgroupType()
         {
-			map = new Dictionary<string, int>();
+            map = new Dictionary<string, int>();
 
-			for (int i = 0; i < O.ExtMulticenter; i++)
-				map.Add(ctabKeys[i], i);
+            for (int i = 0; i < O.ExtMulticenter; i++)
+                map.Add(ctabKeys[i], i);
         }
-		
-		public string Key => ctabKeys[Ordinal];
+        
+        public string Key => ctabKeys[Ordinal];
 
         public static SgroupType ParseCtabKey(string str)
         {
@@ -310,7 +329,7 @@ namespace NCDK.SGroups
             }
             return values[o];
         }
-	}
+    }
 }
 
 

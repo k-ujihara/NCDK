@@ -78,13 +78,13 @@ namespace NCDK.Default
             }
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
             return monomers.Where(n => n.Key != "");
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
             IMonomer ret;
@@ -93,13 +93,13 @@ namespace NCDK.Default
             return ret;
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IEnumerable<string> GetMonomerNames()
         {
             return monomers.Keys;
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
             IMonomer monomer;
@@ -182,13 +182,13 @@ namespace NCDK.Silent
             }
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
             return monomers.Where(n => n.Key != "");
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
             IMonomer ret;
@@ -197,13 +197,13 @@ namespace NCDK.Silent
             return ret;
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual IEnumerable<string> GetMonomerNames()
         {
             return monomers.Keys;
         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
             IMonomer monomer;

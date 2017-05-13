@@ -40,10 +40,10 @@ namespace NCDK
         true
     ); 
 #>
-	{
+    {
         public bool IsUnset => this.Ordinal == 0;
 
-		/// <summary>
+        /// <summary>
         /// Invert this conformation, Together.Invert() = Opposite, Opposite.Invert() = Together.
         /// </summary>
         /// <returns>the inverse conformation</returns>

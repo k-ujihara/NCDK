@@ -127,7 +127,7 @@ namespace NCDK.Reactions.Types
                                     {
                                         IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if (checkAtom(atomk)
-											&& !reactant.GetConnectedSingleElectrons(atomk).Any())
+                                            && !reactant.GetConnectedSingleElectrons(atomk).Any())
                                         {
                                             atomi.IsReactiveCenter = true;
                                             atomj.IsReactiveCenter = true;

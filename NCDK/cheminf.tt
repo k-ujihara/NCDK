@@ -11,8 +11,8 @@
 <#@ output extension=".tokens" #>
 <?xml version="1.0" encoding="utf-8" ?>
 <#
-		{
-			var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "cheminf.bibx");
+        {
+            var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "cheminf.bibx");
             using (var reader = XmlReader.Create(fn))
             {
                 var output = new XDocument();
@@ -29,7 +29,7 @@
                         var item = new XElement("item");
                         item.SetAttributeValue("id", "cdk-cite" + "-" + entry.Attribute("id").Value);
                         XElement toAddText = item;
-						XNode url = null;
+                        XNode url = null;
                         switch (cont.Name.LocalName)
                         {
                             case "article":
@@ -100,12 +100,12 @@
                                 toAddText.Add(MakeElement(cont, "b", "year", "19??"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "institution", "?Institute?"));
-								url = MakeElement(cont, "url", null);
-								if (url != null)
-								{
-	                                toAddText.Add(", ");
-									toAddText.Add(url);
-								}
+                                url = MakeElement(cont, "url", null);
+                                if (url != null)
+                                {
+                                    toAddText.Add(", ");
+                                    toAddText.Add(url);
+                                }
                                 content.Add(item);
                                 break;
                             case "inproceedings":
@@ -116,11 +116,11 @@
                                 toAddText.Add(MakeElement(cont, "b", "year", "19??"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "booktitle", "?BookTitle?"));
-								if (url != null)
-								{
-	                                toAddText.Add(", ");
-									toAddText.Add(url);
-								}
+                                if (url != null)
+                                {
+                                    toAddText.Add(", ");
+                                    toAddText.Add(url);
+                                }
                                 content.Add(item);
                                 break;
                             case "thesis":
@@ -142,11 +142,11 @@
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "b", "year", "19??"));
                                 toAddText.Add(", ");
-								if (url != null)
-								{
-	                                toAddText.Add(", ");
-									toAddText.Add(url);
-								}
+                                if (url != null)
+                                {
+                                    toAddText.Add(", ");
+                                    toAddText.Add(url);
+                                }
                                 content.Add(item);
                                 break;
                             default:
@@ -154,7 +154,7 @@
                         }
                     }
 
-				var str = output.ToString();
+                var str = output.ToString();
 #>
 <#= str #>
 <#

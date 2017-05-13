@@ -44,7 +44,7 @@ namespace NCDK.Default
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
-	[Serializable]
+    [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
@@ -54,7 +54,7 @@ namespace NCDK.Default
         /// Constructs an single electron orbital on an Atom.
         /// </summary>
         /// <param name="atom">The atom to which the single electron belongs.</param>
-		public SingleElectron(IAtom atom)
+        public SingleElectron(IAtom atom)
         {
             this.atom = atom;
         }
@@ -67,7 +67,7 @@ namespace NCDK.Default
         {
         }
 
-		/// <summary>
+        /// <summary>
         /// Number of electron for this class is defined as one.
         /// </summary>
         public override int? ElectronCount
@@ -79,7 +79,7 @@ namespace NCDK.Default
         /// <summary>
         /// The associated Atom.
         /// </summary>
-		public IAtom Atom
+        public IAtom Atom
         {
             get { return atom; }
             set
@@ -136,7 +136,7 @@ namespace NCDK.Silent
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
-	[Serializable]
+    [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
@@ -146,7 +146,7 @@ namespace NCDK.Silent
         /// Constructs an single electron orbital on an Atom.
         /// </summary>
         /// <param name="atom">The atom to which the single electron belongs.</param>
-		public SingleElectron(IAtom atom)
+        public SingleElectron(IAtom atom)
         {
             this.atom = atom;
         }
@@ -159,7 +159,7 @@ namespace NCDK.Silent
         {
         }
 
-		/// <summary>
+        /// <summary>
         /// Number of electron for this class is defined as one.
         /// </summary>
         public override int? ElectronCount
@@ -171,7 +171,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The associated Atom.
         /// </summary>
-		public IAtom Atom
+        public IAtom Atom
         {
             get { return atom; }
             set

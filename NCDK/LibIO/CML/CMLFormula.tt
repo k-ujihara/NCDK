@@ -27,7 +27,7 @@ namespace NCDK.LibIO.CML
             true
         );
 #>
-		{
+        {
         }
 
 <# 
@@ -41,7 +41,7 @@ namespace NCDK.LibIO.CML
             true
         );
 #>
-		{
+        {
         }
     }
 }

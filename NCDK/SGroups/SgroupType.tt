@@ -41,65 +41,65 @@ namespace NCDK.SGroups
         "SgroupType", 
         new[]
         {
-			"Nil",
-			// Display shortcuts
-			"CtabAbbreviation:SUP, abbreviation Sgroup (formerly called superatom)",
-			"CtabMultipleGroup:MUL, multiple group",
-			"CtabStructureRepeatUnit:GEN, generic",
-			// Polymers
-			"CtabMonomer:SRU, SRU type",
-			"CtabModified:MON, monomer",
-			"CtabCopolymer:MER, Mer type",
-			"CtabMer:COP, copolymer",
-			"CtabCrossLink:CRO, crosslink",
-			"CtabGraft:MOD, modification",
-			"CtabAnyPolymer:GRA, graft",
-			"CtabComponent:ANY, any polymer",
-			// Components, Mixtures, and formulations
-			"CtabMixture:COM, component",
-			"CtabFormulation:MIX, mixture",
-			"CtabData:FOR, formulation",
-			// Non-chemical
-			"CtabGeneric:DAT, data Sgroup",
-			// extension for handling positional variation and distributed coordination bonds
-			"ExtMulticenter",
-		},
+            "Nil",
+            // Display shortcuts
+            "CtabAbbreviation:SUP, abbreviation Sgroup (formerly called superatom)",
+            "CtabMultipleGroup:MUL, multiple group",
+            "CtabStructureRepeatUnit:GEN, generic",
+            // Polymers
+            "CtabMonomer:SRU, SRU type",
+            "CtabModified:MON, monomer",
+            "CtabCopolymer:MER, Mer type",
+            "CtabMer:COP, copolymer",
+            "CtabCrossLink:CRO, crosslink",
+            "CtabGraft:MOD, modification",
+            "CtabAnyPolymer:GRA, graft",
+            "CtabComponent:ANY, any polymer",
+            // Components, Mixtures, and formulations
+            "CtabMixture:COM, component",
+            "CtabFormulation:MIX, mixture",
+            "CtabData:FOR, formulation",
+            // Non-chemical
+            "CtabGeneric:DAT, data Sgroup",
+            // extension for handling positional variation and distributed coordination bonds
+            "ExtMulticenter",
+        },
         true
     ); 
 #>
-	{
-		private static Dictionary<string, int> map;
+    {
+        private static Dictionary<string, int> map;
 
-		private static string[] ctabKeys = new string[]
-		{
-			"",
-		   "SUP",
-		   "MUL",
-		   "SRU",
-		   "MON",
-		   "MOD", 
-		   "COP", 
-		   "MER", 
-		   "CRO",
-		   "GRA", 
-		   "ANY", 
-		   "COM",
-		   "MIX",
-		   "FOR",
-		   "DAT",
-		   "GEN", 
-		   "N/A",
-		};
+        private static string[] ctabKeys = new string[]
+        {
+            "",
+           "SUP",
+           "MUL",
+           "SRU",
+           "MON",
+           "MOD", 
+           "COP", 
+           "MER", 
+           "CRO",
+           "GRA", 
+           "ANY", 
+           "COM",
+           "MIX",
+           "FOR",
+           "DAT",
+           "GEN", 
+           "N/A",
+        };
 
         static SgroupType()
         {
-			map = new Dictionary<string, int>();
+            map = new Dictionary<string, int>();
 
-			for (int i = 0; i < O.ExtMulticenter; i++)
-				map.Add(ctabKeys[i], i);
+            for (int i = 0; i < O.ExtMulticenter; i++)
+                map.Add(ctabKeys[i], i);
         }
-		
-		public string Key => ctabKeys[Ordinal];
+        
+        public string Key => ctabKeys[Ordinal];
 
         public static SgroupType ParseCtabKey(string str)
         {
@@ -110,7 +110,7 @@ namespace NCDK.SGroups
             }
             return values[o];
         }
-	}
+    }
 }
 
 

@@ -65,7 +65,7 @@ namespace NCDK.Default
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
-		
+        
         /// <summary>
         /// Constructs an empty bond.
         /// </summary>
@@ -152,7 +152,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-		/// <summary>
+        /// <summary>
         /// Returns the atom connected to the given atom.
         /// </summary>
         /// <remarks>
@@ -189,7 +189,7 @@ namespace NCDK.Default
         /// <param name="atom">The atom whose partners are to be searched for</param>
         /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
         /// <seealso cref="GetConnectedAtom(IAtom)"/>
-		public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
+        public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             if (!atoms.Contains(atom))
                 return null;
@@ -218,7 +218,7 @@ namespace NCDK.Default
         /// <summary>
         /// The bond order of this bond.
         /// </summary>
-		public virtual BondOrder Order
+        public virtual BondOrder Order
         {
             get { return order; }
             set
@@ -239,7 +239,7 @@ namespace NCDK.Default
         /// <summary>
         /// The stereo descriptor for this bond.
         /// </summary>
-		public virtual BondStereo Stereo
+        public virtual BondStereo Stereo
         {
             get { return stereo; }
             set
@@ -252,7 +252,7 @@ namespace NCDK.Default
         /// <summary>
         /// The geometric 2D center of the bond.
         /// </summary>
-		public virtual Vector2 Geometric2DCenter
+        public virtual Vector2 Geometric2DCenter
         {
             get
             {
@@ -372,7 +372,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="obj">Object of type Bond</param>
         /// <returns> true if the bond is equal to this bond</returns>
-		public override bool Compare(object obj)
+        public override bool Compare(object obj)
         {
             var bond = obj as Bond;
             if (bond == null)
@@ -387,7 +387,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="bond">The bond which is checked to be connect with this one</param>
         /// <returns>true if the bonds share an atom, otherwise false</returns>
-		public virtual bool IsConnectedTo(IBond bond)
+        public virtual bool IsConnectedTo(IBond bond)
         {
             return atoms.Any(atom => bond.Contains(atom));
         }
@@ -435,7 +435,7 @@ namespace NCDK.Silent
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
-		
+        
         /// <summary>
         /// Constructs an empty bond.
         /// </summary>
@@ -522,7 +522,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-		/// <summary>
+        /// <summary>
         /// Returns the atom connected to the given atom.
         /// </summary>
         /// <remarks>
@@ -559,7 +559,7 @@ namespace NCDK.Silent
         /// <param name="atom">The atom whose partners are to be searched for</param>
         /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
         /// <seealso cref="GetConnectedAtom(IAtom)"/>
-		public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
+        public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             if (!atoms.Contains(atom))
                 return null;
@@ -588,7 +588,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The bond order of this bond.
         /// </summary>
-		public virtual BondOrder Order
+        public virtual BondOrder Order
         {
             get { return order; }
             set
@@ -608,7 +608,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The stereo descriptor for this bond.
         /// </summary>
-		public virtual BondStereo Stereo
+        public virtual BondStereo Stereo
         {
             get { return stereo; }
             set
@@ -620,7 +620,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The geometric 2D center of the bond.
         /// </summary>
-		public virtual Vector2 Geometric2DCenter
+        public virtual Vector2 Geometric2DCenter
         {
             get
             {
@@ -735,7 +735,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="obj">Object of type Bond</param>
         /// <returns> true if the bond is equal to this bond</returns>
-		public override bool Compare(object obj)
+        public override bool Compare(object obj)
         {
             var bond = obj as Bond;
             if (bond == null)
@@ -750,7 +750,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="bond">The bond which is checked to be connect with this one</param>
         /// <returns>true if the bonds share an atom, otherwise false</returns>
-		public virtual bool IsConnectedTo(IBond bond)
+        public virtual bool IsConnectedTo(IBond bond)
         {
             return atoms.Any(atom => bond.Contains(atom));
         }

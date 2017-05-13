@@ -14,10 +14,10 @@ namespace NCDK.Renderers.Generators.Standards
             "Left",
             "Above",
             "Below",
-		},
+        },
         true
     ); 
 #>
-	{
+    {
     }
 }

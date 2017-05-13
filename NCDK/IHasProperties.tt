@@ -9,16 +9,16 @@
 <#@ output extension=".cs" #>
 
 <#
-	string[]  interfaceNames = new string[] { "IChemObject", "IMolecularFormula", };
-	foreach (string name in interfaceNames)
-	{
+    string[]  interfaceNames = new string[] { "IChemObject", "IMolecularFormula", };
+    foreach (string name in interfaceNames)
+    {
 #>
 namespace NCDK
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public partial interface <#= name #> 
-	{
+    public partial interface <#= name #> 
+    {
         /// <summary>
         /// Sets a property for a <see cref="<#= name #>"/>.
         /// </summary>
@@ -80,8 +80,8 @@ namespace NCDK
         /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         IDictionary<object, object> GetProperties();
-	}	
+    }    
 }
 <#
-	}
+    }
 #>

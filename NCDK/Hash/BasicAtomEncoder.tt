@@ -51,29 +51,29 @@ namespace NCDK.Hash
         "BasicAtomEncoder", 
             new[]
         {
-			"AtomicNumber:Encode the atomic number of an atom.",
-			"MassNumber:Encode the mass number of an atom, allowing distinction of isotopes.",
-			"FormalCharge:Encode the formal charge of an atom, allowing distinction of different protonation states.",
-			"NConnectedAtoms:Encode the number of explicitly connected atoms (degree).",
-			"BondOrderSum:Encode the explicit bond order sum of an atom.",
-			"OrbitalHybridization:Encode the orbital hybridization of an atom.",
-			"FreeRadicals",
+            "AtomicNumber:Encode the atomic number of an atom.",
+            "MassNumber:Encode the mass number of an atom, allowing distinction of isotopes.",
+            "FormalCharge:Encode the formal charge of an atom, allowing distinction of different protonation states.",
+            "NConnectedAtoms:Encode the number of explicitly connected atoms (degree).",
+            "BondOrderSum:Encode the explicit bond order sum of an atom.",
+            "OrbitalHybridization:Encode the orbital hybridization of an atom.",
+            "FreeRadicals",
         },
         "IAtomEncoder"
     ); 
 #>
-	{
+    {
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);
         private static EncodeDelegate[] listOnEncode;
 
         public int Encode(IAtom atom, IAtomContainer container)
         {
-			return listOnEncode[Ordinal](atom, container);
+            return listOnEncode[Ordinal](atom, container);
         }
 
         static BasicAtomEncoder()
         {
-			listOnEncode = new EncodeDelegate[values.Length];
+            listOnEncode = new EncodeDelegate[values.Length];
             listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
             listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
             listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;

@@ -443,7 +443,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             int nearestBond = -1;
             double distance = 0;
-			IAtom atom0 = bond.Atoms[0];
+            IAtom atom0 = bond.Atoms[0];
             var bondsAtLeft = mol.GetConnectedBonds(atom0);
             foreach (var curBond in bondsAtLeft)
             {

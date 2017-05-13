@@ -31,7 +31,7 @@ namespace NCDK.Default
     /// <inheritdoc cref="IRing"/>
     // @cdk.githash
     // @cdk.keyword ring
-	[Serializable]
+    [Serializable]
     public class Ring
         : AtomContainer, IRing
     {
@@ -55,7 +55,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="atoms">atoms</param>
         /// <param name="bonds">bonds</param>
-		public Ring(
+        public Ring(
            IEnumerable<IAtom> atoms,
            IEnumerable<IBond> bonds)
            : base(atoms, bonds)
@@ -84,7 +84,7 @@ namespace NCDK.Default
         /// <summary>
         /// the number of atoms\edges in this ring.
         /// </summary>
-		public int RingSize => atoms.Count;
+        public int RingSize => atoms.Count;
 
         /// <summary>
         /// Returns the next bond in order, relative to a given bond and atom.
@@ -100,7 +100,7 @@ namespace NCDK.Default
         /// <summary>
         /// The sum of all bond orders in the ring.
         /// </summary>
-		public int BondOrderSum
+        public int BondOrderSum
             => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
 
         public override string ToString()
@@ -123,7 +123,7 @@ namespace NCDK.Silent
     /// <inheritdoc cref="IRing"/>
     // @cdk.githash
     // @cdk.keyword ring
-	[Serializable]
+    [Serializable]
     public class Ring
         : AtomContainer, IRing
     {
@@ -147,7 +147,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="atoms">atoms</param>
         /// <param name="bonds">bonds</param>
-		public Ring(
+        public Ring(
            IEnumerable<IAtom> atoms,
            IEnumerable<IBond> bonds)
            : base(atoms, bonds)
@@ -176,7 +176,7 @@ namespace NCDK.Silent
         /// <summary>
         /// the number of atoms\edges in this ring.
         /// </summary>
-		public int RingSize => atoms.Count;
+        public int RingSize => atoms.Count;
 
         /// <summary>
         /// Returns the next bond in order, relative to a given bond and atom.
@@ -192,7 +192,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The sum of all bond orders in the ring.
         /// </summary>
-		public int BondOrderSum
+        public int BondOrderSum
             => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
 
         public override string ToString()

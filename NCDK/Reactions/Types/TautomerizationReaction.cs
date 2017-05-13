@@ -81,7 +81,7 @@ namespace NCDK.Reactions.Types
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-										)
+                                        )
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {
@@ -163,7 +163,7 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
-										)
+                                        )
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {

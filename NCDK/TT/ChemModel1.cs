@@ -26,43 +26,43 @@ using System.Text;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// An object containing multiple MoleculeSet and
-	/// the other lower level concepts like rings, sequences,
-	/// fragments, etc.
-	/// </summary>
-	// @cdk.githash 
+    /// <summary>
+    /// An object containing multiple MoleculeSet and
+    /// the other lower level concepts like rings, sequences,
+    /// fragments, etc.
+    /// </summary>
+    // @cdk.githash 
     [Serializable]
     public class ChemModel
         : ChemObject, IChemModel, IChemObjectListener, ICloneable
     {
-		/// <summary>
-		///  A molecule set.
-		/// </summary>
+        /// <summary>
+        ///  A molecule set.
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> setOfMolecules = null;
 
-		/// <summary>
-		///  A reaction set.
-		/// </summary>
-	    private IReactionSet setOfReactions = null;
-		private IRingSet ringSet = null;
+        /// <summary>
+        ///  A reaction set.
+        /// </summary>
+        private IReactionSet setOfReactions = null;
+        private IRingSet ringSet = null;
 
-		/// <summary>
-		///  A Crystal.
-		/// </summary>
+        /// <summary>
+        ///  A Crystal.
+        /// </summary>
         private ICrystal crystal = null;
 
-		/// <summary>
-		///  Constructs an new <see cref="ChemModel"/> with a null set of molecules.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an new <see cref="ChemModel"/> with a null set of molecules.
+        /// </summary>
         public ChemModel()
             : base()
         {
         }
 
-		/// <summary>
-		/// The molecule set of this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The molecule set of this <see cref="ChemModel"/>.
+        /// </summary>
         public virtual IAtomContainerSet<IAtomContainer> MoleculeSet
         {
             get { return setOfMolecules; }
@@ -80,9 +80,9 @@ namespace NCDK.Default
             }
         }
 
-		/// <summary>
-		/// The ring set of this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The ring set of this <see cref="ChemModel"/>.
+        /// </summary>
         public IRingSet RingSet
         {
             get { return ringSet; }
@@ -100,9 +100,9 @@ namespace NCDK.Default
             }
         }
 
-		/// <summary>
-		/// The crystal contained in this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The crystal contained in this <see cref="ChemModel"/>.
+        /// </summary>
         public ICrystal Crystal
         {
             get { return crystal; }
@@ -120,9 +120,9 @@ namespace NCDK.Default
             }
         }
 
-		/// <summary>
-		/// The reaction set contained in this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The reaction set contained in this <see cref="ChemModel"/>.
+        /// </summary>
         public IReactionSet ReactionSet
         {
             get { return setOfReactions; }
@@ -174,16 +174,16 @@ namespace NCDK.Default
             return clone;
         }
 
-		/// <summary>
-		///  Called by objects to which this object has
-		///  registered as a listener.
-		/// </summary>
-		/// <param name="evt">A change event pointing to the source of the change</param>
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public bool IsEmpty()
             => (setOfMolecules == null || setOfMolecules.IsEmpty())
             && (setOfReactions == null || setOfReactions.IsEmpty())
@@ -193,43 +193,43 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// An object containing multiple MoleculeSet and
-	/// the other lower level concepts like rings, sequences,
-	/// fragments, etc.
-	/// </summary>
-	// @cdk.githash 
+    /// <summary>
+    /// An object containing multiple MoleculeSet and
+    /// the other lower level concepts like rings, sequences,
+    /// fragments, etc.
+    /// </summary>
+    // @cdk.githash 
     [Serializable]
     public class ChemModel
         : ChemObject, IChemModel, IChemObjectListener, ICloneable
     {
-		/// <summary>
-		///  A molecule set.
-		/// </summary>
+        /// <summary>
+        ///  A molecule set.
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> setOfMolecules = null;
 
-		/// <summary>
-		///  A reaction set.
-		/// </summary>
-	    private IReactionSet setOfReactions = null;
-		private IRingSet ringSet = null;
+        /// <summary>
+        ///  A reaction set.
+        /// </summary>
+        private IReactionSet setOfReactions = null;
+        private IRingSet ringSet = null;
 
-		/// <summary>
-		///  A Crystal.
-		/// </summary>
+        /// <summary>
+        ///  A Crystal.
+        /// </summary>
         private ICrystal crystal = null;
 
-		/// <summary>
-		///  Constructs an new <see cref="ChemModel"/> with a null set of molecules.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an new <see cref="ChemModel"/> with a null set of molecules.
+        /// </summary>
         public ChemModel()
             : base()
         {
         }
 
-		/// <summary>
-		/// The molecule set of this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The molecule set of this <see cref="ChemModel"/>.
+        /// </summary>
         public virtual IAtomContainerSet<IAtomContainer> MoleculeSet
         {
             get { return setOfMolecules; }
@@ -240,9 +240,9 @@ namespace NCDK.Silent
             }
         }
 
-		/// <summary>
-		/// The ring set of this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The ring set of this <see cref="ChemModel"/>.
+        /// </summary>
         public IRingSet RingSet
         {
             get { return ringSet; }
@@ -253,9 +253,9 @@ namespace NCDK.Silent
             }
         }
 
-		/// <summary>
-		/// The crystal contained in this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The crystal contained in this <see cref="ChemModel"/>.
+        /// </summary>
         public ICrystal Crystal
         {
             get { return crystal; }
@@ -266,9 +266,9 @@ namespace NCDK.Silent
             }
         }
 
-		/// <summary>
-		/// The reaction set contained in this <see cref="ChemModel"/>.
-		/// </summary>
+        /// <summary>
+        /// The reaction set contained in this <see cref="ChemModel"/>.
+        /// </summary>
         public IReactionSet ReactionSet
         {
             get { return setOfReactions; }
@@ -313,16 +313,16 @@ namespace NCDK.Silent
             return clone;
         }
 
-		/// <summary>
-		///  Called by objects to which this object has
-		///  registered as a listener.
-		/// </summary>
-		/// <param name="evt">A change event pointing to the source of the change</param>
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
         public bool IsEmpty()
             => (setOfMolecules == null || setOfMolecules.IsEmpty())
             && (setOfReactions == null || setOfReactions.IsEmpty())

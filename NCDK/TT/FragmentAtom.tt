@@ -38,7 +38,7 @@ namespace <#= ns.NS #>
     /// </summary>
     // @cdk.githash 
     // @author egonw 
-	public class FragmentAtom 
+    public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
         public FragmentAtom()

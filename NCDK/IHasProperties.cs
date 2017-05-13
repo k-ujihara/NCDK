@@ -4,10 +4,10 @@
 
 namespace NCDK
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public partial interface IChemObject 
-	{
+    public partial interface IChemObject 
+    {
         /// <summary>
         /// Sets a property for a <see cref="IChemObject"/>.
         /// </summary>
@@ -69,14 +69,14 @@ namespace NCDK
         /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         IDictionary<object, object> GetProperties();
-	}	
+    }    
 }
 namespace NCDK
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public partial interface IMolecularFormula 
-	{
+    public partial interface IMolecularFormula 
+    {
         /// <summary>
         /// Sets a property for a <see cref="IMolecularFormula"/>.
         /// </summary>
@@ -138,5 +138,5 @@ namespace NCDK
         /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         IDictionary<object, object> GetProperties();
-	}	
+    }    
 }

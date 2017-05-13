@@ -45,7 +45,7 @@ namespace <#= ns.NS #>
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
-	[Serializable]
+    [Serializable]
     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
@@ -55,7 +55,7 @@ namespace <#= ns.NS #>
         /// Constructs an single electron orbital on an Atom.
         /// </summary>
         /// <param name="atom">The atom to which the single electron belongs.</param>
-		public SingleElectron(IAtom atom)
+        public SingleElectron(IAtom atom)
         {
             this.atom = atom;
         }
@@ -68,7 +68,7 @@ namespace <#= ns.NS #>
         {
         }
 
-		/// <summary>
+        /// <summary>
         /// Number of electron for this class is defined as one.
         /// </summary>
         public override int? ElectronCount
@@ -80,7 +80,7 @@ namespace <#= ns.NS #>
         /// <summary>
         /// The associated Atom.
         /// </summary>
-		public IAtom Atom
+        public IAtom Atom
         {
             get { return atom; }
             set

@@ -27,35 +27,35 @@ using System.Text;
 
 namespace NCDK.Default
 {
-	/// <summary>
-	/// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
-	/// </summary>
-	// @cdk.githash 
-	// @cdk.keyword orbital
-	// @cdk.keyword lone-pair
-	// @cdk.keyword bond 
+    /// <summary>
+    /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
+    /// </summary>
+    // @cdk.githash 
+    // @cdk.keyword orbital
+    // @cdk.keyword lone-pair
+    // @cdk.keyword bond 
     [Serializable]
     public class ElectronContainer 
         : ChemObject, IElectronContainer, ICloneable
     {
-		/// <summary>
-		/// Constructs an empty ElectronContainer.
-		/// </summary>
+        /// <summary>
+        /// Constructs an empty ElectronContainer.
+        /// </summary>
         private int? electronCount = 0;
 
-		/// <summary>
-		/// Returns the number of electrons in this electron container.
-		/// </summary>
-		/// <returns>The number of electrons in this electron container.</returns>
-		/// <seealso cref="ElectronCount"/>
+        /// <summary>
+        /// Returns the number of electrons in this electron container.
+        /// </summary>
+        /// <returns>The number of electrons in this electron container.</returns>
+        /// <seealso cref="ElectronCount"/>
         public ElectronContainer()
             : base()
         {
         }
 
-		/// <summary>
-		/// The number of electrons in this electron container.
-		/// </summary>
+        /// <summary>
+        /// The number of electrons in this electron container.
+        /// </summary>
         public virtual int? ElectronCount
         {
             get { return electronCount; }
@@ -79,35 +79,35 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-	/// <summary>
-	/// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
-	/// </summary>
-	// @cdk.githash 
-	// @cdk.keyword orbital
-	// @cdk.keyword lone-pair
-	// @cdk.keyword bond 
+    /// <summary>
+    /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
+    /// </summary>
+    // @cdk.githash 
+    // @cdk.keyword orbital
+    // @cdk.keyword lone-pair
+    // @cdk.keyword bond 
     [Serializable]
     public class ElectronContainer 
         : ChemObject, IElectronContainer, ICloneable
     {
-		/// <summary>
-		/// Constructs an empty ElectronContainer.
-		/// </summary>
+        /// <summary>
+        /// Constructs an empty ElectronContainer.
+        /// </summary>
         private int? electronCount = 0;
 
-		/// <summary>
-		/// Returns the number of electrons in this electron container.
-		/// </summary>
-		/// <returns>The number of electrons in this electron container.</returns>
-		/// <seealso cref="ElectronCount"/>
+        /// <summary>
+        /// Returns the number of electrons in this electron container.
+        /// </summary>
+        /// <returns>The number of electrons in this electron container.</returns>
+        /// <seealso cref="ElectronCount"/>
         public ElectronContainer()
             : base()
         {
         }
 
-		/// <summary>
-		/// The number of electrons in this electron container.
-		/// </summary>
+        /// <summary>
+        /// The number of electrons in this electron container.
+        /// </summary>
         public virtual int? ElectronCount
         {
             get { return electronCount; }

@@ -17,22 +17,22 @@
 <#
         {
             var source = new FileInfo(this.Host.TemplateFile).Directory.Parent;
-			source = new DirectoryInfo(Path.Combine(source.FullName, "ExampleCodes"));
+            source = new DirectoryInfo(Path.Combine(source.FullName, "ExampleCodes"));
 
             var doc = new XDocument();
             var root = new XElement("Comments");
             doc.Add(root);
             AddElements(root, "NCDK", source);
-			var stringWriter = new StringWriter();
+            var stringWriter = new StringWriter();
 
             doc.Save(stringWriter);
 
-			var str = stringWriter.ToString();
-			str = doc.ToString();
+            var str = stringWriter.ToString();
+            str = doc.ToString();
 #>
 <?xml version="1.0" encoding="utf-8" ?>
 <#= str #>
-<#			
+<#            
         }
 #>
 

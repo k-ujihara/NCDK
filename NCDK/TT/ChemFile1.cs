@@ -39,14 +39,14 @@ namespace NCDK.Default
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
-	    /// <summary>
-		/// List of ChemSquences.
-		/// </summary>
+        /// <summary>
+        /// List of ChemSquences.
+        /// </summary>
         protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
-		/// <summary>
-		///  Constructs an empty ChemFile.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an empty ChemFile.
+        /// </summary>
         public ChemFile()
             : base()
         { }
@@ -66,7 +66,7 @@ namespace NCDK.Default
         /// <summary>
         /// The number of ChemSequences in this Container.
         /// </summary>
-		public int Count => chemSequences.Count;
+        public int Count => chemSequences.Count;
 
         public bool IsReadOnly => chemSequences.IsReadOnly;
         
@@ -179,7 +179,7 @@ namespace NCDK.Default
         ///  registered as a listener.
         /// </summary>
         /// <param name="evt">A change event pointing to the source of the change</param>
-		public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
     }
@@ -197,14 +197,14 @@ namespace NCDK.Silent
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener
     {
-	    /// <summary>
-		/// List of ChemSquences.
-		/// </summary>
+        /// <summary>
+        /// List of ChemSquences.
+        /// </summary>
         protected IList<IChemSequence> chemSequences = new List<IChemSequence>();
 
-		/// <summary>
-		///  Constructs an empty ChemFile.
-		/// </summary>
+        /// <summary>
+        ///  Constructs an empty ChemFile.
+        /// </summary>
         public ChemFile()
             : base()
         { }
@@ -224,7 +224,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The number of ChemSequences in this Container.
         /// </summary>
-		public int Count => chemSequences.Count;
+        public int Count => chemSequences.Count;
 
         public bool IsReadOnly => chemSequences.IsReadOnly;
         
@@ -321,7 +321,7 @@ namespace NCDK.Silent
         ///  registered as a listener.
         /// </summary>
         /// <param name="evt">A change event pointing to the source of the change</param>
-		public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
     }

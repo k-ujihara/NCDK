@@ -46,21 +46,21 @@ namespace NCDK.Default
     /// <code>
     /// for (int i = 0; i &lt; reactionSet.Count; i++)
     /// {
-    ///		IReaction reaction = reactionSet[i]; 
+    ///        IReaction reaction = reactionSet[i]; 
     /// }
     /// </code>
     /// </example>
     // @cdk.module  silent
     // @cdk.githash
     // @cdk.keyword reaction
-	[Serializable]
+    [Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
         /// <summary>
         /// Array of Reactions.
         /// </summary>
-		private IList<IReaction> reactions = new List<IReaction>();
+        private IList<IReaction> reactions = new List<IReaction>();
 
         /// <summary>
         /// Constructs an empty ReactionSet.
@@ -88,11 +88,11 @@ namespace NCDK.Default
         public int Count => reactions.Count;
         public bool IsReadOnly => reactions.IsReadOnly;
         
-		/// <summary>
+        /// <summary>
         /// Adds an reaction to this container.
         /// </summary>
         /// <param name="reaction">The reaction to be added to this container</param>
-		public void Add(IReaction reaction)
+        public void Add(IReaction reaction)
         {
             reactions.Add(reaction);
              NotifyChanged();         }
@@ -131,7 +131,7 @@ namespace NCDK.Default
         /// Remove a reaction from this set.
         /// </summary>
         /// <param name="index">The position of the reaction to be removed.</param>
-		public void RemoveAt(int index)
+        public void RemoveAt(int index)
         {
             reactions.RemoveAt(index);
              NotifyChanged();         }
@@ -187,21 +187,21 @@ namespace NCDK.Silent
     /// <code>
     /// for (int i = 0; i &lt; reactionSet.Count; i++)
     /// {
-    ///		IReaction reaction = reactionSet[i]; 
+    ///        IReaction reaction = reactionSet[i]; 
     /// }
     /// </code>
     /// </example>
     // @cdk.module  silent
     // @cdk.githash
     // @cdk.keyword reaction
-	[Serializable]
+    [Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
         /// <summary>
         /// Array of Reactions.
         /// </summary>
-		private IList<IReaction> reactions = new List<IReaction>();
+        private IList<IReaction> reactions = new List<IReaction>();
 
         /// <summary>
         /// Constructs an empty ReactionSet.
@@ -229,11 +229,11 @@ namespace NCDK.Silent
         public int Count => reactions.Count;
         public bool IsReadOnly => reactions.IsReadOnly;
         
-		/// <summary>
+        /// <summary>
         /// Adds an reaction to this container.
         /// </summary>
         /// <param name="reaction">The reaction to be added to this container</param>
-		public void Add(IReaction reaction)
+        public void Add(IReaction reaction)
         {
             reactions.Add(reaction);
                     }
@@ -272,7 +272,7 @@ namespace NCDK.Silent
         /// Remove a reaction from this set.
         /// </summary>
         /// <param name="index">The position of the reaction to be removed.</param>
-		public void RemoveAt(int index)
+        public void RemoveAt(int index)
         {
             reactions.RemoveAt(index);
                     }

@@ -32,10 +32,10 @@ namespace NCDK.Renderers.Elements
         {
             IRenderingElement element = new PathElement(
                 new[] 
-				{
-					new Point(0, 0),
-					new Point(1, 1),
-				}, System.Windows.Media.Colors.Orange);
+                {
+                    new Point(0, 0),
+                    new Point(1, 1),
+                }, System.Windows.Media.Colors.Orange);
             SetRenderingElement(element);
         }
     }

@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 <#    foreach (var ns in namespaces) 
 {
-	bool addNofityChanged =  !ns.IsSilent;
+    bool addNofityChanged =  !ns.IsSilent;
 #>
 namespace <#= ns.NS #>
 {
@@ -153,7 +153,7 @@ namespace <#= ns.NS #>
         }
 
 <#
-		IncludePropertiesImplementation(addNofityChanged);
+        IncludePropertiesImplementation(addNofityChanged);
 #>
 
         public virtual object Clone()

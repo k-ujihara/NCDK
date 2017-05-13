@@ -31,7 +31,7 @@ using System.Windows.Media.Imaging;
 
 namespace NCDK.Depict
 {
-	/// <summary>
+    /// <summary>
     /// Base class of a pre-rendered depiction. The class allows introspection of
     /// depiction size (decided at generation time) and serialization to raster
     /// and vector graphic formats.

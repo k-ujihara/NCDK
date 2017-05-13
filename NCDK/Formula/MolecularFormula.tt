@@ -7,7 +7,7 @@ namespace NCDK.Formula
     public partial class MolecularFormula : IMolecularFormula
     {
 <#
-		IncludePropertiesImplementation(false);
+        IncludePropertiesImplementation(false);
 #>
-	}
+    }
 }

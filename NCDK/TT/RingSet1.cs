@@ -84,7 +84,7 @@ namespace NCDK.Default
         /// If you want to add a single ring to the set use <see cref="Add(IRingSet)"/> 
         /// </summary>
         /// <param name="ringSet">the ring set to be united with this one.</param>
-		public void Add(IRingSet ringSet)
+        public void Add(IRingSet ringSet)
         {
             foreach (var ring in ringSet)
                 if (!Contains(ring))
@@ -176,7 +176,7 @@ namespace NCDK.Silent
         /// If you want to add a single ring to the set use <see cref="Add(IRingSet)"/> 
         /// </summary>
         /// <param name="ringSet">the ring set to be united with this one.</param>
-		public void Add(IRingSet ringSet)
+        public void Add(IRingSet ringSet)
         {
             foreach (var ring in ringSet)
                 if (!Contains(ring))

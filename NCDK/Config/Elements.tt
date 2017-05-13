@@ -12,57 +12,57 @@ namespace NCDK.Config
     public sealed partial class Elements
     {
 <#
-		var names = new List<string>();
-		var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Elements.txt");
-		using (var reader = new StreamReader(fn))
-		{
-			string line;
-			while ((line = reader.ReadLine()) != null)
-			{
-				var match = re.Match(line);
-				if (!match.Success)
-					continue;
-				var name = match.Groups["name"].Value;
-				var inner = match.Groups["inner"].Value;
-				names.Add(name);
+        var names = new List<string>();
+        var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Elements.txt");
+        using (var reader = new StreamReader(fn))
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                var match = re.Match(line);
+                if (!match.Success)
+                    continue;
+                var name = match.Groups["name"].Value;
+                var inner = match.Groups["inner"].Value;
+                names.Add(name);
 #>
         public static readonly Elements <#= name #> = new Elements("<#= name #>", <#= inner #>);
 <#
-			}
+            }
 #>
 <#
-		}
+        }
 #>
-		public static class O
-		{
+        public static class O
+        {
 <#
-		for (int i = 0; i < names.Count; i++)
-		{
+        for (int i = 0; i < names.Count; i++)
+        {
 #>
-			public const int <#= names[i] #> = <#= i #>;
+            public const int <#= names[i] #> = <#= i #>;
 <#
-		}
+        }
 #>
-		}
+        }
 
-		/// <summary>
+        /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
         public static Elements[] Values { get; } = new Elements[] 
-		{
+        {
 <#
-		for (int i = 0; i < names.Count; i++)
-		{
+        for (int i = 0; i < names.Count; i++)
+        {
 #>
-			<#= names[i] #>,
+            <#= names[i] #>,
 <#
-		}
+        }
 #>
-		};
-	}
+        };
+    }
 }
 
 <#+
-	static Regex re = new Regex(@"(?<name>\w+)\((?<inner>.*)\)", RegexOptions.Compiled);
-	// Magnesium(12, "Mg", 3, 2, 1.30, 2.20, 1.31)
+    static Regex re = new Regex(@"(?<name>\w+)\((?<inner>.*)\)", RegexOptions.Compiled);
+    // Magnesium(12, "Mg", 3, 2, 1.30, 2.20, 1.31)
 #>

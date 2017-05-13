@@ -1,8 +1,27 @@
 ﻿// .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara
 
-// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
-// This file is under LGPL-2.1 
+/*
+ * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 
 
@@ -192,18 +211,18 @@ namespace NCDK.Hash
         }   	
 	}
 	public partial class BasicAtomEncoder 
-	{
+    {
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);
         private static EncodeDelegate[] listOnEncode;
 
         public int Encode(IAtom atom, IAtomContainer container)
         {
-			return listOnEncode[Ordinal](atom, container);
+            return listOnEncode[Ordinal](atom, container);
         }
 
         static BasicAtomEncoder()
         {
-			listOnEncode = new EncodeDelegate[values.Length];
+            listOnEncode = new EncodeDelegate[values.Length];
             listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
             listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
             listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;
