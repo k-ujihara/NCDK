@@ -1,14 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Smiles;
+﻿using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
 
 namespace NCDK.Charges
 {
-    [TestClass()]
     public class MMFF94PartialCharges_Example
     {
-        [TestMethod]
         public void Ctor()
         {
             #region 

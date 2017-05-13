@@ -1,13 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Config;
+﻿using NCDK.Config;
 
 namespace NCDK.Formula
 {
-    [TestClass]
     public class MolecularFormulaGenerator_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             #region

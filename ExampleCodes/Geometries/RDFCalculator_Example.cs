@@ -1,12 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace NCDK.Geometries
+﻿namespace NCDK.Geometries
 {
-    [TestClass]
     public class RDFCalculator_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             #region

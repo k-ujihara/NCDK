@@ -1,12 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
+﻿using NCDK.Templates;
 
 namespace NCDK.Graphs
 {
-    [TestClass]
     public class ConnectivityChecker_Example
     {
-        [TestMethod]
         public void Main()
         {
             var container = TestMoleculeFactory.MakeBenzene();

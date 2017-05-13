@@ -1,12 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
+﻿using NCDK.Templates;
 
 namespace NCDK.ForceField.MMFF
 {
-    [TestClass]
     public class Mmff_Example
     {
-        [TestCategory("Example")]
         public void Main()
         {
             {

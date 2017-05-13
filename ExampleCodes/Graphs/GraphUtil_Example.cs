@@ -1,12 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
+﻿using NCDK.Templates;
 
 namespace NCDK.Graphs
 {
-    [TestClass]
     public class GraphUtil_Example
     {
-        [TestMethod]
         public void Main()
         {
             var naphthalene = TestMoleculeFactory.MakeNaphthalene();

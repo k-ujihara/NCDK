@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.IO.Iterator;
+﻿using NCDK.IO.Iterator;
 using System.IO;
 
 namespace NCDK
 {
-    [TestClass]
     public class ConformerContainer_Example
     {
-        [TestCategory("Example")]
         public void Ctor()
         {
             string filename = null;

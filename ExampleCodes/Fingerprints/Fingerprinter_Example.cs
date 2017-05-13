@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+﻿using NCDK.Silent;
 using System;
 
 namespace NCDK.Fingerprints
 {
-    [TestClass]
     public class Fingerprinter_Example
     {
-        [TestMethod]
         public void Main()
         {
             {

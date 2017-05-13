@@ -5,41 +5,38 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
 
 namespace NCDK.Graphs
 {
-    [TestClass]
     public class Cycles_Example1
     {
-        [TestMethod]
         public void Main()
         {
 <#
-	foreach (var nc in ncs)
-	{
+    foreach (var nc in ncs)
+    {
 #>
-			{
-				IAtomContainerSet<IAtomContainer> containers = null;
-				#region <#= nc.Name #>
-				CycleFinder cf = Cycles.AllFinder;
-				foreach (var container in containers) 
-				{
-					try
-					{
-						Cycles cycles = cf.Find(container);
-						IRingSet rings  = cycles.ToRingSet();
-					} 
-					catch (IntractableException) 
-					{
-						// <#= nc.Comment #>
-					}
-				}
-				#endregion
-			}
+            {
+                IAtomContainerSet<IAtomContainer> containers = null;
+                #region <#= nc.Name #>
+                CycleFinder cf = Cycles.AllFinder;
+                foreach (var container in containers) 
+                {
+                    try
+                    {
+                        Cycles cycles = cf.Find(container);
+                        IRingSet rings  = cycles.ToRingSet();
+                    } 
+                    catch (IntractableException) 
+                    {
+                        // <#= nc.Comment #>
+                    }
+                }
+                #endregion
+            }
 <#
-	}
+    }
 #>
 
             {
@@ -56,36 +53,36 @@ namespace NCDK.Graphs
             }
 
 <#
-	foreach (var nc in finds)
-	{
+    foreach (var nc in finds)
+    {
 #>
             {
                 IAtomContainerSet<IAtomContainer> containers = null;
 <#
-		if (nc.Comment == null)
-		{
+        if (nc.Comment == null)
+        {
 #>
-				IAtomContainer container = null;
+                IAtomContainer container = null;
 <#
-		}
+        }
 #>
                 #region <#= nc.Name #>
 <#
-		if (nc.Comment != null)
-		{
+        if (nc.Comment != null)
+        {
 #>
                 foreach (var container in containers)
                 {
                     try
                     {
 <#
-		}
+        }
 #>
                         Cycles cycles = Cycles.<#= nc.Name #>(container);
                         IRingSet rings = cycles.ToRingSet();
 <#
-		if (nc.Comment != null)
-		{
+        if (nc.Comment != null)
+        {
 #>
                     }
                     catch (IntractableException)
@@ -94,29 +91,29 @@ namespace NCDK.Graphs
                     }
                 }
 <#
-		}
+        }
 #>
                 #endregion
             }
 <#
-	}
+    }
 #>
-		}
-	}
+        }
+    }
 }
 
 <#+
-	class NameComment 
-	{
-		public string Name;
-		public string Comment;
+    class NameComment 
+    {
+        public string Name;
+        public string Comment;
 
-		public NameComment(string name, string comment)
-		{
-			Name = name;
-			Comment = comment;
-		}
-	}
+        public NameComment(string name, string comment)
+        {
+            Name = name;
+            Comment = comment;
+        }
+    }
 #>
 <#+
     static IList<NameComment> ncs = new List<NameComment>()
@@ -124,24 +121,24 @@ namespace NCDK.Graphs
         new NameComment("AllFinder", "handle error - note it is common that finding all simple cycles in chemical graphs is intractable"),
         new NameComment("MCB", "ignore error - MCB should never be intractable"),
         new NameComment("Relevant", "ignore error - there may be an exponential number of cycles but this is not currently checked"),
-		new NameComment("Essential", "ignore error - essential cycles do not check tractability"),
-		new NameComment("TripletShort", "ignore error - triple short cycles do not check tractability"),
-		new NameComment("VertexShort", "ignore error - vertex short cycles do not check tractability"),
-		new NameComment("EdgeShort", "ignore error - edge short cycles do not check tractability"),
-		new NameComment("CDKAromaticSetFinder", "ignore error - edge short cycles do not check tractability"),
-		new NameComment("AllOrVertexShortFinder", "ignore error - edge short cycles do not check tractability"),
+        new NameComment("Essential", "ignore error - essential cycles do not check tractability"),
+        new NameComment("TripletShort", "ignore error - triple short cycles do not check tractability"),
+        new NameComment("VertexShort", "ignore error - vertex short cycles do not check tractability"),
+        new NameComment("EdgeShort", "ignore error - edge short cycles do not check tractability"),
+        new NameComment("CDKAromaticSetFinder", "ignore error - edge short cycles do not check tractability"),
+        new NameComment("AllOrVertexShortFinder", "ignore error - edge short cycles do not check tractability"),
     };
     static IList<NameComment> finds = new List<NameComment>()
     {
-		new NameComment("FindAll", "handle error - note it is common that finding all simple cycles in chemical graphs is intractable"),
-		new NameComment("FindMCB", null),
-		new NameComment("FindSSSR", null),
-		new NameComment("FindRelevant", null),
-		new NameComment("FindEssential", null),
-		new NameComment("FindTripletShort", null),
-		new NameComment("FindVertexShort", null),
-		new NameComment("FindEdgeShort", null),
-	};
+        new NameComment("FindAll", "handle error - note it is common that finding all simple cycles in chemical graphs is intractable"),
+        new NameComment("FindMCB", null),
+        new NameComment("FindSSSR", null),
+        new NameComment("FindRelevant", null),
+        new NameComment("FindEssential", null),
+        new NameComment("FindTripletShort", null),
+        new NameComment("FindVertexShort", null),
+        new NameComment("FindEdgeShort", null),
+    };
 #>
 
 

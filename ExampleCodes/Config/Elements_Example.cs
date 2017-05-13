@@ -1,12 +1,7 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace NCDK.Config
+﻿namespace NCDK.Config
 {
-    [TestClass]
     public class Elements_Example
     {
-        [TestMethod]
         public void Main()
         {
             {

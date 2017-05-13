@@ -1,14 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
+﻿using NCDK.Templates;
 using System;
 
 namespace NCDK.Fingerprints
 {
-    [TestClass]
     public class FingerprinterTool_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             {

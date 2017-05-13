@@ -1,14 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
+﻿using NCDK.AtomTypes;
 using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.Tools
 {
-    [TestClass]
     public class CDKHydrogenAdder_Example
     {
-        [TestMethod]
         public void Ctor()
         {
             {

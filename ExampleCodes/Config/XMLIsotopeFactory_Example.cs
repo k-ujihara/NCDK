@@ -1,13 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+﻿using NCDK.Silent;
 
 namespace NCDK.Config
 {
-    [TestClass]
     public class XMLIsotopeFactory_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             {

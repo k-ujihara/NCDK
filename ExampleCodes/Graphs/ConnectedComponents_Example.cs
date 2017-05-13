@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Templates;
+﻿using NCDK.Templates;
 using System;
 
 namespace NCDK.Graphs
 {
-    [TestClass]
     public class ConnectedComponents_Example
     {
-        [TestMethod]
         public void Main()
         {
             var container = TestMoleculeFactory.MakeBenzene();

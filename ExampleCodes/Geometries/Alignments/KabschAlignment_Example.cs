@@ -1,16 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Numerics;
+﻿using NCDK.Numerics;
 using NCDK.Silent;
 using System;
 using System.Linq;
 
 namespace NCDK.Geometries.Alignments
 {
-    [TestClass()]
     public class KabschAlignment_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             {

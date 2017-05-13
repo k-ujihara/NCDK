@@ -1,14 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
+﻿using NCDK.Silent;
 using System;
 
 namespace NCDK.Fingerprints
 {
-    [TestClass]
     public class HybridizationFingerprinter_Example
     {
-        [TestMethod]
-        [TestCategory("Example")]
         public void Main()
         {
             {
