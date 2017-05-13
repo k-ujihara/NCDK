@@ -113,10 +113,8 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                         mappings = ExactMapping.ExtractMapping(mappings, compGraphNodes, cliqueList);
                     }
                     maxCliqueSet.Pop();
-#if !DEBUG
                     if (IsTimeOut())
                         break;
-#endif
                 }
             }
             catch (IOException ex)

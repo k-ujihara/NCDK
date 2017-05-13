@@ -60,7 +60,7 @@ namespace NCDK.SMSD.Global
         /// cutoff value for time out.
         /// -1 for infinite and 0.23 for 23 seconds.
         /// </summary>
-        public double Time { get; set; }
+        public double Time { get; set; } = -1;
 
         /// <summary>
         /// true if timeout occures else false
