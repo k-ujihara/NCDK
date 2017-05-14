@@ -361,9 +361,8 @@ namespace NCDK.Renderers
         }
 
         /// <summary>
-        /// Adds a change listener to the list of listeners.
+        /// Change listeners.
         /// </summary>
-        /// <param name="listener">The listener added to the list</param>
         public ICollection<ICDKChangeListener> Listeners
         {
             get

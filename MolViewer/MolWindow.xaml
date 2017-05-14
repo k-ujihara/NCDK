@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:NCDK.MolViewer"
         mc:Ignorable="d"
         Title="MolWindow">
-    <DockPanel>
+    <DockPanel LastChildFill="False">
         <Menu x:Name="menu" Grid.RowSpan="2" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem x:Name="menuItem_Open" Header="_Open" Click="menuItem_Open_Click"/>
+                <MenuItem x:Name="menuItem_SaveAs" Header="Save _as" Click="menuItem_SaveAs_Click"/>
                 <Separator Height="2"/>
                 <MenuItem Header="E_xit"/>
             </MenuItem>

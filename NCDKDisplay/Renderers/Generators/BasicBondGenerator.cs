@@ -49,7 +49,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class BondWidth : AbstractGeneratorParameter<double?>
         {
-            /// <summary> Returns the default value.</summary>
+            /// <summary>Returns the default value.</summary>
             /// <returns>1.0</returns>
             public override double? Default => 1;
         }

@@ -23,16 +23,13 @@
 using Microsoft.Win32;
 using NCDK.Default;
 using NCDK.Geometries;
-using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Layout;
-using NCDK.Numerics;
 using NCDK.Renderers;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
 using NCDK.Renderers.Visitors;
 using NCDK.Smiles;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +37,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NCDK.MolViewer
 {
@@ -145,27 +143,67 @@ namespace NCDK.MolViewer
             Render();
         }
 
+        private void menuItem_SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            if (mol == null)
+                return;
+
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.FilterIndex = 1;
+            fileDialog.Filter = "PNG file (*.png)|*.png|All Files (*.*)|*.*";
+            bool? result = fileDialog.ShowDialog();
+            if (result != true)
+                return;
+
+            // the renderer needs to have a toolkit-specific font manager
+            var renderer = Utils.BuildStdRenderer();
+            var r = NCDK.MolViewer.Renderers.AtomContainerRenderer.CalculateBounds(mol);
+            var drawArea = new Rect(0, 0, r.Width, r.Height);
+
+            //// the call to 'setup' only needs to be done on the first paint
+            renderer.Setup(mol, drawArea);
+            
+            DrawingVisual drawingVisual = new DrawingVisual();
+            using (DrawingContext g2d = drawingVisual.RenderOpen())
+            {
+                g2d.DrawRectangle(Brushes.White, null, drawArea);
+                renderer.PaintMolecule(mol, new WPFDrawVisitor(g2d), drawArea, true);
+                g2d.DrawRectangle(null, new Pen(Brushes.Black, 1), drawArea);
+            }
+
+        var bmp = new System.Windows.Media.Imaging.RenderTargetBitmap((int)drawArea.Width, (int)drawArea.Height, 72, 72, PixelFormats.Pbgra32);
+            bmp.Render(drawingVisual);
+            
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+            using (var stream = new FileStream(fileDialog.FileName, FileMode.Create, FileAccess.Write))
+            {
+                encoder.Save(stream);
+            }
+        }
+
         public void Render()
         {
             if (mol == null)
                 return;
 
-            var render = molgen.Generate(mol, Model);
-
+            var rendeingrElement = molgen.Generate(mol, Model);
             DrawingGroup dGroup = new DrawingGroup();
             using (DrawingContext g2d = dGroup.Open())
             {
-                var v = new WPFDrawVisitor(g2d);
-                v.SetTransform(new ScaleTransform(1, 1));
-                v.SetFontManager(fontManager);
-                v.SetRendererModel(Model);
-                v.Visit(render);
+                DrawRendeingrElement(g2d, rendeingrElement);
             }
-
-            Image theImage = new Image();
-            DrawingImage dImageSource = new DrawingImage(dGroup);
-            theImage.Source = dImageSource;
+            ImageSource dImageSource = new DrawingImage(dGroup);
             image.Source = dImageSource;
+        }
+
+        private void DrawRendeingrElement(DrawingContext g2d, NCDK.Renderers.Elements.IRenderingElement rendeingrElement)
+        {
+            var v = new WPFDrawVisitor(g2d);
+            v.SetTransform(new ScaleTransform(1, 1));
+            v.SetFontManager(fontManager);
+            v.SetRendererModel(Model);
+            v.Visit(rendeingrElement); 
         }
 
         private void menuItem_Open_Click(object sender, RoutedEventArgs e)

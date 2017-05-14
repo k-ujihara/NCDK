@@ -36,22 +36,23 @@ namespace NCDK.MolViewer.Renderers
     /// A general renderer for <see cref="IAtomContainer"/>s. The chem object
     /// is converted into a 'diagram' made up of <see cref="IRenderingElement"/>s. It takes
     /// an <see cref="IDrawVisitor"/> to do the drawing of the generated diagram. Various
-    /// display properties can be set using the <see cref="JChemPaintRendererModel"/>.<p>
-    /// 
+    /// display properties can be set using the <see cref="JChemPaintRendererModel"/>.
+    /// </summary>
+    /// <example>
     /// This class has several usage patterns. For just painting fit-to-screen do:
-    /// <pre>
+    /// <code>
     ///   renderer.paintMolecule(molecule, visitor, drawArea)
-    /// </pre>
+    /// </code>
     /// for painting at a scale determined by the bond length in the RendererModel:
-    /// <pre>
+    /// <code>
     ///   if (moleculeIsNew) {
     ///     renderer.setup(molecule, drawArea);
     ///   }
     ///   Rectangle diagramSize = renderer.paintMolecule(molecule, visitor);
     ///   // ...update scroll bars here
-    /// </pre>
+    /// </code>
     /// to paint at full screen size, but not resize with each change:
-    /// <pre>
+    /// <code>
     ///   if (moleculeIsNew) {
     ///     renderer.setScale(molecule);
     ///     Rectangle diagramBounds = renderer.calculateDiagramBounds(molecule);
@@ -61,34 +62,39 @@ namespace NCDK.MolViewer.Renderers
     ///     Rectangle diagramSize = renderer.paintMolecule(molecule, visitor);
     ///   // ...update scroll bars here
     ///   }
-    /// </pre>
+    /// </code>
     /// finally, if you are scrolling, and have not changed the diagram:
-    /// <pre>
+    /// <code>
     ///   renderer.repaint(visitor)
-    /// </pre>
-    /// will just repaint the previously generated diagram, at the same scale.<p>
-    /// 
+    /// </code>
+    /// will just repaint the previously generated diagram, at the same scale.
+    /// </example>
+    /// <remarks>
+    /// <para>
     /// There are two sets of methods for painting IChemObjects - those that take
     /// a Rectangle that represents the desired draw area, and those that return a
     /// Rectangle that represents the actual draw area. The first are intended for
     /// drawing molecules fitted to the screen (where 'screen' means any drawing
     /// area) while the second type of method are for drawing bonds at the length
-    /// defined by the <see cref="JChemPaintRendererModel"/> parameter bondLength.<p>
-    /// 
+    /// defined by the <see cref="JChemPaintRendererModel"/> parameter bondLength.
+    /// </para>
+    /// <para>
     /// There are two numbers used to transform the model so that it fits on screen.
-    /// The first is <tt>scale</tt>, which is used to map model coordinates to
-    /// screen coordinates. The second is <tt>zoom</tt> which is used to, well,
+    /// The first is <c>scale</c>, which is used to map model coordinates to
+    /// screen coordinates. The second is <c>zoom</c> which is used to, well,
     /// zoom the on screen coordinates. If the diagram is fit-to-screen, then the
     /// ratio of the bounds when drawn using bondLength and the bounds of
-    /// the screen is used as the zoom.<p>
-    /// 
+    /// the screen is used as the zoom.
+    /// </para>
+    /// <para>
     /// So, if the bond length on screen is set to 40, and the average bond length
-    /// of the model is 2 (unitless, but roughly &Aring;ngstrom scale) then the
+    /// of the model is 2 (unitless, but roughly Ångström scale) then the
     /// scale will be 20. If the model is 10 units wide, then the diagram drawn at
     /// 100% zoom will be 10 * 20 = 200 in width on screen. If the screen is 400
     /// pixels wide, then fitting it to the screen will make the zoom 200%. Since the
     /// zoom is just a floating point number, 100% = 1 and 200% = 2.
-    /// </summary>
+    /// </para>
+    /// </remarks>
     // @author maclean
     // @cdk.module renderbasic 
     public class AtomContainerRenderer : IRenderer
@@ -125,7 +131,6 @@ namespace NCDK.MolViewer.Renderers
         /// </summary>
         /// <param name="generators">a list of classes that implement the IGenerator interface</param>
         /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
-        /// <param name="useUserSettings">Should user setting (in $HOME/.jchempaint/properties) be used or not?</param>
         public AtomContainerRenderer(IList<IGenerator<IAtomContainer>> generators,
                                      IFontManager fontManager)
         {
@@ -352,7 +357,6 @@ namespace NCDK.MolViewer.Renderers
                                  double diagramWidth,
                                  double diagramHeight)
         {
-
             double m = this.rendererModel.GetMargin();
 
             // determine the zoom needed to fit the diagram to the screen
@@ -365,7 +369,6 @@ namespace NCDK.MolViewer.Renderers
 
             // record the zoom in the model, so that generators can use it
             this.rendererModel.SetZoomFactor(zoom);
-
         }
 
         /// <summary>
@@ -500,11 +503,13 @@ namespace NCDK.MolViewer.Renderers
             // set the transform
             try
             {
-                this.transform = new TranslateTransform(this.drawCenter.X, this.drawCenter.Y);
+                Matrix m = Matrix.Identity;
+                m.Translate(-this.modelCenter.X, -this.modelCenter.Y);
                 //this.transform.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
-                transform.Value.Scale(scale, scale);
-                transform.Value.Scale(zoom, zoom);
-                transform.Value.Translate(-this.modelCenter.X, -this.modelCenter.Y);
+                m.Scale(scale, scale);
+                m.Scale(zoom, zoom);
+                m.Translate(this.drawCenter.X, this.drawCenter.Y);
+                this.transform = new MatrixTransform(m);
             }
             catch (Exception)
             {
