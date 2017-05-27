@@ -89,7 +89,7 @@ namespace NCDK.Fingerprints
 
         /// <summary>
         /// Sets the bit at the specified index to true.
-        /// <param name="i"></param>
+        /// <param name="i">index</param>
         /// </summary>
         void Set(int i);
 

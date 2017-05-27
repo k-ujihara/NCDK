@@ -18,6 +18,7 @@
  */
 using System.Collections.Generic;
 using NCDK.Numerics;
+using System;
 
 namespace NCDK
 {
@@ -26,9 +27,9 @@ namespace NCDK
     /// considered to be a number of electrons connecting two ore more atoms.
     /// type filter text
     /// </summary>
+    // @author      egonw
     // @cdk.module interfaces
     // @cdk.githash
-    // @author      egonw
     // @cdk.created 2005-08-24
     // @cdk.keyword bond
     // @cdk.keyword atom
@@ -48,11 +49,49 @@ namespace NCDK
         void SetAtoms(IEnumerable<IAtom> atoms);
 
         /// <summary>
-        /// Returns the atom connected to the given atom.
+        /// The begin (or first) atom of the bond.
         /// </summary>
+        /// <returns>the begin atom</returns>
+        IAtom Begin { get; }
+
+        /// <summary>
+        /// The end (or second) atom of the bond.
+        /// </summary>
+        /// <returns>the end atom</returns>
+        IAtom End { get; }
+
+        /// <summary>
+        /// Returns the other atom in the bond, the atom is connected to the given atom. This
+        /// method is only correct for two-centre bonds, for n-centre bonds the behaviour is undefined
+        /// and the more correct <see cref="GetConnectedAtoms(IAtom)"/> should be used.
+        /// </summary>
+        /// <example>
+        /// <code>IAtom beg = bond.getBegin();
+        /// IAtom end = bond.getEnd();
+        /// // bond.getConnectedAtom(beg) == end
+        /// // bond.getConnectedAtom(end) == beg
+        /// </code>
+        /// </example>
         /// <param name="atom">The atom the bond partner is searched of</param>
-        /// <returns>the connected atom or <see langword="null"/> if the given atom is not part of the bond</returns>
+        /// <returns>the connected atom or null if the given atom is not part of the bond</returns>
+        [Obsolete("use the method " + nameof(GetOther))]
         IAtom GetConnectedAtom(IAtom atom);
+
+        /// <summary>
+        /// Returns the other atom in the bond, the atom is connected to the given atom.This
+        /// method is only correct for two-centre bonds, for n-centre bonds the behaviour is undefined
+        /// and the more correct <see cref="GetConnectedAtoms(IAtom)"/> should be used.
+        /// </summary>
+        /// <example>
+        /// <code>IAtom beg = bond.getBegin();
+        /// IAtom end = bond.getEnd();
+        /// // bond.getOther(beg) == end
+        /// // bond.getOther(end) == beg
+        /// </code>
+        /// </example>
+        /// <param name="atom">The atom the bond partner is searched of</param>
+        /// <returns>the connected atom or null if the given atom is not part of the bond</returns>
+        IAtom GetOther(IAtom atom);
 
         /// <summary>
         /// Returns all the atoms in the bond connected to the given atom.

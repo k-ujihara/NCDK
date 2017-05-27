@@ -20,7 +20,6 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Collections;
-using NCDK.IO.Iterator;
 
 namespace NCDK
 {
@@ -76,9 +75,11 @@ namespace NCDK
         /// </para>
         /// </summary>
         /// <remarks>
-        /// Note that the constructor will use the title of the input molecule
+        /// <note type="note">
+        /// The constructor will use the title of the input molecule
         /// when adding new molecules as conformers. That is, the title of any molecule
         /// to be added as a conformer should match the title of the input molecule.
+        /// </note>
         /// </remarks>
         /// <param name="atomContainer">The base molecule (or first conformer).</param>
         public ConformerContainer(IAtomContainer atomContainer)
@@ -123,7 +124,8 @@ namespace NCDK
         /// The title of the conformers.
         /// </summary>
         /// <remarks>
-        /// Note that all conformers for a given molecule will have the same title.</remarks>
+        /// <note type="note">All conformers for a given molecule will have the same title.</note>
+        /// </remarks>
         public string Title => title;
 
         /// <summary>

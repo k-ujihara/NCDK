@@ -40,9 +40,7 @@ namespace NCDK.Formula
     {
         private IDictionary<IIsotope, int?> isotopes;
 
-        /// <summary>
-        /// The partial charge of the molecularFormula. The default value is double.NaN.
-        /// </summary>
+        /// <inheritdoc/>
         public int? Charge { get; set; } = null;
 
         /// <summary>

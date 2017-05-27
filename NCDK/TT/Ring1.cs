@@ -28,9 +28,16 @@ using System.Collections.Generic;
 
 namespace NCDK.Default
 {
-    /// <inheritdoc cref="IRing"/>
-    // @cdk.githash
-    // @cdk.keyword ring
+	/// <summary>
+	/// Class representing a ring structure in a molecule.
+	/// A ring is a linear sequence of
+	/// N atoms interconnected to each other by covalent bonds,
+	/// such that atom i (1 &lt; i &lt; N) is bonded to
+	/// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+	/// </summary>
+	// @cdk.module  data
+	// @cdk.githash
+	// @cdk.keyword ring 
     [Serializable]
     public class Ring
         : AtomContainer, IRing
@@ -95,7 +102,7 @@ namespace NCDK.Default
         /// <param name="atom">A atom from the bond above to assign a search direction</param>
         /// <returns>The next bond in the order given by the above assignment</returns>
         public IBond GetNextBond(IBond bond, IAtom atom)
-            => bonds.Where(n => n.Contains(atom) && n != bond).FirstOrDefault();
+            => bonds.Where(n => n.Contains(atom) && !n.Equals(bond)).FirstOrDefault();
 
         /// <summary>
         /// The sum of all bond orders in the ring.
@@ -120,9 +127,16 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /// <inheritdoc cref="IRing"/>
-    // @cdk.githash
-    // @cdk.keyword ring
+	/// <summary>
+	/// Class representing a ring structure in a molecule.
+	/// A ring is a linear sequence of
+	/// N atoms interconnected to each other by covalent bonds,
+	/// such that atom i (1 &lt; i &lt; N) is bonded to
+	/// atom i-1 and atom i + 1 and atom 1 is bonded to atom N and atom 2.
+	/// </summary>
+	// @cdk.module  data
+	// @cdk.githash
+	// @cdk.keyword ring 
     [Serializable]
     public class Ring
         : AtomContainer, IRing
@@ -187,7 +201,7 @@ namespace NCDK.Silent
         /// <param name="atom">A atom from the bond above to assign a search direction</param>
         /// <returns>The next bond in the order given by the above assignment</returns>
         public IBond GetNextBond(IBond bond, IAtom atom)
-            => bonds.Where(n => n.Contains(atom) && n != bond).FirstOrDefault();
+            => bonds.Where(n => n.Contains(atom) && !n.Equals(bond)).FirstOrDefault();
 
         /// <summary>
         /// The sum of all bond orders in the ring.

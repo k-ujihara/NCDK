@@ -51,22 +51,22 @@ namespace NCDK.Default
         /// <summary>
         /// Atoms contained by this object.
         /// </summary>
-        internal IList<IAtom> atoms;
+        internal ObservableChemObjectCollection<IAtom> atoms;
 
         /// <summary>
         /// Bonds contained by this object.
         /// </summary>
-        internal IList<IBond> bonds;
+        internal ObservableChemObjectCollection<IBond> bonds;
 
         /// <summary>
         /// Lone pairs contained by this object.
         /// </summary>
-        internal IList<ILonePair> lonePairs;
+        internal ObservableChemObjectCollection<ILonePair> lonePairs;
 
         /// <summary>
         /// Single electrons contained by this object.
         /// </summary>
-        internal IList<ISingleElectron> singleElectrons;
+        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
 
         /// <summary>
         /// Stereo elements contained by this object.
@@ -77,10 +77,10 @@ namespace NCDK.Default
         internal bool isSingleOrDouble;
 
         private void Init(
-            IList<IAtom> atoms,
-            IList<IBond> bonds,
-            IList<ILonePair> lonePairs,
-            IList<ISingleElectron> singleElectrons,
+            ObservableChemObjectCollection<IAtom> atoms,
+            ObservableChemObjectCollection<IBond> bonds,
+            ObservableChemObjectCollection<ILonePair> lonePairs,
+            ObservableChemObjectCollection<ISingleElectron> singleElectrons,
             IList<IStereoElement> stereoElements)
         {
             this.atoms = atoms;
@@ -200,7 +200,7 @@ namespace NCDK.Default
         /// <returns>The bond that connects the two atoms</returns>
         public virtual IBond GetBond(IAtom atom1, IAtom atom2)
         {
-            return bonds.Where(bond => bond.Contains(atom1) && bond.GetConnectedAtom(atom1) == atom2).FirstOrDefault();
+            return bonds.Where(bond => bond.Contains(atom1) && bond.GetOther(atom1).Equals(atom2)).FirstOrDefault();
         }
 
         /// <inheritdoc/>
@@ -258,39 +258,76 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-            var max = BondOrder.Single;
-            foreach (var order in GetBondOrders(atom))
-            {
-                if (max.Numeric < order.Numeric)
-                    max = order;
-            }
-            return max;
+			BondOrder max = BondOrder.Unset;
+			foreach (IBond bond in Bonds)
+			{
+				if (!bond.Contains(atom))
+					continue;
+				if (max == BondOrder.Unset || bond.Order.Numeric > max.Numeric) 
+				{
+					max = bond.Order;
+				}
+			}
+			if (max == BondOrder.Unset)
+			{
+				if (!Contains(atom))
+					throw new InvalidOperationException("Atom does not belong to this container!");
+				if (atom.ImplicitHydrogenCount != null &&
+					atom.ImplicitHydrogenCount > 0)
+					max = BondOrder.Single;
+				else
+					max = BondOrder.Unset;
+			}
+			return max;
         }
 
         /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
-            var min = BondOrder.Quadruple;
-            foreach (var order in GetBondOrders(atom))
-            {
-                if (min.Numeric > order.Numeric)
-                    min = order;
-            }
-            return min;
+			BondOrder min = BondOrder.Unset;
+			foreach (IBond bond in Bonds) 
+			{
+				if (!bond.Contains(atom))
+					continue;
+				if (min == BondOrder.Unset || bond.Order.Numeric < min.Numeric) 
+				{
+					min = bond.Order;
+				}
+			}
+			if (min == BondOrder.Unset) 
+			{
+				if (!Contains(atom))
+					throw new InvalidOperationException("Atom does not belong to this container!");
+				if (atom.ImplicitHydrogenCount != null &&
+					atom.ImplicitHydrogenCount > 0)
+					min = BondOrder.Single;
+				else
+					min = BondOrder.Unset;
+			}
+			return min;
         }
 
         /// <inheritdoc/>
-        public virtual void Add(IAtomContainer atomContainer)
+        public virtual void Add(IAtomContainer that)
         {
-            foreach (var atom in atomContainer.Atoms.Where(atom => !Contains(atom)))
+			foreach (IAtom atom in that.Atoms)
+                atom.IsVisited = false;
+            foreach (IBond bond in that.Bonds)
+                bond.IsVisited = false;
+            foreach (IAtom atom in this.Atoms)
+                atom.IsVisited = true;
+            foreach (IBond bond in this.Bonds)
+                bond.IsVisited = true;
+
+            foreach (var atom in that.Atoms.Where(atom => !atom.IsVisited))
                 Atoms.Add(atom);
-            foreach (var bond in atomContainer.Bonds.Where(bond => !Contains(bond)))
+            foreach (var bond in that.Bonds.Where(bond => !bond.IsVisited))
                 Bonds.Add(bond);
-            foreach (var lonePair in atomContainer.LonePairs.Where(lonePair => !Contains(lonePair)))
+            foreach (var lonePair in that.LonePairs.Where(lonePair => !lonePair.IsVisited))
                 LonePairs.Add(lonePair);
-            foreach (var singleElectron in atomContainer.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
+            foreach (var singleElectron in that.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
                 SingleElectrons.Add(singleElectron);
-            foreach (var se in atomContainer.StereoElements)
+            foreach (var se in that.StereoElements)
                 stereoElements.Add(se);
 
              NotifyChanged();         }
@@ -355,8 +392,15 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
+		[Obsolete]
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
+			RemoveAtom(atom);
+		}
+
+		/// <inheritdoc/>
+        public virtual void RemoveAtom(IAtom atom)
+		{
             {
                 var toRemove = bonds.Where(bond => bond.Contains(atom)).ToList();
                 foreach (var bond in toRemove)
@@ -471,10 +515,10 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public virtual bool Contains(IAtom atom) => atoms.Any(n => n == atom);
+        public virtual bool Contains(IAtom atom) => atoms.Any(n => n.Equals(atom));
 
         /// <inheritdoc/>
-        public virtual bool Contains(IBond bond) => bonds.Any(n => n == bond);
+        public virtual bool Contains(IBond bond) => bonds.Any(n => n.Equals(bond));
 
         /// <inheritdoc/>
         public virtual bool Contains(ILonePair lonePair) => lonePairs.Any(n => n == lonePair);
@@ -604,22 +648,22 @@ namespace NCDK.Silent
         /// <summary>
         /// Atoms contained by this object.
         /// </summary>
-        internal IList<IAtom> atoms;
+        internal ObservableChemObjectCollection<IAtom> atoms;
 
         /// <summary>
         /// Bonds contained by this object.
         /// </summary>
-        internal IList<IBond> bonds;
+        internal ObservableChemObjectCollection<IBond> bonds;
 
         /// <summary>
         /// Lone pairs contained by this object.
         /// </summary>
-        internal IList<ILonePair> lonePairs;
+        internal ObservableChemObjectCollection<ILonePair> lonePairs;
 
         /// <summary>
         /// Single electrons contained by this object.
         /// </summary>
-        internal IList<ISingleElectron> singleElectrons;
+        internal ObservableChemObjectCollection<ISingleElectron> singleElectrons;
 
         /// <summary>
         /// Stereo elements contained by this object.
@@ -630,10 +674,10 @@ namespace NCDK.Silent
         internal bool isSingleOrDouble;
 
         private void Init(
-            IList<IAtom> atoms,
-            IList<IBond> bonds,
-            IList<ILonePair> lonePairs,
-            IList<ISingleElectron> singleElectrons,
+            ObservableChemObjectCollection<IAtom> atoms,
+            ObservableChemObjectCollection<IBond> bonds,
+            ObservableChemObjectCollection<ILonePair> lonePairs,
+            ObservableChemObjectCollection<ISingleElectron> singleElectrons,
             IList<IStereoElement> stereoElements)
         {
             this.atoms = atoms;
@@ -751,7 +795,7 @@ namespace NCDK.Silent
         /// <returns>The bond that connects the two atoms</returns>
         public virtual IBond GetBond(IAtom atom1, IAtom atom2)
         {
-            return bonds.Where(bond => bond.Contains(atom1) && bond.GetConnectedAtom(atom1) == atom2).FirstOrDefault();
+            return bonds.Where(bond => bond.Contains(atom1) && bond.GetOther(atom1).Equals(atom2)).FirstOrDefault();
         }
 
         /// <inheritdoc/>
@@ -809,39 +853,76 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-            var max = BondOrder.Single;
-            foreach (var order in GetBondOrders(atom))
-            {
-                if (max.Numeric < order.Numeric)
-                    max = order;
-            }
-            return max;
+			BondOrder max = BondOrder.Unset;
+			foreach (IBond bond in Bonds)
+			{
+				if (!bond.Contains(atom))
+					continue;
+				if (max == BondOrder.Unset || bond.Order.Numeric > max.Numeric) 
+				{
+					max = bond.Order;
+				}
+			}
+			if (max == BondOrder.Unset)
+			{
+				if (!Contains(atom))
+					throw new InvalidOperationException("Atom does not belong to this container!");
+				if (atom.ImplicitHydrogenCount != null &&
+					atom.ImplicitHydrogenCount > 0)
+					max = BondOrder.Single;
+				else
+					max = BondOrder.Unset;
+			}
+			return max;
         }
 
         /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
-            var min = BondOrder.Quadruple;
-            foreach (var order in GetBondOrders(atom))
-            {
-                if (min.Numeric > order.Numeric)
-                    min = order;
-            }
-            return min;
+			BondOrder min = BondOrder.Unset;
+			foreach (IBond bond in Bonds) 
+			{
+				if (!bond.Contains(atom))
+					continue;
+				if (min == BondOrder.Unset || bond.Order.Numeric < min.Numeric) 
+				{
+					min = bond.Order;
+				}
+			}
+			if (min == BondOrder.Unset) 
+			{
+				if (!Contains(atom))
+					throw new InvalidOperationException("Atom does not belong to this container!");
+				if (atom.ImplicitHydrogenCount != null &&
+					atom.ImplicitHydrogenCount > 0)
+					min = BondOrder.Single;
+				else
+					min = BondOrder.Unset;
+			}
+			return min;
         }
 
         /// <inheritdoc/>
-        public virtual void Add(IAtomContainer atomContainer)
+        public virtual void Add(IAtomContainer that)
         {
-            foreach (var atom in atomContainer.Atoms.Where(atom => !Contains(atom)))
+			foreach (IAtom atom in that.Atoms)
+                atom.IsVisited = false;
+            foreach (IBond bond in that.Bonds)
+                bond.IsVisited = false;
+            foreach (IAtom atom in this.Atoms)
+                atom.IsVisited = true;
+            foreach (IBond bond in this.Bonds)
+                bond.IsVisited = true;
+
+            foreach (var atom in that.Atoms.Where(atom => !atom.IsVisited))
                 Atoms.Add(atom);
-            foreach (var bond in atomContainer.Bonds.Where(bond => !Contains(bond)))
+            foreach (var bond in that.Bonds.Where(bond => !bond.IsVisited))
                 Bonds.Add(bond);
-            foreach (var lonePair in atomContainer.LonePairs.Where(lonePair => !Contains(lonePair)))
+            foreach (var lonePair in that.LonePairs.Where(lonePair => !lonePair.IsVisited))
                 LonePairs.Add(lonePair);
-            foreach (var singleElectron in atomContainer.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
+            foreach (var singleElectron in that.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
                 SingleElectrons.Add(singleElectron);
-            foreach (var se in atomContainer.StereoElements)
+            foreach (var se in that.StereoElements)
                 stereoElements.Add(se);
 
                     }
@@ -906,8 +987,15 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
+		[Obsolete]
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
+			RemoveAtom(atom);
+		}
+
+		/// <inheritdoc/>
+        public virtual void RemoveAtom(IAtom atom)
+		{
             {
                 var toRemove = bonds.Where(bond => bond.Contains(atom)).ToList();
                 foreach (var bond in toRemove)
@@ -1022,10 +1110,10 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public virtual bool Contains(IAtom atom) => atoms.Any(n => n == atom);
+        public virtual bool Contains(IAtom atom) => atoms.Any(n => n.Equals(atom));
 
         /// <inheritdoc/>
-        public virtual bool Contains(IBond bond) => bonds.Any(n => n == bond);
+        public virtual bool Contains(IBond bond) => bonds.Any(n => n.Equals(bond));
 
         /// <inheritdoc/>
         public virtual bool Contains(ILonePair lonePair) => lonePairs.Any(n => n == lonePair);

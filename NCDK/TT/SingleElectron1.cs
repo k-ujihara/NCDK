@@ -93,7 +93,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns>true if this SingleElectron is associated with the atom</returns>
-        public bool Contains(IAtom atom) => this.atom == atom;
+        public bool Contains(IAtom atom) => this.atom.Equals(atom);
 
         public override string ToString()
         {
@@ -185,7 +185,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns>true if this SingleElectron is associated with the atom</returns>
-        public bool Contains(IAtom atom) => this.atom == atom;
+        public bool Contains(IAtom atom) => this.atom.Equals(atom);
 
         public override string ToString()
         {

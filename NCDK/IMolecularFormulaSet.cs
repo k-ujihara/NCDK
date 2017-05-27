@@ -35,7 +35,7 @@ namespace NCDK
     /// <list type="bullet">
     /// <item>[C5H5]-</item>
     /// <item>C6H6</item>
-    /// <item><sup>12</sup>C5<sup>13</sup>CH6</item>
+    /// <item><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></item>
     /// </list>
     /// </remarks>
     // @cdk.module  interfaces

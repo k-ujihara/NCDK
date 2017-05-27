@@ -23,7 +23,7 @@ namespace NCDK
     /// Class representing a ring structure in a molecule.
     /// A ring is a linear sequence of
     /// N atoms interconnected to each other by covalent bonds,
-    /// such that atom i(1 &gt; i &gt; N ) is bonded to
+    /// such that atom i (1 &lt; i &lt; N) is bonded to
     /// atom i-1 and atom i+1 and atom 1 is bonded to atom N and atom 2.
     /// </summary>
     // @cdk.module  interfaces

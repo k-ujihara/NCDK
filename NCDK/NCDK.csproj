@@ -149,6 +149,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IHasProperties.tt</DependentUpon>
     </Compile>
+    <Compile Include="IO\INChIContentProcessorTool.cs" />
     <Compile Include="Isomorphisms\Matchers\SMARTS\ReactionRoleQueryAtom.cs" />
     <Compile Include="Maths\MersenneTwister.cs" />
     <Compile Include="Common\Mathematics\Vectors.cs" />

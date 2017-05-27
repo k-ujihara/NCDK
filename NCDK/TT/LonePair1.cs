@@ -90,7 +90,7 @@ namespace NCDK.Default
         /// <returns>true if this lone pair is associated with the atom</returns>
         public bool Contains(IAtom atom)
         {
-            return (this.atom == atom);
+            return (this.atom.Equals(atom));
         }
 
         public override ICDKObject Clone(CDKObjectMap map)
@@ -184,7 +184,7 @@ namespace NCDK.Silent
         /// <returns>true if this lone pair is associated with the atom</returns>
         public bool Contains(IAtom atom)
         {
-            return (this.atom == atom);
+            return (this.atom.Equals(atom));
         }
 
         public override ICDKObject Clone(CDKObjectMap map)

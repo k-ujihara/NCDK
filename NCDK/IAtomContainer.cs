@@ -3,19 +3,20 @@
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
+ * modify it under the terms of the GNU Lesser General License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
- * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * GNU Lesser General License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public License
+ * You should have received a copy of the GNU Lesser General License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 using System.Collections.Generic;
 
 namespace NCDK
@@ -30,9 +31,9 @@ namespace NCDK
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IAtomContainer_Example.cs"]/*' />
     /// </example>
     /// </example>
+    // @author     steinbeck
     // @cdk.module interfaces
     // @cdk.githash
-    // @author     steinbeck
     // @cdk.created    2000-10-02
     public interface IAtomContainer
         : IChemObject, IChemObjectListener
@@ -109,39 +110,44 @@ namespace NCDK
         /// <returns>The <see cref="IBond"/> that connectes between <paramref name="atom1"/> and <paramref name="atom2"/></returns>
         IBond GetBond(IAtom atom1, IAtom atom2);
 
+
         /// <summary>
-        /// Returns the <see cref="IEnumerable{T}"/> of connected <see cref="IAtom"/>s connected to the given <paramref name="atom"/>.
+        /// Returns the atoms connected connected to the specified atom by
+        /// a bond.
         /// </summary>
-        /// <param name="atom">The atom the number of bond partners are searched of.</param>
-        /// <returns>The <see cref="IEnumerable{T}"/> of connected <see cref="IAtom"/>s</returns>
+        /// <param name="atom">the atom</param>
+        /// <returns>connected atoms</returns>
         IEnumerable<IAtom> GetConnectedAtoms(IAtom atom);
 
         /// <summary>
-        /// Returns the <see cref="IEnumerable{T}"/> of <see cref="IBond"/>s for a given <see cref="IAtom"/>.
+        /// Returns the bonds connected connected to the specified atom.
         /// </summary>
-        /// <param name="atom">The atom</param>
-        /// <returns>The <see cref="IEnumerable{T}"/> of <see cref="IBond"/>s for this <paramref name="atom"/></returns>
+        /// <param name="atom">the atom</param>
+        /// <returns>connected bonds</returns>
         IEnumerable<IBond> GetConnectedBonds(IAtom atom);
 
         /// <summary>
-        /// Returns the <see cref="IEnumerable{T}"/> of <see cref="ILonePair"/>s for a given <paramref name="atom"/>.
+        /// Returns the lone pairs connected connected to the specified atom.
         /// </summary>
-        /// <param name="atom">The atom</param>
-        /// <returns>The <see cref="IEnumerable{T}"/> of <see cref="ILonePair"/> for a given <paramref name="atom"/></returns>
+        /// <param name="atom">the atom</param>
+        /// <returns>connected lone pairs</returns>
         IEnumerable<ILonePair> GetConnectedLonePairs(IAtom atom);
 
         /// <summary>
-        /// Returns the <see cref="IEnumerable{T}"/> of <see cref="ISingleElectron"/> for a given <paramref name="atom"/>.
+        /// Returns the electron containers (bonds, radicals, and lone pairs )
+        /// connected connected to the specified atom.
         /// </summary>
-        /// <param name="atom">The atom on which the single electron is located</param>
-        /// <returns>The <see cref="IEnumerable{T}"/> of <see cref="ISingleElectron"/> for a given <paramref name="atom"/></returns>
+        /// <param name="atom">the atom</param>
+        /// <returns>connected lone pairs</returns>
         IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom);
 
+
         /// <summary>
-        /// Returns the <see cref="IEnumerable{T}"/> of all <see cref="IElectronContainer"/>s connected to the given <paramref name="atom"/>.
+        /// Returns the electron containers (bonds, radicals, and lone pairs )
+        /// connected connected to the specified atom.
         /// </summary>
-        /// <param name="atom">The atom the connected electronContainers are searched of</param>
-        /// <returns>The <see cref="IEnumerable{T}"/> of <see cref="IElectronContainer"/> connected to the given <paramref name="atom"/></returns>
+        /// <param name="atom">the atom</param>
+        /// <returns>connected lone pairs</returns>
         IEnumerable<IElectronContainer> GetConnectedElectronContainers(IAtom atom);
 
         /// <summary>
@@ -152,17 +158,26 @@ namespace NCDK
         double GetBondOrderSum(IAtom atom);
 
         /// <summary>
-        /// Returns the maximum bond order that this <paramref name="atom"/> currently has in the context of this <see cref="IAtomContainer"/>.
+        /// Returns the maximum bond order that this atom currently has in the context
+        /// of this AtomContainer.  If the atom has no bonds
+        /// but does have implicit hydrogens the minimum bond order is
+        /// <see cref="BondOrder.Single"/>, otherwise the bond is unset
+        /// <see cref="BondOrder.Unset"/>.
         /// </summary>
         /// <param name="atom">The atom</param>
-        /// <returns>The maximum bond order that this <paramref name="atom"/> currently has</returns>
+        /// <returns>The maximum bond order that this atom currently has</returns>
         BondOrder GetMaximumBondOrder(IAtom atom);
 
+
         /// <summary>
-        /// Returns the minimum bond order that this <paramref name="atom"/> currently has in the context of this <see cref="IAtomContainer"/>.
+        /// Returns the minimum bond order that this atom currently has
+        /// in the context of this AtomContainer. If the atom has no bonds
+        /// but does have implicit hydrogens the minimum bond order is
+        /// <see cref="BondOrder.Single"/>, otherwise the bond is unset
+        /// <see cref="BondOrder.Unset"/>.
         /// </summary>
         /// <param name="atom">The atom</param>
-        /// <returns>The minimum bond order that this <paramref name="atom"/> currently has</returns>
+        /// <returns>The minimum bond order that this atom currently has</returns>
         BondOrder GetMinimumBondOrder(IAtom atom);
 
         /// <summary>
@@ -190,13 +205,30 @@ namespace NCDK
         void RemoveElectronContainer(IElectronContainer electronContainer);
 
         /// <summary>
-        /// Removes the given atom and all connected electronContainers from the
-        /// AtomContainer. The method will also remove any <see cref="IStereoElement"/> 
-        /// that the atom is contained in. If you are removing hydrogens one of the
+        /// Safely remove an atom from the container.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Removes a single atom from the container updating all internal
+        /// state to be consistent. All bonds connected to the atom will be
+        /// deleted as well as all stereo elements. If multiple atoms/bonds are
+        /// being deleted they should be gathered into a single transaction
+        /// and removed with <see cref="Remove(IAtomContainer)"/>.
+        /// </para>
+        /// <para>
+        /// If you are removing hydrogens one of the
         /// utility methods (e.g. <see cref="Tools.Manipulator.AtomContainerManipulator.RemoveHydrogens(IAtomContainer)"/>)
         /// is preferable.
-        /// </summary>
+        /// </para>
+        /// </remarks>
         /// <param name="atom">the atom to be removed</param>
+        void RemoveAtom(IAtom atom);
+
+        /// <summary>
+        /// Safely remove an atom from the container.
+        /// </summary>
+        /// <seealso cref="RemoveAtom(IAtom)"/>
+        [Obsolete("Method has be renamed " + nameof(IAtom) + "." + nameof(IList<object>.Remove))]
         void RemoveAtomAndConnectedElectronContainers(IAtom atom);
 
         /// <summary>

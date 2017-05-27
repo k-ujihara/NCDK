@@ -45,7 +45,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
@@ -55,9 +57,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Category("Legacy")]
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public interface IQuery
     {
-
         /// <summary>
         /// Returns nodes of the query.
         /// </summary>

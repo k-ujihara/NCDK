@@ -248,6 +248,9 @@ namespace NCDK.Graphs
             public void RemoveAtomAndConnectedElectronContainers(IAtom atom)
             { }
 
+            public void RemoveAtom(IAtom atom)
+            { }
+
             public void SetStereoElements(IEnumerable<IStereoElement> elements)
             { throw new InvalidOperationException("not supported"); }
 

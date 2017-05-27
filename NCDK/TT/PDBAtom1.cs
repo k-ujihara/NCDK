@@ -90,6 +90,7 @@ namespace NCDK.Default
             Oxt = false;
             HetAtom = false;
 
+			base.ImplicitHydrogenCount = null;
             base.Charge = 0.0;
             base.FormalCharge = 0;
         }
@@ -243,6 +244,7 @@ namespace NCDK.Silent
             Oxt = false;
             HetAtom = false;
 
+			base.ImplicitHydrogenCount = null;
             base.Charge = 0.0;
             base.FormalCharge = 0;
         }

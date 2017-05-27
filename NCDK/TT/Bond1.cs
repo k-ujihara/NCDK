@@ -152,48 +152,32 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-        /// <summary>
-        /// Returns the atom connected to the given atom.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This method is only strictly relevant for 2-center bonds
-        /// since in multi-center bonds, a given atom will be connected
-        /// to multiple atoms.
-        /// </para>
-        /// <para>
-        /// If called for a multi-center bond, then the next atom in the
-        /// atom list is returned. This is probably not what is expected and
-        /// hence the user should instead call <see cref="GetConnectedAtoms(IAtom)"/>. 
-        /// </para>
-        /// </remarks>
-        /// <param name="atom">The atom the bond partner is searched of</param>
-        /// <returns> the connected atom or null  if the atom is not part of the bond</returns>
-        /// <seealso cref="GetConnectedAtoms(IAtom)"/>
-        public virtual IAtom GetConnectedAtom(IAtom atom)
+		/// <inheritdoc/>
+        public IAtom Begin => atoms[0];
+
+        /// <inheritdoc/>
+        public IAtom End => atoms[1];
+
+        /// <inheritdoc/>
+        public IAtom GetOther(IAtom atom)
         {
-            if (atoms[0] == atom)
+            if (atoms[0].Equals(atom))
                 return atoms[1];
-            else if (atoms[1] == atom)
+            else if (atoms[1].Equals(atom))
                 return atoms[0];
             return null;
         }
 
-        /// <summary>
-        /// Returns all the atoms in the bond connected to the specified atom.
-        /// </summary>
-        /// <remarks>
-        /// Though this can be used for traditional 2-center bonds, it is oriented
-        /// towards multi-center bonds, where a single atom is connected to multiple
-        /// atoms.</remarks>
-        /// <param name="atom">The atom whose partners are to be searched for</param>
-        /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
-        /// <seealso cref="GetConnectedAtom(IAtom)"/>
+        /// <inheritdoc/>
+        public virtual IAtom GetConnectedAtom(IAtom atom)
+        {
+            return GetOther(atom);
+        }
+
+        /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
-            if (!atoms.Contains(atom))
-                return null;
-            return atoms.Where(n => n != atom);
+			return atoms.Where(n => n != atom);
         }
 
         /// <summary>
@@ -522,48 +506,32 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
-        /// <summary>
-        /// Returns the atom connected to the given atom.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This method is only strictly relevant for 2-center bonds
-        /// since in multi-center bonds, a given atom will be connected
-        /// to multiple atoms.
-        /// </para>
-        /// <para>
-        /// If called for a multi-center bond, then the next atom in the
-        /// atom list is returned. This is probably not what is expected and
-        /// hence the user should instead call <see cref="GetConnectedAtoms(IAtom)"/>. 
-        /// </para>
-        /// </remarks>
-        /// <param name="atom">The atom the bond partner is searched of</param>
-        /// <returns> the connected atom or null  if the atom is not part of the bond</returns>
-        /// <seealso cref="GetConnectedAtoms(IAtom)"/>
-        public virtual IAtom GetConnectedAtom(IAtom atom)
+		/// <inheritdoc/>
+        public IAtom Begin => atoms[0];
+
+        /// <inheritdoc/>
+        public IAtom End => atoms[1];
+
+        /// <inheritdoc/>
+        public IAtom GetOther(IAtom atom)
         {
-            if (atoms[0] == atom)
+            if (atoms[0].Equals(atom))
                 return atoms[1];
-            else if (atoms[1] == atom)
+            else if (atoms[1].Equals(atom))
                 return atoms[0];
             return null;
         }
 
-        /// <summary>
-        /// Returns all the atoms in the bond connected to the specified atom.
-        /// </summary>
-        /// <remarks>
-        /// Though this can be used for traditional 2-center bonds, it is oriented
-        /// towards multi-center bonds, where a single atom is connected to multiple
-        /// atoms.</remarks>
-        /// <param name="atom">The atom whose partners are to be searched for</param>
-        /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
-        /// <seealso cref="GetConnectedAtom(IAtom)"/>
+        /// <inheritdoc/>
+        public virtual IAtom GetConnectedAtom(IAtom atom)
+        {
+            return GetOther(atom);
+        }
+
+        /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
-            if (!atoms.Contains(atom))
-                return null;
-            return atoms.Where(n => n != atom);
+			return atoms.Where(n => n != atom);
         }
 
         /// <summary>

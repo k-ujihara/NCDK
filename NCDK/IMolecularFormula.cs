@@ -28,7 +28,7 @@ namespace NCDK
     /// <list type="bullet">
     /// <item>[C5H5]-</item>
     /// <item>C6H6</item>
-    /// <item><sup>12</sup>C<sub>5</sub><sup>13</sup>CH6</item>
+    /// <item><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></item>
     /// </list>
     /// </para>
     /// </summary>
@@ -105,9 +105,32 @@ namespace NCDK
         void Clear();
 
         /// <summary>
-        /// The partial charge of this IMolecularFormula. If the charge
-        /// has not been set the return value is null.
+        /// Sets the charge of this IMolecularFormula, since there is no atom
+        /// associated with the charge the number of a given isotope is not modified.
         /// </summary>
+        /// <example>
+        /// <code>
+        /// // Correct usage
+        /// IMolecularFormula phenolate = MolecularFormulaManipulator.GetMolecularFormula("C6H5O", builder)
+        /// mf.Charge = -1;
+        /// // MF=C6H5O-
+        /// 
+        /// // Wrong! the H6 is not automatically adjust
+        /// IMolecularFormula phenolate = MolecularFormulaManipulator.getMolecularFormula("C6H6O", builder)
+        /// mf.Charge = -1;
+        /// // MF=C6H6O- (wrong)
+        /// </code>
+        /// 
+        /// If you wish to adjust the protonation of a formula try the convenience method of the <see cref="Tools.Manipulator.MolecularFormulaManipulator"/>:
+        /// 
+        /// <code>
+        /// IMolecularFormula mf = MolecularFormulaManipulator.getMolecularFormula("[C6H5O]-", bldr);
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, +1);
+        /// MolecularFormulaManipulator.GetString(mf); // "C6H6O"
+        /// </code>
+        /// </example>
+        /// <value>
+        /// If the charge has not been set the return value is <see langword="null"/>.</value>
         int? Charge { get; set; }
     }
 }
