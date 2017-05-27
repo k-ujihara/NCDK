@@ -72,7 +72,7 @@ namespace NCDK.MolViewer
         public MolWindow()
         {
             InitializeComponent();
-           
+
             sdg.BondLength = 40;
             sdg.UseIdentityTemplates = false;
             Model = new RendererModel();
@@ -160,9 +160,9 @@ namespace NCDK.MolViewer
             var r = NCDK.MolViewer.Renderers.AtomContainerRenderer.CalculateBounds(mol);
             var drawArea = new Rect(0, 0, r.Width, r.Height);
 
-            //// the call to 'setup' only needs to be done on the first paint
+            // the call to 'setup' only needs to be done on the first paint
             renderer.Setup(mol, drawArea);
-            
+
             DrawingVisual drawingVisual = new DrawingVisual();
             using (DrawingContext g2d = drawingVisual.RenderOpen())
             {
@@ -171,9 +171,9 @@ namespace NCDK.MolViewer
                 g2d.DrawRectangle(null, new Pen(Brushes.Black, 1), drawArea);
             }
 
-        var bmp = new System.Windows.Media.Imaging.RenderTargetBitmap((int)drawArea.Width, (int)drawArea.Height, 72, 72, PixelFormats.Pbgra32);
+            var bmp = new RenderTargetBitmap((int)drawArea.Width, (int)drawArea.Height, 72, 72, PixelFormats.Pbgra32);
             bmp.Render(drawingVisual);
-            
+
             var encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
             using (var stream = new FileStream(fileDialog.FileName, FileMode.Create, FileAccess.Write))
@@ -203,7 +203,7 @@ namespace NCDK.MolViewer
             v.SetTransform(new ScaleTransform(1, 1));
             v.SetFontManager(fontManager);
             v.SetRendererModel(Model);
-            v.Visit(rendeingrElement); 
+            v.Visit(rendeingrElement);
         }
 
         private void menuItem_Open_Click(object sender, RoutedEventArgs e)

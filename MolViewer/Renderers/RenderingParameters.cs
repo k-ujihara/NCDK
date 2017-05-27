@@ -95,7 +95,6 @@ namespace NCDK.MolViewer.Renderers
 
         private bool willDrawNumbers;
 
-
         public bool IsHighlightShapeFilled()
         {
             return highlightShapeFilled;
@@ -275,7 +274,5 @@ namespace NCDK.MolViewer.Renderers
         {
             this.notTypeableUnderlineColor = notTypeableUnderlineColor;
         }
-
     }
-
 }

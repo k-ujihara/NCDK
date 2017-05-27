@@ -67,7 +67,6 @@ namespace NCDK.Layout
             IChemModel model = seq[0];
             IAtomContainer mol = model.MoleculeSet[0];
             //MoleculeViewer2D.Display(mol, true, false, JFrame.DO_NOTHING_ON_CLOSE,"");
-
         }
 
         // @cdk.bug 1670871
@@ -779,6 +778,30 @@ namespace NCDK.Layout
 
             StructureDiagramGenerator generator = new StructureDiagramGenerator();
             generator.UseIdentityTemplates = true;
+
+            IAtomContainer mol = sp.ParseSmiles(smiles);
+
+            generator.SetMolecule(mol, false);
+            generator.GenerateCoordinates();
+
+            IAtom nitrogen = mol.Atoms[2];
+
+            // nitrogen is lowest point
+            Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[0].Point2D.Value.Y);
+            Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[1].Point2D.Value.Y);
+            Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[3].Point2D.Value.Y);
+            Assert.IsTrue(nitrogen.Point2D.Value.Y < mol.Atoms[4].Point2D.Value.Y);
+        }
+
+        [TestMethod()]
+        public void PyrroleWithIdentityTemplate40()
+        {
+            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            string smiles = "C1=CNC=C1";
+
+            StructureDiagramGenerator generator = new StructureDiagramGenerator();
+            generator.UseIdentityTemplates = true;
+            generator.BondLength = 40;
 
             IAtomContainer mol = sp.ParseSmiles(smiles);
 
