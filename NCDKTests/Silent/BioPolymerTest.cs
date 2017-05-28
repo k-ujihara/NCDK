@@ -51,11 +51,11 @@ namespace NCDK.Silent
             oMono2.MonomerName = "HOH";
             IMonomer oMono3 = oBioPolymer.Builder.CreateMonomer();
             oMono3.MonomerName = "GLYA16";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
-            IAtom oAtom4 = oBioPolymer.Builder.CreateAtom("C4");
-            IAtom oAtom5 = oBioPolymer.Builder.CreateAtom("C5");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom4 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom5 = oBioPolymer.Builder.CreateAtom("C");
 
             oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.AddAtom(oAtom2, oStrand1);

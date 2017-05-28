@@ -66,6 +66,98 @@ namespace NCDK.Default
             Assert.IsNull(a.FractionalPoint3D);
         }
 
+        [TestMethod()]
+        public void TestAtom_NH4plus_direct()
+        {
+            IAtom a = new Atom(7, 4, +1);
+            Assert.AreEqual("N", a.Symbol);
+            Assert.AreEqual(7, a.AtomicNumber);
+            Assert.AreEqual(4, a.ImplicitHydrogenCount);
+            Assert.AreEqual(1, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_CH3_direct()
+        {
+            IAtom a = new Atom(6, 3);
+            Assert.AreEqual("C", a.Symbol);
+            Assert.AreEqual(6, a.AtomicNumber);
+            Assert.AreEqual(3, a.ImplicitHydrogenCount);
+            Assert.AreEqual(0, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_Cl_direct()
+        {
+            IAtom a = new Atom(17);
+            Assert.AreEqual("Cl", a.Symbol);
+            Assert.AreEqual(17, a.AtomicNumber);
+            Assert.AreEqual(0, a.ImplicitHydrogenCount);
+            Assert.AreEqual(0, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_NH4plus()
+        {
+            IAtom a = new Atom("NH4+");
+            Assert.AreEqual("N", a.Symbol);
+            Assert.AreEqual(7, a.AtomicNumber);
+            Assert.AreEqual(4, a.ImplicitHydrogenCount);
+            Assert.AreEqual(1, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_Ominus()
+        {
+            IAtom a = new Atom("O-");
+            Assert.AreEqual("O", a.Symbol);
+            Assert.AreEqual(8, a.AtomicNumber);
+            Assert.AreEqual(0, a.ImplicitHydrogenCount);
+            Assert.AreEqual(-1, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_Ca2plus()
+        {
+            IAtom a = new Atom("Ca+2");
+            Assert.AreEqual("Ca", a.Symbol);
+            Assert.AreEqual(20, a.AtomicNumber);
+            Assert.AreEqual(0, a.ImplicitHydrogenCount);
+            Assert.AreEqual(+2, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
+        [TestMethod()]
+        public void TestAtom_13CH3()
+        {
+            IAtom a = new Atom("13CH3");
+            Assert.AreEqual("C", a.Symbol);
+            Assert.AreEqual(13, a.MassNumber);
+            Assert.AreEqual(6, a.AtomicNumber);
+            Assert.AreEqual(3, a.ImplicitHydrogenCount);
+            Assert.AreEqual(0, a.FormalCharge);
+            Assert.IsNull(a.Point2D);
+            Assert.IsNull(a.Point3D);
+            Assert.IsNull(a.FractionalPoint3D);
+        }
+
         /// <summary>
         /// Method to test the <see cref="Atom.Atom(string, Vector3)"/> method.
         /// </summary>

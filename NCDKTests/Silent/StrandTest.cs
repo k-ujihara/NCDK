@@ -47,11 +47,11 @@ namespace NCDK.Silent
             oMono2.MonomerName = "HOH";
             IMonomer oMono3 = oStrand.Builder.CreateMonomer();
             oMono3.MonomerName = "GLYA16";
-            IAtom oAtom1 = oStrand.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C3");
-            IAtom oAtom4 = oStrand.Builder.CreateAtom("C4");
-            IAtom oAtom5 = oStrand.Builder.CreateAtom("C5");
+            IAtom oAtom1 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom4 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom5 = oStrand.Builder.CreateAtom("C");
 
             oStrand.AddAtom(oAtom1);
             oStrand.AddAtom(oAtom2);

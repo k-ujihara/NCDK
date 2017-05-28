@@ -38,8 +38,8 @@ namespace NCDK.Silent
         {
             IBond bond = new Bond();
             Assert.AreEqual(0, bond.Atoms.Count);
-            //Assert.IsNull(bond.Atoms[0]);
-            //Assert.IsNull(bond.Atoms[1]);
+            Assert.IsNull(bond.Begin);
+            Assert.IsNull(bond.End);
             Assert.AreEqual(default(BondOrder), bond.Order);
             Assert.AreEqual(default(BondStereo), bond.Stereo);
             Assert.AreEqual(BondOrder.Unset, bond.Order);
@@ -58,8 +58,8 @@ namespace NCDK.Silent
 
             IBond bond1 = new Bond(new IAtom[] { atom1, atom2, atom3, atom4, atom5 });
             Assert.AreEqual(5, bond1.Atoms.Count);
-            Assert.AreEqual(atom1, bond1.Atoms[0]);
-            Assert.AreEqual(atom2, bond1.Atoms[1]);
+            Assert.AreEqual(atom1, bond1.Begin);
+            Assert.AreEqual(atom2, bond1.End);
         }
 
         [TestMethod()]
@@ -74,8 +74,8 @@ namespace NCDK.Silent
 
             IBond bond1 = new Bond(new IAtom[] { atom1, atom2, atom3, atom4, atom5 }, BondOrder.Single);
             Assert.AreEqual(5, bond1.Atoms.Count);
-            Assert.AreEqual(atom1, bond1.Atoms[0]);
-            Assert.AreEqual(atom2, bond1.Atoms[1]);
+            Assert.AreEqual(atom1, bond1.Begin);
+            Assert.AreEqual(atom2, bond1.End);
             Assert.AreEqual(BondOrder.Single, bond1.Order);
         }
 
@@ -88,8 +88,8 @@ namespace NCDK.Silent
             IBond bond = new Bond(c, o);
 
             Assert.AreEqual(2, bond.Atoms.Count);
-            Assert.AreEqual(c, bond.Atoms[0]);
-            Assert.AreEqual(o, bond.Atoms[1]);
+            Assert.AreEqual(c, bond.Begin);
+            Assert.AreEqual(o, bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
         }
@@ -103,8 +103,8 @@ namespace NCDK.Silent
             IBond bond = new Bond(c, o, BondOrder.Double);
 
             Assert.AreEqual(2, bond.Atoms.Count);
-            Assert.AreEqual(c, bond.Atoms[0]);
-            Assert.AreEqual(o, bond.Atoms[1]);
+            Assert.AreEqual(c, bond.Begin);
+            Assert.AreEqual(o, bond.End);
             Assert.IsTrue(bond.Order == BondOrder.Double);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
         }
@@ -118,8 +118,8 @@ namespace NCDK.Silent
             IBond bond = new Bond(c, o, BondOrder.Single, BondStereo.Up);
 
             Assert.AreEqual(2, bond.Atoms.Count);
-            Assert.AreEqual(c, bond.Atoms[0]);
-            Assert.AreEqual(o, bond.Atoms[1]);
+            Assert.AreEqual(c, bond.Begin);
+            Assert.AreEqual(o, bond.End);
             Assert.IsTrue(bond.Order == BondOrder.Single);
             Assert.AreEqual(BondStereo.Up, bond.Stereo);
         }

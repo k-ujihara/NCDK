@@ -1909,6 +1909,8 @@ namespace NCDK.Templates
         {
             try
             {
+                foreach (IAtom atom in mol.Atoms)
+                    atom.ImplicitHydrogenCount = null;
                 Isotopes.Instance.ConfigureAtoms(mol);
             }
             catch (Exception exc)

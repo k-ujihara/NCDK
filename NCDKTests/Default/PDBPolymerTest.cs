@@ -51,11 +51,11 @@ namespace NCDK.Default
             oMono2.MonomerName = "HOH";
             IMonomer oMono3 = pdbPolymer.Builder.CreateMonomer();
             oMono3.MonomerName = "GLYA16";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C1");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C2");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C3");
-            IPDBAtom oPDBAtom4 = pdbPolymer.Builder.CreatePDBAtom("C4");
-            IPDBAtom oPDBAtom5 = pdbPolymer.Builder.CreatePDBAtom("C5");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom4 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom5 = pdbPolymer.Builder.CreatePDBAtom("C");
 
             pdbPolymer.Add(oPDBAtom1);
             pdbPolymer.AddAtom(oPDBAtom2, oStrand1);
@@ -101,8 +101,8 @@ namespace NCDK.Default
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "CYS280";
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C2");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C3");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom2, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono2, oStrand1);
             Assert.IsNotNull(pdbPolymer.Atoms[0]);
