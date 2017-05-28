@@ -414,6 +414,11 @@
     <Compile Include="Numerics\Vector4.cs" />
     <Compile Include="Numerics\Vector4_Intrinsics.cs" />
     <Compile Include="Numerics\Vector_Operations.cs" />
+    <Compile Include="TT\AdductFormula.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdductFormula.tt</DependentUpon>
+    </Compile>
     <Compile Include="TT\Association.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1151,7 +1156,10 @@
     <Compile Include="Fingerprints\SimpleAtomComparator.cs" />
     <Compile Include="Fingerprints\StandardSubstructureSets.cs" />
     <Compile Include="Fingerprints\SubstructureFingerprinter.cs" />
-    <Compile Include="Formula\AdductFormula.cs" />
+    <Content Include="TT\AdductFormula.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AdductFormula.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="Formula\MolecularFormula.cs" />
     <Compile Include="Formula\MolecularFormulaSet.cs" />
     <Compile Include="Fingerprints\SignatureFingerprinter.cs" />

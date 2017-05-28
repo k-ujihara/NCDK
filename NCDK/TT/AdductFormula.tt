@@ -1,3 +1,6 @@
+<#@ include file="..\..\ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
 /* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -21,7 +24,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NCDK.Formula
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
 {
     /// <summary>
     /// Class defining an adduct object in a MolecularFormula. It maintains
@@ -277,9 +283,12 @@ namespace NCDK.Formula
             components.CopyTo(array, arrayIndex);
         }
 
-        public bool IsReadOnly => ((IList<MolecularFormula>)(components)).IsReadOnly;
+        public bool IsReadOnly => ((IList<IMolecularFormula>)(components)).IsReadOnly;
 
         public IChemObjectBuilder Builder
-            => Default.ChemObjectBuilder.Instance;
+            => <#= ns.NS #>.ChemObjectBuilder.Instance;
     }
 }
+<#
+}
+#>
