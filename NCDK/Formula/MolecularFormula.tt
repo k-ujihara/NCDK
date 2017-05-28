@@ -1,4 +1,4 @@
-﻿<#@ include file="..\TT\ChemObjectConfig.ttinclude" #>
+﻿<#@ include file="..\..\ChemObjectConfig.ttinclude" #>
 
 using System.Collections.Generic;
 

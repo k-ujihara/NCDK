@@ -1,4 +1,4 @@
-<#@ include file="ChemObjectConfig.ttinclude" #>
+<#@ include file="..\..\ChemObjectConfig.ttinclude" #>
 <# GenerateCopyrightHeader(); #>
 
 /* Copyright (C) 2006-2007  Miguel Rojas <miguelrojasch@yahoo.es>

@@ -1,12 +1,44 @@
-﻿
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
 
+<#+ 
+    public const string Namespace_Default = "NCDK.Default";
+    public const string Namespace_Silent = "NCDK.Silent";
+    public const string Namespace_Fixed = "NCDK.Fixed";
 
-using System.Collections.Generic;
-
-namespace NCDK.Formula
-{
-    public partial class MolecularFormula : IMolecularFormula
+    public class PackageInfo
     {
+        public string NS { get; set; }
+        public bool IsSilent { get; private set; }
+
+        public PackageInfo(string ns, bool silent)
+        {
+            NS = ns;
+            IsSilent = silent;
+        }
+    }
+
+    public static PackageInfo[] namespaces = new[] 
+    { 
+        new PackageInfo(Namespace_Default, false),
+        new PackageInfo(Namespace_Silent, true),
+    };
+
+	public void IncludePropertiesImplementation(bool addNofityChanged)
+	{
+#>
 #if DEBUG
         private static IList<System.Type> AcceptablePropertyKeyTypes { get; } = new List<System.Type>()
         {
@@ -36,6 +68,9 @@ namespace NCDK.Formula
             if (this.properties == null)
                 InitProperties();
             properties[description] = property;
+<#+ if (addNofityChanged) { #>
+            NotifyChanged();
+<#+ } #>
         }
 
         /// <inheritdoc/>
@@ -48,6 +83,10 @@ namespace NCDK.Formula
             if (this.properties == null)
                 return;
             var removed = properties.Remove(description);
+<#+ if (addNofityChanged) { #>
+            if (removed)
+                NotifyChanged();
+<#+ } #>
         }
 
         /// <inheritdoc/>
@@ -103,6 +142,18 @@ namespace NCDK.Formula
                 InitProperties();
             foreach (var pair in properties)
                 this.properties[pair.Key] = pair.Value;
+<#+ if (addNofityChanged) { #>
+            NotifyChanged();
+<#+ } #>
         }
+<#+
+	}
+
+    public void GenerateCopyrightHeader()
+    {
+#>
+// .NET Framework port by Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+<#+
     }
-}
+#>

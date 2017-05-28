@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
+﻿// Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 // This file is under LGPL-2.1 
 
 <#@ template debug="false" hostspecific="false" language="C#" #>

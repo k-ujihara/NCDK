@@ -1,4 +1,4 @@
-<#@ include file="ChemObjectConfig.ttinclude" #>
+<#@ include file="..\..\ChemObjectConfig.ttinclude" #>
 <# GenerateCopyrightHeader(); #>
 
 using System;
