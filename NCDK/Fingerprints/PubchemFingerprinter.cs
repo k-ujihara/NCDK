@@ -55,12 +55,13 @@ namespace NCDK.Fingerprints
     /// <para>
     /// Some SMARTS patterns have been modified from the original code, since they
     /// were based on explicit H matching. As a result, we replace the explicit H's
+    /// with a query of the <pre>#<N>&!H0</pre> where <pre><N></pre> is the atomic number. Thus bit 344 was
     /// with a query of the #N&amp;!H0 where N is the atomic number. Thus bit 344 was
-    /// originally <c>[#6](~[#6])([H])</c> but is written here as
-    /// <c>[#6&amp;!H0]~[#6]</c>. In some cases, where the H count can be reduced
+    /// originally <pre>[#6](~[#6])([H])</pre> but is written here as
+    /// <pre>[#6&!H0]~[#6]</pre>. In some cases, where the H count can be reduced
     /// to single possibility we directly use that H count. An example is bit 35,
     /// which was <c>[#6](~[#6])(~[#6])(~[#6])([H])</c> and is rewritten as
-    /// <c>[#6H1](~[#6])(~[#6])(~[#6]</c>.
+    /// <pre>[#6H1](~[#6])(~[#6])(~[#6])</pre>.
     /// </para>
     /// <note type="warning">
     /// This class is not thread-safe and uses stores intermediate steps
@@ -74,7 +75,7 @@ namespace NCDK.Fingerprints
     // @cdk.module fingerprint
     // @cdk.githash
     // @cdk.threadnonsafe
-    public class PubchemFingerprinter : IFingerprinter
+    public class PubchemFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// <summary>
         /// Number of bits in this fingerprint.
@@ -101,7 +102,7 @@ namespace NCDK.Fingerprints
         /// <returns>the fingerprint</returns>
         /// <exception cref="CDKException">if there is an error during substructure searching or atom typing</exception>
         /// <see cref="GetFingerprintAsBytes"/>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             GenerateFp(atomContainer);
             BitArray fp = new BitArray(FPSize);
@@ -113,7 +114,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
@@ -121,7 +122,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// the size of the fingerprint.
         /// </summary>
-        public int Count => FPSize;
+        public override int Count => FPSize;
 
         class ElementsCounter
         {
@@ -2292,7 +2293,7 @@ namespace NCDK.Fingerprints
             if (cs.CountSubstructure("Br[#6]1[#6](Br)[#6][#6][#6]1") > 0) fp[b >> 3] |= (byte)Mask[b % 8];
         }
 
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
         }

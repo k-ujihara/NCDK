@@ -168,7 +168,7 @@ namespace NCDK.Graphs
             root.IsVisited = true;
             foreach (var bond in bonds)
             {
-                nextAtom = bond.GetConnectedAtom(root);
+                nextAtom = bond.GetOther(root);
                 if (!nextAtom.IsVisited)
                 {
                     path.Atoms.Add(nextAtom);
@@ -280,7 +280,7 @@ namespace NCDK.Graphs
                         molecule.Bonds.Add(bond);
                         bond.IsVisited = true;
                     }
-                    nextAtom = bond.GetConnectedAtom(atom);
+                    nextAtom = bond.GetOther(atom);
                     if (!nextAtom.IsVisited)
                     {
                         //                    Debug.WriteLine("wie oft???");
@@ -331,7 +331,7 @@ namespace NCDK.Graphs
                     {
                         bond.IsVisited = true;
                     }
-                    nextAtom = bond.GetConnectedAtom(atom);
+                    nextAtom = bond.GetOther(atom);
                     if (!nextAtom.IsVisited)
                     {
                         if (nextAtom == target)

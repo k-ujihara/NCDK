@@ -245,6 +245,7 @@ namespace NCDK.Graphs
             public void RemoveAllElements()
             { }
 
+            [Obsolete]
             public void RemoveAtomAndConnectedElectronContainers(IAtom atom)
             { }
 

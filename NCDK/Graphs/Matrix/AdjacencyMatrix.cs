@@ -50,8 +50,8 @@ namespace NCDK.Graphs.Matrix
             for (int f = 0; f < container.Bonds.Count; f++)
             {
                 bond = container.Bonds[f];
-                indexAtom1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                indexAtom2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                indexAtom1 = container.Atoms.IndexOf(bond.Begin);
+                indexAtom2 = container.Atoms.IndexOf(bond.End);
                 conMat[indexAtom1][indexAtom2] = 1;
                 conMat[indexAtom2][indexAtom1] = 1;
             }

@@ -142,8 +142,8 @@ namespace NCDK.Graphs
             {
                 bondsInTree[b] = false;
                 bond = atomContainer.Bonds[b];
-                vertex1 = int.Parse((bond.Atoms[0]).GetProperty<string>(ATOM_NUMBER));
-                vertex2 = int.Parse((bond.Atoms[1]).GetProperty<string>(ATOM_NUMBER));
+                vertex1 = int.Parse((bond.Begin).GetProperty<string>(ATOM_NUMBER));
+                vertex2 = int.Parse((bond.End).GetProperty<string>(ATOM_NUMBER));
                 //this below is a little bit  slower
                 //v1 = atomContainer.Atoms.IndexOf(bond.GetAtomAt(0))+1;
                 //v2 = atomContainer.Atoms.IndexOf(bond.GetAtomAt(1))+1;
@@ -212,8 +212,8 @@ namespace NCDK.Graphs
         {
             IRing ring = spt.Builder.CreateRing();
             PathTools.ResetFlags(spt);
-            ring.Atoms.Add(bond.Atoms[0]);
-            PathTools.DepthFirstTargetSearch(spt, bond.Atoms[0], bond.Atoms[1], ring);
+            ring.Atoms.Add(bond.Begin);
+            PathTools.DepthFirstTargetSearch(spt, bond.Begin, bond.End, ring);
             ring.Bonds.Add(bond);
             return ring;
         }

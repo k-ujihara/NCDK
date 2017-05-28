@@ -7,6 +7,8 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension=".cs" #>
 
+using System;
+
 namespace NCDK.Config
 {
     public sealed partial class Elements
@@ -21,7 +23,12 @@ namespace NCDK.Config
             {
                 var match = re.Match(line);
                 if (!match.Success)
+				{
+#>
+	<#= line #>
+<#
                     continue;
+				}
                 var name = match.Groups["name"].Value;
                 var inner = match.Groups["inner"].Value;
                 names.Add(name);
@@ -63,6 +70,6 @@ namespace NCDK.Config
 }
 
 <#+
-    static Regex re = new Regex(@"(?<name>\w+)\((?<inner>.*)\)", RegexOptions.Compiled);
+    static Regex re = new Regex(@"(?<name>\w+)\((?<inner>(?<number>\d+)\, .*)\)", RegexOptions.Compiled);
     // Magnesium(12, "Mg", 3, 2, 1.30, 2.20, 1.31)
 #>

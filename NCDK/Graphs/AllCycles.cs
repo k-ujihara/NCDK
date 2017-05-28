@@ -68,7 +68,10 @@ namespace NCDK.Graphs
         /// The percentage of molecules in PubChem Compound
         /// (Dec '12) which would successfully complete for a given Degree are listed
         /// below.
-        /// <list type="table"> <item><term>Percent</term><term>Max Degree</term></item>
+        /// <list type="table">
+        /// <listheader>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+        /// setting the max degree</listheader>
+        /// <item><term>Percent</term><term>Max Degree</term></item>
         /// <item><term>99%</term><term>9</term></item> <item><term>99.95%</term><term>72</term></item>
         /// <item><term>99.96%</term><term>84</term></item> <item><term>99.97%</term><term>126</term></item>
         /// <item><term>99.98%</term><term>216</term></item> <item><term>99.99%</term><term>684</term></item>

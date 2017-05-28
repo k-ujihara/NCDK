@@ -59,29 +59,8 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    similarity
     // @cdk.module     standard
     // @cdk.githash
-    public class HybridizationFingerprinter : IFingerprinter
+    public class HybridizationFingerprinter : Fingerprinter, IFingerprinter
     {
-        /// <summary>The default length of created fingerprints.</summary>
-        public const int DefaultSize = 1024;
-        /// <summary>The default search depth used to create the fingerprints.</summary>
-        public const int DefaultSearchDepth = 8;
-
-        private int size;
-        private int searchDepth;
-
-        private static readonly IDictionary<string, string> QUERY_REPLACE = new Dictionary<string, string>()
-        {
-            { "Cl", "X" },
-            { "Br", "Z" },
-            { "Si", "Y" },
-            { "As", "D" },
-            { "Li", "L" },
-            { "Se", "E" },
-            { "Na", "G" },
-            { "Ca", "J" },
-            { "Al", "A" },
-        };
-
         /// <summary>
         /// Creates a fingerprint generator of length <see cref="DefaultSize"/>
         /// and with a search depth of <see cref="DefaultSearchDepth"/>.
@@ -101,144 +80,15 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="size">The desired size of the fingerprint</param>
         /// <param name="searchDepth">The desired depth of search</param>
-        public HybridizationFingerprinter(int size, int searchDepth)
+        public HybridizationFingerprinter(int size, int searchDepth) : base(size, searchDepth)
         {
-            this.size = size;
-            this.searchDepth = searchDepth;
-        }
-
-        /// <summary>
-        /// Generates a fingerprint of the default size for the given AtomContainer.
-        /// </summary>
-        /// <param name="container">The <see cref="IAtomContainer"/> for which a fingerprint is generated.</param>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer container)
-        {
-            BitArray bitSet = new BitArray(size);
-
-            IAtomContainer clonedContainer = (IAtomContainer)container.Clone();
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(clonedContainer);
-            int[] hashes = FindPathes(clonedContainer, searchDepth);
-            foreach (var hash in hashes)
-            {
-                bitSet.Set(new JavaRandom(hash).Next(size), true);
-            }
-
-            return new BitSetFingerprint(bitSet);
-        }
-
-        /// <summary>
-        /// Get all paths of lengths 0 to the specified length.
-        /// This method will find all paths up to length N starting from each
-        /// atom in the molecule and return the unique set of such paths.
-        /// </summary>
-        /// <param name="container">The molecule to search</param>
-        /// <param name="searchDepth">The maximum path length desired</param>
-        /// <returns>Path strings</returns>
-        protected int[] FindPathes(IAtomContainer container, int searchDepth)
-        {
-            var allPaths = new List<string>();
-            var cache = new Dictionary<IAtom, IDictionary<IAtom, IBond>>();
-
-            foreach (var startAtom in container.Atoms)
-            {
-                var p = PathTools.GetPathsOfLengthUpto(container, startAtom, searchDepth);
-                foreach (var path in p)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    IAtom x = path[0];
-
-                    // TODO if we ever get more than 255 elements, this will
-                    // fail maybe we should use 0 for pseudo atoms and
-                    // malformed symbols?
-                    if (x is IPseudoAtom)
-                        sb.Append('0');
-                    else
-                    {
-                        int atnum = PeriodicTable.GetAtomicNumber(x.Symbol);
-                        if (atnum > 0)
-                            sb.Append((char)atnum);
-                        else
-                            sb.Append('0');
-                    }
-
-                    for (int i = 1; i < path.Count; i++)
-                    {
-                        IAtom[] y = { path[i] };
-                        IDictionary<IAtom, IBond> m;
-                        if (!cache.TryGetValue(x, out m))
-                        {
-                            m = null;
-                        }
-                        IBond bond = null;
-                        if (m != null)
-                        {
-                            if (!m.TryGetValue(y[0], out bond))
-                                bond = null;
-                        }
-                        IBond[] b = new IBond[] { bond };
-                        if (b[0] == null)
-                        {
-                            b[0] = container.GetBond(x, y[0]);
-                            cache[x] = new Dictionary<IAtom, IBond>() { { y[0], b[0] } };
-                        }
-                        sb.Append(GetBondSymbol(b[0]));
-                        Strings.Append(sb, ConvertSymbol(y[0].Symbol));
-                        x = y[0];
-                    }
-
-                    // we store the lexicographically lower one of the
-                    // string and its reverse
-                    string sb_string = sb.ToString();
-                    char[] revForm_array = sb_string.ToCharArray();
-                    Array.Reverse(revForm_array);
-                    string rev_string = new string(revForm_array);
-                    if (string.Compare(sb.ToString(), rev_string, StringComparison.Ordinal) <= 0)
-                        allPaths.Add(sb_string);
-                    else
-                        allPaths.Add(rev_string);
-                }
-            }
-            // now lets clean stuff up
-            ICollection<string> cleanPath = new HashSet<string>();
-            foreach (var s in allPaths)
-            {
-                if (cleanPath.Contains(s.ToString())) continue;
-                string s2 = new string(s.Reverse().ToArray());
-                if (cleanPath.Contains(s2)) continue;
-                cleanPath.Add(s2);
-            }
-
-            // convert paths to hashes
-            int[] hashes = new int[cleanPath.Count];
-            {
-                int i = 0;
-                foreach (var s in cleanPath)
-                    hashes[i++] = Strings.GetJavaHashCode(s);
-            }
-
-            return hashes;
-        }
-
-        /// <summary>
-        /// Maps two character element symbols unto unique single character equivalents.
-        /// </summary>
-        /// <param name="symbol"></param>
-        /// <returns></returns>
-        private string ConvertSymbol(string symbol)
-        {
-            if (symbol == null)
-                return null;
-            string returnSymbol;
-            if (!QUERY_REPLACE.TryGetValue(symbol, out returnSymbol))
-                return symbol;
-            return returnSymbol;
         }
 
         /// <summary>
         /// Gets the bond Symbol attribute of the Fingerprinter class.
         /// </summary>
         /// <returns>The bondSymbol value</returns>
-        protected string GetBondSymbol(IBond bond)
+        protected override string GetBondSymbol(IBond bond)
         {
             string bondSymbol = "";
             if (bond.Order == BondOrder.Single)
@@ -279,24 +129,8 @@ namespace NCDK.Fingerprints
         /// </summary>
         private bool IsSP2Bond(IBond bond)
         {
-            if (bond.Atoms.Count == 2 && bond.Atoms[0].Hybridization == Hybridization.SP2
-                    && bond.Atoms[1].Hybridization == Hybridization.SP2) return true;
-            return false;
-        }
-
-        public int SearchDepth => searchDepth;
-
-        public int Count => size;
-
-        /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer container)
-        {
-            throw new NotSupportedException();
-        }
-
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
-        {
-            throw new NotSupportedException();
+            return bond.Atoms.Count == 2 && bond.Begin.Hybridization == Hybridization.SP2
+                   && bond.End.Hybridization == Hybridization.SP2;
         }
     }
 }

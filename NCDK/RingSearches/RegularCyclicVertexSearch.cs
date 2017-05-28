@@ -57,6 +57,8 @@ namespace NCDK.RingSearches
         /// <summary>Vertex colors - which component does each vertex belong.</summary>
         private volatile int[] colors;
 
+        private int numCycles = 0;
+
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
         /// </summary>
@@ -115,6 +117,8 @@ namespace NCDK.RingSearches
                     // include w - they are adjacent
                     if (IsBitSet(prev, w))
                     {
+                        numCycles++;
+
                         // xor the state when we last visited 'w' with our current
                         // state. this set is all the vertices we visited since then
                         // and are all in a cycle
@@ -128,6 +132,8 @@ namespace NCDK.RingSearches
                 }
             }
         }
+
+        public int NumCycles => numCycles;
 
         /// <summary>
         /// Returns whether the vertex 'v' has been visited.

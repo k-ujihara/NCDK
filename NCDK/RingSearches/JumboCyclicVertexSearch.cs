@@ -56,6 +56,8 @@ namespace NCDK.RingSearches
         /// <summary>vertex colored by each component.</summary>
         private int[] colors;
 
+        private int numCycles = 0;
+
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
         /// </summary>
@@ -117,6 +119,7 @@ namespace NCDK.RingSearches
                 // include w - they are adjacent
                 if (prev[w])
                 {
+                    numCycles++;
                     // we have a cycle, xor the state when we last visited 'w'
                     // with our current state. this set is all the vertices
                     // we visited since then
@@ -135,6 +138,8 @@ namespace NCDK.RingSearches
 
         /// <summary>Synchronisation lock.</summary>
         private readonly object syncLock = new object();
+
+        public int NumCycles =>numCycles;
 
         /// <summary>
         /// Lazily build an indexed lookup of vertex color. The vertex color

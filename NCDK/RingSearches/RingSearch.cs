@@ -146,6 +146,13 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
+        /// Access the number of rings found (aka. circuit rank, SSSR size).
+        /// </summary>
+        /// <returns>number of rings</returns>
+        /// <seealso cref=""/>
+        public int NumRings => searcher.NumCycles;
+
+        /// <summary>
         /// Determine whether the edge between the vertices <paramref name="u"/> and <paramref name="v"/> is
         /// cyclic.
         /// </summary>
@@ -183,8 +190,8 @@ namespace NCDK.RingSearches
         public bool Cyclic(IBond bond)
         {
             // XXX: linear search - but okay for now
-            int u = container.Atoms.IndexOf(bond.Atoms[0]);
-            int v = container.Atoms.IndexOf(bond.Atoms[1]);
+            int u = container.Atoms.IndexOf(bond.Begin);
+            int v = container.Atoms.IndexOf(bond.End);
             if (u < 0 || v < 0) throw new NoSuchAtomException("atoms of the bond are not found in the container");
             return searcher.Cyclic(u, v);
         }
@@ -258,8 +265,8 @@ namespace NCDK.RingSearches
 
             foreach (var bond in abonds)
             {
-                IAtom either = bond.Atoms[0];
-                IAtom other = bond.Atoms[1];
+                IAtom either = bond.Begin;
+                IAtom other = bond.End;
 
                 int u = container.Atoms.IndexOf(either);
                 int v = container.Atoms.IndexOf(other);
@@ -354,8 +361,8 @@ namespace NCDK.RingSearches
             // include bonds that have both atoms in the atoms set
             foreach (var bond in container.Bonds)
             {
-                IAtom either = bond.Atoms[0];
-                IAtom other = bond.Atoms[1];
+                IAtom either = bond.Begin;
+                IAtom other = bond.End;
                 if (atoms.Contains(either) && atoms.Contains(other))
                 {
                     bonds.Add(bond);

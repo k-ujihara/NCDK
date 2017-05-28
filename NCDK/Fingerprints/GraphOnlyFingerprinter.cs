@@ -67,12 +67,8 @@ namespace NCDK.Fingerprints
 
         public BitArray GetBitFingerprint(IAtomContainer container, int size)
         {
-            int[] hashes = FindPathes(container, base.SearchDepth);
             BitArray bitSet = new BitArray(size);
-            foreach (var hash in hashes)
-            {
-                bitSet.Set(new Random(hash).Next(size), true);
-            }
+            EncodePaths(container, base.SearchDepth, bitSet, size);
             return bitSet;
         }
     }

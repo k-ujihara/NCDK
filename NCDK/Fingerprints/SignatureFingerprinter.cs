@@ -31,7 +31,7 @@ namespace NCDK.Fingerprints
     // @cdk.module  signature
     // @cdk.keyword fingerprint
     // @cdk.githash
-    public class SignatureFingerprinter : IFingerprinter
+    public class SignatureFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private int signatureDepth;
 
@@ -51,12 +51,18 @@ namespace NCDK.Fingerprints
             this.signatureDepth = depth;
         }
 
-        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
+        protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
+        {
+            yield return new KeyValuePair<string, string>("signatureDepth", signatureDepth.ToString());
+            yield break;
+        }
+
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             return new IntArrayFingerprint(GetRawFingerprint(atomContainer));
         }
 
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             var map = new Dictionary<string, int>();
             foreach (var atom in atomContainer.Atoms)
@@ -74,9 +80,9 @@ namespace NCDK.Fingerprints
             return map;
         }
 
-        public int Count => -1;
+        public override int Count => -1;
 
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             return new IntArrayCountFingerprint(GetRawFingerprint(container));
         }

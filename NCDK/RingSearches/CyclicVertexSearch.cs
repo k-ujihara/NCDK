@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2012 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -20,10 +20,6 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using NCDK.Graphs;
 
 namespace NCDK.RingSearches
 {
@@ -38,6 +34,12 @@ namespace NCDK.RingSearches
     // @cdk.githash
     public interface CyclicVertexSearch
     {
+        /// <summary>
+        /// The number of cycles (circuit rank, frère jacques number, num SSSR).
+        /// </summary>
+        /// <returns>number of cycles</returns>
+        int NumCycles { get; }
+
         /// <summary>
         /// Returns true if the vertex <paramref name="v"/> is in a cycle.
         /// </summary>

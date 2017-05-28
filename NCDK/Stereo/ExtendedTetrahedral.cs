@@ -73,9 +73,9 @@ namespace NCDK.Stereo
     /// </para>
     /// </remarks>
     // @author John May
-    // @cdk.keywords extended tetrahedral
-    // @cdk.keywords allene
-    // @cdk.keywords axial chirality
+    // @cdk.keyword extended tetrahedral
+    // @cdk.keyword allene
+    // @cdk.keyword axial chirality
     public sealed class ExtendedTetrahedral : IStereoElement
     {
         private readonly IAtom focus;
@@ -131,8 +131,8 @@ namespace NCDK.Stereo
 
             if (focusBonds.Count() != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
 
-            IAtom left = focusBonds.ElementAt(0).GetConnectedAtom(focus);
-            IAtom right = focusBonds.ElementAt(1).GetConnectedAtom(focus);
+            IAtom left = focusBonds.ElementAt(0).GetOther(focus);
+            IAtom right = focusBonds.ElementAt(1).GetOther(focus);
 
             return new IAtom[] { left, right };
         }
@@ -151,8 +151,8 @@ namespace NCDK.Stereo
 
             if (focusBonds.Count() != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
 
-            IAtom left = focusBonds.ElementAt(0).GetConnectedAtom(focus);
-            IAtom right = focusBonds.ElementAt(1).GetConnectedAtom(focus);
+            IAtom left = focusBonds.ElementAt(0).GetOther(focus);
+            IAtom right = focusBonds.ElementAt(1).GetOther(focus);
 
             var leftAtoms = container.GetConnectedAtoms(left);
 

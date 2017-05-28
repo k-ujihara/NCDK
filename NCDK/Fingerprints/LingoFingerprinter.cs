@@ -42,7 +42,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword hologram
     // @cdk.githash
-    public class LingoFingerprinter : IFingerprinter
+    public class LingoFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private readonly int n;
         private readonly SmilesGenerator gen = SmilesGenerator.Unique().Aromatic();
@@ -65,12 +65,18 @@ namespace NCDK.Fingerprints
             this.n = n;
         }
 
-        public IBitFingerprint GetBitFingerprint(IAtomContainer iAtomContainer)
+        protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
+        {
+            yield return new KeyValuePair<string, string>("ngramLength", n.ToString());
+            yield break;
+        }
+
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer iAtomContainer)
         {
             return FingerprinterTool.MakeBitFingerprint(GetRawFingerprint(iAtomContainer));
         }
 
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             aromaticity.Apply(atomContainer);
             string smiles = ReplaceDigits(gen.Create(atomContainer));
@@ -87,14 +93,14 @@ namespace NCDK.Fingerprints
             return map;
         }
 
-        public int Count => -1; // 1L << 32
+        public override int Count => -1; // 1L << 32
 
         private string ReplaceDigits(string smiles)
         {
             return DIGITS.Replace(smiles, "0");
         }
 
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             return FingerprinterTool.MakeCountFingerprint(GetRawFingerprint(container));
         }

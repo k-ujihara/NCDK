@@ -79,7 +79,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    similarity
     // @cdk.module     standard
     // @cdk.githash
-    internal class CircularFingerprinter : IFingerprinter
+    internal class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// ------------ constants ------------
 
@@ -180,6 +180,26 @@ namespace NCDK.Fingerprints
             this.length = len;
         }
 
+        protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
+        {
+            string type = null;
+            switch (classType)
+            {
+                case CLASS_ECFP0: type = "ECFP0"; break;
+                case CLASS_ECFP2: type = "ECFP2"; break;
+                case CLASS_ECFP4: type = "ECFP4"; break;
+                case CLASS_ECFP6: type = "ECFP6"; break;
+                case CLASS_FCFP0: type = "FCFP0"; break;
+                case CLASS_FCFP2: type = "FCFP2"; break;
+                case CLASS_FCFP4: type = "FCFP4"; break;
+                case CLASS_FCFP6: type = "FCFP6"; break;
+                default:
+                    break;
+            }
+            yield return new KeyValuePair<string, string>("classType", type);
+            yield break;
+        }
+
         /// <summary>
         /// Calculates the fingerprints for the given <see cref="IAtomContainer"/>, and stores them for subsequent retrieval.
         /// </summary>
@@ -252,7 +272,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="mol">IAtomContainer for which the fingerprint should be calculated.</param>
         /// <returns>the fingerprint</returns>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer mol)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer mol)
         {
             Calculate(mol);
             BitArray bits = new BitArray(length);
@@ -295,7 +315,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="mol">IAtomContainer for which the fingerprint should be calculated.</param>
         /// <returns>the count fingerprint</returns>
-        public ICountFingerprint GetCountFingerprint(IAtomContainer mol)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer mol)
         {
             Calculate(mol);
 
@@ -324,7 +344,7 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// Invalid: it is not appropriate to convert the integer hash codes into strings.
         /// </summary>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
         {
             throw new NotSupportedException();
         }
@@ -333,7 +353,7 @@ namespace NCDK.Fingerprints
         /// Returns the extent of the folded fingerprints.
         /// </summary>
         /// <returns>the size of the fingerprint</returns>
-        public int Count => length;
+        public override int Count => length;
 
         /// ------------ private methods ------------
 
@@ -522,7 +542,7 @@ namespace NCDK.Fingerprints
             {
                 IBond bond = mol.Bonds[n];
                 if (bond.Atoms.Count != 2) continue;
-                int a1 = mol.Atoms.IndexOf(bond.Atoms[0]), a2 = mol.Atoms.IndexOf(bond.Atoms[1]);
+                int a1 = mol.Atoms.IndexOf(bond.Begin), a2 = mol.Atoms.IndexOf(bond.End);
                 if (amask[a1] && amask[a2])
                 {
                     atomAdj[a1] = AppendInteger(atomAdj[a1], a2);
@@ -792,8 +812,8 @@ namespace NCDK.Fingerprints
                 if (bondOrder[n] == 2)
                 {
                     IBond bond = mol.Bonds[n];
-                    piAtom[mol.Atoms.IndexOf(bond.Atoms[0])] = true;
-                    piAtom[mol.Atoms.IndexOf(bond.Atoms[1])] = true;
+                    piAtom[mol.Atoms.IndexOf(bond.Begin)] = true;
+                    piAtom[mol.Atoms.IndexOf(bond.End)] = true;
                 }
 
             List<int[]> maybe = new List<int[]>(); // rings which may yet be aromatic
@@ -898,6 +918,10 @@ namespace NCDK.Fingerprints
 
             // fill in existing positions, including "fake" Z coordinate if wedges are being used
             Vector2? a2d = atom.Point2D;
+
+            // for safety in case the bond type (bond stereo) is set but no coords are
+            if (a2d == null && a3d == null) return null;
+
             var x0 = a3d != null ? a3d.Value.X : a2d.Value.X;
             var y0 = a3d != null ? a3d.Value.Y : a2d.Value.Y;
             var z0 = a3d != null ? a3d.Value.Z : 0;
@@ -922,7 +946,7 @@ namespace NCDK.Fingerprints
                     BondStereo stereo = bond.Stereo;
                     xp[n] = o2d.Value.X - x0;
                     yp[n] = o2d.Value.Y - y0;
-                    zp[n] = other == bond.Atoms[0] ? 0 : stereo == BondStereo.Up ? 1 : stereo == BondStereo.Down ? -1
+                    zp[n] = other == bond.Begin ? 0 : stereo == BondStereo.Up ? 1 : stereo == BondStereo.Down ? -1
                             : 0;
                 }
                 else
@@ -1039,7 +1063,7 @@ namespace NCDK.Fingerprints
             {
                 IBond bond = mol.Bonds[n];
                 if (bond.Atoms.Count != 2) continue;
-                int a1 = mol.Atoms.IndexOf(bond.Atoms[0]), a2 = mol.Atoms.IndexOf(bond.Atoms[1]), o = bondOrder[n];
+                int a1 = mol.Atoms.IndexOf(bond.Begin), a2 = mol.Atoms.IndexOf(bond.End), o = bondOrder[n];
                 if (!amask[a1] || !amask[a2]) continue;
                 bondSum[a1] += o;
                 bondSum[a2] += o;
@@ -1335,7 +1359,7 @@ namespace NCDK.Fingerprints
         {
             IBond bond = mol.Bonds[bidx];
             if (bond.Atoms.Count != 2) return 0;
-            int a1 = mol.Atoms.IndexOf(bond.Atoms[0]), a2 = mol.Atoms.IndexOf(bond.Atoms[1]);
+            int a1 = mol.Atoms.IndexOf(bond.Begin), a2 = mol.Atoms.IndexOf(bond.End);
             if (maskAro[a1] && maskAro[a2]) return -1;
             return bondOrder[bidx];
         }

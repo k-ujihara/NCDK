@@ -355,7 +355,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword  similarity
     // @cdk.module   fingerprint
     // @cdk.githash
-    internal class SubstructureFingerprinter : IFingerprinter
+    public class SubstructureFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private string[] smarts;
 
@@ -384,7 +384,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             if (smarts == null)
             {
@@ -407,13 +407,13 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-        public int Count => smarts.Length;
+        public override int Count => smarts.Length;
 
         /// <summary>
         /// Retrieves the SMARTS representation of a substructure for a given
@@ -427,7 +427,7 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
         }

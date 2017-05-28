@@ -8,8 +8,8 @@
 namespace NCDK.Fingerprints
 {
     /// <summary>
-    /// SMARTS based substructure fingerprint based on <emph>Chemical substructures
-    /// that enrich for biological activity</emph> <token>cdk-cite-Klekota01112008</token>.
+    /// SMARTS based substructure fingerprint based on <b>Chemical substructures
+    /// that enrich for biological activity</b> <token>cdk-cite-Klekota01112008</token>.
     ///
     /// Presence of 4860 substructures
     /// </summary>

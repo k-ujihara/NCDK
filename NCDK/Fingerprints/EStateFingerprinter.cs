@@ -56,14 +56,14 @@ namespace NCDK.Fingerprints
     // @cdk.keyword estate
     // @cdk.module fingerprint
     // @cdk.githash
-    internal class EStateFingerprinter : IFingerprinter
+    internal class EStateFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private static readonly string[] PATTERNS = EStateFragments.Smarts;
 
         public EStateFingerprinter() { }
 
         /// <inheritdoc/>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             int bitsetLength = PATTERNS.Length;
             BitArray fingerPrint = new BitArray(bitsetLength);
@@ -79,16 +79,16 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-        public int Count => PATTERNS.Length;
+        public override int Count => PATTERNS.Length;
 
         /// <inheritdoc/>
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
         }

@@ -123,7 +123,7 @@ namespace NCDK.Graphs
     /// </listheader>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=135973">135973</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135973"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135973"  alt="Compound Image"/></term>
     /// <term>
     ///     <list type="table">
     ///         <item><term>{3, 3, 4}</term></item>
@@ -141,7 +141,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9249">9249</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9249"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9249"  alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{3, 3, <b style="color: #FF4444;"><u>4</u></b>, 6, 6}</term> </item>
     /// <item><term>{3, 3, 4, 6, 6}</term></item>
@@ -156,7 +156,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=931">931</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=931"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=931"  alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 10}</term></item>
     /// <item><term>{6, 6, 10}</term></item>
@@ -170,7 +170,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5702">5702</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5702"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5702" alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b
     /// style="color: #FF4444;"><u>10</u></b>, 20, 22, 22, 24, 24}</term></item>
@@ -186,7 +186,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1211">1211</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211" alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b><u>10</u></b>, 18, 18, 20, 20, 22, 22, 22}</term></item>
     /// <item><term>{6, 6, 6, 6, 6, 6, 10, 10, 18, 18, 20, 20, 22, 22, 22}</term></item>
@@ -200,7 +200,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=17858819">17858819</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=17858819"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=17858819" alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{5, 6, 9}</term></item>
     /// <item><term>{5, 6, 9}</term></item>
@@ -214,7 +214,7 @@ namespace NCDK.Graphs
     /// </item>
     /// <item>
     /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1909">1909</see></term>
-    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1909"/></term>
+    /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1909" alt="Compound Image"/></term>
     /// <term><list type="table">
     /// <item><term>{5, 5, 5, 6, <b style="color: #FF4444;"><u>9</u></b>, 16, 17, 17, 17, 18}</term></item>
     /// <item><term>{5, 5, 5, 6, 9, 16, 17, 17, 17, 18}</term></item>

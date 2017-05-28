@@ -278,11 +278,13 @@ namespace NCDK.Graphs
         /// Find and mark all cyclic atoms and bonds in the provided molecule.
         /// </summary>
         /// <param name="mol">molecule</param>
+        /// <returns>Number of rings found (circuit rank)</returns>
         /// <seealso cref="IMolecularEntity.IsInRing"/>
-        public static void MarkRingAtomsAndBonds(IAtomContainer mol)
+        /// <seealso href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</seealso> 
+        public static int MarkRingAtomsAndBonds(IAtomContainer mol)
         {
             EdgeToBondMap bonds = EdgeToBondMap.WithSpaceFor(mol);
-            MarkRingAtomsAndBonds(mol, GraphUtil.ToAdjList(mol, bonds), bonds);
+            return MarkRingAtomsAndBonds(mol, GraphUtil.ToAdjList(mol, bonds), bonds);
         }
 
         /// <summary>
@@ -293,8 +295,10 @@ namespace NCDK.Graphs
         /// <param name="mol">molecule</param>
         /// <param name="adjList"></param>
         /// <param name="bondMap"></param>
+        /// <returns>Number of rings found (circuit rank)</returns>
         /// <seealso cref="IMolecularEntity.IsInRing"/>
-        public static void MarkRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap)
+        /// <seealso href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</seealso> 
+        public static int MarkRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap)
         {
             RingSearch ringSearch = new RingSearch(mol, adjList);
             for (int v = 0; v < mol.Atoms.Count; v++)
@@ -316,6 +320,7 @@ namespace NCDK.Graphs
                     }
                 }
             }
+            return ringSearch.NumRings;
         }
 
         /// <summary>
@@ -567,8 +572,8 @@ namespace NCDK.Graphs
                     if (!ac.Completed)
                         throw new IntractableException("A large number of cycles were being generated and the"
                                 + " computation was aborted. Please use AllCycles/AllRingsFinder with"
-                                + " and specify a larger threshold or use a CycleFinger with a fall-back"
-                                + " to a set unique cycles: e.g. Cycles.FindAllOrVertexShort().");
+                                + " and specify a larger threshold or use a " + nameof(CycleFinder) + " with a fall-back"
+                                + " to a set unique cycles: e.g. " + nameof(Cycles) + "."  + nameof(Cycles.AllOrVertexShortFinder) +".");
                     return ac.GetPaths();
                 }
             }

@@ -104,6 +104,8 @@ namespace NCDK.Config
                 symbolMap.Add(elm.Symbol.ToLowerInvariant(), elm);
                 symbolMap.Add(elm.Name.ToLowerInvariant(), elm);
             }
+
+            // recently named elements
             symbolMap.Add("uub", Copernicium); // 2009
             symbolMap.Add("ununbium", Copernicium);
 
@@ -112,6 +114,12 @@ namespace NCDK.Config
 
             symbolMap.Add("uuh", Livermorium); // 2012
             symbolMap.Add("ununhexium", Livermorium);
+
+            // 2016
+            symbolMap["uut"] = Nihonium;
+            symbolMap["uup"] = Moscovium;
+            symbolMap["uus"] = Tennessine;
+            symbolMap["uuo"] = Oganesson;
 
             // alternative spellings
             symbolMap.Add("sulphur", Sulfur);

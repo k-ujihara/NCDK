@@ -31,6 +31,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.Fingerprints
@@ -76,19 +77,21 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    similarity
     // @cdk.module     standard
     // @cdk.githash
-    public class Fingerprinter : IFingerprinter
+    public class Fingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// <summary>Throw an exception if too many paths (per atom) are generated.</summary>
-        private const int DefaultPathLimit = 1500;
+        private const int DefaultPathLimit = 42000;
 
         /// <summary>The default length of created fingerprints.</summary>
         public const int DefaultSize = 1024;
         /// <summary>The default search depth used to create the fingerprints.</summary>
-        public const int DefaultSearchDepth = 8;
+        public const int DefaultSearchDepth = 7;
 
         private int size;
         private int searchDepth;
         private int pathLimit = DefaultPathLimit;
+
+        private bool hashPseudoAtoms = false;
 
         private static readonly IDictionary<string, string> QueryReplace = new Dictionary<string, string>()
         {
@@ -121,11 +124,19 @@ namespace NCDK.Fingerprints
         /// depth.
         /// </summary>
         /// <param name="size">The desired size of the fingerprint</param>
-        /// <param name="searchDepth">The desired depth of search</param>
+        /// <param name="searchDepth">The desired depth of search (number of bonds)</param>
         public Fingerprinter(int size, int searchDepth)
         {
             this.size = size;
             this.searchDepth = searchDepth;
+        }
+
+        protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
+        {
+            yield return new KeyValuePair<string, string>("searchDepth", searchDepth.ToString());
+            yield return new KeyValuePair<string, string>("pathLimit", pathLimit.ToString());
+            yield return new KeyValuePair<string, string>("hashPseudoAtoms", hashPseudoAtoms.ToString());
+            yield break;
         }
 
         /// <summary>
@@ -141,19 +152,16 @@ namespace NCDK.Fingerprints
             Debug.WriteLine("Entering Fingerprinter");
             Debug.WriteLine("Starting Aromaticity Detection");
             long before = DateTime.Now.Ticks;
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            Aromaticity.CDKLegacy.Apply(container);
+            if (!HasPseudoAtom(container.Atoms))
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
             long after = DateTime.Now.Ticks;
             Debug.WriteLine("time for aromaticity calculation: " + (after - before) + " ticks");
             Debug.WriteLine("Finished Aromaticity Detection");
             BitArray bitSet = new BitArray(size);
-
-            int[] hashes = FindPathes(container, searchDepth);
-            foreach (var hash in hashes)
-            {
-                position = new JavaRandom(hash).Next(size);
-                bitSet.Set(position, true);
-            }
+            EncodePaths(container, searchDepth, bitSet, size);
 
             return new BitSetFingerprint(bitSet);
         }
@@ -162,15 +170,194 @@ namespace NCDK.Fingerprints
         /// Generates a fingerprint of the default size for the given AtomContainer.
         /// </summary>
         /// <param name="container">The AtomContainer for which a Fingerprint is generated</param>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer container)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             return GetBitFingerprint(container, null);
         }
 
         /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
+        }
+
+        private IBond FindBond(List<IBond> bonds, IAtom beg, IAtom end)
+        {
+            foreach (IBond bond in bonds)
+                if (bond.Contains(beg) && bond.Contains(end))
+                    return bond;
+            return null;
+        }
+
+        private string EncodePath(IAtomContainer mol, IDictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
+        {
+            buffer.Clear();
+            IAtom prev = path[0];
+            buffer.Append(GetAtomSymbol(prev));
+            for (int i = 1; i < path.Count; i++)
+            {
+                IAtom next = path[i];
+                List<IBond> bonds = cache[prev];
+
+                if (bonds == null)
+                {
+                    bonds = mol.GetConnectedBonds(prev).ToList();
+                    cache[prev] = bonds;
+                }
+
+                IBond bond = FindBond(bonds, next, prev);
+                if (bond == null)
+                    throw new InvalidOperationException("FATAL - Atoms in patch were connected?");
+                buffer.Append(GetBondSymbol(bond));
+                buffer.Append(GetAtomSymbol(next));
+                prev = next;
+            }
+            return buffer.ToString();
+        }
+
+        private string EncodePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer)
+        {
+            buffer.Clear();
+            IAtom prev = apath[0];
+            buffer.Append(GetAtomSymbol(prev));
+            for (int i = 1; i < apath.Count; i++)
+            {
+                IAtom next = apath[i];
+                IBond bond = bpath[i - 1];
+                buffer.Append(GetBondSymbol(bond));
+                buffer.Append(GetAtomSymbol(next));
+            }
+            return buffer.ToString();
+        }
+
+        private int AppendHash(int hash, string str)
+        {
+            int len = str.Length;
+            for (int i = 0; i < len; i++)
+                hash = 31 * hash + str[0];
+            return hash;
+        }
+
+        private int HashPath(List<IAtom> apath, List<IBond> bpath)
+        {
+            int hash = 0;
+            hash = AppendHash(hash, GetAtomSymbol(apath[0]));
+            for (int i = 1; i < apath.Count; i++)
+            {
+                IAtom next = apath[i];
+                IBond bond = bpath[i - 1];
+                hash = AppendHash(hash, GetBondSymbol(bond));
+                hash = AppendHash(hash, GetAtomSymbol(next));
+            }
+            return hash;
+        }
+
+        private int HashRevPath(List<IAtom> apath, List<IBond> bpath)
+        {
+            int hash = 0;
+            int last = apath.Count - 1;
+            hash = AppendHash(hash, GetAtomSymbol(apath[last]));
+            for (int i = last - 1; i >= 0; i--)
+            {
+                IAtom next = apath[i];
+                IBond bond = bpath[i];
+                hash = AppendHash(hash, GetBondSymbol(bond));
+                hash = AppendHash(hash, GetAtomSymbol(next));
+            }
+            return hash;
+        }
+
+        private class State
+        {
+            internal int numPaths = 0;
+            private JavaRandom rand = new JavaRandom(0);
+            private BitArray fp;
+            private IAtomContainer mol;
+            private HashSet<IAtom> visited = new HashSet<IAtom>();
+            internal List<IAtom> apath = new List<IAtom>();
+            internal List<IBond> bpath = new List<IBond>();
+            internal readonly int maxDepth;
+            private readonly int fpsize;
+            private IDictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
+            public StringBuilder buffer = new StringBuilder();
+
+            public State(IAtomContainer mol, BitArray fp, int fpsize, int maxDepth)
+            {
+                this.mol = mol;
+                this.fp = fp;
+                this.fpsize = fpsize;
+                this.maxDepth = maxDepth;
+            }
+
+            internal List<IBond> GetBonds(IAtom atom)
+            {
+                List<IBond> bonds = cache[atom];
+                if (bonds == null)
+                {
+                    bonds = mol.GetConnectedBonds(atom).ToList();
+                    cache[atom] = bonds;
+                }
+                return bonds;
+            }
+
+            internal bool Visit(IAtom a)
+            {
+                return visited.Add(a);
+            }
+
+            internal bool Unvisit(IAtom a)
+            {
+                return visited.Remove(a);
+            }
+
+            internal void Push(IAtom atom, IBond bond)
+            {
+                apath.Add(atom);
+                if (bond != null)
+                    bpath.Add(bond);
+            }
+
+            internal void Pop()
+            {
+                if (apath.Any())
+                    apath.RemoveAt(apath.Count - 1);
+                if (bpath.Any())
+                    bpath.RemoveAt(bpath.Count - 1);
+            }
+
+            internal void AddHash(int x)
+            {
+                numPaths++;
+                rand = new JavaRandom(x);
+                // XXX: fp.set(x % size); would work just as well but would encode a
+                //      different bit
+                fp.Set(rand.Next(fpsize), true);
+            }
+        }
+
+        private void TraversePaths(State state, IAtom beg, IBond prev)
+        {
+            if (!hashPseudoAtoms && IsPseudo(beg))
+                return;
+            state.Push(beg, prev);
+            state.AddHash(EncodeUniquePath(state.apath, state.bpath, state.buffer));
+            if (state.numPaths > pathLimit)
+                throw new CDKException("Too many paths! Structure is likely a cage, reduce path length or increase path limit");
+            if (state.apath.Count < state.maxDepth)
+            {
+                foreach (IBond bond in state.GetBonds(beg))
+                {
+                    if (bond.Equals(prev))
+                        continue;
+                    IAtom nbr = bond.GetOther(beg);
+                    if (state.Visit(nbr))
+                    {
+                        TraversePaths(state, nbr, bond);
+                        state.Unvisit(nbr); // traverse all paths
+                    }
+                }
+            }
+            state.Pop();
         }
 
         /// <summary>
@@ -183,96 +370,189 @@ namespace NCDK.Fingerprints
         /// <param name="container">The molecule to search</param>
         /// <param name="searchDepth">The maximum path length desired</param>
         /// <returns>A IDictionary of path strings, keyed on themselves</returns>
+        [Obsolete("Use " + nameof(EncodePath) + "(IAtomContainer, int, " + nameof(BitArray) + ", int)")]
         protected int[] FindPathes(IAtomContainer container, int searchDepth)
         {
-            List<string> allPaths = new List<string>();
+            var hashes = new HashSet<int>();
 
-            IDictionary<IAtom, IDictionary<IAtom, IBond>> cache = new Dictionary<IAtom, IDictionary<IAtom, IBond>>();
-
-            foreach (var startAtom in container.Atoms)
+            IDictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
+            StringBuilder buffer = new StringBuilder();
+            foreach (IAtom startAtom in container.Atoms)
             {
-                IList<IList<IAtom>> p = PathTools.GetLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
-                foreach (var path in p)
+                var p = PathTools.GetLimitedPathsOfLengthUpto(container, startAtom, searchDepth, pathLimit);
+                foreach (List<IAtom> path in p)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    IAtom x = path[0];
-
-                    // TODO if we ever get more than 255 elements, this will
-                    // fail maybe we should use 0 for pseudo atoms and
-                    // malformed symbols? - nope a char 16 bit, up to 65,535
-                    // is okay :)
-                    if (x is IPseudoAtom)
-                        sb.Append((char)PeriodicTable.ElementCount + 1);
-                    else
-                    {
-                        int atnum = PeriodicTable.GetAtomicNumber(x.Symbol);
-                        if (atnum != 0)
-                            sb.Append(ConvertSymbol(x.Symbol));
-                        else
-                            sb.Append((char)(PeriodicTable.ElementCount + 1));
-                    }
-
-                    for (int i_ = 1; i_ < path.Count; i_++)
-                    {
-                        IAtom[] y = { path[i_] };
-                        IBond[] b;
-                        IDictionary<IAtom, IBond> m;
-                        {
-                            IBond val = null;
-                            if (cache.TryGetValue(x, out m))
-                                if (m.ContainsKey(y[0]))
-                                    val = m[y[0]];
-                            b = new IBond[] { val };
-                        }
-                        if (b[0] == null)
-                        {
-                            b[0] = container.GetBond(x, y[0]);
-                            var dic = new Dictionary<IAtom, IBond>();
-                            dic[y[0]] = b[0];
-                            cache[x] = dic;
-                        }
-                        sb.Append(GetBondSymbol(b[0]));
-                        sb.Append(ConvertSymbol(y[0].Symbol));
-                        x = y[0];
-                    }
-
-                    // we store the lexicographically lower one of the
-                    // string and its reverse
-                    var sb_str = sb.ToString();
-                    var rev_str = Strings.Reverse(sb_str);
-                    if (string.Compare(sb_str, rev_str, StringComparison.Ordinal) <= 0)  
-                        allPaths.Add(sb_str);
-                    else
-                        allPaths.Add(rev_str);
+                    if (hashPseudoAtoms || !HasPseudoAtom(path))
+                        hashes.Add(EncodeUniquePath(container, cache, path, buffer));
                 }
             }
-            // now lets clean stuff up
-            ICollection<string> cleanPath = new HashSet<string>();
-            foreach (var s in allPaths)
-            {
-                string s1 = s.ToString().Trim();
-                if (s1.Equals("")) continue;
-                if (cleanPath.Contains(s1)) continue;
-                string s2 = Strings.Reverse(s).ToString().Trim();
-                if (cleanPath.Contains(s2)) continue;
-                cleanPath.Add(s2);
-            }
 
-            // convert paths to hashes
-            int[] hashes = new int[cleanPath.Count];
-            int i = 0;
-            foreach (var s in cleanPath)
-                hashes[i++] = Strings.GetJavaHashCode(s);
+            int pos = 0;
+            int[] result = new int[hashes.Count];
+            foreach (var hash in hashes)
+                result[pos++] = hash;
 
-            return hashes;
+            return result;
         }
 
-        private string ConvertSymbol(string symbol)
+        protected void EncodePaths(IAtomContainer mol, int depth, BitArray fp, int size)
         {
-            string returnSymbol;
-            if (!QueryReplace.TryGetValue(symbol, out returnSymbol))
-                return symbol;
-            return returnSymbol;
+            State state = new State(mol, fp, size, depth + 1);
+            foreach (IAtom atom in mol.Atoms)
+            {
+                state.numPaths = 0;
+                state.Visit(atom);
+                TraversePaths(state, atom, null);
+                state.Unvisit(atom);
+            }
+        }
+
+        private static bool IsPseudo(IAtom a)
+        {
+            return GetElem(a) == 0;
+        }
+
+        private static bool HasPseudoAtom(IEnumerable<IAtom> path)
+        {
+            foreach (IAtom atom in path)
+                if (IsPseudo(atom))
+                    return true;
+            return false;
+        }
+
+        private int EncodeUniquePath(IAtomContainer container, IDictionary<IAtom, List<IBond>> cache, List<IAtom> path, StringBuilder buffer)
+        {
+            if (path.Count == 1)
+                return GetAtomSymbol(path[0]).GetHashCode();
+            string forward = EncodePath(container, cache, path, buffer);
+            path.Reverse();
+            string reverse = EncodePath(container, cache, path, buffer);
+            path.Reverse();
+
+            int x;
+            if (reverse.CompareTo(forward) < 0)
+                x = forward.GetHashCode();
+            else
+                x = reverse.GetHashCode();
+            return x;
+        }
+
+        /// <summary>
+        /// Compares atom symbols lexicographical
+        /// </summary>
+        /// <param name="a">atom a</param>
+        /// <param name="b">atom b</param>
+        /// <returns>comparison &lt;0 a is less than b, &gt;0 a is more than b</returns>
+        private int Compare(IAtom a, IAtom b)
+        {
+            int elemA = GetElem(a);
+            int elemB = GetElem(b);
+            if (elemA == elemB)
+                return 0;
+            return GetAtomSymbol(a).CompareTo(GetAtomSymbol(b));
+        }
+
+        /// <summary>
+        /// Compares bonds symbols lexicographical
+        /// </summary>
+        /// <param name="a">bond a</param>
+        /// <param name="b">bond b</param>
+        /// <returns>comparison &lt;0 a is less than b, &gt;0 a is more than b</returns>
+        private int Compare(IBond a, IBond b)
+        {
+            return GetBondSymbol(a).CompareTo(GetBondSymbol(b));
+        }
+
+        /// <summary>
+        /// Compares a path of atoms with it's self to give the
+        /// lexicographically lowest traversal (forwards or backwards).
+        /// </summary>
+        /// <param name="apath">path of atoms</param>
+        /// <param name="bpath">path of bonds</param>
+        /// <returns>&lt;0 forward is lower &gt;0 reverse is lower</returns>
+        private int Compare(List<IAtom> apath, List<IBond> bpath)
+        {
+            int i = 0;
+            int len = apath.Count;
+            int j = len - 1;
+            int cmp = Compare(apath[i], apath[j]);
+            if (cmp != 0)
+                return cmp;
+            i++;
+            j--;
+            while (j != 0)
+            {
+                cmp = Compare(bpath[i - 1], bpath[j]);
+                if (cmp != 0) return cmp;
+                cmp = Compare(apath[i], apath[j]);
+                if (cmp != 0) return cmp;
+                i++;
+                j--;
+            }
+            return 0;
+        }
+
+        private int EncodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer)
+        {
+            if (bpath.Count == 0)
+                return GetAtomSymbol(apath[0]).GetHashCode();
+            int x;
+            if (Compare(apath, bpath) >= 0)
+            {
+                x = HashPath(apath, bpath);
+            }
+            else
+            {
+                x = HashRevPath(apath, bpath);
+            }
+            return x;
+        }
+
+        private static int GetElem(IAtom atom)
+        {
+            return atom.AtomicNumber ?? 0;
+        }
+
+        private string GetAtomSymbol(IAtom atom)
+        {
+            // XXX: backwards compatibility
+            // This is completely random, I believe the intention is because
+            // paths were reversed with string manipulation to de-duplicate
+            // (only the lowest lexicographically is stored) however this
+            // doesn't work with multiple atom symbols:
+            // e.g. Fe-C => C-eF vs C-Fe => eF-C
+            // A dirty hack is to replace "common" symbols with single letter
+            // equivalents so the reversing is less wrong
+            switch (GetElem(atom))
+            {
+                case 0:  // *
+                    return "*";
+                case 6:  // C
+                    return "C";
+                case 7:  // N
+                    return "N";
+                case 8:  // O
+                    return "O";
+                case 17: // Cl
+                    return "X";
+                case 35: // Br
+                    return "Z";
+                case 14: // Si
+                    return "Y";
+                case 33: // As
+                    return "D";
+                case 3: // Li
+                    return "L";
+                case 34: // Se
+                    return "E";
+                case 11:  // Na
+                    return "G";
+                case 20:  // Ca
+                    return "J";
+                case 13:  // Al
+                    return "A";
+            }
+            return atom.Symbol;
         }
 
         /// <summary>
@@ -282,24 +562,19 @@ namespace NCDK.Fingerprints
         /// <returns>The bondSymbol value</returns>
         protected virtual string GetBondSymbol(IBond bond)
         {
-            string bondSymbol = "";
             if (bond.IsAromatic)
+                return ":";
+            switch (bond.Order.Ordinal)
             {
-                bondSymbol = ":";
+                case BondOrder.O.Single:
+                    return "-";
+                case BondOrder.O.Double:
+                    return "=";
+                case BondOrder.O.Triple:
+                    return "#";
+                default:
+                    return "";
             }
-            else if (bond.Order == BondOrder.Single)
-            {
-                bondSymbol = "-";
-            }
-            else if (bond.Order == BondOrder.Double)
-            {
-                bondSymbol = "=";
-            }
-            else if (bond.Order == BondOrder.Triple)
-            {
-                bondSymbol = "#";
-            }
-            return bondSymbol;
         }
 
         public void SetPathLimit(int limit)
@@ -307,11 +582,16 @@ namespace NCDK.Fingerprints
             this.pathLimit = limit;
         }
 
+        public void SetHashPseudoAtoms(bool value)
+        {
+            this.hashPseudoAtoms = value;
+        }
+
         public int SearchDepth => searchDepth;
 
-        public int Count => size;
+        public override int Count => size;
 
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
         }

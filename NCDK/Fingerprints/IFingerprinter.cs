@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
@@ -35,6 +36,33 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public interface IFingerprinter
     {
+        /// <summary>
+        /// Generate a fingerprint type version description in chemfp's FPS format. We
+        /// report the library version rather than an individual version per fingerprint,
+        /// although this is awkward as many fingerprint's don't/won't change between releases
+        /// and we can not keep comptability we guarantee we document how the fingerprint was
+        /// encoded.
+        /// </summary>
+        /// <remarks>
+        /// Examples:
+        /// <pre>
+        /// #type=CDK-Fingerprinter/2.0 searchDepth=7 pathLimit=2000 hashPseudoAtoms=true
+        /// #type=CDK-CircularFingerprint/2.0 classType=ECFP4
+        /// </pre>
+        /// </remarks>
+        /// <returns>version description.</returns>
+        string GetVersionDescription();
+
+        /// <summary>
+        /// Generate a binary fingerprint as a bit. This method will usually delegate to
+        /// <see cref="GetBitFingerprint(IAtomContainer)"/> and invoke
+        /// <see cref="IBitFingerprint.AsBitSet()"/>, it is included for backwards compatibility.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <returns>BitSet</returns>
+        /// <exception cref="CDKException">problem generating fingerprint</exception>
+        BitArray GetFingerprint(IAtomContainer mol);
+
         /// <summary>
         /// Returns the bit fingerprint for the given <see cref="IAtomContainer"/>.
         /// </summary>
@@ -63,7 +91,7 @@ namespace NCDK.Fingerprints
         IDictionary<string, int> GetRawFingerprint(IAtomContainer container);
 
         /// <summary>
-        /// The size of the fingerprints calculated.
+        /// The size (or length) of the fingerprint.
         /// </summary>
         int Count { get; }
     }

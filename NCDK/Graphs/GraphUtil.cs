@@ -74,8 +74,8 @@ namespace NCDK.Graphs
 
             foreach (var bond in container.Bonds)
             {
-                int v = container.Atoms.IndexOf(bond.Atoms[0]);
-                int w = container.Atoms.IndexOf(bond.Atoms[1]);
+                int v = container.Atoms.IndexOf(bond.Begin);
+                int w = container.Atoms.IndexOf(bond.End);
 
                 if (v < 0 || w < 0)
                     throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");
@@ -118,8 +118,8 @@ namespace NCDK.Graphs
                 if (!include.Contains(bond))
                     continue;
 
-                int v = container.Atoms.IndexOf(bond.Atoms[0]);
-                int w = container.Atoms.IndexOf(bond.Atoms[1]);
+                int v = container.Atoms.IndexOf(bond.Begin);
+                int w = container.Atoms.IndexOf(bond.End);
 
                 if (v < 0 || w < 0)
                     throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");

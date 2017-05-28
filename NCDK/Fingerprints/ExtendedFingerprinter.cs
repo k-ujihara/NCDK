@@ -40,7 +40,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    similarity
     // @cdk.module     fingerprint
     // @cdk.githash
-    internal class ExtendedFingerprinter : IFingerprinter
+    internal class ExtendedFingerprinter : Fingerprinter, IFingerprinter
     {
         private const int ReservedBits = 25;
 
@@ -80,13 +80,13 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="container">The AtomContainer for which a Fingerprint is generated</param>
         /// <returns>a bit fingerprint for the given <see cref="IAtomContainer"/>.</returns>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer container)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             return this.GetBitFingerprint(container, null, null);
         }
 
         /// <inheritdoc/>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
         {
             throw new NotSupportedException();
         }
@@ -141,10 +141,10 @@ namespace NCDK.Fingerprints
         }
 
         /// <inheritdoc/>
-        public int Count => fingerprinter.Count + ReservedBits;
+        public override int Count => fingerprinter.Count + ReservedBits;
 
         /// <inheritdoc/>
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
         }

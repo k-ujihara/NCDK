@@ -58,7 +58,7 @@ namespace NCDK.Fingerprints
     // @cdk.module fingerprint
     // @cdk.githash
     [Serializable]
-    public class ShortestPathFingerprinter : RandomNumber, IFingerprinter
+    public class ShortestPathFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// <summary>
         /// The default length of created fingerprints.
@@ -69,6 +69,8 @@ namespace NCDK.Fingerprints
         /// The default length of created fingerprints.
         /// </summary>
         private int fingerprintLength;
+
+        private readonly RandomNumber rand = new RandomNumber();
 
         /// <summary>
         /// Creates a fingerprint generator of length <see cref="DefaultSize"/>. 
@@ -93,7 +95,7 @@ namespace NCDK.Fingerprints
         /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
         /// <exception cref="CDKException">if there error in aromaticity perception or other CDK functions</exception>
         /// <returns>A <see cref="BitArray"/> representing the fingerprint</returns>
-        public IBitFingerprint GetBitFingerprint(IAtomContainer ac)
+        public override IBitFingerprint GetBitFingerprint(IAtomContainer ac)
         {
             IAtomContainer atomContainer = null;
             atomContainer = (IAtomContainer)ac.Clone();
@@ -120,7 +122,7 @@ namespace NCDK.Fingerprints
         /// <param name="ac">The <see cref="IAtomContainer"/> for which a fingerprint is generated</param>
         /// <returns><see cref="IDictionary{T, T}"/> of raw fingerprint paths/features</returns>
         /// <exception cref="NotSupportedException">method is not supported</exception>
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
+        public override IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
         {
             throw new NotSupportedException();
         }
@@ -228,9 +230,9 @@ namespace NCDK.Fingerprints
             return paths.ToArray();
         }
 
-        public int Count => fingerprintLength;
+        public override int Count => fingerprintLength;
 
-        public ICountFingerprint GetCountFingerprint(IAtomContainer iac)
+        public override ICountFingerprint GetCountFingerprint(IAtomContainer iac)
         {
             throw new NotSupportedException("Not supported yet.");
         }
@@ -238,7 +240,7 @@ namespace NCDK.Fingerprints
         // Returns a random number for a given object
         private int GetRandomNumber(int hashValue)
         {
-            return GenerateMersenneTwisterRandomNumber(fingerprintLength, hashValue);
+            return rand.GenerateMersenneTwisterRandomNumber(fingerprintLength, hashValue);
         }
     }
 }

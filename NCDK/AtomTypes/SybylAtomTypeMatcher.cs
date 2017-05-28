@@ -138,7 +138,7 @@ namespace NCDK.AtomTypes
             var neighbors = atomContainer.GetConnectedBonds(atom).ToList();
             if (neighbors.Count != 1) return false;
             IBond neighbor = neighbors[0];
-            IAtom neighborAtom = neighbor.GetConnectedAtom(atom);
+            IAtom neighborAtom = neighbor.GetOther(atom);
             if (neighborAtom.Symbol.Equals("C"))
             {
                 if (neighbor.Order == BondOrder.Single)
@@ -177,7 +177,7 @@ namespace NCDK.AtomTypes
                     {
                         if (symbol != null)
                         {
-                            IAtom neighbor = bond.GetConnectedAtom(atom);
+                            IAtom neighbor = bond.GetOther(atom);
                             if (neighbor.Symbol.Equals(symbol))
                             {
                                 doubleBondedAtoms++;
