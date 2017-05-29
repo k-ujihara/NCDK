@@ -69,6 +69,7 @@ namespace NCDK.Config
         /// Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius
         /// (<i>r<sub>w</sub></i>) and Pauling electronegativity.
         /// </summary>
+        /// <seealso href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</seealso>
         public double? CovalentRadius { get; private set; }
         public double? VdwRadius { get; private set; }
 

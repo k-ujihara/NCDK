@@ -1,28 +1,84 @@
+/* Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
+ *               2011  Jonathan Alvarsson <jonalv@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
+ *
+ * Contact: cdk-devel@lists.sf.net
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 using System;
 using System.Collections.Generic;
 using NCDK.Config;
 
 namespace NCDK.Tools
 {
+    /// <summary>
+    /// Represents elements of the Periodic Table.  This utility class was
+    /// previously useful when one wants generic properties of elements such as
+    /// atomic number, VdW radius etc. The new approach to this is to use the
+    /// <see cref="Elements"/> enumeration.
+    /// </summary>
+    // @author Rajarshi Guha
+    // @cdk.created 2008-06-12
+    // @cdk.keyword element
+    // @cdk.keyword periodic table
+    // @cdk.keyword radius, vanderwaals
+    // @cdk.keyword electronegativity
+    // @cdk.module core
+    // @cdk.githash 
     public sealed class PeriodicTable
     {
+        /// <summary>A lock used for locking CAD ID initialisation.</summary>
         private readonly static object syncLock = new object();
 
+        /// <summary>
+        /// Get the Van der Waals radius for the element in question.
+        /// </summary>
+        /// <param name="symbol">The symbol of the element</param>
+        /// <returns>the Van der waals radius</returns>
         public static double? GetVdwRadius(string symbol)
         {
             return Elements.OfString(symbol).VdwRadius;
         }
-
+        
+        /// <summary>
+        /// Get the covalent radius for an element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the covalent radius</returns>
         public static double? GetCovalentRadius(string symbol)
         {
             return Elements.OfString(symbol).CovalentRadius;
         }
 
+        /// <summary>
+        /// Get the CAS ID for an element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the CAS ID</returns>
         public static string GetCASId(string symbol)
         {
             return MapToCasId[Elements.OfString(symbol).AtomicNumber]; 
         }
 
+        /// <summary>
+        /// Get the chemical series for an element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the chemical series of the element</returns>
         public static string GetChemicalSeries(string symbol)
         {
             string series;
@@ -31,21 +87,41 @@ namespace NCDK.Tools
             return series;
         }
 
+        /// <summary>
+        /// Get the group of the element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the group</returns>
         public static int GetGroup(string symbol)
         {
             return Elements.OfString(symbol).Group;
         }
 
+        /// <summary>
+        /// Get the name of the element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the name of the element</returns>
         public static string GetName(string symbol)
         {
             return Elements.OfString(symbol).Name;
         }
 
+        /// <summary>
+        /// Get the period of the element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the period</returns>
         public static int GetPeriod(string symbol)
         {
             return Elements.OfString(symbol).Period;
         }
 
+        /// <summary>
+        /// Get the phase of the element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the phase of the element</returns>
         public static string GetPhase(string symbol)
         {
             string phase;
@@ -54,16 +130,31 @@ namespace NCDK.Tools
             return phase;
         }
 
+        /// <summary>
+        /// Get the atomic number of the element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the atomic number</returns>
         public static int GetAtomicNumber(string symbol)
         {
             return Elements.OfString(symbol).AtomicNumber;
         }
 
+        /// <summary>
+        /// Get the Pauling electronegativity of an element.
+        /// </summary>
+        /// <param name="symbol">the symbol of the element</param>
+        /// <returns>the Pauling electronegativity</returns>
         public static double? GetPaulingElectronegativity(string symbol)
         {
             return Elements.OfString(symbol).Electronegativity;
         }
 
+        /// <summary>
+        /// Get the symbol for the specified atomic number.
+        /// </summary>
+        /// <param name="atomicNumber">the atomic number of the element</param>
+        /// <returns>the corresponding symbol</returns>
         public static string GetSymbol(int atomicNumber)
         {
             return Elements.OfNumber(atomicNumber).Symbol;
