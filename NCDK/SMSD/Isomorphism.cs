@@ -32,7 +32,6 @@ using NCDK.SMSD.Global;
 using NCDK.SMSD.Tools;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -69,7 +68,6 @@ namespace NCDK.SMSD
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    [Category("Legacy")]
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     [Serializable]
     public sealed class Isomorphism : AbstractMCS

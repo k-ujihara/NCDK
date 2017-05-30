@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,7 +28,6 @@ namespace NCDK.IO.InChI
     /// </summary>
     // @cdk.module extra
     // @cdk.githash
-    [Category("Legacy")]
     [Obsolete]
     public class InChIContentProcessorTool
     {

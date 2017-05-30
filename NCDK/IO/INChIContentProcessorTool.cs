@@ -94,7 +94,7 @@ namespace NCDK.IO
         /// <param name="bondsEncoding">the content of the INChI connections field</param>
         /// <param name="container">the atomContainer parsed from the formula field</param>
         /// <param name="source">the atom to build the path upon. If -1, then start new path</param>
-        /// <seealso cref="ProcessFormula(IAtomContainer, string)"/> 
+        /// <seealso cref="ProcessFormula(IAtomContainer, string)"/>
         public void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
         {
             Debug.WriteLine("Parsing bond data: ", bondsEncoding);
@@ -132,7 +132,7 @@ namespace NCDK.IO
                         {
                             IAtom sourceAtom = container.Atoms[source - 1];
                             bondToAdd = container.Builder.CreateBond(sourceAtom, targetAtom,
-                                    BondOrder.Single);
+                                                                           BondOrder.Single);
                             container.Bonds.Add(bondToAdd);
                         }
                         remainder = matcher.Groups[2].Value;

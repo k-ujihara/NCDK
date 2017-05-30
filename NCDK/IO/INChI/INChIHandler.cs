@@ -20,6 +20,7 @@ using NCDK.Utils.Xml;
 using NCDK.Default;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System;
 
 namespace NCDK.IO.InChI
 {
@@ -38,7 +39,7 @@ namespace NCDK.IO.InChI
     /// <seealso cref="InChIReader"/>
     // @cdk.module extra
     // @cdk.githash
-    // @cdk.require java1.4+
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class InChIHandler : XContentHandler
     {
         private InChIContentProcessorTool inchiTool;
