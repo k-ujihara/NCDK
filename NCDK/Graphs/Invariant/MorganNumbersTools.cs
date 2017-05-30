@@ -73,8 +73,8 @@ namespace NCDK.Graphs.Canon
             // value to the number of connected non-hydrogens
             foreach (var bond in molecule.Bonds)
             {
-                int u = molecule.Atoms.IndexOf(bond.Atoms[0]);
-                int v = molecule.Atoms.IndexOf(bond.Atoms[1]);
+                int u = molecule.Atoms.IndexOf(bond.Begin);
+                int v = molecule.Atoms.IndexOf(bond.End);
                 graph[u] = Ints.EnsureCapacity(graph[u], degree[u] + 1, InitialDegree);
                 graph[v] = Ints.EnsureCapacity(graph[v], degree[v] + 1, InitialDegree);
                 graph[u][degree[u]++] = v;

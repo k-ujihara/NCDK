@@ -29,7 +29,7 @@ namespace NCDK.Reactions.Types
     /// <para>Based on the valence bond model of bonding, hyperconjugation can be described as
     /// "double bond - no bond resonance"</para>
     /// <para>This reaction could be represented like</para>
-    /// <pre>[C+]-C => C=C + [H+] </pre>
+    /// <pre>[C+]-C =&gt; C=C + [H+] </pre>
     /// </summary>
     // @author         Miguel Rojas
     // @cdk.created    2006-07-04
@@ -79,7 +79,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter
                                     && (atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
@@ -91,7 +91,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
@@ -144,7 +144,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if ((atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
@@ -154,7 +154,7 @@ namespace NCDK.Reactions.Types
 
                                     if (bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
                                                 && atomk.Symbol.Equals("H")

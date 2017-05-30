@@ -363,6 +363,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Smiles\SMARTS\Parser\ParseException.cs" />
     <Compile Include="Smiles\SMARTS\SmartsAtomAtomMapFilter.cs" />
     <Compile Include="Smiles\SmiFlavor.cs" />
     <Compile Include="Templates\IsoAlkanes.cs" />
@@ -873,7 +874,6 @@
     <Compile Include="Smiles\SMARTS\Parser\ASTValence.cs" />
     <Compile Include="Smiles\SMARTS\Parser\JJTSMARTSParserState.cs" />
     <Compile Include="Smiles\SMARTS\Parser\Node.cs" />
-    <Compile Include="Smiles\SMARTS\Parser\ParseException.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SimpleCharStream.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SimpleNode.cs" />
     <Compile Include="Smiles\SMARTS\Parser\Smarts2MQLVisitor.cs" />
@@ -1577,7 +1577,7 @@
     <Compile Include="LibIO\MD\MDMolecule.cs" />
     <Compile Include="LibIO\MD\Residue.cs" />
     <Compile Include="Maths\FortranFormat.cs" />
-    <Compile Include="Maths\MathTools.cs" />
+    <Compile Include="StructGen\MathTools.cs" />
     <Compile Include="Maths\Primes.cs" />
     <Compile Include="Maths\RandomNumbersTool.cs" />
     <Compile Include="Modelings\Builder3D\AtomPlacer3D.cs" />

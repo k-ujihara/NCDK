@@ -56,6 +56,9 @@ namespace <#= ns.NS #>
         // elements
         public IAtom CreateAtom() => new Atom();
         public IAtom CreateAtom(IElement element) => new Atom(element);
+		public IAtom CreateAtom(int elem) => new Atom(elem);
+		public IAtom CreateAtom(int elem, int hcnt) => new Atom(elem, hcnt);
+		public IAtom CreateAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
         public IAtom CreateAtom(string elementSymbol) => new Atom(elementSymbol);
         public IAtom CreateAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
         public IAtom CreateAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);

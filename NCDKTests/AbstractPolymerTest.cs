@@ -42,8 +42,8 @@ namespace NCDK
         {
             IPolymer oPolymer = (IPolymer)NewChemObject();
 
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C");
             oPolymer.Atoms.Add(oAtom1);
             oPolymer.Atoms.Add(oAtom2);
 
@@ -58,9 +58,9 @@ namespace NCDK
             IMonomer oMono1 = oPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = null;
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C");
 
             oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
@@ -89,9 +89,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C");
             oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
@@ -109,9 +109,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C");
             oPolymer.AddAtom(oAtom1, oMono1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
@@ -131,9 +131,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oPolymer.Builder.CreateAtom("C");
             oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
@@ -154,7 +154,7 @@ namespace NCDK
             IPolymer oPolymer = (IPolymer)NewChemObject();
             IMonomer oMono1 = oPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
+            IAtom oAtom1 = oPolymer.Builder.CreateAtom("C");
             oPolymer.AddAtom(oAtom1, oMono1);
             Assert.IsTrue(oPolymer.GetMonomerNames().Contains(oMono1.MonomerName));
             Assert.AreEqual(1, oPolymer.Atoms.Count);
@@ -175,8 +175,8 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = polymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = polymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = polymer.Builder.CreateAtom("C3");
+            IAtom oAtom2 = polymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = polymer.Builder.CreateAtom("C");
             polymer.AddAtom(oAtom2, oMono1);
             polymer.AddAtom(oAtom3, oMono2);
             IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();

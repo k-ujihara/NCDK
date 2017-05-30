@@ -1,4 +1,4 @@
-/* Copyright (C) 2010  M.Rijnbeek <markr@ebi.ac.uk>
+﻿/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -8,7 +8,7 @@
  * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
- * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
@@ -16,28 +16,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.Isomorphisms.Matchers
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace NCDK
 {
     /// <summary>
-    /// Implements the concept of a "query bond" between two or more atoms.
-    /// Query bonds can be used to capture types such as "Single or Double" or "Any".
+    /// Tests the <see cref="CDK"/> helper class functionality.
     /// </summary>
-    // @cdk.module isomorphism
-    // @cdk.githash
-    // @cdk.created 2010-12-16
-    public abstract class QueryBond : Silent.Bond, IQueryBond
+    // @cdk.module test-core 
+    [TestClass()]
+    public class CDKTest
     {
-        public QueryBond(IChemObjectBuilder builder)
+        [TestMethod()]
+        public void TestGetVersion()
         {
-            this.Builder = builder;
+            string version = CDK.Version;
+            Assert.IsNotNull(version);
         }
-
-        public QueryBond(IAtom atom1, IAtom atom2, BondOrder order, IChemObjectBuilder builder)
-            : base(atom1, atom2, order)
-        {
-            this.Builder = builder;
-        }
-
-        public abstract bool Matches(IBond bond);
     }
 }

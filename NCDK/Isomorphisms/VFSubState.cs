@@ -82,7 +82,11 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        /// Check the feasibility of the candidate pair {n, m}. A candidate pair is
+        /// Check the feasibility of the candidate pair {n, m}. 
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// A candidate pair is
         /// syntactically feasible iff all k-look-ahead rules hold. These look ahead
         /// rules check adjacency relation of the mapping. If an edge is mapped in g1
         /// it should also be mapped in g2 and vise-versa (0-look-ahead). If an edge
@@ -90,14 +94,21 @@ namespace NCDK.Isomorphisms
         /// (terminal) then the number of such edges should be less or equal in g1
         /// compared to g2 (1-look-ahead). If the edge is unmapped and non-terminal
         /// then the number of such edges should be less or equal in g1 compared to
-        /// g2 (2-look-ahead). <p/> The above feasibility rules are for
+        /// g2 (2-look-ahead).
+        /// </para>
+        /// <para>
+        /// The above feasibility rules are for
         /// subgraph-isomorphism and have been adapted for subgraph-monomorphism. For
         /// a monomorphism a mapped edge in g2 does not have to be present in g1. The
         /// 2-look-ahead also requires summing the terminal and remaining counts (or
-        /// sorting the vertices). <p/> The semantic feasibility verifies that the
+        /// sorting the vertices). 
+        /// </para>
+        /// <para>
+        /// The semantic feasibility verifies that the
         /// labels the label n, m are compatabile and that the label on each matched
         /// edge is compatabile.
-        /// </summary>
+        /// </para>
+        /// </remarks>
         /// <param name="n">a candidate vertex from g1</param>
         /// <param name="m">a candidate vertex from g2</param>
         /// <returns>the mapping is feasible</returns>

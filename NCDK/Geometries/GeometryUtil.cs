@@ -625,15 +625,15 @@ namespace NCDK.Geometries
         /// <returns>The array with the coordinates</returns>
         public static int[] GetBondCoordinates(IBond bond)
         {
-            if (bond.Atoms[0].Point2D == null || bond.Atoms[1].Point2D == null)
+            if (bond.Begin.Point2D == null || bond.End.Point2D == null)
             {
                 Trace.TraceError("GetBondCoordinates() called on Bond without 2D coordinates!");
                 return new int[0];
             }
-            int beginX = (int)bond.Atoms[0].Point2D.Value.X;
-            int endX = (int)bond.Atoms[1].Point2D.Value.X;
-            int beginY = (int)bond.Atoms[0].Point2D.Value.Y;
-            int endY = (int)bond.Atoms[1].Point2D.Value.Y;
+            int beginX = (int)bond.Begin.Point2D.Value.X;
+            int endX = (int)bond.End.Point2D.Value.X;
+            int beginY = (int)bond.Begin.Point2D.Value.Y;
+            int endY = (int)bond.End.Point2D.Value.Y;
             return new int[] { beginX, beginY, endX, endY };
         }
 
@@ -875,8 +875,8 @@ namespace NCDK.Geometries
             int bondCounter = 0;
             foreach (var bond in container.Bonds)
             {
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                IAtom atom1 = bond.Begin;
+                IAtom atom2 = bond.End;
                 if (atom1.Point2D != null && atom2.Point2D != null)
                 {
                     bondCounter++;
@@ -894,12 +894,12 @@ namespace NCDK.Geometries
         /// <returns>The geometric length of this bond</returns>
         public static double GetLength2D(IBond bond)
         {
-            if (bond.Atoms[0] == null || bond.Atoms[1] == null)
+            if (bond.Begin == null || bond.End == null)
             {
                 return 0.0;
             }
-            Vector2 point1 = bond.Atoms[0].Point2D.Value;
-            Vector2 point2 = bond.Atoms[1].Point2D.Value;
+            Vector2 point1 = bond.Begin.Point2D.Value;
+            Vector2 point2 = bond.End.Point2D.Value;
             if (point1 == null || point2 == null)
             {
                 return 0.0;
@@ -1071,7 +1071,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Determines the normalized vector orthogonal on the vector p1->p2.
+        /// Determines the normalized vector orthogonal on the vector p1-&gt;p2.
         /// </summary>
         /// <param name="point1">Description of the Parameter</param>
         /// <param name="point2">Description of the Parameter</param>
@@ -1106,8 +1106,8 @@ namespace NCDK.Geometries
                 if (bond.Atoms.Count == 2)
                 {
                     counter++;
-                    IAtom atom1 = bond.Atoms[0];
-                    IAtom atom2 = bond.Atoms[1];
+                    IAtom atom1 = bond.Begin;
+                    IAtom atom2 = bond.End;
                     bondlength += Math.Sqrt(Math.Pow(atom1.Point2D.Value.X - atom2.Point2D.Value.X, 2)
                             + Math.Pow(atom1.Point2D.Value.Y - atom2.Point2D.Value.Y, 2));
                 }
@@ -1287,6 +1287,7 @@ namespace NCDK.Geometries
         {
             IAtom firstAtom = firstAC.Atoms[posFirstAtom];
             IAtom secondAtom = secondAC.Atoms[posSecondAtom];
+            // XXX: floating point comparision!
             return firstAtom.Symbol.Equals(secondAtom.Symbol)
                     && firstAC.GetConnectedAtoms(firstAtom).Count() == secondAC.GetConnectedAtoms(secondAtom).Count()
                     && firstAtom.BondOrderSum.Equals(secondAtom.BondOrderSum)
@@ -1576,8 +1577,8 @@ namespace NCDK.Geometries
             int bondCounter = 0;
             foreach (var bond in container.Bonds)
             {
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                IAtom atom1 = bond.Begin;
+                IAtom atom2 = bond.End;
                 if (atom1.Point3D != null && atom2.Point3D != null)
                 {
                     bondCounter++;
@@ -1658,8 +1659,8 @@ namespace NCDK.Geometries
             for (int i = 0; i < container.Bonds.Count; i++)
             {
                 IBond bond = container.Bonds[i];
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                IAtom atom1 = bond.Begin;
+                IAtom atom2 = bond.End;
                 if (atom1.Point2D == null || atom2.Point2D == null)
                     throw new ArgumentException("An atom has no 2D coordinates.");
                 Vector2 p1 = atom1.Point2D.Value;

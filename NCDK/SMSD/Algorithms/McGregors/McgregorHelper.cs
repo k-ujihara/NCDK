@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -27,16 +28,17 @@ namespace NCDK.SMSD.Algorithms.McGregors
 {
     /// <summary>
     /// Helper Class for McGregor algorithm.
-    ///
+    /// </summary>
+    /// <remarks>
     /// The second part of the program extents the mapping by the McGregor algorithm in case,
     /// that not all atoms of molecule A and molecule B are mapped by the clique approach.
-    /// </summary>
+    /// </remarks>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class McgregorHelper
     {
-
         private readonly IList<string> cBondSetA;
         private readonly IList<string> cBondSetB;
         private readonly bool mappingCheckFlag;
@@ -77,7 +79,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
             this.setNumB = setNumB;
             this.iBondSetA = iBondSetA;
             this.iBondSetB = iBondSetB;
-
         }
 
         /// <summary>

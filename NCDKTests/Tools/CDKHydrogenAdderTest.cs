@@ -195,7 +195,7 @@ namespace NCDK.Tools
             Assert.IsNotNull(type);
             AtomTypeManipulator.Configure(atom, type);
 
-            Assert.IsNull(atom.ImplicitHydrogenCount);
+            Assert.AreNotEqual(2, atom.ImplicitHydrogenCount);
             adder.AddImplicitHydrogens(mol);
             Assert.AreEqual(1, mol.Atoms.Count);
             Assert.IsNotNull(atom.ImplicitHydrogenCount);
@@ -742,13 +742,13 @@ namespace NCDK.Tools
             Assert.AreEqual("S", sulfur.Symbol);
             Assert.IsNotNull(sulfur.ImplicitHydrogenCount);
             Assert.AreEqual(0, sulfur.ImplicitHydrogenCount.Value);
-            Assert.AreEqual(3, atomContainer_0.GetConnectedAtoms(sulfur).Count());
+            Assert.AreEqual(3, atomContainer_0.GetConnectedBonds(sulfur).Count());
 
             Assert.AreEqual(10, atomContainer_0.Atoms.Count);
 
             Assert.IsNotNull(sulfur.ImplicitHydrogenCount);
             Assert.AreEqual(0, sulfur.ImplicitHydrogenCount.Value);
-            Assert.AreEqual(3, atomContainer_0.GetConnectedAtoms(sulfur).Count());
+            Assert.AreEqual(3, atomContainer_0.GetConnectedBonds(sulfur).Count());
         }
 
         // @cdk.bug 1627763

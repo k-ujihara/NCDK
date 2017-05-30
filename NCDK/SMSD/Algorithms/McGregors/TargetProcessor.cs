@@ -32,6 +32,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class TargetProcessor
     {
         private List<string> cTab1Copy;
@@ -77,8 +78,8 @@ namespace NCDK.SMSD.Algorithms.McGregors
             for (int atomIndex = 0; atomIndex < target.Bonds.Count; atomIndex++)
             {
 
-                int indexI = target.Atoms.IndexOf(target.Bonds[atomIndex].Atoms[0]);
-                int indexJ = target.Atoms.IndexOf(target.Bonds[atomIndex].Atoms[1]);
+                int indexI = target.Atoms.IndexOf(target.Bonds[atomIndex].Begin);
+                int indexJ = target.Atoms.IndexOf(target.Bonds[atomIndex].End);
                 int order = target.Bonds[atomIndex].Order.Numeric;
 
                 for (int b = 0; b < unmappedNumB; b++)

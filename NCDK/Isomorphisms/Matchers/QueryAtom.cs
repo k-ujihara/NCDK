@@ -23,7 +23,7 @@ namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
     // @cdk.githash
-    public abstract class QueryAtom : Default.Atom, IQueryAtom
+    public abstract class QueryAtom : Silent.Atom, IQueryAtom
     {
         public abstract bool Matches(IAtom atom);
 

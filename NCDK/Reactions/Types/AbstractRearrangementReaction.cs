@@ -59,7 +59,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter
                                     && (atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
@@ -71,7 +71,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Double)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter
                                                 && checkAtom(atomk)
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any())
@@ -115,7 +115,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if ((atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
@@ -125,7 +125,7 @@ namespace NCDK.Reactions.Types
 
                                     if (bondj.Order == BondOrder.Double)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (checkAtom(atomk)
                                             && !reactant.GetConnectedSingleElectrons(atomk).Any())
                                         {

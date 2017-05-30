@@ -21,6 +21,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Stereo;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using NCDK.Common.Base;
 
 namespace NCDK
 {
@@ -218,8 +220,8 @@ namespace NCDK
             // test cloning of atoms in bonds
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
             Assert.IsNotNull(clonedMol);
-            Assert.AreNotSame(atom1, clonedMol.Bonds[0].Atoms[0]);
-            Assert.AreNotSame(atom2, clonedMol.Bonds[0].Atoms[1]);
+            Assert.AreNotSame(atom1, clonedMol.Bonds[0].Begin);
+            Assert.AreNotSame(atom2, clonedMol.Bonds[0].End);
         }
 
         [TestMethod()]
@@ -235,8 +237,8 @@ namespace NCDK
             // test that cloned bonds contain atoms from cloned atomcontainer
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
             Assert.IsNotNull(clonedMol);
-            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].Atoms[0]));
-            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].Atoms[1]));
+            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].Begin));
+            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].End));
         }
 
         [TestMethod()]
@@ -464,7 +466,7 @@ namespace NCDK
             container.Bonds.Add(c1c4);
 
             IDoubleBondStereochemistry dbStereo = new DoubleBondStereochemistry(
-                c1c2, 
+                c1c2,
                 new IBond[] { c2c3, c1c4 },
                 DoubleBondConformation.Opposite);
 
@@ -692,7 +694,7 @@ namespace NCDK
             acetone.LonePairs.Add(lp2);
 
             // Remove the oxygen
-            acetone.RemoveAtomAndConnectedElectronContainers(o);
+            acetone.RemoveAtom(o);
             Assert.AreEqual(3, acetone.Atoms.Count);
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(0, acetone.LonePairs.Count);
@@ -724,7 +726,7 @@ namespace NCDK
                     TetrahedralStereo.Clockwise));
 
             // Remove the oxygen
-            acetone.RemoveAtomAndConnectedElectronContainers(o);
+            acetone.RemoveAtom(o);
             Assert.AreEqual(3, acetone.Atoms.Count);
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(0, acetone.LonePairs.Count);
@@ -958,16 +960,235 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestSetAtom_int_IAtom()
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestSetAtomOutOfRange()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
-            IAtom n = container.Builder.CreateAtom("N");
             IAtom c = container.Builder.CreateAtom("C");
-            container.Atoms.Add(n);   // I believe this line is requied but not exist in CDK version. 
             container.Atoms[0] = c;
+        }
 
-            Assert.IsNotNull(container.Atoms[0]);
-            Assert.AreEqual("C", container.Atoms[0].Symbol);
+        [TestMethod()]
+        public void TestSetAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom c1 = container.Builder.CreateAtom("C");
+            IAtom c2 = container.Builder.CreateAtom("C");
+            container.Atoms.Add(c1);
+            container.Atoms[0] = c2;
+            Assert.AreEqual(c2, container.Atoms[0]);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), AllowDerivedTypes = true)]
+        public void TestSetAtomSameMolecule()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom c1 = container.Builder.CreateAtom("C");
+            IAtom c2 = container.Builder.CreateAtom("C");
+            container.Atoms.Add(c1);
+            container.Atoms.Add(c2);
+            container.Atoms[0] = c2;
+        }
+
+        [TestMethod()]
+        public void TestSetAtomUpdatesBonds()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom a1 = container.Builder.CreateAtom();
+            IAtom a2 = container.Builder.CreateAtom();
+            IAtom a3 = container.Builder.CreateAtom();
+            IBond b1 = container.Builder.CreateBond();
+            IBond b2 = container.Builder.CreateBond();
+            a1.Symbol = "C";
+            a2.Symbol = "C";
+            a2.Symbol = "O";
+            b1.Order = BondOrder.Single;
+            b1.SetAtoms(new IAtom[] { a1, a2 });
+            b2.Order = BondOrder.Single;
+            b2.SetAtoms(new IAtom[] { a2, a3 });
+            container.Atoms.Add(a1);
+            container.Atoms.Add(a2);
+            container.Atoms.Add(a3);
+            container.Bonds.Add(b1);
+            container.Bonds.Add(b2);
+
+            IAtom a4 = container.Builder.CreateAtom();
+            container.Atoms[2] = a4;
+            Assert.AreEqual(a4, b2.End);
+        }
+
+        [TestMethod()]
+        public void TestSetAtomUpdatesSingleElectron()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder bldr = container.Builder;
+            IAtom a1 = bldr.CreateAtom();
+            IAtom a2 = bldr.CreateAtom();
+            IAtom a3 = bldr.CreateAtom();
+            IBond b1 = bldr.CreateBond();
+            IBond b2 = bldr.CreateBond();
+            a1.Symbol = "C";
+            a2.Symbol = "C";
+            a2.Symbol = "O";
+            b1.Order = BondOrder.Single;
+            b1.SetAtoms(new IAtom[] { a1, a2 });
+            b2.Order = BondOrder.Single;
+            b2.SetAtoms(new IAtom[] { a2, a3 });
+            container.Atoms.Add(a1);
+            container.Atoms.Add(a2);
+            container.Atoms.Add(a3);
+            container.Bonds.Add(b1);
+            container.Bonds.Add(b2);
+            ISingleElectron se = bldr.CreateSingleElectron();
+            se.Atom = a3;
+            container.SingleElectrons.Add(se);
+
+            IAtom a4 = bldr.CreateAtom();
+            container.Atoms[2] = a4;
+
+            Assert.AreEqual(a4, se.Atom);
+        }
+
+        [TestMethod()]
+        public void TestSetAtomUpdatesAtomStereo()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder bldr = container.Builder;
+            IAtom a1 = bldr.CreateAtom();
+            IAtom a2 = bldr.CreateAtom();
+            IAtom a3 = bldr.CreateAtom();
+            IAtom a4 = bldr.CreateAtom();
+            IAtom a5 = bldr.CreateAtom();
+            a1.Symbol = "C";
+            a2.Symbol = "O";
+            a3.Symbol = "Cl";
+            a4.Symbol = "F";
+            a5.Symbol = "C";
+            container.Atoms.Add(a1);
+            container.Atoms.Add(a2);
+            container.Atoms.Add(a3);
+            container.Atoms.Add(a4);
+            container.Atoms.Add(a5);
+            container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
+            container.AddBond(container.Atoms[0], container.Atoms[2], BondOrder.Single);
+            container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
+            container.AddBond(container.Atoms[0], container.Atoms[4], BondOrder.Single);
+            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0],
+                                                                new IAtom[]{
+                                                                container.Atoms[1],
+                                                                container.Atoms[2],
+                                                                container.Atoms[3],
+                                                                container.Atoms[4]},
+                                                                TetrahedralStereo.Clockwise));
+
+            IAtom aNew = bldr.CreateAtom();
+            container.Atoms[2] = aNew;
+
+            var siter = container.StereoElements.GetEnumerator();
+            Assert.IsTrue(siter.MoveNext());
+            IStereoElement se = siter.Current;
+            Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
+            ITetrahedralChirality tc = (ITetrahedralChirality)se;
+            Assert.AreEqual(a1, tc.ChiralAtom);
+            Assert.IsTrue(Compares.AreDeepEqual(new IAtom[] { a2, aNew, a4, a5 }, tc.Ligands));
+            Assert.IsFalse(siter.MoveNext());
+        }
+
+        [TestMethod()]
+        public void TestSetAtomUpdatesBondStereo()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder bldr = container.Builder;
+            IAtom a1 = bldr.CreateAtom();
+            IAtom a2 = bldr.CreateAtom();
+            IAtom a3 = bldr.CreateAtom();
+            IAtom a4 = bldr.CreateAtom();
+            a1.Symbol = "C";
+            a2.Symbol = "C";
+            a3.Symbol = "C";
+            a4.Symbol = "C";
+            container.Atoms.Add(a1);
+            container.Atoms.Add(a2);
+            container.Atoms.Add(a3);
+            container.Atoms.Add(a4);
+            container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
+            container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Double);
+            container.AddBond(container.Atoms[2], container.Atoms[3], BondOrder.Single);
+            IBond b1 = container.Bonds[0];
+            IBond b2 = container.Bonds[1];
+            IBond b3 = container.Bonds[2];
+
+            container.StereoElements.Add(new DoubleBondStereochemistry(b2,
+                                                                     new IBond[] { b1, b3 },
+                                                                     DoubleBondConformation.Together));
+
+            IAtom aNew = bldr.CreateAtom();
+            container.Atoms[2] = aNew;
+
+            Assert.AreEqual(aNew, b2.End);
+            Assert.AreEqual(aNew, b3.Begin);
+
+            var siter = container.StereoElements.GetEnumerator();
+            Assert.IsTrue(siter.MoveNext());
+            IStereoElement se = siter.Current;
+            Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
+            IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry)se;
+            Assert.AreEqual(b2, tc.StereoBond);
+            Assert.AreEqual(new IBond[] { b1, b3 }, tc.Bonds);
+            Assert.IsFalse(siter.MoveNext());
+        }
+
+        /// <summary>
+        /// This test we ensure there is backing array and then access the index,
+        /// we should get an exception rather than null
+        /// </summary>
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestGetAtomOutOfBackedArray()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = mol.Builder;
+            for (int i = 0; i < 10; i++)
+                mol.Atoms.Add(builder.CreateAtom());
+            for (int i = 9; i >= 0; i--)
+                mol.Atoms.RemoveAt(i);
+            var dummy = mol.Atoms[0]; // fail rather than return null
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestGetAtomOutOfRange()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            var dummy = mol.Atoms[99999];
+        }
+
+        /// <summary>
+        /// This test we ensure there is backing array and then access the index,
+        /// we should get an exception rather than null
+        /// </summary>
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestGetBondOutOfRangeBackedArray()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = mol.Builder;
+            for (int i = 0; i < 10; i++)
+                mol.Atoms.Add(builder.CreateAtom());
+            for (int i = 0; i < 9; i++)
+                mol.AddBond(mol.Atoms[i], mol.Atoms[i + 1], BondOrder.Single);
+            for (int i = 8; i >= 0; i--)
+                mol.Bonds.RemoveAt(i);
+            var dummy = mol.Bonds[0]; // fail rather than return null
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestGetBondOutOfRange()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            var dummy = mol.Atoms[99999];
         }
 
         [TestMethod()]
@@ -1172,7 +1393,7 @@ namespace NCDK
             Assert.AreEqual(4, counter);
 
             // test force growing of default arrays
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 500; i++)
             {
                 acetone.Atoms.Add(acetone.Builder.CreateAtom());
                 acetone.Bonds.Add(acetone.Builder.CreateBond());
@@ -1486,6 +1707,94 @@ namespace NCDK
         }
 
         [TestMethod()]
+        public void TestGetMinBondOrderHighBondOrder()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            container.Atoms.Add(builder.CreateAtom());
+            container.Atoms.Add(builder.CreateAtom());
+            container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Sextuple);
+            Assert.AreEqual(BondOrder.Sextuple, container.GetMinimumBondOrder(container.Atoms[0]));
+        }
+
+        [TestMethod()]
+        public void TestGetMinBondOrderNoBonds()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.Atoms.Add(atom);
+            Assert.AreEqual(BondOrder.Unset, container.GetMinimumBondOrder(atom));
+        }
+
+        [TestMethod()]
+        public void TestGetMinBondOrderImplH()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom a = builder.CreateAtom();
+            a.ImplicitHydrogenCount = 1;
+            container.Atoms.Add(a);
+            Assert.AreEqual(BondOrder.Single, container.GetMinimumBondOrder(a));
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetMinBondOrderNoSuchAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom a1 = builder.CreateAtom();
+            IAtom a2 = builder.CreateAtom();
+            container.Atoms.Add(a1);
+            Assert.AreEqual(BondOrder.Unset, container.GetMinimumBondOrder(a2));
+        }
+
+        [TestMethod()]
+        public void TestGetMaxBondOrderHighBondOrder()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            container.Atoms.Add(builder.CreateAtom());
+            container.Atoms.Add(builder.CreateAtom());
+            container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Sextuple);
+            Assert.AreEqual(BondOrder.Sextuple, container.GetMaximumBondOrder(container.Atoms[0]));
+        }
+
+        [TestMethod()]
+        public void TestGetMaxBondOrderNoBonds()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.Atoms.Add(atom);
+            Assert.AreEqual(BondOrder.Unset, container.GetMaximumBondOrder(atom));
+        }
+
+        [TestMethod()]
+        public void TestGetMaxBondOrderImplH()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom a = builder.CreateAtom();
+            a.ImplicitHydrogenCount = 1;
+            container.Atoms.Add(a);
+            Assert.AreEqual(BondOrder.Single, container.GetMaximumBondOrder(a));
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetMaxBondOrderNoSuchAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom a1 = builder.CreateAtom();
+            IAtom a2 = builder.CreateAtom();
+            container.Atoms.Add(a1);
+            Assert.AreEqual(BondOrder.Unset, container.GetMaximumBondOrder(a2));
+        }
+
+        [TestMethod()]
         public virtual void TestRemoveElectronContainer_int()
         {
             // acetone molecule
@@ -1725,14 +2034,14 @@ namespace NCDK
             foreach (var bond in acetone.Bonds)
                 Assert.IsNotNull(bond);
 
-            Assert.AreEqual(c1, acetone.Bonds[0].Atoms[0]);
-            Assert.AreEqual(c2, acetone.Bonds[0].Atoms[1]);
+            Assert.AreEqual(c1, acetone.Bonds[0].Begin);
+            Assert.AreEqual(c2, acetone.Bonds[0].End);
             Assert.AreEqual(BondOrder.Single, acetone.Bonds[0].Order);
-            Assert.AreEqual(c2, acetone.Bonds[1].Atoms[0]);
-            Assert.AreEqual(o, acetone.Bonds[1].Atoms[1]);
+            Assert.AreEqual(c2, acetone.Bonds[1].Begin);
+            Assert.AreEqual(o, acetone.Bonds[1].End);
             Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
-            Assert.AreEqual(c2, acetone.Bonds[2].Atoms[0]);
-            Assert.AreEqual(c3, acetone.Bonds[2].Atoms[1]);
+            Assert.AreEqual(c2, acetone.Bonds[2].Begin);
+            Assert.AreEqual(c3, acetone.Bonds[2].End);
             Assert.AreEqual(BondOrder.Single, acetone.Bonds[2].Order);
         }
 
@@ -1757,16 +2066,16 @@ namespace NCDK
             foreach (var bond in acetone.Bonds)
                 Assert.IsNotNull(bond);
 
-            Assert.AreEqual(c1, acetone.Bonds[0].Atoms[0]);
-            Assert.AreEqual(c2, acetone.Bonds[0].Atoms[1]);
+            Assert.AreEqual(c1, acetone.Bonds[0].Begin);
+            Assert.AreEqual(c2, acetone.Bonds[0].End);
             Assert.AreEqual(BondOrder.Single, acetone.Bonds[0].Order);
             Assert.AreEqual(BondStereo.Up, acetone.Bonds[0].Stereo);
-            Assert.AreEqual(c2, acetone.Bonds[1].Atoms[0]);
-            Assert.AreEqual(o, acetone.Bonds[1].Atoms[1]);
+            Assert.AreEqual(c2, acetone.Bonds[1].Begin);
+            Assert.AreEqual(o, acetone.Bonds[1].End);
             Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
             Assert.AreEqual(BondStereo.Down, acetone.Bonds[1].Stereo);
-            Assert.AreEqual(c2, acetone.Bonds[2].Atoms[0]);
-            Assert.AreEqual(c3, acetone.Bonds[2].Atoms[1]);
+            Assert.AreEqual(c2, acetone.Bonds[2].Begin);
+            Assert.AreEqual(c3, acetone.Bonds[2].End);
             Assert.AreEqual(BondOrder.Single, acetone.Bonds[2].Order);
             Assert.AreEqual(BondStereo.None, acetone.Bonds[2].Stereo);
         }
@@ -1813,8 +2122,8 @@ namespace NCDK
             container.Atoms.Add(c2);
             container.Atoms.Add(o);
 
-            Assert.IsNotNull(container.Atoms.First());
-            Assert.AreEqual("C", container.Atoms.First().Symbol);
+            Assert.IsNotNull(container.Atoms[0]);
+            Assert.AreEqual("C", container.Atoms[0].Symbol);
         }
 
         [TestMethod()]
@@ -1828,8 +2137,8 @@ namespace NCDK
             container.Atoms.Add(c2);
             container.Atoms.Add(o);
 
-            Assert.IsNotNull(container.Atoms.Last());
-            Assert.AreEqual("H", container.Atoms.Last().Symbol);
+            Assert.IsNotNull(container.Atoms[container.Atoms.Count - 1]);
+            Assert.AreEqual("H", container.Atoms[container.Atoms.Count - 1].Symbol);
         }
 
         [TestMethod()]
@@ -2682,6 +2991,94 @@ namespace NCDK
             container.Atoms.Remove(c2);
             Assert.AreEqual(1, container.Bonds.Count, "atom Contains Contains no bonds");
             Assert.IsTrue(container.IsEmpty(), "atom Contains Contains no atoms but was not empty");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedBondsMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.GetConnectedBonds(atom);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedAtomsMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.GetConnectedBonds(atom);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedAtomCountMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            var dummy = container.GetConnectedAtoms(atom).Count();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedBondCountMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            var dummy = container.GetConnectedBonds(atom).Count();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void TestGetConnectedBondCountMissingIdx()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.GetConnectedBonds(container.Atoms[0]);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedLongPairsMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.GetConnectedLonePairs(atom);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedSingleElecsMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            container.GetConnectedSingleElectrons(atom);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedLongPairCountMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            var dummy = container.GetConnectedLonePairs(atom).Count();
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(NoSuchAtomException))]
+        public void TestGetConnectedSingleElecCountMissingAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+            IAtom atom = builder.CreateAtom();
+            var dummy = container.GetConnectedSingleElectrons(atom).Count();
         }
     }
 }

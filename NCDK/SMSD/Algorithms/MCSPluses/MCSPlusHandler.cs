@@ -38,9 +38,9 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class MCSPlusHandler : AbstractMCSAlgorithm, IMCSBase
     {
-
         private static IList<IDictionary<IAtom, IAtom>> allAtomMCS = null;
         private static IDictionary<IAtom, IAtom> atomsMCS = null;
         private static IDictionary<int, int> firstMCS = null;
@@ -130,13 +130,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                     }
                     allMCS.Insert(counter++, validSolution);
                 }
-
             }
             catch (Exception ex)
             {
                 Console.Out.WriteLine(ex.StackTrace);
             }
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -144,14 +142,12 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         {
             try
             {
-
                 int counter = 0;
                 foreach (var solution in allMCS)
                 {
                     IDictionary<IAtom, IAtom> atomMappings = new Dictionary<IAtom, IAtom>();
                     foreach (var map in solution)
                     {
-
                         int iIndex = map.Key;
                         int jIndex = map.Value;
 
@@ -169,7 +165,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             {
                 //I.GetCause();
             }
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

@@ -289,5 +289,18 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual("CCO.CC(=O)O.[H+].CCOC(=O)C.O", smigen.Create(mol));
             Assert.AreEqual("CCO.CC(=O)O>[H+]>CCOC(=O)C.O", smigen.CreateReactionSMILES(ReactionManipulator.ToReaction(mol)));
         }
+
+        [TestMethod()]
+        public void InliningReactionsWithRadicals()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IReaction reaction = smipar.ParseReactionSmiles("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0| ethyl esterification");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+            // convert to molecule
+            IAtomContainer mol = ReactionManipulator.ToMolecule(reaction);
+            Assert.AreEqual("[CH2]CO.CC(=O)O.[H+].CCOC(=O)C.O |^1:0|", smigen.Create(mol));
+            Assert.AreEqual("[CH2]CO.CC(=O)O>[H+]>CCOC(=O)C.O |^1:0|", smigen.CreateReactionSMILES(ReactionManipulator.ToReaction(mol)));
+        }
     }
 }

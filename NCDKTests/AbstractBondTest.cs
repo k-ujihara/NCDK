@@ -85,8 +85,8 @@ namespace NCDK
             b.SetAtoms(atomsToAdd);
 
             Assert.AreEqual(2, b.Atoms.Count);
-            Assert.AreEqual(atomsToAdd[0], b.Atoms[0]);
-            Assert.AreEqual(atomsToAdd[1], b.Atoms[1]);
+            Assert.AreEqual(atomsToAdd[0], b.Begin);
+            Assert.AreEqual(atomsToAdd[1], b.End);
         }
 
         [TestMethod()]
@@ -105,9 +105,9 @@ namespace NCDK
             Assert.AreEqual(1, b.Atoms.Count);
             b.Atoms[0] = b.Builder.CreateAtom("C");
             Assert.AreEqual(1, b.Atoms.Count);
-            //b.Atoms[0] = null;
+            //b.Begin = null;
             //Assert.AreEqual(0, b.Atoms.Count);
-            //b.Atoms[0] = null;
+            //b.Begin = null;
             //Assert.AreEqual(0, b.Atoms.Count);
         }
 
@@ -121,9 +121,9 @@ namespace NCDK
             Assert.AreEqual(1, b.Atoms.Count);
 
             //// test overwrite with null
-            //b.Atoms[0] = null;
+            //b.Begin = null;
             //Assert.AreEqual(0, b.Atoms.Count);
-            //b.Atoms[0] = null;
+            //b.Begin = null;
             //Assert.AreEqual(0, b.Atoms.Count);
         }
 
@@ -154,8 +154,8 @@ namespace NCDK
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
-            Assert.AreEqual(c, b.Atoms[0]);
-            Assert.AreEqual(o, b.Atoms[1]);
+            Assert.AreEqual(c, b.Begin);
+            Assert.AreEqual(o, b.End);
         }
 
         [TestMethod()]
@@ -167,8 +167,8 @@ namespace NCDK
 
             b.SetAtoms(new[] { c, o });
 
-            Assert.AreEqual(c, b.Atoms[0]);
-            Assert.AreEqual(o, b.Atoms[1]);
+            Assert.AreEqual(c, b.Begin);
+            Assert.AreEqual(o, b.End);
         }
 
         [TestMethod()]
@@ -180,11 +180,11 @@ namespace NCDK
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
-            Assert.AreEqual(c, b.GetConnectedAtom(o));
-            Assert.AreEqual(o, b.GetConnectedAtom(c));
+            Assert.AreEqual(c, b.GetOther(o));
+            Assert.AreEqual(o, b.GetOther(c));
 
             // test default return value
-            Assert.IsNull(b.GetConnectedAtom(b.Builder.CreateAtom()));
+            Assert.IsNull(b.GetOther(b.Builder.CreateAtom()));
         }
 
         [TestMethod()]
@@ -373,8 +373,8 @@ namespace NCDK
             IBond clone = (IBond)bond.Clone();
 
             // test cloning of atoms
-            Assert.AreNotSame(atom1, clone.Atoms[0]);
-            Assert.AreNotSame(atom2, clone.Atoms[1]);
+            Assert.AreNotSame(atom1, clone.Begin);
+            Assert.AreNotSame(atom2, clone.End);
         }
 
         [TestMethod()]
@@ -501,8 +501,8 @@ namespace NCDK
             IAtom atom4 = obj.Builder.CreateAtom("C");
 
             IBond bond1 = obj.Builder.CreateBond(new IAtom[] { atom1, atom2, atom3, atom4 });
-            Assert.AreEqual(atom2, bond1.GetConnectedAtom(atom1));
-            Assert.IsNull(bond1.GetConnectedAtom(obj.Builder.CreateAtom()));
+            Assert.AreEqual(atom2, bond1.GetOther(atom1));
+            Assert.IsNull(bond1.GetOther(obj.Builder.CreateAtom()));
 
             IEnumerable<IAtom> conAtoms = bond1.GetConnectedAtoms(atom1);
             bool correct = true;

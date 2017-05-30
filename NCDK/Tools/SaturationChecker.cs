@@ -307,10 +307,10 @@ namespace NCDK.Tools
                 for (int i = 0; i < bonds.Length; i++)
                 {
                     if (bonds[i].Order == BondOrder.Double && bonds[i].IsAromatic
-                            && (bonds[i].Atoms[0].Symbol.Equals("N") && bonds[i].Atoms[1].Symbol.Equals("N")))
+                            && (bonds[i].Begin.Symbol.Equals("N") && bonds[i].End.Symbol.Equals("N")))
                     {
                         int atomtohandle = 0;
-                        if (bonds[i].Atoms[0].Symbol.Equals("N")) atomtohandle = 1;
+                        if (bonds[i].Begin.Symbol.Equals("N")) atomtohandle = 1;
                         var bondstohandle = atomContainer.GetConnectedBonds(bonds[i].Atoms[atomtohandle]);
                         foreach (var bond in bondstohandle)
                         {

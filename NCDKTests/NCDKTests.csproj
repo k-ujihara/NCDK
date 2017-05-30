@@ -107,6 +107,7 @@
     <Compile Include="Beam\Func\RemoveUpDownBondsTest.cs" />
     <Compile Include="Beam\Func\ToSubsetAtomsTest.cs" />
     <Compile Include="Beam\Func\ToTrigonalTopologyTest.cs" />
+    <Compile Include="CDKTest.cs" />
     <Compile Include="Config\BODRIsotopeTest.cs" />
     <Compile Include="Default\AtomContainerTest.cs" />
     <Compile Include="Default\BondTest.cs" />
@@ -1021,7 +1022,7 @@
     <Compile Include="LibIO\CML\PDBAtomCustomizerTest.cs" />
     <Compile Include="LibIO\MD\MDMoleculeTest.cs" />
     <Compile Include="Maths\FortranFormatTest.cs" />
-    <Compile Include="Maths\MathToolsTest.cs" />
+    <Compile Include="StructGen\MathToolsTest.cs" />
     <Compile Include="Maths\PrimesTest.cs" />
     <Compile Include="Maths\RandomNumbersToolTest.cs" />
     <Compile Include="Default\PDBAtomTest.cs" />

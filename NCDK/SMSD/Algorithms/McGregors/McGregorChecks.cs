@@ -33,6 +33,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class McGregorChecks
     {
         protected internal static bool IsFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
@@ -40,7 +41,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                 IList<int> iBondNeighborAtomsB, IList<string> cBondNeighborsA, IList<string> cBondNeighborsB,
                 bool shouldMatchBonds)
         {
-
             for (int row = 0; row < neighborBondNumA; row++)
             {
                 //            Console.Out.WriteLine("i " + row);
@@ -49,7 +49,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                 for (int column = 0; column < neighborBondNumB; column++)
                 {
-
                     string g1B = cBondNeighborsB[column * 4 + 0];
                     string g2B = cBondNeighborsB[column * 4 + 1];
 
@@ -57,7 +56,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                     {
                         try
                         {
-
                             int indexI = iBondNeighborAtomsA[row * 3 + 0];
                             int indexIPlus1 = iBondNeighborAtomsA[row * 3 + 1];
 
@@ -91,16 +89,15 @@ namespace NCDK.SMSD.Algorithms.McGregors
         protected internal static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
                 bool shouldMatchBonds)
         {
-
             if (ac1 is IQueryAtomContainer)
             {
                 if (((IQueryBond)bondA1).Matches(bondA2))
                 {
-                    IQueryAtom atom1 = (IQueryAtom)(bondA1.Atoms[0]);
-                    IQueryAtom atom2 = (IQueryAtom)(bondA1.Atoms[1]);
+                    IQueryAtom atom1 = (IQueryAtom)(bondA1.Begin);
+                    IQueryAtom atom2 = (IQueryAtom)(bondA1.End);
                     // ok, bonds match
-                    if (atom1.Matches(bondA2.Atoms[0]) && atom2.Matches(bondA2.Atoms[1])
-                            || atom1.Matches(bondA2.Atoms[1]) && atom2.Matches(bondA2.Atoms[0]))
+                    if (atom1.Matches(bondA2.Begin) && atom2.Matches(bondA2.End)
+                            || atom1.Matches(bondA2.End) && atom2.Matches(bondA2.Begin))
                     {
                         // ok, atoms match in either order
                         return true;
@@ -111,13 +108,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
             else
             {
-
                 //Bond Matcher
                 var bondMatcher = new Matchers.DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
                 //Atom Matcher
-                var atomMatcher1 = new Matchers.DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[0], shouldMatchBonds);
+                var atomMatcher1 = new Matchers.DefaultMCSPlusAtomMatcher(ac1, bondA1.Begin, shouldMatchBonds);
                 //Atom Matcher
-                var atomMatcher2 = new Matchers.DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[1], shouldMatchBonds);
+                var atomMatcher2 = new Matchers.DefaultMCSPlusAtomMatcher(ac1, bondA1.End, shouldMatchBonds);
 
                 if (Matchers.DefaultMatcher.IsBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                         && Matchers.DefaultMatcher.IsAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds))
@@ -242,7 +238,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                     {
                         marcs[x * neighborBondNumB + y] = 0;
                     }
-
                 }
             }
 
@@ -277,8 +272,8 @@ namespace NCDK.SMSD.Algorithms.McGregors
             List<string> cTabCopy = new List<string>();
             foreach (var bond in atomContainer.Bonds)
             {
-                string atomI = bond.Atoms[0].Symbol;
-                string atomJ = bond.Atoms[1].Symbol;
+                string atomI = bond.Begin.Symbol;
+                string atomJ = bond.End.Symbol;
                 cTabCopy.Add(atomI);
                 cTabCopy.Add(atomJ);
                 cTabCopy.Add("X");
@@ -345,12 +340,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
                 List<string> cBondNeighborsA, List<string> cBondNeighborsB, List<int> modifiedARCS,
                 bool shouldMatchBonds)
         {
-
             for (int row = 0; row < neighborBondNumA; row++)
             {
                 for (int column = 0; column < neighborBondNumB; column++)
                 {
-
                     string g1A = cBondNeighborsA[row * 4 + 0];
                     string g2A = cBondNeighborsA[row * 4 + 1];
                     string g1B = cBondNeighborsB[column * 4 + 0];
@@ -358,7 +351,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                     if (McGregorChecks.IsAtomMatch(g1A, g2A, g1B, g2B))
                     {
-
                         int indexI = iBondNeighborAtomsA[row * 3 + 0];
                         int indexIPlus1 = iBondNeighborAtomsA[row * 3 + 1];
 
@@ -406,14 +398,14 @@ namespace NCDK.SMSD.Algorithms.McGregors
             for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++)
             {
                 IBond bond = atomContainer.Bonds[atomIndex];
-                if ((atomContainer.Atoms.IndexOf(bond.Atoms[0]) == correspondingAtom)
+                if ((atomContainer.Atoms.IndexOf(bond.Begin) == correspondingAtom)
                         && string.Equals(cBondNeighbors[atomIndex * 4 + 2], "X", StringComparison.OrdinalIgnoreCase))
                 {
                     cBondNeighbors[atomIndex * 4 + 2] = cBondNeighbors[atomIndex * 4 + 0];
                     cBondNeighbors[atomIndex * 4 + 0] = newSymbol;
                 }
 
-                if ((atomContainer.Atoms.IndexOf(bond.Atoms[1]) == correspondingAtom)
+                if ((atomContainer.Atoms.IndexOf(bond.End) == correspondingAtom)
                         && string.Equals(cBondNeighbors[atomIndex * 4 + 3], "X", StringComparison.OrdinalIgnoreCase))
                 {
                     cBondNeighbors[atomIndex * 4 + 3] = cBondNeighbors[atomIndex * 4 + 1];
@@ -426,7 +418,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         protected internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum,
                 IList<int> iBondNeighbors, IList<string> cBondNeighbors)
         {
-
             for (int atomIndex = 0; atomIndex < neighborBondNum; atomIndex++)
             {
                 if ((iBondNeighbors[atomIndex * 3 + 0] == (correspondingAtom))
@@ -449,7 +440,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         internal static bool IsFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
                 McgregorHelper mcGregorHelper, bool shouldMatchBonds)
         {
-
             int neighborBondNumA = mcGregorHelper.NeighborBondNumA;
             int neighborBondNumB = mcGregorHelper.NeighborBondNumB;
             var iBondNeighborAtomsA = mcGregorHelper.GetIBondNeighborAtomsA();
@@ -465,7 +455,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                 for (int column = 0; column < neighborBondNumB; column++)
                 {
-
                     string g1B = cBondNeighborsB[column * 4 + 0];
                     string g2B = cBondNeighborsB[column * 4 + 1];
 
@@ -473,7 +462,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                     {
                         try
                         {
-
                             int indexI = iBondNeighborAtomsA[row * 3 + 0];
                             int indexIPlus1 = iBondNeighborAtomsA[row * 3 + 1];
 

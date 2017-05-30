@@ -138,7 +138,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (atoml != null && !atoml.IsInRing
                                 && (atoml.FormalCharge ?? 0) == 0
-                                && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
+                                && !atoml.Symbol.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))
                             {

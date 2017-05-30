@@ -35,6 +35,9 @@ namespace NCDK
         IAminoAcid CreateAminoAcid();
         IAtom CreateAtom();
         IAtom CreateAtom(IElement element);
+        IAtom CreateAtom(int elem);
+        IAtom CreateAtom(int elem, int hcnt);
+        IAtom CreateAtom(int elem, int hcnt, int fchg);
         IAtom CreateAtom(string elementSymbol);
         IAtom CreateAtom(string elementSymbol, Vector2 point2d);
         IAtom CreateAtom(string elementSymbol, Vector3 point3d);

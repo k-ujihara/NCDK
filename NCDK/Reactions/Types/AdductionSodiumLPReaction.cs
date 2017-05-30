@@ -22,8 +22,8 @@ namespace NCDK.Reactions.Types
     /// IReactionProcess which produces an adduction of the Sodium.
     /// As most commonly encountered, this reaction results in the formal migration
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond
-    /// <pre>[X-] + [Na+] => X -Na</pre>
-    /// <pre>|X + [Na+]   => [X+]-Na</pre>
+    /// <pre>[X-] + [Na+] =&gt; X -Na</pre>
+    /// <pre>|X + [Na+]   =&gt; [X+]-Na</pre>
     /// </summary>
     /// <seealso cref="Mechanisms.AdductionLPMechanism"/>
     // @author         Miguel Rojas

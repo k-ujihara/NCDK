@@ -27,7 +27,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <para>This mechanism displaces the charge (lonePair) because of
     /// deficiency of charge.
     /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
-    /// <para>This reaction could be represented as [A*]-B| => A=[B*]</para>
+    /// <para>This reaction could be represented as [A*]-B| =&gt; A=[B*]</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

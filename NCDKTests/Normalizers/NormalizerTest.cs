@@ -22,7 +22,6 @@ using System.Xml.Linq;
 
 namespace NCDK.Normalizers
 {
-    // @cdk.module test-smiles
     [TestClass()]
     public class NormalizerTest : CDKTestCase
     {

@@ -55,6 +55,7 @@ namespace NCDK.SMSD.Ring
     // @cdk.module smsd
     // @cdk.githash
     // @author Richard L. Apodaca <rapodaca at metamolecular.com> 2007-2009,  Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class PathGraph
     {
         private List<PathEdge> edges;
@@ -163,7 +164,7 @@ namespace NCDK.SMSD.Ring
             for (int i = 0; i < molecule.Bonds.Count; i++)
             {
                 IBond bond = molecule.Bonds[i];
-                edges.Add(new PathEdge(new List<IAtom>() { bond.Atoms[0], bond.Atoms[1] }));
+                edges.Add(new PathEdge(new List<IAtom>() { bond.Begin, bond.End }));
             }
         }
 

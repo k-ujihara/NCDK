@@ -43,8 +43,8 @@ namespace NCDK.Signatures
             Console.Out.WriteLine();
             foreach (var bond in mol.Bonds)
             {
-                IAtom aa = bond.Atoms[0];
-                IAtom ab = bond.Atoms[1];
+                IAtom aa = bond.Begin;
+                IAtom ab = bond.End;
                 int o = bond.Order.Numeric;
                 int x = mol.Atoms.IndexOf(aa);
                 int y = mol.Atoms.IndexOf(ab);

@@ -20,11 +20,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Collections;
 using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.IO;
+using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections;
@@ -48,7 +49,7 @@ namespace NCDK.Fingerprints
         {
             IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
             IAtomContainer mol2 = TestMoleculeFactory.MakePyrrole();
-            Fingerprinter fingerprinter = new Fingerprinter();
+            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
             IBitFingerprint bs1 = fingerprinter.GetBitFingerprint(mol1);
             Assert.AreEqual(
                 33, bs1.Cardinality,
@@ -168,7 +169,7 @@ namespace NCDK.Fingerprints
             Assert.IsNotNull(chemFile);
             IAtomContainer mol = ChemFileManipulator.GetAllAtomContainers(chemFile).First();
 
-            Fingerprinter fingerprinter = new Fingerprinter();
+            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
             Assert.IsNotNull(fingerprinter.GetBitFingerprint(mol));
         }
 
@@ -368,5 +369,55 @@ namespace NCDK.Fingerprints
         //    //fpt.TestBug931608();
         //    fpt.TestBug934819();
         //}
+
+        [TestMethod()]
+        public void PseudoAtomFingerprint()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            string query = "*1CCCC1";
+            string indole = "N1CCCC1";
+            IAtomContainer queryMol = smipar.ParseSmiles(query);
+            IAtomContainer indoleMol = smipar.ParseSmiles(indole);
+            Fingerprinter fpr = new Fingerprinter();
+            BitArray fp1 = fpr.GetFingerprint(queryMol);
+            BitArray fp2 = fpr.GetFingerprint(indoleMol);
+            Assert.IsTrue(FingerprinterTool.IsSubset(fp2, fp1));
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp1, fp2));
+            fpr.SetHashPseudoAtoms(true);
+            BitArray fp3 = fpr.GetFingerprint(queryMol);
+            BitArray fp4 = fpr.GetFingerprint(indoleMol);
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp4, fp3));
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp3, fp4));
+        }
+
+        [TestMethod()]
+        public void PseudoAtomFingerprintArom()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            string query = "*1cccc1";
+            string indole = "o1cccc1";
+            IAtomContainer queryMol = smipar.ParseSmiles(query);
+            IAtomContainer indoleMol = smipar.ParseSmiles(indole);
+            Fingerprinter fpr = new Fingerprinter();
+            BitArray fp1 = fpr.GetFingerprint(queryMol);
+            BitArray fp2 = fpr.GetFingerprint(indoleMol);
+            Assert.IsTrue(FingerprinterTool.IsSubset(fp2, fp1));
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp1, fp2));
+            fpr.SetHashPseudoAtoms(true);
+            BitArray fp3 = fpr.GetFingerprint(queryMol);
+            BitArray fp4 = fpr.GetFingerprint(indoleMol);
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp4, fp3));
+            Assert.IsFalse(FingerprinterTool.IsSubset(fp3, fp4));
+        }
+
+        [TestMethod()]
+        public void TestVersion()
+        {
+            Fingerprinter fpr = new Fingerprinter(1024, 7);
+            fpr.SetPathLimit(2000);
+            fpr.SetHashPseudoAtoms(true);
+            string expected = "CDK-Fingerprinter/" + CDK.Version + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true";
+            Assert.AreEqual(expected, fpr.GetVersionDescription());
+        }
     }
 }

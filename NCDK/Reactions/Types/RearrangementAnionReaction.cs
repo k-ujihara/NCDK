@@ -22,7 +22,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate in movement resonance.
-    /// This reaction could be represented as [A-]-B=C => A=B-[C-]. Due to
+    /// This reaction could be represented as [A-]-B=C =&gt; A=B-[C-]. Due to
     /// excess of charge of the atom B, the double bond in the position 2 is
     /// desplaced.</para>
     /// <para>

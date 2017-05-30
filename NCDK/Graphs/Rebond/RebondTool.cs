@@ -56,7 +56,7 @@ namespace NCDK.Graphs.Rebond
         /// <summary>
         /// Rebonding using a Binary Space Partition Tree. Note, that any bonds
         /// defined will be deleted first. It assumes the unit of 3D space to
-        /// be 1 Ångstrom.
+        /// be 1 Å.
         /// </summary>
         public void Rebond(IAtomContainer container)
         {

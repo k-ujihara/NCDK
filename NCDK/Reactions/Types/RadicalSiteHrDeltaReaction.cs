@@ -20,7 +20,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>
-    /// This reaction could be represented as [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*]. Due to
+    /// This reaction could be represented as [A*]-(C)_4-C5[H] =&gt; A([H])-(C_4)-[C5*]. Due to
     /// the single electron of atom A the proton is moved.</para>
     /// </summary>
     /// <seealso cref="Mechanisms.RadicalSiteRearrangementMechanism"/>

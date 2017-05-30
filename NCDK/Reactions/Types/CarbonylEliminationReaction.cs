@@ -24,7 +24,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate mass spectrum process.
-    /// This reaction could be represented as RC-C#[O+] => R[C] + |C#[O+]</para>
+    /// This reaction could be represented as RC-C#[O+] =&gt; R[C] + |C#[O+]</para>
     /// Make sure that the molecule has the correspond lone pair electrons
     /// for each atom. You can use <see cref="Tools.LonePairElectronChecker"/>.
     /// </summary>
@@ -71,12 +71,11 @@ namespace NCDK.Reactions.Types
                 if (atomi.IsReactiveCenter && atomi.Symbol.Equals("O")
                     && atomi.FormalCharge == 1)
                 {
-
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Triple)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter)
                             {
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
@@ -86,11 +85,9 @@ namespace NCDK.Reactions.Types
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Single)
                                     {
-
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter && atomk.FormalCharge == 0)
                                         {
-
                                             var atomList = new List<IAtom>();
                                             atomList.Add(atomk);
                                             atomList.Add(atomj);
@@ -104,7 +101,6 @@ namespace NCDK.Reactions.Types
                                                 continue;
                                             else
                                                 setOfReactions.Add(reaction);
-
                                         }
                                     }
                                 }
@@ -139,14 +135,14 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Triple)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             foreach (var bondj in reactant.GetConnectedBonds(atomj))
                             {
                                 if (bondj.Equals(bondi)) continue;
 
                                 if (bondj.Order == BondOrder.Single)
                                 {
-                                    IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                    IAtom atomk = bondj.GetOther(atomj);
                                     if (atomk.FormalCharge == 0)
                                     {
                                         atomi.IsReactiveCenter = true;

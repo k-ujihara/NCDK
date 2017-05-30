@@ -183,13 +183,17 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="Aromaticities.Aromaticity.Apply(IAtomContainer)"/> prior to
+        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="CDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
         /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
-        /// IMPORTANT: Your molecule must contain implicit or explicit hydrogens
-        /// for this method to work properly.
         /// </summary>
+        /// <remarks>
+        /// <note type="important">
+        /// Your molecule must contain implicit or explicit hydrogens
+        /// for this method to work properly.
+        /// </note>
+        /// </remarks>
         /// <param name="ac">The <see cref="IAtomContainer"/> with the molecular skeleton in which the root atom resides</param>
         /// <param name="root">The root atom for which to produce the HOSE code</param>
         /// <param name="noOfSpheres">The number of spheres to look at</param>
@@ -204,7 +208,7 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="Aromaticities.Aromaticity.Apply(IAtomContainer)"/> prior to
+        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="CDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
         /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int, bool)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
@@ -216,7 +220,7 @@ namespace NCDK.Tools
         /// <param name="noOfSpheres">The number of spheres to look at</param>
         /// <param name="ringsize">The size of the Ring(s) it is in is included in center atom code</param>
         /// <returns>The HOSECode value</returns>
-        /// <exception cref="CDKException"> Thrown if something is wrong</exception>
+        /// <exception cref="CDKException">Thrown if something is wrong</exception>
         public string GetHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
         {
             EnsureIsotopeFactory();

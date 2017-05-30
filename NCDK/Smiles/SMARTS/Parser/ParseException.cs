@@ -22,16 +22,16 @@ using System.Text;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
     /// <summary>
     /// This exception is thrown when parse errors are encountered.
     /// You can explicitly create objects of this exception type by
     /// calling the method generateParseException in the generated
     /// parser.
-    ///
+    /// </summary>
+    /// <remarks>
     /// You can modify this class to customize your error reporting
     /// mechanisms so long as you retain the public fields.
-    /// </summary>
+    /// </remarks>
     public class ParseException : System.Exception
     {
         /// <summary>

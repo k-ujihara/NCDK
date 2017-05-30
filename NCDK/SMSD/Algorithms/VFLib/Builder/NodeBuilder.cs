@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.SMSD.Algorithms.Matchers;
-
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -34,9 +34,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class NodeBuilder : INode
     {
-
         private List<INode> neighborsList;
         private List<IEdge> edgesList;
         private VFAtomMatcher matcher;

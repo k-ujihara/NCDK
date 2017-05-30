@@ -37,8 +37,8 @@ namespace NCDK.Graphs.Rebond
     /// <code>
     ///    mySplitDimension = (parentSplitDimension + 1) % 3;
     /// </code>
-    ///  A split value is stored in the node. Values which are &lt;= splitValue are
-    ///  stored down the left branch. Values which are >= splitValue are stored
+    ///  A split value is stored in the node. Values which are ÅÖ splitValue are
+    ///  stored down the left branch. Values which are ÅÜ splitValue are stored
     ///  down the right branch. When this happens, the search must proceed down
     ///  both branches.
     ///  Planar and crystalline substructures can generate values which are == along

@@ -51,8 +51,8 @@ namespace NCDK.Reactions.Types
 
             foreach (var bondi in reactant.Bonds)
             {
-                IAtom atom1 = bondi.Atoms[0];
-                IAtom atom2 = bondi.Atoms[1];
+                IAtom atom1 = bondi.Begin;
+                IAtom atom2 = bondi.End;
                 if (bondi.IsReactiveCenter
                     && (bondCheck == null || bondCheck(bondi))
                     && atom1.IsReactiveCenter && atom2.IsReactiveCenter
@@ -94,8 +94,8 @@ namespace NCDK.Reactions.Types
         {
             foreach (var bond in reactant.Bonds)
             {
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                IAtom atom1 = bond.Begin;
+                IAtom atom2 = bond.End;
                 if ((bondCheck == null || bondCheck(bond)) &&
                         (atom1.FormalCharge ?? 0) == 0
                         && (atom2.FormalCharge ?? 0) == 0

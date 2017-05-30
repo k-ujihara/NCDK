@@ -19,7 +19,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
-
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 
@@ -132,39 +131,39 @@ namespace NCDK.Tools
 
             Assert.IsTrue(mol.Atoms[1].Hybridization == Hybridization.SP2);
 
-            Assert.IsTrue(mol.Bonds[0].Atoms[1].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[0].Atoms[0].Symbol.Equals("O"));
+            Assert.IsTrue(mol.Bonds[0].End.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[0].Begin.Symbol.Equals("O"));
             Assert.AreEqual(mol.Bonds[0].Order, BondOrder.Double);
 
-            Assert.IsTrue(mol.Bonds[1].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[1].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[1].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[1].End.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[1].Order, BondOrder.Single);
 
-            Assert.IsTrue(mol.Bonds[2].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[2].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[2].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[2].End.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[2].Order, BondOrder.Double);
 
-            Assert.IsTrue(mol.Bonds[3].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[3].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[3].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[3].End.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[3].Order, BondOrder.Single);
 
-            Assert.IsTrue(mol.Bonds[4].Atoms[1].Symbol.Equals("O"));
-            Assert.IsTrue(mol.Bonds[4].Atoms[0].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[4].End.Symbol.Equals("O"));
+            Assert.IsTrue(mol.Bonds[4].Begin.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[4].Order, BondOrder.Double);
 
-            Assert.IsTrue(mol.Bonds[5].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[5].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[5].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[5].End.Symbol.Equals("C"));
             Assert.IsTrue(mol.Bonds[5].Order == BondOrder.Single);
 
-            Assert.IsTrue(mol.Bonds[6].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[6].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[6].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[6].End.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[6].Order, BondOrder.Double);
 
-            Assert.IsTrue(mol.Bonds[7].Atoms[0].Symbol.Equals("C"));
-            Assert.IsTrue(mol.Bonds[7].Atoms[1].Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[7].Begin.Symbol.Equals("C"));
+            Assert.IsTrue(mol.Bonds[7].End.Symbol.Equals("C"));
             Assert.AreEqual(mol.Bonds[7].Order, BondOrder.Single);
 
-            Assert.AreEqual(mol.Bonds[0].Atoms[1], mol.Bonds[7].Atoms[0]);
+            Assert.AreEqual(mol.Bonds[0].End, mol.Bonds[7].Begin);
         }
 
         /// <summary>

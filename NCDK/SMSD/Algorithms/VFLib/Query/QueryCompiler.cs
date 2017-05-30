@@ -47,6 +47,7 @@
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.Matchers;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
+using System;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Query
 {
@@ -56,6 +57,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class QueryCompiler : IQueryCompiler
     {
         private IAtomContainer molecule = null;
@@ -120,8 +122,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             for (int i = 0; i < queryMolecule.Bonds.Count; i++)
             {
                 IBond bond = queryMolecule.Bonds[i];
-                IAtom atomI = bond.Atoms[0];
-                IAtom atomJ = bond.Atoms[1];
+                IAtom atomI = bond.Begin;
+                IAtom atomJ = bond.End;
                 result.Connect(result.GetNode(atomI), result.GetNode(atomJ), CreateBondMatcher(queryMolecule, bond));
             }
             return result;
@@ -142,8 +144,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             for (int i = 0; i < queryMolecule.Bonds.Count; i++)
             {
                 IBond bond = queryMolecule.Bonds[i];
-                IQueryAtom atomI = (IQueryAtom)bond.Atoms[0];
-                IQueryAtom atomJ = (IQueryAtom)bond.Atoms[1];
+                IQueryAtom atomI = (IQueryAtom)bond.Begin;
+                IQueryAtom atomJ = (IQueryAtom)bond.End;
                 result.Connect(result.GetNode(atomI), result.GetNode(atomJ), CreateBondMatcher((IQueryBond)bond));
             }
             return result;

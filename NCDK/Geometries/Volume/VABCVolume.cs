@@ -88,7 +88,7 @@ namespace NCDK.Geometries.Volume
                 if (type == null) throw new CDKException("Unknown atom type for atom: " + atom.Symbol);
                 if (type.FormalNeighbourCount == null)
                     throw new CDKException("Formal neighbor count not given for : " + type.AtomTypeName);
-                int hCount = type.FormalNeighbourCount.Value - molecule.GetConnectedAtoms(atom).Count();
+                int hCount = type.FormalNeighbourCount.Value - molecule.GetConnectedBonds(atom).Count();
                 sum += (hCount * bondiiVolumes["H"]);
                 totalHCount += hCount;
             }

@@ -74,7 +74,9 @@ namespace NCDK.Tools.Diff.Tree
             totalDiff.AddChild(IntegerDifference.Construct("atomCount", firstB.Atoms.Count, secondB.Atoms.Count));
             if (firstB.Atoms.Count == secondB.Atoms.Count)
             {
-                for (int i = 0; i < firstB.Atoms.Count; i++)
+                totalDiff.AddChild(AtomDiff.Difference(firstB.Begin, secondB.Begin));
+                totalDiff.AddChild(AtomDiff.Difference(firstB.End, secondB.End));
+                for (int i = 2; i < firstB.Atoms.Count; i++)
                 {
                     totalDiff.AddChild(AtomDiff.Difference(firstB.Atoms[i], secondB.Atoms[i]));
                 }

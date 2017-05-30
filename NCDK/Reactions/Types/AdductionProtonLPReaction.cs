@@ -26,8 +26,8 @@ namespace NCDK.Reactions.Types
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond
     /// </para>
     /// <para>
-    /// [X-] + [H+] => X -H<br/>
-    /// X + [H+]   => [X+]-H<br/>
+    /// [X-] + [H+] =&gt; X -H<br/>
+    /// |X + [H+]   =&gt; [X+]-H<br/>
     /// </para>
     /// <seealso cref="Mechanisms.AdductionLPMechanism"/>
     // @author         Miguel Rojas

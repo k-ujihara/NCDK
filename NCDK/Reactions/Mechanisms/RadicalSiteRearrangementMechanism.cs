@@ -26,7 +26,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <summary>
     /// <para>This mechanism displaces an Atom or substructure (R) from one position to an other.
     /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
-    /// <para>This reaction could be represented as [A*]-(X)_n-Y-Z => A(Z)-(X)_n-[Y*]</para>
+    /// <para>This reaction could be represented as [A*]-(X)_n-Y-Z =&gt; A(Z)-(X)_n-[Y*]</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

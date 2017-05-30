@@ -284,7 +284,7 @@ namespace NCDK.Stereo
             /// <inheritdoc/>
             public override IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters)
             {
-                return CreateGeometric(container.Atoms.IndexOf(bond.Atoms[0]), container.Atoms.IndexOf(bond.Atoms[1]), stereocenters);
+                return CreateGeometric(container.Atoms.IndexOf(bond.Begin), container.Atoms.IndexOf(bond.End), stereocenters);
             }
 
             /// <inheritdoc/>
@@ -596,13 +596,13 @@ namespace NCDK.Stereo
                 switch (bond.Stereo.Ordinal)
                 {
                     case BondStereo.O.Up:
-                        return bond.Atoms[0] == focus ? +1 : 0;
+                        return bond.Begin == focus ? +1 : 0;
                     case BondStereo.O.UpInverted:
-                        return bond.Atoms[1] == focus ? +1 : 0;
+                        return bond.End == focus ? +1 : 0;
                     case BondStereo.O.Down:
-                        return bond.Atoms[0] == focus ? -1 : 0;
+                        return bond.Begin == focus ? -1 : 0;
                     case BondStereo.O.DownInverted:
-                        return bond.Atoms[1] == focus ? -1 : 0;
+                        return bond.End == focus ? -1 : 0;
                     default:
                         return 0;
                 }
@@ -632,7 +632,7 @@ namespace NCDK.Stereo
             /// <inheritdoc/>
             public override IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters)
             {
-                return CreateGeometric(container.Atoms.IndexOf(bond.Atoms[0]), container.Atoms.IndexOf(bond.Atoms[1]), stereocenters);
+                return CreateGeometric(container.Atoms.IndexOf(bond.Begin), container.Atoms.IndexOf(bond.End), stereocenters);
             }
 
             /// <inheritdoc/>
@@ -691,8 +691,7 @@ namespace NCDK.Stereo
                 DoubleBondConformation conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
 
                 IBond bond = bondMap[u, v];
-                bond.Atoms[0] = uAtom;
-                bond.Atoms[1] = vAtom;
+                bond.SetAtoms(new[] { uAtom, vAtom });
 
                 return new DoubleBondStereochemistry(bond, new IBond[] { bondMap[u, x], bondMap[v, w], }, conformation);
             }

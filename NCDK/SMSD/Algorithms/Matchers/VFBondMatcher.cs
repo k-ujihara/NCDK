@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.SMSD.Algorithms.VFLib.Builder;
+using System;
 
 namespace NCDK.SMSD.Algorithms.Matchers
 {
@@ -31,6 +32,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd.")]
     public interface VFBondMatcher
     {
         bool Matches(TargetProperties container, IBond atom);

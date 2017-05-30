@@ -29,7 +29,7 @@ namespace NCDK.Reactions.Types
     /// IReactionProcess which produces a protonation to double bond.
     /// As most commonly encountered, this reaction results in the formal migration
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond
-    /// <para>A=B + [H+] => [A+]-B-H</para>
+    /// <para>A=B + [H+] =&gt; [A+]-B-H</para>
     /// </summary>
     /// <seealso cref="AdductionPBMechanism"/>
     // @author         Miguel Rojas
@@ -85,29 +85,29 @@ namespace NCDK.Reactions.Types
             {
                 if (bondi.IsReactiveCenter
                         && ((bondi.Order == BondOrder.Double) || (bondi.Order == BondOrder.Triple))
-                        && bondi.Atoms[0].IsReactiveCenter
-                        && bondi.Atoms[1].IsReactiveCenter)
+                        && bondi.Begin.IsReactiveCenter
+                        && bondi.End.IsReactiveCenter)
                 {
-                    int chargeAtom0 = bondi.Atoms[0].FormalCharge ?? 0;
-                    int chargeAtom1 = bondi.Atoms[1].FormalCharge ?? 0;
+                    int chargeAtom0 = bondi.Begin.FormalCharge ?? 0;
+                    int chargeAtom1 = bondi.End.FormalCharge ?? 0;
                     if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                            && !reactant.GetConnectedSingleElectrons(bondi.Atoms[0]).Any()
-                            && !reactant.GetConnectedSingleElectrons(bondi.Atoms[1]).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Atoms[0]).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Atoms[1]).Any())
+                            && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
+                            && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
+                            && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
+                            && !reactant.GetConnectedLonePairs(bondi.End).Any())
                     {
                         for (int j = 0; j < 2; j++)
                         {
                             var atomList = new List<IAtom>();
                             if (j == 0)
                             {
-                                atomList.Add(bondi.Atoms[0]);
-                                atomList.Add(bondi.Atoms[1]);
+                                atomList.Add(bondi.Begin);
+                                atomList.Add(bondi.End);
                             }
                             else
                             {
-                                atomList.Add(bondi.Atoms[1]);
-                                atomList.Add(bondi.Atoms[0]);
+                                atomList.Add(bondi.End);
+                                atomList.Add(bondi.Begin);
                             }
                             IAtom atomH = reactant.Builder.CreateAtom("H");
                             atomH.FormalCharge = 1;
@@ -148,17 +148,17 @@ namespace NCDK.Reactions.Types
             {
                 if (((bondi.Order == BondOrder.Double) || (bondi.Order == BondOrder.Triple)))
                 {
-                    int chargeAtom0 = bondi.Atoms[0].FormalCharge ?? 0;
-                    int chargeAtom1 = bondi.Atoms[1].FormalCharge ?? 0;
+                    int chargeAtom0 = bondi.Begin.FormalCharge ?? 0;
+                    int chargeAtom1 = bondi.End.FormalCharge ?? 0;
                     if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                            && !reactant.GetConnectedSingleElectrons(bondi.Atoms[0]).Any()
-                            && !reactant.GetConnectedSingleElectrons(bondi.Atoms[1]).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Atoms[0]).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Atoms[1]).Any())
+                            && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
+                            && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
+                            && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
+                            && !reactant.GetConnectedLonePairs(bondi.End).Any())
                     {
                         bondi.IsReactiveCenter = true;
-                        bondi.Atoms[0].IsReactiveCenter = true;
-                        bondi.Atoms[1].IsReactiveCenter = true;
+                        bondi.Begin.IsReactiveCenter = true;
+                        bondi.End.IsReactiveCenter = true;
                     }
                 }
             }

@@ -542,7 +542,7 @@ namespace NCDK.Isomorphisms
                     bond = g.Bonds[rMap.Id2];
                 }
 
-                a = bond.Atoms[0];
+                a = bond.Begin;
                 if (!table.TryGetValue(a, out a1))
                 {
                     a1 = (IAtom)a.Clone();
@@ -550,7 +550,7 @@ namespace NCDK.Isomorphisms
                     table.Add(a, a1);
                 }
 
-                a = bond.Atoms[1];
+                a = bond.End;
                 if (!table.TryGetValue(a, out a2))
                 {
                     a2 = (IAtom)a.Clone();
@@ -798,13 +798,13 @@ namespace NCDK.Isomorphisms
                     if (bondA2 is IQueryBond)
                     {
                         IQueryBond queryBond = (IQueryBond)bondA2;
-                        IQueryAtom atom1 = (IQueryAtom)(bondA2.Atoms[0]);
-                        IQueryAtom atom2 = (IQueryAtom)(bondA2.Atoms[1]);
+                        IQueryAtom atom1 = (IQueryAtom)(bondA2.Begin);
+                        IQueryAtom atom2 = (IQueryAtom)(bondA2.End);
                         IBond bond = ac1.Bonds[i];
                         if (queryBond.Matches(bond))
                         {
-                            var bondAtom0 = bond.Atoms[0];
-                            var bondAtom1 = bond.Atoms[1];
+                            var bondAtom0 = bond.Begin;
+                            var bondAtom1 = bond.End;
                             // ok, bonds match
                             if (atom1.Matches(bondAtom0) && atom2.Matches(bondAtom1)
                                     || atom1.Matches(bondAtom1) && atom2.Matches(bondAtom0))
@@ -825,10 +825,10 @@ namespace NCDK.Isomorphisms
                                 ac1Bondi.Order == ac2Bondj.Order && ac1Bondi.IsAromatic == ac2Bondj.IsAromatic) || ( // both bond are aromatic
                                 ac1Bondi.IsAromatic && ac2Bondj.IsAromatic))
                         {
-                            var ac1Bondi0 = ac1Bondi.Atoms[0];
-                            var ac1Bondi1 = ac1Bondi.Atoms[1];
-                            var ac2Bondj0 = ac2Bondj.Atoms[0];
-                            var ac2Bondj1 = ac2Bondj.Atoms[1];
+                            var ac1Bondi0 = ac1Bondi.Begin;
+                            var ac1Bondi1 = ac1Bondi.End;
+                            var ac2Bondj0 = ac2Bondj.Begin;
+                            var ac2Bondj1 = ac2Bondj.End;
                             // atom type conditions
                             if (
                                 // a1 = a2 && b1 = b2
@@ -928,7 +928,7 @@ namespace NCDK.Isomorphisms
         /// <returns> the symbol of the common atom or "" if the 2 bonds have no common atom</returns>
         private static bool HasCommonAtom(IBond a, IBond b)
         {
-            return a.Contains(b.Atoms[0]) || a.Contains(b.Atoms[1]);
+            return a.Contains(b.Begin) || a.Contains(b.End);
         }
 
         /// <summary>
@@ -941,13 +941,13 @@ namespace NCDK.Isomorphisms
         {
             string symbol = "";
 
-            if (a.Contains(b.Atoms[0]))
+            if (a.Contains(b.Begin))
             {
-                symbol = b.Atoms[0].Symbol;
+                symbol = b.Begin.Symbol;
             }
-            else if (a.Contains(b.Atoms[1]))
+            else if (a.Contains(b.End))
             {
-                symbol = b.Atoms[1].Symbol;
+                symbol = b.End.Symbol;
             }
 
             return symbol;
@@ -966,22 +966,22 @@ namespace NCDK.Isomorphisms
             IAtom atom1 = null;
             IAtom atom2 = null;
 
-            if (a1.Contains(b1.Atoms[0]))
+            if (a1.Contains(b1.Begin))
             {
-                atom1 = b1.Atoms[0];
+                atom1 = b1.Begin;
             }
-            else if (a1.Contains(b1.Atoms[1]))
+            else if (a1.Contains(b1.End))
             {
-                atom1 = b1.Atoms[1];
+                atom1 = b1.End;
             }
 
-            if (a2.Contains(b2.Atoms[0]))
+            if (a2.Contains(b2.Begin))
             {
-                atom2 = b2.Atoms[0];
+                atom2 = b2.Begin;
             }
-            else if (a2.Contains(b2.Atoms[1]))
+            else if (a2.Contains(b2.End))
             {
-                atom2 = b2.Atoms[1];
+                atom2 = b2.End;
             }
 
             if (atom1 != null && atom2 != null)
@@ -1007,22 +1007,22 @@ namespace NCDK.Isomorphisms
             IAtom centralAtom = null;
             IAtom centralQueryAtom = null;
 
-            if (bond1.Contains(bond2.Atoms[0]))
+            if (bond1.Contains(bond2.Begin))
             {
-                centralAtom = bond2.Atoms[0];
+                centralAtom = bond2.Begin;
             }
-            else if (bond1.Contains(bond2.Atoms[1]))
+            else if (bond1.Contains(bond2.End))
             {
-                centralAtom = bond2.Atoms[1];
+                centralAtom = bond2.End;
             }
 
-            if (queryBond1.Contains(queryBond2.Atoms[0]))
+            if (queryBond1.Contains(queryBond2.Begin))
             {
-                centralQueryAtom = queryBond2.Atoms[0];
+                centralQueryAtom = queryBond2.Begin;
             }
-            else if (queryBond1.Contains(queryBond2.Atoms[1]))
+            else if (queryBond1.Contains(queryBond2.End))
             {
-                centralQueryAtom = queryBond2.Atoms[1];
+                centralQueryAtom = queryBond2.End;
             }
 
             if (centralAtom != null && centralQueryAtom != null && ((IQueryAtom)centralQueryAtom).Matches(centralAtom))

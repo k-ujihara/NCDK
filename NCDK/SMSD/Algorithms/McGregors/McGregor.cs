@@ -32,15 +32,16 @@ namespace NCDK.SMSD.Algorithms.McGregors
     /// <summary>
     /// Class which reports MCS solutions based on the McGregor algorithm
     /// published in 1982.
-    ///
+    /// </summary>
+    /// <remarks>
     ///  <para>The SMSD algorithm is described in this paper.
     /// please refer Rahman <i>et.al. 2009</i>
     ///  <token>cdk-cite-SMSD2009</token>.
-    ///  </para>
-    /// </summary>
+    ///  </para></remarks>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public sealed class McGregor
     {
         private IAtomContainer source = null;

@@ -19,13 +19,12 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Maths
+namespace NCDK.StructGen
 {
     // @cdk.module test-standard
     [TestClass()]
     public class MathToolsTest : CDKTestCase
     {
-
         public MathToolsTest() :
                 base()
         { }

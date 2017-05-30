@@ -28,6 +28,7 @@ using NCDK.SMSD.Algorithms.VFLib.Map;
 using NCDK.SMSD.Algorithms.VFLib.Query;
 using NCDK.SMSD.Tools;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -48,6 +49,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class VFlibMCSHandler : AbstractMCSAlgorithm, IMCSBase
     {
         private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;

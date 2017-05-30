@@ -25,7 +25,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate in movement resonance.
-    /// This reaction could be represented as [A+]-B => A| + [B+]. Due to
+    /// This reaction could be represented as [A+]-B =&gt; A| + [B+]. Due to
     /// deficiency of charge of the atom A, the double bond is displaced to atom A.
     /// Make sure that the molecule has the correspond lone pair electrons
     /// for each atom. You can use the method: <see cref="Tools.LonePairElectronChecker"/></para>
@@ -55,16 +55,12 @@ namespace NCDK.Reactions.Types
         ///  Initiate process.
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency
         ///  from the class tools.HydrogenAdder.
-        ///
+        /// </summary>
         /// <param name="reactants">reactants of the reaction.</param>
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
-        ///
-        /// <exception cref="CDKException"> Description of the Exception</exception>
-        /// </summary>
-
+        /// <exception cref="CDKException"></exception>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
             Debug.WriteLine("initiate reaction: SharingChargeSBReaction");
 
             if (reactants.Count != 1)
@@ -87,18 +83,14 @@ namespace NCDK.Reactions.Types
             {
                 if (atomi.IsReactiveCenter && atomi.FormalCharge == 1)
                 {
-
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
-                        if (bondi.IsReactiveCenter && 
-bondi.Order == BondOrder.Single)
+                        if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Single)
                         {
-
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter && atomj.FormalCharge == 0)
                                 if (!reactant.GetConnectedSingleElectrons(atomj).Any())
                                 {
-
                                     var atomList = new List<IAtom>();
                                     atomList.Add(atomj);
                                     atomList.Add(atomi);
@@ -137,13 +129,11 @@ bondi.Order == BondOrder.Single)
             {
                 if (atomi.FormalCharge == 1)
                 {
-
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
                         if (bondi.Order == BondOrder.Single)
                         {
-
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.FormalCharge == 0)
                                 if (!reactant.GetConnectedSingleElectrons(atomj).Any())
                                 {

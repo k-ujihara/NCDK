@@ -34,6 +34,7 @@ namespace NCDK.SMSD.Algorithms.Single
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class SingleMapping
     {
         private IAtomContainer source = null;

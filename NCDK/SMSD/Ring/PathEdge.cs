@@ -54,6 +54,7 @@ namespace NCDK.SMSD.Ring
     // @cdk.module smsd
     // @cdk.githash
     // @author Richard L. Apodaca <rapodaca at metamolecular.com> 2007-2009, Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class PathEdge
     {
         private IList<IAtom> atoms;

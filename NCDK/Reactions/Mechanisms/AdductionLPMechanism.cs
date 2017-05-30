@@ -26,7 +26,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <summary>
     /// <para>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
     /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
-    /// <para>This reaction could be represented as A + [B+] => A-B</para>
+    /// <para>This reaction could be represented as A + [B+] =&gt; A-B</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

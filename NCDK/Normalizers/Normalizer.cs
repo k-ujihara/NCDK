@@ -26,6 +26,7 @@
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.Smiles;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -38,6 +39,7 @@ namespace NCDK.Normalizers
     // @cdk.created   2004-03-04
     // @cdk.module    smiles
     // @cdk.githash
+    [Obsolete("The functionality provided by with class is better suited to SMIRKS")]
     public class Normalizer
     {
         /// <summary>

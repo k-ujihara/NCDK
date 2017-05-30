@@ -26,6 +26,7 @@ using NCDK.Isomorphisms.Matchers;
 using static NCDK.Graphs.GraphUtil;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 namespace NCDK.Isomorphisms
 {
@@ -93,10 +94,19 @@ namespace NCDK.Isomorphisms
         /// <inheritdoc/>
         public override Mappings MatchAll(IAtomContainer target)
         {
-            EdgeToBondMap bonds2 = EdgeToBondMap.WithSpaceFor(target);
-            int[][] g2 = GraphUtil.ToAdjList(target, bonds2);
-            IEnumerable<int[]> iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher,
-                    subgraph);
+            EdgeToBondMap bonds2;
+            int[][] g2;
+
+            AdjListCache cached = target.GetProperty<AdjListCache>(typeof(AdjListCache).FullName);
+            if (cached == null || !cached.Validate(target))
+            {
+                cached = new AdjListCache(target);
+                target.SetProperty(typeof(AdjListCache).FullName, cached);
+            }
+
+            bonds2 = cached.bmap;
+            g2 = cached.g;
+            IEnumerable<int[]> iterable = new VFIterable(query, target, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher, subgraph);
             return new Mappings(query, target, iterable);
         }
 
@@ -221,6 +231,33 @@ namespace NCDK.Isomorphisms
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
+            }
+        }
+
+        private sealed class AdjListCache
+        {
+            // 100 ms max age
+            private static readonly long MAX_AGE = new TimeSpan(0, 0, 0, 100).Ticks;
+
+            internal readonly int[][] g;
+            internal readonly EdgeToBondMap bmap;
+            private readonly int numAtoms, numBonds;
+            private readonly long tInit;
+
+            internal AdjListCache(IAtomContainer mol)
+            {
+                this.bmap = EdgeToBondMap.WithSpaceFor(mol);
+                this.g = GraphUtil.ToAdjList(mol, bmap);
+                this.numAtoms = mol.Atoms.Count;
+                this.numBonds = mol.Bonds.Count;
+                this.tInit = DateTime.Now.Ticks;
+            }
+
+            internal bool Validate(IAtomContainer mol)
+            {
+                return mol.Atoms.Count == numAtoms &&
+                       mol.Bonds.Count == numBonds &&
+                       (DateTime.Now.Ticks - tInit) < MAX_AGE;
             }
         }
     }

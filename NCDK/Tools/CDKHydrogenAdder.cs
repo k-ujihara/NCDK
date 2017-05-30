@@ -109,7 +109,7 @@ namespace NCDK.Tools
                                 + atom.AtomTypeName);
 
             // very simply counting: each missing explicit neighbor is a missing hydrogen
-            atom.ImplicitHydrogenCount = type.FormalNeighbourCount - container.GetConnectedAtoms(atom).Count();
+            atom.ImplicitHydrogenCount = type.FormalNeighbourCount - container.GetConnectedBonds(atom).Count();
         }
     }
 }

@@ -230,12 +230,11 @@ namespace NCDK.Stereo
         Assert.IsNull(mapped.Bonds[0]);
         Assert.IsNull(mapped.Bonds[1]);
         Assert.IsNull(mapped.Stereo);
-
     }
 
     [TestMethod()]
-    public void TestMap_Map_Map_EmptyMapping()  {
-
+    public void TestMap_Map_Map_EmptyMapping()  
+    {
         IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         IAtom c1 = builder.CreateAtom("C");
@@ -254,11 +253,9 @@ namespace NCDK.Stereo
         // map the existing element a new element - should through an ArgumentException
         IDoubleBondStereochemistry mapped = original.Map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
 
-        Assert.IsNull(mapped.StereoBond);
-        Assert.IsNull(mapped.Bonds[0]);
-        Assert.IsNull(mapped.Bonds[1]);
+        Assert.AreEqual(original.GetStereoBond(), mapped.GetStereoBond());
+        Assert.AreEqual(original.Bonds, mapped.Bonds);
         Assert.IsNotNull(mapped.Stereo);
-
     }
 #endif
 

@@ -25,7 +25,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate in movement resonance.
-    /// This reaction could be represented as [A+]-B| => A=[B+]. Due to
+    /// This reaction could be represented as [A+]-B| =&gt; A=[B+]. Due to
     /// deficiency of charge of the atom A, the lone pair electron of the atom A is
     /// desplaced.</para>
     /// <para>

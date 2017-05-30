@@ -84,7 +84,6 @@ namespace NCDK.Aromaticities
 
             for (int i = 0; i < nAtoms; i++)
             {
-
                 IAtom atom = container.Atoms[i];
                 indexMap.Add(atom, i);
 
@@ -117,8 +116,8 @@ namespace NCDK.Aromaticities
             {
                 if (bond.Order == BondOrder.Double || bond.Order == BondOrder.Triple)
                 {
-                    IAtom a1 = bond.Atoms[0];
-                    IAtom a2 = bond.Atoms[1];
+                    IAtom a1 = bond.Begin;
+                    IAtom a2 = bond.End;
 
                     string a1Type = a1.AtomTypeName;
                     string a2Type = a2.AtomTypeName;

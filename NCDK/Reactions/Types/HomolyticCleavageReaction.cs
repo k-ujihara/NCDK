@@ -27,7 +27,7 @@ namespace NCDK.Reactions.Types
     /// <para>IReactionProcess which breaks the bond homogeneously leading to radical ions.
     /// It is also called homogeneous bond-breaking.Depending of the bond order,
     /// the bond will be removed or simply the order decreased.</para>
-    /// <pre>A-B => [A*] + [B*]</pre>
+    /// <pre>A-B =&gt; [A*] + [B*]</pre>
     /// </summary>
     /// <seealso cref="Mechanisms.HomolyticCleavageMechanism"/>
     // @author         Miguel Rojas
@@ -38,7 +38,6 @@ namespace NCDK.Reactions.Types
     {
         /// <summary>
         /// Constructor of the HomolyticCleavageReaction object.
-        ///
         /// </summary>
         public HomolyticCleavageReaction() { }
 

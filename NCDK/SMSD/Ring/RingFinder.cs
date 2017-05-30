@@ -46,6 +46,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.SMSD.Ring
@@ -53,6 +54,7 @@ namespace NCDK.SMSD.Ring
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+    [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public interface RingFinder
     {
         /// <summary>

@@ -56,7 +56,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter && atomj.FormalCharge == 0)
                             {
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
@@ -66,7 +66,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter && atomk.Symbol.Equals(atomSymbol)
                                                 && atomk.FormalCharge == 0)
                                         {
@@ -106,7 +106,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Single)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.FormalCharge == 0)
                             {
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
@@ -115,7 +115,7 @@ namespace NCDK.Reactions.Types
 
                                     if (bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.Symbol.Equals(atomSymbol) && atomk.FormalCharge == 0)
                                         {
                                             atomi.IsReactiveCenter = true;

@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     ///  conjugated system or not adjacent to an double bond.
     /// </summary>
     /// <remarks>
-    ///  This descriptor uses these parameters:
+    /// Parameters for this descriptor:
     /// <list type="table">
     /// <listheader>
     ///   <term>Name</term>

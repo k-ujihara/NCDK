@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Default;
 using System;
 
@@ -200,11 +201,8 @@ namespace NCDK.Stereo
             // map the existing element a new element 
             ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone();
 
-            Assert.IsNotNull(mapped.ChiralAtom);
-            Assert.IsNotNull(mapped.Ligands[0]);
-            Assert.IsNotNull(mapped.Ligands[1]);
-            Assert.IsNotNull(mapped.Ligands[2]);
-            Assert.IsNotNull(mapped.Ligands[3]);
+            Assert.AreEqual(original.ChiralAtom, mapped.ChiralAtom);
+            Assert.IsTrue(Compares.AreDeepEqual(original.Ligands, mapped.Ligands));
             Assert.AreNotEqual(TetrahedralStereo.Unset, mapped.Stereo);
         }
 

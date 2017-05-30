@@ -155,8 +155,8 @@ namespace NCDK.RingSearches
 
             mock_container.Setup(n => n.Atoms.IndexOf(a1)).Returns(42);
             mock_container.Setup(n => n.Atoms.IndexOf(a2)).Returns(43);
-            mock_bond.Setup(n => n.Atoms[0]).Returns(a1);
-            mock_bond.Setup(n => n.Atoms[1]).Returns(a2);
+            mock_bond.Setup(n => n.Begin).Returns(a1);
+            mock_bond.Setup(n => n.End).Returns(a2);
 
             RingSearch ringSearch = new RingSearch(container, cyclicSearch);
             ringSearch.Cyclic(bond);
@@ -309,6 +309,7 @@ namespace NCDK.RingSearches
             IAtomContainer mol = DiSpiroPentane();
             RingSearch rs = new RingSearch(mol);
             IAtomContainer frag = rs.RingFragments();
+            Assert.AreEqual(4, rs.NumRings);
             Assert.AreEqual(frag.Bonds.Count + 1, mol.Bonds.Count);
         }
 
@@ -318,6 +319,7 @@ namespace NCDK.RingSearches
             IAtomContainer mol = TriSpiroPentane();
             RingSearch rs = new RingSearch(mol);
             IAtomContainer frag = rs.RingFragments();
+            Assert.AreEqual(5, rs.NumRings);
             Assert.AreEqual(frag.Bonds.Count, mol.Bonds.Count);
         }
 

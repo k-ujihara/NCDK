@@ -25,7 +25,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <summary>
     /// <para>This mechanism produces the tautomerization chemical reaction between two tautomers.
     /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
-    /// <para>This reaction could be represented as X=Y-Z-H => X(H)-Y=Z</para>
+    /// <para>This reaction could be represented as X=Y-Z-H =&gt; X(H)-Y=Z</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

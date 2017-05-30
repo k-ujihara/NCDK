@@ -45,9 +45,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oBioPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono2, oStrand2);
@@ -75,9 +75,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oBioPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono2, oStrand2);
@@ -106,9 +106,9 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oBioPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono2, oStrand2);
@@ -122,8 +122,8 @@ namespace NCDK
         {
             IBioPolymer oBioPolymer = (IBioPolymer)NewChemObject();
 
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.Atoms.Add(oAtom2);
 
@@ -138,9 +138,9 @@ namespace NCDK
             oStrand1.StrandName = "A";
             IMonomer oMono1 = oBioPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono1, oStrand1);
@@ -158,8 +158,8 @@ namespace NCDK
             oStrand1.StrandName = "A";
             IMonomer oMono1 = oBioPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom1, null, oStrand1);
@@ -176,7 +176,7 @@ namespace NCDK
             oStrand1.StrandName = "A";
             IMonomer oMono1 = oBioPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
 
             Assert.AreEqual(1, oBioPolymer.GetStrandMap().Count());
@@ -190,7 +190,7 @@ namespace NCDK
             oStrand1.StrandName = "A";
             IMonomer oMono1 = oBioPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
 
             Assert.AreEqual(oStrand1, oBioPolymer.GetStrand("A"));
@@ -208,8 +208,8 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oBioPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "GLY123";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono2, oStrand2);
             IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();
@@ -227,7 +227,7 @@ namespace NCDK
             oStrand1.StrandName = "A";
             IMonomer oMono1 = oBioPolymer.Builder.CreateMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
 
             Assert.IsTrue(oBioPolymer.GetStrandNames().Contains(oStrand1.StrandName));
@@ -249,8 +249,8 @@ namespace NCDK
             oMono1.MonomerName = "TRP279";
             IMonomer oMono2 = oBioPolymer.Builder.CreateMonomer();
             oMono2.MonomerName = "GLY123";
-            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
-            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
+            IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C");
+            IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono2, oStrand2);
             IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();

@@ -87,6 +87,7 @@ namespace NCDK.Isomorphisms
         {
             IAtom firstAtom = firstAC.Atoms[posFirstAtom];
             IAtom secondAtom = secondAC.Atoms[posSecondAtom];
+            // XXX: floating point comparision!
             if (firstAtom.Symbol.Equals(secondAtom.Symbol)
                     && firstAC.GetConnectedAtoms(firstAtom).Count() == secondAC.GetConnectedAtoms(secondAtom).Count()
                     && firstAtom.BondOrderSum == secondAtom.BondOrderSum

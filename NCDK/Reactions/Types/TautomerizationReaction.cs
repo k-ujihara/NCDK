@@ -26,7 +26,7 @@ namespace NCDK.Reactions.Types
     /// <para>IReactionProcess which produces a tautomerization chemical reaction.
     /// As most commonly encountered, this reaction results in the formal migration
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</para>
-    /// <pre>X=Y-Z-H => X(H)-Y=Z</pre>
+    /// <pre>X=Y-Z-H =&gt; X(H)-Y=Z</pre>
     /// </summary>
     /// <seealso cref="Mechanisms.TautomerizationMechanism"/>
     // @author         Miguel Rojas
@@ -65,7 +65,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter
                                     && (atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
@@ -77,7 +77,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
@@ -89,7 +89,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.IsReactiveCenter
                                                         && bondk.Order == BondOrder.Single)
                                                 {
-                                                    IAtom atoml = bondk.GetConnectedAtom(atomk); // Atom pos 4
+                                                    IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
                                                     if (atoml.IsReactiveCenter
                                                             && atoml.Symbol.Equals("H"))
                                                     {
@@ -151,7 +151,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if ((atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
@@ -160,7 +160,7 @@ namespace NCDK.Reactions.Types
                                     if (bondj.Equals(bondi)) continue;
                                     if (bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
+                                        IAtom atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
                                         )
@@ -170,7 +170,7 @@ namespace NCDK.Reactions.Types
                                                 if (bondk.Equals(bondj)) continue;
                                                 if (bondk.Order == BondOrder.Single)
                                                 {
-                                                    IAtom atoml = bondk.GetConnectedAtom(atomk); // Atom pos 4
+                                                    IAtom atoml = bondk.GetOther(atomk); // Atom pos 4
                                                     if (atoml.Symbol.Equals("H"))
                                                     {
                                                         atomi.IsReactiveCenter = true;

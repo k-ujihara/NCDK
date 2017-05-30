@@ -33,9 +33,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class QueryProcessor
     {
-
         private List<string> cTab1Copy;
         private List<string> cTab2Copy;
         private string[] signs;
@@ -54,7 +54,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                 int neighborBondnumA, int setBondnumA, List<int> iBondNeighborsA, List<string> cBondNeighborsA,
                 int mappingSize, List<int> iBondSetA, List<string> cBondSetA)
         {
-
             this.cTab1Copy = cTab1Copy;
             this.cTab2Copy = cTab2Copy;
             this.signs = signArray;
@@ -70,7 +69,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         protected internal void Process(IAtomContainer query, IAtomContainer target, IList<int> unmappedAtomsMolA,
                 IList<int> mappedAtoms, int counter)
         {
-
             int unmappedNumA = unmappedAtomsMolA.Count;
             bool bondConsidered = false;
             bool normalBond = true;
@@ -78,15 +76,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             //        Console.Out.WriteLine("\n" + cTab1Copy + "\n");
             for (int atomIndex = 0; atomIndex < query.Bonds.Count; atomIndex++)
             {
-
-                int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Atoms[0]);
-                int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].Atoms[1]);
+                int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Begin);
+                int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].End);
                 int order = query.Bonds[atomIndex].Order.Numeric;
 
                 //            Console.Out.WriteLine(AtomI + "= , =" + AtomJ );
                 for (int unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++)
                 {
-
                     if (unmappedAtomsMolA[unMappedAtomIndex].Equals(indexI))
                     {
                         normalBond = UnMappedAtomsEqualsIndexJ(query, target, atomIndex, counter, mappedAtoms, indexI,
@@ -114,7 +110,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         protected void Process(IQueryAtomContainer query, IAtomContainer target, IList<int> unmappedAtomsMolA,
                 IList<int> mappedAtoms, int counter)
         {
-
             int unmappedNumA = unmappedAtomsMolA.Count;
             bool bondConsidered = false;
             bool normalBond = true;
@@ -123,8 +118,8 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
             for (int atomIndex = 0; atomIndex < query.Bonds.Count; atomIndex++)
             {
-                int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Atoms[0]);
-                int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].Atoms[1]);
+                int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Begin);
+                int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].End);
                 int order = 0;
                 if (!query.Bonds[atomIndex].Order.IsUnset)
                 {
@@ -162,7 +157,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         protected internal void Process(int setNumA, int setNumB, IList<int> iBondSetA, IList<int> iBondSetB,
                 IList<int> unmappedAtomsMolA, IList<int> newMapping, int counter)
         {
-
             //
             //            int newMapingSize,
             //            List<int> new_iBondSetA,
@@ -205,7 +199,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
                 IList<int> mappedAtomsOrg)
         {
-
             List<int> mappedAtoms = new List<int>(mappedAtomsOrg);
 
             int correspondingAtom = 0;
@@ -301,7 +294,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private bool UnMappedAtomsEqualsIndexI(IAtomContainer query, IAtomContainer target, int atomIndex, int counter,
                 IList<int> mappedAtoms, int indexI, int indexJ, int order)
         {
-
             bool normalBond = true;
             for (int c = 0; c < newNeighborNumA; c++)
             {
@@ -338,10 +330,8 @@ namespace NCDK.SMSD.Algorithms.McGregors
             bool normalBond = true;
             for (int c = 0; c < newNeighborNumA; c++)
             {
-
                 if (newMapping[c * 2 + 0].Equals(indexJ))
                 {
-
                     SetBondNeighbors(indexI, indexJ, order);
                     if (string.Equals(cTab1Copy[atomIndex * 4 + 3], "X", StringComparison.OrdinalIgnoreCase))
                     {
@@ -350,7 +340,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
                         int corAtom = McGregorChecks.SearchCorrespondingAtom(newNeighborNumA, indexI, 1, newMapping);
                         McGregorChecks.ChangeCharBonds(corAtom, signs[counter], setNumB, iBondSetB, cTab2Copy);
                         counter++;
-
                     }
                     else
                     {
@@ -370,10 +359,8 @@ namespace NCDK.SMSD.Algorithms.McGregors
             bool normalBond = true;
             for (int c = 0; c < newNeighborNumA; c++)
             {
-
                 if (newMapping[c * 2 + 0].Equals(indexI))
                 {
-
                     SetBondNeighbors(indexI, indexJ, order);
                     if (string.Equals(cTab1Copy[atomIndex * 4 + 2], "X", StringComparison.OrdinalIgnoreCase))
                     {
@@ -390,7 +377,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                     normalBond = false;
                     neighborBondNumA++;
-
                 }
             }
             return normalBond;

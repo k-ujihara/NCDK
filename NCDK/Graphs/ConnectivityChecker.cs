@@ -92,8 +92,8 @@ namespace NCDK.Graphs
 
             foreach (IBond bond in container.Bonds)
             {
-                IAtomContainer begComp = componentsMap[bond.Atoms[0]];
-                IAtomContainer endComp = componentsMap[bond.Atoms[1]];
+                IAtomContainer begComp = componentsMap[bond.Begin];
+                IAtomContainer endComp = componentsMap[bond.End];
                 if (begComp == endComp)
                     begComp.Bonds.Add(bond);
             }
@@ -114,8 +114,8 @@ namespace NCDK.Graphs
                 else if (stereo is IDoubleBondStereochemistry)
                 {
                     IBond bond = ((IDoubleBondStereochemistry)stereo).StereoBond;
-                    if (componentsMap.ContainsKey(bond.Atoms[0]) && componentsMap.ContainsKey(bond.Atoms[1]))
-                        componentsMap[bond.Atoms[0]].StereoElements.Add(stereo);
+                    if (componentsMap.ContainsKey(bond.Begin) && componentsMap.ContainsKey(bond.End))
+                        componentsMap[bond.Begin].StereoElements.Add(stereo);
                 }
                 else if (stereo is ExtendedTetrahedral)
                 {

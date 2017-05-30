@@ -30,10 +30,10 @@ namespace NCDK.Reactions.Types
     /// As there are two directions for displacing a bond in a polar manner,
     /// each case is investigated twice:</para>
     ///
-    /// <pre>A-B => [A+] + |[B-]</pre>
-    /// <pre>A-B => |[A-] + [B+]</pre>
+    /// <pre>A-B =&gt; [A+] + |[B-]</pre>
+    /// <pre>A-B =&gt; |[A-] + [B+]</pre>
     ///
-    /// <para>It will not be created structures no possible, e.g; C=O => [C-][O+].</para>
+    /// <para>It will not be created structures no possible, e.g; C=O =&gt; [C-][O+].</para>
     /// </summary>
     /// <seealso cref="Mechanisms.HeterolyticCleavageMechanism"/>
     // @author         Miguel Rojas

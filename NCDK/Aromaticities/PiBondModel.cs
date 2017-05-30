@@ -45,8 +45,8 @@ namespace NCDK.Aromaticities
             // count number of cyclic pi bonds
             foreach (var bond in container.Bonds)
             {
-                int u = container.Atoms.IndexOf(bond.Atoms[0]);
-                int v = container.Atoms.IndexOf(bond.Atoms[1]);
+                int u = container.Atoms.IndexOf(bond.Begin);
+                int v = container.Atoms.IndexOf(bond.End);
 
                 if (bond.Order == BondOrder.Double && ringSearch.Cyclic(u, v))
                 {

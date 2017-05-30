@@ -147,9 +147,8 @@ namespace NCDK.Fingerprints
             AddImplicitHydrogens(structure1);
             AddImplicitHydrogens(structure2);
 
-            FixBondOrdersTool fbot = new FixBondOrdersTool();
-            structure1 = fbot.KekuliseAromaticRings(structure1);
-            structure2 = fbot.KekuliseAromaticRings(structure2);
+            Kekulization.Kekulize(structure1);
+            Kekulization.Kekulize(structure2);
 
             // hydrogens loaded from MDL mol files if non-query. Structure 2 has
             // query aromatic bonds and the hydrogen counts are not assigned - ensure

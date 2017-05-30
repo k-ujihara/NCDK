@@ -60,7 +60,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (atomContainer.Contains(atom))
                 {
-                    atomContainer.RemoveAtomAndConnectedElectronContainers(atom);
+                    atomContainer.RemoveAtom(atom);
                     IAtomContainerSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {

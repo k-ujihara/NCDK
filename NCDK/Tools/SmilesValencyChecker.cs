@@ -290,7 +290,6 @@ namespace NCDK.Tools
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, BondOrder maxBondOrder,
                 int neighbourCount)
         {
-
             int missingHydrogens = 0;
             if (atom is IPseudoAtom)
             {
@@ -396,7 +395,7 @@ namespace NCDK.Tools
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container)
         {
             return this.CalculateNumberOfImplicitHydrogens(atom, container.GetBondOrderSum(atom),
-                    container.GetMaximumBondOrder(atom), container.GetConnectedAtoms(atom).Count());
+                    container.GetMaximumBondOrder(atom), container.GetConnectedBonds(atom).Count());
         }
 
         protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)

@@ -210,21 +210,21 @@ namespace NCDK.Tools
         {
             bool atom0isUnsaturated = false, atom1isUnsaturated = false;
             double sum;
-            if (bond.Atoms[0].BondOrderSum == null)
+            if (bond.Begin.BondOrderSum == null)
             {
-                sum = GetAtomBondOrderSum(bond.Atoms[1], atomContainer);
+                sum = GetAtomBondOrderSum(bond.End, atomContainer);
             }
             else
-                sum = bond.Atoms[0].BondOrderSum.Value;
-            if (BondsUsed(bond.Atoms[0], atomContainer) < sum) atom0isUnsaturated = true;
+                sum = bond.Begin.BondOrderSum.Value;
+            if (BondsUsed(bond.Begin, atomContainer) < sum) atom0isUnsaturated = true;
 
-            if (bond.Atoms[1].BondOrderSum == null)
+            if (bond.End.BondOrderSum == null)
             {
-                sum = GetAtomBondOrderSum(bond.Atoms[1], atomContainer);
+                sum = GetAtomBondOrderSum(bond.End, atomContainer);
             }
             else
-                sum = bond.Atoms[1].BondOrderSum.Value;
-            if (BondsUsed(bond.Atoms[1], atomContainer) < sum) atom1isUnsaturated = true;
+                sum = bond.End.BondOrderSum.Value;
+            if (BondsUsed(bond.End, atomContainer) < sum) atom1isUnsaturated = true;
 
             if (atom0isUnsaturated == atom1isUnsaturated)
                 return atom0isUnsaturated;

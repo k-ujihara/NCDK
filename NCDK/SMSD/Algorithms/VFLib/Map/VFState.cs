@@ -49,7 +49,7 @@
  *
  */
 using NCDK.SMSD.Algorithms.VFLib.Builder;
-
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Map
@@ -61,6 +61,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class VFState : IState
     {
         private List<Match> candidates;

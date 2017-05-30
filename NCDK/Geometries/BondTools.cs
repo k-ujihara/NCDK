@@ -50,11 +50,11 @@ namespace NCDK.Geometries
         public static bool IsValidDoubleBondConfiguration(IAtomContainer container, IBond bond)
         {
             //IAtom[] atoms = bond.GetAtoms();
-            var connectedAtoms = container.GetConnectedAtoms(bond.Atoms[0]);
+            var connectedAtoms = container.GetConnectedAtoms(bond.Begin);
             IAtom from = null;
             foreach (var connectedAtom in connectedAtoms)
             {
-                if (connectedAtom != bond.Atoms[1])
+                if (connectedAtom != bond.End)
                 {
                     from = connectedAtom;
                 }
@@ -64,8 +64,8 @@ namespace NCDK.Geometries
             {
                 array[i] = true;
             }
-            if (IsStartOfDoubleBond(container, bond.Atoms[0], from, array)
-                    && IsEndOfDoubleBond(container, bond.Atoms[1], bond.Atoms[0], array)
+            if (IsStartOfDoubleBond(container, bond.Begin, from, array)
+                    && IsEndOfDoubleBond(container, bond.End, bond.Begin, array)
                     && !bond.IsAromatic)
             {
                 return (true);
@@ -328,7 +328,7 @@ namespace NCDK.Geometries
         /// <param name="atom">The atom which is the center</param>
         /// <param name="container">The atomContainer the atom is in</param>
         /// <param name="strict"></param>
-        /// <returns>0=is not tetrahedral;>1 is a certain depiction of
+        /// <returns>0=is not tetrahedral; &gt;1 is a certain depiction of
         ///     tetrahedrality (evaluated in parse chain)</returns>
         public static int IsTetrahedral(IAtomContainer container, IAtom atom, bool strict)
         {

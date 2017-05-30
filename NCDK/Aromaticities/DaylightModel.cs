@@ -105,8 +105,8 @@ namespace NCDK.Aromaticities
             // lookup later.
             foreach (var bond in container.Bonds)
             {
-                int u = atomIndex[bond.Atoms[0]];
-                int v = atomIndex[bond.Atoms[1]];
+                int u = atomIndex[bond.Begin];
+                int v = atomIndex[bond.End];
                 degree[u]++;
                 degree[v]++;
 

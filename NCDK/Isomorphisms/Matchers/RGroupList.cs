@@ -155,7 +155,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <item>n - m : n through m ;</item>
         /// <item>&#62; n : greater than n ;</item>
         /// <item>&#60; n : fewer than n ;</item>
-        /// <item>default (blank) is > 0 ;</item>
+        /// <item>default (blank) is &gt; 0 ;</item>
         /// </list> 
         /// Any non-contradictory combination of the preceding values is also
         /// allowed; for example "1, 3-7, 9, &gt;11".
@@ -228,11 +228,11 @@ namespace NCDK.Isomorphisms.Matchers
         /// <remarks>
         /// <para>
         /// Example: if R1 occurs 3 times attached to some root structure, then
-        /// stating ">5" as an occurrence for that RGoupList does not make
+        /// stating "&gt;5" as an occurrence for that RGoupList does not make
         /// sense: the example R1 can occur 0..3 times. Empty would be returned.
         /// </para>
         /// <para>
-        /// If the occurence would be >2, then 3 would be returned. Etcetera.
+        /// If the occurence would be &gt;2, then 3 would be returned. Etcetera.
         /// </para>
         /// </remarks>
         /// <param name="maxAttachments">number of attachments</param>

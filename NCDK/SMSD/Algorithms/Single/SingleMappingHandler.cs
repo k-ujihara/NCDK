@@ -33,13 +33,13 @@ namespace NCDK.SMSD.Algorithms.Single
 {
     /// <summary>
     /// This is a handler class for single atom mapping <see cref="SingleMapping"/>.
-   /// </summary>
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class SingleMappingHandler : AbstractMCSAlgorithm, IMCSBase
     {
-
         private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
         private static IDictionary<IAtom, IAtom> atomsMCS = null;
         private static IDictionary<int, int> firstMCS = null;
@@ -51,13 +51,11 @@ namespace NCDK.SMSD.Algorithms.Single
 
         public SingleMappingHandler(bool removeH)
         {
-
             this.removeHydrogen = removeH;
             allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
             atomsMCS = new Dictionary<IAtom, IAtom>();
             firstMCS = new SortedDictionary<int, int>();
             allMCS = new List<IDictionary<int, int>>();
-
         }
 
         public void Set(MolHandler source, MolHandler target)
@@ -128,7 +126,6 @@ namespace NCDK.SMSD.Algorithms.Single
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void SetAllAtomMapping(IList<IDictionary<IAtom, IAtom>> mappings)
         {
-
             try
             {
                 int counter = 0;
@@ -137,7 +134,6 @@ namespace NCDK.SMSD.Algorithms.Single
                     IDictionary<IAtom, IAtom> atomMappings = new Dictionary<IAtom, IAtom>();
                     foreach (var map in solution)
                     {
-
                         IAtom sourceAtom = map.Key;
                         IAtom targetAtom = map.Value;
                         atomMappings[sourceAtom] = targetAtom;
@@ -158,7 +154,6 @@ namespace NCDK.SMSD.Algorithms.Single
             {
                 firstMCS = new SortedDictionary<int, int>(allMCS.First());
             }
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

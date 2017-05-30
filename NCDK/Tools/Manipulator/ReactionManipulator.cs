@@ -85,7 +85,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = reactants[i];
                 if (mol.Contains(atom))
                 {
-                    mol.RemoveAtomAndConnectedElectronContainers(atom);
+                    mol.RemoveAtom(atom);
                 }
             }
             var agents = reaction.Reactants;
@@ -94,7 +94,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = agents[i];
                 if (mol.Contains(atom))
                 {
-                    mol.RemoveAtomAndConnectedElectronContainers(atom);
+                    mol.RemoveAtom(atom);
                 }
             }
             IAtomContainerSet<IAtomContainer> products = reaction.Products;
@@ -103,7 +103,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = products[i];
                 if (mol.Contains(atom))
                 {
-                    mol.RemoveAtomAndConnectedElectronContainers(atom);
+                    mol.RemoveAtom(atom);
                 }
             }
         }
@@ -355,13 +355,13 @@ namespace NCDK.Tools.Manipulator
         /// component group.</p>
         /// <p>
         /// The inlined reaction, stored in a molecule can be converted back to an explicit
-        /// reaction with <see cref="toReaction"/>. Data stored on the individual components (e.g.
+        /// reaction with <see cref="ToReaction"/>. Data stored on the individual components (e.g.
         /// titles is lost in the conversion).
         /// </p>
         /// </summary>
         /// <param name="rxn">reaction to convert</param>
         /// <returns>inlined reaction stored in a molecule</returns>
-        /// <seealso cref="toReaction"/>
+        /// <seealso cref="ToReaction"/>
         public static IAtomContainer ToMolecule(IReaction rxn)
         {
             if (rxn == null)
@@ -442,8 +442,8 @@ namespace NCDK.Tools.Manipulator
             // split bonds
             foreach (IBond bond in mol.Bonds)
             {
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 var begIdx = beg.GetProperty<int?>(CDKPropertyName.ReactionGroup);
                 var endIdx = end.GetProperty<int?>(CDKPropertyName.ReactionGroup);
                 if (begIdx == null || endIdx == null)
@@ -463,7 +463,7 @@ namespace NCDK.Tools.Manipulator
                 }
                 else if (se is IDoubleBondStereochemistry)
                 {
-                    focus = ((IDoubleBondStereochemistry)se).StereoBond.Atoms[0];
+                    focus = ((IDoubleBondStereochemistry)se).StereoBond.Begin;
                 }
                 else if (se is ExtendedTetrahedral)
                 {
@@ -473,6 +473,18 @@ namespace NCDK.Tools.Manipulator
                     throw new ArgumentException("Stereochemistry had no focus");
                 var grpIdx = focus.GetProperty<int>(CDKPropertyName.ReactionGroup);
                 components[grpIdx].StereoElements.Add(se);
+            }
+
+            foreach (ISingleElectron se in mol.SingleElectrons)
+            {
+                int grpIdx = se.Atom.GetProperty<int>(CDKPropertyName.ReactionGroup);
+                components[grpIdx].SingleElectrons.Add(se);
+            }
+
+            foreach (ILonePair lp in mol.LonePairs)
+            {
+                int grpIdx = lp.Atom.GetProperty<int>(CDKPropertyName.ReactionGroup);
+                components[grpIdx].LonePairs.Add(lp);
             }
 
             return rxn;
@@ -508,7 +520,7 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Collect the set of bonds that mapped in both a reactant and a product. The method uses
-        /// the <see cref="CDKPropertyName.ATOM_ATOM_MAPPING"/> property of atoms.
+        /// the <see cref="CDKPropertyName.AtomAtomMapping"/> property of atoms.
         /// </summary>
         /// <param name="reaction">reaction</param>
         /// <returns>mapped bonds</returns>
@@ -523,8 +535,8 @@ namespace NCDK.Tools.Manipulator
             {
                 foreach (IBond bond in reactant.Bonds)
                 {
-                    var begidx = bond.Atoms[0].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
-                    var endidx = bond.Atoms[1].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var begidx = bond.Begin.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var endidx = bond.End.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
                     if (begidx != null && endidx != null)
                         mappedReactantBonds.Add(new IntTuple(begidx.Value, endidx.Value));
                 }
@@ -537,8 +549,8 @@ namespace NCDK.Tools.Manipulator
             {
                 foreach (IBond bond in product.Bonds)
                 {
-                    var begidx = bond.Atoms[0].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
-                    var endidx = bond.Atoms[1].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var begidx = bond.Begin.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var endidx = bond.End.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
                     if (begidx != null && endidx != null)
                         mappedProductBonds.Add(new IntTuple(begidx.Value, endidx.Value));
                 }
@@ -552,8 +564,8 @@ namespace NCDK.Tools.Manipulator
             {
                 foreach (IBond bond in reactant.Bonds)
                 {
-                    var begidx = bond.Atoms[0].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
-                    var endidx = bond.Atoms[1].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var begidx = bond.Begin.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var endidx = bond.End.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
                     if (begidx != null && endidx != null && mappedProductBonds.Contains(new IntTuple(begidx.Value, endidx.Value)))
                         mapped.Add(bond);
                 }
@@ -562,8 +574,8 @@ namespace NCDK.Tools.Manipulator
             {
                 foreach (IBond bond in product.Bonds)
                 {
-                    var begidx = bond.Atoms[0].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
-                    var endidx = bond.Atoms[1].GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var begidx = bond.Begin.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
+                    var endidx = bond.End.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
                     if (begidx != null && endidx != null && mappedReactantBonds.Contains(new IntTuple(begidx.Value, endidx.Value)))
                         mapped.Add(bond);
                 }

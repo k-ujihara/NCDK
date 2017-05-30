@@ -221,7 +221,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestConfigure_IAtom()
         {
-            IAtom atom = new Atom("X");
+            IAtom atom = new Atom();
             atom.AtomTypeName = "C.ar";
             AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", new ChemObject().Builder);
             IAtomType atomType = factory.Configure(atom);

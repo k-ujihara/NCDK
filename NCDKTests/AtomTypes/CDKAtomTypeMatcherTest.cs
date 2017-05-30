@@ -106,7 +106,7 @@ namespace NCDK.AtomTypes
         public void TestNonExistingType()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("Error");
+            IAtom atom = new Atom();
             mol.Atoms.Add(atom);
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);
@@ -2147,6 +2147,9 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
             mol.Atoms.Add(atom4);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[0], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Single);
 
             string[] expectedTypes = new string[] { "O.sp3", "Ga", "O.sp3", "O.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);

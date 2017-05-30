@@ -177,7 +177,6 @@ namespace NCDK.Stereo
         /// </summary>
         public static ITetrahedralChirality NewTetrahedralCenter(IAtom focus, IBond[] bonds)
         {
-
             // obtain the bonds of a centre arranged by cardinal direction 
             IBond[] cardinalBonds = CardinalBonds(focus, bonds);
 
@@ -194,18 +193,17 @@ namespace NCDK.Stereo
 
             // the neighbors of our tetrahedral centre, the EAST or WEST may
             // be missing so we initialise these with the implicit (focus)
-            IAtom[] neighbors = new IAtom[]{cardinalBonds[NORTH].GetConnectedAtom(focus),
+            IAtom[] neighbors = new IAtom[]{cardinalBonds[NORTH].GetOther(focus),
                                             focus,
-                                            cardinalBonds[SOUTH].GetConnectedAtom(focus),
+                                            cardinalBonds[SOUTH].GetOther(focus),
                                             focus};
-
 
             // fill in the EAST/WEST bonds, if they are define, single and planar we add the
             // connected atom. else if bond is defined (but not single or planar) or we
             // have 4 neighbours something is wrong and we skip this atom                
             if (IsPlanarSigmaBond(cardinalBonds[EAST]))
             {
-                neighbors[EAST] = cardinalBonds[EAST].GetConnectedAtom(focus);
+                neighbors[EAST] = cardinalBonds[EAST].GetOther(focus);
             }
             else if (cardinalBonds[EAST] != null || bonds.Length == 4)
             {
@@ -214,7 +212,7 @@ namespace NCDK.Stereo
 
             if (IsPlanarSigmaBond(cardinalBonds[WEST]))
             {
-                neighbors[WEST] = cardinalBonds[WEST].GetConnectedAtom(focus);
+                neighbors[WEST] = cardinalBonds[WEST].GetOther(focus);
             }
             else if (cardinalBonds[WEST] != null || bonds.Length == 4)
             {
@@ -243,7 +241,7 @@ namespace NCDK.Stereo
             foreach (var bond in bonds)
             {
 
-                IAtom other = bond.GetConnectedAtom(focus);
+                IAtom other = bond.GetOther(focus);
                 Vector2 otherXy = other.Point2D.Value;
 
                 double deltaX = otherXy.X - centerXy.X;

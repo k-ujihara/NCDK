@@ -1,9 +1,11 @@
 using NCDK.Signatures;
+using System;
 
 namespace NCDK.SMSD.Labelling
 {
     // @cdk.module smsd
     // @cdk.githash
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public class MoleculeSignatureLabellingAdaptor : ICanonicalMoleculeLabeller
     {
         public IAtomContainer GetCanonicalMolecule(IAtomContainer container)

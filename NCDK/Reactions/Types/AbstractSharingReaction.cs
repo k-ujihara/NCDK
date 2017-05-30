@@ -60,7 +60,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && checkBond(bondi))
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter && checkAtom(atomj) && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
                                 IAtom[] atomList;
@@ -96,7 +96,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (checkBond(bondi))
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
+                            IAtom atomj = bondi.GetOther(atomi);
                             if (checkAtom(atomj) && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
                                 atomi.IsReactiveCenter = true;

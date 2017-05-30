@@ -175,8 +175,8 @@ namespace NCDK.Tools.Manipulator
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
-            mol.AddBond(mol.Atoms[1], mol.Atoms[4], BondOrder.Double);
-            mol.AddBond(mol.Atoms[1], mol.Atoms[5], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[5], BondOrder.Single);
             foreach (var atom in mol.Atoms)
                 atom.ImplicitHydrogenCount = 0;
             mol.IsAromatic = true;
@@ -199,6 +199,29 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(2, mol.Atoms.Count);
             IAtomContainer ac = AtomContainerManipulator.RemoveHydrogens(mol);
             Assert.AreEqual(2, ac.Atoms.Count);
+        }
+
+        [TestMethod()]
+        public void SuppressHydrogensKeepsRadicals()
+        {
+            IAtomContainer mol = new AtomContainer(); // *[H]
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms[0].ImplicitHydrogenCount = 0;
+            mol.Atoms[1].ImplicitHydrogenCount = 1;
+            mol.Atoms[2].ImplicitHydrogenCount = 1;
+            mol.Atoms[3].ImplicitHydrogenCount = 1;
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
+            mol.AddSingleElectronTo(mol.Atoms[0]);
+            Assert.AreEqual(4, mol.Atoms.Count);
+            Assert.AreEqual(1, mol.SingleElectrons.Count);
+            IAtomContainer ac = AtomContainerManipulator.RemoveHydrogens(mol);
+            Assert.AreEqual(1, ac.Atoms.Count);
+            Assert.AreEqual(1, ac.SingleElectrons.Count);
         }
 
         private IAtomContainer GetChiralMolTemplate()
@@ -300,8 +323,8 @@ namespace NCDK.Tools.Manipulator
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
-            mol.AddBond(mol.Atoms[1], mol.Atoms[4], BondOrder.Double);
-            mol.AddBond(mol.Atoms[1], mol.Atoms[5], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[5], BondOrder.Single);
 
             mol.Atoms[0].ImplicitHydrogenCount = 0;
             mol.Atoms[1].ImplicitHydrogenCount = 0;
@@ -549,7 +572,9 @@ namespace NCDK.Tools.Manipulator
         public void GetNaturalExactMassNeedsHydrogens()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(new Atom("C"));
+            IAtom atom = new Atom("C");
+            atom.ImplicitHydrogenCount = null;
+            mol.Atoms.Add(atom);
             AtomContainerManipulator.GetNaturalExactMass(mol);
         }
 
@@ -1044,7 +1069,7 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual("C", anonymous.Atoms[0].Symbol);
             Assert.AreEqual("C", anonymous.Atoms[2].Symbol);
             Assert.IsNull(anonymous.Atoms[1].AtomTypeName);
-            Assert.IsNull(anonymous.Atoms[4].ImplicitHydrogenCount);
+            Assert.AreEqual(0, anonymous.Atoms[4].ImplicitHydrogenCount);
             Assert.IsFalse(anonymous.Atoms[3].IsAromatic);
 
             Assert.IsFalse(anonymous.Bonds[1].IsAromatic);

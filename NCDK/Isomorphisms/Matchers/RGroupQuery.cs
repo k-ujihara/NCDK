@@ -318,7 +318,7 @@ namespace NCDK.Isomorphisms.Matchers
                                     IBond bond = rAttachmentPoints[apo + 1];
                                     //Check how R# is attached to bond
                                     int whichAtomInBond = 0;
-                                    if (bond.Atoms[1].Equals(rAtom)) whichAtomInBond = 1;
+                                    if (bond.End.Equals(rAtom)) whichAtomInBond = 1;
                                     IAtom subsAt = null;
                                     if (apo == 0)
                                         subsAt = substitute.FirstAttachmentPoint;
@@ -383,11 +383,11 @@ namespace NCDK.Isomorphisms.Matchers
                     foreach (var cloneBond in rootClone.Bonds)
                     {
                         bool removeBond = false;
-                        if (cloneBond.Atoms[0] is IPseudoAtom
-                                && IsValidRgroupQueryLabel(((IPseudoAtom)cloneBond.Atoms[0]).Label))
+                        if (cloneBond.Begin is IPseudoAtom
+                                && IsValidRgroupQueryLabel(((IPseudoAtom)cloneBond.Begin).Label))
                             removeBond = true;
-                        else if (cloneBond.Atoms[1] is IPseudoAtom
-                                && IsValidRgroupQueryLabel(((IPseudoAtom)cloneBond.Atoms[1]).Label))
+                        else if (cloneBond.End is IPseudoAtom
+                                && IsValidRgroupQueryLabel(((IPseudoAtom)cloneBond.End).Label))
                             removeBond = true;
 
                         if (removeBond)

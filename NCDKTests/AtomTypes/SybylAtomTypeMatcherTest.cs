@@ -191,7 +191,7 @@ namespace NCDK.AtomTypes
         public void TestNonExistingType()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("Error");
+            IAtom atom = new Atom();
             mol.Atoms.Add(atom);
             SybylAtomTypeMatcher matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);

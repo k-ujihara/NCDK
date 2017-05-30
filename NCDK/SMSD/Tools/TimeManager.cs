@@ -30,9 +30,9 @@ namespace NCDK.SMSD.Tools
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class TimeManager
     {
-
         private DateTime startTime;
         //private SimpleDateFormat dateFormat;
 
@@ -41,7 +41,6 @@ namespace NCDK.SMSD.Tools
         /// </summary>
         public TimeManager()
         {
-
             //dateFormat = new SimpleDateFormat("HH:mm:ss");
 
             //dateFormat.SetTimeZone(TimeZone.GetTimeZone("GMT"));
@@ -57,7 +56,6 @@ namespace NCDK.SMSD.Tools
             var currentTime = DateTime.Now;
 
             return (currentTime - startTime).Ticks / (60.0 * 60 * 1000 * 10000);
-
         }
 
         /// <summary>
@@ -66,7 +64,6 @@ namespace NCDK.SMSD.Tools
         /// </summary>
         public double GetElapsedTimeInMinutes()
         {
-
             //long diffSeconds = diff / 1000;
             //long diffMinutes = diff / (60 * 1000);
             //long diffHours = diff / (60 * 60 * 1000);
@@ -74,7 +71,6 @@ namespace NCDK.SMSD.Tools
 
             var currentTime = DateTime.Now;
             return (currentTime - startTime).Ticks / (60.0 * 1000 * 10000);
-
         }
 
         /// <summary>
@@ -85,7 +81,6 @@ namespace NCDK.SMSD.Tools
         {
             var currentTime = DateTime.Now;
             return ((currentTime - startTime).Ticks / (1000.0 * 10000));
-
         }
 
         /// <summary>

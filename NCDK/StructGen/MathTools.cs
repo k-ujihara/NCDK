@@ -16,21 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.Maths
+namespace NCDK.StructGen
 {
     /// <summary>
     /// Class providing convenience methods for simple mathematical operations.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    public static class MathTools
+    internal static class MathTools
     {
         /// <summary>
         /// Analog of <see cref="System.Math.Max(double, double)"/>  that returns the largest double value in an array of doubles.
         /// </summary>
         /// <param name="values">the values to be searched for the largest value among them</param>
         /// <returns>the largest value among a set of given values</returns>
-        public static double Max(double[] values)
+        internal static double Max(double[] values)
         {
             double max = values[0];
             foreach (var value in values)
@@ -43,7 +43,7 @@ namespace NCDK.Maths
         /// </summary>
         /// <param name="values">the values to be searched for the smallest value among them</param>
         /// <returns>the smallest value among a set of given values</returns>
-        public static double Min(double[] values)
+        internal static double Min(double[] values)
         {
             double min = values[0];
             foreach (var value in values)
@@ -54,7 +54,7 @@ namespace NCDK.Maths
         /// <summary>
         /// Analog of <see cref="System.Math.Max(int, int)"/> that returns the largest int value in an array of ints.
         /// </summary>
-        public static int Max(int[] values)
+        internal static int Max(int[] values)
         {
             int max = values[0];
             foreach (var value in values)
@@ -70,7 +70,7 @@ namespace NCDK.Maths
         /// <summary>
         /// Analog of <see cref="System.Math.Min(int, int)"/> that returns the largest int value in an array of ints.
         /// </summary>
-        public static int Min(int[] values)
+        internal static int Min(int[] values)
         {
             int min = values[0];
             foreach (var value in values)
@@ -83,12 +83,12 @@ namespace NCDK.Maths
             return min;
         }
 
-        public static bool IsOdd(int intValue)
+        internal static bool IsOdd(int intValue)
         {
             return !MathTools.IsEven(intValue);
         }
 
-        public static bool IsEven(int intValue)
+        internal static bool IsEven(int intValue)
         {
             return intValue % 2 == 0;
         }

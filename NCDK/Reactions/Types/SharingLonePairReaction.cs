@@ -22,7 +22,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate in movement resonance.
-    /// This reaction could be represented as [A+]-B| => A=[B+]. Due to
+    /// This reaction could be represented as [A+]-B| =&gt; A=[B+]. Due to
     /// deficiency of charge of the atom A, the lone pair electron of the atom A is
     /// desplaced.</para>
     /// <para>Make sure that the molecule has the correspond lone pair electrons
@@ -32,7 +32,7 @@ namespace NCDK.Reactions.Types
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
     // @cdk.githash
-    public partial class SharingLonePairReaction :AbstractSharingReaction
+    public partial class SharingLonePairReaction : AbstractSharingReaction
     {
         public SharingLonePairReaction() { }
 

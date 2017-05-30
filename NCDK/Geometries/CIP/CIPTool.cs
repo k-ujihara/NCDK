@@ -145,10 +145,10 @@ namespace NCDK.Geometries.CIP
             //                        \
             //                         y
             //
-            IAtom u = stereoBond.Atoms[0];
-            IAtom v = stereoBond.Atoms[1];
-            IAtom x = leftBond.GetConnectedAtom(u);
-            IAtom y = rightBond.GetConnectedAtom(v);
+            IAtom u = stereoBond.Begin;
+            IAtom v = stereoBond.End;
+            IAtom x = leftBond.GetOther(u);
+            IAtom y = rightBond.GetOther(v);
 
             var conformation = stereoCenter.Stereo;
 
@@ -342,7 +342,7 @@ namespace NCDK.Geometries.CIP
                 else
                 {
                     int duplication = GetDuplication(bond.Order);
-                    IAtom connectedAtom = bond.GetConnectedAtom(ligandAtom);
+                    IAtom connectedAtom = bond.GetOther(ligandAtom);
                     if (visitedAtoms.IsVisited(connectedAtom))
                     {
                         ligands.Add(new TerminalLigand(container, visitedAtoms, ligandAtom, connectedAtom));

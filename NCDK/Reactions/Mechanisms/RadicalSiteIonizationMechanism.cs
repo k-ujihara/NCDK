@@ -27,7 +27,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <summary>
     /// <para>This mechanism extracts an atom because of the stabilization of a radical.
     /// It returns the reaction mechanism which has been cloned the IAtomContainer.</para>
-    /// <para>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</para>
+    /// <para>This reaction could be represented as Y-B-[C*] =&gt; [Y*] + B=C</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

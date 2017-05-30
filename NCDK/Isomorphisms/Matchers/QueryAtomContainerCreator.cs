@@ -39,8 +39,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
@@ -70,8 +70,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 queryContainer.Bonds.Add(new OrderQueryBondOrderOnly((IQueryAtom)queryContainer.Atoms[index1],
                         (IQueryAtom)queryContainer.Atoms[index2], bond.Order, container.Builder));
             }
@@ -93,8 +93,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
@@ -118,8 +118,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
@@ -159,8 +159,8 @@ namespace NCDK.Isomorphisms.Matchers
 
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 if (aromaticity && bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],
@@ -201,8 +201,8 @@ namespace NCDK.Isomorphisms.Matchers
 
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 queryContainer.Bonds.Add(new AnyOrderBond(queryContainer.Atoms[index1], queryContainer.Atoms[index2],
                         container.Builder));
             }
@@ -233,8 +233,8 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var bond in container.Bonds)
             {
-                int index1 = container.Atoms.IndexOf(bond.Atoms[0]);
-                int index2 = container.Atoms.IndexOf(bond.Atoms[1]);
+                int index1 = container.Atoms.IndexOf(bond.Begin);
+                int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
                     queryContainer.Bonds.Add(new AromaticQueryBond((IQueryAtom)queryContainer.Atoms[index1],

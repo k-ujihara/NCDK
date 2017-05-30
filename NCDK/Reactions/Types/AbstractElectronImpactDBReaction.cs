@@ -50,8 +50,8 @@ namespace NCDK.Reactions.Types
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant, bondChecker);
             foreach (var bondi in reactant.Bonds)
             {
-                IAtom atom1 = bondi.Atoms[0];
-                IAtom atom2 = bondi.Atoms[1];
+                IAtom atom1 = bondi.Begin;
+                IAtom atom2 = bondi.End;
                 if (bondi.IsReactiveCenter
                         && bondChecker(bondi)
                         && atom1.IsReactiveCenter && atom2.IsReactiveCenter
@@ -93,8 +93,8 @@ namespace NCDK.Reactions.Types
         {
             foreach (var bondi in reactant.Bonds)
             {
-                IAtom atom1 = bondi.Atoms[0];
-                IAtom atom2 = bondi.Atoms[1];
+                IAtom atom1 = bondi.Begin;
+                IAtom atom2 = bondi.End;
                 if (bondChecker(bondi)
                         && (atom1.FormalCharge ?? 0) == 0
                         && (atom2.FormalCharge ?? 0) == 0

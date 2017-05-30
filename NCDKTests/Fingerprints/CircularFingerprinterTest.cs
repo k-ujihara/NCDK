@@ -340,5 +340,13 @@ namespace NCDK.Fingerprints
             a.ImplicitHydrogenCount = h;
             return a;
         }
+
+        [TestMethod()]
+        public void TestVersion()
+        {
+            IFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
+            string expected = "CDK-CircularFingerprinter/" + CDK.Version + " classType=ECFP4";
+            Assert.AreEqual(expected, fpr.GetVersionDescription());
+        }
     }
 }

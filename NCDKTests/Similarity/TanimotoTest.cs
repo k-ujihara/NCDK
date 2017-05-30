@@ -42,7 +42,7 @@ namespace NCDK.Similarity
         {
             IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
             IAtomContainer mol2 = TestMoleculeFactory.MakePyrrole();
-            Fingerprinter fingerprinter = new Fingerprinter();
+            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
             BitArray bs1 = fingerprinter.GetBitFingerprint(mol1).AsBitSet();
             BitArray bs2 = fingerprinter.GetBitFingerprint(mol2).AsBitSet();
             var tanimoto = Tanimoto.Calculate(bs1, bs2);
@@ -68,7 +68,7 @@ namespace NCDK.Similarity
         {
             IAtomContainer mol1 = TestMoleculeFactory.MakeIndole();
             IAtomContainer mol2 = TestMoleculeFactory.MakePyrrole();
-            Fingerprinter fp = new Fingerprinter();
+            Fingerprinter fp = new Fingerprinter(1024, 8);
             double similarity = Tanimoto.Calculate(fp.GetBitFingerprint(mol1), fp.GetBitFingerprint(mol2));
             Assert.AreEqual(0.3939, similarity, 0.01 * 2);
         }
@@ -147,7 +147,7 @@ namespace NCDK.Similarity
         {
             IAtomContainer mol1 = TestMoleculeFactory.Make123Triazole();
             IAtomContainer mol2 = TestMoleculeFactory.MakeImidazole();
-            Fingerprinter fingerprinter = new Fingerprinter();
+            Fingerprinter fingerprinter = new Fingerprinter(1024, 8);
             BitArray bs1 = fingerprinter.GetBitFingerprint(mol1).AsBitSet();
             BitArray bs2 = fingerprinter.GetBitFingerprint(mol2).AsBitSet();
             var tanimoto = Tanimoto.Calculate(bs1, bs2);

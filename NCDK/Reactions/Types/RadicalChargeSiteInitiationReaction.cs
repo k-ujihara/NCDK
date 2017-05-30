@@ -20,7 +20,7 @@ namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>IReactionProcess which participate mass spectrum process. Homolitic dissocitation.
-    /// This reaction could be represented as A-B-[c*+] => [A*] + B=[C+].</para>
+    /// This reaction could be represented as A-B-[c*+] =&gt; [A*] + B=[C+].</para>
     /// <para>Make sure that the molecule has the corresponend lone pair electrons
     /// for each atom. You can use the method: <see cref="Tools.LonePairElectronChecker"/></para>
     /// </summary>

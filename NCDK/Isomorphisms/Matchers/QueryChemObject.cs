@@ -19,7 +19,7 @@
  */
 namespace NCDK.Isomorphisms.Matchers
 {
-    public class QueryChemObject : Default.ChemObject, IChemObject
+    public class QueryChemObject : Silent.ChemObject, IChemObject
     {
         public QueryChemObject(IChemObjectBuilder builder)
         {

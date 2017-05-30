@@ -30,13 +30,13 @@ namespace NCDK.Tools.Manipulator
     /// Class with convenience methods that provide methods from
     /// methods from ChemObjects within the ChemModel. For example:
     /// <code>
-    /// ChemModelManipulator.RemoveAtomAndConnectedElectronContainers(chemModel, atom);
+    /// ChemModelManipulator.RemoveAtom(chemModel, atom);
     /// </code>
     /// will find the Atom in the model by traversing the ChemModel's
     /// MoleculeSet, Crystal and ReactionSet fields and remove
-    /// it with the <see cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/> method.
+    /// it with the <see cref="IAtomContainer.RemoveAtom(IAtom)"/> method.
     /// </summary>
-    /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
+    /// <seealso cref="IAtomContainer.RemoveAtom(IAtom)"/>
     // @cdk.module standard
     // @cdk.githash
     public class ChemModelManipulator
@@ -106,7 +106,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (crystal.Contains(atom))
                 {
-                    crystal.RemoveAtomAndConnectedElectronContainers(atom);
+                    crystal.RemoveAtom(atom);
                 }
                 return;
             }

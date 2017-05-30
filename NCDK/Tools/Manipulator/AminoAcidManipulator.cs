@@ -60,7 +60,7 @@ namespace NCDK.Tools.Manipulator
                 }
             }
             foreach (var atom in atomsToRemove)
-                acid.RemoveAtomAndConnectedElectronContainers(atom);
+                acid.RemoveAtom(atom);
         }
 
         /// <summary>

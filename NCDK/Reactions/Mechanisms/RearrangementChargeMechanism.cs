@@ -28,7 +28,7 @@ namespace NCDK.Reactions.Mechanisms
     /// <para>This mechanism displaces the Charge(radical, charge + or charge -) because of
     /// a double bond which is associated.
     /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
-    /// <para>This reaction could be represented as [A*]-Y=Z => A=Z-[Y*]</para>
+    /// <para>This reaction could be represented as [A*]-Y=Z =&gt; A=Z-[Y*]</para>
     /// </summary>
     // @author         miguelrojasch
     // @cdk.created    2008-02-10

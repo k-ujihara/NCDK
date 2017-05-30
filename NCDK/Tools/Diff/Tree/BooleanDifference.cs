@@ -59,8 +59,8 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/></returns>
         public override string ToString()
         {
-            return name + ":" + (first == null ? "NA" : (first == true ? "T" : "F")) + "/"
-                    + (second == null ? "NA" : (second == true ? "T" : "F"));
+            return name + ":" + (first == null ? "NA" : (first.Value ? "T" : "F")) + "/"
+                    + (second == null ? "NA" : (second.Value ? "T" : "F"));
         }
     }
 }

@@ -34,6 +34,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     [Serializable]
     public class TargetProperties 
     {
@@ -87,7 +88,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             map = Arrays.CreateJagged<IBond>(container.Atoms.Count, container.Atoms.Count);
             foreach (var atom in container.Atoms)
             {
-                int count = container.GetConnectedAtoms(atom).Count();
+                int count = container.GetConnectedBonds(atom).Count();
                 connectedTargetAtomCountMap[atom] = count;
                 var list = container.GetConnectedAtoms(atom);
                 if (list != null)
@@ -105,8 +106,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
             foreach (var bond in container.Bonds)
             {
-                map[atoms[bond.Atoms[0]]][atoms[bond.Atoms[1]]] = bond;
-                map[atoms[bond.Atoms[1]]][atoms[bond.Atoms[0]]] = bond;
+                map[atoms[bond.Begin]][atoms[bond.End]] = bond;
+                map[atoms[bond.End]][atoms[bond.Begin]] = bond;
             }
         }
 

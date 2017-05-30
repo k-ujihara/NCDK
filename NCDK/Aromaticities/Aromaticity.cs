@@ -190,8 +190,8 @@ namespace NCDK.Aromaticities
             {
                 isAromatic = true;
                 bond.IsAromatic = true;
-                bond.Atoms[0].IsAromatic = true;
-                bond.Atoms[1].IsAromatic = true;
+                bond.Begin.IsAromatic = true;
+                bond.End.IsAromatic = true;
             }
 
             molecule.IsAromatic = isAromatic;

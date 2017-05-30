@@ -415,7 +415,7 @@ namespace NCDK
         public void TestNewPDBAtom_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("O.3");
+            IPDBAtom atom = builder.CreatePDBAtom("O");
             Assert.IsNotNull(atom);
         }
 
@@ -423,7 +423,7 @@ namespace NCDK
         public void TestNewPDBAtom_String_Point3D()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("O.3", new Vector3(1, 2, 3));
+            IPDBAtom atom = builder.CreatePDBAtom("O", new Vector3(1, 2, 3));
             Assert.IsNotNull(atom);
         }
 
@@ -503,7 +503,7 @@ namespace NCDK
         public void TestNewPDBAtom_String_Point3d()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("Foo", new Vector3(1, 2, 3));
+            IPDBAtom atom = builder.CreatePDBAtom("C", new Vector3(1, 2, 3));
             Assert.IsNotNull(atom);
         }
 

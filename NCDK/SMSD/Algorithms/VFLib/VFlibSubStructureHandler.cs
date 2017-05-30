@@ -25,6 +25,7 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.VFLib.Map;
 using NCDK.SMSD.Algorithms.VFLib.Query;
 using NCDK.SMSD.Tools;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -36,16 +37,21 @@ namespace NCDK.SMSD.Algorithms.VFLib
     /// This is an ultra fast method to report if query
     /// is a substructure for target molecule. If this case is true
     /// then it returns only all mapping.
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// This is much faster than <see cref="VFlibMCSHandler"/> class
     /// as it only reports first match and backtracks.
-    ///
+    /// </para>
+    /// <para>
     /// This class should only be used to report if a query
     /// graph is a substructure of the target graph.
-    /// </summary>
+    /// </para>
+    /// </remarks>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class VFlibSubStructureHandler : AbstractSubGraph, IMCSBase
     {
         private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;

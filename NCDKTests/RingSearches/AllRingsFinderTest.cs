@@ -61,9 +61,7 @@ namespace NCDK.RingSearches
             Assert.AreEqual(6, ringSet.Count);
         }
 
-        /// <summary>
         // @cdk.bug 746067
-        /// </summary>
         [TestMethod()]
         public void TestBondsWithinRing()
         {
@@ -80,8 +78,8 @@ namespace NCDK.RingSearches
                 {
                     IBond ec = ring.Bonds[j];
 
-                    IAtom atom1 = ec.Atoms[0];
-                    IAtom atom2 = ec.Atoms[1];
+                    IAtom atom1 = ec.Begin;
+                    IAtom atom2 = ec.End;
                     Assert.IsTrue(ring.Contains(atom1));
                     Assert.IsTrue(ring.Contains(atom2));
                 }

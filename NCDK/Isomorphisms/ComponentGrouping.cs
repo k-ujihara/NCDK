@@ -98,7 +98,7 @@ namespace NCDK.Isomorphisms
         /// and target (connected components).
         /// </summary>
         /// <param name="grouping">query grouping</param>
-        /// <param name="cc">connected component of the target</param>
+        /// <param name="targetComponents">connected component of the target</param>
         public ComponentGrouping(int[] grouping, int[] targetComponents)
         {
             this.queryComponents = grouping;
