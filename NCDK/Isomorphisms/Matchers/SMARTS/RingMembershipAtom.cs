@@ -38,8 +38,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Ring membership query atom. Check if the an atom belongs to <i>num</i> of
         /// rings. To specify any ring membership, <i>num</i> should be specified as
-        /// &lt; 0. Generally in SMARTS it's better negate ring membership with <c>[!R]</c>
-        /// however for legacy reasons <c>[R0]</c> was accepted and checks
+        /// &lt; 0. Generally in SMARTS it's better negate ring membership with <pre>[!R]</pre>
+        /// however for legacy reasons <pre>[R0]</pre> was accepted and checks
         /// this atoms belongs to 0 rings.
         /// </summary>
         /// <param name="num">number of rings which this atom belongs to, &lt; 0 any ring.</param>
@@ -53,7 +53,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <inheritdoc/>
         public override bool Matches(IAtom atom)
         {
-            return ringNumber < 0 ? Invariants(atom).RingConnectivity > 0 : ringNumber == Invariants(atom).RingNumber;
+            if (ringNumber < 0)
+                return Invariants(atom).RingConnectivity > 0;
+            else if (ringNumber == 0)
+                return Invariants(atom).RingConnectivity == 0;
+            else
+                return ringNumber == Invariants(atom).RingNumber;
         }
     }
 }

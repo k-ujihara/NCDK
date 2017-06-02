@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+﻿/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,44 +20,56 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System.Collections.Generic;
+using NCDK.Common.Collections;
 
 namespace NCDK.Groups
 {
-    /// <summary>
-    /// Refiner for atom containers, which refines partitions of the atoms to
-    /// equitable partitions. Used by the <see cref="AtomDiscretePartitionRefiner"/>.
-    /// </summary>
     // @author maclean
-    // @cdk.module group
-    public class AtomEquitablePartitionRefiner : AbstractEquitablePartitionRefiner, IEquitablePartitionRefiner
+    // @cdk.module group 
+    class IntegerListInvariant : Invariant
     {
-        /// <summary>
-        /// A reference to the discrete refiner, which has the connectivity info.
-        /// </summary>
-        private readonly AtomDiscretePartitionRefiner discreteRefiner;
+        private int[] values;
 
-        public AtomEquitablePartitionRefiner(AtomDiscretePartitionRefiner discreteRefiner)
+        public IntegerListInvariant(int[] values)
         {
-            this.discreteRefiner = discreteRefiner;
+            this.values = values;
         }
 
-        public override int NeighboursInBlock(ISet<int> block, int atomIndex)
+        public int CompareTo(Invariant o)
         {
-            int neighbours = 0;
-            foreach (var connected in discreteRefiner.GetConnectedIndices(atomIndex))
+            int[] other = ((IntegerListInvariant)o).values;
+            for (int index = 0; index < values.Length; index++)
             {
-                if (block.Contains(connected))
+                if (values[index] > other[index])
                 {
-                    neighbours++;
+                    return -1;
+                }
+                else if (values[index] < other[index])
+                {
+                    return 1;
+                }
+                else
+                {
+                    continue;
                 }
             }
-            return neighbours;
+            return 0;
         }
 
-        public override int GetVertexCount()
+        public override int GetHashCode()
         {
-            return discreteRefiner.GetVertexCount();
+            return Arrays.GetHashCode(values);
+        }
+
+        public override bool Equals(object other)
+        {
+            return other is IntegerListInvariant
+                    && Arrays.Equals(values, ((IntegerListInvariant)other).values);
+        }
+
+        public override string ToString()
+        {
+            return Arrays.ToJavaString(values);
         }
     }
 }

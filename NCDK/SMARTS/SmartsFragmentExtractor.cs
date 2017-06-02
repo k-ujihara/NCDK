@@ -133,8 +133,8 @@ namespace NCDK.SMARTS
             for (int bondIdx = 0; bondIdx < numBonds; bondIdx++)
             {
                 IBond bond = mol.Bonds[bondIdx];
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 int begIdx = mol.Atoms.IndexOf(beg);
                 int endIdx = mol.Atoms.IndexOf(end);
                 this.bexpr[bondIdx] = EncodeBondExpr(bondIdx, begIdx, endIdx);
@@ -406,7 +406,7 @@ namespace NCDK.SMARTS
                 for (int i = 0; i < atmDeg; i++)
                 {
                     IBond bond = mol.Bonds[bondAdj[atmIdx][i]];
-                    IAtom nbr = bond.GetConnectedAtom(atom);
+                    IAtom nbr = bond.GetOther(atom);
                     if (nbr.AtomicNumber != null && nbr.AtomicNumber == 1)
                         hcount++;
                     int bord = bond.Order != BondOrder.Unset ? bond.Order.Numeric : 0;

@@ -42,7 +42,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "TurboMole";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-turbomole-coord";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "tmol" };
         public string ReaderClassName => null;

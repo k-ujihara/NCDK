@@ -23,13 +23,13 @@
  */
 
 using NCDK.Graphs;
+using NCDK.Numerics;
 using NCDK.RingSearches;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
@@ -138,8 +138,8 @@ namespace NCDK.Layout
                 else if (element is IDoubleBondStereochemistry)
                 {
                     IBond doubleBond = ((IDoubleBondStereochemistry)element).StereoBond;
-                    doubleBondElements[atomToIndex[doubleBond.Atoms[0]]] =
-                            doubleBondElements[atomToIndex[doubleBond.Atoms[1]]] = (IDoubleBondStereochemistry)element;
+                    doubleBondElements[atomToIndex[doubleBond.Begin]] =
+                            doubleBondElements[atomToIndex[doubleBond.End]] = (IDoubleBondStereochemistry)element;
                 }
             }
 
@@ -356,19 +356,53 @@ namespace NCDK.Layout
             }
 
             // set the label for the highest priority and available bond
-            foreach (var v in Priority(atomToIndex[focus], atoms, n))
+            bool found = false;
+            BondStereo firstlabel = BondStereo.None;
+            bool assignTwoLabels = AssignTwoLabels(bonds, labels);
+            foreach (int v in Priority(atomToIndex[focus], atoms, n))
             {
                 IBond bond = bonds[v];
-                if (bond.Stereo == BondStereo.None && bond.Order == BondOrder.Single)
+                if (bond.Stereo != BondStereo.None || bond.Order != BondOrder.Single)
+                    continue;
+                // first label
+                if (!found)
                 {
-                    bond.SetAtoms(new IAtom[] { focus, atoms[v] }); // avoids UpInverted/DownInverted
+                    found = true;
+                    bond.SetAtoms(new IAtom[] { focus, atoms[v] }); // avoids UP_INVERTED/DOWN_INVERTED
                     bond.Stereo = labels[v];
-                    return;
+                    firstlabel = labels[v];
+                    // don't assign a second label when there are only three ligands
+                    if (!assignTwoLabels)
+                        break;
+                }
+                // second label
+                else if (labels[v] != firstlabel)
+                {
+                    bond.SetAtoms(new IAtom[] { focus, atoms[v] }); // avoids UP_INVERTED/DOWN_INVERTED
+                    bond.Stereo = labels[v];
+                    break;
                 }
             }
 
             // it should be possible to always assign labels somewhere -> unchecked exception
-            throw new ArgumentException("could not assign non-planar (up/down) labels");
+            if (!found)
+                throw new ArgumentException("could not assign non-planar (up/down) labels");
+        }
+
+        private bool AssignTwoLabels(IBond[] bonds, BondStereo[] labels)
+        {
+            return labels.Length == 4 && CountRingBonds(bonds) != 3;
+        }
+
+        private int CountRingBonds(IBond[] bonds)
+        {
+            int rbonds = 0;
+            foreach (IBond bond in bonds)
+            {
+                if (bond != null && bond.IsInRing)
+                    rbonds++;
+            }
+            return rbonds;
         }
 
         /// <summary>
@@ -488,15 +522,30 @@ namespace NCDK.Layout
             if (iAtom.AtomicNumber == 0 && jAtom.AtomicNumber > 0)
                 return false;
 
-            // prioritise atoms with fewer neighbors
-            if (graph[i].Length < graph[j].Length) return true;
-            if (graph[i].Length > graph[j].Length) return false;
+            int iDegree = graph[i].Length;
+            int iElem = iAtom.AtomicNumber.Value;
+            int jDegree = graph[j].Length;
+            int jElem = jAtom.AtomicNumber.Value;
 
-            // prioritise by atomic number
-            if (iAtom.AtomicNumber < jAtom.AtomicNumber)
+            // rank carbon's last
+            if (iElem == 6) iElem = 256;
+            if (jElem == 6) jElem = 256;
+
+            // terminal atoms are always best
+            if (iDegree == 1 && jDegree > 1)
                 return true;
-            if (iAtom.AtomicNumber > jAtom.AtomicNumber)
+            if (jDegree == 1 && iDegree > 1)
                 return false;
+
+            // prioritise by atomic number, H < N < O < ... < C
+            if (iElem < jElem)
+                return true;
+            if (iElem > jElem)
+                return false;
+
+            // prioritise atoms with fewer neighbors
+            if (iDegree < jDegree) return true;
+            if (iDegree > jDegree) return false;
 
             return false;
         }
@@ -569,8 +618,8 @@ namespace NCDK.Layout
         /// <param name="doubleBond">the bond to mark as unspecified</param>
         private void LabelUnspecified(IBond doubleBond)
         {
-            IAtom aBeg = doubleBond.Atoms[0];
-            IAtom aEnd = doubleBond.Atoms[1];
+            IAtom aBeg = doubleBond.Begin;
+            IAtom aEnd = doubleBond.End;
 
             int beg = atomToIndex[aBeg];
             int end = atomToIndex[aEnd];
@@ -632,6 +681,63 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Checks if the atom can be involved in a double-bond.
+        /// </summary>
+        /// <param name="idx">atom idx</param>
+        /// <returns>the atom at index (idx) is valid for a double bond</returns>
+        /// <seealso href="http://www.inchi-trust.org/download/104/InChI_TechMan.pdf">Double bond stereochemistry, InChI Technical Manual</seealso>
+        private bool IsCisTransEndPoint(int idx)
+        {
+            IAtom atom = container.Atoms[idx];
+            // error: uninit atom
+            if (atom.AtomicNumber == null ||
+                atom.FormalCharge == null ||
+                atom.ImplicitHydrogenCount == null)
+                return false;
+            int chg = atom.FormalCharge.Value;
+            int btypes = GetBondTypes(idx);
+            switch (atom.AtomicNumber)
+            {
+                case 6:  // C
+                case 14: // Si
+                case 32: // Ge
+                         // double, single, single
+                    return chg == 0 && btypes == 0x0102;
+                case 7:  // N
+                    if (chg == 0) // double, single
+                        return btypes == 0x0101;
+                    if (chg == +1) // double, single, single
+                        return btypes == 0x0102;
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Generate a bond type code for a given atom. The bond code
+        /// can be quickly tested to count the number of single, double,
+        /// or 'other' bonds.
+        /// </summary>
+        /// <param name="idx">the atom idx</param>
+        /// <returns>bond code</returns>
+        private int GetBondTypes(int idx)
+        {
+            int btypes = container.Atoms[idx].ImplicitHydrogenCount.Value;
+            foreach (int end in graph[idx])
+            {
+                IBond bond = edgeToBond[idx, end];
+                if (bond.Order == BondOrder.Single)
+                    btypes += 0x000001;
+            else if (bond.Order == BondOrder.Double)
+                    btypes += 0x000100;
+            else // other bond types
+                btypes += 0x010000;
+            }
+            return btypes;
+        }
+
+        /// <summary>
         /// Locates double bonds to mark as unspecified stereochemistry.
         /// </summary>
         /// <returns>set of double bonds</returns>
@@ -644,8 +750,8 @@ namespace NCDK.Layout
                 if (bond.Order != BondOrder.Double)
                     continue;
 
-                IAtom aBeg = bond.Atoms[0];
-                IAtom aEnd = bond.Atoms[1];
+                IAtom aBeg = bond.Begin;
+                IAtom aEnd = bond.End;
 
                 int beg = atomToIndex[aBeg];
                 int end = atomToIndex[aEnd];
@@ -661,6 +767,9 @@ namespace NCDK.Layout
 
                 // is actually a tetrahedral centre
                 if (tetrahedralElements[beg] != null || tetrahedralElements[end] != null)
+                    continue;
+
+                if (!IsCisTransEndPoint(beg) || !IsCisTransEndPoint(end))
                     continue;
 
                 if (!HasOnlyPlainBonds(beg, bond) || !HasOnlyPlainBonds(end, bond))

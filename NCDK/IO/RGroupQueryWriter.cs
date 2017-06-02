@@ -149,6 +149,7 @@ namespace NCDK.IO
         /// The actual writing of the output.
         /// </summary>
         /// <param name="obj"></param>
+        /// <exception cref="CDKException">could not write RGroup query</exception>
         public override void Write(IChemObject obj)
         {
             if (!(obj is IRGroupQuery))
@@ -198,7 +199,7 @@ namespace NCDK.IO
                         bool implicitlyOrdered = true;
                         while (rApo.ContainsKey(apoIdx) && implicitlyOrdered)
                         {
-                            IAtom partner = rApo[apoIdx].GetConnectedAtom(rgroupAtom);
+                            IAtom partner = rApo[apoIdx].GetOther(rgroupAtom);
                             for (int atIdx = 0; atIdx < rootAtc.Atoms.Count; atIdx++)
                             {
                                 if (rootAtc.Atoms[atIdx].Equals(partner))
@@ -223,7 +224,7 @@ namespace NCDK.IO
                                     apoIdx = 1;
                                     while (rApo.ContainsKey(apoIdx))
                                     {
-                                        IAtom partner = rApo[apoIdx].GetConnectedAtom(rgroupAtom);
+                                        IAtom partner = rApo[apoIdx].GetOther(rgroupAtom);
 
                                         for (int a = 0; a < rootAtc.Atoms.Count; a++)
                                         {

@@ -39,7 +39,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "MOPAC 2012";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-mopac-out";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "mop", "mopcrt", "mopout" };
         public override string ReaderClassName => null;

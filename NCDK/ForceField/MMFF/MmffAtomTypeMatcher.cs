@@ -193,10 +193,12 @@ namespace NCDK.ForceField.MMFF
         /// <param name="symbs">symbolic atom types</param>
         private void AssignPreliminaryTypes(IAtomContainer container, string[] symbs)
         {
-            SmartsMatchers.Prepare(container, true);
-            foreach (var matcher in patterns)
+            // shallow copy
+            IAtomContainer cpy = container.Builder.CreateAtomContainer(container);
+            SmartsMatchers.Prepare(cpy, true);
+            foreach (AtomTypePattern matcher in patterns)
             {
-                foreach (var idx in matcher.Matches(container))
+                foreach (int idx in matcher.Matches(cpy))
                 {
                     if (symbs[idx] == null)
                     {

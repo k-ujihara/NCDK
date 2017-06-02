@@ -39,7 +39,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Chem3D Cartesian 2";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-chem3d";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "c3d2" };
         public string ReaderClassName => null;

@@ -56,10 +56,10 @@ namespace NCDK.Fragments
                 // later on we'll want to make sure that the fragment doesn't contain
                 // the bond joining the current atom and the atom that is on the other side
                 IAtom excludedAtom;
-                if (atom.Equals(bond.Atoms[0]))
-                    excludedAtom = bond.Atoms[1];
+                if (atom.Equals(bond.Begin))
+                    excludedAtom = bond.End;
                 else
-                    excludedAtom = bond.Atoms[0];
+                    excludedAtom = bond.Begin;
 
                 List<IBond> part = new List<IBond>();
                 part.Add(bond);
@@ -116,8 +116,8 @@ namespace NCDK.Fragments
             {
                 if (bondList.Contains(aBond)) continue;
                 bondList.Add(aBond);
-                IAtom nextAtom = aBond.GetConnectedAtom(atom);
-                if (atomContainer.GetConnectedAtoms(nextAtom).Count() == 1) continue;
+                IAtom nextAtom = aBond.GetOther(atom);
+                if (atomContainer.GetConnectedBonds(nextAtom).Count() == 1) continue;
                 Traverse(atomContainer, nextAtom, bondList);
             }
             return bondList;

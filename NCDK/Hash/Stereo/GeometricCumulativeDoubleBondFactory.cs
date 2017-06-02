@@ -61,8 +61,8 @@ namespace NCDK.Hash.Stereo
                 if (bonds.Count == 2)
                 {
                     // (s)tart/(e)nd of cumulated system: -s=a=e-
-                    IAtom s = bonds[0].GetConnectedAtom(a);
-                    IAtom e = bonds[1].GetConnectedAtom(a);
+                    IAtom s = bonds[0].GetOther(a);
+                    IAtom e = bonds[1].GetOther(a);
                     // need the parents to re-use the double bond encoder
                     IAtom sParent = a;
                     IAtom eParent = a;
@@ -76,8 +76,8 @@ namespace NCDK.Hash.Stereo
                     // expand out from 'l'
                     while (s != null && map.Cumulated(s))
                     {
-                        IAtom p = map.bonds[s][0].GetConnectedAtom(s);
-                        IAtom q = map.bonds[s][1].GetConnectedAtom(s);
+                        IAtom p = map.bonds[s][0].GetOther(s);
+                        IAtom q = map.bonds[s][1].GetOther(s);
                         sParent = s;
                         s = visited.Add(p) ? p : visited.Add(q) ? q : null;
                         size++;
@@ -86,8 +86,8 @@ namespace NCDK.Hash.Stereo
                     // expand from 'r'
                     while (e != null && map.Cumulated(e))
                     {
-                        IAtom p = map.bonds[e][0].GetConnectedAtom(e);
-                        IAtom q = map.bonds[e][1].GetConnectedAtom(e);
+                        IAtom p = map.bonds[e][0].GetOther(e);
+                        IAtom q = map.bonds[e][1].GetOther(e);
                         eParent = e;
                         e = visited.Add(p) ? p : visited.Add(q) ? q : null;
                         size++;
@@ -223,7 +223,7 @@ namespace NCDK.Hash.Stereo
             {
                 if (!IsDoubleBond(bond))
                 {
-                    IAtom other = bond.GetConnectedAtom(a);
+                    IAtom other = bond.GetOther(a);
                     coordinates[i + offset] = other.Point2D.Value;
                     elevations[i + offset] = Elevation(bond, a);
                     indices[i] = container.Atoms.IndexOf(other);
@@ -263,7 +263,7 @@ namespace NCDK.Hash.Stereo
             {
                 if (!IsDoubleBond(bond))
                 {
-                    IAtom other = bond.GetConnectedAtom(a);
+                    IAtom other = bond.GetOther(a);
                     coordinates[i + offset] = other.Point3D.Value;
                     indices[i] = container.Atoms.IndexOf(other);
                     i++;

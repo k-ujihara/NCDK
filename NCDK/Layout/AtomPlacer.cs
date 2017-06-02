@@ -45,6 +45,7 @@ namespace NCDK.Layout
     // @cdk.githash
     public class AtomPlacer
     {
+        private static readonly double ANGLE_120 = Vectors.DegreeToRadian(120);
         public const bool debug = true;
         public const string Priority = "Weight";
 
@@ -140,16 +141,11 @@ namespace NCDK.Layout
                 return;
             }
 
-            // If the atom is a macrocycle and the substituents are terminal we allow these to point these into the ring
-            bool isInMacrocycle = atom.GetProperty<bool>(MacroCycleLayout.MACROCYCLE_ATOM_HINT);
-            if (isInMacrocycle &&
-                placedNeighbours.Atoms.Count == 2 &&
-                Molecule.GetBond(atom, placedNeighbours.Atoms[0]).IsInRing &&
-                Molecule.GetBond(atom, placedNeighbours.Atoms[1]).IsInRing)
+            if (DoAngleSnap(atom, placedNeighbours))
             {
                 int numTerminal = 0;
                 foreach (var unplaced in unplacedNeighbours.Atoms)
-                    if (Molecule.GetConnectedAtoms(unplaced).Count() == 1)
+                    if (Molecule.GetConnectedBonds(unplaced).Count() == 1)
                         numTerminal++;
 
                 if (numTerminal == unplacedNeighbours.Atoms.Count)
@@ -281,6 +277,27 @@ namespace NCDK.Layout
             PopulatePolygonCorners(atomsToDraw, atom.Point2D.Value, startAngle, addAngle, radius);
         }
 
+        private bool DoAngleSnap(IAtom atom, IAtomContainer placedNeighbours)
+        {
+            if (placedNeighbours.Atoms.Count != 2)
+                return false;
+            IBond b1 = Molecule.GetBond(atom, placedNeighbours.Atoms[0]);
+            if (!b1.IsInRing)
+                return false;
+            IBond b2 = Molecule.GetBond(atom, placedNeighbours.Atoms[1]);
+            if (!b2.IsInRing)
+                return false;
+
+            var p1 = atom.Point2D.Value;
+            var p2 = placedNeighbours.Atoms[0].Point2D.Value;
+            var p3 = placedNeighbours.Atoms[1].Point2D.Value;
+
+            var v1 = NewVector(p2, p1);
+            var v2 = NewVector(p3, p1);
+
+            return Math.Abs(Vectors.Angle(v2, v1) - ANGLE_120) < 0.01;
+        }
+
         /// <summary>
         /// Places the atoms in a linear chain.
         /// </summary>
@@ -343,7 +360,7 @@ namespace NCDK.Layout
                     int charge = atom.FormalCharge.Value;
 
                     // double length of the last bond to determing next placement
-                    Vector2 p = prevBond.GetConnectedAtom(atom).Point2D.Value;
+                    Vector2 p = prevBond.GetOther(atom).Point2D.Value;
                     p = Vector2.Lerp(p, atom.Point2D.Value, 2);
                     nextAtom.Point2D = p;
                 }
@@ -399,6 +416,14 @@ namespace NCDK.Layout
             Debug.WriteLine("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: "
                     + distanceMeasure);
 #endif
+            var a = previousAtom.Point2D;
+            var b = atom.Point2D;
+
+            if (IsColinear(atom, Molecule.GetConnectedBonds(atom)))
+            {
+                return b.Value - a.Value;
+            }
+
             double angle = GeometryUtil.GetAngle(previousAtom.Point2D.Value.X - atom.Point2D.Value.X,
                 previousAtom.Point2D.Value.Y - atom.Point2D.Value.Y);
             double addAngle = Vectors.DegreeToRadian(120);
@@ -610,7 +635,7 @@ namespace NCDK.Layout
                     var bonds = ac.GetConnectedBonds(atom);
                     foreach (var curBond in bonds)
                     {
-                        nextAtom = curBond.GetConnectedAtom(atom);
+                        nextAtom = curBond.GetOther(atom);
                         if (!nextAtom.IsVisited && !nextAtom.IsPlaced)
                         {
                             nextAtomNr = ac.Atoms.IndexOf(nextAtom);
@@ -766,8 +791,8 @@ namespace NCDK.Layout
         {
             foreach (IBond bond in src.Bonds)
             {
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 if (beg.IsPlaced)
                 {
                     dest.Atoms.Add(beg);

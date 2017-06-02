@@ -53,7 +53,7 @@ namespace NCDK.LibIO.CML
         /// <summary>
         /// Constructs a CML convertor.
         /// </summary>
-        /// <param name="useCMLIDs">Uses object IDs like 'a1' instead of 'a&lt;hash>'.</param>
+        /// <param name="useCMLIDs">Uses object IDs like 'a1' instead of 'a&lt;hash&gt;'.</param>
         /// <param name="prefix">Namespace prefix to use. If null, then no prefix is used;</param>
         public Convertor(bool useCMLIDs, string prefix)
         {

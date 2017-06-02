@@ -26,7 +26,7 @@ namespace NCDK.Formula.Rules
     /// are into a limits. As default defines all elements of the periodic table with
     /// a occurrence of zero to 100.
     /// <para>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="bullet">
     /// <listheader>
     /// <term>Name</term>

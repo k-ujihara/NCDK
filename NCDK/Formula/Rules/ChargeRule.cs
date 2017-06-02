@@ -25,7 +25,7 @@ namespace NCDK.Formula.Rules
     /// a specific value. As default it is defined as neutral == 0.0.
     /// </summary>
     /// <remarks>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <listheader>
     ///   <term>Name</term>
@@ -47,6 +47,9 @@ namespace NCDK.Formula.Rules
     {
         private double charge = 0.0;
 
+        /// <summary>
+        ///  Constructor for the ChargeRule object.
+        /// </summary>
         public ChargeRule() { }
 
         /// <summary>

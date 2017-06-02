@@ -22,19 +22,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Primitives;
-using NCDK.Fingerprints;
 using NCDK.IO.Iterator;
 using NCDK.Isomorphisms;
-using NCDK.Isomorphisms.MCSS;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.Tools.Manipulator;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -50,9 +47,11 @@ namespace NCDK.Modelings.Builder3D
     public class TemplateHandler3D
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-        IAtomContainerSet<IAtomContainer> templates = null;
-        IList<BitArray> fingerprintData = null;
-        private bool templatesLoaded = false;
+        public const string TEMPLATE_PATH = "Data.ringTemplateStructures.sdf.gz";
+
+        private readonly List<IAtomContainer> templates = new List<IAtomContainer>();
+        private readonly List<IQueryAtomContainer> queries = new List<IQueryAtomContainer>();
+        private readonly List<Pattern> patterns  = new List<Pattern>();
 
         private static TemplateHandler3D self = null;
 
@@ -60,8 +59,6 @@ namespace NCDK.Modelings.Builder3D
 
         private TemplateHandler3D()
         {
-            templates = builder.CreateAtomContainerSet();
-            fingerprintData = new List<BitArray>();
         }
 
         public static TemplateHandler3D Instance
@@ -76,77 +73,40 @@ namespace NCDK.Modelings.Builder3D
             }
         }
 
+        private void AddTemplateMol(IAtomContainer mol)
+        {
+            templates.Add(mol);
+            QueryAtomContainer query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(mol, false);
+            queries.Add(query);
+            for (int i = 0; i < mol.Atoms.Count; i++)
+            {
+                query.Atoms[i].Point3D = mol.Atoms[i].Point3D;
+            }
+            patterns.Add(Pattern.FindSubstructure(query));
+        }
+
         /// <summary>
-        /// Loads all existing templates into memory.
-        /// Template file is a mdl file. Creates a Object Set of Molecules
+        /// Load ring template
         /// </summary>
         /// <exception cref="CDKException">The template file cannot be loaded</exception>
         private void LoadTemplates()
         {
-            Debug.WriteLine("Loading templates...");
-            IteratingSDFReader imdl;
-            Stream ins;
-            TextReader fin;
-
             try
             {
-                ins = ResourceLoader.GetAsStream("NCDK.Modelings.Builder3D.Data.ringTemplateStructures.sdf.gz");
-                fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
-                imdl = new IteratingSDFReader(fin, builder);
-            }
-            catch (IOException exc1)
-            {
-                throw new CDKException("Problems loading file ringTemplateStructures.sdf.gz", exc1);
-            }
-            foreach (var molecule in imdl)
-            {
-                templates.Add(molecule);
-            }
-            try
-            {
-                imdl.Close();
-            }
-            catch (Exception exc2)
-            {
-                Console.Out.WriteLine("Could not close Reader due to: " + exc2.Message);
-            }
-            //Debug.WriteLine("TEMPLATE Finger");
-            try
-            {
-                ins = ResourceLoader.GetAsStream("NCDK.Modelings.Builder3D.Data.ringTemplateFingerprints.txt.gz");
-                fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
-            }
-            catch (Exception exc3)
-            {
-                throw new CDKException($"Could not read Fingerprints from FingerprintFile due to: {exc3.Message}", exc3);
-            }
-            string s = null;
-            while (true)
-            {
-                try
+                using (var gin = GetType().Assembly.GetManifestResourceStream(GetType(), TEMPLATE_PATH))
+                using (var ins = new GZipStream(gin, CompressionMode.Decompress))
+                using (IteratingSDFReader sdfr = new IteratingSDFReader(ins, builder))
                 {
-                    s = fin.ReadLine();
-                }
-                catch (Exception exc4)
-                {
-                    throw new CDKException($"Error while reading the fingerprints: {exc4.Message}", exc4);
-                }
-
-                if (s == null)
-                {
-                    break;
-                }
-                try
-                {
-                    fingerprintData.Add((BitArray)GetBitSetFromFile(Strings.Tokenize(s, '\t', ' ', ';', '{', ',', '}')));
-                }
-                catch (Exception exception)
-                {
-                    throw new CDKException($"Error while reading the fingerprints: {exception.Message}", exception);
+                    foreach (var mol in sdfr)
+                    {
+                        AddTemplateMol(mol);
+                    }
                 }
             }
-            //Debug.WriteLine("Fingerprints are read in:"+fingerprintData.Count);
-            templatesLoaded = true;
+            catch (IOException e)
+            {
+                throw new CDKException("Could not load ring templates", e);
+            }
         }
 
         public static BitArray GetBitSetFromFile(IEnumerable<string> st)
@@ -188,84 +148,91 @@ namespace NCDK.Modelings.Builder3D
             return resultContainer;
         }
 
+        private bool IsExactMatch(IAtomContainer query,
+                                 IDictionary<IChemObject, IChemObject> mapping)
+        {
+            foreach (IAtom src in query.Atoms)
+            {
+                IAtom dst = (IAtom)mapping[src];
+                if (src.Symbol != dst.Symbol)
+                    return false;
+            }
+            foreach (IBond src in query.Bonds)
+            {
+                IBond dst = (IBond)mapping[src];
+                if (src.Order != dst.Order)
+                    return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Checks if one of the loaded templates is a substructure in the given
         /// Molecule. If so, it assigns the coordinates from the template to the
         /// respective atoms in the Molecule.
         /// </summary>
-        /// <param name="ringSystems">AtomContainer from the ring systems.</param>
+        /// <param name="mol">AtomContainer from the ring systems.</param>
         /// <param name="numberOfRingAtoms">Number of atoms in the specified ring</param>
-        public void MapTemplates(IAtomContainer ringSystems, int numberOfRingAtoms)
+        public void MapTemplates(IAtomContainer mol, int numberOfRingAtoms)
         {
-            if (!templatesLoaded) self.LoadTemplates();
+            if (!templates.Any())
+                LoadTemplates();
 
-            //Debug.WriteLine("Map Template...START---Number of Ring Atoms:"+numberOfRingAtoms);
-            IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.Anonymise(ringSystems);
-            BitArray ringSystemFingerprint = new HybridizationFingerprinter().GetBitFingerprint(ringSystemAnyBondAnyAtom).AsBitSet();
-            bool flagMaxSubstructure = false;
-            bool flagSecondbest = false;
-            for (int i = 0; i < fingerprintData.Count; i++)
+            IAtomContainer best = null;
+            IDictionary<IChemObject, IChemObject> bestMap = null;
+            IAtomContainer secondBest = null;
+            IDictionary<IChemObject, IChemObject> secondBestMap = null;
+
+            for (int i = 0; i < templates.Count; i++)
             {
-                IAtomContainer template = templates[i];
+                IAtomContainer query = queries[i];
+
                 //if the atom count is different, it can't be right anyway
-                if (template.Atoms.Count != ringSystems.Atoms.Count)
+                if (query.Atoms.Count != mol.Atoms.Count)
                 {
                     continue;
                 }
-                //we compare the fingerprint with any atom and any bond
-                if (FingerprinterTool.IsSubset(fingerprintData[i], ringSystemFingerprint))
+
+                Mappings mappings = patterns[i].MatchAll(mol);
+                foreach (IDictionary<IChemObject, IChemObject> map in mappings.ToAtomBondMap())
                 {
-                    IAtomContainer templateAnyBondAnyAtom = AtomContainerManipulator.Anonymise(template);
-                    //we do the exact match with any atom and any bond
-                    if (universalIsomorphismTester.IsSubgraph(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom))
+                    if (IsExactMatch(query, map))
                     {
-                        //if this is the case, we keep it as a guess, but look if we can do better
-                        var list = universalIsomorphismTester.GetSubgraphAtomsMap(ringSystemAnyBondAnyAtom,
-                                        templateAnyBondAnyAtom);
-                        bool flagwritefromsecondbest = false;
-                        if ((numberOfRingAtoms == list.Count)
-                                && templateAnyBondAnyAtom.Bonds.Count == ringSystems.Bonds.Count)
-                        {
-                            //so atom and bond count match, could be it's even an exact match,
-                            //we check this with the original ring system
-                            if (universalIsomorphismTester.IsSubgraph(ringSystems, template))
-                            {
-                                flagMaxSubstructure = true;
-                                list = universalIsomorphismTester.GetSubgraphAtomsMap(ringSystems, template);
-                            }
-                            else
-                            {
-                                //if it isn't we still now it's better than just the isomorphism
-                                flagSecondbest = true;
-                                flagwritefromsecondbest = true;
-                            }
-                        }
+                        AssignCoords(query, map);
+                        return;
+                    }
+                    else if (query.Bonds.Count == mol.Bonds.Count)
+                    {
+                        best = query;
+                        bestMap = new Dictionary<IChemObject, IChemObject>(map);
+                    }
+                    else
+                    {
+                        secondBest = query;
+                        secondBestMap = new Dictionary<IChemObject, IChemObject>(map);
+                    }
+                }
+            }
 
-                        if (!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest)
-                        {
-                            for (int j = 0; j < list.Count; j++)
-                            {
-                                RMap map = list[j];
-                                IAtom atom1 = ringSystems.Atoms[map.Id1];
-                                IAtom atom2 = template.Atoms[map.Id2];
-                                if (atom1.IsInRing)
-                                {
-                                    atom1.Point3D = atom2.Point3D;
-                                }
-                            }//for j
-                        }
-
-                        if (flagMaxSubstructure)
-                        {
-                            break;
-                        }
-
-                    }//if subgraph
-                }//if fingerprint
-            }//for i
-            if (!flagMaxSubstructure)
+            if (best != null)
             {
-                Console.Out.WriteLine("WARNING: Maybe RingTemplateError!");
+                AssignCoords(best, bestMap);
+            }
+            else if (secondBest != null)
+            {
+                AssignCoords(secondBest, secondBestMap);
+            }
+
+            Console.Error.WriteLine("WARNING: Maybe RingTemplateError!");
+        }
+
+        private void AssignCoords(IAtomContainer template,
+                                  IDictionary<IChemObject, IChemObject> map)
+        {
+            foreach (IAtom src in template.Atoms)
+            {
+                IAtom dst = (IAtom)map[src];
+                dst.Point3D = src.Point3D;
             }
         }
 

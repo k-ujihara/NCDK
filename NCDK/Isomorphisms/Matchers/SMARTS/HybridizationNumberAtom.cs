@@ -41,40 +41,40 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             switch (hybridizationNumber)
             {
                 case 1:
-                    hybridization = Hybridization.SP1;
+                    Hybridization = Hybridization.SP1;
                     break;
                 case 2:
-                    hybridization = Hybridization.SP2;
+                    Hybridization = Hybridization.SP2;
                     break;
                 case 3:
-                    hybridization = Hybridization.SP3;
+                    Hybridization = Hybridization.SP3;
                     break;
                 case 4:
-                    hybridization = Hybridization.SP3D1;
+                    Hybridization = Hybridization.SP3D1;
                     break;
                 case 5:
-                    hybridization = Hybridization.SP3D2;
+                    Hybridization = Hybridization.SP3D2;
                     break;
                 case 6:
-                    hybridization = Hybridization.SP3D3;
+                    Hybridization = Hybridization.SP3D3;
                     break;
                 case 7:
-                    hybridization = Hybridization.SP3D4;
+                    Hybridization = Hybridization.SP3D4;
                     break;
                 case 8:
-                    hybridization = Hybridization.SP3D5;
+                    Hybridization = Hybridization.SP3D5;
                     break;
             }
         }
 
         public override bool Matches(IAtom atom)
         {
-            return hybridization == atom.Hybridization;
+            return Hybridization == atom.Hybridization;
         }
 
         public override string ToString()
         {
-            return ("HybridizationNumberAtom(" + hybridization.ToString() + ")");
+            return ("HybridizationNumberAtom(" + Hybridization.ToString() + ")");
         }
     }
 }

@@ -60,24 +60,11 @@ namespace NCDK.Groups
             Assert.AreEqual(refiner.GetConnectivity(0, 1), 1);
             Assert.AreEqual(refiner.GetVertexCount(), 2);
 
-            refiner.Reset();
-
             string acpString2 = "C0C1C2 0:1(2),1:2(1)";
             IAtomContainer ac2 = AtomContainerPrinter.FromString(acpString2, builder);
             refiner.Refine(ac2);
             Assert.AreEqual(refiner.GetConnectivity(0, 1), 2);
             Assert.AreEqual(refiner.GetVertexCount(), 3);
-        }
-
-        [TestMethod()]
-        public void GetElementPartitionTest()
-        {
-            string acpString = "C0N1C2P3C4N5";
-            IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
-            AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-            Partition elPartition = refiner.GetElementPartition(ac);
-            Partition expected = Partition.FromString("0,2,4|1,5|3");
-            Assert.AreEqual(expected, elPartition);
         }
 
         [TestMethod()]
@@ -119,7 +106,7 @@ namespace NCDK.Groups
         [TestMethod()]
         public void IsCanonical_TrueTest()
         {
-            string acpString = "C0C1C2O3 0:1(2),0:2(1),1:3(1),2:3(1)";
+            string acpString = "C0C1C2O3 0:2(2),0:3(1),1:2(1),1:3(1)";
             IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
             AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
             Assert.IsTrue(refiner.IsCanonical(ac));

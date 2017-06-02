@@ -65,9 +65,9 @@ namespace NCDK.IO.Iterator
 
         // patterns to match
         private static Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
-        private static Regex M_END = new Regex("M\\s\\sEND", RegexOptions.Compiled);
-        private static Regex SDF_RecordSeparator = new Regex("\\$\\$\\$\\$", RegexOptions.Compiled);
-        private static Regex SDF_FieldStart = new Regex("\\A>\\s", RegexOptions.Compiled);
+        private const string M_END = "M  END";
+        private const string SDF_RECORD_SEPARATOR = "$$$$";
+        private const string SDF_DATA_HEADER = "> ";
 
         // map of MDL formats to their readers
         private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(5);
@@ -158,25 +158,29 @@ namespace NCDK.IO.Iterator
             // buffer to store pre-read Mol records in
             StringBuilder buffer = new StringBuilder(10000);
 
+            // now try to parse the next Molecule
             currentFormat = (IChemFormat)MDLFormat.Instance;
+            int lineNum = 0;
+            buffer.Length = 0;
 
             while ((currentLine = input.ReadLine()) != null)
             {
                 // still in a molecule
                 buffer.Append(currentLine).Append(LINE_SEPARATOR);
+                lineNum++;
 
                 // do MDL molfile version checking
-                var versionMatcher = MDL_Version.Match(currentLine);
-                if (versionMatcher.Success)
+                if (lineNum == 4)
                 {
-                    currentFormat = "2000".Equals(versionMatcher.Groups[1].Value) ? (IChemFormat)MDLV2000Format.Instance
-                            : (IChemFormat)MDLV3000Format.Instance;
+                    var versionMatcher = MDL_Version.Match(currentLine);
+                    if (versionMatcher.Success)
+                    {
+                        currentFormat = "2000".Equals(versionMatcher.Groups[1].Value) ? (IChemFormat)MDLV2000Format.Instance
+                                : (IChemFormat)MDLV3000Format.Instance;
+                    }
                 }
 
-                // un-trimmed line has already been stored in buffer
-                currentLine = currentLine.Trim();
-
-                if (M_END.IsMatch(currentLine))
+                if (currentLine.StartsWith(M_END))
                 {
                     Debug.WriteLine("MDL file part read: ", buffer);
 
@@ -185,21 +189,13 @@ namespace NCDK.IO.Iterator
                     try
                     {
                         ISimpleChemObjectReader reader = GetReader(currentFormat);
-                        using (var byteStream = new MemoryStream(Encoding.UTF8.GetBytes(buffer.ToString())))
-                        {
-                            reader.SetReader(byteStream);
-                            molecule = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
-                        }
+                        reader.SetReader(new StringReader(buffer.ToString()));
+                        molecule = reader.Read(builder.CreateAtomContainer());
                     }
                     catch (Exception exception)
                     {
-                        if (exception is CDKException | exception is ArgumentException | exception is IOException)
-                        {
-                            Trace.TraceError("Error while reading next molecule: " + exception.Message);
+                        Trace.TraceError("Error while reading next molecule: " + exception.Message);
                             Debug.WriteLine(exception);
-                        }
-                        else
-                            throw;
                     }
 
                     if (molecule != null)
@@ -211,9 +207,12 @@ namespace NCDK.IO.Iterator
                     {
                         // null molecule and skip = true, eat up the rest of the entry until '$$$$'
                         string line;
-                        while ((line = input.ReadLine()) != null && !SDF_RecordSeparator.IsMatch(line))
+                        while ((line = input.ReadLine()) != null)
                         {
-                            buffer.Clear();
+                            if (line.StartsWith(SDF_RECORD_SEPARATOR))
+                            {
+                                break;
+                            }
                         }
                     }
                     else
@@ -223,15 +222,17 @@ namespace NCDK.IO.Iterator
 
                     // empty the buffer
                     buffer.Clear();
+                    lineNum = 0;
                 }
 
                 // found SDF record separator ($$$$) without parsing a molecule (separator is detected
                 // in ReadDataBlockInto()) the buffer is cleared and the iterator continues reading
                 if (currentLine == null)
                     break;
-                if (SDF_RecordSeparator.IsMatch(currentLine))
+                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR))
                 {
                     buffer.Clear();
+                    lineNum = 0;
                 }
             }
             yield break;
@@ -239,21 +240,29 @@ namespace NCDK.IO.Iterator
 
         private void ReadDataBlockInto(IAtomContainer m)
         {
-            string fieldName = null;
-            while ((currentLine = input.ReadLine()) != null && !SDF_RecordSeparator.IsMatch(currentLine))
+            string dataHeader = null;
+            StringBuilder sb = new StringBuilder();
+            currentLine = input.ReadLine();
+            while (currentLine != null)
             {
+                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR))
+                    break;
                 Debug.WriteLine("looking for data header: ", currentLine);
                 string str = currentLine;
-                if (SDF_FieldStart.IsMatch(str))
+                if (str.StartsWith(SDF_DATA_HEADER))
                 {
-                    fieldName = ExtractFieldName(fieldName, str);
-                    str = SkipOtherFieldHeaderLines(str);
-                    string data = ExtractFieldData(str);
-                    if (fieldName != null)
+                    dataHeader = ExtractFieldName(str);
+                    SkipOtherFieldHeaderLines(str);
+                    string data = ExtractFieldData(sb);
+                    if (dataHeader != null)
                     {
-                        Trace.TraceInformation("fieldName, data: ", fieldName, ", ", data);
-                        m.SetProperty(fieldName, data);
+                        Trace.TraceInformation("fieldName, data: ", dataHeader, ", ", data);
+                        m.SetProperty(dataHeader, data);
                     }
+                }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -265,26 +274,29 @@ namespace NCDK.IO.Iterator
         /// </summary>
         public bool Skip { get; set; }
 
-        private string ExtractFieldData(string str)
+        private string ExtractFieldData(StringBuilder data)
         {
-            StringBuilder data = new StringBuilder();
-            while (str.Trim().Length > 0)
+            data.Clear();
+            while (currentLine != null && !currentLine.StartsWith(SDF_RECORD_SEPARATOR))
             {
+                if (currentLine.StartsWith(SDF_DATA_HEADER))
+                    break;
                 Debug.WriteLine("data line: ", currentLine);
                 if (data.Length > 0)
-                {
-                    str = Environment.NewLine + str;
-                }
-                data.Append(str);
+                    data.Append('\n');
+                data.Append(currentLine);
                 currentLine = input.ReadLine();
-                str = currentLine.Trim();
             }
+            // trim trailing newline
+            int len = data.Length;
+            if (len > 1 && data[len - 1] == '\n')
+                data.Length = len - 1;
             return data.ToString();
         }
 
         private string SkipOtherFieldHeaderLines(string str)
         {
-            while (str.StartsWith("> "))
+            while (str.StartsWith(SDF_DATA_HEADER))
             {
                 Debug.WriteLine("data header line: ", currentLine);
                 currentLine = input.ReadLine();
@@ -293,18 +305,18 @@ namespace NCDK.IO.Iterator
             return str;
         }
 
-        private string ExtractFieldName(string fieldName, string str)
+        private string ExtractFieldName(string str)
         {
             int index = str.IndexOf('<');
             if (index != -1)
             {
-                int index2 = str.Substring(index).IndexOf('>');
+                int index2 = str.IndexOf('>', index);
                 if (index2 != -1)
                 {
-                    fieldName = str.Substring(index + 1, index2 - 1);
+                    return str.Substring(index + 1, index2 - (index + 1));
                 }
             }
-            return fieldName;
+            return null;
         }
 
         public override void Close()

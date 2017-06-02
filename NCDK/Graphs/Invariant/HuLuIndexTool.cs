@@ -19,7 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using NCDK.Default;
 using NCDK.Graphs.Matrix;
 using System;
 using System.Diagnostics;
@@ -38,7 +37,7 @@ namespace NCDK.Graphs.Invariant
         /// An implementation of the algorithm published in <token>cdk-cite-HU96</token>.
         /// </summary>
         // @cdk.keyword EAID number
-        public static double GetEAIDNumber(AtomContainer atomContainer)
+        public static double GetEAIDNumber(IAtomContainer atomContainer)
         {
             GIMatrix matrix = new GIMatrix(GetExtendedAdjacenyMatrix(atomContainer));
 
@@ -63,7 +62,7 @@ namespace NCDK.Graphs.Invariant
             return eaid;
         }
 
-        public static double[][] GetExtendedAdjacenyMatrix(AtomContainer atomContainer)
+        public static double[][] GetExtendedAdjacenyMatrix(IAtomContainer atomContainer)
         {
             double[][] adjaMatrix = ConnectionMatrix.GetMatrix(atomContainer);
 
@@ -100,7 +99,7 @@ namespace NCDK.Graphs.Invariant
             return adjaMatrix;
         }
 
-        public static double[] GetAtomWeights(AtomContainer atomContainer)
+        public static double[] GetAtomWeights(IAtomContainer atomContainer)
         {
             IAtom atom, headAtom, endAtom;
             int headAtomPosition, endAtomPosition;
@@ -155,8 +154,8 @@ namespace NCDK.Graphs.Invariant
                 var bonds = atomContainer.Bonds;
                 foreach (var bond in bonds)
                 {
-                    headAtom = bond.Atoms[0];
-                    endAtom = bond.Atoms[1];
+                    headAtom = bond.Begin;
+                    endAtom = bond.End;
 
                     headAtomPosition = atomContainer.Atoms.IndexOf(headAtom);
                     endAtomPosition = atomContainer.Atoms.IndexOf(endAtom);

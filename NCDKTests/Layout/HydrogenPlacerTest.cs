@@ -54,7 +54,10 @@ namespace NCDK.Layout
         public void TestNoConnections()
         {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-            hydrogenPlacer.PlaceHydrogens2D(new AtomContainer(), new Atom("C", Vector2.Zero), 1.5);
+            AtomContainer container = new AtomContainer();
+            Atom atom = new Atom("C", new Vector2(0, 0));
+            container.Atoms.Add(atom);
+            hydrogenPlacer.PlaceHydrogens2D(container, atom, 1.5);
         }
 
         /// <summary>@cdk.bug 1269</summary>

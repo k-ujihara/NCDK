@@ -487,8 +487,8 @@ namespace NCDK.Smiles.SMARTS
 
                     // get the atoms in this bond
                     IBond bond = atomContainer.Bonds[bondID];
-                    atom1 = bond.Atoms[0];
-                    atom2 = bond.Atoms[1];
+                    atom1 = bond.Begin;
+                    atom2 = bond.End;
 
                     int idx1 = atomContainer.Atoms.IndexOf(atom1);
                     int idx2 = atomContainer.Atoms.IndexOf(atom2);

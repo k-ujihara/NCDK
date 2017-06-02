@@ -55,6 +55,16 @@ namespace NCDK.Tautomers
             return tautomers;
         }
 
+        private List<IAtomContainer> UnitTestWithoutInchiProvided(string smiles, int flags, int tautCountExpected)
+        {
+            IAtomContainer container = smilesParser.ParseSmiles(smiles);
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
+            List<IAtomContainer> tautomers = tautegen.GetTautomers(container);
+            Assert.AreEqual(tautCountExpected, tautomers.Count);
+            return tautomers;
+        }
+
         [TestMethod()]
         public void Test1()
         {
@@ -96,6 +106,43 @@ namespace NCDK.Tautomers
             UnitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2",
                     "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/"
                             + "h2-10,15H,1H3,(H2,11,20)(H,17,21,22)", 6);
+        }
+
+        [TestMethod()]
+        public void Test1_fast()
+        {
+            UnitTestWithoutInchiProvided("NC1=CC(N)=NC(O)=N1", 0, 5);
+        }
+
+        [TestMethod()]
+        public void Test2_fast()
+        {
+            UnitTestWithoutInchiProvided("CCCN1C2=C(NC=N2)C(=O)NC1=O", 0, 8);
+        }
+
+        [TestMethod()]
+        public void Test3_fast()
+        {
+            UnitTestWithoutInchiProvided("CCNC(=N)NC", 0, 3);
+        }
+
+        [TestMethod()]
+        public void Test4_fast()
+        {
+            UnitTestWithoutInchiProvided("O=C1NC=CC(=O)N1", 0, 6);
+        }
+
+        [TestMethod()]
+        public void Test5_fast()
+        {
+            UnitTestWithoutInchiProvided("CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 0, 2);
+        }
+
+        [TestMethod()]
+        public void Test6_fast()
+        {
+            //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
+            UnitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.KETO_ENOL, 6);
         }
 
         [TestMethod()]

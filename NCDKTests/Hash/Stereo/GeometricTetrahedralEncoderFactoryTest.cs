@@ -81,17 +81,17 @@ namespace NCDK.Hash.Stereo
             m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
             m_c1h5.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1h5.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1h5.SetupGet(n => n.Atoms[1]).Returns(h5);
+            m_c1h5.SetupGet(n => n.Begin).Returns(c1);
+            m_c1h5.SetupGet(n => n.End).Returns(h5);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -143,14 +143,14 @@ namespace NCDK.Hash.Stereo
             m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -208,17 +208,17 @@ namespace NCDK.Hash.Stereo
             m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
             m_c1h5.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1h5.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1h5.SetupGet(n => n.Atoms[1]).Returns(h5);
+            m_c1h5.SetupGet(n => n.Begin).Returns(c1);
+            m_c1h5.SetupGet(n => n.End).Returns(h5);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -271,14 +271,14 @@ namespace NCDK.Hash.Stereo
             m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -330,17 +330,17 @@ namespace NCDK.Hash.Stereo
             // m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
             m_c1h5.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1h5.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1h5.SetupGet(n => n.Atoms[1]).Returns(h5);
+            m_c1h5.SetupGet(n => n.Begin).Returns(c1);
+            m_c1h5.SetupGet(n => n.End).Returns(h5);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -386,17 +386,17 @@ namespace NCDK.Hash.Stereo
             // with a hatch bond from c1 to n3
             //m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
             m_c1h5.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1h5.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1h5.SetupGet(n => n.Atoms[1]).Returns(h5);
+            m_c1h5.SetupGet(n => n.Begin).Returns(c1);
+            m_c1h5.SetupGet(n => n.End).Returns(h5);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
@@ -442,17 +442,17 @@ namespace NCDK.Hash.Stereo
             m_c1.SetupGet(n => n.Hybridization).Returns(Hybridization.SP3);
             // with a hatch bond from c1 to n3
             m_c1n3.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
-            m_c1n3.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1n3.SetupGet(n => n.Atoms[1]).Returns(n3);
+            m_c1n3.SetupGet(n => n.Begin).Returns(c1);
+            m_c1n3.SetupGet(n => n.End).Returns(n3);
             m_c1o2.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1o2.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1o2.SetupGet(n => n.Atoms[1]).Returns(o2);
+            m_c1o2.SetupGet(n => n.Begin).Returns(c1);
+            m_c1o2.SetupGet(n => n.End).Returns(o2);
             m_c1c4.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1c4.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1c4.SetupGet(n => n.Atoms[1]).Returns(c4);
+            m_c1c4.SetupGet(n => n.Begin).Returns(c1);
+            m_c1c4.SetupGet(n => n.End).Returns(c4);
             m_c1h5.SetupGet(n => n.Stereo).Returns(BondStereo.None);
-            m_c1h5.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_c1h5.SetupGet(n => n.Atoms[1]).Returns(h5);
+            m_c1h5.SetupGet(n => n.Begin).Returns(c1);
+            m_c1h5.SetupGet(n => n.End).Returns(h5);
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 

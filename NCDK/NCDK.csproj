@@ -145,6 +145,17 @@
     </Compile>
     <Compile Include="Formula\RoundRobinFormulaGenerator.cs" />
     <Compile Include="Graphs\InChI\JniInChIInputAdapter.cs" />
+    <Compile Include="Groups\AtomContainerDiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\AtomContainerDiscretePartitionRefinerImpl.cs" />
+    <Compile Include="Groups\AtomRefinable.cs" />
+    <Compile Include="Groups\BondRefinable.cs" />
+    <Compile Include="Groups\DiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\EquitablePartitionRefiner.cs" />
+    <Compile Include="Groups\IntegerInvariant.cs" />
+    <Compile Include="Groups\IntegerListInvariant.cs" />
+    <Compile Include="Groups\Invariant.cs" />
+    <Compile Include="Groups\PartitionRefinement.cs" />
+    <Compile Include="Groups\Refinable.cs" />
     <Compile Include="IHasProperties.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1236,10 +1247,7 @@
     <Compile Include="Groups\AbstractDiscretePartitionRefiner.cs" />
     <Compile Include="Groups\AbstractEquitablePartitionRefiner.cs" />
     <Compile Include="Groups\AtomDiscretePartitionRefiner.cs" />
-    <Compile Include="Groups\AtomEquitablePartitionRefiner.cs" />
     <Compile Include="Groups\BondDiscretePartitionRefiner.cs" />
-    <Compile Include="Groups\BondEquitablePartitionRefiner.cs" />
-    <Compile Include="Groups\IEquitablePartitionRefiner.cs" />
     <Compile Include="Groups\Partition.cs" />
     <Compile Include="Groups\Permutation.cs" />
     <Compile Include="Groups\PermutationGroup.cs" />

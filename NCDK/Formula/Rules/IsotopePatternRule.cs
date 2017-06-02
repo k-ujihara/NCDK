@@ -27,7 +27,7 @@ namespace NCDK.Formula.Rules
     /// This class validate if the Isotope Pattern from a given <see cref="IMolecularFormula"/> correspond with other to compare.
     /// </summary>
     /// <remarks>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <listheader>
     ///   <term>Name</term>
@@ -56,7 +56,6 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// Constructor for the <see cref="IsotopePatternRule"/> object.
         /// </summary>
-        /// <exception cref="System.IO.IOException">If an error occurs when reading atom type information</exception>
         public IsotopePatternRule()
         {
             isotopeGe = new IsotopePatternGenerator(0.01);
@@ -72,11 +71,19 @@ namespace NCDK.Formula.Rules
             get
             {
                 // return the parameters as used for the rule validation
-                var parameters = new object[]
+                object[] parameters = new object[2];
+                if (pattern == null)
+                    parameters[0] = null;
+                else
                 {
-                    pattern == null ? (IList<double[]>)null : pattern.Isotopes.Select(n => new double[] { n.Mass, n.Intensity }).ToList(),
-                    toleranceMass
-                };
+                    List<double[]> params0 = new List<double[]>();
+                    foreach (IsotopeContainer isotope in pattern.Isotopes)
+                    {
+                        params0.Add(new double[] { isotope.Mass, isotope.Intensity });
+                    }
+                    parameters[0] = params0;
+                }
+                parameters[1] = toleranceMass;
                 return parameters;
             }
             set

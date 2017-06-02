@@ -22,7 +22,12 @@
  */
 using NCDK.Common.Base;
 using NCDK.Graphs.InChI;
+using NCDK.Graphs.Invariant;
+using NCDK.Isomorphisms;
+using NCDK.Smiles;
 using NCDK.SMSD;
+using NCDK.Tools.Manipulator;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,55 +49,129 @@ namespace NCDK.Tautomers
     // @author Mark Rijnbeek
     // @cdk.module tautomer
     // @cdk.githash
-    public class InChITautomerGenerator
+    public sealed class InChITautomerGenerator
     {
+        private static readonly SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavor.Canonical);
+
+        /// <summary>Generate InChI with -KET (keto-enol tautomers) option.</summary>
+        public const int KETO_ENOL = 0x1;
+
+        /// <summary>Generate InChI with -15T (1,5-shift tautomers) option.</summary>
+        public const int ONE_FIVE_SHIFT = 0x2;
+
+        private readonly int flags;
+
+        /// <summary>
+        /// Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts (-15T).
+        /// 
+        /// <pre><code>// enabled -KET option
+        /// InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL);
+        /// // enabled both -KET and -15T
+        /// InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL | InChITautomerGenerator.ONE_FIVE_SHIFT);
+        /// </code></pre>
+        /// </summary>
+        /// <param name="flags">the options</param>
+        public InChITautomerGenerator(int flags)
+        {
+            this.flags = flags;
+        }
+
+        /// <summary>
+        /// Create a tautomer generator, keto-enol (-KET) and 1,5-shifts (-15T) are disabled.
+        /// </summary>
+        public InChITautomerGenerator() : this(0)
+        {
+        }
+
         /// <summary>
         /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by .NET prot of JNI-InChI..
         /// </summary>
-        /// <param name="molecule">molecule for which to generate tautomers</param>
+        /// <param name="mol">molecule for which to generate tautomers</param>
         /// <returns>a list of tautomers, if any</returns>
         /// <exception cref="CDKException"></exception>
-        public IList<IAtomContainer> GetTautomers(IAtomContainer molecule)
+        public List<IAtomContainer> GetTautomers(IAtomContainer mol)
         {
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(molecule);
+            string opt = "";
+            if ((flags & KETO_ENOL) != 0)
+                opt += " -KET";
+            if ((flags & ONE_FIVE_SHIFT) != 0)
+                opt += " -15T";
+
+            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol, opt);
             string inchi = gen.InChI;
+            string aux = gen.AuxInfo;
+
+            long[] amap = new long[mol.Atoms.Count];
+            InChINumbersTools.ParseAuxInfo(aux, amap);
+
             if (inchi == null)
-                throw new CDKException(nameof(InChIGenerator)
+                throw new CDKException(typeof(InChIGenerator)
                         + " failed to create an InChI for the provided molecule, InChI -> null.");
-            return GetTautomers(molecule, inchi);
+            return GetTautomers(mol, inchi, amap);
+        }
+
+        /// <summary>
+        /// This method is slower than recalculating the InChI with <see cref="GetTautomers(IAtomContainer)"/> as the mapping
+        /// between the two can be found more efficiently.
+        /// </summary>
+        /// <param name="mol"></param>
+        /// <param name="inchi"></param>
+        /// <returns></returns>
+        /// <exception cref="CDKException"></exception>
+        [Obsolete("use " + nameof(GetTautomers) + "(" + nameof(IAtomContainer) + ")" + " directly ")]
+        public List<IAtomContainer> GetTautomers(IAtomContainer mol, string inchi)
+        {
+            return GetTautomers(mol, inchi, null);
         }
 
         /// <summary>
         /// Overloaded <see cref="GetTautomers(IAtomContainer)"/> to get tautomers for an input molecule with the InChI already
         /// provided as input argument.
         /// </summary>
-        /// <param name="inputMolecule">and input molecule for which to generate tautomers</param>
+        /// <param name="mol">and input molecule for which to generate tautomers</param>
         /// <param name="inchi">InChI for the input molecule</param>
+        /// <param name="amap">ordering of the molecules atoms in the InChI</param>
         /// <returns>a list of tautomers</returns>
         /// <exception cref="CDKException"></exception>
-        public List<IAtomContainer> GetTautomers(IAtomContainer inputMolecule, string inchi)
+        private List<IAtomContainer> GetTautomers(IAtomContainer mol, string inchi, long[] amap)
         {
             //Initial checks
-            if (inputMolecule == null || inchi == null)
+            if (mol == null || inchi == null)
                 throw new CDKException("Please provide a valid input molecule and its corresponding InChI value.");
 
+            // shallow copy since we will suppress hydrogens
+            mol = mol.Builder.CreateAtomContainer(mol);
+
             List<IAtomContainer> tautomers = new List<IAtomContainer>();
-            if (inchi.IndexOf("(H") == -1)
+            if (!inchi.Contains("(H"))
             { //No mobile H atoms according to InChI, so bail out.
-                tautomers.Add(inputMolecule);
+                tautomers.Add(mol);
                 return tautomers;
             }
 
             //Preparation: translate the InChi
-            IDictionary<int, IAtom> inchiAtomsByPosition = GetElementsByPosition(inchi, inputMolecule);
-            IAtomContainer inchiMolGraph = ConnectAtoms(inchi, inputMolecule, inchiAtomsByPosition);
-            List<IAtomContainer> mappedContainers = MapInputMoleculeToInChIMolgraph(inchiMolGraph, inputMolecule);
-            inchiMolGraph = mappedContainers[0];
-            inputMolecule = mappedContainers[1];
+            IDictionary<int, IAtom> inchiAtomsByPosition = GetElementsByPosition(inchi, mol);
+            IAtomContainer inchiMolGraph = ConnectAtoms(inchi, mol, inchiAtomsByPosition);
+
+            if (amap != null && amap.Length == mol.Atoms.Count)
+            {
+                for (int i = 0; i < amap.Length; i++)
+                {
+                    mol.Atoms[i]
+                       .Id = amap[i].ToString();
+                }
+                mol = AtomContainerManipulator.SuppressHydrogens(mol);
+            }
+            else
+            {
+                mol = AtomContainerManipulator.SuppressHydrogens(mol);
+                MapInputMoleculeToInchiMolgraph(inchiMolGraph, mol);
+            }
+
             List<int> mobHydrAttachPositions = new List<int>();
             int totalMobHydrCount = ParseMobileHydrogens(mobHydrAttachPositions, inchi);
 
-            tautomers = ConstructTautomers(inputMolecule, mobHydrAttachPositions, totalMobHydrCount);
+            tautomers = ConstructTautomers(mol, mobHydrAttachPositions, totalMobHydrCount);
             //Remove duplicates
             return RemoveDuplicates(tautomers);
         }
@@ -244,27 +323,30 @@ namespace NCDK.Tautomers
         /// This makes it possible to map the positions of the mobile hydrogens in the InChI back to the input molecule.
         /// </summary>
         /// <param name="inchiMolGraph">molecule (bare) as defined in InChI</param>
-        /// <param name="inputMolecule">user input molecule</param>
+        /// <param name="mol">user input molecule</param>
         /// <exception cref="CDKException"></exception>
-        private List<IAtomContainer> MapInputMoleculeToInChIMolgraph(IAtomContainer inchiMolGraph, IAtomContainer inputMolecule)
+        private void MapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
         {
-            List<IAtomContainer> mappedContainers = new List<IAtomContainer>();
-            Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, false);
-            isomorphism.Init(inchiMolGraph, inputMolecule, true, false);
-            isomorphism.SetChemFilters(true, true, true);
-            IDictionary<IAtom, IAtom> mapping = isomorphism.GetFirstAtomMapping();
-            inchiMolGraph = isomorphism.ReactantMolecule;
-            inputMolecule = isomorphism.ProductMolecule;
-            foreach (var inchiAtom in inchiMolGraph.Atoms)
+            var iter = VentoFoggia.FindIdentical(inchiMolGraph, AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
+                                                                                      .MatchAll(mol)
+                                                                                      .Limit(1)
+                                                                                      .ToAtomMap();
+            var i = iter.FirstOrDefault();
+            if (i != null)
             {
-                string position = inchiAtom.Id;
-                IAtom molAtom = mapping[inchiAtom];
-                molAtom.Id = position;
-                Debug.WriteLine($"Mapped InChI {inchiAtom.Symbol} {inchiAtom.Id} to {molAtom.Symbol} {molAtom.Id}");
+                foreach (var e in i)
+                {
+                    IAtom src = e.Key;
+                    IAtom dst = e.Value;
+                    string position = src.Id;
+                    dst.Id = position;
+                    Debug.WriteLine("Mapped InChI " + src.Symbol + " " + src.Id + " to " + dst.Symbol + " " + dst.Id);
+                }
             }
-            mappedContainers.Add(inchiMolGraph);
-            mappedContainers.Add(inputMolecule);
-            return mappedContainers;
+            else
+            {
+                throw new ArgumentException(CANSMI.Create(inchiMolGraph) + " " + CANSMI.Create(mol));
+            }
         }
 
         /// <summary>
@@ -399,7 +481,7 @@ namespace NCDK.Tautomers
                     {
                         if (bond.Contains(removedAtom))
                         {
-                            IAtom other = bond.GetConnectedAtom(removedAtom);
+                            IAtom other = bond.GetOther(removedAtom);
                             int decValence = 0;
                             switch (bond.Order.Numeric)
                             {
@@ -503,7 +585,7 @@ namespace NCDK.Tautomers
                                     IBond skBond = tautomerSkeleton.Bonds[bondIdx];
                                     if (skBond.Contains(skAtom1))
                                     {
-                                        IAtom skAtom2 = skBond.GetConnectedAtom(skAtom1);
+                                        IAtom skAtom2 = skBond.GetOther(skAtom1);
                                         foreach (var atom2 in tautomer.Atoms)
                                         {
                                             if (atom2.Id.Equals(skAtom2.Id))
@@ -535,43 +617,24 @@ namespace NCDK.Tautomers
         }
 
         /// <summary>
-        /// Removes duplicates from a molecule set. Uses SMSD to detect identical molecules.
+        /// Removes duplicates from a molecule set. Uses canonical SMILES to detect identical molecules.
         /// An example of pruning can be a case where double bonds are placed in different positions in
         /// an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
         /// </summary>
         /// <param name="tautomers">molecule set of tautomers with possible duplicates</param>
         /// <returns>tautomers same set with duplicates removed</returns>
-        /// <exception cref="CDKException"></exception>
+        /// <exception cref="CDKException">unable to calculate canonical SMILES</exception>
         private List<IAtomContainer> RemoveDuplicates(List<IAtomContainer> tautomers)
         {
-            List<IAtomContainer> unique = new List<IAtomContainer>();
-            Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, true);
-            BitArray removed = new BitArray(tautomers.Count);
-            for (int idx1 = 0; idx1 < tautomers.Count; idx1++)
+            ISet<string> cansmis = new HashSet<string>();
+            List<IAtomContainer> result = new List<IAtomContainer>();
+            foreach (IAtomContainer tautomer in tautomers)
             {
-                if (removed[idx1])
-                {
-                    continue;
-                }
-                IAtomContainer tautomer1 = tautomers[idx1];
-                for (int idx2 = idx1 + 1; idx2 < tautomers.Count; idx2++)
-                {
-                    if (removed[idx2])
-                    {
-                        continue;
-                    }
-                    IAtomContainer tautomer2 = tautomers[idx2];
-                    isomorphism.Init(tautomer1, tautomer2, false, false);
-                    isomorphism.SetChemFilters(true, true, true);
-                    if (isomorphism.IsSubgraph())
-                    {
-                        removed.Set(idx2, true);
-                    }
-                }
-                unique.Add(tautomer1);
+                if (cansmis.Add(CANSMI.Create(tautomer)))
+                    result.Add(tautomer);
             }
-            Debug.WriteLine($"# tautomers after clean up : {tautomers.Count}");
-            return unique;
+            Debug.WriteLine("# tautomers after clean up : " + tautomers.Count);
+            return result;
         }
 
         /// <summary>
@@ -650,7 +713,7 @@ namespace NCDK.Tautomers
             while (offSet < container.Bonds.Count && dblBondPositions == null)
             {
                 IBond bond = container.Bonds[offSet];
-                if (atomsInNeedOfFix.Contains(bond.Atoms[0]) && atomsInNeedOfFix.Contains(bond.Atoms[1]))
+                if (atomsInNeedOfFix.Contains(bond.Begin) && atomsInNeedOfFix.Contains(bond.End))
                 {
                     bond.Order = BondOrder.Double;
                     dblBondsAdded = dblBondsAdded + 1;

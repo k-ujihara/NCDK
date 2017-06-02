@@ -85,8 +85,8 @@ namespace NCDK.Smiles
 
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
-            int u = indices[b.Atoms[0]];
-            int v = indices[b.Atoms[1]];
+            int u = indices[b.Begin];
+            int v = indices[b.End];
 
             return ToBeamEdgeLabel(b, this.flavour).CreateEdge(u, v);
         }
@@ -142,6 +142,37 @@ namespace NCDK.Smiles
             return gb.Build();
         }
 
+        private static int? GetMajorMassNumber(Element e)
+        {
+            try
+            {
+                switch (e.AtomicNumber)
+                {
+                    case 1: return 1;
+                    case 5: return 11;
+                    case 6: return 12;
+                    case 7: return 14;
+                    case 8: return 16;
+                    case 9: return 19;
+                    case 14: return 28;
+                    case 15: return 31;
+                    case 16: return 32;
+                    case 17: return 35;
+                    case 53: return 127;
+                    default:
+                        IsotopeFactory isotopes = Isotopes.Instance;
+                        IIsotope isotope = isotopes.GetMajorIsotope(e.Symbol);
+                        if (isotope != null)
+                            return isotope.MassNumber;
+                        return null;
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new ApplicationException("Isotope factory wouldn't load: " + ex.Message);
+            }
+        }
+
         /// <summary>
         /// Convert an CDK <see cref="IAtom"/> to a Beam Atom. The symbol and implicit
         /// hydrogen count are not optional. If the symbol is not supported by the
@@ -176,22 +207,14 @@ namespace NCDK.Smiles
             if (charge.HasValue) ab.Charge(charge.Value);
 
             // use the mass number to specify isotope?
-            if (SmiFlavor.IsSet(flavour, SmiFlavor.AtomicMass))
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.AtomicMass | SmiFlavor.AtomicMassStrict))
             {
-                int? massNumber = a.MassNumber;
-                if (massNumber.HasValue)
+                var massNumber = a.MassNumber;
+                if (massNumber != null)
                 {
-                    // XXX: likely causing some overhead but okay for now
-                    try
-                    {
-                        IsotopeFactory isotopes = Isotopes.Instance;
-                        IIsotope isotope = isotopes.GetMajorIsotope(a.Symbol);
-                        if (isotope == null || !isotope.MassNumber.Equals(massNumber)) ab.Isotope(massNumber.Value);
-                    }
-                    catch (IOException e)
-                    {
-                        throw new ApplicationException("Isotope factory wouldn't load: " + e.Message);
-                    }
+                    if (SmiFlavor.IsSet(flavour, SmiFlavor.AtomicMassStrict) ||
+                            !massNumber.Equals(GetMajorMassNumber(element)))
+                        ab.Isotope(massNumber.Value);
                 }
             }
 
@@ -216,8 +239,8 @@ namespace NCDK.Smiles
         {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
-            int u = indices[b.Atoms[0]];
-            int v = indices[b.Atoms[1]];
+            int u = indices[b.Begin];
+            int v = indices[b.End];
 
             return ToBeamEdgeLabel(b, flavour).CreateEdge(u, v);
         }
@@ -231,30 +254,29 @@ namespace NCDK.Smiles
         /// <exception cref="ArgumentException">the bond order could not be converted</exception>
         private static Bond ToBeamEdgeLabel(IBond b, int flavour)
         {
-            if (SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && b.IsAromatic) return Bond.Aromatic;
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && b.IsAromatic)
+            {
+                if (!b.Begin.IsAromatic || !b.End.IsAromatic)
+                    throw new InvalidOperationException("Aromatic bond connects non-aromatic atomic atoms");
+                return Bond.Aromatic;
+            }
 
             if (b.Order.IsUnset) throw new CDKException("A bond had undefined order, possible query bond?");
 
             BondOrder order = b.Order;
-
-            if (order == BondOrder.Single)
+            switch (order.Ordinal)
             {
-                return Bond.Single;
+                case BondOrder.O.Single:
+                    return Bond.Single;
+                case BondOrder.O.Double:
+                    return Bond.Double;
+                case BondOrder.O.Triple:
+                    return Bond.Triple;
+                case BondOrder.O.Quadruple:
+                    return Bond.Quadruple;
+                default:
+                    throw new CDKException("Unsupported bond order: " + order);
             }
-            else if (order == BondOrder.Double)
-            {
-                return Bond.Double;
-            }
-            else if (order == BondOrder.Triple)
-            {
-                return Bond.Triple;
-            }
-            else if (order == BondOrder.Quadruple)
-            {
-                return Bond.Quadruple;
-            }
-            else
-                throw new CDKException("Unsupported bond order: " + order);
         }
 
         /// <summary>
@@ -271,12 +293,12 @@ namespace NCDK.Smiles
             // don't try to set a configuration on aromatic bonds
             if (SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && db.IsAromatic) return;
 
-            int u = indices[db.Atoms[0]];
-            int v = indices[db.Atoms[1]];
+            int u = indices[db.Begin];
+            int v = indices[db.End];
 
             // is bs[0] always connected to db.Atom(0)?
-            int x = indices[bs[0].GetConnectedAtom(db.Atoms[0])];
-            int y = indices[bs[1].GetConnectedAtom(db.Atoms[1])];
+            int x = indices[bs[0].GetOther(db.Begin)];
+            int y = indices[bs[1].GetOther(db.End)];
 
             if (dbs.Stereo == DoubleBondConformation.Together)
             {

@@ -208,8 +208,8 @@ namespace NCDK.Charges
             AddExplicitHydrogens(acH);
             if (bond.Atoms.Count == 2)
             {
-                polarizabilitiy += GetKJPolarizabilityFactor(acH, bond.Atoms[0]);
-                polarizabilitiy += GetKJPolarizabilityFactor(acH, bond.Atoms[1]);
+                polarizabilitiy += GetKJPolarizabilityFactor(acH, bond.Begin);
+                polarizabilitiy += GetKJPolarizabilityFactor(acH, bond.End);
             }
             return (polarizabilitiy / 2);
         }
@@ -360,7 +360,7 @@ namespace NCDK.Charges
             int hCounter = 0;
             foreach (var bond in bonds)
             {
-                connectedAtom = bond.GetConnectedAtom(atom);
+                connectedAtom = bond.GetOther(atom);
                 if (connectedAtom.Symbol.Equals("H"))
                 {
                     hCounter += 1;

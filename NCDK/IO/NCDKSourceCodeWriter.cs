@@ -193,7 +193,7 @@ namespace NCDK.IO
 
         private void WriteBond(IBond bond)
         {
-            writer.Write($"  IBond {bond.Id} = builder.CreateBond({bond.Atoms[0].Id}, {bond.Atoms[1].Id}, BondOrder.{bond.Order});");
+            writer.Write($"  IBond {bond.Id} = builder.CreateBond({bond.Begin.Id}, {bond.End.Id}, BondOrder.{bond.Order});");
             writer.WriteLine();
         }
 

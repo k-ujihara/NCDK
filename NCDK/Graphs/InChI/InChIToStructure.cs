@@ -386,7 +386,7 @@ namespace NCDK.Graphs.InChI
             foreach (var bond in container.GetConnectedBonds(atom))
             {
                 if (!BondOrder.Single.Equals(bond.Order) || bond.Contains(exclude)) continue;
-                return bond.GetConnectedAtom(atom);
+                return bond.GetOther(atom);
             }
             return atom;
         }
@@ -417,10 +417,10 @@ namespace NCDK.Graphs.InChI
         /// 
         /// [x][y]:
         /// <list type="bullet">
-        /// <item>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal</item>
-        /// <item>x=1 => Disconnected layer if Reconnected layer is present</item>
-        /// <item>y=1 => Main layer or Mobile-H</item>
-        /// <item>y=0 => Fixed-H layer</item>
+        /// <item>x=0 =&gt; Reconnected if present in InChI otherwise Disconnected/Normal</item>
+        /// <item>x=1 =&gt; Disconnected layer if Reconnected layer is present</item>
+        /// <item>y=1 =&gt; Main layer or Mobile-H</item>
+        /// <item>y=0 =&gt; Fixed-H layer</item>
         /// </list>
         /// </summary>
         public ulong[,] WarningFlags => output.WarningFlags;

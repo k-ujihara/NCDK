@@ -208,6 +208,7 @@ namespace NCDK.Formula
         private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol)) return false;
+            // XXX: floating point comparision!
             if (isotopeOne.NaturalAbundance != isotopeTwo.NaturalAbundance) return false;
             if (isotopeOne.ExactMass != isotopeTwo.ExactMass) return false;
 

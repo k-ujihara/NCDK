@@ -38,7 +38,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "CTX";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-ctx";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "ctx" };
         public override string ReaderClassName => "NCDK.IO.CTXReader";

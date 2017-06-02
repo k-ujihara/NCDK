@@ -38,7 +38,6 @@ namespace NCDK.Formula
     {
         private IChemObjectBuilder builder = null;
         private IsotopeFactory isoFactory;
-        private IsotopePattern abundance_Mass = null;
 
        /// <summary> Minimal abundance of the isotopes to be added in the combinatorial search.</summary>
         private double minAbundance = .1;
@@ -84,6 +83,8 @@ namespace NCDK.Formula
 
             IMolecularFormula molecularFormula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula(mf, builder);
 
+            IsotopePattern abundance_Mass = null;
+
             foreach (var isos in molecularFormula.Isotopes)
             {
                 string elementSymbol = isos.Symbol;
@@ -91,9 +92,7 @@ namespace NCDK.Formula
 
                 for (int i = 0; i < atomCount; i++)
                 {
-                    if (!CalculateAbundanceAndMass(elementSymbol))
-                    {
-                    }
+                    abundance_Mass = CalculateAbundanceAndMass(abundance_Mass, elementSymbol);
                 }
             }
 
@@ -112,13 +111,13 @@ namespace NCDK.Formula
         /// </summary>
         /// <param name="elementSymbol">The chemical element symbol</param>
         /// <returns>the calculation was successful</returns>
-        private bool CalculateAbundanceAndMass(string elementSymbol)
+        private IsotopePattern CalculateAbundanceAndMass(IsotopePattern isotopePattern, string elementSymbol)
         {
             var isotopes = isoFactory.GetIsotopes(elementSymbol);
 
-            if (isotopes == null) return false;
+            if (isotopes == null) return isotopePattern;
 
-            if (!isotopes.Any()) return false;
+            //if (isotopes.Length == 0) return isotopePattern;
 
             double mass, previousMass, abundance, totalAbundance, newAbundance;
 
@@ -135,23 +134,22 @@ namespace NCDK.Formula
 
             // Verify if there is a previous calculation. If it exists, add the new
             // isotopes
-            if (abundance_Mass == null)
+            if (isotopePattern == null)
             {
-                abundance_Mass = currentISOPattern;
-                return true;
+                isotopePattern = currentISOPattern;
             }
             else
             {
-                for (int i = 0; i < abundance_Mass.Isotopes.Count; i++)
+                foreach (var isotope in isotopePattern.Isotopes)
                 {
-                    totalAbundance = abundance_Mass.Isotopes[i].Intensity;
+                    totalAbundance = isotope.Intensity;
 
                     if (totalAbundance == 0) continue;
 
                     for (int j = 0; j < currentISOPattern.Isotopes.Count; j++)
                     {
                         abundance = currentISOPattern.Isotopes[j].Intensity;
-                        mass = abundance_Mass.Isotopes[i].Mass;
+                        mass = isotope.Mass;
 
                         if (abundance == 0) continue;
 
@@ -175,14 +173,14 @@ namespace NCDK.Formula
                     }
                 }
 
-                abundance_Mass = new IsotopePattern();
-                foreach (var mmass in isotopeMassAndAbundance.Keys)
+                isotopePattern = new IsotopePattern();
+                foreach (var imass in isotopeMassAndAbundance.Keys)
                 {
-                    abundance_Mass.Isotopes.Add(new IsotopeContainer(mmass, isotopeMassAndAbundance[mmass]));
+                    isotopePattern.Isotopes.Add(new IsotopeContainer(imass, isotopeMassAndAbundance[imass]));
                 }
             }
 
-            return true;
+            return isotopePattern;
         }
 
         /// <summary>

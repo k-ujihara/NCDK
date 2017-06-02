@@ -61,24 +61,11 @@ namespace NCDK.Groups
             Assert.AreEqual(refiner.GetConnectivity(0, 1), 1);
             Assert.AreEqual(refiner.GetVertexCount(), 2);
 
-            refiner.Reset();
-
             string acpString2 = "C0C1C2 0:1(1),0:2(1),1:2(1)";
             IAtomContainer ac2 = AtomContainerPrinter.FromString(acpString2, builder);
             refiner.Refine(ac2);
             Assert.AreEqual(refiner.GetConnectivity(0, 2), 1);
             Assert.AreEqual(refiner.GetVertexCount(), 3);
-        }
-
-        [TestMethod()]
-        public void GetBondPartitionTest()
-        {
-            string acpString = "C0C1C2C3O4 0:1(2),0:4(1),1:2(1),2:3(2),3:4(1)";
-            IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
-            BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-            Partition bondPartition = refiner.GetBondPartition(ac);
-            Partition expected = Partition.FromString("0,3|1,4|2");
-            Assert.AreEqual(expected, bondPartition);
         }
 
         [TestMethod()]
@@ -190,19 +177,6 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void GetConnectedIndicesTest()
-        {
-            string acpString = "C0C1C2C3 0:1(1),0:3(1),1:2(1),2:3(1)";
-            IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
-            BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-            refiner.Refine(ac);
-            int[] expected = new int[] { 0, 3 };
-            int[] observed = refiner.GetConnectedIndices(1);
-            Assert.IsTrue(Compares.AreDeepEqual(expected, observed),
-                $"Expected : {Arrays.ToJavaString(expected)} but was {Arrays.ToJavaString(observed)}");
-        }
-
-        [TestMethod()]
         public void GetAutomorphismPartitionTest()
         {
             string acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),"
@@ -220,10 +194,8 @@ namespace NCDK.Groups
         [TestMethod()]
         public void TestAzulene()
         {
-
             IAtomContainer mol = TestMoleculeFactory.MakeAzulene();
             Assert.IsNotNull(mol, "Created molecule was null");
-            AtomContainerPrinter.Print(mol);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);

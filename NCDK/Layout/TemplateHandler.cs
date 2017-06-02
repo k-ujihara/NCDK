@@ -322,8 +322,8 @@ namespace NCDK.Layout
         /// Create a template from a substructure pattern. Using this template handler in the diagram
         /// generator then allows us to align to common reference.
         /// </summary>
-        /// <param name="ptrn">pattern</param>
-        /// <param name="mols">the molecules</param>
+        /// <param name="ptrn">the structure pattern to match</param>
+        /// <param name="mols">list of molecules</param>
         /// <returns>new template handler</returns>
         public static TemplateHandler CreateFromSubstructure(Pattern ptrn, IEnumerable<IAtomContainer> mols)
         {
@@ -339,8 +339,8 @@ namespace NCDK.Layout
         /// Create a template from a substructure pattern. Using this template handler in the diagram
         /// generator then allows us to align to common reference.
         /// </summary>
-        /// <param name="ptrn">pattern</param>
-        /// <param name="mol">the molecule</param>
+        /// <param name="ptrn">the structure pattern to match</param>
+        /// <param name="mol">molecule</param>
         /// <returns>new template handler</returns>
         public static TemplateHandler CreateFromSubstructure(Pattern ptrn, IAtomContainer mol)
         {

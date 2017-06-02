@@ -59,31 +59,31 @@ namespace NCDK.Beam
     public class Bond
     {
         /// <summary>Atoms are not bonded. </summary>
-        public static readonly Bond Dot = new Bond(".", 0);
+        public static readonly Bond Dot = new Bond(O.Dot, ".", 0);
 
         /// <summary>Atoms are bonded by either a single or aromatic bond. </summary>
-        public static readonly Bond Implicit = new Bond("", 1);
+        public static readonly Bond Implicit = new Bond(O.Implicit, "", 1);
 
         /// <summary>An implicit bond which is delocalised. </summary>
-        public static readonly Bond ImplicitAromatic = new Bond("", 1);
+        public static readonly Bond ImplicitAromatic = new Bond(O.ImplicitAromatic, "", 1);
 
         /// <summary>Atoms are bonded by a single pair of electrons. </summary>
-        public static readonly Bond Single = new Bond("-", 1);
+        public static readonly Bond Single = new Bond(O.Single, "-", 1);
 
         /// <summary>Atoms are bonded by two pairs of electrons. </summary>
-        public static readonly Bond Double = new Bond("=", 2);
+        public static readonly Bond Double = new Bond(O.Double, "=", 2);
 
         /// <summary>A double bond which is delocalised. </summary>
-        public static readonly Bond DoubleAromatic = new Bond("=", 2);
+        public static readonly Bond DoubleAromatic = new Bond(O.DoubleAromatic, "=", 2);
 
         /// <summary>Atoms are bonded by three pairs of electrons. </summary>
-        public static readonly Bond Triple = new Bond("#", 3);
+        public static readonly Bond Triple = new Bond(O.Triple, "#", 3);
 
         /// <summary>Atoms are bonded by four pairs of electrons. </summary>
-        public static readonly Bond Quadruple = new Bond("$", 4);
+        public static readonly Bond Quadruple = new Bond(O.Quadruple, "$", 4);
 
         /// <summary>Atoms are bonded by a delocalized bond of an aromatic system. </summary>
-        public static readonly Bond Aromatic = new Bond(":", 1);
+        public static readonly Bond Aromatic = new Bond(O.Aromatic, ":", 1);
 
         /// <summary>
         /// Directional, single or aromatic bond (currently always single). The bond
@@ -91,17 +91,34 @@ namespace NCDK.Beam
         /// <i>above</i> the first or the first end point is <i>below</i> the
         /// second.
         /// </summary>
-        public static readonly Bond Up = new Bond_Up("/", 1);
+        public static readonly Bond Up = new Bond_Up(O.Up, "/", 1);
+
+        public static readonly Bond Down = new Bond_Down(O.Down, "\\", 1);
 
         public static IEnumerable<Bond> Values = new[]
         {
-            Dot, Implicit, ImplicitAromatic, Single, Double, DoubleAromatic, Triple, Aromatic, Up,
+            Dot, Implicit, ImplicitAromatic, Single, Double, DoubleAromatic, Triple, Quadruple, Aromatic, Up, Down, 
         };
+
+        public static class O
+        {
+            public const int Dot = 0;
+            public const int Implicit = 1;
+            public const int ImplicitAromatic = 2;
+            public const int Single = 3;
+            public const int Double = 4;
+            public const int DoubleAromatic = 5;
+            public const int Triple = 6;
+            public const int Quadruple = 7;
+            public const int Aromatic = 8;
+            public const int Up = 9;
+            public const int Down = 10;
+        }
 
         class Bond_Up : Bond
         {
-            public Bond_Up(string token, int Order)
-                : base(token, Order)
+            public Bond_Up(int ordinal, string token, int Order)
+                : base(ordinal, token, Order)
             {
             }
 
@@ -119,12 +136,11 @@ namespace NCDK.Beam
         /// <i>below</i> the first or the first end point is <i>above</i> the
         /// second.
         /// </summary>
-        public static readonly Bond Down = new Bond_Down("\\", 1);
 
         class Bond_Down : Bond
         {
-            public Bond_Down(string token, int Order)
-                : base(token, Order)
+            public Bond_Down(int ordinal, string token, int Order)
+                : base(ordinal, token, Order)
             {
             }
 
@@ -136,16 +152,21 @@ namespace NCDK.Beam
             public override bool IsDirectional => true;
         }
 
+        private readonly int ordinal;
+
         /// <summary>The token for the bond in the SMILES grammar. </summary>
         private readonly string token;
 
         private readonly int order;
 
-        public Bond(string token, int Order)
+        public Bond(int ordinal, string token, int Order)
         {
+            this.ordinal = ordinal;
             this.token = token;
             this.order = Order;
         }
+
+        public int Ordinal => ordinal;
 
         /// <summary>
         /// The token of the bond in the SMILES grammar.

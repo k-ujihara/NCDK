@@ -30,6 +30,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     // @cdk.keyword SMARTS
     public class MassAtom : SMARTSAtom
     {
+        private readonly int mass;
+
         /// <summary>
         /// Creates a new instance
         /// </summary>
@@ -38,16 +40,20 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             : base(builder)
         {
             this.MassNumber = mass;
+            this.mass = mass;
         }
 
         public override bool Matches(IAtom atom)
         {
-            return atom.MassNumber == this.MassNumber;
+            if (mass == 0)
+                return atom.MassNumber == null;
+            else
+                return atom.MassNumber != null && mass == atom.MassNumber;
         }
 
         public override string ToString()
         {
-            return ("(" + nameof(MassAtom) + "(" + this.MassNumber + ")");
+            return "(MassAtom(" + mass + ")";
         }
     }
 }

@@ -59,7 +59,6 @@ namespace NCDK.Charges
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>AtomContainer with MMFF94 partial charges as atom properties</returns>
-        /// <exception cref="Exception">Possible Exceptions</exception>
         public IAtomContainer AssignMMFF94PartialCharges(IAtomContainer ac)
         {
             if (!mmff.AssignAtomTypes(ac))

@@ -840,7 +840,7 @@ namespace NCDK.Smiles
             // I can also check whether all carbons have exact two neighbors
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[i]).Count());
+                Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[i]).Count());
             }
             // and the number of implicit hydrogens
             int hCount = 0;
@@ -941,7 +941,7 @@ namespace NCDK.Smiles
             foreach (var atomi in mol.Atoms)
             {
                 Assert.AreEqual(1, atomi.ImplicitHydrogenCount.Value);
-                Assert.AreEqual(2, mol.GetConnectedAtoms(atomi).Count());
+                Assert.AreEqual(2, mol.GetConnectedBonds(atomi).Count());
             }
             // and the first atom should have a negative charge
             Assert.AreEqual(-1, mol.Atoms[0].FormalCharge.Value);
@@ -1275,8 +1275,8 @@ namespace NCDK.Smiles
             for (int i = 0; i < 17; i++)
             {
                 IBond bond = mol.Bonds[i];
-                if (bond.Atoms[0].Symbol.Equals("H") || bond.Atoms[0].Symbol.Equals("Br")
-                        || bond.Atoms[1].Symbol.Equals("H") || bond.Atoms[1].Symbol.Equals("Br"))
+                if (bond.Begin.Symbol.Equals("H") || bond.Begin.Symbol.Equals("Br")
+                        || bond.End.Symbol.Equals("H") || bond.End.Symbol.Equals("Br"))
                 {
                     Assert.IsFalse(bond.IsAromatic);
                 }
@@ -1330,7 +1330,7 @@ namespace NCDK.Smiles
             for (int i = 0; i < 7; i++)
             {
                 IBond bond = mol.Bonds[i];
-                if (bond.Atoms[0].Symbol.Equals("O") || bond.Atoms[1].Symbol.Equals("O"))
+                if (bond.Begin.Symbol.Equals("O") || bond.End.Symbol.Equals("O"))
                 {
                     Assert.IsFalse(bond.IsAromatic);
                 }
@@ -2180,9 +2180,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("C", mol.Atoms[0].Symbol);
             Assert.AreEqual("O", mol.Atoms[1].Symbol);
             Assert.AreEqual("C", mol.Atoms[2].Symbol);
-            Assert.AreEqual(4, mol.GetConnectedAtoms(mol.Atoms[0]).Count());
-            Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[1]).Count());
-            Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[2]).Count());
+            Assert.AreEqual(4, mol.GetConnectedBonds(mol.Atoms[0]).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[1]).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[2]).Count());
         }
 
         [TestMethod()]
@@ -2499,10 +2499,10 @@ namespace NCDK.Smiles
 
             IAtomContainer mol = LoadExact(smiles);
             Assert.AreEqual(8, mol.Atoms.Count);
-            Assert.AreEqual(4, mol.GetConnectedAtoms(mol.Atoms[1]).Count());
-            Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[3]).Count());
-            Assert.AreEqual(4, mol.GetConnectedAtoms(mol.Atoms[4]).Count());
-            Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[5]).Count());
+            Assert.AreEqual(4, mol.GetConnectedBonds(mol.Atoms[1]).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[3]).Count());
+            Assert.AreEqual(4, mol.GetConnectedBonds(mol.Atoms[4]).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[5]).Count());
         }
 
         /// <summary>

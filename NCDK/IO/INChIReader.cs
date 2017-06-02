@@ -98,7 +98,7 @@ namespace NCDK.IO
         {
             if (obj is IChemFile)
             {
-                return (T)ReadChemFile();
+                return (T)ReadChemFile(obj.Builder);
             }
             else
             {
@@ -112,13 +112,13 @@ namespace NCDK.IO
         /// Reads a ChemFile object from input.
         /// </summary>
         /// <returns>ChemFile with the content read from the input</returns>
-        private IChemFile ReadChemFile()
+        private IChemFile ReadChemFile(IChemObjectBuilder bldr)
         {
             IChemFile cf = null;
             XmlReaderSettings setting = new XmlReaderSettings();
             setting.ValidationFlags = XmlSchemaValidationFlags.None;
 
-            InChIHandler handler = new InChIHandler();
+            InChIHandler handler = new InChIHandler(bldr);
 
             try
             {
@@ -149,6 +149,123 @@ namespace NCDK.IO
         public override void Dispose()
         {
             Close();
+        }
+
+        private class InChIHandler : XContentHandler
+        {
+            private InChIContentProcessorTool inchiTool;
+
+            private IChemFile chemFile;
+            private IChemSequence chemSequence;
+            private IChemModel chemModel;
+            private IAtomContainerSet<IAtomContainer> setOfMolecules;
+            private IAtomContainer tautomer;
+            private IChemObjectBuilder builder;
+
+            /// <summary>
+            /// Constructor for the IChIHandler.
+            /// </summary>
+            public InChIHandler(IChemObjectBuilder builder)
+            {
+                this.builder = builder;
+                inchiTool = new InChIContentProcessorTool();
+            }
+
+            public override void DoctypeDecl(XDocumentType docType)
+            {
+                if (docType == null)
+                    return;
+                Trace.TraceInformation("DocType root element: " + docType.Name);
+                Trace.TraceInformation("DocType root PUBLIC: " + docType.PublicId);
+                Trace.TraceInformation("DocType root SYSTEM: " + docType.SystemId);
+            }
+
+            public override void StartDocument()
+            {
+                chemFile = builder.CreateChemFile();
+                chemSequence = builder.CreateChemSequence();
+                chemModel = builder.CreateChemModel();
+                setOfMolecules = builder.CreateAtomContainerSet<IAtomContainer>();
+            }
+
+            public override void EndDocument()
+            {
+                chemFile.Add(chemSequence);
+            }
+
+            public override void EndElement(XElement element)
+            {
+                Debug.WriteLine("end element: ", element.ToString());
+                if ("identifier".Equals(element.Name.LocalName))
+                {
+                    if (tautomer != null)
+                    {
+                        // ok, add tautomer
+                        setOfMolecules.Add(tautomer);
+                        chemModel.MoleculeSet = setOfMolecules;
+                        chemSequence.Add(chemModel);
+                    }
+                }
+                else if ("formula".Equals(element.Name.LocalName))
+                {
+                    if (tautomer != null)
+                    {
+                        Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
+                        tautomer = builder.CreateAtomContainer(inchiTool.ProcessFormula(
+                                setOfMolecules.Builder.CreateAtomContainer(), element.Value));
+                    }
+                    else
+                    {
+                        Trace.TraceWarning("Cannot set atom info for empty tautomer");
+                    }
+                }
+                else if ("connections".Equals(element.Name.LocalName))
+                {
+                    if (tautomer != null)
+                    {
+                        Trace.TraceInformation("Parsing <connections> chars: ", element.Value);
+                        inchiTool.ProcessConnections(element.Value, tautomer, -1);
+                    }
+                    else
+                    {
+                        Trace.TraceWarning("Cannot set dbond info for empty tautomer");
+                    }
+                }
+                else
+                {
+                    // skip all other elements
+                }
+            }
+
+            /// <summary>
+            /// Implementation of the StartElement() procedure overwriting the
+            /// DefaultHandler interface.
+            /// </summary>
+            public override void StartElement(XElement element)
+            {
+                Debug.WriteLine("startElement: ", element.ToString());
+                Debug.WriteLine("uri: ", element.Name.NamespaceName);
+                Debug.WriteLine("local: ", element.Name.LocalName);
+                Debug.WriteLine("raw: ", element.ToString());
+                if ("INChI".Equals(element.Name.LocalName))
+                {
+                    // check version
+                    foreach (var att in element.Attributes())
+                    {
+                        if (att.Name.LocalName.Equals("version")) Trace.TraceInformation("INChI version: ", att.Value);
+                    }
+                }
+                else if ("structure".Equals(element.Name.LocalName))
+                {
+                    tautomer = builder.CreateAtomContainer();
+                }
+                else
+                {
+                    // skip all other elements
+                }
+            }
+
+            public IChemFile ChemFile => chemFile;
         }
     }
 }

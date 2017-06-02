@@ -26,6 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.Stereo;
+using NCDK.Smiles;
 
 namespace NCDK.Layout
 {
@@ -49,8 +50,8 @@ namespace NCDK.Layout
             m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
                 m.Atoms[3]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
-            Assert.AreEqual(BondStereo.Down, m.Bonds[0].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[1].Stereo);
+            Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
+            Assert.AreEqual(BondStereo.Down, m.Bonds[1].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[2].Stereo);
         }
 
@@ -93,8 +94,8 @@ namespace NCDK.Layout
             m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
                 m.Atoms[3]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
-            Assert.AreEqual(BondStereo.Up, m.Bonds[0].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[1].Stereo);
+            Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
+            Assert.AreEqual(BondStereo.Up, m.Bonds[1].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[2].Stereo);
         }
 
@@ -144,8 +145,8 @@ namespace NCDK.Layout
                 m.Atoms[6]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
-            Assert.AreEqual(BondStereo.Up, m.Bonds[3].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[4].Stereo);
+            Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
+            Assert.AreEqual(BondStereo.Up, m.Bonds[4].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[5].Stereo);
         }
 
@@ -173,7 +174,7 @@ namespace NCDK.Layout
             m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
-            Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
+            Assert.AreEqual(BondStereo.Up, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
             Assert.AreEqual(BondStereo.Down, m.Bonds[4].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[5].Stereo);
@@ -201,9 +202,9 @@ namespace NCDK.Layout
                 m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
-            Assert.AreEqual(BondStereo.Down, m.Bonds[3].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[4].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[5].Stereo);
+            Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
+            Assert.AreEqual(BondStereo.Down, m.Bonds[4].Stereo);
+            Assert.AreEqual(BondStereo.Up, m.Bonds[5].Stereo);
         }
 
         // [C@](CCC)(C1)(C)C1 (favour acyclic)
@@ -230,7 +231,7 @@ namespace NCDK.Layout
             m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
-            Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
+            Assert.AreEqual(BondStereo.Down, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
             Assert.AreEqual(BondStereo.Up, m.Bonds[4].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[5].Stereo);
@@ -306,9 +307,8 @@ namespace NCDK.Layout
             m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[2], m.Atoms[4], m.Atoms[6],
                 m.Atoms[3],}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
-            Assert.AreEqual(BondStereo.Down, m.Bonds[4].Stereo);
+            Assert.AreEqual(BondStereo.Up, m.Bonds[2].Stereo);
         }
-
 
         // ethene is left alone and not marked as crossed
         [TestMethod()]
@@ -596,6 +596,40 @@ namespace NCDK.Layout
                 if (bond.Stereo == BondStereo.UpOrDown)
                     wavyCount++;
             Assert.AreEqual(1, wavyCount);
+        }
+
+        /// <summary>
+        /// SMILES: O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4
+        /// </summary>
+        [TestMethod()]
+        public void Testosterone()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("O=C4C=C2[C@]([C@@]1([H])CC[C@@]3([C@@]([H])(O)CC[C@@]3([H])[C@]1([H])CC2)C)(C)CC4");
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            int wedgeCount = 0;
+            foreach (IBond bond in mol.Bonds)
+                if (bond.Stereo == BondStereo.Up || bond.Stereo == BondStereo.Down)
+                    wedgeCount++;
+            Assert.AreEqual(7, wedgeCount);
+        }
+
+        /// <summary>
+        /// SMILES: CN(C)(C)=CC
+        /// </summary>
+        [TestMethod()]
+        public void NoWavyBondForCisTransNv5()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("CN(C)(C)=CC");
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.GenerateCoordinates(mol);
+            foreach (IBond bond in mol.Bonds)
+            {
+                Assert.AreNotEqual(BondStereo.UpOrDown, bond.Stereo);
+                Assert.AreNotEqual(BondStereo.UpOrDownInverted, bond.Stereo);
+            }
         }
 
         static IAtom Atom(string symbol, int hCount, double x, double y)

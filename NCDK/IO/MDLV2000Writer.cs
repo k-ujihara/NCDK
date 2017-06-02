@@ -561,13 +561,13 @@ namespace NCDK.IO
                         || bond.Stereo == BondStereo.UpOrDownInverted)
                     {
                         // turn around atom coding to correct for inv stereo
-                        line = FormatMDLInt(atomindex[bond.Atoms[1]] + 1, 3);
-                        line += FormatMDLInt(atomindex[bond.Atoms[0]] + 1, 3);
+                        line = FormatMDLInt(atomindex[bond.End] + 1, 3);
+                        line += FormatMDLInt(atomindex[bond.Begin] + 1, 3);
                     }
                     else
                     {
-                        line = FormatMDLInt(atomindex[bond.Atoms[0]] + 1, 3);
-                        line += FormatMDLInt(atomindex[bond.Atoms[1]] + 1, 3);
+                        line = FormatMDLInt(atomindex[bond.Begin] + 1, 3);
+                        line += FormatMDLInt(atomindex[bond.End] + 1, 3);
                     }
                     int bondType = 0;
 
@@ -945,7 +945,7 @@ namespace NCDK.IO
                             writer.Write(' ');
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
-                            writer.Write((string)sgroup.GetValue(key));
+                            writer.Write(((string)sgroup.GetValue(key)).ToUpperInvariant());
                             writer.WriteLine();
                             break;
                         case SgroupKey.CtabSubType:

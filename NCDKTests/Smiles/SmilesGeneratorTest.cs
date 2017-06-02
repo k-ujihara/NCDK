@@ -1164,6 +1164,27 @@ namespace NCDK.Smiles
             Assert.AreEqual(smigen.Create(r3), smigen.Create(r2));
         }
 
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void InconsistentAromaticState()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1");
+            foreach (IAtom atom in mol.Atoms)
+                atom.IsAromatic = false;
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+            smigen.Create(mol);
+        }
+
+        [TestMethod()]
+        public void StrictIsotopes()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[12CH3]C");
+            Assert.AreEqual("[12CH3]C", new SmilesGenerator(SmiFlavor.AtomicMassStrict).Create(mol));
+            Assert.AreEqual("CC", new SmilesGenerator(SmiFlavor.AtomicMass).Create(mol));
+        }
+
         static ITetrahedralChirality Anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4)
         {
             return new TetrahedralChirality(container.Atoms[central], new IAtom[]{container.Atoms[a1],

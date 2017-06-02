@@ -130,11 +130,12 @@ namespace NCDK.Layout
             IBond db = dbs.StereoBond;
             var bonds = dbs.Bonds;
 
-            IAtom left = db.Atoms[0];
-            IAtom right = db.Atoms[1];
+            IAtom left = db.Begin;
+            IAtom right = db.End;
 
             int p = Parity(dbs);
-            int q = Parity(GetAtoms(left, bonds[0].GetConnectedAtom(left), right)) * Parity(GetAtoms(right, bonds[1].GetConnectedAtom(right), left));
+            int q = Parity(GetAtoms(left, bonds[0].GetOther(left), right)) 
+                * Parity(GetAtoms(right, bonds[1].GetOther(right), left));
 
             // configuration is unspecified? then we add an unspecified bond.
             // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -257,8 +258,8 @@ namespace NCDK.Layout
         /// <returns>the reflected point</returns>
         private Vector2 Reflect(Vector2 p, IBond bond)
         {
-            IAtom a = bond.Atoms[0];
-            IAtom b = bond.Atoms[1];
+            IAtom a = bond.Begin;
+            IAtom b = bond.End;
             return Reflect(p, a.Point2D.Value.X, a.Point2D.Value.Y, b.Point2D.Value.X, b.Point2D.Value.Y);
         }
 

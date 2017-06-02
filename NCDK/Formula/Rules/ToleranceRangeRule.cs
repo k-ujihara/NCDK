@@ -29,7 +29,7 @@ namespace NCDK.Formula.Rules
     /// the mass to range is 0.0.
     /// </summary>
     /// <remarks>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <item>
     ///   <term>Name</term>

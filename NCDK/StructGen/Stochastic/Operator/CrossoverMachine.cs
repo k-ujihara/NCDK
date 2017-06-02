@@ -130,7 +130,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 }
                 for (int j = 0; j < blueAtomsInRedChild0.Count; j++)
                 {
-                    redChild[0].RemoveAtomAndConnectedElectronContainers(blueAtomsInRedChild0[j]);
+                    redChild[0].RemoveAtom(blueAtomsInRedChild0[j]);
                 }
                 List<IAtom> blueAtomsInRedChild1 = new List<IAtom>();
                 for (int j = 0; j < blueAtoms.Count; j++)
@@ -139,7 +139,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 }
                 for (int j = 0; j < blueAtomsInRedChild1.Count; j++)
                 {
-                    redChild[1].RemoveAtomAndConnectedElectronContainers(blueAtomsInRedChild1[j]);
+                    redChild[1].RemoveAtom(blueAtomsInRedChild1[j]);
                 }
                 List<IAtom> redAtomsInBlueChild0 = new List<IAtom>();
                 for (int j = 0; j < redAtoms.Count; j++)
@@ -148,7 +148,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 }
                 for (int j = 0; j < redAtomsInBlueChild0.Count; j++)
                 {
-                    blueChild[0].RemoveAtomAndConnectedElectronContainers(redAtomsInBlueChild0[j]);
+                    blueChild[0].RemoveAtom(redAtomsInBlueChild0[j]);
                 }
                 List<IAtom> redAtomsInBlueChild1 = new List<IAtom>();
                 for (int j = 0; j < redAtoms.Count; j++)
@@ -157,7 +157,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 }
                 for (int j = 0; j < redAtomsInBlueChild1.Count; j++)
                 {
-                    blueChild[1].RemoveAtomAndConnectedElectronContainers(redAtomsInBlueChild1[j]);
+                    blueChild[1].RemoveAtom(redAtomsInBlueChild1[j]);
                 }
                 //if the two fragments of one and only one parent have an uneven number
                 //of attachment points, we need to rearrange them
@@ -192,7 +192,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                                 && firstToBalance.GetBondOrderSum(atom) % 2 == 0)
                         {
                             //we remove this from it's current container and add it to the other one
-                            firstToBalance.RemoveAtomAndConnectedElectronContainers(atom);
+                            firstToBalance.RemoveAtom(atom);
                             secondToBalance.Atoms.Add(atom);
                             isok = true;
                             break;

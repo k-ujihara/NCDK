@@ -57,8 +57,8 @@ namespace NCDK.Groups
                 }
                 foreach (var bond in atomContainer.Bonds)
                 {
-                    int a0 = atomContainer.Atoms.IndexOf(bond.Atoms[0]);
-                    int a1 = atomContainer.Atoms.IndexOf(bond.Atoms[1]);
+                    int a0 = atomContainer.Atoms.IndexOf(bond.Begin);
+                    int a1 = atomContainer.Atoms.IndexOf(bond.End);
                     int pA0 = permutation[a0];
                     int pA1 = permutation[a1];
                     char o = BondOrderToChar(bond.Order);

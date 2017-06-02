@@ -21,6 +21,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Beam;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
 using NCDK.SGroups;
@@ -239,9 +240,8 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="molecule">the molecule to create the SMILES of</param>
         /// <returns>a SMILES string</returns>
-        /// <exception cref="CDKException">SMILES could not be generated</exception>
         [Obsolete("Use " + nameof(Create))]
-    public string CreateSMILES(IAtomContainer molecule)
+        public string CreateSMILES(IAtomContainer molecule)
         {
             try
             {
@@ -260,7 +260,6 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="reaction">the reaction to create the SMILES of</param>
         /// <returns>a reaction SMILES string</returns>
-        /// <exception cref="CDKException">SMILES could not be generated</exception>
         [Obsolete("Use " + nameof(CreateReactionSMILES))]
         public string CreateSMILES(IReaction reaction)
         {
@@ -598,6 +597,14 @@ namespace NCDK.Smiles
             // class each time
             string cname = "NCDK.Graphs.Invariant.InChINumbersTools";
             string mname = "GetUSmilesNumbers";
+
+            var rgrps = GetRgrps(container, Elements.Rutherfordium);
+            foreach (IAtom rgrp in rgrps)
+            {
+                rgrp.AtomicNumber = Elements.Rutherfordium.AtomicNumber;
+                rgrp.Symbol = Elements.Rutherfordium.Symbol;
+            }
+
             try
             {
                 var c = Type.GetType(cname, true);
@@ -617,6 +624,31 @@ namespace NCDK.Smiles
             {
                 throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.Message, e);
             }
+            finally
+            {
+                foreach (IAtom rgrp in rgrps)
+                {
+                    rgrp.AtomicNumber = Elements.Unknown.AtomicNumber;
+                    rgrp.Symbol = "*";
+                }
+            }
+        }
+
+        private static IList<IAtom> GetRgrps(IAtomContainer container, Elements reversed)
+        {
+            List<IAtom> res = new List<IAtom>();
+            foreach (IAtom atom in container.Atoms)
+            {
+                if (atom.AtomicNumber == 0)
+                {
+                    res.Add(atom);
+                }
+                else if (atom.AtomicNumber == reversed.AtomicNumber)
+                {
+                    return Array.Empty<IAtom>();
+                }
+            }
+            return res;
         }
 
         // utility safety check to guard against invalid state
@@ -748,10 +780,11 @@ namespace NCDK.Smiles
                         case SgroupType.O.CtabGeneric:
                         case SgroupType.O.CtabComponent:
                         case SgroupType.O.CtabGraft:
+                            string supscript = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
                             state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
                                                                               ToAtomIdxs(sgroup.Atoms, atomidx),
                                                                               sgroup.Subscript,
-                                                                              (string)sgroup.GetValue(SgroupKey.CtabConnectivity)));
+                                                                              supscript));
                             break;
                         case SgroupType.O.ExtMulticenter:
                             IAtom beg = null;
@@ -780,9 +813,11 @@ namespace NCDK.Smiles
                         case SgroupType.O.CtabMultipleGroup:
                             // display shortcuts are not output
                             break;
+                        case SgroupType.O.CtabData:
+                            // can be generated but currently ignored
+                            break;
                         default:
                             throw new NotSupportedException("Unsupported Sgroup Polymer");
-
                     }
                 }
             }

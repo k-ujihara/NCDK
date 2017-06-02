@@ -104,8 +104,8 @@ namespace NCDK.Charges
                 //            bonds = ac.Bonds;
                 foreach (var bond in ac.Bonds)
                 {
-                    atom1 = ac.Atoms.IndexOf(bond.Atoms[0]);
-                    atom2 = ac.Atoms.IndexOf(bond.Atoms[1]);
+                    atom1 = ac.Atoms.IndexOf(bond.Begin);
+                    atom2 = ac.Atoms.IndexOf(bond.End);
 
                     if (gasteigerFactors[StepSize * atom1 + atom1 + 4] >= gasteigerFactors[StepSize * atom2 + atom2 + 4])
                     {
@@ -173,139 +173,139 @@ namespace NCDK.Charges
         {
             //a,b,c,denom,chi,q
             double[] gasteigerFactors = new double[(ac.Atoms.Count * (StepSize + 1))];
-            string AtomSymbol = "";
             double[] factors = new double[] { 0.0, 0.0, 0.0 };
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
                 factors[0] = 0.0;
                 factors[1] = 0.0;
                 factors[2] = 0.0;
-                AtomSymbol = ac.Atoms[i].Symbol;
-                if (AtomSymbol.Equals("H"))
+                IAtom atom = ac.Atoms[i];
+                string symbol = atom.Symbol;
+                BondOrder maxBondOrder = ac.GetMaximumBondOrder(atom);
+                var charge = atom.FormalCharge;
+                switch (symbol)
                 {
-                    factors[0] = 7.17;
-                    factors[1] = 6.24;
-                    factors[2] = -0.56;
-                }
-                else if (AtomSymbol.Equals("C"))
-                {
-                    if ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
-                            && (ac.Atoms[i].FormalCharge != -1))
-                    {
-                        factors[0] = 7.98;
-                        factors[1] = 9.18;
-                        factors[2] = 1.88;
-                    }
-                    else if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Double
-                          || ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single) && ac.Atoms[i]
-                                  .FormalCharge == -1))
-                    {
-                        factors[0] = 8.79;/* 8.79 *//* 8.81 */
-                        factors[1] = 9.32;/* 9.32 *//* 9.34 */
-                        factors[2] = 1.51;/* 1.51 *//* 1.52 */
-                    }
-                    else if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Triple
-                          || ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Quadruple)
-                    {
-                        factors[0] = 10.39;/* 10.39 */
-                        factors[1] = 9.45;/* 9.45 */
-                        factors[2] = 0.73;
-                    }
-                }
-                else if (AtomSymbol.Equals("N"))
-                {
-                    if ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
-                            && (ac.Atoms[i].FormalCharge != -1))
-                    {
-                        factors[0] = 11.54;
-                        factors[1] = 10.82;
-                        factors[2] = 1.36;
-                    }
-                    else if ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Double)
-                          || ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single) && ac.Atoms[i]
-                                  .FormalCharge == -1))
-                    {
-                        factors[0] = 12.87;
-                        factors[1] = 11.15;
-                        factors[2] = 0.85;
-                    }
-                    else if (ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Triple
-                          || ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Quadruple)
-                    {
-                        factors[0] = 17.68;/* 15.68 */
-                        factors[1] = 12.70;/* 11.70 */
-                        factors[2] = -0.27;/*-0.27*/
-                    }
-                }
-                else if (AtomSymbol.Equals("O"))
-                {
-                    if ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single)
-                            && (ac.Atoms[i].FormalCharge != -1))
-                    {
-                        factors[0] = 14.18;
-                        factors[1] = 12.92;
-                        factors[2] = 1.39;
-                    }
-                    else if ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Double)
-                          || ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single) && ac.Atoms[i]
-                                  .FormalCharge == -1))
-                    {
-                        factors[0] = 17.07; // paramaters aren'T correct parametrized.
-                        factors[1] = 13.79;
-                        factors[2] = 0.47;/* 0.47 */
-                    }
-                }
-                else if (AtomSymbol.Equals("Si"))
-                {// <--not correct
-                    factors[0] = 8.10;// <--not correct
-                    factors[1] = 7.92;// <--not correct
-                    factors[2] = 1.78;// <--not correct
-                }
-                else if (AtomSymbol.Equals("P"))
-                {
-                    factors[0] = 8.90;
-                    factors[1] = 8.32;
-                    factors[2] = 1.58;
-                }
-                else if (AtomSymbol.Equals("S") /* && ac.GetMaximumBondOrder(ac.Atoms[i]) == 1 */)
-                {
-                    factors[0] = 10.14;/* 10.14 */
-                    factors[1] = 9.13;/* 9.13 */
-                    factors[2] = 1.38;/* 1.38 */
-                }
-                else if (AtomSymbol.Equals("F"))
-                {
-                    factors[0] = 14.66;
-                    factors[1] = 13.85;
-                    factors[2] = 2.31;
-                }
-                else if (AtomSymbol.Equals("Cl"))
-                {
-                    factors[0] = 12.31;/* 11.0 *//* 12.31 */
-                    factors[1] = 10.84;/* 9.69 *//* 10.84 */
-                    factors[2] = 1.512;/* 1.35 *//* 1.512 */
-                }
-                else if (AtomSymbol.Equals("Br"))
-                {
-                    factors[0] = 11.44;/* 10.08 *//* 11.2 */
-                    factors[1] = 9.63;/* 8.47 *//* 9.4 */
-                    factors[2] = 1.31;/* 1.16 *//* 1.29 */
-                }
-                else if (AtomSymbol.Equals("I"))
-                {
-                    factors[0] = 9.88;/* 9.90 */
-                    factors[1] = 7.95;/* 7.96 */
-                    factors[2] = 0.945;/* 0.96 */
-                }
-                else
-                {
-                    throw new CDKException("Partial charge not-supported for element: '" + AtomSymbol + "'.");
+                    case "H":
+                        factors[0] = 7.17;
+                        factors[1] = 6.24;
+                        factors[2] = -0.56;
+                        break;
+                    case "C":
+                        if (maxBondOrder == BondOrder.Double ||
+                            (maxBondOrder == BondOrder.Single && (charge == -1 || charge == +1)))
+                        {
+                            factors[0] = 8.79;/* 8.79 *//* 8.81 */
+                            factors[1] = 9.32;/* 9.32 *//* 9.34 */
+                            factors[2] = 1.51;/* 1.51 *//* 1.52 */
+                        }
+                        else if (maxBondOrder == BondOrder.Single && charge == 0)
+                        {
+                            factors[0] = 7.98;
+                            factors[1] = 9.18;
+                            factors[2] = 1.88;
+                        }
+                        else if (maxBondOrder == BondOrder.Triple
+                                 || maxBondOrder == BondOrder.Quadruple)
+                        {
+                            factors[0] = 10.39;/* 10.39 */
+                            factors[1] = 9.45;/* 9.45 */
+                            factors[2] = 0.73;
+                        }
+                        break;
+                    case "N":
+                        if ((maxBondOrder == BondOrder.Single)
+                            && (charge != -1))
+                        {
+                            factors[0] = 11.54;
+                            factors[1] = 10.82;
+                            factors[2] = 1.36;
+                        }
+                        else if ((maxBondOrder == BondOrder.Double)
+                                 || ((maxBondOrder == BondOrder.Single)))
+                        {
+                            factors[0] = 12.87;
+                            factors[1] = 11.15;
+                            factors[2] = 0.85;
+                        }
+                        else if (maxBondOrder == BondOrder.Triple
+                                 || maxBondOrder == BondOrder.Quadruple)
+                        {
+                            factors[0] = 17.68;/* 15.68 */
+                            factors[1] = 12.70;/* 11.70 */
+                            factors[2] = -0.27;/*-0.27*/
+                        }
+                        break;
+                    case "O":
+                        if ((maxBondOrder == BondOrder.Single)
+                            && (charge != -1))
+                        {
+                            factors[0] = 14.18;
+                            factors[1] = 12.92;
+                            factors[2] = 1.39;
+                        }
+                        else if ((maxBondOrder == BondOrder.Double)
+                                 || ((maxBondOrder == BondOrder.Single)))
+                        {
+                            factors[0] = 17.07;/*
+                                            * paramaters aren'T correct
+                                            * parametrized.
+                                            */
+                            factors[1] = 13.79;
+                            factors[2] = 0.47;/* 0.47 */
+                        }
+                        break;
+                    case "Si": // <--not correct
+                        factors[0] = 8.10;// <--not correct
+
+                        factors[1] = 7.92;// <--not correct
+
+                        factors[2] = 1.78;// <--not correct
+
+                        break;
+                    case "P":
+                        factors[0] = 8.90;
+                        factors[1] = 8.32;
+                        factors[2] = 1.58;
+                        break;
+                    case "S":
+                        /*
+                                                                           * &&
+                                                                           * ac.getMaximumBondOrder(ac.getAtomAt
+                                                                           * (i)) == 1
+                                                                           */
+
+                        factors[0] = 10.14;/* 10.14 */
+                        factors[1] = 9.13;/* 9.13 */
+                        factors[2] = 1.38;/* 1.38 */
+                        break;
+                    case "F":
+                        factors[0] = 14.66;
+                        factors[1] = 13.85;
+                        factors[2] = 2.31;
+                        break;
+                    case "Cl":
+                        factors[0] = 12.31;/* 11.0 *//* 12.31 */
+                        factors[1] = 10.84;/* 9.69 *//* 10.84 */
+                        factors[2] = 1.512;/* 1.35 *//* 1.512 */
+                        break;
+                    case "Br":
+                        factors[0] = 11.44;/* 10.08 *//* 11.2 */
+                        factors[1] = 9.63;/* 8.47 *//* 9.4 */
+                        factors[2] = 1.31;/* 1.16 *//* 1.29 */
+                        break;
+                    case "I":
+                        factors[0] = 9.88;/* 9.90 */
+                        factors[1] = 7.95;/* 7.96 */
+                        factors[2] = 0.945;/* 0.96 */
+                        break;
+                    default:
+                        throw new CDKException("Partial charge not-supported for element: '" + symbol + "'.");
                 }
 
                 gasteigerFactors[StepSize * i + i] = factors[0];
                 gasteigerFactors[StepSize * i + i + 1] = factors[1];
                 gasteigerFactors[StepSize * i + i + 2] = factors[2];
-                gasteigerFactors[StepSize * i + i + 5] = ac.Atoms[i].Charge.Value;
+                gasteigerFactors[StepSize * i + i + 5] = atom.Charge.Value;
                 if (factors[0] == 0 && factors[1] == 0 && factors[2] == 0)
                 {
                     gasteigerFactors[StepSize * i + i + 3] = 1;

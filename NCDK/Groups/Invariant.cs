@@ -1,4 +1,4 @@
-/* Copyright (C) 2012  Gilleain Torrance <gilleain.torrance@gmail.com>
+﻿/* Copyright (C) 2017  Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,22 +20,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
+
 namespace NCDK.Groups
 {
     /// <summary>
-    /// Interface that the discrete partition refiner uses to interact with
-    /// a particular implementation of an equitable partition refiner.
+    /// Marker interface for invariants.
     /// </summary>
     // @author maclean
-    // @cdk.module group
-    public interface IEquitablePartitionRefiner
-    {
-        /// <summary>
-        /// Refines the coarse partition into an equitable partition that
-        /// is at least as fine, or finer.
-        /// </summary>
-        /// <param name="coarse">the partition to refine</param>
-        /// <returns>a partition that is at least as fine, or finer</returns>
-        Partition Refine(Partition coarse);
-    }
+    // @cdk.module group  
+    public interface Invariant : IComparable<Invariant> { }
 }

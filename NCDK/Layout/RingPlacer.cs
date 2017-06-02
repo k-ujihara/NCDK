@@ -135,7 +135,7 @@ namespace NCDK.Layout
             var radius = this.GetNativeRingRadius(ring, bondLength);
             double addAngle = 2 * Math.PI / ring.RingSize;
 
-            IAtom startAtom = ring.Atoms.First();
+            IAtom startAtom = ring.Atoms[0];
             Vector2 p = new Vector2((ringCenter.X + radius), ringCenter.Y);
             startAtom.Point2D = p;
             double startAngle = Math.PI * 0.5;
@@ -153,7 +153,7 @@ namespace NCDK.Layout
             for (int i = 0; i < ring.Bonds.Count; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
-                currentAtom = currentBond.GetConnectedAtom(currentAtom);
+                currentAtom = currentBond.GetOther(currentAtom);
                 atomsToDraw.Add(currentAtom);
             }
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
@@ -309,7 +309,7 @@ namespace NCDK.Layout
             for (int i = 0; i < ring.Bonds.Count; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
-                currentAtom = currentBond.GetConnectedAtom(currentAtom);
+                currentAtom = currentBond.GetOther(currentAtom);
                 if (!sharedAtoms.Contains(currentAtom))
                 {
                     atoms.Add(currentAtom);
@@ -362,7 +362,7 @@ namespace NCDK.Layout
             for (int i = 0; i < ring.Bonds.Count; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
-                currentAtom = currentBond.GetConnectedAtom(currentAtom);
+                currentAtom = currentBond.GetOther(currentAtom);
                 atomsToDraw.Add(currentAtom);
             }
             Debug.WriteLine("currentAtom  " + currentAtom);
@@ -490,7 +490,7 @@ namespace NCDK.Layout
             for (int i = 0; i < ring.Bonds.Count - 2; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
-                currentAtom = currentBond.GetConnectedAtom(currentAtom);
+                currentAtom = currentBond.GetOther(currentAtom);
                 atomsToDraw.Add(currentAtom);
             }
             addAngle = addAngle * direction;

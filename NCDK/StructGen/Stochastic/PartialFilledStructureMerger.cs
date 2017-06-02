@@ -68,7 +68,7 @@ namespace NCDK.StructGen.Stochastic
             return container;
         }
 
-        public IAtomContainer Generate2(IAtomContainerSet<IAtomContainer> atomContainers)
+        internal IAtomContainer Generate2(IAtomContainerSet<IAtomContainer> atomContainers)
         {
             int iteration = 0;
             bool structureFound = false;
@@ -90,7 +90,7 @@ namespace NCDK.StructGen.Stochastic
                         {
                             if (!satCheck.IsSaturated(atom, ac))
                             {
-                                IAtom partner = GetAnotherUnsaturatedNode(atom, atomContainers);
+                                IAtom partner = GetAnotherUnsaturatedNode(atom, ac, atomContainers);
                                 if (partner != null)
                                 {
                                     IAtomContainer toadd = AtomContainerSetManipulator.GetRelevantAtomContainer(
@@ -136,34 +136,34 @@ namespace NCDK.StructGen.Stochastic
         ///  container than exclusionAtom.
         /// </summary>
         /// <returns>The unsaturated atom.</returns>
-        private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainerSet<IAtomContainer> atomContainers)
+        private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom,
+                                           IAtomContainer exclusionAtomContainer,
+                                           IAtomContainerSet<IAtomContainer> atomContainers)
         {
             IAtom atom;
 
             foreach (var ac in atomContainers)
             {
-                if (!ac.Contains(exclusionAtom))
+                if (ac != exclusionAtomContainer)
                 {
                     int next = 0;//(int) (Math.Random() * ac.Atoms.Count);
                     for (int f = next; f < ac.Atoms.Count; f++)
                     {
                         atom = ac.Atoms[f];
-                        if (!satCheck.IsSaturated(atom, ac) && exclusionAtom != atom
-                                && !ac.GetConnectedAtoms(exclusionAtom).Contains(atom))
+                        if (!satCheck.IsSaturated(atom, ac) && exclusionAtom != atom)
                         {
                             return atom;
                         }
                     }
                 }
             }
-            foreach (var ac in atomContainers)
             {
-                int next = ac.Atoms.Count;//(int) (Math.Random() * ac.Atoms.Count);
+                int next = exclusionAtomContainer.Atoms.Count;//(int) (Math.random() * ac.getAtomCount());
                 for (int f = 0; f < next; f++)
                 {
-                    atom = ac.Atoms[f];
-                    if (!satCheck.IsSaturated(atom, ac) && exclusionAtom != atom
-                            && !ac.GetConnectedAtoms(exclusionAtom).Contains(atom))
+                    atom = exclusionAtomContainer.Atoms[f];
+                    if (!satCheck.IsSaturated(atom, exclusionAtomContainer) && exclusionAtom != atom
+                        && !exclusionAtomContainer.GetConnectedAtoms(exclusionAtom).Contains(atom))
                     {
                         return atom;
                     }

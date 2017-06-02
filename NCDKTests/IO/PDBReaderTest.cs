@@ -134,7 +134,7 @@ namespace NCDK.IO
             Assert.IsNotNull(oMol);
             Assert.AreEqual(oMol.Atoms.Count, 14);
 
-            IAtom nAtom = oMol.Atoms.FirstOrDefault();
+            IAtom nAtom = oMol.Atoms[0];
             Assert.IsNotNull(nAtom);
             Assert.IsTrue(nAtom is PDBAtom);
             PDBAtom oAtom = (PDBAtom)nAtom;
@@ -158,7 +158,7 @@ namespace NCDK.IO
             Assert.AreEqual(1.0, oAtom.Occupancy.Value, 0);
             Assert.AreEqual(0.0, oAtom.TempFactor.Value, 0);
 
-            nAtom = oMol.Atoms.LastOrDefault();
+            nAtom = oMol.Atoms[oMol.Atoms.Count - 1];
             Assert.IsNotNull(nAtom);
             Assert.IsTrue(nAtom is PDBAtom);
             oAtom = (PDBAtom)nAtom;

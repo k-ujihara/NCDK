@@ -22,12 +22,14 @@
  */
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.SGroups;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
@@ -42,7 +44,8 @@ namespace NCDK.IO
     public class SDFWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
-        private BooleanIOSetting writerProperties;
+        private BooleanIOSetting paramWriteData;
+        private BooleanIOSetting paramWriteV3000;
         private ICollection<string> propertiesToWrite;
 
         /// <summary>
@@ -192,35 +195,60 @@ namespace NCDK.IO
             }
         }
 
+        private static readonly Regex re_invalidHeaderChars = new Regex("[-<>.=% ]", RegexOptions.Compiled);
+        private static string ReplaceInvalidHeaderChars(string headerKey)
+        {
+            return re_invalidHeaderChars.Replace(headerKey, "_");
+        }
+
         private void WriteMolecule(IAtomContainer container)
         {
             try
             {
                 // write the MDL molfile bits
                 StringWriter stringWriter = new StringWriter();
-                MDLV2000Writer mdlWriter = new MDLV2000Writer(stringWriter);
+                IChemObjectWriter mdlWriter;
+
+                if (WriteV3000(container))
+                    mdlWriter = new MDLV3000Writer(stringWriter);
+                else
+                    mdlWriter = new MDLV2000Writer(stringWriter);
+
                 mdlWriter.AddSettings(IOSettings.Settings);
                 mdlWriter.Write(container);
                 mdlWriter.Close();
                 writer.Write(stringWriter.ToString());
 
-                // write the properties
-                var sdFields = container.GetProperties();
-                bool writeAllProperties = propertiesToWrite == null;
-                if (sdFields != null)
+                // write non-structural data (mol properties in our case)
+                if (paramWriteData.IsSet)
                 {
-                    foreach (var propKey in sdFields.Keys)
+                    var sdFields = container.GetProperties();
+                    bool writeAllProperties = propertiesToWrite == null;
+                    if (sdFields != null)
                     {
-                        if (!IsCDKInternalProperty(propKey))
+                        foreach (var propKey in sdFields.Keys)
                         {
-                            var stringKey = propKey as string;
-                            if (writeAllProperties || (propKey != null && propertiesToWrite.Contains(stringKey)))
+                            string headerKey = propKey.ToString();
+                            if (!IsCDKInternalProperty(headerKey))
                             {
-                                writer.Write("> <" + propKey + ">");
-                                writer.WriteLine();
-                                writer.Write("" + sdFields[propKey]);
-                                writer.WriteLine();
-                                writer.WriteLine();
+                                if (writeAllProperties || propertiesToWrite.Contains(headerKey))
+                                {
+                                    string cleanHeaderKey = ReplaceInvalidHeaderChars(headerKey);
+                                    if (!cleanHeaderKey.Equals(headerKey))
+                                        Trace.TraceInformation("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
+
+                                    Object val = sdFields[propKey];
+
+                                    if (IsPrimitiveDataValue(val))
+                                    {
+                                        writer.Write("> <" + cleanHeaderKey + ">");
+                                        writer.WriteLine();
+                                        if (val != null)
+                                            writer.Write(val.ToString());
+                                        writer.WriteLine();
+                                        writer.WriteLine();
+                                    }
+                                }
                             }
                         }
                     }
@@ -233,6 +261,31 @@ namespace NCDK.IO
             }
         }
 
+        private static bool IsPrimitiveDataValue(object obj)
+        {
+            return obj == null ||
+                   obj.GetType().IsPrimitive;
+        }
+
+        private bool WriteV3000(IAtomContainer container)
+        {
+            if (paramWriteV3000.IsSet)
+                return true;
+            if (container.Atoms.Count > 999)
+                return true;
+            if (container.Bonds.Count > 999)
+                return true;
+            // check for positional variation, this can be output in base V3000 and not V2000
+            var sgroups = container.GetProperty<IEnumerable<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                foreach (Sgroup sgroup in sgroups)
+                    if (sgroup.GetType() == SgroupType.ExtMulticenter)
+                        return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// A list of properties used by CDK algorithms which must never be
         /// serialized into the SD file format.
@@ -243,6 +296,10 @@ namespace NCDK.IO
         {
             cdkInternalProperties.Add(InvPair.CANONICAL_LABEL);
             cdkInternalProperties.Add(InvPair.INVARIANCE_PAIR);
+            cdkInternalProperties.Add(CDKPropertyName.CtabSgroups);
+            // TITLE/REMARK written in Molfile header
+            cdkInternalProperties.Add(CDKPropertyName.Remark);
+            cdkInternalProperties.Add(CDKPropertyName.Title);
             // I think there are a few more, but cannot find them right now
         }
 
@@ -253,12 +310,30 @@ namespace NCDK.IO
                 return false;
             return cdkInternalProperties.Contains(stringKey);
         }
-
+        
         private void InitIOSettings()
         {
-            writerProperties = Add(new BooleanIOSetting("writeProperties", IOSetting.Importance.Low,
-                    "Should molecular properties be written?", "true"));
+            paramWriteData = Add(new BooleanIOSetting("writeProperties",
+                                                             IOSetting.Importance.Low,
+                                                             "Should molecule properties be written as non-structural data", "true"));
+            paramWriteV3000 = Add(new BooleanIOSetting("writeV3000",
+                                                              IOSetting.Importance.Low,
+                                                              "Write all records as V3000", "false"));
             AddSettings(new MDLV2000Writer().IOSettings.Settings);
+            AddSettings(new MDLV3000Writer().IOSettings.Settings);
+        }
+
+        public void SetAlwaysV3000(bool val)
+        {
+            try
+            {
+                paramWriteV3000.Setting = val.ToString();
+            }
+            catch (CDKException e)
+            {
+                // ignored, no type unsafety
+                throw new ApplicationException(e.Message);
+            }
         }
 
         public void CustomizeJob()

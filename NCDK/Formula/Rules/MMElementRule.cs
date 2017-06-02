@@ -33,7 +33,7 @@ namespace NCDK.Formula.Rules
     /// </para>
     /// </summary>
     /// <remarks>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <listheader>
     ///   <term>Name</term>
@@ -91,7 +91,6 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// Constructor for the MMElementRule object.
         /// </summary>
-        /// <exception cref="System.IO.IOException">If an error occurs when reading atom type information</exception>
         public MMElementRule()
         {
             // initiate Hashmap default

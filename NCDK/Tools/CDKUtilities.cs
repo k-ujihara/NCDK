@@ -29,7 +29,7 @@ namespace NCDK.Tools
     /// parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
     /// </summary>
     /// <para>TODO: merge with Normalizer.</para>
-    /// <seealso cref="Normalize.Normalizer"/>
+    /// <seealso cref="Normalizers.Normalizer"/>
     // @author     Todd Martin
     // @cdk.module extra
     // @cdk.githash
@@ -82,7 +82,7 @@ namespace NCDK.Tools
                                     IAtom caj = (IAtom)ca[j];
                                     if (caj.Symbol.Equals("O"))
                                     {
-                                        if (m.GetConnectedAtoms(caj).Count() == 1)
+                                        if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
                                             cao[count] = caj;
                                             count++;
@@ -153,7 +153,7 @@ namespace NCDK.Tools
                                     IAtom caj = (IAtom)ca[j];
                                     if (caj.Symbol.Equals("O"))
                                     {
-                                        if (m.GetConnectedAtoms(caj).Count() == 1)
+                                        if (m.GetConnectedBonds(caj).Count() == 1)
                                         {// account for possibility of ONO2
                                             cao[count] = caj;
                                             count++;
@@ -303,7 +303,7 @@ namespace NCDK.Tools
                         {
                             if (conAtom.Symbol.Equals("H"))
                             {
-                                m.RemoveAtomAndConnectedElectronContainers(conAtom);
+                                m.RemoveAtom(conAtom);
                             }
                         }
                     }

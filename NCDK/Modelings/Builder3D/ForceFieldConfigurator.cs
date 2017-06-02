@@ -311,22 +311,22 @@ namespace NCDK.Modelings.Builder3D
                 bondType = "0";
                 if (bond.Order == BondOrder.Single)
                 {
-                    if ((bond.Atoms[0].AtomTypeName.Equals("Csp2"))
-                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) || (bond.Atoms[1].AtomTypeName
+                    if ((bond.Begin.AtomTypeName.Equals("Csp2"))
+                            && ((bond.End.AtomTypeName.Equals("Csp2")) || (bond.End.AtomTypeName
                                     .Equals("C="))))
                     {
                         bondType = "1";
                     }
 
-                    if ((bond.Atoms[0].AtomTypeName.Equals("C="))
-                            && ((bond.Atoms[1].AtomTypeName.Equals("Csp2")) || (bond.Atoms[1].AtomTypeName
+                    if ((bond.Begin.AtomTypeName.Equals("C="))
+                            && ((bond.End.AtomTypeName.Equals("Csp2")) || (bond.End.AtomTypeName
                                     .Equals("C="))))
                     {
                         bondType = "1";
                     }
 
-                    if ((bond.Atoms[0].AtomTypeName.Equals("Csp"))
-                            && (bond.Atoms[1].AtomTypeName.Equals("Csp")))
+                    if ((bond.Begin.AtomTypeName.Equals("Csp"))
+                            && (bond.End.AtomTypeName.Equals("Csp")))
                     {
                         bondType = "1";
                     }

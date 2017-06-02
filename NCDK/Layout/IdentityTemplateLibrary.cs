@@ -106,8 +106,8 @@ namespace NCDK.Layout
             for (int i = 0; i < mol.Bonds.Count; i++)
             {
                 IBond bond = mol.Bonds[i];
-                bondedValence[idxs[bond.Atoms[0]]] += bond.Order.Numeric;
-                bondedValence[idxs[bond.Atoms[1]]] += bond.Order.Numeric;
+                bondedValence[idxs[bond.Begin]] += bond.Order.Numeric;
+                bondedValence[idxs[bond.End]] += bond.Order.Numeric;
             }
 
             // http://www.opensmiles.org/opensmiles.html#orgsbst

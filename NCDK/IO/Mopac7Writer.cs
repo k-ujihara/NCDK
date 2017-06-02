@@ -57,7 +57,6 @@ namespace NCDK.IO
         /// given <see cref="Stream"/>.
         /// </summary>
         /// <param name="output"><see cref="Stream"/> to which the output is written</param>
-        /// <exception cref="Exception"></exception>
         public Mopac7Writer(Stream output)
                 : this(new StreamWriter(output))
         { }

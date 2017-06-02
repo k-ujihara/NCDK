@@ -61,10 +61,10 @@ namespace NCDK.Hash.Stereo
             var m_left = new Mock<IBond>(); var left = m_left.Object;
             var m_right = new Mock<IBond>(); var right = m_right.Object;
 
-            m_stereoBond.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_stereoBond.SetupGet(n => n.Atoms[1]).Returns(c2);
-            m_left.Setup(n => n.GetConnectedAtom(c1)).Returns(cl3);
-            m_right.Setup(n => n.GetConnectedAtom(c2)).Returns(cl4);
+            m_stereoBond.SetupGet(n => n.Begin).Returns(c1);
+            m_stereoBond.SetupGet(n => n.End).Returns(c2);
+            m_left.Setup(n => n.GetOther(c1)).Returns(cl3);
+            m_right.Setup(n => n.GetOther(c2)).Returns(cl4);
 
             var m_dbs = new Mock<IDoubleBondStereochemistry>(); var dbs = m_dbs.Object;
             m_dbs.SetupGet(n => n.StereoBond).Returns(stereoBond);
@@ -100,10 +100,10 @@ namespace NCDK.Hash.Stereo
             var m_left = new Mock<IBond>(); var left = m_left.Object;
             var m_right = new Mock<IBond>(); var right = m_right.Object;
 
-            m_stereoBond.SetupGet(n => n.Atoms[0]).Returns(c1);
-            m_stereoBond.SetupGet(n => n.Atoms[1]).Returns(c2);
-            m_left.Setup(n => n.GetConnectedAtom(c1)).Returns(cl3);
-            m_right.Setup(n => n.GetConnectedAtom(c2)).Returns(cl4);
+            m_stereoBond.SetupGet(n => n.Begin).Returns(c1);
+            m_stereoBond.SetupGet(n => n.End).Returns(c2);
+            m_left.Setup(n => n.GetOther(c1)).Returns(cl3);
+            m_right.Setup(n => n.GetOther(c2)).Returns(cl4);
 
             var m_dbs = new Mock<IDoubleBondStereochemistry>(); var dbs = m_dbs.Object;
             m_dbs.SetupGet(n => n.StereoBond).Returns(stereoBond);

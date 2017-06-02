@@ -270,7 +270,8 @@ namespace NCDK.IO
                     string element = tokenizer.Current;
                     if (isotopeFactory.IsElement(element))
                     {
-                        atom = isotopeFactory.Configure(readData.Builder.CreateAtom(element));
+                        atom.Symbol = element;
+                        isotopeFactory.Configure(atom); // ?
                     }
                     else if ("A".Equals(element))
                     {
@@ -583,7 +584,7 @@ namespace NCDK.IO
                     {
                         Sgroup sgroup = new Sgroup();
                         sgroup.Type = SgroupType.ExtMulticenter;
-                        sgroup.Atoms.Add(bond.Atoms[0]); // could be other end?
+                        sgroup.Atoms.Add(bond.Begin); // could be other end?
                         sgroup.Bonds.Add(bond);
                         foreach (var endpt in endpts)
                             sgroup.Atoms.Add(endpt);

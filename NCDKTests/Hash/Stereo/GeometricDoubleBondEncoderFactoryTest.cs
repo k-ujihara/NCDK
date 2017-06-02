@@ -83,16 +83,16 @@ namespace NCDK.Hash.Stereo
             var m_cd = new Mock<IBond>(); var cd = m_cd.Object;
             var m_cf = new Mock<IBond>(); var cf = m_cf.Object;
 
-            m_ba.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_ba.SetupGet(n => n.Atoms[1]).Returns(a);
-            m_be.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_be.SetupGet(n => n.Atoms[1]).Returns(e);
-            m_bc.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_bc.SetupGet(n => n.Atoms[1]).Returns(c);
-            m_cd.SetupGet(n => n.Atoms[0]).Returns(c);
-            m_cd.SetupGet(n => n.Atoms[1]).Returns(d);
-            m_cf.SetupGet(n => n.Atoms[0]).Returns(c);
-            m_cf.SetupGet(n => n.Atoms[1]).Returns(f);
+            m_ba.SetupGet(n => n.Begin).Returns(b);
+            m_ba.SetupGet(n => n.End).Returns(a);
+            m_be.SetupGet(n => n.Begin).Returns(b);
+            m_be.SetupGet(n => n.End).Returns(e);
+            m_bc.SetupGet(n => n.Begin).Returns(b);
+            m_bc.SetupGet(n => n.End).Returns(c);
+            m_cd.SetupGet(n => n.Begin).Returns(c);
+            m_cd.SetupGet(n => n.End).Returns(d);
+            m_cf.SetupGet(n => n.Begin).Returns(c);
+            m_cf.SetupGet(n => n.End).Returns(f);
 
             m_bc.SetupGet(n => n.Order).Returns(BondOrder.Double);
 
@@ -153,16 +153,16 @@ namespace NCDK.Hash.Stereo
             var m_cd = new Mock<IBond>(); var cd = m_cd.Object;
             var m_cf = new Mock<IBond>(); var cf = m_cf.Object;
 
-            m_ba.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_ba.SetupGet(n => n.Atoms[1]).Returns(a);
-            m_be.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_be.SetupGet(n => n.Atoms[1]).Returns(e);
-            m_bc.SetupGet(n => n.Atoms[0]).Returns(b);
-            m_bc.SetupGet(n => n.Atoms[1]).Returns(c);
-            m_cd.SetupGet(n => n.Atoms[0]).Returns(c);
-            m_cd.SetupGet(n => n.Atoms[1]).Returns(d);
-            m_cf.SetupGet(n => n.Atoms[0]).Returns(c);
-            m_cf.SetupGet(n => n.Atoms[1]).Returns(f);
+            m_ba.SetupGet(n => n.Begin).Returns(b);
+            m_ba.SetupGet(n => n.End).Returns(a);
+            m_be.SetupGet(n => n.Begin).Returns(b);
+            m_be.SetupGet(n => n.End).Returns(e);
+            m_bc.SetupGet(n => n.Begin).Returns(b);
+            m_bc.SetupGet(n => n.End).Returns(c);
+            m_cd.SetupGet(n => n.Begin).Returns(c);
+            m_cd.SetupGet(n => n.End).Returns(d);
+            m_cf.SetupGet(n => n.Begin).Returns(c);
+            m_cf.SetupGet(n => n.End).Returns(f);
 
             m_bc.SetupGet(n => n.Order).Returns(BondOrder.Double);
             m_mol.SetupGet(n => n.Bonds).Returns(new[] { ba, be, bc, cd, cf });

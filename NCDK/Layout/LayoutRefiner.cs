@@ -359,8 +359,8 @@ namespace NCDK.Layout
                     if (bond.Order != BondOrder.Single || bond.IsInRing)
                         continue;
 
-                    IAtom beg = bond.Atoms[0];
-                    IAtom end = bond.Atoms[1];
+                    IAtom beg = bond.Begin;
+                    IAtom end = bond.End;
                     int begIdx = idxs[beg];
                     int endIdx = idxs[end];
 
@@ -451,7 +451,7 @@ namespace NCDK.Layout
             }
             foreach (IBond bond in bfix)
             {
-                if (amoved.Contains(bond.Atoms[0]) && amoved.Contains(bond.Atoms[1]))
+                if (amoved.Contains(bond.Begin) && amoved.Contains(bond.End))
                     cnt++;
             }
             return cnt;
@@ -504,10 +504,10 @@ namespace NCDK.Layout
                     if (bfix.Contains(bond))
                         continue;
                     Arrays.Fill(visited, false);
-                    stackBackup.len = Visit(visited, stackBackup.xs, v, idxs[bond.GetConnectedAtom(atom)], 0);
+                    stackBackup.len = Visit(visited, stackBackup.xs, v, idxs[bond.GetOther(atom)], 0);
 
                     Vector2 a = atom.Point2D.Value;
-                    Vector2 b = bond.GetConnectedAtom(atom).Point2D.Value;
+                    Vector2 b = bond.GetOther(atom).Point2D.Value;
 
                     Vector2 perp = new Vector2(b.X - a.X, b.Y - a.Y);
                     perp = Vector2.Normalize(perp);
@@ -550,7 +550,7 @@ namespace NCDK.Layout
             else
                 stackBackup.Push(pair.snd);
 
-            Reflect(stackBackup, pair.bndAt[0].Atoms[0], pair.bndAt[0].Atoms[1]);
+            Reflect(stackBackup, pair.bndAt[0].Begin, pair.bndAt[0].End);
             congestion.Update(stackBackup.xs, stackBackup.len);
             return true;
         }
@@ -592,8 +592,8 @@ namespace NCDK.Layout
                     return int.MaxValue;
 
                 Arrays.Fill(visited, false);
-                int split = Visit(visited, stack.xs, idxs[pivotA], idxs[bndA.GetConnectedAtom(pivotA)], 0);
-                stack.len = Visit(visited, stack.xs, idxs[pivotB], idxs[bndB.GetConnectedAtom(pivotB)], split);
+                int split = Visit(visited, stack.xs, idxs[pivotA], idxs[bndA.GetOther(pivotA)], 0);
+                stack.len = Visit(visited, stack.xs, idxs[pivotB], idxs[bndB.GetOther(pivotB)], split);
 
                 // perform bend one way
                 BackupCoords(backup, stack);
@@ -643,8 +643,8 @@ namespace NCDK.Layout
                     if (first != pair)
                         continue;
 
-                    IAtom beg = bond.Atoms[0];
-                    IAtom end = bond.Atoms[1];
+                    IAtom beg = bond.Begin;
+                    IAtom end = bond.End;
                     int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
                     int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
@@ -728,8 +728,8 @@ namespace NCDK.Layout
                 if (first != pair)
                     continue;
 
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 int begIdx = idxs[beg];
                 int endIdx = idxs[end];
                 int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
@@ -1079,8 +1079,8 @@ namespace NCDK.Layout
         /// <returns>common atom or null if non exists</returns>
         private static IAtom GetCommon(IBond bndA, IBond bndB)
         {
-            IAtom beg = bndA.Atoms[0];
-            IAtom end = bndA.Atoms[1];
+            IAtom beg = bndA.Begin;
+            IAtom end = bndA.End;
             if (bndB.Contains(beg))
                 return beg;
             else if (bndB.Contains(end))

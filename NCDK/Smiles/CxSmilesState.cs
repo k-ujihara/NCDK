@@ -117,7 +117,7 @@ namespace NCDK.Smiles
 
             public PolymerSgroup(string type, IList<int> atomset, string subscript, string supscript)
             {
-                Trace.Assert(type != null && atomset != null && subscript != null && supscript != null);
+                Trace.Assert(type != null && atomset != null);
                 this.type = type;
                 this.atomset = new List<int>(atomset);
                 this.subscript = subscript;

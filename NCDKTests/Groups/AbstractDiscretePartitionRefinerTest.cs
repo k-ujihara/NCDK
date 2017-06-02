@@ -29,18 +29,18 @@ namespace NCDK.Groups
                 this.graph = graph;
             }
 
-            public override int GetVertexCount()
+            protected internal override int GetVertexCount()
             {
                 return graph.vertexCount;
             }
 
-            public override int GetConnectivity(int vertexI, int vertexJ)
+            protected internal override int GetConnectivity(int vertexI, int vertexJ)
             {
                 return graph.connectionTable[vertexI][vertexJ];
             }
         }
 
-        public class MockEqRefiner : AbstractEquitablePartitionRefiner, IEquitablePartitionRefiner
+        public class MockEqRefiner : AbstractEquitablePartitionRefiner
         {
             public Graph graph;
 
@@ -71,6 +71,66 @@ namespace NCDK.Groups
             }
         }
 
+        private class GraphRefinable : Refinable
+        {
+            private readonly Graph graph;
+
+            public GraphRefinable(Graph graph)
+            {
+                this.graph = graph;
+            }
+
+            public int GetVertexCount()
+            {
+                return graph.vertexCount;
+            }
+
+            public int GetConnectivity(int vertexI, int vertexJ)
+            {
+                return graph.connectionTable[vertexI][vertexJ];
+            }
+
+            private int[] GetConnectedIndices(int vertexIndex)
+            {
+                ISet<int> connectedSet = new HashSet<int>();
+                for (int index = 0; index < graph.connectionTable.Length; index++)
+                {
+                    if (graph.connectionTable[vertexIndex][index] == 1)
+                    {
+                        connectedSet.Add(index);
+                    }
+                }
+                int[] connections = new int[connectedSet.Count];
+                {
+                    int index = 0;
+                    foreach (int connected in connectedSet)
+                    {
+                        connections[index] = connected;
+                        index++;
+                    }
+                }
+                return connections;
+            }
+
+            public Partition GetInitialPartition()
+            {
+                return Partition.Unit(GetVertexCount());
+            }
+
+            public Invariant NeighboursInBlock(ISet<int> block, int vertexIndex)
+            {
+                int neighbours = 0;
+                foreach (int connected in GetConnectedIndices(vertexIndex))
+                {
+                    if (block.Contains(connected))
+                    {
+                        neighbours++;
+                    }
+                }
+                return new IntegerInvariant(neighbours);
+            }
+        }
+
         [TestMethod()]
         public void EmptyConstructor()
         {
@@ -97,6 +157,11 @@ namespace NCDK.Groups
             Assert.AreEqual(1, refiner.GetConnectivity(0, 1));
         }
 
+        private void Setup(MockRefiner refiner, PermutationGroup group, Graph g)
+        {
+            refiner.Setup(group, new EquitablePartitionRefiner(new GraphRefinable(g)));
+        }
+
         [TestMethod()]
         public void SetupTest()
         {
@@ -104,7 +169,7 @@ namespace NCDK.Groups
             PermutationGroup group = new PermutationGroup(n);
             Graph g = new Graph(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             Assert.AreEqual(group, refiner.GetAutomorphismGroup());
         }
 
@@ -116,7 +181,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Assert.IsTrue(refiner.FirstIsIdentity());
         }
@@ -129,38 +194,11 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Partition autPartition = refiner.GetAutomorphismPartition();
             Partition expected = Partition.FromString("0|1,2");
             Assert.AreEqual(expected, autPartition);
-        }
-
-        [TestMethod()]
-        public void GetHalfMatrixStringTest()
-        {
-            int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
-            MockRefiner refiner = new MockRefiner(g);
-            string hms = refiner.GetHalfMatrixString();
-            string expected = "110";
-            Assert.AreEqual(expected, hms);
-        }
-
-        [TestMethod()]
-        public void GetBestHalfMatrixStringTest()
-        {
-            int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
-            PermutationGroup group = new PermutationGroup(n);
-            MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
-            refiner.Refine(Partition.Unit(n));
-            string hms = refiner.GetBestHalfMatrixString();
-            string expected = "110";
-            Assert.AreEqual(expected, hms);
         }
 
         [TestMethod()]
@@ -171,7 +209,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 0, 1 }, new[] { 0, 0, 1 }, new[] { 1, 1, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             string hms = refiner.GetFirstHalfMatrixString();
             string expected = "110";
@@ -186,7 +224,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             Assert.IsNotNull(refiner.GetAutomorphismGroup());
         }
 
@@ -198,7 +236,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Permutation best = refiner.GetBest();
             Permutation expected = new Permutation(1, 0, 2);
@@ -213,7 +251,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Permutation first = refiner.GetFirst();
             Permutation expected = new Permutation(1, 0, 2);
@@ -228,7 +266,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Assert.IsTrue(refiner.IsCanonical());
         }
@@ -241,7 +279,7 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Assert.IsFalse(refiner.IsCanonical());
         }
@@ -254,9 +292,10 @@ namespace NCDK.Groups
             g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
-            refiner.Setup(group, new MockEqRefiner(g));
+            Setup(refiner, group, g);
             refiner.Refine(Partition.Unit(n));
             Assert.IsNotNull(refiner);
         }
     }
 }
+

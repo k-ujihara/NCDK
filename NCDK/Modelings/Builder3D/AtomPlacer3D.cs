@@ -425,18 +425,18 @@ namespace NCDK.Modelings.Builder3D
         {
             foreach (var bond in molecule.Bonds)
             {
-                if (bond.Atoms[0].IsPlaced && !(bond.Atoms[1].IsPlaced))
+                if (bond.Begin.IsPlaced && !(bond.End.IsPlaced))
                 {
-                    if (IsAliphaticHeavyAtom(bond.Atoms[1]))
+                    if (IsAliphaticHeavyAtom(bond.End))
                     {
-                        return bond.Atoms[1];
+                        return bond.End;
                     }
                 }
-                if (bond.Atoms[1].IsPlaced && !(bond.Atoms[0].IsPlaced))
+                if (bond.End.IsPlaced && !(bond.Begin.IsPlaced))
                 {
-                    if (IsAliphaticHeavyAtom(bond.Atoms[0]))
+                    if (IsAliphaticHeavyAtom(bond.Begin))
                     {
-                        return bond.Atoms[0];
+                        return bond.Begin;
                     }
                 }
             }
@@ -468,8 +468,8 @@ namespace NCDK.Modelings.Builder3D
         {
             foreach (var bond in molecule.Bonds)
             {
-                IAtom atom0 = bond.Atoms[0];
-                IAtom atom1 = bond.Atoms[1];
+                IAtom atom0 = bond.Begin;
+                IAtom atom1 = bond.End;
                 if (atom0.IsPlaced && !(atom1.IsPlaced))
                 {
                     if (IsAliphaticHeavyAtom(atom1) && IsHeavyAtom(atom0))
@@ -497,8 +497,8 @@ namespace NCDK.Modelings.Builder3D
         {
             foreach (var bond in molecule.Bonds)
             {
-                IAtom atom0 = bond.Atoms[0];
-                IAtom atom1 = bond.Atoms[1];
+                IAtom atom0 = bond.Begin;
+                IAtom atom1 = bond.End;
                 if (atom0.IsPlaced && !(atom1.IsPlaced))
                 {
                     if (IsRingHeavyAtom(atom1) && IsHeavyAtom(atom0))
@@ -552,7 +552,7 @@ namespace NCDK.Modelings.Builder3D
             IAtom connectedAtom = null;
             foreach (var bond in bonds)
             {
-                connectedAtom = bond.GetConnectedAtom(atom);
+                connectedAtom = bond.GetOther(atom);
                 if (IsUnplacedHeavyAtom(connectedAtom) && connectedAtom.IsInRing)
                 {
                     return connectedAtom;
@@ -584,7 +584,7 @@ namespace NCDK.Modelings.Builder3D
             var bonds = molecule.GetConnectedBonds(atom);
             foreach (var bond in bonds)
             {
-                IAtom connectedAtom = bond.GetConnectedAtom(atom);
+                IAtom connectedAtom = bond.GetOther(atom);
                 if (IsPlacedHeavyAtom(connectedAtom))
                 {
                     return connectedAtom;
@@ -605,7 +605,7 @@ namespace NCDK.Modelings.Builder3D
             var bonds = molecule.GetConnectedBonds(atomA);
             foreach (var bond in bonds)
             {
-                IAtom connectedAtom = bond.GetConnectedAtom(atomA);
+                IAtom connectedAtom = bond.GetOther(atomA);
                 if (IsPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB)
                 {
                     return connectedAtom;
@@ -627,7 +627,7 @@ namespace NCDK.Modelings.Builder3D
             IAtom connectedAtom = null;
             foreach (var bond in bonds)
             {
-                connectedAtom = bond.GetConnectedAtom(atom);
+                connectedAtom = bond.GetOther(atom);
                 if (IsPlacedHeavyAtom(connectedAtom))
                 {
                     connectedAtoms.Atoms.Add(connectedAtom);

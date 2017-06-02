@@ -41,7 +41,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Ghemical Quantum/Molecular Mechanics Model";
-        public override string MIMEType => null;
+        public override string MIMEType => "application/x-ghemical";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "gpr" };
         public override string ReaderClassName => "NCDK.IO.GhemicalMMReader";

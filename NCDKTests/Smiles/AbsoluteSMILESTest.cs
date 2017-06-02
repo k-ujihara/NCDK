@@ -107,6 +107,25 @@ namespace NCDK.Smiles
             Assert.AreEqual(cansmi.Create(mol), cansmi.Create(smipar.ParseSmiles(cansmi.Create(mol))));
         }
 
+        [TestMethod()]
+        public void SmilesWithUnknownElem()
+        {
+            Test("*CC", "CC*");
+        }
+
+        [TestMethod()]
+        public void RfElement()
+        {
+            Test("[Rf]");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException))]
+        public void Problematic()
+        {
+            Test("*[Rf]");
+        }
+
         static void Test(params string[] inputs)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);

@@ -36,7 +36,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Scalable Vector Graphics";
-        public override string MIMEType => null;
+        public override string MIMEType => "image/svg+xml";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "svg" };
         public override bool IsXmlBased => true;

@@ -66,8 +66,8 @@ namespace NCDK.Hash.Stereo
         private static GeometryEncoder GetEncoder(IDoubleBondStereochemistry dbs, IDictionary<IAtom, int> atomToIndex, int[][] graph)
         {
             IBond db = dbs.StereoBond;
-            int u = atomToIndex[db.Atoms[0]];
-            int v = atomToIndex[db.Atoms[1]];
+            int u = atomToIndex[db.Begin];
+            int v = atomToIndex[db.End];
 
             // we now need to expand our view of the environment - the vertex arrays
             // 'us' and <paramref name="vs"/> hold the neighbors of each end point of the double bond
@@ -80,10 +80,10 @@ namespace NCDK.Hash.Stereo
             int[] us = new int[2];
             int[] vs = new int[2];
 
-            us[0] = atomToIndex[bs[0].GetConnectedAtom(db.Atoms[0])];
+            us[0] = atomToIndex[bs[0].GetOther(db.Begin)];
             us[1] = graph[u].Length == 2 ? u : FindOther(graph[u], v, us[0]);
 
-            vs[0] = atomToIndex[bs[1].GetConnectedAtom(db.Atoms[1])];
+            vs[0] = atomToIndex[bs[1].GetOther(db.End)];
             vs[1] = graph[v].Length == 2 ? v : FindOther(graph[v], u, vs[0]);
 
             int parity = dbs.Stereo == DoubleBondConformation.Opposite ? +1 : -1;

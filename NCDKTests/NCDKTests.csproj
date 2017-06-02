@@ -124,6 +124,10 @@
     <Compile Include="Graphs\JumboPathGraphTest.cs" />
     <Compile Include="Graphs\RegularPathGraphTest.cs" />
     <Compile Include="Graphs\ShortestPathsTest.cs" />
+    <Compile Include="Groups\AtomEquitablePartitionRefinementTests.cs" />
+    <Compile Include="Groups\AtomRefinableTest.cs" />
+    <Compile Include="Groups\BondRefinableTest.cs" />
+    <Compile Include="Groups\EquitablePartitionRefinerTest.cs" />
     <Compile Include="Hash\AbstractHashGeneratorTest.cs" />
     <Compile Include="Hash\AllEquivalentCyclicSetTest.cs" />
     <Compile Include="Hash\AtomSuppressionTest.cs" />
@@ -731,11 +735,9 @@
     <Compile Include="Groups\AbstractDiscretePartitionRefinerTest.cs" />
     <Compile Include="Groups\AtomContainerPrinter.cs" />
     <Compile Include="Groups\AtomDiscretePartitionRefinerTest.cs" />
-    <Compile Include="Groups\AtomEquitablePartitionRefinerTest.cs" />
     <Compile Include="Groups\AtomGroupTests.cs" />
     <Compile Include="Groups\AtomPermutationTests.cs" />
     <Compile Include="Groups\BondDiscretePartitionRefinerTest.cs" />
-    <Compile Include="Groups\BondEquitablePartitionRefinerTest.cs" />
     <Compile Include="Groups\BondGroupTests.cs" />
     <Compile Include="Groups\PartitionTest.cs" />
     <Compile Include="Groups\PermutationGroupTest.cs" />

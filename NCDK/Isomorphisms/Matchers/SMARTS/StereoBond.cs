@@ -51,9 +51,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public Direction GetDirection(IAtom atom)
         {
-            if (atom == Atoms[0])
+            if (Begin == atom)
                 return direction;
-            else if (atom == Atoms[1]) return Inv(direction);
+            else if (End == atom)
+                return Inv(direction);
             throw new ArgumentException("atom is not a memeber of this bond");
         }
 

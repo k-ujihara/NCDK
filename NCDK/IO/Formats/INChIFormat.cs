@@ -44,7 +44,7 @@ namespace NCDK.IO.Formats
         public override string FormatName => "IUPAC-NIST Chemical Identifier (XML)";
 
         /// <inheritdoc/>
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-inchi-xml";
 
         /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];

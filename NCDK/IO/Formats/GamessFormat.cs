@@ -44,7 +44,7 @@ namespace NCDK.IO.Formats
         public override string FormatName => "GAMESS log file";
 
         /// <inheritdoc/>
-        public override string MIMEType => "chemical/x-gamess-input";
+        public override string MIMEType => "chemical/x-gamess-output";
 
         /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];

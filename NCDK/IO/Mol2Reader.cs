@@ -318,7 +318,7 @@ namespace NCDK.IO
                             if (ATOM_TYPE_ALIASES.ContainsKey(atomTypeStr))
                                 atomTypeStr = ATOM_TYPE_ALIASES[atomTypeStr];
 
-                            IAtom atom = molecule.Builder.CreateAtom("X");
+                            IAtom atom = molecule.Builder.CreateAtom();
                             IAtomType atomType;
                             try
                             {
@@ -408,8 +408,8 @@ namespace NCDK.IO
                                     {
                                         bond.Order = BondOrder.Single;
                                         bond.IsAromatic = true;
-                                        bond.Atoms[0].IsAromatic = true;
-                                        bond.Atoms[1].IsAromatic = true;
+                                        bond.Begin.IsAromatic = true;
+                                        bond.End.IsAromatic = true;
                                     }
                                     else if ("du".Equals(orderStr))
                                     {

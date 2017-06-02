@@ -77,7 +77,7 @@ namespace NCDK.Hash
             listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
             listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
             listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;
-            listOnEncode[O.NConnectedAtoms] = (atom, container) => container.GetConnectedAtoms(atom).Count();
+            listOnEncode[O.NConnectedAtoms] = (atom, container) => container.GetConnectedBonds(atom).Count();
             listOnEncode[O.BondOrderSum] = (atom, container) => container.GetBondOrderSum(atom).GetHashCode(); // Fixed CDK's bug?? HashCode() removed.
             listOnEncode[O.OrbitalHybridization] = (atom, container) =>
                 {

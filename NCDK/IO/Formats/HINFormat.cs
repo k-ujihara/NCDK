@@ -37,7 +37,7 @@ namespace NCDK.IO.Formats
         public override string FormatName => "HyperChem HIN";
 
         /// <inheritdoc/>
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-hin";
 
         /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];

@@ -265,13 +265,13 @@ namespace NCDK.Hash.Stereo
 
                 // change elevation depending on which end of the wedge/hatch
                 // the atom is on
-                if (bond.Atoms[0].Equals(atom))
+                if (bond.Begin.Equals(atom))
                 {
-                    map[bond.Atoms[1]] = elevation;
+                    map[bond.End] = elevation;
                 }
                 else
                 {
-                    map[bond.Atoms[0]] = -1 * elevation;
+                    map[bond.Begin] = -1 * elevation;
                 }
             }
         }

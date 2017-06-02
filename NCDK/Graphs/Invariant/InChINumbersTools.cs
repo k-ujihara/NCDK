@@ -42,13 +42,22 @@ namespace NCDK.Graphs.Invariant
         public static long[] GetNumbers(IAtomContainer atomContainer)
         {
             string aux = AuxInfo(atomContainer);
+            long[] numbers = new long[atomContainer.Atoms.Count];
+            ParseAuxInfo(aux, numbers);
+            return numbers;
+        }
+        /// <summary>
+        /// Parse the atom numbering from the auxinfo.
+        /// </summary>
+        /// <param name="aux">InChI AuxInfo</param>
+        /// <param name="numbers">the atom numbers</param>
+        public static void ParseAuxInfo(string aux, long[] numbers)
+        {
             aux = aux.Substring(aux.IndexOf("/N:") + 3);
             string numberStringAux = aux.Substring(0, aux.IndexOf('/'));
             int i = 1;
-            long[] numbers = new long[atomContainer.Atoms.Count];
-            foreach (var numberString in numberStringAux.Split(','))
+            foreach (string numberString in numberStringAux.Split(',', ';'))
                 numbers[int.Parse(numberString) - 1] = i++;
-            return numbers;
         }
 
         /// <summary>
@@ -221,7 +230,7 @@ namespace NCDK.Graphs.Invariant
             {
                 if (bond.Order == BondOrder.Double)
                 {
-                    IAtom neighbor = bond.GetConnectedAtom(atom);
+                    IAtom neighbor = bond.GetOther(atom);
                     int charge = neighbor.FormalCharge ?? 0;
                     if (neighbor.AtomicNumber == 8 && charge == 0) return neighbor;
                 }

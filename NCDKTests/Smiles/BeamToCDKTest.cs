@@ -137,57 +137,6 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void SingleBondEdge()
-        {
-            IAtom[] atoms = new IAtom[]{
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Single.CreateEdge(0, 5), atoms, true);
-            Assert.AreEqual(BondOrder.Single, b.Order);
-            Assert.IsFalse(b.IsAromatic);
-            Assert.AreEqual(atoms[0], b.Atoms[0]);
-            Assert.AreEqual(atoms[5], b.Atoms[1]);
-        }
-
-        [TestMethod()]
-        public void AromaticBondEdge()
-        {
-            IAtom[] atoms = new IAtom[]{
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Aromatic.CreateEdge(0, 5), atoms, true);
-            Assert.AreEqual(BondOrder.Single, b.Order);
-            Assert.IsTrue(b.IsAromatic);
-            Assert.AreEqual(atoms[0], b.Atoms[0]);
-            Assert.AreEqual(atoms[5], b.Atoms[1]);
-        }
-
-        [TestMethod()]
-        public void DoubleBondEdge()
-        {
-            IAtom[] atoms = new IAtom[]{
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object,
-                new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Double.CreateEdge(0, 5), atoms, true);
-            Assert.AreEqual(BondOrder.Double, b.Order);
-            Assert.IsFalse(b.IsAromatic);
-            Assert.AreEqual(atoms[0], b.Atoms[0]);
-            Assert.AreEqual(atoms[5], b.Atoms[1]);
-        }
-
-        [TestMethod()]
         public void Benzene()
         {
             IAtomContainer ac = Convert("c1ccccc1");

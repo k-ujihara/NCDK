@@ -32,6 +32,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
@@ -54,6 +55,7 @@ namespace NCDK.IO
     /// </remarks>
     public sealed class MDLV3000Writer : DefaultChemObjectWriter
     {
+        private static readonly Regex R_GRP_NUM = new Regex("R(\\d+)", RegexOptions.Compiled);
         private V30LineWriter writer;
 
         /// <summary>
@@ -72,6 +74,13 @@ namespace NCDK.IO
         public MDLV3000Writer(Stream output)
         {
             this.SetWriter(output);
+        }
+        
+        /// <summary>
+        /// Default empty constructor.
+        /// </summary>
+        public MDLV3000Writer()
+        {
         }
 
         /// <summary>
@@ -217,6 +226,17 @@ namespace NCDK.IO
 
                 string symbol = GetSymbol(atom, elem);
 
+                int rnum = -1;
+                if (symbol[0] == 'R')
+                {
+                    var matcher = R_GRP_NUM.Match(symbol);
+                    if (matcher.Success)
+                    {
+                        symbol = "R#";
+                        rnum = int.Parse(matcher.Groups[1].Value);
+                    }
+                }
+
                 writer.Write(++atomIdx)
                       .Write(' ')
                       .Write(symbol)
@@ -247,7 +267,8 @@ namespace NCDK.IO
                     writer.Write(" MASS=").Write(mass);
                 if (rad > 0 && rad < 4)
                     writer.Write(" RAD=").Write(rad);
-
+                if (rnum >= 0)
+                    writer.Write(" RGROUPS=(1 ").Write(rnum).Write(")");
 
                 // determine if we need to write the valence
                 if (MDLValence.ImplicitValence(elem, chg, expVal) - expVal != hcnt)
@@ -287,6 +308,8 @@ namespace NCDK.IO
         /// <returns>atom symbol</returns>
         private string GetSymbol(IAtom atom, int elem)
         {
+            if (atom is IPseudoAtom)
+                return ((IPseudoAtom)atom).Label;
             string symbol = Elements.OfNumber(elem).Symbol;
             if (symbol.Length == 0)
                 symbol = atom.Symbol;
@@ -327,8 +350,8 @@ namespace NCDK.IO
             int bondIdx = 0;
             foreach (var bond in mol.Bonds)
             {
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 if (beg == null || end == null)
                     throw new InvalidOperationException($"Bond {bondIdx} had one or more atoms.");
                 int begIdx = FindIdx(idxs, beg);
@@ -386,8 +409,8 @@ namespace NCDK.IO
                 if (multicenterSgroups.TryGetValue(bond, out sgroup))
                 {
                     var atoms = new List<IAtom>(sgroup.Atoms);
-                    atoms.Remove(bond.Atoms[0]);
-                    atoms.Remove(bond.Atoms[1]);
+                    atoms.Remove(bond.Begin);
+                    atoms.Remove(bond.End);
                     writer.Write(" ATTACH=Any ENDPTS=(").Write(atoms, idxs).Write(')');
                 }
 
@@ -530,7 +553,7 @@ namespace NCDK.IO
                             writer.Write(" SUBTYPE=").Write(sgroup.GetValue(key).ToString());
                             break;
                         case SgroupKey.CtabConnectivity:
-                            writer.Write(" CONNECT=").Write(sgroup.GetValue(key).ToString());
+                            writer.Write(" CONNECT=").Write(sgroup.GetValue(key).ToString().ToUpperInvariant());
                             break;
                         case SgroupKey.CtabSubScript:
                             if (type == SgroupType.CtabMultipleGroup)
@@ -593,13 +616,18 @@ namespace NCDK.IO
 
             var sgroups = (IEnumerable<Sgroup>)GetSgroups(mol);
 
+            int numSgroups = 0;
+            foreach (var sgroup in sgroups)
+                if (sgroup.GetType() != SgroupType.ExtMulticenter)
+                    numSgroups++;
+
             writer.Write("BEGIN CTAB\n");
             writer.Write("COUNTS ")
                   .Write(mol.Atoms.Count)
                   .Write(' ')
                   .Write(mol.Bonds.Count)
                   .Write(' ')
-                  .Write(sgroups.Count())
+                  .Write(numSgroups)
                   .Write(" 0 0\n");
 
             // fast lookup atom indexes, MDL indexing starts at 1
@@ -633,7 +661,6 @@ namespace NCDK.IO
         /// Writes a molecule to the V3000 format. 
         /// </summary>
         /// <param name="obj"></param>
-        /// <exception cref="IOException">low-level IO error</exception>
         /// <exception cref="CDKException">state exception (e.g undef bonds), unsupported format feature, object not supported etc</exception>
         public override void Write(IChemObject obj)
         {

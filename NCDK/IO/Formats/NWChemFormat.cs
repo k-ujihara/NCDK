@@ -41,7 +41,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "NWChem";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-nwchem-output";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "nw", "nwo" };
         public override string ReaderClassName => null;

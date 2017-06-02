@@ -42,7 +42,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Chemtool";
-        public override string MIMEType => null;
+        public override string MIMEType => "application/x-chemtool";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "cht" };
         public string ReaderClassName => null;

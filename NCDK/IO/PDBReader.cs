@@ -21,20 +21,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
-using NCDK.Common.Mathematics;
 using NCDK.Config;
+using NCDK.Default;
 using NCDK.Graphs.Rebond;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using NCDK.Numerics;
 using System.Text;
-using NCDK.Default;
 
 namespace NCDK.IO
 {
@@ -70,8 +69,6 @@ namespace NCDK.IO
         /// </summary>
         private List<IBond> bondsFromConnectRecords;
 
-        private static AtomTypeFactory pdbFactory;
-
         /// <summary>
         /// A mapping between HETATM 3-letter codes + atomNames to CDK atom type
         /// names; for example "RFB.N13" maps to "N.planar3".
@@ -97,7 +94,6 @@ namespace NCDK.IO
         {
             oInput = oIn;
             InitIOSettings();
-            pdbFactory = null;
             hetDictionary = null;
             cdkAtomTypeFactory = null;
         }
@@ -137,18 +133,6 @@ namespace NCDK.IO
         {
             if (oObj is IChemFile)
             {
-                if (pdbFactory == null)
-                {
-                    try
-                    {
-                        pdbFactory = AtomTypeFactory.GetInstance("NCDK.Config.Data.pdb_atomtypes.xml", ((IChemFile)oObj).Builder);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.WriteLine(exception);
-                        throw new CDKException("Could not setup list of PDB atom types! " + exception.Message, exception);
-                    }
-                }
                 return (T)ReadChemFile((IChemFile)oObj);
             }
             else
@@ -587,8 +571,8 @@ namespace NCDK.IO
             for (int i = 0; i < bondsFromConnectRecords.Count; i++)
             {
                 IBond existingBond = (IBond)bondsFromConnectRecords[i];
-                IAtom a = existingBond.Atoms[0];
-                IAtom b = existingBond.Atoms[1];
+                IAtom a = existingBond.Begin;
+                IAtom b = existingBond.End;
                 if ((a == firstAtom && b == secondAtom) || (b == firstAtom && a == secondAtom))
                 {
                     // already stored
@@ -639,6 +623,80 @@ namespace NCDK.IO
             return true;
         }
 
+        private static bool IsUpper(char c)
+        {
+            return c >= 'A' && c <= 'Z';
+        }
+        private static bool IsLower(char c)
+        {
+            return c >= 'a' && c <= 'z';
+        }
+        private static bool IsDigit(char c)
+        {
+            return c >= '0' && c <= '9';
+        }
+
+        private string ParseAtomSymbol(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return null;
+
+            int len = str.Length;
+
+            StringBuilder sym = new StringBuilder();
+
+            // try grabbing from end of line
+
+            if (len > 76 && IsUpper(str[76]))
+            {
+                sym.Append(str[76]);
+                if (len > 77 && IsUpper(str[77]))
+                    sym.Append(str.Substring(77, 1).ToLowerInvariant());
+                else if (len > 77 && IsLower(str[77]))
+                    sym.Append(str.Substring(77, 1).ToLowerInvariant());
+            }
+            else if (len > 76 && str[76] == ' ')
+            {
+                if (len > 77 && IsUpper(str[77]))
+                    sym.Append(str[77]);
+            }
+
+            if (sym.Length > 0)
+                return sym.ToString();
+
+            // try getting from PDB atom name
+            if (len > 13 && IsUpper(str[13]))
+            {
+                if (str[12] == ' ')
+                {
+                    sym.Append(str[13]);
+                    if (IsLower(str[14]))
+                        sym.Append(str[14]);
+                }
+                else if (IsUpper(str[12]))
+                {
+                    if (str[0] == 'A' && str[12] == 'H')
+                    {
+                        sym.Append('H'); // ATOM record H is always H
+                    }
+                    else
+                    {
+                        sym.Append(str[12]);
+                        sym.Append(str.Substring(13, 1).ToLowerInvariant());
+                    }
+                }
+                else if (IsDigit(str[12]))
+                {
+                    sym.Append(str[13]);
+                }
+            }
+
+            if (sym.Length > 0)
+                return sym.ToString();
+
+            return null;
+        }
+
         /// <summary>
         /// Creates an <see cref="PDBAtom"/> and sets properties to their values from
         /// the ATOM or HETATM record. If the line is shorter than 80 characters, the
@@ -668,52 +726,20 @@ namespace NCDK.IO
             {
                 throw new InvalidDataException("PDBReader error during ReadAtom(): line too short");
             }
-            string elementSymbol;
-            if (cLine.Length > 78)
-            {
-                elementSymbol = cLine.Substring(76, 2).Trim();
-                if (elementSymbol.Length == 0)
-                {
-                    elementSymbol = cLine.Substring(12, 2).Trim();
-                }
-            }
-            else
-            {
-                elementSymbol = cLine.Substring(12, 2).Trim();
-            }
 
-            if (elementSymbol.Length == 2)
-            {
-                // ensure that the second char is lower case
-                if (char.IsDigit(elementSymbol[0]))
-                {
-                    elementSymbol = elementSymbol.Substring(1);
-                }
-                else
-                {
-                    elementSymbol = elementSymbol[0] + elementSymbol.Substring(1).ToLowerInvariant();
-                }
-            }
-
-            string rawAtomName = cLine.Substring(12, 4).Trim();
+            bool isHetatm = cLine.Substring(0, 6).Equals("HETATM");
+            string atomName = cLine.Substring(12, 4).Trim();
             string resName = cLine.Substring(17, 3).Trim();
-            bool isHetatm;
-            try
-            {
-                IAtomType type = pdbFactory.GetAtomType(resName + "." + rawAtomName);
-                elementSymbol = type.Symbol;
-                isHetatm = false;
-            }
-            catch (NoSuchAtomTypeException)
-            {
-                Trace.TraceError("Did not recognize PDB atom type: " + resName + "." + rawAtomName);
-                isHetatm = true;
-            }
-            PDBAtom oAtom = new PDBAtom(elementSymbol, new Vector3(double.Parse(cLine.Substring(30, 8)),
-                    double.Parse(cLine.Substring(38, 8)), double.Parse(cLine.Substring(46, 8))));
+            string symbol = ParseAtomSymbol(cLine);
+
+            if (symbol == null)
+                HandleError("Cannot parse symbol from " + atomName);
+
+            PDBAtom oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8)),
+                        double.Parse(cLine.Substring(38, 8)), double.Parse(cLine.Substring(46, 8))));
             if (useHetDictionary.IsSet && isHetatm)
             {
-                string cdkType = TypeHetatm(resName, rawAtomName);
+                string cdkType = TypeHetatm(resName, atomName);
                 oAtom.AtomTypeName = cdkType;
                 if (cdkType != null)
                 {
@@ -723,14 +749,14 @@ namespace NCDK.IO
                     }
                     catch (CDKException)
                     {
-                        Trace.TraceWarning("Could not configure", resName, " ", rawAtomName);
+                        Trace.TraceWarning("Could not configure", resName, " ", atomName);
                     }
                 }
             }
 
             oAtom.Record = cLine;
             oAtom.Serial = int.Parse(cLine.Substring(6, 5).Trim());
-            oAtom.Name = rawAtomName.Trim();
+            oAtom.Name = atomName.Trim();
             oAtom.AltLoc = cLine.Substring(16, 1).Trim();
             oAtom.ResName = resName;
             oAtom.ChainID = cLine.Substring(21, 1).Trim();
@@ -738,11 +764,11 @@ namespace NCDK.IO
             oAtom.ICode = cLine.Substring(26, 1).Trim();
             if (useHetDictionary.IsSet && isHetatm)
             {
-                oAtom.Id = oAtom.ResName + "." + rawAtomName;
+                oAtom.Id = oAtom.ResName + "." + atomName;
             }
             else
             {
-                oAtom.AtomTypeName = oAtom.ResName + "." + rawAtomName;
+                oAtom.AtomTypeName = oAtom.ResName + "." + atomName;
             }
             if (lineLength >= 59)
             {

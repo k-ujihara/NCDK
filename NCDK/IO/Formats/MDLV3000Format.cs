@@ -41,7 +41,7 @@ namespace NCDK.IO.Formats
         public override string FormatName => "MDL Mol/SDF V3000";
 
         /// <inheritdoc/>
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-mdl-molfile";
 
         /// <inheritdoc/>
         public override string PreferredNameExtension => null;

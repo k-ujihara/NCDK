@@ -105,13 +105,12 @@ namespace NCDK.Fingerprints
         }
 
         /// <summary>
-        // @cdk.bug 2871303
-        ///
         /// While this test fails, Daylight says that the
         /// SMARTS pattern used for vinylogous ester should
         /// match benzaldehyde twice. So according to the
         /// supplied definition this answer is actually correct.
         /// </summary>
+        // @cdk.bug 2871303
         //("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
         public void TestVinylogousEster()
         {

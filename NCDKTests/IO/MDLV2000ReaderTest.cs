@@ -725,13 +725,13 @@ namespace NCDK.IO
                 IAtom partner = null;
                 if (bond.Atoms[0] is IPseudoAtom)
                 {
-                    rGroup = (IPseudoAtom)bond.Atoms[0];
-                    partner = bond.Atoms[1];
+                    rGroup = (IPseudoAtom)bond.Begin;
+                    partner = bond.End;
                 }
                 else
                 {
-                    partner = bond.Atoms[0];
-                    rGroup = (IPseudoAtom)bond.Atoms[1];
+                    partner = bond.Begin;
+                    rGroup = (IPseudoAtom)bond.End;
                 }
                 if (partner.Symbol.Equals("N"))
                 {
@@ -770,9 +770,9 @@ namespace NCDK.IO
             {
                 IPseudoAtom rGroup;
                 if (bond.Atoms[0] is IPseudoAtom)
-                    rGroup = (IPseudoAtom)bond.Atoms[0];
+                    rGroup = (IPseudoAtom)bond.Begin;
                 else
-                    rGroup = (IPseudoAtom)bond.Atoms[1];
+                    rGroup = (IPseudoAtom)bond.End;
 
                 if (bond.Order == BondOrder.Double)
                 {
@@ -907,7 +907,7 @@ namespace NCDK.IO
             reader.Close();
             IAtom deuterium = molecule.Atoms[molecule.Atoms.Count - 1];
             Assert.IsTrue(1 == deuterium.AtomicNumber);
-            Assert.IsTrue(2.014101778 == deuterium.ExactMass);
+            Assert.IsTrue(2 == deuterium.MassNumber);
         }
 
         [TestMethod()]
@@ -937,7 +937,7 @@ namespace NCDK.IO
             reader.Close();
             IAtom tritium = molecule.Atoms[molecule.Atoms.Count - 1];
             Assert.IsTrue(1 == tritium.AtomicNumber);
-            Assert.IsTrue(3.016049278 == tritium.ExactMass);
+            Assert.IsTrue(3 == tritium.MassNumber);
         }
 
         /// <summary>

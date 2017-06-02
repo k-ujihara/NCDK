@@ -62,8 +62,8 @@ namespace NCDK.IO
             // compute the bond order sums
             foreach (var bond in container.Bonds)
             {
-                int u = atomToIndex[bond.Atoms[0]];
-                int v = atomToIndex[bond.Atoms[1]];
+                int u = atomToIndex[bond.Begin];
+                int v = atomToIndex[bond.End];
 
                 int bondOrder = bond.Order.Numeric;
 

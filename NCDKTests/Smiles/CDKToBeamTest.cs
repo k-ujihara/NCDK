@@ -61,7 +61,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void UnknownSymbol()
         {
-            IAtom a = new Default.Atom("ALA");
+            IAtom a = new Default.PseudoAtom("ALA");
             a.ImplicitHydrogenCount = 0;
             Assert.AreEqual(Beam.Element.Unknown, new CDKToBeam().ToBeamAtom(a).Element);
         }
@@ -152,9 +152,9 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void PseuDoAtom_nullH()
         {
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.Atom("R")).NumOfHydrogens);
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.Atom("*")).NumOfHydrogens);
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.Atom("R1")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("R")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("*")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("R1")).NumOfHydrogens);
         }
 
         [TestMethod()]
@@ -222,6 +222,8 @@ namespace NCDK.Smiles
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
+            mock_u.SetupGet(n => n.IsAromatic).Returns(true);
+            mock_v.SetupGet(n => n.IsAromatic).Returns(true);
             CDKToBeam c2g = new CDKToBeam();
             Assert.AreEqual(Beam.Bond.Aromatic.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
         }
@@ -489,19 +491,20 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
+            ac.Atoms[1].IsAromatic = true;
+            ac.Atoms[2].IsAromatic = true;
 
             ac.Bonds[1].IsAromatic = true;
 
             ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                    DoubleBondConformation.Together));
             Beam.Graph g = Convert(ac, SmiFlavor.UseAromaticSymbols);
-            Assert.AreEqual("F[CH]:[CH]F", g.ToSmiles());
+            Assert.AreEqual("FccF", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Propadiene()
         {
-
         }
 
         [TestMethod()]

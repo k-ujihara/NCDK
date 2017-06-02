@@ -45,7 +45,7 @@ namespace NCDK.IO.Formats
         public override string FormatName => "Gaussian 2003";
 
         /// <inheritdoc/>
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-gaussian-log";
 
         /// <inheritdoc/>
         public override string PreferredNameExtension => null;

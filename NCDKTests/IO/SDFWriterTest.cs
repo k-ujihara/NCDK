@@ -68,8 +68,8 @@ namespace NCDK.IO
             sdfWriter.CustomizeJob();
             sdfWriter.Write(molSet);
             sdfWriter.Close();
-            Assert.IsTrue(writer.ToString().IndexOf("<foo>") != -1);
-            Assert.IsTrue(writer.ToString().IndexOf("bar") != -1);
+            string result = writer.ToString();
+            Assert.IsFalse(result.Contains("<foo>"));
         }
 
         // @cdk.bug 2827745
@@ -176,6 +176,72 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("toys") != -1);
             Assert.IsTrue(writer.ToString().IndexOf("r-us") != -1);
             Assert.IsTrue(writer.ToString().IndexOf("$$$$") != -1);
+        }
+
+        [TestMethod()]
+        public void InvalidSDfileHeaderTags()
+        {
+            StringWriter writer = new StringWriter();
+            SDFWriter sdfWriter = new SDFWriter(writer);
+
+            IAtomContainer molecule = new AtomContainer();
+            molecule.Atoms.Add(new Atom("C"));
+            molecule.SetProperty("http://not-valid.com", "URL");
+            sdfWriter.Write(molecule);
+
+            sdfWriter.Close();
+            Assert.IsTrue(writer.ToString().Contains("> <http://not_valid_com>"));
+        }
+
+        [TestMethod()]
+        public void ChooseFormatToWrite()
+        {
+            StringWriter writer = new StringWriter();
+            SDFWriter sdfWriter = new SDFWriter(writer);
+
+            IAtomContainer molecule = new AtomContainer();
+            molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            molecule = new AtomContainer();
+            for (int i = 0; i < 1000; i++)
+                molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            molecule = new AtomContainer();
+            molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            sdfWriter.Close();
+            string result = writer.ToString();
+            Assert.IsTrue(result.Contains("V2000"));
+            Assert.IsTrue(result.Contains("V3000"));
+        }
+
+        [TestMethod()]
+        public void ChooseFormatToWrite2()
+        {
+            StringWriter writer = new StringWriter();
+            SDFWriter sdfWriter = new SDFWriter(writer);
+            sdfWriter.SetAlwaysV3000(true);
+
+            IAtomContainer molecule = new AtomContainer();
+            molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            molecule = new AtomContainer();
+            for (int i = 0; i < 1000; i++)
+                molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            molecule = new AtomContainer();
+            molecule.Atoms.Add(new Atom("CH4"));
+            sdfWriter.Write(molecule);
+
+            sdfWriter.Close();
+            string result = writer.ToString();
+            Assert.IsFalse(result.Contains("V2000"));
+            Assert.IsFalse(result.Contains("V3000"));
         }
 
         // @cdk.bug 3392485

@@ -272,7 +272,7 @@ namespace NCDK.Fingerprints.Model
         /// Converts a raw Bayesian prediction and transforms it into a probability-like range, i.e. most values within the domain
         /// are between 0..1, and assigning a cutoff of activie = scaled_prediction &gt; 0.5 is reasonable. The transform (scale/translation)
         /// is determined by the ROC-analysis, if any. The resulting value can be used as a probability by capping the values so that
-        /// 0 &lt;= p &lt;= 1.
+        /// 0 ÅÖ p ÅÖ 1.
         /// </summary>
         /// <param name="pred">raw prediction, as provided by the Predict(..) method</param>
         /// <returns>scaled prediction</returns>
@@ -491,7 +491,7 @@ namespace NCDK.Fingerprints.Model
         /// Reads the incoming stream and attempts to convert it into an instantiated model. The input most be compatible
         /// with the format used by the Serialise() method, otherwise an exception will be thrown.
         /// </summary>
-        /// <param name="rdr">containing the serialised model</param>
+        /// <param name="rdr">reader</param>
         /// <returns>instantiated model that can be used for predictions</returns>
         public static Bayesian Deserialise(TextReader rdr)
         {

@@ -212,7 +212,7 @@ namespace NCDK.Modelings.Builder3D
             double avlength = GeometryUtil.GetBondLengthAverage3D(ac);
             for (int i = 0; i < ac.Bonds.Count; i++)
             {
-                double distance = Vector3.Distance(ac.Bonds[i].Atoms[0].Point3D.Value, ac.Bonds[i].Atoms[1].Point3D.Value);
+                double distance = Vector3.Distance(ac.Bonds[i].Begin.Point3D.Value, ac.Bonds[i].End.Point3D.Value);
                 Assert.IsTrue(distance >= avlength / 2 && distance <= avlength * 2, "Unreasonable bond length (" + distance + ") for bond " + i);
             }
         }

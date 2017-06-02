@@ -166,7 +166,7 @@ namespace NCDK.Fragments
                 // lets see if it is a terminal bond
                 foreach (var atom in bond.Atoms)
                 {
-                    if (atomContainer.GetConnectedAtoms(atom).Count() == 1)
+                    if (atomContainer.GetConnectedBonds(atom).Count() == 1)
                     {
                         isTerminal = true;
                         break;

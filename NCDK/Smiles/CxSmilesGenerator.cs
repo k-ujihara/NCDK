@@ -246,9 +246,11 @@ namespace NCDK.Smiles
                     sb.Append(':');
                     AppendIntegers(ordering, ',', sb, sgroup.atomset);
                     sb.Append(':');
-                    sb.Append(sgroup.subscript);
+                    if (sgroup.subscript != null)
+                        sb.Append(sgroup.subscript);
                     sb.Append(':');
-                    sb.Append(sgroup.supscript);
+                    if (sgroup.supscript != null)
+                        sb.Append(sgroup.supscript.ToLowerInvariant());
                 }
             }
 
@@ -270,8 +272,8 @@ namespace NCDK.Smiles
                     sb.Append('^');
                     sb.Append(e.Key.Ordinal + 1);
                     sb.Append(':');
-                    e.Value.Sort(invComp);
-                    AppendIntegers(invorder, ',', sb, e.Value);
+                    e.Value.Sort(comp);
+                    AppendIntegers(ordering, ',', sb, e.Value);
                 }
             }
 

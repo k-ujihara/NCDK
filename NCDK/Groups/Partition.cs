@@ -164,7 +164,7 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Check whether the cells are ordered such that for cells i and j,
-        /// First(j) > First(i) and Last(j) > Last(i).
+        /// First(j)  &gt; First(i) and Last(j)  &gt; Last(i).
         /// </summary>
         /// <returns>true if all cells in the partition are ordered</returns>
         public bool InOrder()

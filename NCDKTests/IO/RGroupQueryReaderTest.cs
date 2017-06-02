@@ -194,8 +194,8 @@ namespace NCDK.IO
                                 IDictionary<IAtom, IDictionary<int, IBond>> rootApo = rGroupQuery.RootAttachmentPoints;
                                 IDictionary<int, IBond> apoBonds = rootApo[at];
                                 Assert.AreEqual(apoBonds.Count, 2);
-                                Assert.AreEqual(apoBonds[1].GetConnectedAtom(at).Symbol, "N");
-                                Assert.IsTrue(apoBonds[2].GetConnectedAtom(at).Symbol.Equals("C"));
+                                Assert.AreEqual(apoBonds[1].GetOther(at).Symbol, "N");
+                                Assert.IsTrue(apoBonds[2].GetOther(at).Symbol.Equals("C"));
                                 //Test: Oxygens are the 2nd APO's for R1
                                 RGroupList rList = rGroupQuery.RGroupDefinitions[1];
                                 Assert.AreEqual(rList.RGroups.Count, 2);
@@ -284,10 +284,10 @@ namespace NCDK.IO
                     IDictionary<int, IBond> apoBonds = rGroupQuery.RootAttachmentPoints[at];
                     Assert.AreEqual(apoBonds.Count, 2);
 
-                    IAtom boundAtom1 = apoBonds[1].GetConnectedAtom(at);
+                    IAtom boundAtom1 = apoBonds[1].GetOther(at);
                     Assert.IsTrue(boundAtom1.Symbol.Equals("Te") || boundAtom1.Symbol.Equals("S"));
 
-                    IAtom boundAtom2 = apoBonds[2].GetConnectedAtom(at);
+                    IAtom boundAtom2 = apoBonds[2].GetOther(at);
                     Assert.IsTrue(boundAtom2.Symbol.Equals("Po") || boundAtom2.Symbol.Equals("O"));
                 }
             }

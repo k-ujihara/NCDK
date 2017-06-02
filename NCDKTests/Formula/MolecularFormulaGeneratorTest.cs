@@ -137,10 +137,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test the Cancel() method called from another thread. This test must
-        /// finish in 100 ms.
+        /// finish in 1000 ms.
         /// </summary>
         [TestMethod()]
-        [Timeout(100)]
+        [Timeout(1000)]
         public void TestCancel()
         {
             IsotopeFactory ifac = Isotopes.Instance;

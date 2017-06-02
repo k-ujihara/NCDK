@@ -38,7 +38,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Gaussian98";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-gaussian-log";
         public override string PreferredNameExtension => null;
         public override string[] NameExtensions { get; } = new string[0];
         public override string ReaderClassName => "NCDK.IO.Gaussian98Reader";

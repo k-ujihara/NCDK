@@ -120,9 +120,9 @@ namespace NCDK.Hash
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
             IAtomEncoder encoder = BasicAtomEncoder.NConnectedAtoms;
 
-            m_container.Setup(n => n.GetConnectedAtoms(atom)).Returns(new IAtom[2]);
+            m_container.Setup(n => n.GetConnectedBonds(atom)).Returns(new IBond[2]);
             Assert.AreEqual(2, encoder.Encode(atom, container));
-            m_container.Verify(n => n.GetConnectedAtoms(atom), Times.Exactly(1));
+            m_container.Verify(n => n.GetConnectedBonds(atom), Times.Exactly(1));
             //VerifyNoMoreInteractions(atom, container);
         }
 

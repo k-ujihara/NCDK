@@ -480,10 +480,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(21, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 2686473
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicNumber8()
         {
@@ -492,10 +489,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 2686473
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicNumber9()
         {
@@ -524,7 +518,6 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         //@Ignore("This feature was removed - essential rings aren't useful really")
-        //[TestMethod()]
         public void TestPropertyR2_essentialRings()
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[R2]");
@@ -534,9 +527,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        //@Ignore("This feature is pending but will be the combinded in an 'OpenSMARTS'"
-        //        + " configuration which uses the relevant rings.")
-        //[TestMethod()]
+        //@Ignore("This feature is pending but will be the combinded in an 'OpenSMARTS'" + " configuration which uses the relevant rings.")
         public void TestPropertyR2_relevantRings()
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[R2]");
@@ -748,10 +739,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(8, results[0]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2489417
-        /// </summary>
         [TestMethod()]
         public void TestPropertyD7()
         {
@@ -760,10 +748,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2489417
-        /// </summary>
         [TestMethod()]
         public void TestPropertyD8()
         {
@@ -772,10 +757,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2489417
-        /// </summary>
         [TestMethod()]
         public void TestPropertyD9()
         {
@@ -786,10 +768,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2489417
-        /// </summary>
         [TestMethod()]
         public void TestPropertyD10()
         {
@@ -800,10 +779,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2489417
-        /// </summary>
         [TestMethod()]
         public void TestPropertyD11()
         {
@@ -816,8 +792,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>
         /// With '*' matching 'H', this smarts matches twice 'OC' and 'O[H]'.
-        // @cdk.bug 2489417
         /// </summary>
+        // @cdk.bug 2489417
         [TestMethod()]
         public void TestPropertyD12()
         {
@@ -826,7 +802,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             results = Match("[OD1H]-*", "CCO[H]");
             Assert.AreEqual(2, results[0]);
             Assert.AreEqual(2, results[1]);
-
         }
 
         [TestMethod()]
@@ -972,10 +947,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
         /// suppressed by default.
-        ///
-        // @throws Exception
-        // @cdk.bug 2489533
         /// </summary>
+        // @cdk.bug 2489533
         [TestMethod()]
         public void TestPropertyAnyAtom7()
         {
@@ -987,10 +960,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
         /// suppressed by default.
-        ///
-        // @throws Exception
-        // @cdk.bug 2489533
         /// </summary>
+        // @cdk.bug 2489533
         [TestMethod()]
         public void TestPropertyAnyAtom8()
         {
@@ -1002,10 +973,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
         /// suppressed by default.
-        ///
-        // @throws Exception
-        // @cdk.bug 2489533
         /// </summary>
+        // @cdk.bug 2489533
         [TestMethod()]
         public void TestPropertyAnyAtom9()
         {
@@ -1046,10 +1015,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 2490336
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicMass5()
         {
@@ -1489,8 +1455,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(5, results[1]);
         }
 
-        /// <summary> The CDK aromaticity detection differs from Daylight - by persevering
-        ///  aromaticity from the SMILES we can match correctly.  */
+        /// <summary>
+        /// The CDK aromaticity detection differs from Daylight - by persevering
+        /// aromaticity from the SMILES we can match correctly. 
+        /// </summary>
         [TestMethod()]
         public void TestLogicalOrLowAnd6()
         {
@@ -1791,10 +1759,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 1967468
-        /// </summary>
         [TestMethod()]
         public void TestAcyclicUreas()
         {
@@ -1804,10 +1769,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 1985811
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestIndoleAgainstIndole()
         {
@@ -1818,13 +1780,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             results = Match("c1ccc2cc[nH]c2(c1)", "c1ccc2cc[nH]c2(c1)");
             Assert.AreEqual(1, results[0]);
             Assert.AreEqual(1, results[1]);
-
         }
 
-        /// <summary>
         // @cdk.bug 1985811
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestPyridineAgainstPyridine()
         {
@@ -1935,7 +1893,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             results = Match(CreateFromSmarts("[^1&N,^2&C]"), SmilesAtomTyped("CC(=O)CC(=O)CC#N"));
             Assert.AreEqual(3, results[0]);
             Assert.AreEqual(3, results[1]);
-
         }
 
         [TestMethod()]
@@ -1966,10 +1923,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
         }
 
-        /// <summary>
         // @cdk.bug  2589807
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestAromAliArom()
         {
@@ -2037,10 +1991,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2587204
-        /// </summary>
         [TestMethod()]
         public void TestLactamSimple()
         {
@@ -2049,10 +2000,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
-        // @throws Exception
         // @cdk.bug 2587204
-        /// </summary>
         [TestMethod()]
         public void TestLactamRecursive()
         {
@@ -2069,10 +2017,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 2898399
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestHydrogen()
         {
@@ -2081,10 +2026,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /// <summary>
         // @cdk.bug 2898399
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestLeadingHydrogen()
         {
@@ -2094,12 +2036,11 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
-        // @cdk.bug 2871303
-        /// <p/>
         /// Note that this test passes, and really indicates that
         /// the SMARTS below is not a correct one for vinylogous
         /// esters
         /// </summary>
+        // @cdk.bug 2871303
         [TestMethod()]
         public void TestVinylogousEster()
         {
@@ -2110,8 +2051,6 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>
         /// Check that bond order query respects aromaticity.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestBondOrderQueryKekuleVsSmiles()
@@ -2144,9 +2083,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Checks that when no number is specified for ring member ship any ring
         /// atom is matched.
-        ///
-        // @cdk.bug 1168
         /// </summary>
+        // @cdk.bug 1168
         [TestMethod()]
         public void UnspecifiedRingMembership()
         {
@@ -2188,8 +2126,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>
         /// Ensure a class cast exception is not thrown when matching stereochemistry. 
-        // @cdk.bug 1358
         /// </summary>
+        // @cdk.bug 1358
         [TestMethod()]
         public void Bug1358()
         {

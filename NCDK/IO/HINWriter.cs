@@ -168,7 +168,7 @@ namespace NCDK.IO
                             if (bond.Contains(atom))
                             {
                                 // current atom is in the bond so lets get the connected atom
-                                IAtom connectedAtom = bond.GetConnectedAtom(atom);
+                                IAtom connectedAtom = bond.GetOther(atom);
                                 BondOrder bondOrder = bond.Order;
                                 int serial;
                                 string bondType = "";

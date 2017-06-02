@@ -81,6 +81,33 @@ namespace NCDK.Smiles.SMARTS
         }
 
         [TestMethod()]
+        public void Isotopes()
+        {
+            // FIXME SMARTS Grammar needs fixing/replacing [12] is not considered valid
+
+            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("C")));
+            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[CH4]")));
+            Assert.IsTrue(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[12CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[13CH4]")));
+
+            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("C")));
+            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[12CH4]")));
+            Assert.IsTrue(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[13CH4]")));
+
+            Assert.IsTrue(SmartsPattern.Create("[0*]", bldr).Matches(Smi("C")));
+            Assert.IsTrue(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[12CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[13CH4]")));
+
+            //      Not possible with current grammar
+            //        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("C")));
+            //        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("[CH4]")));
+            //        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[12CH4]")));
+            //        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[13CH4]")));
+        }
+
+        [TestMethod()]
         public void Components()
         {
             Assert.IsTrue(SmartsPattern.Create("(O).(O)", bldr).Matches(Smi("O.O")));
@@ -192,6 +219,14 @@ namespace NCDK.Smiles.SMARTS
         {
             Assert.AreEqual(2, SmartsPattern.Create("([C:1]).([C:2])>>[C:1][C:2]", null)
                                     .MatchAll(Rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).Count());
+        }
+
+        [TestMethod()]
+        public void MatchProductStereo()
+        {
+            Assert.AreEqual(1, SmartsPattern.Create(">>C[C@H](CC)[C@H](CC)O")
+                                    .MatchAll(Rsmi(">>C[C@H](CC)[C@H](CC)O"))
+                                    .CountUnique());
         }
 
         [TestMethod()]

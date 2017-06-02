@@ -2071,7 +2071,7 @@ namespace NCDK.IO.CML
                     if (aroms.MoveNext())
                     {
                         var nextArom = aroms.Current;
-                        if (nextArom != null && nextArom == true)
+                        if (nextArom != null && nextArom.Value)
                         {
                             CurrentBond.IsAromatic = true;
                         }

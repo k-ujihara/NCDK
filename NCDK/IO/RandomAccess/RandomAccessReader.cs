@@ -360,7 +360,7 @@ namespace NCDK.IO.RandomAccess
         }
 
         /// <summary>
-        /// Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by <see cref="Path.GetTempPath()"/> property.
+        /// Opens the file index <pre>_cdk.index</pre> in a temporary folder, as specified by <see cref="Path.GetTempPath()"/> property.
         /// </summary>
         /// <param name="filename">the name of the file for which the index was generated</param>
         /// <returns>a file object representing the index file</returns>

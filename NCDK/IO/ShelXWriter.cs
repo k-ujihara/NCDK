@@ -177,7 +177,16 @@ namespace NCDK.IO
                     Write(" ");
                 }
                 Write("     ");
-                string elemID = (asortedElements.FindIndex(n => n.Symbol == symbol) + 1).ToString();
+                string elemID = null;
+                for (int elemidx = 0; elemidx < asortedElements.Count; elemidx++)
+                {
+                    IElement elem = asortedElements[elemidx];
+                    if (elem.Symbol.Equals(symbol))
+                    {
+                        elemID = (elemidx + 1).ToString();
+                        break;
+                    }
+                }
                 Write(elemID);
                 Write("    ".Substring(elemID.Length));
                 Write(fracCoord.X.ToString("F5") + "   ");

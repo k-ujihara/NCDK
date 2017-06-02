@@ -39,7 +39,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Gaussian90";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-gaussian-log";
         public override string PreferredNameExtension => null;
         public override string[] NameExtensions { get; } = Array.Empty<string>();
         public override string ReaderClassName => null;

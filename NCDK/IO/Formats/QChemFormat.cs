@@ -41,7 +41,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "Q-Chem";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-qchem-output";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "qc" };
         public override string ReaderClassName => null;

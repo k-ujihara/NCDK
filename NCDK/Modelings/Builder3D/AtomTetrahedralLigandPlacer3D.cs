@@ -125,7 +125,6 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="atom2">movable atom</param>
         /// <param name="point2">coordinates for atom 2</param>
         /// <returns>new coordinates for atom 2</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         public Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
         {
             Vector3 point1 = atom1.Point3D.Value;
@@ -167,7 +166,7 @@ namespace NCDK.Modelings.Builder3D
         ///  vectors at angle ang, whose resultant is 2i (3) 3 Ligands(B, C, D) of
         ///  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
         ///  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
-        ///  or >4 ligands
+        ///  or &gt;4 ligands
         /// </summary>
         /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>
         /// <param name="length">A-X length</param>
@@ -683,7 +682,6 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="id2">Description of the Parameter</param>
         /// <param name="id3">Description of the Parameter</param>
         /// <returns>The angleKey value</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         public double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";
@@ -724,7 +722,7 @@ namespace NCDK.Modelings.Builder3D
         ///  set Atoms in respect to stereoinformation.
         ///    take placed neighbours to stereocenter
         ///        create a x b
-        ///         if right handed system (spatproduct >0)
+        ///         if right handed system (spatproduct &gt;0)
         ///            if unplaced is not up (relative to stereocenter)
         ///                n=b x a
         ///         Determine angle between n and possible ligand place points
@@ -819,7 +817,7 @@ namespace NCDK.Modelings.Builder3D
             IAtom connectedAtom = null;
             foreach (var bond in bonds)
             {
-                connectedAtom = bond.GetConnectedAtom(atom);
+                connectedAtom = bond.GetOther(atom);
                 if (connectedAtom.IsPlaced)
                 {
                     connectedAtoms.Atoms.Add(connectedAtom);

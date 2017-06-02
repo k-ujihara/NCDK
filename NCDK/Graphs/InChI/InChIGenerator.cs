@@ -46,8 +46,8 @@ namespace NCDK.Graphs.InChI
     // @cdk.githash
     public class InChIGenerator
     {
-        protected NInchiInput Input;
-        protected NInchiOutput Output;
+        protected internal NInchiInput Input { get; set; }
+        protected internal NInchiOutput Output { get; set; }
         private readonly bool auxNone;
 
         /// <summary>
@@ -240,8 +240,8 @@ namespace NCDK.Graphs.InChI
             foreach (var bond in atomContainer.Bonds)
             {
                 // Assumes 2 centre bond
-                NInchiAtom at0 = (NInchiAtom)atomMap[bond.Atoms[0]];
-                NInchiAtom at1 = (NInchiAtom)atomMap[bond.Atoms[1]];
+                NInchiAtom at0 = (NInchiAtom)atomMap[bond.Begin];
+                NInchiAtom at1 = (NInchiAtom)atomMap[bond.End];
 
                 // Get bond order
                 INCHI_BOND_TYPE order;
@@ -372,29 +372,29 @@ namespace NCDK.Graphs.InChI
                     NInchiAtom at3 = null;
                     // TODO: I should check for two atom bonds... or maybe that should happen when you
                     //    create a double bond stereochemistry
-                    if (stereoBond.Contains(surroundingBonds[0].Atoms[0]))
+                    if (stereoBond.Contains(surroundingBonds[0].Begin))
                     {
                         // first atom is A
-                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].Atoms[0]];
-                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].Atoms[1]];
+                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].Begin];
+                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].End];
                     }
                     else
                     {
                         // first atom is X
-                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].Atoms[0]];
-                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].Atoms[1]];
+                        at0 = (NInchiAtom)atomMap[surroundingBonds[0].Begin];
+                        at1 = (NInchiAtom)atomMap[surroundingBonds[0].End];
                     }
-                    if (stereoBond.Contains(surroundingBonds[1].Atoms[0]))
+                    if (stereoBond.Contains(surroundingBonds[1].Begin))
                     {
                         // first atom is B
-                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].Atoms[0]];
-                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].Atoms[1]];
+                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].Begin];
+                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].End];
                     }
                     else
                     {
                         // first atom is Y
-                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].Atoms[1]];
-                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].Atoms[0]];
+                        at2 = (NInchiAtom)atomMap[surroundingBonds[1].End];
+                        at3 = (NInchiAtom)atomMap[surroundingBonds[1].Begin];
                     }
                     INCHI_PARITY p = INCHI_PARITY.Unknown;
                     if (stereoType == DoubleBondConformation.Together)
@@ -447,7 +447,7 @@ namespace NCDK.Graphs.InChI
                     {
                         var orgBond = t0Bonds[0];
                         t0Bonds.RemoveAt(0);
-                        IAtom replace = orgBond.GetConnectedAtom(terminals[0]);
+                        IAtom replace = orgBond.GetOther(terminals[0]);
                         for (int i = 0; i < peripherals.Length; i++)
                             if (replace == peripherals[i]) peripherals[i] = terminals[0];
                     }
@@ -456,15 +456,15 @@ namespace NCDK.Graphs.InChI
                     {
                         var orgBond = t0Bonds[0];
                         t1Bonds.RemoveAt(0);
-                        IAtom replace = orgBond.GetConnectedAtom(terminals[1]);
+                        IAtom replace = orgBond.GetOther(terminals[1]);
                         for (int i = 0; i < peripherals.Length; i++)
                             if (replace == peripherals[i]) peripherals[i] = terminals[1];
                     }
 
                     // the neighbor attached to each terminal atom that we will
                     // define the configuration of
-                    IAtom t0Neighbor = t0Bonds[0].GetConnectedAtom(terminals[0]);
-                    IAtom t1Neighbor = t1Bonds[0].GetConnectedAtom(terminals[1]);
+                    IAtom t0Neighbor = t0Bonds[0].GetOther(terminals[0]);
+                    IAtom t1Neighbor = t1Bonds[0].GetOther(terminals[1]);
 
                     // we now need to move all the atoms into the correct positions
                     // everytime we exchange atoms the configuration inverts

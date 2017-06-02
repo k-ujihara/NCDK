@@ -47,8 +47,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
         }
 
         [TestMethod()]
@@ -233,8 +233,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1  0  0  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
@@ -246,8 +246,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1  0  0  0  0    ";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
@@ -259,8 +259,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
@@ -272,8 +272,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1  0       ";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);
@@ -285,8 +285,8 @@ namespace NCDK.IO
         {
             string input = "  1  3  1";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
-            Assert.AreEqual(atoms[0], bond.Atoms[0]);
-            Assert.AreEqual(atoms[2], bond.Atoms[1]);
+            Assert.AreEqual(atoms[0], bond.Begin);
+            Assert.AreEqual(atoms[2], bond.End);
             Assert.AreEqual(BondOrder.Single, bond.Order);
             Assert.AreEqual(BondStereo.None, bond.Stereo);
             Assert.IsFalse(bond.IsAromatic);

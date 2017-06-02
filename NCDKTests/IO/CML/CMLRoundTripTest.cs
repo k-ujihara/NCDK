@@ -354,8 +354,8 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(1, roundTrippedMol.Bonds.Count);
             IBond roundTrippedBond = roundTrippedMol.Bonds[0];
             Assert.AreEqual(2, roundTrippedBond.Atoms.Count);
-            Assert.AreEqual("C", roundTrippedBond.Atoms[0].Symbol); // preserved direction?
-            Assert.AreEqual("O", roundTrippedBond.Atoms[1].Symbol);
+            Assert.AreEqual("C", roundTrippedBond.Begin.Symbol); // preserved direction?
+            Assert.AreEqual("O", roundTrippedBond.End.Symbol);
             Assert.AreEqual(bond.Order, roundTrippedBond.Order);
         }
 
@@ -503,7 +503,7 @@ namespace NCDK.IO.CML {
 
             IAtomContainer product = reaction.Builder.CreateAtomContainer();
             product.Id = "product";
-            atom = reaction.Builder.CreateAtom("X");
+            atom = reaction.Builder.CreateAtom("R");
             product.Atoms.Add(atom);
             reaction.Products.Add(product);
 
@@ -739,6 +739,7 @@ namespace NCDK.IO.CML {
         {
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom("C");
+            atom.ImplicitHydrogenCount = null;
             Assert.IsNull(atom.ImplicitHydrogenCount);
             mol.Atoms.Add(atom);
 

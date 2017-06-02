@@ -32,9 +32,12 @@ namespace NCDK.Isomorphisms
     /// <summary>
     /// Filters SMARTS matches for those that have valid stereochemistry
     /// configuration.
-    ///
-    /// Note: This class is internal and will be private in future.
     /// </summary>
+    /// <remarks>
+    /// <note type="note">
+    /// This class is internal and will be private in future.
+    /// </note>
+    /// </remarks>
     // @author John May
     // @cdk.module smarts
     // @cdk.githash
@@ -198,7 +201,7 @@ namespace NCDK.Isomorphisms
             // bond is undirected so we need to ensure v1 is the first atom in the bond
             // we also need to to swap the substituents later
             bool swap = false;
-            if (targetElement.StereoBond.Atoms[0] != target.Atoms[v1])
+            if (targetElement.StereoBond.Begin != target.Atoms[v1])
             {
                 int tmp = v1;
                 v1 = v2;
@@ -211,11 +214,11 @@ namespace NCDK.Isomorphisms
             int p = Parity(queryElement.Stereo);
             int q = Parity(targetElement.Stereo);
 
-            int uLeft = queryMap[queryBonds[0].GetConnectedAtom(query.Atoms[u1])];
-            int uRight = queryMap[queryBonds[1].GetConnectedAtom(query.Atoms[u2])];
+            int uLeft = queryMap[queryBonds[0].GetOther(query.Atoms[u1])];
+            int uRight = queryMap[queryBonds[1].GetOther(query.Atoms[u2])];
 
-            int vLeft = targetMap[targetBonds[0].GetConnectedAtom(target.Atoms[v1])];
-            int vRight = targetMap[targetBonds[1].GetConnectedAtom(target.Atoms[v2])];
+            int vLeft = targetMap[targetBonds[0].GetOther(target.Atoms[v1])];
+            int vRight = targetMap[targetBonds[1].GetOther(target.Atoms[v2])];
 
             if (swap)
             {
@@ -269,7 +272,7 @@ namespace NCDK.Isomorphisms
         private int OtherIndex(int i)
         {
             IDoubleBondStereochemistry element = (IDoubleBondStereochemistry)queryElements[i];
-            return queryMap[element.StereoBond.GetConnectedAtom(query.Atoms[i])];
+            return queryMap[element.StereoBond.GetOther(query.Atoms[i])];
         }
 
         /// <summary>
@@ -312,8 +315,8 @@ namespace NCDK.Isomorphisms
                 else if (element is IDoubleBondStereochemistry)
                 {
                     IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry)element;
-                    int idx1 = map[dbs.StereoBond.Atoms[0]];
-                    int idx2 = map[dbs.StereoBond.Atoms[1]];
+                    int idx1 = map[dbs.StereoBond.Begin];
+                    int idx2 = map[dbs.StereoBond.End];
                     elements[idx2] = elements[idx1] = element;
                     types[idx1] = types[idx2] = StereoType.Geometric;
                     indices[nElements++] = idx1; // only visit the first atom

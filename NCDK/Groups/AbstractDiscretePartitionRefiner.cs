@@ -31,13 +31,14 @@ namespace NCDK.Groups
     /// </summary>
     // @author maclean
     // @cdk.module group
-    public abstract class AbstractDiscretePartitionRefiner
+    public abstract class AbstractDiscretePartitionRefiner 
+        : DiscretePartitionRefiner
     {
         /// <summary>
         /// The result of a comparison between the current partition
         /// and the best permutation found so far.
         /// </summary>
-        public enum Result
+        internal enum Result
         {
             Worse, Equal, Better
         }
@@ -62,7 +63,7 @@ namespace NCDK.Groups
         /// <summary>
         /// An equitable refiner.
         /// </summary>
-        private IEquitablePartitionRefiner equitableRefiner;
+        private EquitablePartitionRefiner equitableRefiner;
 
         /// <summary>
         /// The automorphism group that is used to prune the search.
@@ -83,7 +84,7 @@ namespace NCDK.Groups
         /// Get the number of vertices in the graph to be refined.
         /// </summary>
         /// <returns>a count of the vertices in the underlying graph</returns>
-        public abstract int GetVertexCount();
+        protected internal abstract int GetVertexCount();
 
         /// <summary>
         /// Get the connectivity between two vertices as an integer, to allow
@@ -93,7 +94,7 @@ namespace NCDK.Groups
         /// <param name="vertexI">a vertex of the graph</param>
         /// <param name="vertexJ">a vertex of the graph</param>
         /// <returns>the multiplicity of the edge (0, 1, 2, 3, ...)</returns>
-        public abstract int GetConnectivity(int vertexI, int vertexJ);
+        protected internal abstract int GetConnectivity(int vertexI, int vertexJ);
 
         /// <summary>
         /// Setup the group and refiner; it is important to call this method before
@@ -101,7 +102,7 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="group">a group (possibly empty) of automorphisms</param>
         /// <param name="refiner">the equitable refiner</param>
-        public void Setup(PermutationGroup group, IEquitablePartitionRefiner refiner)
+        public void Setup(PermutationGroup group, EquitablePartitionRefiner refiner)
         {
             this.bestExist = false;
             this.best = null;
@@ -210,15 +211,6 @@ namespace NCDK.Groups
                 }
             }
             return builder.ToString();
-        }
-
-        /// <summary>
-        /// Get the half-matrix string under the best permutation.
-        /// </summary>
-        /// <returns>the upper-half adjacency matrix string permuted by the best</returns>
-        public string GetBestHalfMatrixString()
-        {
-            return GetHalfMatrixString(best);
         }
 
         /// <summary>

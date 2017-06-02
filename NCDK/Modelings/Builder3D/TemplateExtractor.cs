@@ -369,7 +369,8 @@ namespace NCDK.Modelings.Builder3D
 
         public IList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, IDictionary<string, int> timings, TextReader fin, int limit)
         {
-            IFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
+            HybridizationFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
+            fingerPrinter.SetHashPseudoAtoms(true);
             //QueryAtomContainer query=null;
             IAtomContainer query = null;
             List<IBitFingerprint> data = new List<IBitFingerprint>();
@@ -497,7 +498,7 @@ namespace NCDK.Modelings.Builder3D
             for (int i = 0; i < molecule.Bonds.Count; i++)
             {
                 IBond bond = molecule.Bonds[i];
-                if (bond.Atoms[0] == bond.Atoms[1])
+                if (bond.Begin== bond.End)
                 {
                     Console.Out.WriteLine("Loop found! Molecule:" + position);
                     molecule.Bonds.Remove(bond);

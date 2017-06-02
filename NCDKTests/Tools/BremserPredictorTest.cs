@@ -163,7 +163,7 @@ namespace NCDK.Tools
                 atom = ac.Atoms[f];
                 if (atom.Symbol.Equals("H"))
                 {
-                    ac.RemoveAtomAndConnectedElectronContainers(atom);
+                    ac.RemoveAtom(atom);
                 }
                 f--;
             } while (f >= 0);

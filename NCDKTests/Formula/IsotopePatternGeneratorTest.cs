@@ -245,5 +245,56 @@ namespace NCDK.Formula
             IsotopePattern isos = isotopeGe.GetIsotopes(molFor);
             Assert.IsTrue(isos.Isotopes.Count == 34 || isos.Isotopes.Count == 35);
         }
+
+        [TestMethod()]
+        public void TestGeneratorSavesState()
+        {
+            IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
+
+            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula("C6H12O6", builder);
+            IsotopePattern ip1 = isogen.GetIsotopes(mf1);
+            Assert.AreEqual(1, ip1.Isotopes.Count);
+
+            IMolecularFormula mf2 = MolecularFormulaManipulator.GetMolecularFormula("C6H12O6", builder);
+            IsotopePattern ip2 = isogen.GetIsotopes(mf2);
+            Assert.AreEqual(1, ip2.Isotopes.Count);
+        }
+
+        [TestMethod()]
+        public void TestGetIsotopes_IMolecularFormula_Charged()
+        {
+            IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
+
+            IMolecularFormula mfPositive = MolecularFormulaManipulator.GetMolecularFormula("C6H11O6Na", builder);
+            mfPositive.Charge = 1;
+            IsotopePattern ip1 = isogen.GetIsotopes(mfPositive);
+            Assert.AreEqual(1, ip1.Isotopes.Count);
+
+            isogen = new IsotopePatternGenerator(.1);
+            IMolecularFormula mfNeutral = MolecularFormulaManipulator.GetMolecularFormula("C6H12O6Na", builder);
+            mfNeutral.Charge = 0;
+            IsotopePattern ip2 = isogen.GetIsotopes(mfNeutral);
+            Assert.AreEqual(1, ip2.Isotopes.Count);
+
+            Assert.AreNotEqual(ip1.Isotopes[0].Mass, ip2.Isotopes[0].Mass);
+        }
+
+        [TestMethod()]
+        public void TestGetIsotopes_IMolecularFormula_deprotonate()
+        {
+            IsotopePatternGenerator isogen = new IsotopePatternGenerator(.1);
+
+            IMolecularFormula mf1 = MolecularFormulaManipulator.GetMolecularFormula("C6H12O6", builder);
+            MolecularFormulaManipulator.AdjustProtonation(mf1, -1);
+            IsotopePattern ip1 = isogen.GetIsotopes(mf1);
+            Assert.AreEqual(1, ip1.Isotopes.Count);
+
+            isogen = new IsotopePatternGenerator(.1);
+            IMolecularFormula mf2 = MolecularFormulaManipulator.GetMolecularFormula("C6H11O6", builder);
+            IsotopePattern ip2 = isogen.GetIsotopes(mf2);
+            Assert.AreEqual(1, ip2.Isotopes.Count);
+
+            Assert.AreEqual(ip1.Isotopes[0].Mass, ip2.Isotopes[0].Mass, 0.001);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace NCDK.Formula.Rules
     /// <para>If a compound has no nitrogen atom or an even number of nitrogen atoms, then the m/e value of [M]<sup>+</sup> will be even.</para>
     /// </summary>
     /// <remarks>
-    /// This rule uses these parameters:
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <item>
     ///   <term>Name</term>

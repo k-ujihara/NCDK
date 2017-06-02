@@ -38,7 +38,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "IUPAC-NIST Chemical Identifier (Plain Text)";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-inchi";
         public override string PreferredNameExtension => null;
         public override string[] NameExtensions => new string[0];
         public override string ReaderClassName => "NCDK.IO.InChIPlainTextReader";

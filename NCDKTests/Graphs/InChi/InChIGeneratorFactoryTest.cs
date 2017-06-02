@@ -178,6 +178,8 @@ namespace NCDK.Graphs.InChI
             {
                 // create a fairly complex aromatic molecule
                 IAtomContainer tetrazole = TestMoleculeFactory.MakeTetrazole();
+                foreach (IAtom atom in tetrazole.Atoms)
+                    atom.ImplicitHydrogenCount = null;
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(tetrazole);
                 Aromaticity.CDKLegacy.Apply(tetrazole);
 

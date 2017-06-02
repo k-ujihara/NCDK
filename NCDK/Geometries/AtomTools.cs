@@ -152,7 +152,7 @@ namespace NCDK.Geometries
         /// (3) 3 Ligands(B, C, D) of refAtom A
         ///    (i) 1 points  required; if A, B, C, D coplanar, no points.
         ///       else vector is resultant of BA, CA, DA
-        /// fails if atom itself has no coordinates or >4 ligands
+        /// fails if atom itself has no coordinates or &gt;4 ligands
         /// </remarks>
         /// <param name="atomContainer">describing the ligands of refAtom. It could be the whole molecule, or could be a selected subset of ligands</param>
         /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>

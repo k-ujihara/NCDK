@@ -163,8 +163,8 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(3, bMatches[0].Count);
 
             PharmacophoreBond pbond = (PharmacophoreBond)bMatches[0][0];
-            PharmacophoreAtom patom1 = (PharmacophoreAtom)pbond.Atoms[0];
-            PharmacophoreAtom patom2 = (PharmacophoreAtom)pbond.Atoms[1];
+            PharmacophoreAtom patom1 = (PharmacophoreAtom)pbond.Begin;
+            PharmacophoreAtom patom2 = (PharmacophoreAtom)pbond.End;
             Assert.AreEqual("D", patom1.Symbol);
             Assert.AreEqual("A", patom2.Symbol);
 

@@ -22,6 +22,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Default;
+using NCDK.IO;
 using System.Collections.Generic;
 
 namespace NCDK.Smiles
@@ -77,6 +79,60 @@ namespace NCDK.Smiles
             state.atomRads[6] = CxSmilesState.Radical.Monovalent;
             state.atomRads[4] = CxSmilesState.Radical.Divalent;
             Assert.AreEqual(" |^1:1,5,^2:3|", CxSmilesGenerator.Generate(state, SmiFlavor.CxSmiles, new int[0], new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
+        }
+
+        /// <summary>
+        /// Integration - test used to fail because the D (pseudo) was swapped out with a 2H after Sgroups were
+        /// initialized.
+        /// </summary>
+        [TestMethod()]
+        public void Chebi53695()
+        {
+            using (var ins = GetType().Assembly.GetManifestResourceStream(GetType(), "CHEBI_53695.mol"))
+            using (var mdlr = new MDLV2000Reader(ins))
+            {
+                IAtomContainer mol = mdlr.Read(Silent.ChemObjectBuilder.Instance.CreateAtomContainer());
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles | SmiFlavor.AtomicMassStrict);
+                Assert.AreEqual("C(C(=O)OC)(C*)*C(C(C1=C(C(=C(C(=C1[2H])[2H])[2H])[2H])[2H])(*)[2H])([2H])[2H] |Sg:n:0,1,2,3,4,5:n:ht,Sg:n:8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24:m:ht|", smigen.Create(mol));
+            }
+        }
+
+        [TestMethod()]
+        public void Chembl367774()
+        {
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CHEMBL367774.mol")))
+            {
+                IAtomContainer container = mdlr.Read(new AtomContainer());
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles);
+                Assert.AreEqual("OC(=O)C1=CC(F)=CC=2NC(=NC12)C3=CC=C(C=C3F)C4=CC=CC=C4", smigen.Create(container));
+            }
+        }
+
+        [TestMethod()]
+        public void RadicalCanon()
+        {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
+            IAtomContainer mola = builder.CreateAtomContainer();
+            mola.Atoms.Add(builder.CreateAtom("CH3"));
+            mola.Atoms.Add(builder.CreateAtom("CH2"));
+            mola.Atoms.Add(builder.CreateAtom("CH2"));
+            mola.Atoms.Add(builder.CreateAtom("CH2"));
+            mola.Atoms.Add(builder.CreateAtom("CH2"));
+            mola.Atoms.Add(builder.CreateAtom("CH1"));
+            mola.Atoms.Add(builder.CreateAtom("CH3"));
+            mola.AddBond(mola.Atoms[1], mola.Atoms[2], BondOrder.Single);
+            mola.AddBond(mola.Atoms[2], mola.Atoms[3], BondOrder.Single);
+            mola.AddBond(mola.Atoms[3], mola.Atoms[4], BondOrder.Single);
+            mola.AddBond(mola.Atoms[4], mola.Atoms[5], BondOrder.Single);
+            mola.AddBond(mola.Atoms[5], mola.Atoms[6], BondOrder.Single);
+            mola.AddBond(mola.Atoms[0], mola.Atoms[5], BondOrder.Single);
+            mola.AddSingleElectronTo(mola.Atoms[1]);
+
+            SmilesParser smipar = new SmilesParser(builder);
+            IAtomContainer molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxRadical);
+            Assert.AreEqual(smigen.Create(molb), smigen.Create(mola));
         }
     }
 }

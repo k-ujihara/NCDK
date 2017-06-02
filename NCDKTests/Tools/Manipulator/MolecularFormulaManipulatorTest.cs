@@ -1263,5 +1263,88 @@ namespace NCDK.Tools.Manipulator
                                                                                    bldr);
             Assert.AreEqual(-3, mf.Charge);
         }
+
+        [TestMethod()]
+        public void DeprotonatePhenol()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("C6H6O", bldr);
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
+            Assert.AreEqual("C6H5O", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(-1, mf.Charge);
+        }
+
+        [TestMethod()]
+        public void ProtonatePhenolate()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[C6H5O]-", bldr);
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
+            Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(0, mf.Charge);
+            Assert.AreEqual(3, mf.Isotopes.Count());
+        }
+
+        [TestMethod()]
+        public void ProtonatePhenolateMajorIsotopes()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("[C6H5O]-", bldr);
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
+            Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(0, mf.Charge);
+            Assert.AreEqual(3, mf.Isotopes.Count());
+        }
+
+        [TestMethod()]
+        public void DeprontateHCl()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("HCl", bldr);
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
+            Assert.AreEqual("Cl", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(-1, mf.Charge);
+            Assert.AreEqual(1, mf.Isotopes.Count());
+        }
+
+        [TestMethod()]
+        public void ProntateChloride()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
+            Assert.AreEqual("ClH", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(0, mf.Charge);
+            Assert.AreEqual(2, mf.Isotopes.Count());
+        }
+
+        [TestMethod()]
+        public void DeprontateChloride()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
+            Assert.IsFalse(MolecularFormulaManipulator.AdjustProtonation(mf, -1));
+        }
+
+        [TestMethod()]
+        public void ProtonateDeuteratedPhenolate()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            IMolecularFormula mf = bldr.CreateMolecularFormula();
+            // [C6DH4O]- (parser not good enough ATM so need to create like this)
+            IIsotope deuterium = Isotopes.Instance.GetIsotope("H", 2);
+            IIsotope hydrogen = Isotopes.Instance.GetMajorIsotope(1);
+            mf.Add(deuterium, 1);
+            mf.Add(hydrogen, 4);
+            mf.Add(Isotopes.Instance.GetMajorIsotope(6), 6);
+            mf.Add(Isotopes.Instance.GetMajorIsotope(8), 1);
+            mf.Charge = -1;
+            Assert.IsTrue(MolecularFormulaManipulator.AdjustProtonation(mf, +1));
+            Assert.AreEqual("C6H6O", MolecularFormulaManipulator.GetString(mf));
+            Assert.AreEqual(0, mf.Charge);
+            Assert.AreEqual(4, mf.Isotopes.Count());
+            Assert.AreEqual(1, mf.GetCount(deuterium));
+            Assert.AreEqual(5, mf.GetCount(hydrogen));
+        }
     }
 }

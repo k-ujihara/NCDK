@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using NCDK.Numerics;
+using NCDK.Stereo;
 
 namespace NCDK.Layout
 {
@@ -1159,10 +1160,10 @@ namespace NCDK.Layout
 
         bool IsCrossing(IBond a, IBond b)
         {
-            Vector2 p1 = a.Atoms[0].Point2D.Value;
-            Vector2 p2 = a.Atoms[1].Point2D.Value;
-            Vector2 p3 = b.Atoms[0].Point2D.Value;
-            Vector2 p4 = b.Atoms[1].Point2D.Value;
+            Vector2 p1 = a.Begin.Point2D.Value;
+            Vector2 p2 = a.End.Point2D.Value;
+            Vector2 p3 = b.Begin.Point2D.Value;
+            Vector2 p4 = b.End.Point2D.Value;
             return Vectors.LinesIntersect(p1.X, p1.Y, p2.X, p2.Y, p3.X, p3.Y, p4.X, p4.Y);
         }
 
@@ -1263,6 +1264,30 @@ namespace NCDK.Layout
             IAtomContainer mol = smipar.ParseSmiles("[NH4+].[OH-]");
             Layout(mol);
             Assert.IsTrue(SDG.BondLength < mol.Atoms[1].Point2D.Value.X - mol.Atoms[0].Point2D.Value.X);
+        }
+
+        [TestMethod()]
+        public void FragmentDoubleBondConfiguration()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("C(\\C)=C/C.C(\\C)=C\\C.C(\\C)=C/C.C(\\C)=C\\C");
+            Layout(mol);
+            var elements = StereoElementFactory.Using2DCoordinates(mol).CreateAll();
+            int numCis = 0;
+            int numTrans = 0;
+            foreach (IStereoElement se in elements)
+            {
+                if (se is IDoubleBondStereochemistry)
+                {
+                    DoubleBondConformation config = ((IDoubleBondStereochemistry)se).Stereo;
+                    if (config == DoubleBondConformation.Together)
+                        numCis++;
+                    else if (config == DoubleBondConformation.Opposite)
+                        numTrans++;
+                }
+            }
+            Assert.AreEqual(2, numCis);
+            Assert.AreEqual(2, numTrans);
         }
     }
 }

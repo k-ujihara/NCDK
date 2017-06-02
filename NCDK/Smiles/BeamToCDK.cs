@@ -95,39 +95,115 @@ namespace NCDK.Smiles
         public IAtomContainer ToAtomContainer(Graph g, bool kekule)
         {
             IAtomContainer ac = CreateEmptyContainer();
-            IAtom[] atoms = new IAtom[g.Order];
+            int numAtoms = g.Order;
+            IAtom[] atoms = new IAtom[numAtoms];
             IBond[] bonds = new IBond[g.Size];
 
             int j = 0; // bond index
 
+            bool checkAtomStereo = false;
+            bool checkBondStereo = false;
+
             for (int i = 0; i < g.Order; i++)
-                atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
-            foreach (var e in g.Edges)
-                bonds[j++] = ToCDKBond(e, atoms, kekule);
-
-            // atom-centric stereo-specification (only tetrahedral ATM)
-            for (int u = 0; u < g.Order; u++)
             {
-                Configuration c = g.ConfigurationOf(u);
-                if (c.Type == Tetrahedral)
-                {
-                    IStereoElement se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
+                checkAtomStereo = checkAtomStereo || g.ConfigurationOf(i).Type != Configuration.Types.None;
+                atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
+            }
+            ac.SetAtoms(atoms);
+            foreach (Edge edge in g.Edges)
+            {
+                int u = edge.Either();
+                int v = edge.Other(u);
+                IBond bond = builder.CreateBond();
+                bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
+                bonds[j++] = bond;
 
-                    if (se != null) ac.StereoElements.Add(se);
-                }
-                else if (c.Type == Configuration.Types.ExtendedTetrahedral)
+                switch (edge.Bond.Ordinal)
                 {
-                    IStereoElement se = NewExtendedTetrahedral(u, g, atoms);
-
-                    if (se != null) ac.StereoElements.Add(se);
+                    case Bond.O.Single:
+                        bond.Order = BondOrder.Single;
+                        break;
+                    case Bond.O.Up:
+                    case Bond.O.Down:
+                        checkBondStereo = true;
+                        bond.Order = BondOrder.Single;
+                        break;
+                    case Bond.O.Implicit:
+                        bond.Order = BondOrder.Single;
+                        if (!kekule && atoms[u].IsAromatic && atoms[v].IsAromatic)
+                        {
+                            bond.IsAromatic = true;
+                            bond.Order = BondOrder.Unset;
+                            atoms[u].IsAromatic = true;
+                            atoms[v].IsAromatic = true;
+                        }
+                        break;
+                    case Bond.O.ImplicitAromatic:
+                    case Bond.O.Aromatic:
+                        bond.Order = BondOrder.Single;
+                        bond.IsAromatic = true;
+                        atoms[u].IsAromatic = true;
+                        atoms[v].IsAromatic = true;
+                        break;
+                    case Bond.O.Double:
+                        bond.Order = BondOrder.Double;
+                        break;
+                    case Bond.O.DoubleAromatic:
+                        bond.Order = BondOrder.Double;
+                        bond.IsAromatic = true;
+                        atoms[u].IsAromatic = true;
+                        atoms[v].IsAromatic = true;
+                        break;
+                    case Bond.O.Triple:
+                        bond.Order = BondOrder.Triple;
+                        break;
+                    case Bond.O.Quadruple:
+                        bond.Order = BondOrder.Quadruple;
+                        break;
+                    default:
+                        throw new ArgumentException("Edge label " + edge.Bond
+                                                           + "cannot be converted to a CDK bond order");
                 }
             }
 
-            ac.SetAtoms(atoms);
+            // atom-centric stereo-specification (only tetrahedral ATM)
+            if (checkAtomStereo)
+            {
+                for (int u = 0; u < g.Order; u++)
+                {
+                    Configuration c = g.ConfigurationOf(u);
+                    switch (c.Type)
+                    {
+                        case Configuration.Types.Tetrahedral:
+                            {
+                                IStereoElement se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
+
+                                if (se != null) ac.StereoElements.Add(se);
+                                break;
+                            }
+                        case Configuration.Types.ExtendedTetrahedral:
+                            {
+                                IStereoElement se = NewExtendedTetrahedral(u, g, atoms);
+
+                                if (se != null) ac.StereoElements.Add(se);
+                                break;
+                            }
+                        case DoubleBond:
+                            {
+                                checkBondStereo = true;
+                                break;
+                            }
+                    }
+                }
+            }
+
             ac.SetBonds(bonds);
 
             // use directional bonds to assign bond-based stereo-specification
-            AddDoubleBondStereochemistry(g, ac);
+            if (checkBondStereo)
+            {
+                AddDoubleBondStereochemistry(g, ac);
+            }
 
             // title suffix
             ac.SetProperty(CDKPropertyName.Title, g.Title);
@@ -151,12 +227,12 @@ namespace NCDK.Smiles
                 int v = e.Other(u);
 
                 // find a directional bond for either end
-                Edge first = FindDirectionalEdge(g, u);
-                Edge second = FindDirectionalEdge(g, v);
+                Edge first = null;
+                Edge second = null;
 
                 // if either atom is not incident to a directional label there
                 // is no configuration
-                if (first != null && second != null)
+                if ((first = FindDirectionalEdge(g, u)) != null && (second = FindDirectionalEdge(g, v)) != null)
                 {
                     // if the directions (relative to the double bond) are the
                     // same then they are on the same side - otherwise they
@@ -276,6 +352,9 @@ namespace NCDK.Smiles
         /// <returns>first directional edge (or <see langword="null"/> if none)</returns>
         private Edge FindDirectionalEdge(Graph g, int u)
         {
+            var edges = g.GetEdges(u);
+            if (edges.Count == 1)
+                return null;
             foreach (var e in g.GetEdges(u))
             {
                 Bond b = e.Bond;
@@ -402,84 +481,12 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Convert an edge from the Beam Graph to a CDK bond. Note -
-        /// currently aromatic bonds are set to Single and then.
-        /// </summary>
-        /// <param name="edge">the Beam edge to convert</param>
-        /// <param name="atoms">the already converted atoms</param>
-        /// <returns>new bond instance</returns>
-        public IBond ToCDKBond(Edge edge, IAtom[] atoms, bool kekule)
-        {
-            int u = edge.Either();
-            int v = edge.Other(u);
-
-            IBond bond = CreateBond(atoms[u], atoms[v], ToCDKBondOrder(edge));
-
-            // switch on the edge label to set aromatic flags
-            var aa = edge.Bond;
-            if (aa == Bond.Aromatic || aa == Bond.ImplicitAromatic || aa == Bond.DoubleAromatic)
-            {
-                bond.IsAromatic = true;
-                atoms[u].IsAromatic = true;
-                atoms[v].IsAromatic = true;
-            }
-            else if (aa == Bond.Implicit)
-            {
-                if (!kekule && atoms[u].IsAromatic && atoms[v].IsAromatic)
-                {
-                    bond.IsAromatic = true;
-                    bond.Order = BondOrder.Unset;
-                    atoms[u].IsAromatic = true;
-                    atoms[v].IsAromatic = true;
-                }
-            }
-
-            return bond;
-        }
-
-        /// <summary>
-        /// Convert bond label on the edge to a CDK bond order - there is no aromatic
-        /// bond order and as such this is currently set 'Single' with the aromatic
-        /// flag to be set.
-        /// </summary>
-        /// <param name="edge">beam edge</param>
-        /// <returns>CDK bond order for the edge type</returns>
-        /// <exception cref="ArgumentException">the bond was a 'DOT' - should not be loaded but the exception is there in-case</exception>
-        private BondOrder ToCDKBondOrder(Edge edge)
-        {
-            var aa = edge.Bond;
-            if (aa == Bond.Single ||
-                aa == Bond.Up ||
-                aa == Bond.Down ||
-                aa == Bond.Implicit || // single/aromatic - aromatic ~ single atm.
-                aa == Bond.ImplicitAromatic ||
-                aa == Bond.Aromatic)  // we will also set the flag
-                return BondOrder.Single;
-            if (aa == Bond.Double ||
-                aa == Bond.DoubleAromatic)
-                return BondOrder.Double;
-            if (aa == Bond.Triple)
-                return BondOrder.Triple;
-            if (aa == Bond.Quadruple)
-                return BondOrder.Quadruple;
-            throw new ArgumentException("Edge label " + edge.Bond
-               + "cannot be converted to a CDK bond order");
-        }
-
-        /// <summary>
         /// Create a new empty atom container instance.
         /// </summary>
         /// <returns>a new atom container instance</returns>
         private IAtomContainer CreateEmptyContainer()
         {
-            try
-            {
-                return (IAtomContainer)emptyContainer.Clone();
-            }
-            catch (Exception)
-            {
-                return builder.CreateAtomContainer();
-            }
+            return builder.CreateAtomContainer();
         }
 
         /// <summary>
@@ -491,35 +498,10 @@ namespace NCDK.Smiles
         /// <returns>new atom with configured symbol and atomic number</returns>
         private IAtom CreateAtom(Element element)
         {
-            try
-            {
-                IAtom atom = (IAtom)templateAtom.Clone();
-                atom.Symbol = element.Symbol;
-                atom.AtomicNumber = element.AtomicNumber;
-                return atom;
-            }
-            catch (Exception)
-            {
-                // clone is always supported if overridden but just in case :-)
-                return builder.CreateAtom(element.Symbol);
-            }
-        }
-
-        /// <summary>
-        /// Create a new bond for the provided symbol. The bond is created by cloning
-        /// an existing 'template'. Unfortunately IChemObjectBuilders really show a
-        /// slow down when SMILES processing.
-        /// </summary>
-        /// <param name="either">an atom of the bond</param>
-        /// <param name="other">another atom of the bond</param>
-        /// <param name="order">the order of the bond</param>
-        /// <returns>new bond instance</returns>
-        private IBond CreateBond(IAtom either, IAtom other, BondOrder order)
-        {
-            IBond bond = (IBond)templateBond.Clone();
-            bond.SetAtoms(new IAtom[] { either, other });
-            bond.Order = order;
-            return bond;
+            IAtom atom = builder.CreateAtom();
+            atom.Symbol = element.Symbol;
+            atom.AtomicNumber = element.AtomicNumber;
+            return atom;
         }
     }
 }

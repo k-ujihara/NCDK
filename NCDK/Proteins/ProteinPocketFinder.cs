@@ -985,7 +985,7 @@ namespace NCDK.Proteins
             }
         }
 
-        /// <summary>Method writes the PSP points (>=minPSPocket) to pmesh format.</summary>
+        /// <summary>Method writes the PSP points (ÅÜminPSPocket) to pmesh format.</summary>
         public void PspGridToPmesh(string outPutFileName)
         {
             try

@@ -68,8 +68,8 @@ namespace NCDK.IO
             // check bond stuff
             Assert.AreEqual(30, molecule.Bonds.Count);
             Assert.IsNotNull(molecule.Bonds[3]);
-            Assert.AreEqual(molecule.Atoms[2], molecule.Bonds[3].Atoms[0]);
-            Assert.AreEqual(molecule.Atoms[11], molecule.Bonds[3].Atoms[1]);
+            Assert.AreEqual(molecule.Atoms[2], molecule.Bonds[3].Begin);
+            Assert.AreEqual(molecule.Atoms[11], molecule.Bonds[3].End);
 
             // some extracted props
             Assert.AreEqual("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
@@ -78,4 +78,3 @@ namespace NCDK.IO
         }
     }
 }
-

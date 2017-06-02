@@ -33,7 +33,8 @@ namespace NCDK.Formula.Rules
     /// <para>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
     /// of atoms of element i, and Vi is the common valence of the atom i.</para>
     /// </summary>
-    /// <remarks>This rule uses these parameters:
+    /// <remarks>
+    /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <item>
     ///   <term>Name</term>

@@ -478,7 +478,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMolecularFormula(string, bool, IChemObjectBuilder)"/>
         private static IMolecularFormula GetMolecularFormula(string stringMF, IMolecularFormula formula, bool assumeMajorIsotope)
         {
-            if (stringMF.Contains(".") || stringMF.Contains("(") || (stringMF.Length > 0 && stringMF[0] >= '0' && stringMF[0] <= '9')) 
+            if (stringMF.Contains(".") || stringMF.Contains("(") || (stringMF.Length > 0 && stringMF[0] >= '0' && stringMF[0] <= '9'))
                 stringMF = SimplifyMolecularFormula(stringMF);
 
             // Extract charge from string when contains []X- format
@@ -538,10 +538,14 @@ namespace NCDK.Tools.Manipulator
                     }
 
                     IIsotope isotope = formula.Builder.CreateIsotope(RecentElementSymbol);
-                    if (assumeMajorIsotope) {
-                        try {
+                    if (assumeMajorIsotope)
+                    {
+                        try
+                        {
                             isotope = Isotopes.Instance.GetMajorIsotope(RecentElementSymbol);
-                        } catch (IOException) {
+                        }
+                        catch (IOException)
+                        {
                             throw new ApplicationException("Cannot load the IsotopeFactory");
                         }
                     }
@@ -781,7 +785,8 @@ namespace NCDK.Tools.Manipulator
             AtomTypeFactory factory = AtomTypeFactory.GetInstance(
                     "NCDK.Config.Data.structgen_atomtypes.xml", ac.Builder);
 
-            for (int f = 0; f < ac.Atoms.Count; f++) {
+            for (int f = 0; f < ac.Atoms.Count; f++)
+            {
                 var types = factory.GetAtomTypes(ac.Atoms[f].Symbol);
                 if (types.Count() == 0)
                     throw new CDKException(
@@ -1222,6 +1227,87 @@ namespace NCDK.Tools.Manipulator
                 }
             }
             return finalformula;
+        }
+
+        /// <summary>
+        /// Adjust the protonation of a molecular formula. This utility method adjusts the hydrogen isotope count
+        /// and charge at the same time.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[C6H5O]-", bldr);
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, +1); // now "C6H6O"
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, -1); // now "C6H5O-"
+        /// </code>
+        /// 
+        /// The return value indicates whether the protonation could be adjusted:
+        /// 
+        /// <code>
+        /// IMolecularFormula mf = MolecularFormulaManipulator.GetMolecularFormula("[Cl]-", bldr);
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, +0); // false still "[Cl]-"
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, +1); // true now "HCl"
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, -1); // true now "[Cl]-" (again)
+        /// MolecularFormulaManipulator.AdjustProtonation(mf, -1); // false still "[Cl]-" (no H to remove!)
+        /// </code>
+        /// 
+        /// The method tries to select an existing hydrogen isotope to augment. If no hydrogen isotopes are found
+        /// a new major isotope (<sup>1</sup>H) is created.
+        /// </example>
+        /// <param name="mf">molecular formula</param>
+        /// <param name="hcnt">the number of hydrogens to add/remove, (&gt;0 protonate:, &lt;0: deprotonate)</param>
+        /// <returns>the protonation was be adjusted</returns>
+        public static bool AdjustProtonation(IMolecularFormula mf, int hcnt)
+        {
+            if (mf == null) throw new ArgumentNullException(nameof(mf), "No formula provided");
+            if (hcnt == 0) return false; // no protons to add
+
+            IChemObjectBuilder bldr = mf.Builder;
+            int chg = mf.Charge ?? 0;
+
+            IIsotope proton = null;
+            int pcount = 0;
+
+            foreach (IIsotope iso in mf.Isotopes)
+            {
+                if ("H".Equals(iso.Symbol))
+                {
+                    int count = mf.GetCount(iso);
+                    if (count < hcnt)
+                        continue;
+                    // acceptable
+                    if (proton == null &&
+                        (iso.MassNumber == null || iso.MassNumber == 1))
+                    {
+                        proton = iso;
+                        pcount = count;
+                    }
+                    // better
+                    else if (proton != null &&
+                               iso.MassNumber != null && iso.MassNumber == 1 &&
+                               proton.MassNumber == null)
+                    {
+                        proton = iso;
+                        pcount = count;
+                    }
+                }
+            }
+
+            if (proton == null && hcnt < 0)
+            {
+                return false;
+            }
+            else if (proton == null && hcnt > 0)
+            {
+                proton = bldr.CreateIsotope("H");
+                proton.MassNumber = 1;
+            }
+
+            mf.Remove(proton);
+            if (pcount + hcnt > 0)
+                mf.Add(proton, pcount + hcnt);
+            mf.Charge = chg + hcnt;
+
+            return true;
         }
     }
 }

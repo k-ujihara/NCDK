@@ -159,8 +159,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(1, mol.Bonds.Count);
             IBond bond = mol.Bonds[0];
             Assert.AreEqual(2, bond.Atoms.Count);
-            IAtom atom1 = bond.Atoms[0];
-            IAtom atom2 = bond.Atoms[1];
+            IAtom atom1 = bond.Begin;
+            IAtom atom2 = bond.End;
             Assert.AreEqual("a1", atom1.Id);
             Assert.AreEqual("a2", atom2.Id);
         }
@@ -177,8 +177,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(1, mol.Bonds.Count);
             IBond bond = mol.Bonds[0];
             Assert.AreEqual(2, bond.Atoms.Count);
-            IAtom atom1 = bond.Atoms[0];
-            IAtom atom2 = bond.Atoms[1];
+            IAtom atom1 = bond.Begin;
+            IAtom atom2 = bond.End;
             Assert.AreEqual("a1", atom1.Id);
             Assert.AreEqual("a2", atom2.Id);
         }
@@ -195,8 +195,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(1, mol.Bonds.Count);
             IBond bond = mol.Bonds[0];
             Assert.AreEqual(2, bond.Atoms.Count);
-            IAtom atom1 = bond.Atoms[0];
-            IAtom atom2 = bond.Atoms[1];
+            IAtom atom1 = bond.Begin;
+            IAtom atom2 = bond.End;
             Assert.AreEqual("a1", atom1.Id);
             Assert.AreEqual("a2", atom2.Id);
         }
@@ -213,8 +213,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(2, mol.Bonds.Count);
             IBond bond = mol.Bonds[0];
             Assert.AreEqual(2, bond.Atoms.Count);
-            IAtom atom1 = bond.Atoms[0];
-            IAtom atom2 = bond.Atoms[1];
+            IAtom atom1 = bond.Begin;
+            IAtom atom2 = bond.End;
             Assert.AreEqual("a1", atom1.Id);
             Assert.AreEqual("a2", atom2.Id);
             Assert.AreEqual("b2", mol.Bonds[1].Id);

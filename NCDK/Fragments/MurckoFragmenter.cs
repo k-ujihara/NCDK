@@ -184,7 +184,7 @@ namespace NCDK.Fragments
                 if (IsLinker(atom)) atomsToDelete.Add(atom);
             }
             foreach (var atom in atomsToDelete)
-                clone.RemoveAtomAndConnectedElectronContainers(atom);
+                clone.RemoveAtom(atom);
 
             List<IBond> bondsToDelete = new List<IBond>();
             foreach (var bond in clone.Bonds)
@@ -252,7 +252,7 @@ namespace NCDK.Fragments
                 if (IsSideChain(atom)) atomsToDelete.Add(atom);
             }
             foreach (var anAtomsToDelete in atomsToDelete)
-                clone.RemoveAtomAndConnectedElectronContainers(anAtomsToDelete);
+                clone.RemoveAtom(anAtomsToDelete);
             return clone;
         }
 
@@ -428,13 +428,13 @@ namespace NCDK.Fragments
 
         private bool IsLinker(IBond bond)
         {
-            return IsLinker(bond.Atoms[0]) || IsLinker(bond.Atoms[1]);
+            return IsLinker(bond.Begin) || IsLinker(bond.End);
         }
 
         private bool IsZeroAtomLinker(IBond bond)
         {
             bool isRingBond = bond.IsInRing;
-            return IsRing(bond.Atoms[0]) && IsRing(bond.Atoms[1]) && !isRingBond;
+            return IsRing(bond.Begin) && IsRing(bond.End) && !isRingBond;
         }
 
         private bool Hasframework(IAtomContainer atomContainer)

@@ -215,8 +215,8 @@ namespace NCDK.IO
 
                     // we need to check the atom types to see if we have an amide bond
                     // and we're assuming a 2-centered bond
-                    IAtom bondAtom1 = bond.Atoms[0];
-                    IAtom bondAtom2 = bond.Atoms[1];
+                    IAtom bondAtom1 = bond.Begin;
+                    IAtom bondAtom2 = bond.End;
                     try
                     {
                         IAtomType bondAtom1Type = matcher.FindMatchingAtomType(mol, bondAtom1);
@@ -233,8 +233,8 @@ namespace NCDK.IO
                         Console.Error.WriteLine(e.StackTrace);
                     }
 
-                    writer.Write((counter + 1) + " " + (mol.Atoms.IndexOf(bond.Atoms[0]) + 1) + " "
-                            + (mol.Atoms.IndexOf(bond.Atoms[1]) + 1) + " " + sybylBondOrder);
+                    writer.Write((counter + 1) + " " + (mol.Atoms.IndexOf(bond.Begin) + 1) + " "
+                            + (mol.Atoms.IndexOf(bond.End) + 1) + " " + sybylBondOrder);
                     writer.WriteLine();
                     counter++;
                 }

@@ -41,7 +41,7 @@ namespace NCDK.IO.Formats
         }
 
         public override string FormatName => "ShelXL";
-        public override string MIMEType => null;
+        public override string MIMEType => "chemical/x-shelx";
         public override string PreferredNameExtension => NameExtensions[0];
         public override string[] NameExtensions { get; } = new string[] { "ins", "res" };
         public override string ReaderClassName => "NCDK.IO.ShelXReader";

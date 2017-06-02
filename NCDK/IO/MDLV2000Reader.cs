@@ -29,7 +29,6 @@ using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SGroups;
 using NCDK.Stereo;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -94,7 +93,7 @@ namespace NCDK.IO
         private const string RECORD_DELIMITER = "$$$$";
 
         /// <summary>Valid pseudo labels.</summary>
-        private static readonly ICollection<string> PSEUDO_LABELS =
+        private static readonly ICollection<string> PseudoLabels =
                 new ReadOnlyCollection<string>(new[] {
                     "*", "A", "Q",
                     "L", "LP", "R", // XXX: not in spec
@@ -420,8 +419,10 @@ namespace NCDK.IO
                 else
                     outputContainer = new QueryAtomContainer(molecule.Builder);
 
-                outputContainer.SetProperty(CDKPropertyName.Title, title);
-                outputContainer.SetProperty(CDKPropertyName.Remark, remark);
+                if (title != null)
+                    outputContainer.SetProperty(CDKPropertyName.Title, title);
+                if (remark != null)
+                    outputContainer.SetProperty(CDKPropertyName.Remark, remark);
 
                 if (outputContainer.IsEmpty())
                 {
@@ -484,11 +485,6 @@ namespace NCDK.IO
 
                 // read potential SD file data between M  END and $$$$
                 ReadNonStructuralData(input, outputContainer);
-
-                if (interpretHydrogenIsotopes.IsSet)
-                {
-                    FixHydrogenIsotopes(molecule, Isotopes.Instance);
-                }
 
                 // note: apply the valence model last so that all fixes (i.e. hydrogen
                 // isotopes) are in place we need to use a offset as this atoms
@@ -798,7 +794,8 @@ namespace NCDK.IO
                     throw new CDKException("invalid line length: " + length + " " + line);
             }
 
-            IBond bond = builder.CreateBond(atoms[u], atoms[v]);
+            IBond bond = builder.CreateBond();
+            bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
 
             switch (type)
             {
@@ -1341,7 +1338,28 @@ namespace NCDK.IO
         /// <exception cref="CDKException">the symbol is not allowed</exception>
         private IAtom CreateAtom(string symbol, IChemObjectBuilder builder, int lineNum)
         {
-            if (IsPeriodicElement(symbol)) return builder.CreateAtom(symbol);
+            Elements elem = Elements.OfString(symbol);
+            if (elem != Elements.Unknown)
+            {
+                IAtom atom = builder.CreateAtom();
+                atom.Symbol = elem.Symbol;
+                atom.AtomicNumber = elem.AtomicNumber;
+                return atom;
+            }
+            if (symbol.Equals("D") && interpretHydrogenIsotopes.IsSet)
+            {
+                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                IAtom atom = builder.CreateAtom("H");
+                atom.MassNumber = 2;
+                return atom;
+            }
+            if (symbol.Equals("T") && interpretHydrogenIsotopes.IsSet)
+            {
+                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                IAtom atom = builder.CreateAtom("H");
+                atom.MassNumber = 3;
+                return atom;
+            }
 
             if (!IsPseudoElement(symbol))
             {
@@ -1349,28 +1367,17 @@ namespace NCDK.IO
                 // when strict only accept labels from the specification
                 if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
             }
+            {
+                // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
+                // 'R' is a better label than 'R#' if now RGP is specified
+                if (symbol.Equals("R#")) symbol = "R";
 
-            // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
-            // 'R' is a better label than 'R#' if now RGP is specified
-            if (symbol.Equals("R#")) symbol = "R";
+                IAtom atom = builder.CreatePseudoAtom(symbol);
+                atom.Symbol = symbol;
+                atom.AtomicNumber = 0; // avoid NPE downstream
 
-            IAtom atom = builder.CreatePseudoAtom(symbol);
-            atom.Symbol = symbol;
-            atom.AtomicNumber = 0; // avoid NPE downstream
-
-            return atom;
-        }
-
-        /// <summary>
-        /// Is the symbol a periodic element.
-        /// </summary>
-        /// <param name="symbol">a symbol from the input</param>
-        /// <returns>the symbol is a pseudo atom</returns>
-        private static bool IsPeriodicElement(string symbol)
-        {
-            // XXX: PeriodicTable is slow - switch without file IO would be optimal
-            int elem = PeriodicTable.GetAtomicNumber(symbol);
-            return elem > 0;
+                return atom;
+            }
         }
 
         /// <summary>
@@ -1382,7 +1389,7 @@ namespace NCDK.IO
         /// <returns>the symbol is a valid pseudo element</returns>
         internal static bool IsPseudoElement(string symbol)
         {
-            return PSEUDO_LABELS.Contains(symbol);
+            return PseudoLabels.Contains(symbol);
         }
 
         /// <summary>

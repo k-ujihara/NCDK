@@ -38,7 +38,7 @@ namespace NCDK.Validate
             // only consider two atom bonds
             if (subject.Atoms.Count == 2)
             {
-                double distance = Vector3.Distance(subject.Atoms[0].Point3D.Value, subject.Atoms[1].Point3D.Value);
+                double distance = Vector3.Distance(subject.Begin.Point3D.Value, subject.End.Point3D.Value);
                 if (distance > 3.0)
                 { // should really depend on the elements
                     ValidationTest badBondLengthError = new ValidationTest(subject,

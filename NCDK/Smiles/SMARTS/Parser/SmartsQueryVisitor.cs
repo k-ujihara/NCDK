@@ -298,12 +298,12 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
             }
 
-            // for each double bond, find the stereo bonds. currently doesn't
+            // for each double bond, find the stereo bonds. Currently doesn't
             // handle logical bonds i.e. C/C-,=C/C
             foreach (var bond in doubleBonds)
             {
-                IAtom left = bond.Atoms[0];
-                IAtom right = bond.Atoms[1];
+                IAtom left = bond.Begin;
+                IAtom right = bond.End;
                 StereoBond leftBond = FindStereoBond(left);
                 StereoBond rightBond = FindStereoBond(right);
                 if (leftBond == null || rightBond == null) continue;

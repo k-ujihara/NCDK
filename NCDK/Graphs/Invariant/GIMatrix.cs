@@ -50,7 +50,6 @@ namespace NCDK.Graphs.Invariant
         /// Array must be at leat 1x1.
         /// </summary>
         /// <param name="array">an array of integer (first index is the line, second is the column)</param>
-        /// <exception cref="BadMatrixFormatException">in case the given array is unproper to construct a matrix</exception>
         public GIMatrix(int[][] array)
         {
             double[][] temp = new double[array.Length][];
@@ -469,7 +468,6 @@ namespace NCDK.Graphs.Invariant
         /// diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
         /// </summary>
         /// <returns>the matrix's transpose as a Matrix object</returns>
-        /// <exception cref="BadMatrixFormatException">if the matrix is not square</exception>
         public GIMatrix Inverse()
         {
             try

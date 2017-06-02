@@ -67,8 +67,8 @@ namespace NCDK.Templates
                 foreach (var bond in acid.Bonds)
                 {
                     info[counter][0] = counter;
-                    info[counter][1] = acid.Atoms.IndexOf(bond.Atoms[0]);
-                    info[counter][2] = acid.Atoms.IndexOf(bond.Atoms[1]);
+                    info[counter][1] = acid.Atoms.IndexOf(bond.Begin);
+                    info[counter][2] = acid.Atoms.IndexOf(bond.End);
                     info[counter][3] = bond.Order.Numeric;
                     counter++;
                 }

@@ -162,10 +162,10 @@ namespace NCDK.Modelings.Builder3D
 
             foreach (var bond in molecule.Bonds)
             {
-                if (bond.GetConnectedAtom(molecule.Atoms[4]) != null
-                        && !bond.GetConnectedAtom(molecule.Atoms[4]).IsPlaced)
+                if (bond.GetOther(molecule.Atoms[4]) != null
+                        && !bond.GetOther(molecule.Atoms[4]).IsPlaced)
                 {
-                    natompair = bond.GetConnectedAtom(molecule.Atoms[4]);
+                    natompair = bond.GetOther(molecule.Atoms[4]);
                 }
             }
             Assert.AreEqual(natompair, molecule.Atoms[3]);

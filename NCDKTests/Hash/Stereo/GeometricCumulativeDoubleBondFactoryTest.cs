@@ -82,8 +82,8 @@ namespace NCDK.Hash.Stereo
             var m_a2 = new Mock<IAtom>(); var a2 = m_a2.Object;
             var m_bond = new Mock<IBond>(); var bond = m_bond.Object;
             m_bond.SetupGet(n => n.Stereo).Returns(BondStereo.Up);
-            m_bond.SetupGet(n => n.Atoms[0]).Returns(a1);
-            m_bond.SetupGet(n => n.Atoms[1]).Returns(a2);
+            m_bond.SetupGet(n => n.Begin).Returns(a1);
+            m_bond.SetupGet(n => n.End).Returns(a2);
             Assert.AreEqual(+1, GeometricCumulativeDoubleBondFactory.Elevation(bond, a1));
             Assert.AreEqual(-1, GeometricCumulativeDoubleBondFactory.Elevation(bond, a2));
         }
@@ -95,8 +95,8 @@ namespace NCDK.Hash.Stereo
             var m_a2 = new Mock<IAtom>(); var a2 = m_a2.Object;
             var m_bond = new Mock<IBond>(); var bond = m_bond.Object;
             m_bond.SetupGet(n => n.Stereo).Returns(BondStereo.Down);
-            m_bond.SetupGet(n => n.Atoms[0]).Returns(a1);
-            m_bond.SetupGet(n => n.Atoms[1]).Returns(a2);
+            m_bond.SetupGet(n => n.Begin).Returns(a1);
+            m_bond.SetupGet(n => n.End).Returns(a2);
             Assert.AreEqual(-1, GeometricCumulativeDoubleBondFactory.Elevation(bond, a1));
             Assert.AreEqual(+1, GeometricCumulativeDoubleBondFactory.Elevation(bond, a2));
         }

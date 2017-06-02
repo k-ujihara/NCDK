@@ -24,6 +24,8 @@ using NCDK.NInChI;
 using NCDK.Numerics;
 using NCDK.Smiles;
 using NCDK.Stereo;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Graphs.InChI
 {
@@ -53,7 +55,7 @@ namespace NCDK.Graphs.InChI
         public void TestGetInchiFromChlorineAtom()
         {
             IAtomContainer ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("Cl"));
+            ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
@@ -129,7 +131,7 @@ namespace NCDK.Graphs.InChI
         public void TestGetInchiFromChlorine37Atom()
         {
             IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
+            IAtom a = new Atom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
@@ -183,6 +185,36 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
+            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
+            Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
+        }
+
+        /// <summary>
+        /// Test generation of non-standard InChIs.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
+        /// <seealso cref=""/>
+        // @cdk.bug 1384
+        [TestMethod()]
+        public void NonStandardInChIWithEnumOptions()
+        {
+            IAtomContainer ac = new AtomContainer();
+            IAtom a1 = new Atom("C");
+            IAtom a2 = new Atom("C");
+            a1.ImplicitHydrogenCount = 3;
+            a2.ImplicitHydrogenCount = 3;
+            ac.Atoms.Add(a1);
+            ac.Atoms.Add(a2);
+            ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
+            List<INCHI_OPTION> options = new List<INCHI_OPTION>();
+            options.Add(INCHI_OPTION.FixedH);
+            options.Add(INCHI_OPTION.SAbs);
+            options.Add(INCHI_OPTION.SAsXYZ);
+            options.Add(INCHI_OPTION.SPXYZ);
+            options.Add(INCHI_OPTION.FixSp3Bug);
+            options.Add(INCHI_OPTION.AuxNone);
+            InChIGenerator gen = GetFactory().GetInChIGenerator(ac, options);
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
             Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
@@ -361,7 +393,7 @@ namespace NCDK.Graphs.InChI
         public void TestGetStandardInchiFromChlorineAtom()
         {
             IAtomContainer ac = new AtomContainer();
-            ac.Atoms.Add(new Atom("Cl"));
+            ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
             Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
@@ -389,7 +421,7 @@ namespace NCDK.Graphs.InChI
         public void TestGetStandardInchiFromChlorine37Atom()
         {
             IAtomContainer ac = new AtomContainer();
-            IAtom a = new Atom("Cl");
+            IAtom a = new Atom("ClH");
             a.MassNumber = 37;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
@@ -705,11 +737,11 @@ namespace NCDK.Graphs.InChI
         public void R_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("CH3"));
+            m.Atoms.Add(new Atom("CH"));
             m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("CH"));
+            m.Atoms.Add(new Atom("CH3"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -744,11 +776,11 @@ namespace NCDK.Graphs.InChI
         public void S_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("CH3"));
+            m.Atoms.Add(new Atom("CH"));
             m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("CH"));
+            m.Atoms.Add(new Atom("CH3"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -783,11 +815,11 @@ namespace NCDK.Graphs.InChI
         public void R_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("H"));
             m.Atoms.Add(new Atom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
@@ -826,11 +858,11 @@ namespace NCDK.Graphs.InChI
         public void S_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
             m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
-            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("CH3"));
             m.Atoms.Add(new Atom("H"));
             m.Atoms.Add(new Atom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
@@ -947,6 +979,21 @@ namespace NCDK.Graphs.InChI
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
             Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
+        }
+
+        /// <summary>
+        /// Ensures default timeout option is passed with proper switch character.
+        /// </summary>
+        [TestMethod()]
+        public void TestFiveSecondTimeoutFlag()
+        {
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("C"));
+            InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
+            InChIGenerator generator = factory.GetInChIGenerator(ac);
+
+            string flagChar = Environment.OSVersion.Platform < PlatformID.Unix ? "/" : "-";
+            Assert.IsTrue(generator.Input.Options.Contains(flagChar + "W5"));
         }
     }
 }

@@ -64,8 +64,8 @@ namespace NCDK.Hash.Stereo
                 if (BondOrder.Double.Equals(bond.Order) && !BondStereo.EOrZ.Equals(bond.Stereo))
                 {
 
-                    IAtom left = bond.Atoms[0];
-                    IAtom right = bond.Atoms[1];
+                    IAtom left = bond.Begin;
+                    IAtom right = bond.End;
 
                     // skip -N=N- double bonds which exhibit inversion
                     if (7.Equals(left.AtomicNumber)

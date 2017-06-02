@@ -22,7 +22,6 @@ namespace NCDK.Groups
             refiner.Refine(atomContainer);
             Permutation best = refiner.GetBest().Invert();
             string cert = AtomContainerPrinter.ToString(atomContainer, best, true);
-            refiner.Reset();
             while (permutor.MoveNext())
             {
                 IAtomContainer permutedContainer = permutor.Current;
@@ -30,7 +29,6 @@ namespace NCDK.Groups
                 best = refiner.GetBest().Invert();
                 string permCert = AtomContainerPrinter.ToString(permutedContainer, best, true);
                 Assert.AreEqual(cert, permCert);
-                refiner.Reset();
             }
         }
 
