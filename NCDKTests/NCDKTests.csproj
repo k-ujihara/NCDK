@@ -289,6 +289,28 @@
     <Compile Include="SMSD\Algorithms\VFLib\Molecules.cs" />
     <Compile Include="SMSD\Ring\HanserRingFinderTest.cs" />
     <Compile Include="SMSD\Tools\TimeManagerTest.cs" />
+    <Compile Include="Tools\Diff\AtomContainerDiffTest.cs" />
+    <Compile Include="Tools\Diff\AtomDiffTest.cs" />
+    <Compile Include="Tools\Diff\AtomTypeDiffTest.cs" />
+    <Compile Include="Tools\Diff\BondDiffTest.cs" />
+    <Compile Include="Tools\Diff\ChemObjectDiffTest.cs" />
+    <Compile Include="Tools\Diff\ElectronContainerDiffTest.cs" />
+    <Compile Include="Tools\Diff\ElementDiffTest.cs" />
+    <Compile Include="Tools\Diff\IsotopeDiffTest.cs" />
+    <Compile Include="Tools\Diff\LonePairDiffTest.cs" />
+    <Compile Include="Tools\Diff\SingleElectronDiffTest.cs" />
+    <Compile Include="Tools\Diff\Tree\AbstractDifferenceListTest.cs" />
+    <Compile Include="Tools\Diff\Tree\AbstractDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\AtomTypeHybridizationDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\BondOrderDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\BooleanArrayDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\BooleanDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\ChemObjectDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\DoubleDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\IntegerDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\Point2dDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\Point3dDifferenceTest.cs" />
+    <Compile Include="Tools\Diff\Tree\StringDifferenceTest.cs" />
     <Compile Include="Tools\PeriodicTable\PeriodicTableTest.cs" />
   </ItemGroup>
   <ItemGroup>
