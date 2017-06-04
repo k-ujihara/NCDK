@@ -98,10 +98,6 @@ namespace NCDK.Config
             for (var i = 0; i < Values.Length; i++)
             {
                 var elm = Values[i];
-                // check index == AtomicNumber
-                if (i != elm.AtomicNumber)
-                    throw new Exception($"{nameof(Values)} is not proper.");
-
                 symbolMap.Add(elm.Symbol.ToLowerInvariant(), elm);
                 symbolMap.Add(elm.Name.ToLowerInvariant(), elm);
             }
