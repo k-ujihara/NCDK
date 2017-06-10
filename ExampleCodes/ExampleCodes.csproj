@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -52,6 +53,8 @@
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\Elements_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />
+    <Compile Include="Depict\SvgDrawVisitor_Example.cs" />
+    <Compile Include="Depict\DepictionGenerator_Example.cs" />
     <Compile Include="Fingerprints\FingerprinterTool_Example.cs" />
     <Compile Include="Fingerprints\ShortestPathFingerprinter_Example.cs" />
     <Compile Include="Fingerprints\PubchemFingerprinter_Example.cs" />
@@ -144,6 +147,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj">
+      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
+      <Name>NCDKDisplay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
       <Name>NCDK</Name>

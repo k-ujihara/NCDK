@@ -112,18 +112,20 @@ namespace NCDK.Renderers
                 if (mass != null && !IsMajorIsotope(element.AtomicNumber, mass.Value)) return true;
 
                 // no kink between bonds to imply the presence of a carbon and it must
-                // be displayed
-                if (HasParallelBonds(atom, bonds))
+                // be displayed if the bonds have the same bond order
+                if (bonds.Count == 2 &&
+                        bonds[0].Order == bonds[1].Order)
                 {
-                    // TODO only when both bonds are single?
-                    return true;
+                    BondOrder bndord = bonds[0].Order;
+                    if (bndord == BondOrder.Double || HasParallelBonds(atom, bonds))
+                        return true;
                 }
 
                 // special case ethane
                 if (bonds.Count == 1)
                 {
                     var begHcnt = atom.ImplicitHydrogenCount;
-                    IAtom end = bonds[0].GetConnectedAtom(atom);
+                    IAtom end = bonds[0].GetOther(atom);
                     var endHcnt = end.ImplicitHydrogenCount;
                     if (begHcnt != null && endHcnt != null && begHcnt == 3 && endHcnt == 3)
                         return true;
@@ -196,8 +198,8 @@ namespace NCDK.Renderers
             private static double GetAngle(IAtom atom, IBond bond1, IBond bond2)
             {
                 var pA = atom.Point2D.Value;
-                var pB = bond1.GetConnectedAtom(atom).Point2D.Value;
-                var pC = bond2.GetConnectedAtom(atom).Point2D.Value;
+                var pB = bond1.GetOther(atom).Point2D.Value;
+                var pC = bond2.GetOther(atom).Point2D.Value;
                 var u = new Vector2(pB.X - pA.X, pB.Y - pA.Y);
                 var v = new Vector2(pC.X - pA.X, pC.Y - pA.Y);
                 return Vectors.Angle(u, v);

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2015 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Common.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -194,6 +195,13 @@ namespace NCDK.Renderers.Generators.Standards
                     continue;
                 }
 
+                if (c == '/' || c == '·')
+                {
+                    tokens.Add(c.ToString());
+                    i++;
+                    continue;
+                }
+
                 // SYMBOL Tokens
                 // optional prefix o- m- p- etc.
                 if ((last = FindPrefix(PREFIX_TRIE, label, i, -1)) > 0)
@@ -257,6 +265,14 @@ namespace NCDK.Renderers.Generators.Standards
             return false;
         }
 
+        private static bool IsNumber(string str)
+        {
+            for (int i = 0; i < str.Length; i++)
+                if (!IsDigit(str[i]))
+                    return false;
+            return true;
+        }
+
         /// <summary>
         /// Reverse a list of tokens for display, flipping
         /// brackets as needed.
@@ -265,12 +281,36 @@ namespace NCDK.Renderers.Generators.Standards
         public static void Reverse(List<string> tokens)
         {
             tokens.Reverse();
-            // now flip brackets
+            // now flip brackets and move numbers
+            Deque<string> numbers = new Deque<string>();
             for (int i = 0; i < tokens.Count; i++)
             {
                 string token = tokens[i];
-                if (token.Equals("(")) tokens[i] = ")";
-                else if (token.Equals(")")) tokens[i] = "(";
+                if (token.Equals("("))
+                {
+                    tokens[i] = ")";
+                    string num = numbers.Pop();
+                    if (num.Any())
+                    {
+                        tokens.Insert(i + 1, num);
+                        i++;
+                    }
+                }
+                else if (token.Equals(")"))
+                {
+                    tokens[i] = "(";
+                    if (i > 0 && IsNumber(tokens[i - 1]))
+                    {
+                        var last = tokens[i - 1];
+                        tokens.RemoveAt(i - 1);
+                        numbers.Push(last);
+                        i--;
+                    }
+                    else
+                    {
+                        numbers.Push("");
+                    }
+                }
             }
         }
 
@@ -343,6 +383,27 @@ namespace NCDK.Renderers.Generators.Standards
             return res;
         }
 
+        internal static void Reduce(List<FormattedText> texts, int from, int to)
+        {
+            List<FormattedText> tmp = new List<FormattedText>(texts.Count);
+            FormattedText prev = null;
+            tmp.AddRange(texts.GetRange(0, from));
+            foreach (FormattedText curr in texts.GetRange(from, to - from))
+            {
+                if (prev == null || prev.Style != curr.Style)
+                {
+                    tmp.Add(prev = curr);
+                }
+                else
+                {
+                    prev.Text += curr.Text;
+                }
+            }
+            tmp.AddRange(texts.GetRange(to, texts.Count - to));
+            texts.Clear();
+            texts.AddRange(tmp);
+        }
+
         /// <summary>
         /// Determines if the token is representing a charge.
         /// </summary>
@@ -350,7 +411,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the token is a charge label (+2, -, +, -2)</returns>
         private static bool IsChargeToken(string token)
         {
-            return Norm(token[0]) == '-' || token[0] == '+';
+            return token.Length > 0 && Norm(token[0]) == '-' || token[0] == '+';
         }
 
         /// <summary>

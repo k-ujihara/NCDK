@@ -49,7 +49,7 @@ namespace NCDK.Renderers.Colors
             CDK2DAtomColors colors = new CDK2DAtomColors();
 
             Assert.IsNotNull(colors);
-            IAtom imaginary = new Atom("Ix");
+            IAtom imaginary = new PseudoAtom("Ix");
             Assert.AreEqual(Color.FromRgb(0, 0, 0), colors.GetAtomColor(imaginary, WPF::Media.Colors.Black));
         }
     }

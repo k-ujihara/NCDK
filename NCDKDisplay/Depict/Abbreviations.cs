@@ -170,8 +170,8 @@ namespace NCDK.Depict
 
         private static List<IAtomContainer> MakeCut(IBond cut, IAtomContainer mol, Dictionary<IAtom, int> idx, int[][] adjlist)
         {
-            IAtom beg = cut.Atoms[0];
-            IAtom end = cut.Atoms[1];
+            IAtom beg = cut.Begin;
+            IAtom end = cut.End;
 
             var bvisit = new LinkedHashSet<IAtom>();
             var evisit = new LinkedHashSet<IAtom>();
@@ -241,8 +241,8 @@ namespace NCDK.Depict
 
             foreach (var bond in mol.Bonds)
             {
-                IAtom a1 = bond.Atoms[0];
-                IAtom a2 = bond.Atoms[1];
+                IAtom a1 = bond.Begin;
+                IAtom a2 = bond.End;
                 if (bvisit.Contains(a1) && bvisit.Contains(a2))
                     bfrag.Bonds.Add(bond);
                 else if (evisit.Contains(a1) && evisit.Contains(a2))
@@ -435,10 +435,10 @@ namespace NCDK.Depict
                         IAtom atom = frag.Atoms[i];
                         usedAtoms.Add(atom);
                         sgroup.Atoms.Add(atom);
-                        if (attachBond.Atoms[0] == atom)
-                            attachAtom = attachBond.Atoms[1];
-                        else if (attachBond.Atoms[1] == atom)
-                            attachAtom = attachBond.Atoms[0];
+                        if (attachBond.Begin == atom)
+                            attachAtom = attachBond.End;
+                        else if (attachBond.End == atom)
+                            attachAtom = attachBond.Begin;
                     }
 
                     if (attachAtom != null)
@@ -488,7 +488,7 @@ namespace NCDK.Depict
                 {
                     if (!xbonds.Contains(bond))
                     {
-                        IAtom nbr = bond.GetConnectedAtom(attach);
+                        IAtom nbr = bond.GetOther(attach);
                         // contract terminal bonds
                         if (mol.GetConnectedBonds(nbr).Count() == 1)
                         {
@@ -542,7 +542,8 @@ namespace NCDK.Depict
                     }
                     else
                     {
-                        AppendGroup(sb, prev, count, count == 0 || CountUpper(prev) > 1);
+                        bool useParen = count == 0 || CountUpper(prev) > 1 || (prev != null && nbrSymbol.StartsWith(prev));
+                        AppendGroup(sb, prev, count, useParen);
                         prev = nbrSymbol;
                         count = 1;
                     }
@@ -705,7 +706,7 @@ namespace NCDK.Depict
             {
                 val += bond.Order.Numeric;
                 con++;
-                if (bond.GetConnectedAtom(atom).AtomicNumber == 1)
+                if (bond.GetOther(atom).AtomicNumber == 1)
                     hcnt++;
             }
 
@@ -717,7 +718,7 @@ namespace NCDK.Depict
 
         /// <summary>
         /// Internal - create a query atom container that exactly matches the molecule provided.
-        /// Similar to {@link org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator}
+        /// Similar to <see cref="QueryAtomContainerCreator"/>
         /// but we can't access SMARTS query classes from that module (cdk-isomorphism).
         /// </summary>
         /// <param name="mol">molecule</param>
@@ -741,8 +742,8 @@ namespace NCDK.Depict
 
             foreach (var bond in mol.Bonds)
             {
-                IAtom beg = atmmap[bond.Atoms[0]];
-                IAtom end = atmmap[bond.Atoms[1]];
+                IAtom beg = atmmap[bond.Begin];
+                IAtom end = atmmap[bond.End];
 
                 // attach bond skipped
                 if (beg == null || end == null)
@@ -912,7 +913,8 @@ namespace NCDK.Depict
         ///
         /// Available:
         /// <pre>
-        /// obabel_superatoms.smi - https://www.github.com/openbabel/superatoms
+        /// obabel_superatoms.smi - 
+        /// <see href="https://www.github.com/openbabel/superatoms"/s>
         /// </pre>
         /// </summary>
         /// <param name="path">classpath or filesystem path to a SMILES file</param>

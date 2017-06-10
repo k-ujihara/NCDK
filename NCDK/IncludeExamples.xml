@@ -102,6 +102,41 @@
                 IIsotope major = factory.GetMajorIsotope("H");
 </code>
   </Codes>
+  <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+1">
+    <code>                DepictionGenerator dg = new DepictionGenerator().WithSize(512, 512).WithAtomColors();
+                foreach (IAtomContainer mol in mols)
+                    dg.Depict(mol).WriteTo("mol.png");
+</code>
+  </Codes>
+  <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+2">
+    <code>                new DepictionGenerator().Depict(mol).WriteTo("mo.png");
+</code>
+  </Codes>
+  <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+3">
+    <code>                Depiction depiction = new DepictionGenerator().Depict(mol);
+                 
+                 // quick use, format determined by name by path
+                 depiction.WriteTo("mol.png");
+                 depiction.WriteTo("mol.svg");
+                 depiction.WriteTo("mol.pdf");
+                 depiction.WriteTo("mol.jpg");
+                 
+                 // manually specify the format
+                 depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
+
+                // convert to a Java buffered image
+                RenderTargetBitmap img = depiction.ToImg();
+                 
+                 // get the SVG XML string
+                 string svg = depiction.ToSvgStr();
+</code>
+  </Codes>
+  <Codes id="NCDK.Depict.SvgDrawVisitor_Example.cs">
+    <code>            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            visitor.Visit(renderingElements);
+            string svg = visitor.ToString();
+</code>
+  </Codes>
   <Codes id="NCDK.Fingerprints.FingerprinterTool_Example.cs+IsSubset">
     <code>                var mol = TestMoleculeFactory.MakeIndole();
                 var fingerprinter = new Fingerprinter();

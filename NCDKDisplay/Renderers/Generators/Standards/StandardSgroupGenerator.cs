@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2015 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -94,7 +94,7 @@ namespace NCDK.Renderers.Generators.Standards
                 {
                     bool? expansion = (bool?)sgroup.GetValue(SgroupKey.CtabExpansion);
                     // abbreviation is displayed as expanded
-                    if (expansion != null && expansion == true)
+                    if (expansion ?? false)
                         continue;
                     // no or empty label, skip it
                     if (string.IsNullOrEmpty(sgroup.Subscript))
@@ -114,8 +114,8 @@ namespace NCDK.Renderers.Generators.Standards
                     // should only be one bond
                     foreach (var bond in sgroup.Bonds)
                     {
-                        IAtom beg = bond.Atoms[0];
-                        IAtom end = bond.Atoms[1];
+                        IAtom beg = bond.Begin;
+                        IAtom end = bond.End;
                         if (atoms.Contains(beg))
                         {
                             StandardGenerator.HideFully(beg);
@@ -167,8 +167,8 @@ namespace NCDK.Renderers.Generators.Standards
             }
             foreach (var bond in container.Bonds)
             {
-                IAtom beg = bond.Atoms[0];
-                IAtom end = bond.Atoms[1];
+                IAtom beg = bond.Begin;
+                IAtom end = bond.End;
                 if (sgroupAtoms.Contains(beg) && sgroupAtoms.Contains(end))
                 {
                     numSgroupBonds++;
@@ -206,9 +206,9 @@ namespace NCDK.Renderers.Generators.Standards
 
             foreach (var bond in container.Bonds)
             {
-                if (parentAtoms.Contains(bond.Atoms[0]) && parentAtoms.Contains(bond.Atoms[1]))
+                if (parentAtoms.Contains(bond.Begin) && parentAtoms.Contains(bond.End))
                     continue;
-                if (atoms.Contains(bond.Atoms[0]) || atoms.Contains(bond.Atoms[1]))
+                if (atoms.Contains(bond.Begin) || atoms.Contains(bond.End))
                     StandardGenerator.Hide(bond);
             }
             foreach (var atom in atoms)
@@ -244,15 +244,15 @@ namespace NCDK.Renderers.Generators.Standards
             }
             foreach (var bond in container.Bonds)
             {
-                if (atoms.Contains(bond.Atoms[0]) ||
-                    atoms.Contains(bond.Atoms[1]))
+                if (atoms.Contains(bond.Begin) ||
+                    atoms.Contains(bond.End))
                     StandardGenerator.Hide(bond);
             }
             foreach (var bond in crossing)
             {
                 StandardGenerator.Unhide(bond);
-                IAtom a1 = bond.Atoms[0];
-                IAtom a2 = bond.Atoms[1];
+                IAtom a1 = bond.Begin;
+                IAtom a2 = bond.End;
                 StandardGenerator.Unhide(a1);
                 if (atoms.Contains(a1))
                     symbolRemap[a1] = sgroup.Subscript;
@@ -497,6 +497,21 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
+        private static bool IsDigit(char c)
+        {
+            return c >= '0' && c <= '9';
+        }
+
+        private static bool IsUnsignedInt(string str)
+        {
+            int pos = 0;
+            int len = str.Length;
+            while (pos < len)
+                if (!IsDigit(str[pos++]))
+                    return false;
+            return true;
+        }
+
         private IRenderingElement GenerateSgroupBrackets(Sgroup sgroup,
                                                          IList<SgroupBracket> brackets,
                                                          IDictionary<IAtom, AtomSymbol> symbols,
@@ -522,62 +537,90 @@ namespace NCDK.Renderers.Generators.Standards
             // override bracket layout around single atoms to bring them in closer
             if (atoms.Count == 1)
             {
-                double scriptscale = labelScale;
+                IAtom atom = atoms.First();
 
-                TextOutline leftBracket = new TextOutline("(", font, emSize).Resize(1 / scale, 1 / -scale);
-                TextOutline rightBracket = new TextOutline(")", font, emSize).Resize(1 / scale, 1 / -scale);
-
-                var leftCenter = leftBracket.GetCenter();
-                var rightCenter = rightBracket.GetCenter();
-
-                if (symbols.ContainsKey(atoms.First()))
+                // e.g. 2 HCL, 8 H2O etc.
+                if (IsUnsignedInt(subscriptSuffix) &&
+                    !crossingBonds.Any() &&
+                    symbols.ContainsKey(atom))
                 {
-                    AtomSymbol symbol = symbols[atoms.First()];
+                    TextOutline prefix = new TextOutline('·' + subscriptSuffix, font, emSize).Resize(1 / scale, 1 / -scale);
+                    Rect prefixBounds = prefix.GetLogicalBounds();
 
-                    var bounds = symbol.GetConvexHull().Outline().Bounds;
+                    AtomSymbol symbol = symbols[atom];
+
+                    Rect bounds = symbol.GetConvexHull().Outline().Bounds;
+
                     // make slightly large
-                    bounds = new Rect(bounds.Left - 2 * stroke,
-                                   bounds.Top - 2 * stroke,
+                    bounds = new Rect(bounds.Bottom - 2 * stroke,
+                                   bounds.Left - 2 * stroke,
                                    bounds.Width + 4 * stroke,
                                    bounds.Height + 4 * stroke);
 
-                    leftBracket = leftBracket.Translate(bounds.Left - 0.1 - leftCenter.X,
-                                                        symbol.GetAlignmentCenter().Y - leftCenter.Y);
-                    rightBracket = rightBracket.Translate(bounds.Right + 0.1 - rightCenter.X,
-                                                          symbol.GetAlignmentCenter().Y - rightCenter.Y);
+                    prefix = prefix.Translate(bounds.Bottom - prefixBounds.Top,
+                                              symbol.GetAlignmentCenter().Y - prefixBounds.GetCenterY());
+
+                    result.Add(GeneralPath.ShapeOf(prefix.GetOutline(), foreground));
                 }
-                else
+                // e.g. CC(O)nCC
+                else if (crossingBonds.Count > 0)
                 {
-                    Vector2 p = atoms.First().Point2D.Value;
-                    leftBracket = leftBracket.Translate(p.X - 0.2 - leftCenter.X, p.Y - leftCenter.Y);
-                    rightBracket = rightBracket.Translate(p.X + 0.2 - rightCenter.X, p.Y - rightCenter.Y);
+                    double scriptscale = labelScale;
+
+                    TextOutline leftBracket = new TextOutline("(", font, emSize).Resize(1 / scale, 1 / -scale);
+                    TextOutline rightBracket = new TextOutline(")", font, emSize).Resize(1 / scale, 1 / -scale);
+
+                    var leftCenter = leftBracket.GetCenter();
+                    var rightCenter = rightBracket.GetCenter();
+
+                    if (symbols.ContainsKey(atom))
+                    {
+                        AtomSymbol symbol = symbols[atom];
+
+                        var bounds = symbol.GetConvexHull().Outline().Bounds;
+                        // make slightly large
+                        bounds = new Rect(bounds.Left - 2 * stroke,
+                                       bounds.Top - 2 * stroke,
+                                       bounds.Width + 4 * stroke,
+                                       bounds.Height + 4 * stroke);
+
+                        leftBracket = leftBracket.Translate(bounds.Left - 0.1 - leftCenter.X,
+                                                            symbol.GetAlignmentCenter().Y - leftCenter.Y);
+                        rightBracket = rightBracket.Translate(bounds.Right + 0.1 - rightCenter.X,
+                                                              symbol.GetAlignmentCenter().Y - rightCenter.Y);
+                    }
+                    else
+                    {
+                        Vector2 p = atoms.First().Point2D.Value;
+                        leftBracket = leftBracket.Translate(p.X - 0.2 - leftCenter.X, p.Y - leftCenter.Y);
+                        rightBracket = rightBracket.Translate(p.X + 0.2 - rightCenter.X, p.Y - rightCenter.Y);
+                    }
+
+                    result.Add(GeneralPath.ShapeOf(leftBracket.GetOutline(), foreground));
+                    result.Add(GeneralPath.ShapeOf(rightBracket.GetOutline(), foreground));
+
+                    var rightBracketBounds = rightBracket.GetBounds();
+
+                    // subscript/superscript suffix annotation
+                    if (subscriptSuffix != null && subscriptSuffix.Any())
+                    {
+                        TextOutline subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(),
+                                                                          new Vector2(rightBracketBounds.Right,
+                                                                                      rightBracketBounds.Top - 0.1),
+                                                                          new Vector2(-0.5 * rightBracketBounds.Width, 0),
+                                                                          scriptscale));
+                        result.Add(GeneralPath.ShapeOf(subscriptOutline.GetOutline(), foreground));
+                    }
+                    if (superscriptSuffix != null && superscriptSuffix.Any())
+                    {
+                        TextOutline superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(),
+                                                                            new Vector2(rightBracketBounds.Right,
+                                                                                        rightBracketBounds.Bottom + 0.1),
+                                                                            new Vector2(-rightBracketBounds.Width, 0),
+                                                                            scriptscale));
+                        result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
+                    }
                 }
-
-                result.Add(GeneralPath.ShapeOf(leftBracket.GetOutline(), foreground));
-                result.Add(GeneralPath.ShapeOf(rightBracket.GetOutline(), foreground));
-
-                var rightBracketBounds = rightBracket.GetBounds();
-
-                // subscript/superscript suffix annotation
-                if (subscriptSuffix != null && subscriptSuffix.Any())
-                {
-                    TextOutline subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(),
-                                                                      new Vector2(rightBracketBounds.Right,
-                                                                                  rightBracketBounds.Top - 0.1),
-                                                                      new Vector2(-0.5 * rightBracketBounds.Width, 0),
-                                                                      scriptscale));
-                    result.Add(GeneralPath.ShapeOf(subscriptOutline.GetOutline(), foreground));
-                }
-                if (superscriptSuffix != null && superscriptSuffix.Any())
-                {
-                    TextOutline superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(),
-                                                                        new Vector2(rightBracketBounds.Right,
-                                                                                    rightBracketBounds.Bottom + 0.1),
-                                                                        new Vector2(-rightBracketBounds.Width, 0),
-                                                                        scriptscale));
-                    result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
-                }
-
             }
             else if (pairs.Any())
             {
@@ -588,7 +631,7 @@ namespace NCDK.Renderers.Generators.Standards
                 {
                     var bracket = e.Key;
                     var bond = e.Value;
-                    var inGroupAtom = atoms.Contains(bond.Atoms[0]) ? bond.Atoms[0] : bond.Atoms[1];
+                    var inGroupAtom = atoms.Contains(bond.Begin) ? bond.Begin : bond.End;
 
                     var p1 = bracket.FirstPoint;
                     var p2 = bracket.SecondPoint;
@@ -829,8 +872,8 @@ namespace NCDK.Renderers.Generators.Standards
                 IBond crossingBond = null;
                 foreach (var bond in bonds)
                 {
-                    IAtom a1 = bond.Atoms[0];
-                    IAtom a2 = bond.Atoms[1];
+                    IAtom a1 = bond.Begin;
+                    IAtom a2 = bond.End;
                     if (Vectors.LinesIntersect(
                         bracket.FirstPoint.X, bracket.FirstPoint.Y,
                         bracket.SecondPoint.X, bracket.SecondPoint.Y,

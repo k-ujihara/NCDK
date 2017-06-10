@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("NCDK: Chemistry Development Kit for .NET Framework")]
-[assembly: AssemblyDescription("NCDK is .NET port of Chemistry Development Kit based on cdk-1.5.14.")]
+[assembly: AssemblyDescription("NCDK is .NET port of Chemistry Development Kit based on cdk-2.0.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kazuya Ujihara")]
 [assembly: AssemblyProduct("NCDK")]

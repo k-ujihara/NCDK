@@ -44,11 +44,7 @@ namespace NCDK.Depict
     /// </summary>
     /// <example>
     /// Usage:
-    /// <code>
-    /// SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50)
-    /// visitor.Visit(renderingElements);
-    /// string svg = visitor.ToString();
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.SvgDrawVisitor_Example.cs+1"]/*' />
     /// </example>
     public sealed class SvgDrawVisitor : IDrawVisitor
     {

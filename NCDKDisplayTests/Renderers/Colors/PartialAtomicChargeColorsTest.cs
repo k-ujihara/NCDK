@@ -48,7 +48,7 @@ namespace NCDK.Renderers.Colors
             PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
 
             Assert.IsNotNull(colors);
-            IAtom imaginary = new Atom("Ix");
+            IAtom imaginary = new PseudoAtom("Ix");
             Assert.AreEqual(WPF::Media.Colors.Orange, colors.GetAtomColor(imaginary, WPF::Media.Colors.Orange));
         }
     }

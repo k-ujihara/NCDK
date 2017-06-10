@@ -45,7 +45,7 @@ namespace NCDK.Renderers.Colors
             CPKAtomColors colors = new CPKAtomColors();
 
             Assert.IsNotNull(colors);
-            IAtom imaginary = new Atom("Ix");
+            IAtom imaginary = new PseudoAtom("Ix");
             Assert.AreEqual(WPF::Media.Colors.Orange, colors.GetAtomColor(imaginary, WPF::Media.Colors.Orange));
         }
     }

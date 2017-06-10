@@ -35,49 +35,28 @@ using WPF = System.Windows;
 
 namespace NCDK.Depict
 {
-    /**
-     * A high-level API for depicting molecules and reactions.
-     * <p/>
-     * <h4>General Usage</h4>
-     * Create a generator and reuse it for multiple depictions. Configure how
-     * the depiction will look using {@code with...()} methods.
-     * <code>{@code
-     * DepictionGenerator dg = new DepictionGenerator().WithSize(512, 512)
-     *                                                 .WithAtomColors();
-     * foreach (var mol in mols) {
-     *   dg.Depict(mol).WriteTo("~/mol.png");
-     * }
-     * }</code>
-     * <p/>
-     * <h4>One Line Quick Use</h4>
-     * For simplified use we can create a generator and use it once for a single depiction.
-     * <code>{@code
-     * new DepictionGenerator().Depict(mol)
-     *                         .WriteTo("~/mol.png");
-     * }</code>
-     * The intermediate {@link Depiction} object can write to many different formats
-     * through a variety of API calls.
-     * <code>{@code
-     * Depiction depiction = new DepictionGenerator().Depict(mol);
-     * <p/>
-     * // quick use, format determined by name by path
-     * depiction.WriteTo("~/mol.png");
-     * depiction.WriteTo("~/mol.svg");
-     * depiction.WriteTo("~/mol.pdf");
-     * depiction.WriteTo("~/mol.jpg");
-     * <p/>
-     * // manually specify the format
-     * depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
-     * <p/>
-     * // convert to a Java buffered image
-     * BufferedImage img = depiction.ToImg();
-     * <p/>
-     * // get the SVG XML string
-     * string svg = depiction.ToSvgStr();
-     * }</code>
-     *
-     * @author John may
-     */
+    /// <summary>
+    /// A high-level API for depicting molecules and reactions.
+    /// </summary>
+    /// <example>
+    /// <b>General Usage</b>
+    /// <para>
+    /// Create a generator and reuse it for multiple depictions. Configure how
+    /// the depiction will look using <c>With...()</c> methods.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.DepictionGenerator_Example.cs+1"]/*' />
+    /// </para>
+    /// <b>One Line Quick Use</b>
+    /// <para>
+    /// For simplified use we can create a generator and use it once for a single depiction.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.DepictionGenerator_Example.cs+2"]/*' />
+    /// </para>
+    /// <para>
+    /// The intermediate <see cref="Depiction"/> object can write to many different formats
+    /// through a variety of API calls.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.DepictionGenerator_Example.cs+3"]/*' />
+    /// </para>
+    /// </example>
+    // @author John may 
     public sealed class DepictionGenerator
     {
         /// <summary>
@@ -88,7 +67,8 @@ namespace NCDK.Depict
         /// National Bureau of Standards,
         /// Spec. Publ. 440, Dec. 1976, 189 pages.
         /// </summary>
-        private static readonly Color[] KELLY_MAX_CONTRAST = new Color[]{
+        private static readonly Color[] KELLY_MAX_CONTRAST = new Color[]
+        {
             Color.FromRgb(0x00, 0x53, 0x8A), // Strong Blue (sub-optimal for defective color vision)
             Color.FromRgb(0x93, 0xAA, 0x00), // Vivid Yellowish Green (sub-optimal for defective color vision)
             Color.FromRgb(0xC1, 0x00, 0x20), // Vivid Red
@@ -112,7 +92,7 @@ namespace NCDK.Depict
             Color.FromRgb(0x59, 0x33, 0x15), // Deep Yellowish Brown (sub-optimal for defective color vision)
             Color.FromRgb(0xF1, 0x3A, 0x13), // Vivid Reddish Orange (sub-optimal for defective color vision)
             Color.FromRgb(0x23, 0x2C, 0x16), // Dark Olive Green (sub-optimal for defective color vision)
-    };
+        };
 
         /// <summary>
         /// Magic value for indicating automatic parameters. These can
@@ -334,16 +314,18 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">a depiction could not be generated</exception>
         public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol)
         {
+            List<LayoutBackup> layoutBackups = new List<LayoutBackup>();
             int molId = 0;
             foreach (var mol in mols)
             {
                 SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+                layoutBackups.Add(new LayoutBackup(mol));
             }
 
             // ensure we have coordinates, generate them if not
             // we also rescale the molecules such that all bond
             // lengths are the same.
-            var scaleFactors = PrepareCoords(mols);
+            PrepareCoords(mols);
 
             // highlight parts
             foreach (var e in highlight)
@@ -358,7 +340,8 @@ namespace NCDK.Depict
             var molElems = copy.Generate(molList, model, 1);
 
             // reset molecule coordinates
-            ResetCoords(mols, scaleFactors);
+            foreach (LayoutBackup backup in layoutBackups)
+                backup.Reset();
 
             // generate titles (if enabled)
             var titles = new List<Bounds>();
@@ -385,27 +368,16 @@ namespace NCDK.Depict
         /// <returns>coordinates</returns>
         /// <exception cref="CDKException"></exception>
         /// </summary>
-        private List<double> PrepareCoords(IEnumerable<IAtomContainer> mols)
+        private void PrepareCoords(IEnumerable<IAtomContainer> mols)
         {
-            var scaleFactors = new List<double>();
-            foreach (var mol in mols)
+            foreach (IAtomContainer mol in mols)
             {
-                if (Ensure2dLayout(mol))
-                {
-                    scaleFactors.Add(double.NaN);
-                }
-                else if (mol.Bonds.Count > 0)
+                if (!Ensure2dLayout(mol) && mol.Bonds.Count > 0)
                 {
                     double factor = GeometryUtil.GetScaleFactor(mol, 1.5);
                     GeometryUtil.ScaleMolecule(mol, factor);
-                    scaleFactors.Add(factor);
-                }
-                else
-                {
-                    scaleFactors.Add(1d); // no bonds
                 }
             }
-            return scaleFactors;
         }
 
         /// <summary>
@@ -453,6 +425,7 @@ namespace NCDK.Depict
             var reactants = ToList(rxn.Reactants);
             var products = ToList(rxn.Products);
             var agents = ToList(rxn.Agents);
+            List<LayoutBackup> layoutBackups = new List<LayoutBackup>();
 
             // set ids for tagging elements
             int molId = 0;
@@ -460,16 +433,19 @@ namespace NCDK.Depict
             {
                 SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
                 SetIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
+                layoutBackups.Add(new LayoutBackup(mol));
             }
             foreach (var mol in products)
             {
                 SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
                 SetIfMissing(mol, MarkedElement.CLASS_KEY, "product");
+                layoutBackups.Add(new LayoutBackup(mol));
             }
             foreach (var mol in agents)
             {
                 SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
                 SetIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
+                layoutBackups.Add(new LayoutBackup(mol));
             }
 
             var myHighlight = new Dictionary<IChemObject, Color>();
@@ -483,9 +459,9 @@ namespace NCDK.Depict
                 myHighlight[e.Key] = e.Value;
             highlight.Clear();
 
-            var reactantScales = PrepareCoords(reactants);
-            var productScales = PrepareCoords(products);
-            var agentScales = PrepareCoords(agents);
+            PrepareCoords(reactants);
+            PrepareCoords(products);
+            PrepareCoords(agents);
 
             // highlight parts
             foreach (var e in myHighlight)
@@ -509,9 +485,8 @@ namespace NCDK.Depict
             Bounds plus = copy.GeneratePlusSymbol(scale, fgcol);
 
             // reset the coordinates to how they were before we invoked depict
-            ResetCoords(reactants, reactantScales);
-            ResetCoords(products, productScales);
-            ResetCoords(agents, agentScales);
+            foreach (LayoutBackup backup in layoutBackups)
+                backup.Reset();
 
             Bounds emptyBounds = new Bounds();
             Bounds title = copy.GetParameterValueV<bool>(typeof(BasicSceneGenerator.ShowReactionTitle)) ? copy.GenerateTitle(rxn, scale) : emptyBounds;
@@ -572,8 +547,8 @@ namespace NCDK.Depict
                 {
                     foreach (var bond in mol.Bonds)
                     {
-                        IAtom a1 = bond.Atoms[0];
-                        IAtom a2 = bond.Atoms[1];
+                        IAtom a1 = bond.Begin;
+                        IAtom a2 = bond.End;
                         Color c1 = colorMap[a1];
                         Color c2 = colorMap[a2];
                         if (c1 != null && c1 == c2)
@@ -594,8 +569,8 @@ namespace NCDK.Depict
                 }
                 foreach (var bond in mol.Bonds)
                 {
-                    IAtom a1 = bond.Atoms[0];
-                    IAtom a2 = bond.Atoms[1];
+                    IAtom a1 = bond.Begin;
+                    IAtom a2 = bond.End;
                     Color c1 = colorMap[a1];
                     Color c2 = colorMap[a2];
                     if (c1 != null && c1 == c2)
@@ -821,8 +796,10 @@ namespace NCDK.Depict
         /// such as IUPAC numbering.
         /// </summary>
         /// <remarks>
-        /// Note: A depiction can not have both atom numbers and atom maps visible
+        /// <note type="note">
+        /// A depiction can not have both atom numbers and atom maps visible
         /// (but this can be achieved by manually setting the annotation).
+        /// </note>
         /// </remarks>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="WithAtomMapNumbers"/>
@@ -840,10 +817,13 @@ namespace NCDK.Depict
         /// Display atom numbers on the molecule or reaction. The numbers are based on the
         /// ordering of atoms in the molecule data structure and not a systematic system
         /// such as IUPAC numbering.
-        /// <p/>
-        /// Note: A depiction can not have both atom numbers and atom maps visible
-        /// (but this can be achieved by manually setting the annotation).
         /// </summary>
+        /// <remarks>
+        /// <note type="note">
+        /// A depiction can not have both atom numbers and atom maps visible
+        /// (but this can be achieved by manually setting the annotation).
+        /// </note>
+        /// </remarks>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="WithAtomMapNumbers()"/>
         /// <seealso cref="StandardGenerator.ANNOTATION_LABEL"/>
@@ -861,9 +841,11 @@ namespace NCDK.Depict
         /// is loaded from the property <see cref="CDKPropertyName.AtomAtomMapping"/>.
         /// </summary>
         /// <remarks>
-        /// Note: A depiction can not have both atom numbers and atom
+        /// <note type="note">
+        /// A depiction can not have both atom numbers and atom
         /// maps visible (but this can be achieved by manually setting
         /// the annotation).
+        /// </note>
         /// </remarks>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="WithAtomNumbers"/>
@@ -1016,11 +998,11 @@ namespace NCDK.Depict
         /// <summary>
         /// Highlight the provided set of atoms and bonds in the depiction in the
         /// specified color.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// Calling this methods appends to the current highlight buffer. The buffer
         /// is cleared after each depiction is generated (e.g. <see cref="Depict(IAtomContainer)"/>).
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="chemObjs">set of atoms and bonds</param>
         /// <param name="color">the color to highlight</param>
         /// <returns>new generator for method chaining</returns>
@@ -1038,12 +1020,12 @@ namespace NCDK.Depict
         /// raster images using pixels and vector graphics using millimeters. By default depictions
         /// are only ever made smaller if you would also like to make depictions fill all available
         /// space use the <see cref="WithFillToFit"/> option. 
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// Currently the size must either both be precisely specified (e.g. 256x256) or
         /// automatic (e.g. <see cref="AUTOMATIC"/>x<see cref="AUTOMATIC"/>) you cannot for example
         /// specify a fixed height and automatic width.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="w">max width</param>
         /// <param name="h">max height</param>
         /// <returns>new generator for method chaining</returns>
@@ -1087,11 +1069,11 @@ namespace NCDK.Depict
         /// depiction and is used for uniformly making depictions bigger. If
         /// you would like to simply fill all available space (not recommended)
         /// use <see cref="WithFillToFit"/>.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The zoom is a scaling factor, specifying a zoom of 2 is double size,
         /// 0.5 half size, etc.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="zoom">zoom factor</param>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="BasicSceneGenerator.ZoomFactor"/>
@@ -1159,8 +1141,8 @@ namespace NCDK.Depict
             double[] lengths = new double[bonds.Count];
             foreach (var bond in bonds)
             {
-                Vector2 p1 = bond.Atoms[0].Point2D.Value;
-                Vector2 p2 = bond.Atoms[1].Point2D.Value;
+                Vector2 p1 = bond.Begin.Point2D.Value;
+                Vector2 p2 = bond.End.Point2D.Value;
                 // watch out for overlaid atoms (occur in multiple group Sgroups)
                 if (!p1.Equals(p2))
                     lengths[nBonds++] = Vector2.Distance(p1, p2);
@@ -1178,6 +1160,47 @@ namespace NCDK.Depict
         {
             // TODO: Native Font Support - choose best for Win/Linux/OS X etc
             return WPF.SystemFonts.MessageFontFamily;
+        }
+
+        /// <summary>
+        /// Utility class for storing coordinates and bond types and resetting them after use.
+        /// </summary>
+        private sealed class LayoutBackup
+        {
+            private readonly Vector2?[] coords;
+            private readonly BondStereo[] btypes;
+            private readonly IAtomContainer mol;
+
+            public LayoutBackup(IAtomContainer mol)
+            {
+                int numAtoms = mol.Atoms.Count;
+                int numBonds = mol.Bonds.Count;
+                this.coords = new Vector2?[numAtoms];
+                this.btypes = new BondStereo[numBonds];
+                this.mol = mol;
+                for (int i = 0; i < numAtoms; i++)
+                {
+                    IAtom atom = mol.Atoms[i];
+                    coords[i] = atom.Point2D;
+                    if (coords[i] != null)
+                        atom.Point2D = coords[i]; // copy
+                }
+                for (int i = 0; i < numBonds; i++)
+                {
+                    IBond bond = mol.Bonds[i];
+                    btypes[i] = bond.Stereo;
+                }
+            }
+
+            internal void Reset()
+            {
+                int numAtoms = mol.Atoms.Count;
+                int numBonds = mol.Bonds.Count;
+                for (int i = 0; i < numAtoms; i++)
+                    mol.Atoms[i].Point2D = coords[i];
+                for (int i = 0; i < numBonds; i++)
+                    mol.Bonds[i].Stereo = btypes[i];
+            }
         }
     }
 }

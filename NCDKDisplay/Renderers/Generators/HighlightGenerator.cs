@@ -49,8 +49,8 @@ namespace NCDK.Renderers.Generators
     ///
     /// // set atom/bond ids, atoms with no id will not be highlighted, numbering
     /// // starts at 0
-    /// ids.Put(m.Atoms[0], 0);
-    /// ids.Put(m.Atoms[1], 0);
+    /// ids.Put(m.Begin, 0);
+    /// ids.Put(m.End, 0);
     /// ids.Put(m.Atoms[2], 0);
     /// ids.Put(m.Atoms[5], 2);
     /// ids.Put(m.Atoms[6], 1);
@@ -148,7 +148,7 @@ namespace NCDK.Renderers.Generators
                 // punch out the area occupied by atoms highlighted with a
                 // different color
 
-                IAtom a1 = bond.Atoms[0], a2 = bond.Atoms[1];
+                IAtom a1 = bond.Begin, a2 = bond.End;
                 int a1Id, a2Id;
                 if (highlight.TryGetValue(a1, out a1Id))
                 {
@@ -192,10 +192,10 @@ namespace NCDK.Renderers.Generators
         /// <returns>the shape which will highlight the atom</returns>
         private static Geometry CreateBondHighlight(IBond bond, double radius)
         {
-            double x1 = bond.Atoms[0].Point2D.Value.X;
-            double x2 = bond.Atoms[1].Point2D.Value.X;
-            double y1 = bond.Atoms[0].Point2D.Value.Y;
-            double y2 = bond.Atoms[1].Point2D.Value.Y;
+            double x1 = bond.Begin.Point2D.Value.X;
+            double x2 = bond.End.Point2D.Value.X;
+            double y1 = bond.Begin.Point2D.Value.Y;
+            double y2 = bond.End.Point2D.Value.Y;
 
             double dx = x2 - x1;
             double dy = y2 - y1;
@@ -249,9 +249,9 @@ namespace NCDK.Renderers.Generators
         /// Create an auto generating palette which will generate colors using the
         /// provided parameters.
         /// </summary>
-        /// <param name="saturation">color saturation, 0.0 < x < 1.0</param>
-        /// <param name="brightness">color brightness, 0.0 < x < 1.0</param>
-        /// <param name="alpha">color alpha (transparency), 0 < x < 255</param>
+        /// <param name="saturation">color saturation, 0.0 &lt; x &lt; 1.0</param>
+        /// <param name="brightness">color brightness, 0.0 &lt; x &lt; 1.0</param>
+        /// <param name="alpha">color alpha (transparency), 0 &lt; x &lt; 255</param>
         /// <returns>a palette to use in highlighting</returns>
         public static Palette CreateAutoPalette(float saturation, float brightness, int alpha)
         {

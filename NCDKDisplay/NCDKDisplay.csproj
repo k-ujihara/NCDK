@@ -117,6 +117,17 @@
     <Compile Include="Renderers\Elements\WedgeLineElement.cs" />
     <Compile Include="Renderers\Fonts\AbstractFontManager.cs" />
     <Compile Include="Renderers\Fonts\WPFFontManager.cs" />
+    <Content Include="..\NCDK\IncludeExamples.tt">
+      <Link>IncludeExamples.tt</Link>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
+    </Content>
+    <Content Include="..\NCDK\IncludeExamples.xml">
+      <Link>IncludeExamples.xml</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
+    </Content>
     <Content Include="Renderers\Elements\TextGroupElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TextGroupElement1.cs</LastGenOutput>

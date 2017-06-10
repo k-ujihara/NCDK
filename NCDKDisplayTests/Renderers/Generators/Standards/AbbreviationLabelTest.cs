@@ -67,7 +67,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void tertbutyls()
+        public void Tertbutyls()
         {
             var tokens = new List<string>(1);
             foreach (var str in new[] { "tBu", "tertBu", "t-Bu", "t-Butyl", "tertButyl" })
@@ -136,7 +136,26 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void nonAbbreviationLabel()
+        public void ReversingFormatPOOHOEt()
+        {
+            List<string> tokens = new List<string>();
+            Assert.IsTrue(AbbreviationLabel.Parse("PO(OH)OEt", tokens));
+            AbbreviationLabel.Reverse(tokens);
+            AbbreviationLabel.Format(tokens);
+            Assert.AreEqual("EtO(HO)OP", string.Join("", tokens));
+        }
+
+        [TestMethod()]
+        public void ReversingBracketsWithNumbers()
+        {
+            List<string> tokens = new List<string>();
+            Assert.IsTrue(AbbreviationLabel.Parse("B(OH)2", tokens));
+            AbbreviationLabel.Reverse(tokens);
+            Assert.AreEqual("(HO)2B", string.Join("", tokens));
+        }
+
+        [TestMethod()]
+        public void NonAbbreviationLabel()
         {
             var tokens = new List<string>();
             Assert.IsFalse(AbbreviationLabel.Parse("A Random Label - Don't Reverse", tokens));
@@ -170,6 +189,28 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
+        public void NEt3DotHCl()
+        {
+            List<string> tokens = new List<string>();
+            Assert.IsTrue(AbbreviationLabel.Parse("NEt3·HCl", tokens));
+            Assert.AreEqual(5, tokens.Count);
+            Assert.AreEqual("N", tokens[0]);
+            Assert.AreEqual("Et3", tokens[1]);
+            Assert.AreEqual("·", tokens[2]);
+            Assert.AreEqual("H", tokens[3]);
+            Assert.AreEqual("Cl", tokens[4]);
+            List<AbbreviationLabel.FormattedText> formatted = AbbreviationLabel.Format(tokens);
+            AbbreviationLabel.Reduce(formatted, 0, formatted.Count);
+            Assert.AreEqual(3, formatted.Count);
+            Assert.AreEqual("NEt", formatted[0].Text);
+            Assert.AreEqual(AbbreviationLabel.STYLE_NORMAL, formatted[0].Style);
+            Assert.AreEqual("3", formatted[1].Text);
+            Assert.AreEqual(AbbreviationLabel.STYLE_SUBSCRIPT, formatted[1].Style);
+            Assert.AreEqual("·HCl", formatted[2].Text);
+            Assert.AreEqual(AbbreviationLabel.STYLE_NORMAL, formatted[2].Style);
+        }
+
+        [TestMethod()]
         public void FormatOPO3H2()
         {
             var tokens = new[] { "O", "P", "O3", "H2" };
@@ -186,7 +227,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void het()
+        public void Het()
         {
             // 'Het' not 'He'lium and 't'erts
             Assert.IsFalse(AbbreviationLabel.Parse("Het", new List<string>()));
@@ -205,7 +246,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void nonAsciiLabel()
+        public void NonAsciiLabel()
         {
             // phenyl
             Assert.IsFalse(AbbreviationLabel.Parse("苯基", new List<string>()));

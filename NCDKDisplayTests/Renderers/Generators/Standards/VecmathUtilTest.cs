@@ -67,8 +67,8 @@ namespace NCDK.Renderers.Generators.Standards
             mock_a1.Setup(n => n.Point2D).Returns(new Vector2(0, 1));
             mock_a2.Setup(n => n.Point2D).Returns(new Vector2(1, 0));
             var mock_bond = new Mock<IBond>(); var bond = mock_bond.Object;
-            mock_bond.Setup(n => n.GetConnectedAtom(a1)).Returns(a2);
-            mock_bond.Setup(n => n.GetConnectedAtom(a2)).Returns(a1);
+            mock_bond.Setup(n => n.GetOther(a1)).Returns(a2);
+            mock_bond.Setup(n => n.GetOther(a2)).Returns(a1);
             Vector2 unit = VecmathUtil.NewUnitVector(a1, bond);
             Assert.AreEqual(0.707, unit.X, 0.01);
             Assert.AreEqual(-0.707, unit.Y, 0.01);
@@ -179,14 +179,13 @@ namespace NCDK.Renderers.Generators.Standards
             var mock_b1 = new Mock<IBond>(); var b1 = mock_b1.Object;
             var mock_b2 = new Mock<IBond>(); var b2 = mock_b2.Object;
             var mock_b3 = new Mock<IBond>(); var b3 = mock_b3.Object;
-            mock_b1.Setup(n => n.GetConnectedAtom(a1)).Returns(a2);
-            mock_b2.Setup(n => n.GetConnectedAtom(a1)).Returns(a3);
-            mock_b3.Setup(n => n.GetConnectedAtom(a1)).Returns(a4);
+            mock_b1.Setup(n => n.GetOther(a1)).Returns(a2);
+            mock_b2.Setup(n => n.GetOther(a1)).Returns(a3);
+            mock_b3.Setup(n => n.GetOther(a1)).Returns(a4);
             mock_a1.Setup(n => n.Point2D).Returns(new Vector2(0, 0));
             mock_a2.Setup(n => n.Point2D).Returns(new Vector2(0, 1));
             mock_a3.Setup(n => n.Point2D).Returns(new Vector2(1, 0));
-            mock_a4.Setup(n => n.Point2D).Returns(new Vector2(1, 1)); // this one is
-                                                                      // found
+            mock_a4.Setup(n => n.Point2D).Returns(new Vector2(1, 1)); // this one is found
 
             Vector2 nearest = VecmathUtil.GetNearestVector(new Vector2(0.5, 0.5), a1, new[] { b1, b2, b3 });
             Assert.AreEqual(0.707, nearest.X, 0.01);

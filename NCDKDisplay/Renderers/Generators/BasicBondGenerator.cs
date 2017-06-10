@@ -288,8 +288,8 @@ namespace NCDK.Renderers.Generators
             if (bond.Atoms.Count > 2) return null;
 
             // is object right? if not replace with a good one
-            Vector2 point1 = bond.Atoms[0].Point2D.Value;
-            Vector2 point2 = bond.Atoms[1].Point2D.Value;
+            Vector2 point1 = bond.Begin.Point2D.Value;
+            Vector2 point2 = bond.End.Point2D.Value;
             Color color = this.GetColorForBond(bond, model);
             double bondWidth = this.GetWidthForBond(bond, model);
             double bondDistance = model.GetV<double>(typeof(BondDistance)) / model.GetV<double>(typeof(Scale));
@@ -381,8 +381,8 @@ namespace NCDK.Renderers.Generators
         public virtual LineElement GenerateInnerElement(IBond bond, IRing ring, RendererModel model)
         {
             Vector2 center = GeometryUtil.Get2DCenter(ring);
-            Vector2 a = bond.Atoms[0].Point2D.Value;
-            Vector2 b = bond.Atoms[1].Point2D.Value;
+            Vector2 a = bond.Begin.Point2D.Value;
+            Vector2 b = bond.End.Point2D.Value;
 
             // the proportion to move in towards the ring center
             double distanceFactor = model.GetV<double>(typeof(TowardsRingCenterProportion));

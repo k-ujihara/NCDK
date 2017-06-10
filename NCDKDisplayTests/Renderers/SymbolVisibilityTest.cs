@@ -73,6 +73,8 @@ namespace NCDK.Renderers
         {
             IAtom a1 = new Atom("C");
             IAtom a2 = new Atom("C");
+            a1.ImplicitHydrogenCount = null;
+            a2.ImplicitHydrogenCount = null;
             IBond bond = new Bond(a1, a2);
             a1.Point2D = new Vector2(0, 0);
             a2.Point2D = new Vector2(0, 0);

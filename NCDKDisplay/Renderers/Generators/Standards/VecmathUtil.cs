@@ -87,7 +87,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>unit vector</returns>
         public static Vector2 NewUnitVector(IAtom atom, IBond bond)
         {
-            return NewUnitVector(atom.Point2D.Value, bond.GetConnectedAtom(atom).Point2D.Value);
+            return NewUnitVector(atom.Point2D.Value, bond.GetOther(atom).Point2D.Value);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace NCDK.Renderers.Generators.Standards
             List<IAtom> toAtoms = new List<IAtom>();
             foreach (var bond in bonds)
             {
-                toAtoms.Add(bond.GetConnectedAtom(fromAtom));
+                toAtoms.Add(bond.GetOther(fromAtom));
             }
 
             return GetNearestVector(reference, NewUnitVectors(fromAtom, toAtoms));

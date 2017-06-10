@@ -209,7 +209,7 @@ namespace NCDK.Renderers.Generators.Standards
                     continue;
 
                 var highlight = GetHighlightColor(atom, parameters);
-                Color color = highlight != null && style == HighlightStyle.Colored ? highlight.Value : coloring.GetAtomColor(atom);
+                Color color = GetColorOfAtom(symbolRemap, coloring, foreground, style, atom, highlight);
 
                 if (symbols[i] == null)
                 {
@@ -263,6 +263,19 @@ namespace NCDK.Renderers.Generators.Standards
             group.Add(frontLayer);
 
             return MarkedElement.MarkupMol(group, container);
+        }
+
+        private Color GetColorOfAtom(IDictionary<IAtom, string> symbolRemap, IAtomColorer coloring, Color foreground,
+                             HighlightStyle style, IAtom atom, Color? highlight)
+        {
+            // atom is highlighted...?
+            if (highlight != null && style == HighlightStyle.Colored)
+                return highlight.Value;
+            // abbreviations default to foreground color
+            if (symbolRemap.ContainsKey(atom))
+                return foreground;
+            // use the atom colorer
+            return coloring.GetAtomColor(atom);
         }
 
         /// <summary>

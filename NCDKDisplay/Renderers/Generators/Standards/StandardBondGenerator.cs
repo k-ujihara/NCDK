@@ -168,8 +168,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>rendering element</returns>
         internal IRenderingElement Generate(IBond bond)
         {
-            IAtom atom1 = bond.Atoms[0];
-            IAtom atom2 = bond.Atoms[1];
+            IAtom atom1 = bond.Begin;
+            IAtom atom2 = bond.End;
 
             BondOrder order = bond.Order;
 
@@ -311,7 +311,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (toBonds.Count == 1)
                 {
                     IBond toBondNeighbor = toBonds[0];
-                    IAtom toNeighbor = toBondNeighbor.GetConnectedAtom(to);
+                    IAtom toNeighbor = toBondNeighbor.GetOther(to);
 
                     Vector2 refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
                     bool wideToWide = false;
@@ -326,7 +326,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     double theta = Vectors.Angle(refVector, unit);
 
-                    if (theta > threshold)
+                    if (theta > threshold && theta + threshold + threshold < Math.PI)
                     {
                         c = Intersection(b, NewUnitVector(b, c), toPoint, refVector);
                         d = Intersection(a, NewUnitVector(a, d), toPoint, refVector);
@@ -404,7 +404,7 @@ namespace NCDK.Renderers.Generators.Standards
             if (CanDrawFancyHashedWedge(to, toBonds, adjacent))
             {
                 IBond toBondNeighbor = toBonds[0];
-                IAtom toNeighbor = toBondNeighbor.GetConnectedAtom(to);
+                IAtom toNeighbor = toBondNeighbor.GetOther(to);
 
                 Vector2 refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
 
@@ -417,7 +417,8 @@ namespace NCDK.Renderers.Generators.Standards
                 }
 
                 // only slant if the angle isn't shallow
-                if (Vectors.Angle(refVector, unit) > threshold)
+                double theta = Vectors.Angle(refVector, unit);
+                if (theta > threshold && theta + threshold + threshold < Math.PI)
                 {
                     hatchAngle = refVector;
                 }
@@ -588,16 +589,16 @@ namespace NCDK.Renderers.Generators.Standards
             IAtomContainer refContainer = cyclic ? ringMap[bond] : container;
 
             int length = refContainer.Atoms.Count;
-            int index1 = refContainer.Atoms.IndexOf(bond.Atoms[0]);
-            int index2 = refContainer.Atoms.IndexOf(bond.Atoms[1]);
+            int index1 = refContainer.Atoms.IndexOf(bond.Begin);
+            int index2 = refContainer.Atoms.IndexOf(bond.End);
 
             // if the bond is in a cycle we are using ring bonds to determine offset, since rings
             // have been normalised and ordered to wind anti-clockwise we want to get the atoms
             // in the order they are in the ring.
             bool outOfOrder = cyclic && index1 == (index2 + 1) % length;
 
-            IAtom atom1 = bond.Atoms[outOfOrder ? 1 : 0];
-            IAtom atom2 = bond.Atoms[outOfOrder ? 0 : 1];
+            IAtom atom1 = outOfOrder ? bond.End : bond.Begin;
+            IAtom atom2 = outOfOrder ? bond.Begin : bond.End;
 
             if (BondStereo.EOrZ.Equals(bond.Stereo)) return GenerateCrossedDoubleBond(atom1, atom2);
 
@@ -711,13 +712,13 @@ namespace NCDK.Renderers.Generators.Standards
             switch (bond.Stereo.Ordinal)
             {
                 case BondStereo.O.Up:
-                    return bond.Atoms[1] == atom;
+                    return bond.End == atom;
                 case BondStereo.O.UpInverted:
-                    return bond.Atoms[0] == atom;
+                    return bond.Begin == atom;
                 case BondStereo.O.Down:
-                    return bond.Atoms[1] == atom;
+                    return bond.End == atom;
                 case BondStereo.O.DownInverted:
-                    return bond.Atoms[0] == atom;
+                    return bond.Begin == atom;
                 default:
                     return false;
             }
@@ -764,7 +765,7 @@ namespace NCDK.Renderers.Generators.Standards
             Vector2 unit = NewUnitVector(atom1Point, atom2Point);
             Vector2 perpendicular = NewPerpendicularVector(unit);
 
-            Vector2 reference = NewUnitVector(atom1.Point2D.Value, atom1Bond.GetConnectedAtom(atom1).Point2D.Value);
+            Vector2 reference = NewUnitVector(atom1.Point2D.Value, atom1Bond.GetOther(atom1).Point2D.Value);
 
             // there are two perpendicular vectors, this check ensures we have one on the same side as
             // the reference
@@ -969,7 +970,7 @@ namespace NCDK.Renderers.Generators.Standards
             Vector2 bndVec = VecmathUtil.NewUnitVector(atom, bond);
             Vector2 bndXVec = VecmathUtil.NewPerpendicularVector(bndVec);
 
-            double length = Vector2.Distance(atom.Point2D.Value, bond.GetConnectedAtom(atom).Point2D.Value);
+            double length = Vector2.Distance(atom.Point2D.Value, bond.GetOther(atom).Point2D.Value);
             bndXVec *= length / 2;
             Vector2 beg = VecmathUtil.Sum(atom.Point2D.Value, bndXVec);
             bndXVec *= -1;
@@ -1214,11 +1215,11 @@ namespace NCDK.Renderers.Generators.Standards
             IAtom atom2 = bond1.Atoms[1];
             if (bond2.Contains(atom1))
             {
-                return Winding(atom2.Point2D.Value, atom1.Point2D.Value, bond2.GetConnectedAtom(atom1).Point2D.Value);
+                return Winding(atom2.Point2D.Value, atom1.Point2D.Value, bond2.GetOther(atom1).Point2D.Value);
             }
             else if (bond2.Contains(atom2))
             {
-                return Winding(atom1.Point2D.Value, atom2.Point2D.Value, bond2.GetConnectedAtom(atom2).Point2D.Value);
+                return Winding(atom1.Point2D.Value, atom2.Point2D.Value, bond2.GetOther(atom2).Point2D.Value);
             }
             else
             {
@@ -1233,7 +1234,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>bond to ring map</returns>
         internal static IDictionary<IBond, IAtomContainer> RingPreferenceMap(IAtomContainer container)
         {
-            IRingSet relevantRings = Cycles.FindRelevant(container).ToRingSet();
+            IRingSet relevantRings = Cycles.FindSSSR(container).ToRingSet();
             var rings = AtomContainerSetManipulator.GetAllAtomContainers(relevantRings).ToList();
 
             rings.Sort(new RingBondOffsetComparator());
