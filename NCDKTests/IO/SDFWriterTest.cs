@@ -241,7 +241,7 @@ namespace NCDK.IO
             sdfWriter.Close();
             string result = writer.ToString();
             Assert.IsFalse(result.Contains("V2000"));
-            Assert.IsFalse(result.Contains("V3000"));
+            Assert.IsTrue(result.Contains("V3000"));
         }
 
         // @cdk.bug 3392485

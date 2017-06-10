@@ -416,7 +416,7 @@ namespace NCDK.Fingerprints
             Fingerprinter fpr = new Fingerprinter(1024, 7);
             fpr.SetPathLimit(2000);
             fpr.SetHashPseudoAtoms(true);
-            string expected = "CDK-Fingerprinter/" + CDK.Version + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=true";
+            string expected = "CDK-Fingerprinter/" + CDK.Version + " searchDepth=7 pathLimit=2000 hashPseudoAtoms=" + true.ToString();
             Assert.AreEqual(expected, fpr.GetVersionDescription());
         }
     }

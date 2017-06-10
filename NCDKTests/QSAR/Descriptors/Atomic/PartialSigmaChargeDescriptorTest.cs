@@ -43,10 +43,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Fluoroethylene
-        /// 
-        ///   @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
+        /// A unit test with Fluoroethylene
         /// </summary>
+        /// @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Fluoroethylene()
         {
@@ -77,10 +76,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Ethyl Fluoride
-        /// 
-        ///   @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+        /// A unit test with Ethyl Fluoride
         /// </summary>
+        /// @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Methyl_Floride()
         {
@@ -105,9 +103,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Methyl chloride
+        /// A unit test with Methyl chloride
         /// </summary>
-        //   @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
+        // @cdk.inchi  InChI=1/CH3Cl/c1-2/h1H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Methyl_chloride()
         {
@@ -131,9 +129,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Methyl chloride
+        /// A unit test with Methyl chloride
         /// </summary>
-        //   @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
+        // @cdk.inchi  InChI=1/CH3Br/c1-2/h1H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Methyl_bromide()
         {
@@ -157,9 +155,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Methyl iodide
+        /// A unit test with Methyl iodide
         /// </summary>
-        //   @cdk.inchi
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Methyl_iodide()
         {
@@ -182,9 +179,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Allyl bromide
+        /// A unit test with Allyl bromide
         /// </summary>
-        //   @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
+        // @cdk.inchi  InChI=1/C3H5Br/c1-2-3-4/h2H,1,3H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Allyl_bromide()
         {
@@ -208,9 +205,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Isopentyl iodide
+        /// A unit test with Isopentyl iodide
         /// </summary>
-        //   @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3
+        // @cdk.inchi  InChI=1/C5H11I/c1-5(2)3-4-6/h5H,3-4H2,1-2H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Isopentyl_iodide()
         {
@@ -229,9 +226,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Ethoxy ethane
+        /// A unit test with Ethoxy ethane
         /// </summary>
-        //   @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
+        //  @cdk.inchi  InChI=1/C4H10O/c1-3-5-4-2/h3-4H2,1-2H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Ethoxy_ethane()
         {
@@ -257,9 +254,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Ethanolamine
+        /// A unit test with Ethanolamine
         /// </summary>
-        //   @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2
+        // @cdk.inchi  InChI=1/C2H7NO/c3-1-2-4/h4H,1-3H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Ethanolamine()
         {
@@ -286,9 +283,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with Allyl mercaptan
+        /// A unit test with Allyl mercaptan
         /// </summary>
-        //   @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
+        // @cdk.inchi  InChI=1/C3H6S/c1-2-3-4/h2,4H,1,3H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor_Allyl_mercaptan()
         {
@@ -315,9 +312,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        /// <summary>
-        ///   A unit test for JUnit with
-        /// </summary>
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor1()
         {
@@ -333,9 +327,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        /// <summary>
-        ///   A unit test for JUnit with
-        /// </summary>
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor2()
         {
@@ -366,7 +357,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        //   @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
+        // @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor4()
         {
@@ -393,7 +384,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        //   @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor5()
         {
@@ -442,23 +433,23 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///   A unit test for JUnit with [H]c1[n-][c+]([H])c([H])c([H])c1([H])
+        /// A unit test with [H]c1[n-][c+]([H])c([H])c([H])c1([H])
         /// </summary>
         [TestMethod()]
         public void TestPartialSigmaChargeDescriptor7()
         {
+            // from Petra online: http://www2.chemi.uni.erlange.de/services/petra/smiles.pthml
             double[] testResult = { 0.0835, 0.0265, -0.2622, 0.0265, 0.0835, -0.0444, 0.064, -0.0596, 0.0626, -0.0444, 0.064 };
-            // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            sp.Kekulise(false);
             IAtomContainer mol = sp.ParseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
-            descriptor.Parameters = new object[] { 6 };
+            object[] obj = { 6 };
+            descriptor.Parameters = obj;
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
-                //            Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
+                //			logger.debug(mol.getAtom(i).getSymbol()+",result: "+result);
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }

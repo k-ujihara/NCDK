@@ -147,7 +147,7 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
             Assert.AreEqual(BondStereo.None, m.Bonds[3].Stereo);
             Assert.AreEqual(BondStereo.Up, m.Bonds[4].Stereo);
-            Assert.AreEqual(BondStereo.None, m.Bonds[5].Stereo);
+            Assert.AreEqual(BondStereo.Down, m.Bonds[5].Stereo);
         }
 
         // [C@@](CCC)(C1)(C)C1 (favour acyclic)

@@ -166,7 +166,7 @@ namespace NCDK.IO
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object that subclasses IChemObject</param>
         /// <returns>The IChemObject read</returns>
-        public override T Read<T>(T obj)
+        public override T Read<T>(T obj) 
         {
             if (obj is IAtomContainer)
             {

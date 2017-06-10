@@ -24,7 +24,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using System.IO;
 
 namespace NCDK.IO

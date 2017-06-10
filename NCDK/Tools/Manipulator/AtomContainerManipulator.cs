@@ -119,7 +119,7 @@ namespace NCDK.Tools.Manipulator
              int idx = container.Atoms.IndexOf(oldAtom);
             if (idx < 0)
                 return false;
-            container.Atoms[idx]  = newAtom;
+            container.SetAtom(idx, newAtom);
             var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {
@@ -700,7 +700,7 @@ namespace NCDK.Tools.Manipulator
             int nCpyAtoms = 0;
             int nCpyBonds = 0;
 
-            ICollection<IAtom> hydrogens = new HashSet<IAtom>();
+            ISet<IAtom> hydrogens = new HashSet<IAtom>();
             IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
 
             // filter the original container atoms for those that can/can't

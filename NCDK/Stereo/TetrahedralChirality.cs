@@ -24,6 +24,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace NCDK.Stereo
 {
@@ -103,11 +104,24 @@ namespace NCDK.Stereo
 
         public ICDKObject Clone(CDKObjectMap map)
         {
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
+
             var clone = (TetrahedralChirality)MemberwiseClone();
-            clone.chiralAtom = (IAtom)chiralAtom?.Clone(map);
+
+            // convert the chiral atom and it's ligands to their equivalent
+            IAtom chiral = chiralAtom;
+            if (chiral != null && map.AtomMap.ContainsKey(chiralAtom))
+                chiral = map.AtomMap[chiralAtom];
+            clone.chiralAtom = chiral;
             clone.ligandAtoms = new List<IAtom>();
             foreach (var ligand in ligandAtoms)
-                clone.ligandAtoms.Add((IAtom)ligand?.Clone(map));
+            {
+                IAtom atom;
+                if (ligand == null || !map.AtomMap.TryGetValue(ligand, out atom))
+                    atom = ligand;
+                clone.ligandAtoms.Add(atom);
+            }
             return clone;
         }
     }

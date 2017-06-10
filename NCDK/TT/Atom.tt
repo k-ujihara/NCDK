@@ -358,6 +358,8 @@ namespace <#= ns.NS #>
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
+			Elements elem;
+
             int len = str.Length;
             int pos = 0;
 
@@ -366,38 +368,60 @@ namespace <#= ns.NS #>
             int hcnt = 0;
             int chg = 0;
 
-            // optional mass
-            if (pos < len && IsDigit(str[pos]))
             {
-                mass = (str[pos++] - '0');
-                while (pos < len && IsDigit(str[pos]))
-                    mass = 10 * mass + (str[pos++] - '0');
-            }
-            else if ("R".Equals(str))
-            {
-                atom.AtomicNumber = 0;
-                atom.Symbol = "R";
-                return true;
-            }
-            else if ("*".Equals(str))
-            {
-                atom.AtomicNumber = 0;
-                atom.Symbol = "*";
-                return true;
-            }
-            else if ("D".Equals(str))
-            {
-                atom.AtomicNumber = 1;
-                atom.MassNumber = 2;
-                atom.Symbol = "H";
-                return true;
-            }
-            else if ("T".Equals(str))
-            {
-                atom.AtomicNumber = 1;
-                atom.MassNumber = 3;
-                atom.Symbol = "H";
-                return true;
+<# if (!ns.IsSilent) { #>
+                // optional mass
+				if (pos < len && IsDigit(str[pos])) 
+				{
+					mass = (str[pos++] - '0');
+					while (pos < len && IsDigit(str[pos]))
+						mass = 10 * mass + (str[pos++] - '0');
+				}
+<# } else { #>
+                elem = Elements.OfString(str);
+                if (elem != Elements.Unknown)
+                {
+                    atom.AtomicNumber = elem.AtomicNumber;
+                    atom.Symbol = elem.Symbol;
+                    return true;
+                }
+<# } #>
+                else if ("R".Equals(str))
+                {
+                    atom.AtomicNumber = 0;
+                    atom.Symbol = "R";
+                    return true;
+                }
+                else if ("*".Equals(str))
+                {
+                    atom.AtomicNumber = 0;
+                    atom.Symbol = "*";
+                    return true;
+                }
+                else if ("D".Equals(str))
+                {
+                    atom.AtomicNumber = 1;
+                    atom.MassNumber = 2;
+                    atom.Symbol = "H";
+                    return true;
+                }
+                else if ("T".Equals(str))
+                {
+                    atom.AtomicNumber = 1;
+                    atom.MassNumber = 3;
+                    atom.Symbol = "H";
+                    return true;
+                }
+
+<# if (ns.IsSilent) { #>
+                // optional mass
+				if (pos < len && IsDigit(str[pos])) 
+				{
+					mass = (str[pos++] - '0');
+					while (pos < len && IsDigit(str[pos]))
+						mass = 10 * mass + (str[pos++] - '0');
+				}
+<# } #>
             }
 
             // atom symbol
@@ -407,7 +431,7 @@ namespace <#= ns.NS #>
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                Elements elem = Elements.OfString(str.Substring(beg, pos - beg));
+                elem = Elements.OfString(str.Substring(beg, pos - beg));
                 if (elem == Elements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
@@ -469,11 +493,11 @@ namespace <#= ns.NS #>
             if (mass < 0)
                 atom.MassNumber = null;
             else
-                atom.MassNumber= mass;
+                atom.MassNumber = mass;
             atom.AtomicNumber = anum;
             atom.Symbol = Elements.OfNumber(anum).Symbol;
-            atom.ImplicitHydrogenCount= hcnt;
-            atom.FormalCharge= chg;
+            atom.ImplicitHydrogenCount = hcnt;
+            atom.FormalCharge = chg;
 
             return pos == len && len > 0;
         }

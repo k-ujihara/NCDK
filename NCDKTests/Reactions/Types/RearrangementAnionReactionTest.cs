@@ -107,7 +107,7 @@ namespace NCDK.Reactions.Types
 
             IAtomContainer product = setOfReactions[0].Products[0];
             Assert.AreEqual(-1, product.Atoms[2].FormalCharge.Value);
-            Assert.AreEqual(0, product.GetConnectedLonePairs(molecule.Atoms[1]).Count());
+            Assert.AreEqual(0, product.GetConnectedLonePairs(product.Atoms[1]).Count());
 
             /* C=C-[C-]-C */
             IAtomContainer molecule2 = GetExpectedProducts()[0];

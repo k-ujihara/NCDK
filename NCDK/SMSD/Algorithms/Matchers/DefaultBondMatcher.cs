@@ -151,7 +151,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         private int GetUnsaturation(IAtomContainer container, IBond bond)
         {
-            return GetUnsaturation(container, bond.Atoms[0]) + GetUnsaturation(container, bond.Atoms[1]);
+            return GetUnsaturation(container, bond.Begin) + GetUnsaturation(container, bond.End);
         }
 
         private int GetUnsaturation(IAtomContainer container, IAtom atom)
@@ -161,7 +161,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         private int CountNeighbors(IAtomContainer container, IAtom atom)
         {
-            return container.GetConnectedAtoms(atom).Count();
+            return container.GetConnectedBonds(atom).Count();
         }
 
         private int CountImplicitHydrogens(IAtom atom)

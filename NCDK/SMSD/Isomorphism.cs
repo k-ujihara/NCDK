@@ -822,7 +822,6 @@ namespace NCDK.SMSD
 
         public override bool IsSubgraph()
         {
-
             IAtomContainer reactant = ReactantMolecule;
             IAtomContainer product = ProductMolecule;
 

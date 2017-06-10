@@ -1,6 +1,7 @@
 ﻿// Copyright (C) 2016-2017  Kazuya Ujihara
 // This file is under LGPL-2.1 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -38,6 +39,9 @@ namespace NCDK
             get { return list[index]; }
             set
             {
+                if (!AllowDuplicate)
+                    if (list.Contains(value))
+                        throw new ArgumentException();
                 if (Listener != null)
                 {
                     list[index]?.Listeners?.Remove(Listener);

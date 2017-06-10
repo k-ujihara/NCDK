@@ -18,6 +18,7 @@
  *
  */
 using NCDK.Common.Collections;
+using System;
 
 namespace NCDK.Graphs.Invariant
 {
@@ -119,7 +120,7 @@ namespace NCDK.Graphs.Invariant
                     {
                         temp[i][j] = matrix.GetValueAt(i, j);
                     }
-                    catch (IndexOutOfBoundsException)
+                    catch (IndexOutOfRangeException)
                     {
                     } // never happens
                 }
@@ -159,7 +160,7 @@ namespace NCDK.Graphs.Invariant
                         GIMatrix tempMatrix = table[k][h];
                         temp[i][j] = tempMatrix.GetValueAt(i - k * tempMatrix.Height, j - h * tempMatrix.Width);
                     }
-                    catch (IndexOutOfBoundsException)
+                    catch (IndexOutOfRangeException)
                     {
                     } // never happens
                 }
@@ -201,7 +202,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public double GetValueAt(int i, int j)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
             return array[i][j];
         } // method GetValueAt(int,int)
 
@@ -214,7 +215,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public void SetValueAt(int i, int j, double element)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfRangeException();
             array[i][j] = element;
         } // method SetValueAt(int,int,double)
 
@@ -226,7 +227,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetLine(int i)
         {
-            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m)) throw new IndexOutOfRangeException();
             double[][] line = Arrays.CreateJagged<double>(1, n);
             for (int k = 0; k < n; k++)
                 line[0][k] = array[i][k];
@@ -248,7 +249,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetColumn(int j)
         {
-            if ((j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            if ((j < 0) || (j >= n)) throw new IndexOutOfRangeException();
             double[][] column = Arrays.CreateJagged<double>(m, 1);
             for (int k = 0; k < m; k++)
                 column[k][0] = array[k][j];
@@ -271,7 +272,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a line of this Matrix</exception>
         public void SetLine(int i, GIMatrix line)
         {
-            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m)) throw new IndexOutOfRangeException();
             if ((line.Height != 1) || (line.Width != n)) throw new BadMatrixFormatException();
             for (int k = 0; k < n; k++)
                 array[i][k] = line.GetValueAt(0, k);
@@ -286,7 +287,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a column of this Matrix</exception>
         public void SetColumn(int j, GIMatrix column)
         {
-            if ((j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            if ((j < 0) || (j >= n)) throw new IndexOutOfRangeException();
             if ((column.Height != m) || (column.Width != 1)) throw new BadMatrixFormatException();
             for (int k = 0; k < m; k++)
                 array[k][j] = column.GetValueAt(k, 0);
@@ -499,7 +500,7 @@ namespace NCDK.Graphs.Invariant
                     {
                         inv[i][j - n] = table.GetValueAt(i, j);
                     }
-                    catch (IndexOutOfBoundsException)
+                    catch (IndexOutOfRangeException)
                     {
                         return null;
                     } // never happens
@@ -564,7 +565,7 @@ namespace NCDK.Graphs.Invariant
                 // normally here, r = i-1
                 return tempMatrix;
             }
-            catch (IndexOutOfBoundsException)
+            catch (IndexOutOfRangeException)
             {
                 return null;
             } // never happens... well I hope ;)
@@ -619,7 +620,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public GIMatrix MultiplyLine(int i, double c)
         {
-            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
             double[][] temp = array;
             for (int k = 0; k < n; k++)
                 temp[i][k] = c * temp[i][k]; // mutliply every member of the line by c
@@ -642,7 +643,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public GIMatrix InvertLine(int i, int j)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();
             double[][] temp = array;
             double[] tempLine = temp[j]; // temporary line
             temp[j] = temp[i];
@@ -668,7 +669,7 @@ namespace NCDK.Graphs.Invariant
         /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
         public GIMatrix AddLine(int i, int j, double c)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new IndexOutOfBoundsException();
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();
             double[][] temp = array;
             for (int k = 0; k < n; k++)
                 temp[i][k] = temp[i][k] + c * temp[j][k]; // add multiplied element of i to element of j

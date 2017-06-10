@@ -304,7 +304,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// <exception cref="System.IO.IOException"></exception>
         internal int CompatibilityGraphCEdgeZero()
         {
-
             int compGraphNodesCZeroListSize = compGraphNodesCZero.Count;
             cEdges = new List<int>(); //Initialize the cEdges List
             dEdges = new List<int>(); //Initialize the dEdges List
@@ -321,7 +320,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                     // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
                     if ((a != b) && (indexA != indexB) && (indexAPlus1 != indexBPlus1))
                     {
-
                         IBond reactantBond = null;
                         IBond productBond = null;
 
@@ -332,7 +330,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                         {
                             AddCZeroEdges(reactantBond, productBond, a, b);
                         }
-
                     }
                 }
             }
@@ -345,7 +342,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         private void AddCZeroEdges(IBond reactantBond, IBond productBond, int indexI, int indexJ)
         {
-            if (IsMatchFeasible(source, productBond, target, productBond, shouldMatchBonds))
+            if (IsMatchFeasible(source, reactantBond, target, productBond, shouldMatchBonds))
             {
                 //BondMatch(reactantBond, productBond)
                 cEdges.Add((indexI / 4) + 1);
@@ -361,7 +358,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         private static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
                 bool shouldMatchBonds)
         {
-
             //Bond Matcher
             BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher

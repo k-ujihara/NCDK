@@ -103,7 +103,7 @@ namespace NCDK.QSAR
             DoubleResult doubleVal = new DoubleResult(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" },
                     new CDKException("A test exception"));
-            Assert.AreEqual(typeof(CDKException).ToString(), value.GetException());
+            Assert.IsInstanceOfType(value.GetException(), typeof(CDKException));
         }
     }
 }

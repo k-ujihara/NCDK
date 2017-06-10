@@ -56,7 +56,7 @@ namespace NCDK.Modelings.Builder3D
         public void TestFingerprints()
         {
             BitArray[] expected = new BitArray[]{
-               ParseBitSet("{3, 5, 8, 18, 29, 33, 39, 65, 71, 90, 105, 125, 140, 170, 182, 192, 199, 203, 209, 213, 226, 271, 272, 287, 301, 304, 319, 368, 386, 423, 433, 540, 590, 605, 618, 620, 629, 641, 649, 672, 681, 690, 694, 696, 697, 716, 726, 745, 748, 751, 760, 765, 775, 777, 780, 792, 799, 805, 810, 825, 829, 836, 844, 850, 876, 880, 882, 888, 899, 914, 924, 929, 932, 935, 967, 971, 1004, 1013, 1015, 1023}"),
+                ParseBitSet("{3, 5, 8, 18, 29, 33, 39, 65, 71, 90, 105, 125, 140, 170, 182, 192, 199, 203, 209, 213, 226, 271, 272, 287, 301, 304, 319, 368, 386, 423, 433, 540, 590, 605, 618, 620, 629, 641, 649, 672, 681, 690, 694, 696, 697, 716, 726, 745, 748, 751, 760, 765, 775, 777, 780, 792, 799, 805, 810, 825, 829, 836, 844, 850, 876, 880, 882, 888, 899, 914, 924, 929, 932, 935, 967, 971, 1004, 1013, 1015, 1023}"),
                 ParseBitSet("{3, 8, 18, 29, 33, 65, 90, 101, 109, 117, 125, 127, 140, 170, 190, 192, 209, 213, 218, 226, 271, 272, 286, 287, 301, 304, 319, 386, 423, 433, 566, 590, 605, 618, 629, 641, 646, 649, 672, 690, 694, 696, 716, 726, 745, 748, 765, 775, 777, 780, 783, 792, 805, 810, 825, 829, 836, 844, 850, 876, 882, 899, 914, 924, 932, 934, 956, 967, 971, 994, 1004, 1013, 1015, 1023}"),
                 ParseBitSet("{3, 18, 26, 32, 33, 43, 140, 155, 188, 189, 226, 238, 262, 267, 287, 315, 319, 326, 375, 450, 577, 629, 644, 690, 719, 732, 745, 746, 751, 775, 847, 850, 881, 959, 971, 995, 1015, 1019}"),
                 ParseBitSet("{3, 18, 33, 192, 319, 745, 780, 882}"),
@@ -75,7 +75,7 @@ namespace NCDK.Modelings.Builder3D
             for (int i = 0; i < data.Count; i++)
             {
                 IBitFingerprint bs = data[i];
-                Assert.AreEqual(expected[i], bs.AsBitSet());
+                Assert.IsTrue(Compares.AreEqual(expected[i], bs.AsBitSet()));
             }
         }
 
@@ -94,8 +94,8 @@ namespace NCDK.Modelings.Builder3D
                 ParseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}"),
                 ParseBitSet("{148, 206, 392, 542, 637, 742, 752, 830}")};
 
-            string filename = "Data.MDL.fingerprints_from_modelbuilder3d.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(GetType(), filename);
+            string filename = "NCDK.Data.MDL.fingerprints_from_modelbuilder3d.sdf";
+            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
             var data = new TemplateExtractor().MakeFingerprintsFromSdf(true, true,
                 new Dictionary<string, int>(), new StreamReader(ins), 10);
             QueryChemObject obj = new QueryChemObject(Default.ChemObjectBuilder.Instance);

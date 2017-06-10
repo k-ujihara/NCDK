@@ -39,8 +39,8 @@ namespace NCDK.Default
         {
             IBond bond = new Bond();
             Assert.AreEqual(0, bond.Atoms.Count);
-            Assert.IsNull(bond.Begin);
-            Assert.IsNull(bond.End);
+            //Assert.IsNull(bond.Begin);
+            //Assert.IsNull(bond.End);
             Assert.AreEqual(default(BondOrder), bond.Order);
             Assert.AreEqual(default(BondStereo), bond.Stereo);
             Assert.AreEqual(BondOrder.Unset, bond.Order);

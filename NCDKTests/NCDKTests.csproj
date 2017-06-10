@@ -1706,6 +1706,8 @@
     <EmbeddedResource Include="IO\CH3.mol" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
+    <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
+    <EmbeddedResource Include="Smiles\CHEMBL367774.mol" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDK\NCDK.csproj">

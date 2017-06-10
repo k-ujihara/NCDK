@@ -323,7 +323,7 @@ namespace NCDK.Hash.Stereo
         /// <returns>elevation of bond</returns>
         internal static int Elevation(IBond bond, IAtom a)
         {
-            return bond.Atoms[0].Equals(a) ? Elevation(bond) : Elevation(bond) * -1;
+            return bond.Begin.Equals(a) ? Elevation(bond) : Elevation(bond) * -1;
         }
 
         /// <summary>

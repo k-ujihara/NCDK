@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Collections;
+using NCDK.Common.Primitives;
 
 namespace NCDK.Groups
 {
@@ -64,7 +65,7 @@ namespace NCDK.Groups
         public override bool Equals(object other)
         {
             return other is IntegerListInvariant
-                    && Arrays.Equals(values, ((IntegerListInvariant)other).values);
+                    && Arrays.AreEqual(values, ((IntegerListInvariant)other).values);
         }
 
         public override string ToString()

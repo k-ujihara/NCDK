@@ -213,27 +213,32 @@ var thisListener = ns.IsSilent ? "null" : "this";
         /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
-            foreach (var bond in Bonds)
-                if (bond.Contains(atom))
-                    yield return bond.GetConnectedAtom(atom);
-            yield break;
+            if (!atoms.Contains(atom))
+                throw new NoSuchAtomException("Atom does not belong to the container!");
+            return Bonds.Where(n => n.Contains(atom)).Select(n => n.GetOther(atom));
         }
 
         /// <inheritdoc/>
         public virtual IEnumerable<IBond> GetConnectedBonds(IAtom atom)
         {
+            if (!atoms.Contains(atom))
+                throw new NoSuchAtomException("Atom does not belong to the container!");
             return bonds.Where(bond => bond.Contains(atom));
         }
 
         /// <inheritdoc/>
         public virtual IEnumerable<ILonePair> GetConnectedLonePairs(IAtom atom)
         {
+            if (!atoms.Contains(atom))
+                throw new NoSuchAtomException("Atom does not belong to the container!");
             return LonePairs.Where(lonePair => lonePair.Contains(atom));
         }
 
         /// <inheritdoc/>
         public virtual IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom)
         {
+            if (!atoms.Contains(atom))
+                throw new NoSuchAtomException("Atom does not belong to the container!");
             return SingleElectrons.Where(singleElectron => singleElectron.Contains(atom));
         }
 
@@ -278,7 +283,7 @@ var thisListener = ns.IsSilent ? "null" : "this";
 			if (max == BondOrder.Unset)
 			{
 				if (!Contains(atom))
-					throw new InvalidOperationException("Atom does not belong to this container!");
+					throw new NoSuchAtomException("Atom does not belong to this container!");
 				if (atom.ImplicitHydrogenCount != null &&
 					atom.ImplicitHydrogenCount > 0)
 					max = BondOrder.Single;
@@ -304,7 +309,7 @@ var thisListener = ns.IsSilent ? "null" : "this";
 			if (min == BondOrder.Unset) 
 			{
 				if (!Contains(atom))
-					throw new InvalidOperationException("Atom does not belong to this container!");
+					throw new NoSuchAtomException("Atom does not belong to this container!");
 				if (atom.ImplicitHydrogenCount != null &&
 					atom.ImplicitHydrogenCount > 0)
 					min = BondOrder.Single;
@@ -630,6 +635,75 @@ var thisListener = ns.IsSilent ? "null" : "this";
             this.bonds.Clear();
             foreach (var bond in bonds)
                 this.bonds.Add(bond);
+        }
+
+		public void SetAtom(int idx, IAtom atom)
+        {
+            if (idx >= atoms.Count)
+                throw new IndexOutOfRangeException("No atom at index: " + idx);
+            int aidx = atoms.IndexOf(atom);
+            if (aidx >= 0)
+                throw new ArgumentException("Atom already in container at index: " + idx, nameof(atom));
+            IAtom oldAtom = atoms[idx];
+            atoms[idx] = atom;
+		<# if (!ns.IsSilent) { #> 
+            atom.Listeners.Add(this);
+            oldAtom.Listeners.Remove(this);
+		<# } #>
+
+            // replace in electron containers
+            foreach (IBond bond in bonds)
+            {
+                for (int i = 0; i < bond.Atoms.Count; i++)
+                {
+                    if (oldAtom.Equals(bond.Atoms[i]))
+                    {
+                        bond.Atoms[i] = atom;
+                    }
+                }
+            }
+            foreach (ISingleElectron ec in singleElectrons)
+            {
+                if (oldAtom.Equals(ec.Atom))
+                    ec.Atom = atom; 
+            }
+            foreach (ILonePair lp in lonePairs)
+            {
+                if (oldAtom.Equals(lp.Atom))
+                    lp.Atom = atom;
+            }
+
+            // update stereo
+            CDKObjectMap map = null;
+            List<IStereoElement> oldStereo = null;
+            List<IStereoElement> newStereo = null;
+
+            foreach (IStereoElement se in stereoElements)
+            {
+                if (se.Contains(oldAtom))
+                {
+                    if (oldStereo == null)
+                    {
+                        oldStereo = new List<IStereoElement>();
+                        newStereo = new List<IStereoElement>();
+                        map = new CDKObjectMap();
+                        foreach (var a in atoms)
+                            map.AtomMap.Add(a, a);
+                        map.AtomMap[oldAtom] = atom;
+                    }
+                    oldStereo.Add(se);
+                    newStereo.Add((IStereoElement)se.Clone(map));
+                }
+            }
+            if (oldStereo != null)
+            {
+                foreach (var stereo in oldStereo)
+                    stereoElements.Remove(stereo);
+                foreach (var stereo in newStereo)
+                    stereoElements.Add(stereo);
+            }
+
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
         }
 
         /// <inheritdoc/>

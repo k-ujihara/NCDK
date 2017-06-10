@@ -123,7 +123,6 @@ namespace NCDK.Fingerprints
                             }
                         }
                         break;
-
                     // ring bits
                     case "[R]1@*@*@1": // 3M RING bit22
                     case "[R]1@*@*@*@1": // 4M RING bit11
@@ -133,7 +132,6 @@ namespace NCDK.Fingerprints
                     case "[R]1@*@*@*@*@*@*@*@1": // 8M RING, bit101
                                                  // handled separately
                         break;
-
                     case "(*).(*)":
                         // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
                         // count the number of components or in this case try to traverse the
@@ -143,7 +141,6 @@ namespace NCDK.Fingerprints
                         if (numAtoms > 1 && VisitPart(visit, adjlist, 0, -1) < numAtoms)
                             fp.Set(165, true);
                         break;
-
                     default:
                         if (key.Count == 0)
                         {

@@ -23,14 +23,15 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using Moq;
+using NCDK.Aromaticities;
+using NCDK.Silent;
 using NCDK.Stereo;
 using NCDK.Templates;
-using NCDK.Tools.Manipulator;
 using NCDK.Tools;
-using NCDK.Aromaticities;
+using NCDK.Tools.Manipulator;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Smiles
 {
@@ -48,20 +49,20 @@ namespace NCDK.Smiles
         [ExpectedException(typeof(NullReferenceException))]
         public void NoImplicitHCount()
         {
-            new CDKToBeam().ToBeamAtom(new Default.Atom("C"));
+            new CDKToBeam().ToBeamAtom(new Atom("C"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(NullReferenceException))]
         public void NoSymbol()
         {
-            new CDKToBeam().ToBeamAtom(new Default.Atom());
+            new CDKToBeam().ToBeamAtom(new Atom());
         }
 
         [TestMethod()]
         public void UnknownSymbol()
         {
-            IAtom a = new Default.PseudoAtom("ALA");
+            IAtom a = new PseudoAtom("ALA");
             a.ImplicitHydrogenCount = 0;
             Assert.AreEqual(Beam.Element.Unknown, new CDKToBeam().ToBeamAtom(a).Element);
         }
@@ -69,7 +70,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void UnknownSymbol_Pseudo()
         {
-            IAtom a = new Default.PseudoAtom("R1");
+            IAtom a = new PseudoAtom("R1");
             a.ImplicitHydrogenCount = 0;
             Assert.AreEqual(Beam.Element.Unknown, new CDKToBeam().ToBeamAtom(a).Element);
         }
@@ -77,7 +78,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Methane_Atom()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 4;
             Assert.AreEqual(Beam.Element.Carbon, new CDKToBeam().ToBeamAtom(a).Element);
             Assert.AreEqual(4, new CDKToBeam().ToBeamAtom(a).NumOfHydrogens);
@@ -86,7 +87,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Water_Atom()
         {
-            IAtom a = new Default.Atom("O");
+            IAtom a = new Atom("O");
             a.ImplicitHydrogenCount = 2;
             Assert.AreEqual(Beam.Element.Oxygen, new CDKToBeam().ToBeamAtom(a).Element);
             Assert.AreEqual(2, new CDKToBeam().ToBeamAtom(a).NumOfHydrogens);
@@ -95,7 +96,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void ChargedAtom()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             for (int chg = -10; chg < 10; chg++)
             {
@@ -107,7 +108,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AliphaticAtom()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             Assert.IsFalse(new CDKToBeam().ToBeamAtom(a).IsAromatic());
         }
@@ -115,7 +116,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AromaticAtom()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             a.IsAromatic = true;
             Assert.IsTrue(new CDKToBeam().ToBeamAtom(a).IsAromatic());
@@ -124,7 +125,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void UnspecifiedIsotope()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             Assert.AreEqual(-1, new CDKToBeam().ToBeamAtom(a).Isotope);
         }
@@ -132,7 +133,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void SpecifiedIsotope()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             a.MassNumber = 13;
             Assert.AreEqual(13, new CDKToBeam().ToBeamAtom(a).Isotope);
@@ -141,7 +142,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void DefaultIsotope()
         {
-            IAtom a = new Default.Atom("C");
+            IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             a.MassNumber = 12;
             Assert.AreEqual(-1, new CDKToBeam().ToBeamAtom(a).Isotope);
@@ -152,9 +153,9 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void PseuDoAtom_nullH()
         {
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("R")).NumOfHydrogens);
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("*")).NumOfHydrogens);
-            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new Default.PseudoAtom("R1")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new PseudoAtom("R")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new PseudoAtom("*")).NumOfHydrogens);
+            Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new PseudoAtom("R1")).NumOfHydrogens);
         }
 
         [TestMethod()]
@@ -163,7 +164,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v, BondOrder.Unset);
+            IBond b = new Bond(u, v, BondOrder.Unset);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -176,7 +177,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v, BondOrder.Unset);
+            IBond b = new Bond(u, v, BondOrder.Unset);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -187,7 +188,7 @@ namespace NCDK.Smiles
         [ExpectedException(typeof(ArgumentException))]
         public void TooFewAtoms()
         {
-            IBond b = new Default.Bond(new IAtom[] { new Mock<IAtom>().Object });
+            IBond b = new Bond(new IAtom[] { new Mock<IAtom>().Object });
             new CDKToBeam().ToBeamEdge(b, new Mock<IDictionary<IAtom, int>>().Object);
         }
 
@@ -195,7 +196,7 @@ namespace NCDK.Smiles
         [ExpectedException(typeof(ArgumentException))]
         public void TooManyAtoms()
         {
-            IBond b = new Default.Bond(new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object });
+            IBond b = new Bond(new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object });
             new CDKToBeam().ToBeamEdge(b, new Mock<IDictionary<IAtom, int>>().Object);
         }
 
@@ -204,7 +205,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v);
+            IBond b = new Bond(u, v);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -217,7 +218,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v);
+            IBond b = new Bond(u, v);
             b.IsAromatic = true;
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
@@ -233,7 +234,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v, BondOrder.Double);
+            IBond b = new Bond(u, v, BondOrder.Double);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -246,7 +247,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v, BondOrder.Triple);
+            IBond b = new Bond(u, v, BondOrder.Triple);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -259,7 +260,7 @@ namespace NCDK.Smiles
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
-            IBond b = new Default.Bond(u, v, BondOrder.Quadruple);
+            IBond b = new Bond(u, v, BondOrder.Quadruple);
             var mock = new Mock<IDictionary<IAtom, int>>();
             mock.SetupGet(n => n[u]).Returns(0);
             mock.SetupGet(n => n[v]).Returns(1);
@@ -313,8 +314,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void C13_Isomeric()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            IAtom a = new Default.Atom("C");
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("C");
             a.MassNumber = 13;
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, SmiFlavor.AtomicMass);
@@ -325,8 +326,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void C13_nonIsomeric()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            IAtom a = new Default.Atom("C");
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("C");
             a.MassNumber = 13;
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, false, 0); // non-isomeric
@@ -337,8 +338,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Azanium()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            IAtom a = new Default.Atom("N");
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("N");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
@@ -349,8 +350,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Oxidanide()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            IAtom a = new Default.Atom("O");
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("O");
             a.FormalCharge = -1;
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
@@ -361,8 +362,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Oxidandiide()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            IAtom a = new Default.Atom("O");
+            IAtomContainer ac = new AtomContainer();
+            IAtom a = new Atom("O");
             a.FormalCharge = -2;
             ac.Atoms.Add(a);
             Beam.Graph g = Convert(ac, 0);
@@ -377,11 +378,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void E_1_2_difluoroethene()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("F"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("F"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("F"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("F"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -399,11 +400,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Z_1_2_difluoroethene()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("F"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("F"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("F"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("F"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -421,13 +422,13 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_2R_butan_2_ol()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("O"));
-            ac.Atoms.Add(new Default.Atom("H"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("O"));
+            ac.Atoms.Add(new Atom("H"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -451,13 +452,13 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_2S_butan_2_ol()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("O"));
-            ac.Atoms.Add(new Default.Atom("H"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("O"));
+            ac.Atoms.Add(new Atom("H"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -483,11 +484,11 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Z_1_2_difluoroethene_aromatic()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("F"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("F"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("F"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("F"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -510,10 +511,10 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void WriteAtomClass()
         {
-            IAtomContainer ac = new Default.AtomContainer();
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("C"));
-            ac.Atoms.Add(new Default.Atom("O"));
+            IAtomContainer ac = new AtomContainer();
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("O"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Single);
             ac.Atoms[0].SetProperty(CDKPropertyName.AtomAtomMapping, 3);
@@ -525,12 +526,12 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void R_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new Default.AtomContainer();
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -546,12 +547,12 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void S_penta_2_3_diene_impl_h()
         {
-            IAtomContainer m = new Default.AtomContainer();
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -567,14 +568,14 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void R_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new Default.AtomContainer();
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("H"));
-            m.Atoms.Add(new Default.Atom("H"));
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("H"));
+            m.Atoms.Add(new Atom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -599,14 +600,14 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void S_penta_2_3_diene_expl_h()
         {
-            IAtomContainer m = new Default.AtomContainer();
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("C"));
-            m.Atoms.Add(new Default.Atom("H"));
-            m.Atoms.Add(new Default.Atom("H"));
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("C"));
+            m.Atoms.Add(new Atom("H"));
+            m.Atoms.Add(new Atom("H"));
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);

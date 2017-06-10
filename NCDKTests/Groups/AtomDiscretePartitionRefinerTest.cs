@@ -196,7 +196,6 @@ namespace NCDK.Groups
         [TestMethod()]
         public void TestAzulene()
         {
-
             IAtomContainer mol = TestMoleculeFactory.MakeAzulene();
             Assert.IsNotNull(mol, "Created molecule was null");
 
@@ -216,8 +215,6 @@ namespace NCDK.Groups
         /// Test the equivalent classes method in pyrimidine
         /// Tests if the position of the single and double bonds in an aromatic ring matter
         /// to assign a class.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestPyrimidine()
@@ -239,8 +236,6 @@ namespace NCDK.Groups
         /// <summary>
         /// Test the equivalent classes method in biphenyl,
         /// a molecule with two aromatic systems. It has 2 symmetry axis.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestBiphenyl()

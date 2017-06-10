@@ -22,7 +22,7 @@ namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
     // @cdk.githash
-    public class QueryAtomContainer : Silent.AtomContainer, IQueryAtomContainer
+    public class QueryAtomContainer : Default.AtomContainer, IQueryAtomContainer
     {
         public override string ToString()
         {

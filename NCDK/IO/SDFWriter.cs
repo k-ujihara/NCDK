@@ -263,7 +263,7 @@ namespace NCDK.IO
 
         private static bool IsPrimitiveDataValue(object obj)
         {
-            return obj == null ||
+            return obj == null || obj is string ||
                    obj.GetType().IsPrimitive;
         }
 

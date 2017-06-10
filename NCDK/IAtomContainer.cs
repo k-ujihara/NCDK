@@ -51,6 +51,17 @@ namespace NCDK
         /// <param name="bonds">The array of bonds to be assigned to this AtomContainer</param>
         /// <seealso cref="Bonds"/>
         void SetBonds(IEnumerable<IBond> bonds);
+        
+        /// <summary>
+        /// Set the atom at <paramref name="index"/>, the index must have an existing atom
+        /// and therefore be in the range 0 &le; idx &lt; mol.getAtomCount().
+        /// </summary>
+        /// <param name="index">The index of the atom to be set.</param>
+        /// <param name="atom">The atom to be stored at position <paramref name="index"/></param>
+        /// <exception cref="ArgumentOutOfRangeException">index is out of bounds</exception>
+        /// <exception cref="ArgumentException">the atom counld not be set</exception>
+        /// <seealso cref="Atoms"/>
+        void SetAtom(int index, IAtom atom);
 
         /// <summary>
         /// The atoms in this container.

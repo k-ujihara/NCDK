@@ -960,7 +960,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestSetAtomOutOfRange()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -988,7 +988,7 @@ namespace NCDK
             IAtom c2 = container.Builder.CreateAtom("C");
             container.Atoms.Add(c1);
             container.Atoms.Add(c2);
-            container.Atoms[0] = c2;
+            container.SetAtom(0, c2);
         }
 
         [TestMethod()]
@@ -1014,7 +1014,7 @@ namespace NCDK
             container.Bonds.Add(b2);
 
             IAtom a4 = container.Builder.CreateAtom();
-            container.Atoms[2] = a4;
+            container.SetAtom(2, a4);
             Assert.AreEqual(a4, b2.End);
         }
 
@@ -1045,7 +1045,7 @@ namespace NCDK
             container.SingleElectrons.Add(se);
 
             IAtom a4 = bldr.CreateAtom();
-            container.Atoms[2] = a4;
+            container.SetAtom(2, a4);
 
             Assert.AreEqual(a4, se.Atom);
         }
@@ -1083,7 +1083,7 @@ namespace NCDK
                                                                 TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.CreateAtom();
-            container.Atoms[2] = aNew;
+            container.SetAtom(2, aNew);
 
             var siter = container.StereoElements.GetEnumerator();
             Assert.IsTrue(siter.MoveNext());
@@ -1124,7 +1124,7 @@ namespace NCDK
                                                                      DoubleBondConformation.Together));
 
             IAtom aNew = bldr.CreateAtom();
-            container.Atoms[2] = aNew;
+            container.SetAtom(2, aNew);
 
             Assert.AreEqual(aNew, b2.End);
             Assert.AreEqual(aNew, b3.Begin);
@@ -1135,7 +1135,7 @@ namespace NCDK
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
             IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry)se;
             Assert.AreEqual(b2, tc.StereoBond);
-            Assert.AreEqual(new IBond[] { b1, b3 }, tc.Bonds);
+            Assert.IsTrue(Compares.AreDeepEqual(new IBond[] { b1, b3 }, tc.Bonds));
             Assert.IsFalse(siter.MoveNext());
         }
 
@@ -1144,7 +1144,7 @@ namespace NCDK
         /// we should get an exception rather than null
         /// </summary>
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGetAtomOutOfBackedArray()
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
@@ -1157,7 +1157,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGetAtomOutOfRange()
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
@@ -1169,7 +1169,7 @@ namespace NCDK
         /// we should get an exception rather than null
         /// </summary>
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGetBondOutOfRangeBackedArray()
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
@@ -1184,7 +1184,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGetBondOutOfRange()
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
@@ -3020,7 +3020,7 @@ namespace NCDK
             IAtomContainer container = (IAtomContainer)NewChemObject();
             IChemObjectBuilder builder = container.Builder;
             IAtom atom = builder.CreateAtom();
-            var dummy = container.GetConnectedAtoms(atom).Count();
+            container.GetConnectedAtoms(atom);
         }
 
         [TestMethod()]
@@ -3030,11 +3030,11 @@ namespace NCDK
             IAtomContainer container = (IAtomContainer)NewChemObject();
             IChemObjectBuilder builder = container.Builder;
             IAtom atom = builder.CreateAtom();
-            var dummy = container.GetConnectedBonds(atom).Count();
+            container.GetConnectedBonds(atom);
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGetConnectedBondCountMissingIdx()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -3068,7 +3068,7 @@ namespace NCDK
             IAtomContainer container = (IAtomContainer)NewChemObject();
             IChemObjectBuilder builder = container.Builder;
             IAtom atom = builder.CreateAtom();
-            var dummy = container.GetConnectedLonePairs(atom).Count();
+            container.GetConnectedLonePairs(atom);
         }
 
         [TestMethod()]
@@ -3078,7 +3078,7 @@ namespace NCDK
             IAtomContainer container = (IAtomContainer)NewChemObject();
             IChemObjectBuilder builder = container.Builder;
             IAtom atom = builder.CreateAtom();
-            var dummy = container.GetConnectedSingleElectrons(atom).Count();
+            container.GetConnectedSingleElectrons(atom);
         }
     }
 }

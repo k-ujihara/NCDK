@@ -291,8 +291,8 @@ namespace NCDK.Fingerprints
 
             internal List<IBond> GetBonds(IAtom atom)
             {
-                List<IBond> bonds = cache[atom];
-                if (bonds == null)
+                List<IBond> bonds;
+                if (!cache.TryGetValue(atom, out bonds))
                 {
                     bonds = mol.GetConnectedBonds(atom).ToList();
                     cache[atom] = bonds;
@@ -495,7 +495,7 @@ namespace NCDK.Fingerprints
         private int EncodeUniquePath(List<IAtom> apath, List<IBond> bpath, StringBuilder buffer)
         {
             if (bpath.Count == 0)
-                return GetAtomSymbol(apath[0]).GetHashCode();
+                return Strings.GetJavaHashCode(GetAtomSymbol(apath[0]));
             int x;
             if (Compare(apath, bpath) >= 0)
             {

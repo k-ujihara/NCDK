@@ -186,6 +186,8 @@ namespace <#= ns.NS #>
         /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
+            if (!atoms.Contains(atom))
+                return null;
 			return atoms.Where(n => n != atom);
         }
 

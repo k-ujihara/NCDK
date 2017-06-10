@@ -113,15 +113,19 @@ namespace NCDK.Stereo
 
             // clone the atoms and place in a map
             var mapping = new CDKObjectMap();
+            IAtom c1clone = (IAtom)c1.Clone();
+            mapping.AtomMap[c1] = c1clone;
+            IAtom o2clone = (IAtom)o2.Clone();
+            mapping.AtomMap[o2] = o2clone;
+            IAtom n3clone = (IAtom)n3.Clone();
+            mapping.AtomMap[n3] = n3clone;
+            IAtom c4clone = (IAtom)c4.Clone();
+            mapping.AtomMap[c4] = c4clone;
+            IAtom h5clone = (IAtom)h5.Clone();
+            mapping.AtomMap[h5] = h5clone;
 
             // map the existing element a new element
             ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone(mapping);
-
-            IAtom c1clone = mapping.AtomMap[c1];
-            IAtom o2clone = mapping.AtomMap[o2];
-            IAtom n3clone = mapping.AtomMap[n3];
-            IAtom c4clone = mapping.AtomMap[c4];
-            IAtom h5clone = mapping.AtomMap[h5];
 
             Assert.AreNotSame(original.ChiralAtom, mapped.ChiralAtom, "mapped chiral atom was the same as the original");
             Assert.AreSame(c1clone, mapped.ChiralAtom, "mapped chiral atom was not the clone");
@@ -137,6 +141,7 @@ namespace NCDK.Stereo
             Assert.AreSame(c4clone, mappedLigands[2], "third mapped ligand was not the clone");
             Assert.AreNotSame(originalLigands[3], mappedLigands[3], "forth ligand was te same as the original");
             Assert.AreSame(h5clone, mappedLigands[3], "forth mapped ligand was not the clone");
+
             Assert.AreEqual(original.Stereo, mapped.Stereo, "stereo was not mapped");
         }
 
@@ -174,7 +179,7 @@ namespace NCDK.Stereo
             ITetrahedralChirality original = new TetrahedralChirality(null, new IAtom[4], TetrahedralStereo.Unset);
 
             // map the existing element a new element
-            ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone();
+            ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone(new CDKObjectMap());
 
             Assert.IsNull(mapped.ChiralAtom);
             Assert.IsNull(mapped.Ligands[0]);
@@ -184,7 +189,7 @@ namespace NCDK.Stereo
             Assert.AreEqual(TetrahedralStereo.Unset, mapped.Stereo);
         }
 
-        [TestMethod()]
+        [TestMethod()] 
         public void TestMap_Map_Map_EmptyMapping()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -198,8 +203,9 @@ namespace NCDK.Stereo
             // new stereo element
             ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[] { o2, n3, c4, h5 }, TetrahedralStereo.Clockwise);
 
-            // map the existing element a new element 
-            ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone();
+            // map the existing element a new element - should through an IllegalArgumentException
+            var map = new CDKObjectMap();
+            ITetrahedralChirality mapped = (ITetrahedralChirality)original.Clone(map);
 
             Assert.AreEqual(original.ChiralAtom, mapped.ChiralAtom);
             Assert.IsTrue(Compares.AreDeepEqual(original.Ligands, mapped.Ligands));

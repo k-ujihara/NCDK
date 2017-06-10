@@ -332,7 +332,6 @@
     <Compile Include="Geometries\RDFCalculator.cs" />
     <Compile Include="Graphs\Invariant\EquivalentClassPartitioner.cs" />
     <Compile Include="Graphs\Invariant\BadMatrixFormatException.cs" />
-    <Compile Include="Graphs\Invariant\IndexOutOfBoundsException.cs" />
     <Compile Include="Graphs\Invariant\MatrixNotInvertibleException.cs" />
     <Compile Include="Graphs\Invariant\GIMatrix.cs" />
     <Compile Include="Graphs\Invariant\HuLuIndexTool.cs" />
@@ -1973,7 +1972,6 @@
     <None Include="Beam\README.md" />
     <None Include="FaulonSignatures\README" />
     <None Include="ForceField\MMFF\README" />
-    <EmbeddedResource Include="Modelings\Builder3D\Data\ringTemplateFingerprints.txt.gz" />
     <EmbeddedResource Include="Modelings\Builder3D\Data\ringTemplateStructures.sdf.gz" />
     <EmbeddedResource Include="Templates\Data\list_aminoacids.cml" />
     <EmbeddedResource Include="QSAR\IAtomPairDescriptor" />

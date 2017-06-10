@@ -265,6 +265,9 @@ namespace NCDK.Graphs
 
             public void SetBonds(IEnumerable<IBond> bonds)
             { throw new InvalidOperationException("not supported"); }
+
+            public void SetAtom(int index, IAtom atom)
+            { throw new InvalidOperationException("not supported"); }
         }
 
         /// <summary>

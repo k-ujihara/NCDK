@@ -618,7 +618,7 @@ namespace NCDK.IO
 
             int numSgroups = 0;
             foreach (var sgroup in sgroups)
-                if (sgroup.GetType() != SgroupType.ExtMulticenter)
+                if (sgroup.Type != SgroupType.ExtMulticenter)
                     numSgroups++;
 
             writer.Write("BEGIN CTAB\n");
