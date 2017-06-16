@@ -11,6 +11,7 @@
     </HelpKeywords>
     <Topic id="ce71932b-728b-4efb-b633-b2576df0de36" visible="True" title="Version 1.0.0" />
     <Topic id="5c1f7bab-480e-41fb-b16b-aab842a90ef8" visible="True" title="Version 1.0.2" />
-    <Topic id="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" visible="True" isSelected="true" title="Version 1.0.3" />
+    <Topic id="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" visible="True" title="Version 1.0.3" />
+    <Topic id="3463f77d-eb02-4dd3-bc62-96cd86c87cfd" visible="True" isSelected="true" title="Version 1.1.0" />
   </Topic>
 </Topics>
