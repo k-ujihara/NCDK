@@ -23,15 +23,15 @@ namespace NCDK
 {
     /// <summary>
     /// Class defining a molecular formula object. It maintains a list of <see cref="IIsotope"/>.
-    /// <para>
+    /// </summary>
+    /// <remarks>
     /// Examples:
     /// <list type="bullet">
     /// <item>[C5H5]-</item>
     /// <item>C6H6</item>
     /// <item><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></item>
     /// </list>
-    /// </para>
-    /// </summary>
+    /// </remarks>
     // @cdk.module  interfaces
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
@@ -40,61 +40,61 @@ namespace NCDK
     public partial interface IMolecularFormula : ICDKObject
     {
         /// <summary>
-        /// Adds an molecularFormula to this MolecularFormula.
+        /// Adds an <see cref="IMolecularFormula"/> to this <see cref="IMolecularFormula"/>.
         /// </summary>
-        /// <param name="formula">The molecularFormula to be added to this chemObject</param>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> to be added to this <see cref="IChemObject"/></param>
         /// <returns>the new molecular formula</returns>
         IMolecularFormula Add(IMolecularFormula formula);
 
         /// <summary>
-        /// Adds an Isotope to this MolecularFormula one time.
+        /// Adds an <see cref="IIsotope"/> to this <see cref="IMolecularFormula"/> one time.
         /// </summary>
-        /// <param name="isotope">The isotope to be added to this MolecularFormula</param>
+        /// <param name="isotope">The isotope to be added to this <see cref="IMolecularFormula"/></param>
         /// <returns>the new molecular formula</returns>
         /// <seealso cref="Add(IIsotope, int)"/>
         IMolecularFormula Add(IIsotope isotope);
 
         /// <summary>
-        ///  Adds an Isotope to this MolecularFormula in a number of occurrences.
+        ///  Adds an <see cref="IIsotope"/> to this <see cref="IMolecularFormula"/> in a number of occurrences.
         /// </summary>
-        /// <param name="isotope">The isotope to be added to this MolecularFormula</param>
+        /// <param name="isotope">The isotope to be added to this <see cref="IMolecularFormula"/></param>
         /// <param name="count">The number of occurrences to add</param>
         /// <returns>the new molecular formula</returns>
         /// <seealso cref="Add(IIsotope)"/>
         IMolecularFormula Add(IIsotope isotope, int count);
 
         /// <summary>
-        ///  Checks a set of Nodes for the occurrence of the isotope in the
-        ///  IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
+        /// Checks a set of Nodes for the occurrence of the isotope in the
+        /// <see cref="IMolecularFormula"/> from a particular isotope. It returns 0 if the does not exist.
         /// </summary>
-        /// <param name="isotope">The IIsotope to look for</param>
+        /// <param name="isotope">The <see cref="IIsotope"/> to look for</param>
         /// <returns>The occurrence of this isotope in this IMolecularFormula</returns>
         int GetCount(IIsotope isotope);
 
         /// <summary>
-        ///  Returns an <see cref="IEnumerable{T}"/> for looping over all isotopes in this IMolecularFormula.
+        ///  Returns an <see cref="IEnumerable{T}"/> for looping over all isotopes in this <see cref="IMolecularFormula"/>.
         /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> with the isotopes in this IMolecularFormula</returns>
+        /// <returns>An <see cref="IEnumerable{T}"/> with the isotopes in this <see cref="IMolecularFormula"/></returns>
         IEnumerable<IIsotope> Isotopes { get; }
 
         /// <summary>
-        ///  Checks a set of Nodes for the number of different isotopes in the
-        ///  IMolecularFormula.
+        /// Checks a set of Nodes for the number of different isotopes in the
+        /// <see cref="IMolecularFormula"/>.
         /// </summary>
-        /// <value>The the number of different isotopes in this IMolecularFormula</value>
+        /// <value>The the number of different isotopes in this <see cref="IMolecularFormula"/></value>
         int Count { get; }
 
         /// <summary>
-        ///  True, if the MolecularFormula contains the given IIsotope object. Not
-        ///  the instance. The method looks for other isotopes which has the same
-        ///  symbol, natural abundance and exact mass.
+        /// <see langword="true"/>, if the <see cref="IMolecularFormula"/> contains the given <see cref="IIsotope"/> object. Not
+        /// the instance. The method looks for other isotopes which has the same
+        /// symbol, natural abundance and exact mass.
         /// </summary>
-        /// <param name="isotope">The IIsotope this IMolecularFormula is searched for</param>
-        /// <returns>True, if the IMolecularFormula contains the given isotope object</returns>
+        /// <param name="isotope">The <see cref="IIsotope"/> this IMolecularFormula is searched for</param>
+        /// <returns>True, if the <see cref="IMolecularFormula"/> contains the given isotope object</returns>
         bool Contains(IIsotope isotope);
 
         /// <summary>
-        /// Removes the given isotope from the MolecularFormula.
+        /// Removes the given isotope from the <see cref="IMolecularFormula"/>.
         /// </summary>
         /// <param name="isotope">The IIsotope to be removed</param>
         void Remove(IIsotope isotope);
