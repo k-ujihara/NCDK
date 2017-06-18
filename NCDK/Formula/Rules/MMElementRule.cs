@@ -24,15 +24,15 @@ namespace NCDK.Formula.Rules
 {
     /// <summary>
     /// This class validate if the occurrence of the IElements in the IMolecularFormula, for
-    /// metabolites, are into a maximal limit according paper: . The study is from 2 different mass spectral
+    /// metabolites, are into a maximal limit according paper: The study is from 2 different mass spectral
     /// databases and according different mass of the metabolites. The analysis don't
     /// take account if the IElement is not contained in the matrix. It will be jumped. 
+    /// </summary>
+    /// <remarks>
     /// <para>
     /// The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
     /// filtering of molecular formula" <token>cdk-cite-kind2007</token>.
     /// </para>
-    /// </summary>
-    /// <remarks>
     /// Table 1: Parameters set by this rule.
     /// <list type="table">
     /// <listheader>

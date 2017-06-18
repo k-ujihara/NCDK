@@ -25,9 +25,10 @@ namespace NCDK.Formula.Rules
     /// This class validate if the occurrence of the IElements in the IMolecularFormula
     /// are into a limits. As default defines all elements of the periodic table with
     /// a occurrence of zero to 100.
-    /// <para>
+    /// </summary>
+    /// <remarks>
     /// Table 1: Parameters set by this rule.
-    /// <list type="bullet">
+    /// <list type="table">
     /// <listheader>
     /// <term>Name</term>
     /// <term>Default</term>
@@ -39,8 +40,7 @@ namespace NCDK.Formula.Rules
     /// <term>The <see cref="IElement"/> to be analyzed</term>
     /// </item>
     /// </list>
-    /// </para>
-    /// </summary>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
