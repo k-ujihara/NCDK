@@ -15,4 +15,4 @@ Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTest
 Open NCDK.sln or NCDKDisplay.sln. You can see the library and its test project.
 
 ## Contribute
-The current release is based on cdk-1.5.14.
+The current release is based on cdk-2.0.
