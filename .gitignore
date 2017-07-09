@@ -4,6 +4,8 @@ IncludeExamples.xml
 cheminf.tokens
 $ExampleCodes.cs
 
+# 
+
 desktop.ini
 *.zip
 *.bat
@@ -32,8 +34,8 @@ Documentation/Help/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-[Xx]64/
-[Xx]86/
+[Xx]64/*
+[Xx]86/*
 [Bb]uild/
 bld/
 [Bb]in/
@@ -95,7 +97,7 @@ ipch/
 *.ncb
 *.opendb
 *.opensdf
-*.sdf
+# *.sdf
 *.cachefile
 *.VC.db
 
@@ -260,3 +262,13 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+
+# 
+
+!NCDKTests/**/*.sdf
+!NCDKTests/**/*.pdb
+!NCDKTests/**/*.zip
+!NCDKTests/**/*.log
+!NCDK/x86/libinchi.dll
+!NCDK/x64/libinchi.dll
