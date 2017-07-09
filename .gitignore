@@ -97,7 +97,7 @@ ipch/
 *.ncb
 *.opendb
 *.opensdf
-*.sdf
+# *.sdf
 *.cachefile
 *.VC.db
 
@@ -267,8 +267,7 @@ ModelManifest.xml
 # 
 
 !NCDKTests/**/*.sdf
-!NCDKDisplayTests/**/*.sdf
 !NCDKTests/**/*.pdb
-!NCDKDisplayTests/**/*.pdb
+!NCDKTests/**/*.zip
 !NCDK/x86/libinchi.dll
 !NCDK/x64/libinchi.dll
