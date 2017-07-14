@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<topic id="3463f77d-eb02-4dd3-bc62-96cd86c87cfd" revisionNumber="1">
+<topic id="397d8d08-1732-4fcb-a0cf-90852c3d3b79" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        Version 1.1.0 was released on 2017-06-10.
+        Version 1.1.1 was released on 2017-07-13.
       </para>
     </introduction>
 
@@ -13,7 +13,7 @@
 
         <list class="bullet">
           <listItem>
-            <para>Follow cdk-2.0.</para>
+            <para>Fix repository.</para>
           </listItem>
         </list>
 
