@@ -3,7 +3,7 @@
 ###############################################################################
 * text=auto
 *.tt text eol=crlf
-*.ttinclude text eof=crlf
+*.ttinclude text eol=crlf
 
 ###############################################################################
 # Set default behavior for command prompt diff.
