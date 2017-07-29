@@ -83,6 +83,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
+        /// <![CDATA[
         ///                     Start ::= <ReactionExpression> <#_WS>
         ///        ReactionExpression ::= <GroupExpression>? (">" <GroupExpression>? ">" <GroupExpression>?)?
         ///           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
@@ -117,6 +118,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         ///                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
         ///                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
         ///                               "c" | "o" | "n" | "p" | "as" | "se" ]
+        /// ]]>                               
         /// </summary>
         public ASTStart Start()
         {
@@ -3622,7 +3624,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     }
                     p = p.next;
                 } while (p != null);
-            } catch (LookaheadSuccess ls) { }
+            } catch (LookaheadSuccess) { }
         }
         jj_rescan = false;
     }

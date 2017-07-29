@@ -64,7 +64,7 @@ namespace NCDK.Formula
         /// <param name="minMass">Lower boundary of the target mass range</param>
         /// <param name="maxMass">Upper boundary of the target mass range</param>
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
-        /// <exception cref="IllegalArgumentException">In case some of the isotopes in mfRange has undefined exact             mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
+        /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact mass or in case illegal parameters are provided (e.g., negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
         internal RoundRobinFormulaGenerator(IChemObjectBuilder builder,
                                     double minMass, double maxMass,
@@ -238,12 +238,13 @@ namespace NCDK.Formula
             /// <summary>
             /// checks if this decomposer can be used for the given alphabet. This is the case when the decomposer
             /// contains the same elements as the given alphabet.
-            /// <p>
+            /// </summary>
+            /// <remarks>
             /// It would be also the case when the given alphabet is a subset of this decomposers alphabet. However,
             /// if the alphabet size of the decomposer is much larger, the decomposer might be slower anyways due to
             /// larger memory footprint. As we expect that the alphabet does not change that often, it might be
             /// sufficient to just compare the arrays.
-            /// </summary>
+            /// </remarks>
             internal bool IsCompatible(IIsotope[] elements)
             {
                 return Arrays.AreEqual(elements, this.elements);
@@ -611,7 +612,7 @@ namespace NCDK.Formula
                     m = new int[k];
                     lbound = new int[k];
                     r = new int[k];
-                    flagWhile = false; // flag wether we are in the while-loop or not
+                    flagWhile = false; // flag whether we are in the while-loop or not
                     a = weights[0].GetIntegerMass();
                     // Init
                     for (int i = 1; i < k; ++i)

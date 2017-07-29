@@ -107,7 +107,7 @@ namespace NCDK.Formula
         /// <param name="minMass">Lower boundary of the target mass range</param>
         /// <param name="maxMass">Upper boundary of the target mass range</param>
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
-        /// <exception cref="IllegalArgumentException">In case some of the isotopes in mfRange has undefined exact             mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
+        /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact             mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
         public FullEnumerationFormulaGenerator(IChemObjectBuilder builder,
                                                 double minMass, double maxMass,
@@ -374,7 +374,7 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// A simple <see cref="Comparator"/> implementation for sorting IIsotopes by their
+        /// A simple <see cref="IComparer{T}"/> implementation for sorting IIsotopes by their
         /// mass
         /// </summary>
         private class IIsotopeSorterByMass : IComparer<IIsotope>

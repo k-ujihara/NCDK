@@ -149,7 +149,7 @@ namespace NCDK.RingSearches
         /// Access the number of rings found (aka. circuit rank, SSSR size).
         /// </summary>
         /// <returns>number of rings</returns>
-        /// <seealso cref=""/>
+        /// <seealso href="https://en.wikipedia.org/wiki/Circuit_rank">Circuit Rank</seealso>
         public int NumRings => searcher.NumCycles;
 
         /// <summary>

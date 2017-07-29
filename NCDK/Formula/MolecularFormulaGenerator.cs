@@ -35,7 +35,7 @@ namespace NCDK.Formula
         /// <param name="minMass">Lower boundary of the target mass range</param>
         /// <param name="maxMass">Upper boundary of the target mass range</param>
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
-        /// <exception cref="IllegalArgumentException">In case some of the isotopes in mfRange has undefined exact             mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
+        /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact             mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
         public MolecularFormulaGenerator(IChemObjectBuilder builder,
                                          double minMass, double maxMass,
@@ -139,7 +139,7 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// Checks if input parameters are valid and throws an IllegalArgumentException otherwise.
+        /// Checks if input parameters are valid and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.
         /// </summary>
         protected void CheckInputParameters(IChemObjectBuilder builder,
                                              double minMass, double maxMass,

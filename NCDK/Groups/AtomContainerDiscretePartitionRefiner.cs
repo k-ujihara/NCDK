@@ -25,15 +25,14 @@ namespace NCDK.Groups
     /// <summary>
     /// A tool for determining the automorphism group of the atoms in a molecule, or
     /// for checking for a canonical form of a molecule.
-    /// 
+    /// </summary>
+    /// <example>
     /// If two atoms are equivalent under an automorphism in the group, then
     /// roughly speaking they are in symmetric positions in the molecule. For
     /// example, the C atoms in two methyl groups attached to a benzene ring
     /// are 'equivalent' in this sense.
-    /// 
-    /// <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
-    /// 
-    /// <pre>
+    /// <para>There are a couple of ways to use it - firstly, get the automorphisms.</para>
+    /// <code>
     ///     IAtomContainer ac = ... // get an atom container somehow
     ///     AtomContainerDiscretePartitionRefiner refiner =
     ///          PartitionRefinement.forAtoms().create()
@@ -41,43 +40,44 @@ namespace NCDK.Groups
     ///     for (Permutation automorphism : autG.all()) {
     ///         ... // do something with the permutation
     ///     }
-    /// </pre>
+    /// </code>
     /// 
-    /// <p>Another is to check an atom container to see if it is canonical:</p>
+    /// <para>Another is to check an atom container to see if it is canonical:</para>
     /// 
-    /// <pre>
+    /// <code>
     ///     IAtomContainer ac = ... // get an atom container somehow
     ///     AtomContainerDiscretePartitionRefiner refiner =
     ///          PartitionRefinement.forAtoms().create()
     ///     if (refiner.isCanonical(ac)) {
     ///         ... // do something with the atom container
     ///     }
-    /// </pre>
+    /// </code>
     /// 
     /// Note that it is not necessary to call <see cref="Refine(IAtomContainer)"/> before
     /// either of these methods. However if both the group and the canonical check
     /// are required, then the code should be:
     /// 
-    /// <pre>
+    /// <code>
     ///     AtomContainerDiscretePartitionRefiner refiner =
     ///          PartitionRefinement.forAtoms().create()
     ///     refiner.refine(ac);
     ///     boolean isCanon = refiner.isCanonical();
     ///     PermutationGroup autG = refiner.getAutomorphismGroup();
-    /// </pre>
+    /// </code>
     /// 
     /// This way, the refinement is not carried out multiple times.
-    /// </summary>
+    /// </example>
     public interface AtomContainerDiscretePartitionRefiner : DiscretePartitionRefiner
     {
         /// <summary>
         /// Refine an atom container, which has the side effect of calculating
         /// the automorphism group.
-        /// 
-        /// If the group is needed afterwards, call <see cref="GetAutomorphismGroup"/>
+        /// </summary>
+        /// <remarks>
+        /// If the group is needed afterwards, call <see cref="DiscretePartitionRefiner.GetAutomorphismGroup()"/>
         /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
         /// refine method will be called twice.
-        /// </summary>
+        /// </remarks>
         /// <param name="atomContainer">the atomContainer to refine</param>
         void Refine(IAtomContainer atomContainer);
 
@@ -100,7 +100,7 @@ namespace NCDK.Groups
         /// Gets the automorphism group of the atom container. By default it uses an
         /// initial partition based on the element symbols (so all the carbons are in
         /// one cell, all the nitrogens in another, etc). If this behaviour is not
-        /// desired, then use the <see cref="ignoreElements"/> flag in the constructor.
+        /// desired, then use the <see cref="AtomDiscretePartitionRefiner.ignoreElements"/> flag in the constructor.
         /// </summary>
         /// <param name="atomContainer">the atom container to use</param>
         /// <returns>the automorphism group of the atom container</returns>

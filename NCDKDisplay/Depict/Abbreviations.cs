@@ -914,7 +914,7 @@ namespace NCDK.Depict
         /// Available:
         /// <pre>
         /// obabel_superatoms.smi - 
-        /// <see href="https://www.github.com/openbabel/superatoms"/s>
+        /// <see href="https://www.github.com/openbabel/superatoms"/>
         /// </pre>
         /// </summary>
         /// <param name="path">classpath or filesystem path to a SMILES file</param>

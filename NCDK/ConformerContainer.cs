@@ -20,6 +20,7 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using NCDK.IO.Iterator;
 
 namespace NCDK
 {

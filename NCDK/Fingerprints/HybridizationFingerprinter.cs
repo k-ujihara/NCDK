@@ -62,8 +62,8 @@ namespace NCDK.Fingerprints
     public class HybridizationFingerprinter : Fingerprinter, IFingerprinter
     {
         /// <summary>
-        /// Creates a fingerprint generator of length <see cref="DefaultSize"/>
-        /// and with a search depth of <see cref="DefaultSearchDepth"/>.
+        /// Creates a fingerprint generator of length <see cref="Fingerprinter.DefaultSize"/>
+        /// and with a search depth of <see cref="Fingerprinter.DefaultSearchDepth"/>.
         /// </summary>
         public HybridizationFingerprinter()
            : this(DefaultSize, DefaultSearchDepth)

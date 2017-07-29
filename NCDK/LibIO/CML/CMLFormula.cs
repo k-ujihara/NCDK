@@ -56,8 +56,8 @@ namespace NCDK.LibIO.CML
         // only edit insertion module!
 
         // marks whether concise has been processed before atomArray has been read
-        private bool processedConcise;
-        private bool allowNegativeCounts;
+        private bool processedConcise = false;
+        private bool allowNegativeCounts = false;
 
         // element:   formula
         // element:   atomArray

@@ -199,7 +199,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="i">the line number</param>
         /// <param name="j">the column number</param>
         /// <returns>the double at the given index in the Matrix</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public double GetValueAt(int i, int j)
         {
             if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
@@ -212,10 +212,10 @@ namespace NCDK.Graphs.Invariant
         /// <param name="i">the line number</param>
         /// <param name="j">the column number</param>
         /// <param name="element">the double to place at the given index in the Matrix</param>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public void SetValueAt(int i, int j, double element)
         {
-            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfRangeException();
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
             array[i][j] = element;
         } // method SetValueAt(int,int,double)
 
@@ -224,10 +224,10 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="i">the line number</param>
         /// <returns>the specified line as a Matrix object</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetLine(int i)
         {
-            if ((i < 0) || (i >= m)) throw new IndexOutOfRangeException();
+            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
             double[][] line = Arrays.CreateJagged<double>(1, n);
             for (int k = 0; k < n; k++)
                 line[0][k] = array[i][k];
@@ -246,10 +246,10 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="j">the column number</param>
         /// <returns>the specified column as a Matrix object</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix GetColumn(int j)
         {
-            if ((j < 0) || (j >= n)) throw new IndexOutOfRangeException();
+            if ((j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
             double[][] column = Arrays.CreateJagged<double>(m, 1);
             for (int k = 0; k < m; k++)
                 column[k][0] = array[k][j];
@@ -268,11 +268,11 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="i">the line number</param>
         /// <param name="line">the line to be placed at the specified index</param>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a line of this Matrix</exception>
         public void SetLine(int i, GIMatrix line)
         {
-            if ((i < 0) || (i >= m)) throw new IndexOutOfRangeException();
+            if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
             if ((line.Height != 1) || (line.Width != n)) throw new BadMatrixFormatException();
             for (int k = 0; k < n; k++)
                 array[i][k] = line.GetValueAt(0, k);
@@ -282,12 +282,12 @@ namespace NCDK.Graphs.Invariant
         /// Sets the column of the matrix at the specified index to a new value.
         /// </summary>
         /// <param name="j">the column number</param>
-        /// <param name="column">the colums to be placed at the specified index</param>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <param name="column">the column to be placed at the specified index</param>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         /// <exception cref="BadMatrixFormatException">in case the given Matrix is unproper to replace a column of this Matrix</exception>
         public void SetColumn(int j, GIMatrix column)
         {
-            if ((j < 0) || (j >= n)) throw new IndexOutOfRangeException();
+            if ((j < 0) || (j >= n)) throw new ArgumentOutOfRangeException();
             if ((column.Height != m) || (column.Width != 1)) throw new BadMatrixFormatException();
             for (int k = 0; k < m; k++)
                 array[k][j] = column.GetValueAt(k, 0);
@@ -617,7 +617,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="i">the line number</param>
         /// <param name="c">the double constant that multiplies the line</param>
         /// <returns>the resulting Matrix object of the linear operation</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix MultiplyLine(int i, double c)
         {
             if ((i < 0) || (i >= m)) throw new ArgumentOutOfRangeException();
@@ -640,7 +640,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="i">the first line number</param>
         /// <param name="j">the second line number</param>
         /// <returns>the resulting Matrix object of the linear operation</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix InvertLine(int i, int j)
         {
             if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();
@@ -666,7 +666,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="j">the second line number (to be added to the first)</param>
         /// <param name="c">the double constant that multiplies the first line</param>
         /// <returns>the resulting Matrix object of the linear operation</returns>
-        /// <exception cref="IndexOutOfBoundsException">if the given index is out of the matrix's range</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if the given index is out of the matrix's range</exception>
         public GIMatrix AddLine(int i, int j, double c)
         {
             if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new ArgumentOutOfRangeException();

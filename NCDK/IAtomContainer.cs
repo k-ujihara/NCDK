@@ -54,12 +54,12 @@ namespace NCDK
         
         /// <summary>
         /// Set the atom at <paramref name="index"/>, the index must have an existing atom
-        /// and therefore be in the range 0 &le; idx &lt; mol.getAtomCount().
+        /// and therefore be in the range 0 ÅÖ idx &lt; mol.Atoms.Count.
         /// </summary>
         /// <param name="index">The index of the atom to be set.</param>
         /// <param name="atom">The atom to be stored at position <paramref name="index"/></param>
         /// <exception cref="ArgumentOutOfRangeException">index is out of bounds</exception>
-        /// <exception cref="ArgumentException">the atom counld not be set</exception>
+        /// <exception cref="ArgumentException">the atom could not be set</exception>
         /// <seealso cref="Atoms"/>
         void SetAtom(int index, IAtom atom);
 
@@ -114,16 +114,16 @@ namespace NCDK
         IEnumerable<IElectronContainer> GetElectronContainers();
 
         /// <summary>
-        /// Returns the bond that connectes the two given atoms.
+        /// Returns the bond that connects the two given atoms.
         /// </summary>
         /// <param name="atom1">The first atom</param>
         /// <param name="atom2">The second atom</param>
-        /// <returns>The <see cref="IBond"/> that connectes between <paramref name="atom1"/> and <paramref name="atom2"/></returns>
+        /// <returns>The <see cref="IBond"/> that connects between <paramref name="atom1"/> and <paramref name="atom2"/></returns>
         IBond GetBond(IAtom atom1, IAtom atom2);
 
 
         /// <summary>
-        /// Returns the atoms connected connected to the specified atom by
+        /// Returns the atoms connected to the specified atom by
         /// a bond.
         /// </summary>
         /// <param name="atom">the atom</param>
@@ -131,14 +131,14 @@ namespace NCDK
         IEnumerable<IAtom> GetConnectedAtoms(IAtom atom);
 
         /// <summary>
-        /// Returns the bonds connected connected to the specified atom.
+        /// Returns the bonds connected to the specified atom.
         /// </summary>
         /// <param name="atom">the atom</param>
         /// <returns>connected bonds</returns>
         IEnumerable<IBond> GetConnectedBonds(IAtom atom);
 
         /// <summary>
-        /// Returns the lone pairs connected connected to the specified atom.
+        /// Returns the lone pairs connected to the specified atom.
         /// </summary>
         /// <param name="atom">the atom</param>
         /// <returns>connected lone pairs</returns>
@@ -146,7 +146,7 @@ namespace NCDK
 
         /// <summary>
         /// Returns the electron containers (bonds, radicals, and lone pairs )
-        /// connected connected to the specified atom.
+        /// connected to the specified atom.
         /// </summary>
         /// <param name="atom">the atom</param>
         /// <returns>connected lone pairs</returns>
@@ -155,7 +155,7 @@ namespace NCDK
 
         /// <summary>
         /// Returns the electron containers (bonds, radicals, and lone pairs )
-        /// connected connected to the specified atom.
+        /// connected to the specified atom.
         /// </summary>
         /// <param name="atom">the atom</param>
         /// <returns>connected lone pairs</returns>
@@ -279,7 +279,7 @@ namespace NCDK
         /// </summary>
         /// <param name="atom1">The first atom</param>
         /// <param name="atom2">The second atom</param>
-        /// <returns>The bond that connectes the two atoms</returns>
+        /// <returns>The bond that connects the two atoms</returns>
         IBond RemoveBond(IAtom atom1, IAtom atom2);
 
         /// <summary>

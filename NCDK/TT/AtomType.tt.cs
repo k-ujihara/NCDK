@@ -236,7 +236,7 @@ namespace NCDK.Default
         /// <summary>
         /// Compares a atom type with this atom type.
         /// </summary>
-        /// <param name="object">Object of type AtomType</param>
+        /// <param name="obj">Object of type AtomType</param>
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {
@@ -556,7 +556,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Compares a atom type with this atom type.
         /// </summary>
-        /// <param name="object">Object of type AtomType</param>
+        /// <param name="obj">Object of type AtomType</param>
         /// <returns>true if the atom types are equal</returns>
         public override bool Compare(object obj)
         {

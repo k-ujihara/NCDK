@@ -197,7 +197,7 @@ namespace NCDK.Default
         /// <summary>
         /// Sets the array of atoms making up this bond.
         /// </summary>
-		/// <param name="atom">An array of atoms that forms this bond</param>
+		/// <param name="atoms">An array of atoms that forms this bond</param>
 		/// <seealso cref="Atoms"/>
        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
@@ -558,7 +558,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Sets the array of atoms making up this bond.
         /// </summary>
-		/// <param name="atom">An array of atoms that forms this bond</param>
+		/// <param name="atoms">An array of atoms that forms this bond</param>
 		/// <seealso cref="Atoms"/>
        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {

@@ -298,7 +298,7 @@ namespace NCDK.Smiles
         /// </remarks>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create_IAtomContainer_int"]/*' />
-        /// <example>
+        /// </example>
         /// <param name="molecule">the molecule to write</param>
         /// <param name="order">array to store the output order of atoms</param>
         /// <returns>the SMILES string</returns>
@@ -320,7 +320,7 @@ namespace NCDK.Smiles
         /// </remarks>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create_IAtomContainer_int_int"]/*' />
-        /// <example>
+        /// </example>
         /// <param name="molecule">the molecule to write</param>
         /// <param name="order">array to store the output order of atoms</param>
         /// <returns>the SMILES string</returns>

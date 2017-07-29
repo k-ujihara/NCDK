@@ -43,7 +43,7 @@ namespace NCDK.Fingerprints
     /// </example>
     /// <remarks>
     /// <note type="note">
-    /// Note that the fingerprinter assumes that you have detected aromaticity and
+    /// The fingerprinter assumes that you have detected aromaticity and
     /// atom types before evaluating the fingerprint. Also the fingerprinter
     /// expects that explicit H's are present
     /// </note>
@@ -55,17 +55,17 @@ namespace NCDK.Fingerprints
     /// <para>
     /// Some SMARTS patterns have been modified from the original code, since they
     /// were based on explicit H matching. As a result, we replace the explicit H's
-    /// with a query of the <pre>#<N>&!H0</pre> where <pre><N></pre> is the atomic number. Thus bit 344 was
+    /// with a query of the '#&lt;N&gt;&amp;!H0' where '&lt;N&gt;' is the atomic number. Thus bit 344 was
     /// with a query of the #N&amp;!H0 where N is the atomic number. Thus bit 344 was
-    /// originally <pre>[#6](~[#6])([H])</pre> but is written here as
-    /// <pre>[#6&!H0]~[#6]</pre>. In some cases, where the H count can be reduced
+    /// originally '[#6](~[#6])([H])' but is written here as
+    /// '[#6&amp;!H0]~[#6]'. In some cases, where the H count can be reduced
     /// to single possibility we directly use that H count. An example is bit 35,
     /// which was <c>[#6](~[#6])(~[#6])(~[#6])([H])</c> and is rewritten as
     /// <pre>[#6H1](~[#6])(~[#6])(~[#6])</pre>.
     /// </para>
     /// <note type="warning">
     /// This class is not thread-safe and uses stores intermediate steps
-    /// internally. Please use a seperate instance of the class for each thread.
+    /// internally. Please use a separate instance of the class for each thread.
     /// </note>
     /// </remarks>
     /// <threadsafety static="true" instance="false"/>

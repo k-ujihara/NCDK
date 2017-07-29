@@ -116,7 +116,7 @@ namespace NCDK.Smiles
         public const int CxCoordinates = Cx3dCoordinates | Cx2dCoordinates;
 
         /// <summary>
-        /// Output atom labels, atom labels are specified by <see cref="IPseudoAtom.GetLabel()"/>.
+        /// Output atom labels, atom labels are specified by <see cref="IPseudoAtom.Label"/>.
         /// </summary>
         public const int CxAtomLabel = 0x008000;
 

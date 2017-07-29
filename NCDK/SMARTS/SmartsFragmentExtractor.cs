@@ -335,7 +335,7 @@ namespace NCDK.SMARTS
         /// Select the lowest ring number for use in SMARTS.
         /// </summary>
         /// <returns>ring number</returns>
-        /// <exception cref="IllegalStateException">all ring numbers are used</exception>
+        /// <exception cref="InvalidOperationException">all ring numbers are used</exception>
         private int ChooseRingNumber()
         {
             for (int i = 1; i < rnums.Length; i++)

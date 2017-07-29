@@ -53,7 +53,7 @@ namespace NCDK.SMSD
     /// This class represents various algorithm type supported by SMSD.
     /// Presently SMSD supports 5 different kinds of algorithms:
     /// <ol>
-    /// <item>0: defaul</item>
+    /// <item>0: default</item>
     /// <item>1: MCSPlus</item>
     /// <item>2: VFLibMCS</item>
     /// <item>3: CDKMCS</item>

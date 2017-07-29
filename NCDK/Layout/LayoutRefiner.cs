@@ -51,8 +51,8 @@ namespace NCDK.Layout
     /// <list type="bullet">
     ///     <item>Rotation (or reflection), <see cref="Rotate(ICollection{AtomPair})"/></item>
     ///     <item>Inversion (not described in lit), <see cref="Invert(IEnumerable{AtomPair})"/></item>
-    ///     <item>Stretch, <see cref="Stretch(AtomPair, IntStack, Vector2[])"/></item>
-    ///     <item>Bend, <see cref="Bend(AtomPair, IntStack, Vector2[])"/></item>
+    ///     <item>Stretch, <see cref="Stretch(AtomPair, IntStack, Vector2[], IDictionary{IBond, AtomPair})"/></item>
+    ///     <item>Bend, <see cref="Bend(AtomPair, IntStack, Vector2[], IDictionary{IBond, AtomPair})"/></item>
     /// </list>
     /// </para>
     /// </remarks>

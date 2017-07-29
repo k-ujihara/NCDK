@@ -36,7 +36,7 @@ namespace NCDK.Groups
         /// Refine an atom container, which has the side effect of calculating
         /// the automorphism group.
         /// 
-        /// If the group is needed afterwards, call <see cref="GetAutomorphismGroup()"/>
+        /// If the group is needed afterwards, call <see cref="DiscretePartitionRefiner.GetAutomorphismGroup()"/>
         /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
         /// refine method will be called twice.
         /// </summary>
@@ -58,9 +58,11 @@ namespace NCDK.Groups
         }
 
         /// <summary>
-        /// Checks if the atom container is canonical. Note that this calls
-        /// <see cref="Refine"/> first.
-        /// </summary>
+        /// Checks if the atom container is canonical.</summary>
+        /// <remarks>
+        /// <note type="note">
+        /// This calls <see cref="Refine(IAtomContainer)"/> first.
+        /// </note></remarks>
         /// <param name="atomContainer">the atom container to check</param>
         /// <returns>true if the atom container is canonical</returns>
         public bool IsCanonical(IAtomContainer atomContainer)
@@ -74,7 +76,7 @@ namespace NCDK.Groups
         /// Gets the automorphism group of the atom container. By default it uses an
         /// initial partition based on the element symbols (so all the carbons are in
         /// one cell, all the nitrogens in another, etc). If this behaviour is not
-        /// desired, then use the <see cref="ignoreElements"/> flag in the constructor.
+        /// desired, then use the <see cref="AtomDiscretePartitionRefiner.ignoreElements"/> flag in the constructor.
         /// </summary>
         /// <param name="atomContainer">the atom container to use</param>
         /// <returns>the automorphism group of the atom container</returns>
