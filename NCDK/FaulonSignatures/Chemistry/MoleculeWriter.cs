@@ -48,13 +48,13 @@ namespace NCDK.FaulonSignatures.Chemistry
                 TextWriter writer, Molecule molecule)
         {
             writer.WriteLine();
-            writer.Write(" Writen by signature package");
+            writer.Write(" Written by signature package");
             writer.WriteLine();
             writer.WriteLine();
             int a = molecule.GetAtomCount();
             int b = molecule.GetBondCount();
             writer.Write(
-                    string.Format("%3d%3d  0  0  0  0  0  0  0  0999 V2000", a, b));
+                    string.Format("{0, 3D}{1, 3D}  0  0  0  0  0  0  0  0999 V2000", a, b));
             writer.WriteLine();
         }
 
@@ -64,7 +64,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             string empty3DCoords = "    0.0000    0.0000    0.0000 ";
             string emptyTail = " 0  0  0  0  0  0  0  0  0  0  0  0";
             string symbol = molecule.GetSymbolFor(i);
-            writer.Write(empty3DCoords + string.Format("%-3s", symbol) + emptyTail);
+            writer.Write(empty3DCoords + string.Format("{0, -3}", symbol) + emptyTail);
             writer.WriteLine();
         }
 
@@ -74,7 +74,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             int f = molecule.GetFirstInBond(i) + 1;
             int s = molecule.GetSecondInBond(i) + 1;
             int o = molecule.GetBondOrderAsInt(i);
-            writer.Write(string.Format("%3d%3d%3d  0  0  0  0", f, s, o));
+            writer.Write(string.Format("{0, 3D}{1, 3D}{2, 3D} 0  0  0  0", f, s, o));
             writer.WriteLine();
         }
     }
