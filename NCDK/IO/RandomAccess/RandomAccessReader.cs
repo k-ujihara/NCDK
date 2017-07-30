@@ -350,7 +350,11 @@ namespace NCDK.IO.RandomAccess
             while (true)
             {
                 if (c == '\n')
+                {
+                    if (sb.Length > 0 && sb[sb.Length - 1] == '\r')
+                        sb.Remove(sb.Length - 1, 1);
                     break;
+                }
                 if (c == -1)
                     break;
                 sb.Append((char)c);
