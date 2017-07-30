@@ -175,27 +175,32 @@ foreach (var s in entities)
          if (isStruct) 
         {    
 #>
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(<#= name #> a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(<#= name #> a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(<#= name #> a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, <#= name #> b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, <#= name #> b)
         {
             throw new System.Exception();
         }
+
 <#+
         }
 #>

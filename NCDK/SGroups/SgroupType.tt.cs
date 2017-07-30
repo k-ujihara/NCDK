@@ -224,27 +224,32 @@ namespace NCDK.SGroups
         };
         public static System.Collections.Generic.IEnumerable<SgroupType> Values => values;
 
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(SgroupType a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(SgroupType a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(SgroupType a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, SgroupType b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, SgroupType b)
         {
             throw new System.Exception();
         }
+
 
         public static bool operator==(SgroupType a, SgroupType b)
         {

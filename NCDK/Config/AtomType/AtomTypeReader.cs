@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -34,7 +35,7 @@ namespace NCDK.Config.AtomType
     /// <seealso cref="CDKBasedAtomTypeConfigurator"/>
     // @cdk.module core
     // @cdk.githash
-    public class AtomTypeReader
+    public class AtomTypeReader : IDisposable
     {
         private TextReader input;
 
@@ -79,7 +80,7 @@ namespace NCDK.Config.AtomType
                 atomType.AtomTypeName = elementAtomType.Attribute("id")?.Value;
                 foreach (var elm in elementAtomType.Descendants())
                 {
-                    // lazzy compare
+                    // lazy compare
                     switch (elm.Name.LocalName)
                     {
                         case "atom":
@@ -169,5 +170,29 @@ namespace NCDK.Config.AtomType
             }
             yield break;
        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

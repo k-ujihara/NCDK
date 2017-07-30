@@ -48,7 +48,7 @@ namespace NCDK.FaulonSignatures.Chemistry
                 TextWriter writer, Molecule molecule)
         {
             writer.WriteLine();
-            writer.Write(" Writen by signature package");
+            writer.Write(" Written by signature package");
             writer.WriteLine();
             writer.WriteLine();
             int a = molecule.GetAtomCount();

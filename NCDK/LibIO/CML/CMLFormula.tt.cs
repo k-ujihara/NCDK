@@ -159,27 +159,32 @@ namespace NCDK.LibIO.CML
         };
         public static System.Collections.Generic.IEnumerable<Types> Values => values;
 
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(Types a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(Types a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(Types a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, Types b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, Types b)
         {
             throw new System.Exception();
         }
+
 
         public static bool operator==(Types a, Types b)
         {
@@ -290,27 +295,32 @@ namespace NCDK.LibIO.CML
         };
         public static System.Collections.Generic.IEnumerable<Sorts> Values => values;
 
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(Sorts a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(Sorts a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(Sorts a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, Sorts b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, Sorts b)
         {
             throw new System.Exception();
         }
+
 
         public static bool operator==(Sorts a, Sorts b)
         {

@@ -7,7 +7,7 @@ using static NCDK.Config.AtomType.OWLConstants;
 
 namespace NCDK.Config.AtomType
 {
-    public class OWLAtomTypeReader
+    public class OWLAtomTypeReader : IDisposable
     {
         private TextReader input;
 
@@ -101,5 +101,29 @@ namespace NCDK.Config.AtomType
             }
             return ret;
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

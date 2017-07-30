@@ -127,27 +127,32 @@ namespace NCDK
         };
         public static System.Collections.Generic.IEnumerable<BondOrder> Values => values;
 
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(BondOrder a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(BondOrder a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(BondOrder a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, BondOrder b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, BondOrder b)
         {
             throw new System.Exception();
         }
+
 
         public static bool operator==(BondOrder a, BondOrder b)
         {

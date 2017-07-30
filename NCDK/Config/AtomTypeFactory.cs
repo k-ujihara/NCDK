@@ -161,9 +161,9 @@ namespace NCDK.Config
                 atom.AtomicNumber = atomType.AtomicNumber;
                 atom.ExactMass = atomType.ExactMass;
             }
-            catch (CDKException exc)
+            catch (CDKException)
             {
-                throw exc;
+                throw;
             }
             catch (Exception exception)
             {
