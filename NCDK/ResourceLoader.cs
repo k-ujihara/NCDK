@@ -12,6 +12,19 @@ namespace NCDK
     {
         public static Stream GetAsStream(string name)
         {
+            if (File.Exists(name))
+            {
+                try
+                {
+                    var srm = new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    return srm;
+                }
+                catch (Exception exception)
+                {
+                    Trace.TraceInformation(exception.Message);
+                }
+            }
+
             {
                 var asm = Assembly.GetCallingAssembly();
                 var srm = asm.GetManifestResourceStream(name);
@@ -30,19 +43,6 @@ namespace NCDK
                 catch (Exception)
                 {
                     // ignore
-                }
-            }
-
-            if (File.Exists(name))
-            {
-                try
-                {
-                    var srm = new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    return srm;
-                }
-                catch (Exception exception)
-                {
-                    Trace.TraceError(exception.Message);
                 }
             }
 

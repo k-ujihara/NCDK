@@ -117,6 +117,21 @@
     <Compile Include="Config\TXTBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Default\ElementTest.cs" />
     <Compile Include="Default\ReactionTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\ChiralityTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\LargeMoleculeTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeSignatureTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MultipleBondTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\NumberLabelsTest.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\WriterTest.cs" />
+    <Compile Include="FaulonSignatures\DAGTester.cs" />
+    <Compile Include="FaulonSignatures\HeightTest.cs" />
+    <Compile Include="FaulonSignatures\InvariantArrayTest.cs" />
+    <Compile Include="FaulonSignatures\ParsingTest.cs" />
+    <Compile Include="FaulonSignatures\PermutationTest.cs" />
+    <Compile Include="FaulonSignatures\Simple\CanonicalLabellingTest.cs" />
+    <Compile Include="FaulonSignatures\Simple\ReconstructionTest.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraphTest.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleQuotientGraphTest.cs" />
     <Compile Include="Fingerprints\CircularFingerprintSmartsTest.cs" />
     <Compile Include="Graphs\AllCyclesTest.cs" />
     <Compile Include="Graphs\GraphUtilTest.cs" />
@@ -1704,6 +1719,7 @@
     <None Include="app.config" />
     <EmbeddedResource Include="IO\structure-with-radical.mol" />
     <EmbeddedResource Include="IO\CH3.mol" />
+    <EmbeddedResource Include="FaulonSignatures\Data\buckyball.mol" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
     <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
@@ -1723,6 +1739,35 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\buckysigs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\buckysigs3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\large_example.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\multCycle.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\multCycleCanLabel.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FaulonSignatures\Data\test.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FaulonSignatures\SignatureTests.csproj" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
