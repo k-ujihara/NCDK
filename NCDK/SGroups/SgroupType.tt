@@ -37,9 +37,7 @@ namespace NCDK.SGroups
     /// </list>
     /// </remarks>
 <# 
-    GenerateEnumBody(
-        "SgroupType", 
-        new[]
+	var parameters =  new[]
         {
             "Nil",
             // Display shortcuts
@@ -63,42 +61,63 @@ namespace NCDK.SGroups
             "CtabGeneric:DAT, data Sgroup",
             // extension for handling positional variation and distributed coordination bonds
             "ExtMulticenter",
-        },
+        };
+    GenerateEnumBody(
+        "SgroupType", 
+       parameters,
         true
     ); 
 #>
     {
-        private static Dictionary<string, int> map;
+<#
+    string[] a_CtabKeys = new string[]
+    {
+        "",
+        "SUP",
+        "MUL",
+        "SRU",
+        "MON",
+        "MOD", 
+        "COP", 
+        "MER", 
+        "CRO",
+        "GRA", 
+        "ANY", 
+        "COM",
+        "MIX",
+        "FOR",
+        "DAT",
+        "GEN", 
+        "N/A",
+    };
+#>
+		
+		private static string[] ctabKeys = new string[]
+		{
+<#
+	for (var index = 0; index < a_CtabKeys.Length; index++)
+	{
+		var ss = "\"" + a_CtabKeys[index] + "\", ";
+#>
+			<#= ss #>
+<#
+	}
+#>
+		};
 
-        private static string[] ctabKeys = new string[]
-        {
-            "",
-           "SUP",
-           "MUL",
-           "SRU",
-           "MON",
-           "MOD", 
-           "COP", 
-           "MER", 
-           "CRO",
-           "GRA", 
-           "ANY", 
-           "COM",
-           "MIX",
-           "FOR",
-           "DAT",
-           "GEN", 
-           "N/A",
-        };
+        private static Dictionary<string, int> map = new Dictionary<string, int>()
+		{
+<#
+	for (var index = 0; index < a_CtabKeys.Length; index++)
+	{
+		var ss = "{ \"" + a_CtabKeys[index] + "\", " + index.ToString() + " },";
+#>
+			<#= ss #>
+<#
+	}
+#>
+		};
 
-        static SgroupType()
-        {
-            map = new Dictionary<string, int>();
-
-            for (int i = 0; i < O.ExtMulticenter; i++)
-                map.Add(ctabKeys[i], i);
-        }
-        
         public string Key => ctabKeys[Ordinal];
 
         public static SgroupType ParseCtabKey(string str)

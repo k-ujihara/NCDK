@@ -292,37 +292,49 @@ namespace NCDK.SGroups
 	}
 	public partial struct SgroupType 
     {
-        private static Dictionary<string, int> map;
+		
+		private static string[] ctabKeys = new string[]
+		{
+			"", 
+			"SUP", 
+			"MUL", 
+			"SRU", 
+			"MON", 
+			"MOD", 
+			"COP", 
+			"MER", 
+			"CRO", 
+			"GRA", 
+			"ANY", 
+			"COM", 
+			"MIX", 
+			"FOR", 
+			"DAT", 
+			"GEN", 
+			"N/A", 
+		};
 
-        private static string[] ctabKeys = new string[]
-        {
-            "",
-           "SUP",
-           "MUL",
-           "SRU",
-           "MON",
-           "MOD", 
-           "COP", 
-           "MER", 
-           "CRO",
-           "GRA", 
-           "ANY", 
-           "COM",
-           "MIX",
-           "FOR",
-           "DAT",
-           "GEN", 
-           "N/A",
-        };
+        private static Dictionary<string, int> map = new Dictionary<string, int>()
+		{
+			{ "", 0 },
+			{ "SUP", 1 },
+			{ "MUL", 2 },
+			{ "SRU", 3 },
+			{ "MON", 4 },
+			{ "MOD", 5 },
+			{ "COP", 6 },
+			{ "MER", 7 },
+			{ "CRO", 8 },
+			{ "GRA", 9 },
+			{ "ANY", 10 },
+			{ "COM", 11 },
+			{ "MIX", 12 },
+			{ "FOR", 13 },
+			{ "DAT", 14 },
+			{ "GEN", 15 },
+			{ "N/A", 16 },
+		};
 
-        static SgroupType()
-        {
-            map = new Dictionary<string, int>();
-
-            for (int i = 0; i < O.ExtMulticenter; i++)
-                map.Add(ctabKeys[i], i);
-        }
-        
         public string Key => ctabKeys[Ordinal];
 
         public static SgroupType ParseCtabKey(string str)
