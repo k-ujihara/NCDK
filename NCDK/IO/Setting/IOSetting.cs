@@ -47,14 +47,14 @@ namespace NCDK.IO.Setting
         /// </summary>
         /// <param name="name">Name of the setting</param>
         /// <param name="level">Level at which question is asked</param>
-        /// <param name="question">Question that is poped to the user when the ReaderSetting needs setting</param>
+        /// <param name="question">Question that is popped to the user when the ReaderSetting needs setting</param>
         /// <param name="defaultSetting">The default setting, used if not overwritten by a user</param>
         public IOSetting(string name, Importance level, string question, string defaultSetting)
         {
-            Level = level;
-            Name = name;
-            Question = question;
-            Setting = defaultSetting;
+            this.Level = level;
+            this.Name = name;
+            this.Question = question;
+            this.Setting = defaultSetting;
         }
 
         public virtual string Name { get; protected set; }
