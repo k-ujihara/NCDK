@@ -11,7 +11,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             Molecule molecule = null;
             try
             {
-                using (var reader = new StreamReader(filename))
+                using (var reader = new StreamReader(ResourceLoader.GetAsStream(filename)))
                 {
                     string line;
                     var block = new List<string>();
@@ -42,12 +42,12 @@ namespace NCDK.FaulonSignatures.Chemistry
         {
             try
             {
-                using (var stream = new FileStream(filename, FileMode.Open))
+                using (var stream = ResourceLoader.GetAsStream(filename))
                 {
                     return ReadSDFfromStream(stream);
                 }
             }
-            catch (FileNotFoundException e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine(e.ToString());
             }
@@ -107,7 +107,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             // counts are on the fourth line
             string countLine = block[3];
             int atomCount = int.Parse(countLine.Substring(0, 3).Trim());
-            int bondCount = int.Parse(countLine.Substring(3, 6).Trim());
+            int bondCount = int.Parse(countLine.Substring(3, 3).Trim());
 
             // atom block starts on the fifth line (4th index)
             int atomLineStart = 4;
@@ -130,8 +130,8 @@ namespace NCDK.FaulonSignatures.Chemistry
                     int atomNumberA =
                         int.Parse(bondLine.Substring(0, 3).Trim());
                     int atomNumberB =
-                        int.Parse(bondLine.Substring(3, 6).Trim());
-                    int order = int.Parse(bondLine.Substring(7, 10).Trim());
+                        int.Parse(bondLine.Substring(3, 3).Trim());
+                    int order = int.Parse(bondLine.Substring(7, 3).Trim());
                     var o = ConvertIntToBondOrder(order);
                     molecule.AddBond(atomNumberA - 1, atomNumberB - 1, o);
                 }
