@@ -83,12 +83,12 @@ namespace NCDK.IO.Formats
         /// What was the format which matched if there was a match <see cref="IsMatched"/>.
         /// </summary>
         /// <returns>the format which matched</returns>
-        /// <exception cref="ArgumentException">there was no match</exception>
+        /// <exception cref="InvalidOperationException">there was no match</exception>
         public IChemFormat Format
         {
             get
             {
-                if (!matched) throw new ArgumentException("result did not match");
+                if (!matched) throw new InvalidOperationException("result did not match");
                 return format;
             }
         }
