@@ -1050,7 +1050,6 @@ namespace NCDK.Numerics
         /// <summary>
         /// Returns the element at the given index.
         /// </summary>
-        
         public unsafe T this[int index]
         {
             get

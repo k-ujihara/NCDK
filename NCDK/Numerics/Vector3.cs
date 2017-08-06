@@ -12,6 +12,7 @@ namespace NCDK.Numerics
     /// <summary>
     /// A structure encapsulating three single precision floating point values and provides hardware accelerated methods.
     /// </summary>
+    [Serializable]
     public partial struct Vector3 : IEquatable<Vector3>, IFormattable
     {
         #region Public Static Properties

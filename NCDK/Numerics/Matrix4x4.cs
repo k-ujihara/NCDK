@@ -10,6 +10,7 @@ namespace NCDK.Numerics
     /// <summary>
     /// A structure encapsulating a 4x4 matrix.
     /// </summary>
+    [Serializable]
     public struct Matrix4x4 : IEquatable<Matrix4x4>
     {
         #region Public Fields

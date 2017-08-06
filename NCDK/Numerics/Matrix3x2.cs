@@ -10,6 +10,7 @@ namespace NCDK.Numerics
     /// <summary>
     /// A structure encapsulating a 3x2 matrix.
     /// </summary>
+    [Serializable]
     public struct Matrix3x2 : IEquatable<Matrix3x2>
     {
         #region Public Fields

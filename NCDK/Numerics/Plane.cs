@@ -11,6 +11,7 @@ namespace NCDK.Numerics
     /// <summary>
     /// A structure encapsulating a 3D Plane
     /// </summary>
+    [Serializable]
     public struct Plane : IEquatable<Plane>
     {
         /// <summary>

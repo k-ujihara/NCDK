@@ -11,6 +11,7 @@ namespace NCDK.Numerics
     /// A structure encapsulating a four-dimensional vector (x,y,z,w), 
     /// which is used to efficiently rotate an object about the (x,y,z) vector by the angle theta, where w = Cos(theta/2).
     /// </summary>
+    [Serializable]
     public struct Quaternion : IEquatable<Quaternion>
     {
         /// <summary>
