@@ -52,7 +52,7 @@ namespace NCDK.IO.Setting
         /// </summary>
         /// <seealso cref="MakeKey(ISetting)"/>
         /// <seealso cref="MakeKey(string)"/>
-        private static readonly Regex WHITE_SPACE = new Regex("\\s+", RegexOptions.Compiled);
+        private static readonly Regex regex_WhiteSpace = new Regex("\\s+", RegexOptions.Compiled);
 
         /// <summary>
         /// Settings are stored in a map of name -> instance.
@@ -68,7 +68,7 @@ namespace NCDK.IO.Setting
         /// <returns>keyed setting name</returns>
         private static string MakeKey(string name)
         {
-            return WHITE_SPACE.Replace(name, ".").ToLowerInvariant();
+            return regex_WhiteSpace.Replace(name, ".").ToLowerInvariant();
         }
 
         /// <summary>
