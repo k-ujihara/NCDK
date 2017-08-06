@@ -124,7 +124,6 @@ namespace NCDK.Fingerprints
         private int[] identity;
         private bool[] resolvedChiral;
         private int[][] atomGroup;
-        private Crc32 crc = new Crc32();        // recycled for each CRC calculation
         private List<FP> fplist = new List<FP>();
 
         /// summary information about the molecule, for quick access
