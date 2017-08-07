@@ -743,7 +743,8 @@ namespace NCDK.Beam
              "O=c1[nH]c(=O)c2cc3c(cc12)c(=O)[nH]c3=O");
         }
 
-        [TestMethod()] public void Bo_78222()
+        [TestMethod()]
+        public void Bo_78222()
         {
             Test("[O-]S(=O)(=O)OC1=C2C=CC3=C(NC4=CC=C5C6=CC=CC=C6C(=O)C6=C5C4=C3C=C6)C2=C(OS([O-])(=O)=O)C2=CC=CC=C12",
              "[O-]S(=O)(=O)Oc1c2ccc3c([nH]c4ccc5c6ccccc6c(=O)c7c5c4c3cc7)c2c(OS([O-])(=O)=O)c8ccccc18");
