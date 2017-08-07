@@ -96,7 +96,7 @@ namespace NCDK.Formula.Rules
             IMolecularFormula mf = new MolecularFormula();
             mf.Add(new Isotope("C", 13));
             mf.Add(new Isotope("H", 2), 4);
-            rule.Validate(new MolecularFormula());
+            rule.Validate(mf);
 
             // can it handle an empty MF?
             rule.Validate(new MolecularFormula());
