@@ -62,25 +62,7 @@ namespace NCDK.IO
             this.input = input;
         }
 
-        public InChIReader()
-            : this(new MemoryStream(new byte[0]))
-        { }
-
         public override IResourceFormat Format => InChIFormat.Instance;
-
-        /// <summary>
-        /// This method must not be used; XML reading requires the use of an Stream.
-        /// Use SetReader(Stream) instead.
-        /// </summary>
-        public override void SetReader(TextReader reader)
-        {
-            throw new CDKException("Invalid method call; use SetReader(Stream) instead.");
-        }
-
-        public override void SetReader(Stream input)
-        {
-            this.input = input;
-        }
 
         public override bool Accepts(Type type)
         {
@@ -141,15 +123,25 @@ namespace NCDK.IO
             return cf;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private class InChIHandler : XContentHandler
         {

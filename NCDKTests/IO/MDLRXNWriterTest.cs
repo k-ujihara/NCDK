@@ -22,6 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -34,13 +35,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLRXNWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new MDLRXNWriter();
+        protected override Type ChemObjectIOToTestType => typeof(MDLRXNWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLRXNWriter reader = new MDLRXNWriter();
+            MDLRXNWriter reader = new MDLRXNWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }
 

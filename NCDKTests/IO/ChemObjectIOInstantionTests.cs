@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace NCDK.IO
 {
@@ -110,7 +111,17 @@ namespace NCDK.IO
             try
             {
                 // make a new instance of this class
-                Object instance = typeof(ChemObjectIO).Assembly.GetType(className).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                Type type = typeof(ChemObjectIO).Assembly.GetType(className);
+                if (type == null)
+                    throw new ArgumentException();
+                ConstructorInfo ctor;
+                object instance = null;
+                if ((ctor = type.GetConstructor(new[] { typeof(Stream) })) != null)
+                    instance = ctor.Invoke(new[] { new MemoryStream() });
+                else if ((ctor = type.GetConstructor(new[] { typeof(TextReader) })) != null)
+                    instance = ctor.Invoke(new[] { new StringReader("") });
+                else if ((ctor = type.GetConstructor(new[] { typeof(TextWriter) })) != null)
+                    instance = ctor.Invoke(new[] { new StringWriter() });
                 Assert.IsNotNull(instance);
                 Assert.AreEqual(className, instance.GetType().FullName);
             }

@@ -46,28 +46,27 @@ namespace NCDK.IO
          : this(new StreamReader(input))
         { }
 
-        public GhemicalMMReader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => GhemicalMMFormat.Instance;
 
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetReader(Stream input)
+        protected override void Dispose(bool disposing)
         {
-            SetReader(new StreamReader(input));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
 
-        public override void Close() { }
+                input = null;
 
-        public override void Dispose()
-        {
-            Close();
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {

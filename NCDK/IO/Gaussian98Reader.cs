@@ -67,32 +67,11 @@ namespace NCDK.IO
         /// </summary>
         private BooleanIOSetting readOptimizedStructureOnly;
 
-        /// <summary>
-        /// Constructor for the Gaussian98Reader object
-        /// </summary>
-        public Gaussian98Reader()
-            : this(new StringReader(""))
-        { }
-
         public Gaussian98Reader(Stream input)
                 : this(new StreamReader(input))
         { }
 
         public override IResourceFormat Format => Gaussian98Format.Instance;
-
-        /// <summary>
-        /// Sets the reader attribute of the Gaussian98Reader object.
-        /// </summary>
-        /// <param name="input">The new reader value</param>
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         /// <summary>
         /// Create an Gaussian98 output reader.
@@ -133,15 +112,25 @@ namespace NCDK.IO
             }
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         /// <summary>
         /// Read the Gaussian98 output.

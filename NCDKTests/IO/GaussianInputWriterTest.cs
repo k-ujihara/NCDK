@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -35,13 +36,13 @@ namespace NCDK.IO
     [TestClass()]
     public class GaussianInputWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new GaussianInputWriter();
+        protected override Type ChemObjectIOToTestType => typeof(GaussianInputWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()
         {
-            GaussianInputWriter reader = new GaussianInputWriter();
+            GaussianInputWriter reader = new GaussianInputWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(IAtomContainer)));
         }
 

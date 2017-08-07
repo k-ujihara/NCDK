@@ -56,7 +56,7 @@ namespace NCDK.IO
             InitIOSettings();
             try
             {
-                SetWriter(output);
+                this.writer = output;
             }
             catch (Exception)
             {
@@ -67,30 +67,28 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public NCDKSourceCodeWriter()
-        : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => CDKSourceCodeFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(output));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Flush();
+                    writer.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Flush();
-            writer.Close();
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -221,11 +219,6 @@ namespace NCDK.IO
             FireIOSettingQuestion(write2DCoordinates);
             FireIOSettingQuestion(write3DCoordinates);
             FireIOSettingQuestion(builder);
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

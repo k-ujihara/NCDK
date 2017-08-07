@@ -67,10 +67,6 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public SDFWriter()
-                : this(new StringWriter())
-        { }
-
         /// <summary>
         /// Constructs a new SDFWriter that writes to the given <see cref="TextWriter"/>.
         /// </summary>
@@ -102,23 +98,25 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => SDFFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(output));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Close();
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -342,11 +340,6 @@ namespace NCDK.IO
             {
                 FireIOSettingQuestion(setting);
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

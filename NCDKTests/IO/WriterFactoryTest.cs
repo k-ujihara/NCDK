@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Formats;
 using NCDK.Tools;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -53,7 +54,7 @@ namespace NCDK.IO
         public void TestCreateWriter_IChemFormat()
         {
             IChemFormat format = (IChemFormat)XYZFormat.Instance;
-            IChemObjectWriter writer = factory.CreateWriter(format);
+            IChemObjectWriter writer = factory.CreateWriter(format, new StringWriter());
             Assert.IsNotNull(writer);
             Assert.AreEqual(format.FormatName, writer.Format.FormatName);
         }
@@ -63,9 +64,9 @@ namespace NCDK.IO
         {
             WriterFactory factory = new WriterFactory();
             factory.RegisterWriter(typeof(CustomWriter));
-            IChemObjectWriter writer = factory.CreateWriter(new CustomFormat());
+            IChemObjectWriter writer = factory.CreateWriter(new CustomFormat(), new StringWriter());
             Assert.IsNotNull(writer);
-            Assert.AreEqual(new CustomWriter().GetType().Name, writer.GetType().Name);
+            Assert.AreEqual(new CustomWriter(new StringWriter()).GetType().Name, writer.GetType().Name);
         }
     }
 }

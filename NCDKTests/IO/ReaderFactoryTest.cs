@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Formats;
 using NCDK.Tools.Manipulator;
+using System.IO;
 using System.IO.Compression;
 
 namespace NCDK.IO
@@ -41,7 +42,7 @@ namespace NCDK.IO
         public void TestCreateReader_IChemFormat()
         {
             IChemFormat format = (IChemFormat)XYZFormat.Instance;
-            ISimpleChemObjectReader reader = factory.CreateReader(format);
+            ISimpleChemObjectReader reader = factory.CreateReader(format, new StringReader(""));
             Assert.IsNotNull(reader);
             Assert.AreEqual(format.FormatName, reader.Format.FormatName);
         }

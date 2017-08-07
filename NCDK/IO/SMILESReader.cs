@@ -70,21 +70,7 @@ namespace NCDK.IO
                 : this(new StreamReader(input))
         { }
 
-        public SMILESReader()
-                : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => SMILESFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -168,10 +154,25 @@ namespace NCDK.IO
             return som;
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         /// <summary>
         /// Obtain the suffix after a line containing SMILES. The suffix follows
@@ -187,11 +188,6 @@ namespace NCDK.IO
                 if (c == ' ' || c == '\t') return line.Substring(i + 1);
             }
             return null;
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

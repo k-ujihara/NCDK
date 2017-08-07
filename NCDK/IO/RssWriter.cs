@@ -92,25 +92,36 @@ namespace NCDK.IO
         /// </summary>
         public IDictionary<IChemObject, IEnumerable<XElement>> multiMap { get; set; } = new Dictionary<IChemObject, IEnumerable<XElement>>();
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            writer.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override IResourceFormat Format => CMLRSSFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
+        public RssWriter(TextWriter output)
         {
             writer = output;
         }
 
-        public override void SetWriter(Stream output)
-        {
-            SetWriter(new StreamWriter(output));
-        }
+        public RssWriter(Stream output)
+            : this(new StreamWriter(output))
+        { }
 
         public override bool Accepts(Type type) => true;
 
@@ -278,11 +289,6 @@ namespace NCDK.IO
             {
                 throw new CDKException(ex.Message, ex);
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

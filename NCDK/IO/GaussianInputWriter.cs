@@ -59,26 +59,27 @@ namespace NCDK.IO
                 : this(new StreamWriter(output))
         { }
 
-        public GaussianInputWriter()
-                : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => GaussianInputFormat.Instance;
 
-        public override void SetWriter(TextWriter @out)
-        {
-            writer = @out;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(output));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
 
-        public override void Close()
-        {
-            writer.Close();
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -260,11 +261,6 @@ namespace NCDK.IO
             {
                 FireIOSettingQuestion(setting);
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

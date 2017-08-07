@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,14 +41,13 @@ namespace NCDK.IO
     [TestClass()]
     public class Mol2ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.Mol2.fromWebsite.mol2";
-        static readonly Mol2Reader simpleReader = new Mol2Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.Mol2.fromWebsite.mol2";
+        protected override Type ChemObjectIOToTestType => typeof(Mol2Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Mol2Reader reader = new Mol2Reader();
+            Mol2Reader reader = new Mol2Reader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));

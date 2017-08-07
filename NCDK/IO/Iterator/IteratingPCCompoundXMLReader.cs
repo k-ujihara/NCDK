@@ -53,14 +53,21 @@ namespace NCDK.IO.Iterator
         /// </summary>
         /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
-        /// <exception cref="Exception">if there is an error isn setting up the XML parser</exception>
-        public IteratingPCCompoundXMLReader(TextReader ins, IChemObjectBuilder builder)
+        /// <exception cref="Exception">if there is an error in setting up the XML parser</exception>
+        public IteratingPCCompoundXMLReader(TextReader input, IChemObjectBuilder builder)
         {
             this.builder = builder;
             parserHelper = new PubChemXMLHelper(builder);
 
-            primarySource = ins;
-            parser = XDocument.Load(ins).Root;
+            primarySource = input;
+            try
+            {
+                parser = XDocument.Load(primarySource).Root;
+            }
+            catch (Exception e)
+            {
+                throw new CDKException("Error while opening the input:" + e.Message, e);
+            }
         }
 
         /// <summary>
@@ -86,32 +93,24 @@ namespace NCDK.IO.Iterator
             yield break;
         }
 
-        public override void Close()
-        {
-            primarySource.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    primarySource.Dispose();
+                }
 
-        public override void SetReader(TextReader reader)
-        {
-            primarySource = reader;
-            try
-            {
-                parser = XDocument.Load(primarySource).Root;
-            }
-            catch (Exception e)
-            {
-                throw new CDKException("Error while opening the input:" + e.Message, e);
+                primarySource = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
             }
         }
-
-        public override void SetReader(Stream reader)
-        {
-            SetReader(new StreamReader(reader));
-        }
+        #endregion
     }
 }

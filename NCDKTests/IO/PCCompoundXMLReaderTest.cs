@@ -22,7 +22,9 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -30,14 +32,13 @@ namespace NCDK.IO
     [TestClass()]
     public class PCCompoundXMLReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.ASN.PubChem.cid1145.xml";
-        static readonly PCCompoundXMLReader simpleReader = new PCCompoundXMLReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.ASN.PubChem.cid1145.xml";
+        protected override Type ChemObjectIOToTestType => typeof(PCCompoundXMLReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            PCCompoundXMLReader reader = new PCCompoundXMLReader();
+            PCCompoundXMLReader reader = new PCCompoundXMLReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 

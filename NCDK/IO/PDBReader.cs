@@ -98,21 +98,7 @@ namespace NCDK.IO
             cdkAtomTypeFactory = null;
         }
 
-        public PDBReader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => PDBFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.oInput = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -886,10 +872,25 @@ namespace NCDK.IO
             }
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            oInput.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    oInput.Dispose();
+                }
+
+                oInput = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings()
         {
@@ -907,11 +908,6 @@ namespace NCDK.IO
             {
                 FireIOSettingQuestion(setting);
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

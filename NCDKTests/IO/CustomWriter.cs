@@ -34,15 +34,12 @@ namespace NCDK.IO
     // @cdk.module test-io
     public class CustomWriter : ChemObjectIO, IChemObjectWriter
     {
-        public void SetWriter(TextWriter writer) { }
-        public void SetWriter(Stream writer) { }
+        public CustomWriter(TextWriter writer) { }
         public void Write(IChemObject obj) { }
         public override bool Accepts(Type classObject) => false;
         public void AddChemObjectIOListener(IChemObjectIOListener listener) { }
-        public override void Close() { }
         public override IResourceFormat Format => null;
         public override SettingManager<IOSetting> IOSettings => null;
         public void RemoveChemObjectIOListener(IChemObjectIOListener listener) { }
-        public override void Dispose() => Close();
     }
 }

@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -34,9 +35,8 @@ namespace NCDK.IO
     [TestClass()]
     public class GhemicalReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.Ghemical.ethene.mm1gp";
-        static readonly GhemicalMMReader simpleReader = new GhemicalMMReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.Ghemical.ethene.mm1gp";
+        protected override Type ChemObjectIOToTestType => typeof(GhemicalMMReader);
 
         [TestMethod()]
         public void TestAccepts()

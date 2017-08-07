@@ -65,27 +65,8 @@ namespace NCDK.IO
                 : this(new StreamReader(input))
         { }
 
-        /// <summary>
-        /// Create a reader for MoSS output files from an empty string.
-        /// </summary>
-        public MoSSOutputReader()
-                : this(new StringReader(""))
-        { }
-
         /// <inheritdoc/>    
         public override IResourceFormat Format => MoSSOutputFormat.Instance;
-
-        /// <inheritdoc/>
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader;
-        }
-
-        /// <inheritdoc/>
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         /// <inheritdoc/>
         public override bool Accepts(Type type)
@@ -175,15 +156,24 @@ namespace NCDK.IO
             return molSet;
         }
 
-        /// <inheritdoc/>
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

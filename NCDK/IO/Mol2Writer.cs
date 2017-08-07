@@ -38,10 +38,6 @@ namespace NCDK.IO
         private TextWriter writer;
         private SybylAtomTypeMatcher matcher;
 
-        public Mol2Writer()
-            : this(new StringWriter())
-        { }
-
         /// <summary>
         /// Constructs a new Mol2 writer.
         /// <param name="output">the stream to write the Mol2 file to.</param>
@@ -57,23 +53,25 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => Mol2Format.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(output));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Close();
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -244,11 +242,6 @@ namespace NCDK.IO
             {
                 throw e;
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

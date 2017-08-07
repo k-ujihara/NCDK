@@ -26,7 +26,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -122,6 +122,11 @@
     <Compile Include="Common\Collections\Deque.cs" />
     <Compile Include="Common\Collections\Dictionaries.cs" />
     <Compile Include="Common\Collections\DictionaryEqualityComparer.cs" />
+    <Compile Include="Common\Collections\EmptyCollections.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmptyCollections.tt</DependentUpon>
+    </Compile>
     <Compile Include="Common\Collections\ImmutableCollection.cs" />
     <Compile Include="Common\Collections\LinkedHashSet.cs" />
     <Compile Include="Common\Collections\Lists.cs" />
@@ -264,6 +269,10 @@
     <Content Include="cheminf.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>cheminf.tokens</LastGenOutput>
+    </Content>
+    <Content Include="Common\Collections\EmptyCollections.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EmptyCollections.tt.cs</LastGenOutput>
     </Content>
     <Content Include="Config\Elements.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

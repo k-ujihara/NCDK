@@ -64,11 +64,8 @@ namespace NCDK.IO
             writer = output;
         }
 
-        /// <summary>
-        /// Zero argument constructor.
-        /// </summary>
-        public RGroupQueryWriter()
-            : this(new StringWriter())
+        public RGroupQueryWriter(Stream output)
+            : this(new StreamWriter(output))
         { }
 
         /// <summary>
@@ -82,18 +79,25 @@ namespace NCDK.IO
             return false;
         }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         /// <summary>
         /// Produces a CTAB block for an atomContainer, without the header lines.
@@ -126,24 +130,6 @@ namespace NCDK.IO
         /// Returns output format.
         /// </summary>
         public override IResourceFormat Format => RGroupQueryFormat.Instance;
-
-        /// <summary>
-        /// Sets the writer to given output stream.
-        /// </summary>
-        /// <param name="output"></param>
-        public override void SetWriter(Stream output)
-        {
-            SetWriter(new StreamWriter(output));
-        }
-
-        /// <summary>
-        /// Sets the writer.
-        /// </summary>
-        /// <param name="output"></param>
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
 
         /// <summary>
         /// The actual writing of the output.

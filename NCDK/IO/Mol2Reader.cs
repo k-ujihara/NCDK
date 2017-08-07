@@ -70,31 +70,17 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins">The Reader to read from</param>
-        public Mol2Reader(TextReader ins)
+        /// <param name="input">The Reader to read from</param>
+        public Mol2Reader(TextReader input)
         {
-            input = ins;
+            this.input = input;
         }
 
         public Mol2Reader(Stream input)
             : this(new StreamReader(input))
         { }
 
-        public Mol2Reader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => Mol2Format.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -454,14 +440,24 @@ namespace NCDK.IO
             return false;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

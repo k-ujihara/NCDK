@@ -42,12 +42,12 @@ namespace NCDK.IO.RandomAccess
     // @author     Nina Jeliazkova <nina@acad.bg>
     // @cdk.module io
     // @cdk.githash
-    public abstract class RandomAccessReader : DefaultRandomAccessChemObjectReader
+    public abstract class RandomAccessReader : DefaultRandomAccessChemObjectReader, IDisposable
     {
         protected Stream raFile;
         protected IOSetting[] headerOptions = null;
         private readonly string filename;
-        protected ISimpleChemObjectReader chemObjectReader;
+        protected ISimpleChemObjectReader chemObjectReader = null;
         protected int indexVersion = 1;
         // index[record][0] - record offset in file index[record][1] - record length
         // index[record][2] - number of atoms (if available)
@@ -71,7 +71,7 @@ namespace NCDK.IO.RandomAccess
         /// <summary>
         /// Reads the file and builds an index file, if the index file doesn't already exist.
         /// </summary>
-        /// <param name="file">file the file object containg the molecules to be indexed</param>
+        /// <param name="file">file the file object containing the molecules to be indexed</param>
         /// <param name="builder">builder a chem object builder</param>
         /// <param name="listener">listen for read event</param>
         /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
@@ -80,24 +80,11 @@ namespace NCDK.IO.RandomAccess
         {
             this.filename = Path.GetFullPath(file);
             this.builder = builder;
-            SetChemObjectReader(CreateChemObjectReader());
             if (listener != null) AddChemObjectIOListener(listener);
             raFile = new FileStream(filename, FileMode.Open, FileAccess.Read);
             records = 0;
             SetIndexCreated(false);
             IndexTheFile();
-        }
-
-        ~RandomAccessReader()
-        {
-            try
-            {
-                Close();
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Error during finalize");
-            }
         }
 
         /// <summary>
@@ -109,14 +96,9 @@ namespace NCDK.IO.RandomAccess
         public IChemObject ReadRecord(int record)
         {
             string buffer = ReadContent(record);
-            if (chemObjectReader == null)
-                throw new CDKException("No chemobject reader!");
-            else
-            {
-                chemObjectReader.SetReader(new StringReader(buffer));
-                currentRecord = record;
-                return ProcessContent();
-            }
+            chemObjectReader = CreateChemObjectReader(new StringReader(buffer));
+            currentRecord = record;
+            return ProcessContent();
         }
 
         /// <summary>
@@ -375,26 +357,13 @@ namespace NCDK.IO.RandomAccess
             return indexFile;
         }
 
-        public void Close()
-        {
-            raFile.Close();
-            //TODO
-            //RemoveChemObjectIOListener(listener)
-        }
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IChemObjectReader GetChemObjectReader()
         {
             return chemObjectReader;
         }
 
-        public abstract ISimpleChemObjectReader CreateChemObjectReader();
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public void SetChemObjectReader(ISimpleChemObjectReader chemObjectReader)
-        {
-            this.chemObjectReader = chemObjectReader;
-        }
+        public abstract ISimpleChemObjectReader CreateChemObjectReader(TextReader reader);
 
         public bool HasNext()
         {
@@ -526,6 +495,42 @@ namespace NCDK.IO.RandomAccess
             return filename;
         }
 
+        public void Close()
+        {
+            Dispose();
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    raFile.Close();
+                    //TODO
+                    //RemoveChemObjectIOListener(listener)
+                }
+
+                raFile = null;
+
+                disposedValue = true;
+            }
+        }
+
+        ~RandomAccessReader()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 
     class RecordReaderEvent : ReaderEvent

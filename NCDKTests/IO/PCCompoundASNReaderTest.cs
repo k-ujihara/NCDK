@@ -23,7 +23,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace NCDK.IO
@@ -32,14 +34,13 @@ namespace NCDK.IO
     [TestClass()]
     public class PCCompoundASNReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.ASN.PubChem.cid1.asn";
-        static readonly PCCompoundASNReader simpleReader = new PCCompoundASNReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.ASN.PubChem.cid1.asn";
+        protected override Type ChemObjectIOToTestType => typeof(PCCompoundASNReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            PCCompoundASNReader reader = new PCCompoundASNReader();
+            PCCompoundASNReader reader = new PCCompoundASNReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

@@ -118,23 +118,9 @@ namespace NCDK.IO
             : this(new StreamReader(input))
         { }
 
-        public GamessReader()
-                : this(new StringReader(""))
-        { }
-
         //TODO Update comment with appropriate information to comply Constructor's documentation.
 
         public override IResourceFormat Format => GamessFormat.Instance;
-
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -231,7 +217,7 @@ namespace NCDK.IO
             while (true)
             {
                 retrievedLineFromFile = this.input.ReadLine();
-                
+
                 // A coordinate set is followed by an empty line, so when this line
                 // is reached, there are no more coordinates to add to the current
                 // set.
@@ -254,7 +240,7 @@ namespace NCDK.IO
                 {
                     atomicNumber = (int)token.NumberValue;
                     atomicSymbol = this.IdentifyAtomicSymbol(atomicNumber);
-                    
+
                     // Dummy atoms are assumed to be given with an atomic number set
                     // to zero. We will do not add them to the molecule.
                     if (atomicNumber == 0)
@@ -389,15 +375,24 @@ namespace NCDK.IO
         }
 
         //TODO Answer the question : What are all concerned ressources ?
-        public override void Close()
-        {
-            // Closes the TextReader used to read the file content.
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

@@ -19,7 +19,6 @@
  */
 using NCDK.IO.Listener;
 using System;
-using System.IO;
 
 namespace NCDK.IO
 {
@@ -92,7 +91,5 @@ namespace NCDK.IO
         }
 
         public abstract T Read<T>(T obj) where T : IChemObject;
-        public abstract void SetReader(TextReader reader);
-        public abstract void SetReader(Stream reader);
     }
 }

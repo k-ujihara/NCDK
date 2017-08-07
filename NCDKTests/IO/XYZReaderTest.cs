@@ -22,7 +22,9 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -34,14 +36,13 @@ namespace NCDK.IO
     [TestClass()]
     public class XYZReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.XYZ.viagra.xyz";
-        static readonly XYZReader simpleReader = new XYZReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.XYZ.viagra.xyz";
+        protected override Type ChemObjectIOToTestType => typeof(XYZReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            XYZReader reader = new XYZReader();
+            XYZReader reader = new XYZReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

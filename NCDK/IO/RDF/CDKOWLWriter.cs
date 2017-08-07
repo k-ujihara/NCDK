@@ -45,32 +45,29 @@ namespace NCDK.IO.RDF
         }
 
         /// <summary>
-        /// Creates a new CDKOWLWriter with an undefined output.
-        /// </summary>
-        public CDKOWLWriter()
-        {
-            this.output = null;
-        }
-
-        /// <summary>
         /// Returns the <see cref="IResourceFormat"/> for this writer.
         /// </summary>
         public override IResourceFormat Format => CDKOWLFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            this.output = output;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            this.output = new StreamWriter(output);
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    output.Dispose();
+                }
 
-        public override void Close()
-        {
-            if (output != null) output.Close();
+                output = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -95,11 +92,6 @@ namespace NCDK.IO.RDF
             {
                 throw new CDKException("CDKOWLWriter only supports output of IAtomContainer classes.");
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
 
         private void WriteMolecule(IAtomContainer mol)

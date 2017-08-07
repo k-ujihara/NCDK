@@ -44,17 +44,18 @@ namespace NCDK.IO
     public class MDLRXNV2000Reader : DefaultChemObjectReader
     {
         TextReader input = null;
+
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
         /// </summary>
         /// <param name="ins">The Reader to read from</param>
-        public MDLRXNV2000Reader(TextReader ins)
-            : this(ins, ChemObjectReaderModes.Relaxed)
+        public MDLRXNV2000Reader(TextReader input)
+            : this(input, ChemObjectReaderModes.Relaxed)
         { }
 
-        public MDLRXNV2000Reader(TextReader ins, ChemObjectReaderModes mode)
+        public MDLRXNV2000Reader(TextReader input, ChemObjectReaderModes mode)
         {
-            input = ins;
+            this.input = input;
             base.ReaderMode = mode;
         }
 
@@ -66,21 +67,7 @@ namespace NCDK.IO
             : this(new StreamReader(input), mode)
         { }
 
-        public MDLRXNV2000Reader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => MDLRXNFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -92,7 +79,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-        /// this (from file, database, internet etc). If the specific implementation
+        /// this (from file, database, Internet etc). If the specific implementation
         /// does not support a specific IChemObject it will throw an Exception.
         /// </summary>
         /// <param name="obj">The object that subclasses <see cref="IChemObject"/></param>
@@ -315,14 +302,24 @@ namespace NCDK.IO
             return reaction;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

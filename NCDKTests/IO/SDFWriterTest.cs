@@ -39,13 +39,13 @@ namespace NCDK.IO
     [TestClass()]
     public class SDFWriterTest : ChemObjectWriterTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new SDFWriter();
+        protected override Type ChemObjectIOToTestType => typeof(SDFWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()
         {
-            SDFWriter reader = new SDFWriter();
+            SDFWriter reader = new SDFWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));

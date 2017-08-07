@@ -52,32 +52,27 @@ namespace NCDK.IO
         {
         }
 
-        public HINReader()
-            : this(new StringReader(""))
-        {
-        }
-
         public override IResourceFormat Format => HINFormat.Instance;
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
 
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
+                input = null;
 
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {

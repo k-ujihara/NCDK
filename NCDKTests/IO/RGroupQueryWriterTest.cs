@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms.Matchers;
 using System.IO;
 using System.Text.RegularExpressions;
+using System;
 
 namespace NCDK.IO
 {
@@ -39,13 +40,13 @@ namespace NCDK.IO
     [TestClass()]
     public class RGroupQueryWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new RGroupQueryWriter();
+        protected override Type ChemObjectIOToTestType => typeof(RGroupQueryWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public override void TestAcceptsAtLeastOneChemObjectClass()
         {
-            new RGroupQueryWriter().Accepts(typeof(RGroupQuery));
+            new RGroupQueryWriter(new StringWriter()).Accepts(typeof(RGroupQuery));
         }
 
         [TestMethod()]

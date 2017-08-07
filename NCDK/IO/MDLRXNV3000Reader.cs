@@ -41,13 +41,13 @@ namespace NCDK.IO
     {
         TextReader input = null;
 
-        public MDLRXNV3000Reader(TextReader ins)
-           : this(ins, ChemObjectReaderModes.Relaxed)
+        public MDLRXNV3000Reader(TextReader input)
+           : this(input, ChemObjectReaderModes.Relaxed)
         { }
 
-        public MDLRXNV3000Reader(TextReader ins, ChemObjectReaderModes mode)
+        public MDLRXNV3000Reader(TextReader input, ChemObjectReaderModes mode)
         {
-            input = ins;
+            this.input = input;
             InitIOSettings();
             base.ReaderMode = mode;
         }
@@ -60,21 +60,7 @@ namespace NCDK.IO
            : this(new StreamReader(input), mode)
         { }
 
-        public MDLRXNV3000Reader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => MDLRXNV3000Format.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = (TextReader)input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -282,15 +268,25 @@ namespace NCDK.IO
             return false;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings() { }
     }

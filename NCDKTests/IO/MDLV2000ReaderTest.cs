@@ -30,6 +30,7 @@ using NCDK.IO.Listener;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SGroups;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -49,14 +50,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLV2000ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.bug682233.mol";
-        static readonly ISimpleChemObjectReader simpleReader = new MDLV2000Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.bug682233.mol";
+        protected override Type ChemObjectIOToTestType => typeof(MDLV2000Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLV2000Reader reader = new MDLV2000Reader();
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));

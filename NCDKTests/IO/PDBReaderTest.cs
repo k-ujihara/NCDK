@@ -39,9 +39,8 @@ namespace NCDK.IO
     [TestClass()]
     public class PDBReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.PDB.coffeine.pdb";
-        static readonly PDBReader simpleReader = new PDBReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.PDB.coffeine.pdb";
+        protected override Type ChemObjectIOToTestType => typeof(PDBReader);
 
         /// <summary>
         /// Test to see if PDB files with CONECT records are handled properly.
@@ -102,7 +101,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAccepts()
         {
-            PDBReader reader = new PDBReader();
+            PDBReader reader = new PDBReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

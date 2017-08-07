@@ -25,6 +25,7 @@ using NCDK.Default;
 
 using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace NCDK.IO.RDF
 {
@@ -32,9 +33,8 @@ namespace NCDK.IO.RDF
     [TestClass()]
     public class CDKOWLReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.OWL.molecule.n3";
-        static readonly CDKOWLReader simpleReader = new CDKOWLReader(new StringReader(""));
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.OWL.molecule.n3";
+        protected override Type ChemObjectIOToTestType => typeof(CDKOWLReader);
 
         [TestMethod()]
         public void TestAccepts()

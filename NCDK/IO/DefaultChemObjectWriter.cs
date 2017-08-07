@@ -28,8 +28,6 @@ namespace NCDK.IO
     // @cdk.githash
     public abstract class DefaultChemObjectWriter : ChemObjectIO, IChemObjectWriter
     {
-        public abstract void SetWriter(Stream writer);
-        public abstract void SetWriter(TextWriter writer);
         public abstract void Write(IChemObject obj);
     }
 }

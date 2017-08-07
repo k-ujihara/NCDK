@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.SGroups;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,14 +39,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLV3000ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.molV3000.mol";
-        static readonly ISimpleChemObjectReader simpleReader = new MDLV3000Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.molV3000.mol";
+        protected override Type ChemObjectIOToTestType => typeof(MDLV3000Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLV3000Reader reader = new MDLV3000Reader();
+            MDLV3000Reader reader = new MDLV3000Reader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 

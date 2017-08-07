@@ -24,6 +24,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Diagnostics;
+using System;
 
 namespace NCDK.IO
 {
@@ -35,9 +36,8 @@ namespace NCDK.IO
     [TestClass()]
     public class CrystClustReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.CrystClust.estron.crystclust";
-        static readonly CrystClustReader simpleReader = new CrystClustReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.CrystClust.estron.crystclust";
+        protected override Type ChemObjectIOToTestType => typeof(CrystClustReader);
 
         [TestMethod()]
         public void TestAccepts()

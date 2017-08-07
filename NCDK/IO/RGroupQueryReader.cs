@@ -65,13 +65,6 @@ namespace NCDK.IO
         TextReader input = null;
 
         /// <summary>
-        /// Default constructor, input not set.
-        /// </summary>
-        public RGroupQueryReader()
-            : this(new StringReader(""))
-        { }
-
-        /// <summary>
         /// Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
         /// from a given Stream.
         /// <param name="ins">The Stream to read from.</param>
@@ -90,20 +83,6 @@ namespace NCDK.IO
             input = ins;
         }
 
-        /// <summary>
-        /// Sets the input Reader.
-        /// <param name="input">Reader object</param>
-        /// </summary>
-        public override void SetReader(TextReader input)
-        {
-            this.input = (TextReader)input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
-
         public override IResourceFormat Format => RGroupQueryFormat.Instance;
 
         public override bool Accepts(Type type)
@@ -112,10 +91,25 @@ namespace NCDK.IO
             return false;
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         /// <summary>
         /// Check input <see cref="IChemObject"/> and proceed to parse.
@@ -461,11 +455,6 @@ namespace NCDK.IO
             {
                 throw new CDKException("RGFile invalid, line #" + lineCount + " should start with:" + expect + ".");
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

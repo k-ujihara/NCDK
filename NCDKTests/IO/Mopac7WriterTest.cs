@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Listener;
+using System;
 using System.Collections.Specialized;
 using System.IO;
 
@@ -32,7 +33,7 @@ namespace NCDK.IO
     [TestClass()]
     public class Mopac7WriterTest : ChemObjectWriterTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new Mopac7Writer();
+        protected override Type ChemObjectIOToTestType => typeof(Mopac7Writer);
 
         private static IChemObject[] allChemObjectsTypes = {
             new ChemFile(), new ChemModel(), new Reaction(),
@@ -40,7 +41,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAccepts()
         {
-            Mopac7Writer reader = new Mopac7Writer();
+            Mopac7Writer reader = new Mopac7Writer(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 

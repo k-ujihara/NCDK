@@ -21,6 +21,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -32,7 +33,31 @@ namespace NCDK.IO
     [TestClass()]
     public abstract class ChemObjectWriterTest : ChemObjectIOTest
     {
-        protected IChemObjectWriter ChemObjectWriterToTest => (IChemObjectWriter)ChemObjectIOToTest;
+        protected IChemObjectWriter CreateChemObjectWriter(TextWriter writer)
+        {
+            return (IChemObjectWriter)ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextWriter) }).Invoke(new object[] { new StringWriter() });
+        }
+
+        protected IChemObjectWriter CreateChemObjectWriter(Stream stream)
+        {
+            return (IChemObjectWriter)CreateChemObjectIO(stream);
+        }
+
+        protected override IChemObjectIO ChemObjectIOToTest
+        {
+            get
+            {
+                try
+                {
+                    return base.ChemObjectIOToTest;
+                }
+                catch (Exception)
+                {
+                    chemObjectIOToTest = CreateChemObjectWriter(new StringWriter());
+                }
+                return chemObjectIOToTest;
+            }
+        }
 
         private static IChemObject[] allChemObjectsTypes = {
             new ChemFile(), new ChemModel(), new Reaction(),
@@ -46,16 +71,17 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAcceptsWriteConsistency()
         {
-            Assert.IsNotNull(ChemObjectWriterToTest, "The IChemObjectWriter is not set.");
+            var io = CreateChemObjectWriter(new StringWriter());
+            Assert.IsNotNull(io, "The IChemObjectWriter is not set.");
             foreach (var obj in allChemObjectsTypes)
             {
-                if (ChemObjectWriterToTest.Accepts(obj.GetType()))
+                if (io.Accepts(obj.GetType()))
                 {
                     StringWriter writer = new StringWriter();
-                    ChemObjectWriterToTest.SetWriter(writer);
+                    io = CreateChemObjectWriter(writer);
                     try
                     {
-                        ChemObjectWriterToTest.Write(obj);
+                        io.Write(obj);
                     }
                     catch (CDKException exception)
                     {
@@ -76,17 +102,25 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSetWriter_Writer()
         {
-            Assert.IsNotNull(ChemObjectWriterToTest, "No IChemObjectWriter has been set!");
-            StringWriter testWriter = new StringWriter();
-            ChemObjectWriterToTest.SetWriter(testWriter);
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextWriter) });
+            if (ctor != null)
+            {
+                StringWriter testWriter = new StringWriter();
+                var io = CreateChemObjectWriter(new StringWriter());
+                Assert.IsNotNull(io, "No IChemObjectWriter has been set!");
+            }
         }
 
         [TestMethod()]
         public void TestSetWriter_OutputStream()
         {
-            Assert.IsNotNull(ChemObjectWriterToTest, "No IChemObjectWriter has been set!");
-            MemoryStream testStream = new MemoryStream();
-            ChemObjectWriterToTest.SetWriter(testStream);
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(Stream) });
+            if (ctor != null)
+            {
+                MemoryStream testStream = new MemoryStream();
+                var io = CreateChemObjectWriter(testStream);
+                Assert.IsNotNull(io, "No IChemObjectWriter has been set!");
+            }
         }
     }
 }

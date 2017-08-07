@@ -22,6 +22,8 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -29,14 +31,13 @@ namespace NCDK.IO
     [TestClass()]
     public class Mopac7ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MOPAC.ethylene.dat.out";
-        static readonly Mopac7Reader simpleReader = new Mopac7Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MOPAC.ethylene.dat.out";
+        protected override Type ChemObjectIOToTestType => typeof(Mopac7Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Mopac7Reader reader = new Mopac7Reader();
+            Mopac7Reader reader = new Mopac7Reader(new StringReader(""));
             reader.ReaderMode = ChemObjectReaderModes.Strict;
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }

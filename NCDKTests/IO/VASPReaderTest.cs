@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -31,14 +32,13 @@ namespace NCDK.IO
     [TestClass()]
     public class VASPReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
-        static readonly VASPReader simpleReader = new VASPReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.VASP.LiMoS2_optimisation_ISIF3.vasp";
+        protected override Type ChemObjectIOToTestType => typeof(VASPReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            VASPReader reader = new VASPReader();
+            VASPReader reader = new VASPReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

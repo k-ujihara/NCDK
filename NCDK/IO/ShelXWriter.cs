@@ -48,41 +48,34 @@ namespace NCDK.IO
         /// <param name="output">Writer to redirect the output to.</param>
         public ShelXWriter(TextWriter output)
         {
-            writer = output;
+            this.writer = output;
         }
 
         public ShelXWriter(Stream output)
            : this(new StreamWriter(output))
         { }
 
-        public ShelXWriter()
-                : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => ShelXFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(output));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Close();
-        }
+                writer = null;
 
-        public override void Dispose()
-        {
-            Close();
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {

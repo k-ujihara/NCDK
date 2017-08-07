@@ -72,21 +72,7 @@ namespace NCDK.IO
                 : this(new StreamReader(input))
         { }
 
-        public VASPReader()
-                : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => VASPFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.inputBuffer = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -343,15 +329,25 @@ namespace NCDK.IO
             return fieldVal;
         } //end NextVASPTokenFollowing(string string)
 
-        public override void Close()
-        {
-            inputBuffer.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    inputBuffer.Dispose();
+                }
+
+                inputBuffer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }
 

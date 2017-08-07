@@ -22,6 +22,7 @@ using NCDK.IO;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace NCDK.AtomTypes
@@ -41,10 +42,9 @@ namespace NCDK.AtomTypes
             string[] testFiles = { "114D.pdb", "1CRN.pdb", "1D66.pdb", "1IHA.pdb", "1PN8.pdb", };
             int tested = 0;
             int failed = 0;
-            ISimpleChemObjectReader reader = new PDBReader();
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, reader);
+                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -58,10 +58,9 @@ namespace NCDK.AtomTypes
             string[] testFiles = { "fromWebsite.mol2", };
             int tested = 0;
             int failed = 0;
-            ISimpleChemObjectReader reader = new PDBReader();
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, reader);
+                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -75,10 +74,9 @@ namespace NCDK.AtomTypes
             string[] testFiles = { "cid1.asn", };
             int tested = 0;
             int failed = 0;
-            ISimpleChemObjectReader reader = new PDBReader();
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, reader);
+                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -122,12 +120,11 @@ namespace NCDK.AtomTypes
                 "zinc_1309609.sdf", "noxide.sdf", "noxide2.sdf", "noxide3.sdf"};
             int tested = 0;
             int failed = 0;
-            ISimpleChemObjectReader reader = new MDLV2000Reader();
             foreach (var testFile in testFiles)
             {
                 try
                 {
-                    TestResults results = TestFile(DIRNAME, testFile, reader);
+                    TestResults results = TestFile(DIRNAME, testFile, typeof(MDLV2000Reader));
                     tested += results.tested;
                     failed += results.failed;
                 }
@@ -139,11 +136,11 @@ namespace NCDK.AtomTypes
             Assert.AreEqual(tested, (tested - failed), "Could not match all atom types!");
         }
 
-        private TestResults TestFile(string dir, string filename, ISimpleChemObjectReader reader)
+        private TestResults TestFile(string dir, string filename, Type readerType)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
             var ins = ResourceLoader.GetAsStream(dir + filename);
-            reader.SetReader(ins);
+            var reader = (ISimpleChemObjectReader)readerType.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { ins });
             IAtomContainer mol = null;
             if (reader.Accepts(typeof(IAtomContainer)))
             {

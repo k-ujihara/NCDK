@@ -53,10 +53,10 @@ namespace NCDK.IO.Iterator
         /// </summary>
         /// <param name="ins"> The Reader to read from</param>
         /// <param name="builder"></param>
-        public IteratingPCCompoundASNReader(TextReader ins, IChemObjectBuilder builder)
+        public IteratingPCCompoundASNReader(TextReader input, IChemObjectBuilder builder)
         {
             this.builder = builder;
-            SetReader(ins);
+            this.input = input;
         }
 
         /// <summary>
@@ -150,10 +150,25 @@ namespace NCDK.IO.Iterator
             return bracketsOpen - bracketsClose;
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private string GetCommand(string line)
         {
@@ -174,21 +189,6 @@ namespace NCDK.IO.Iterator
                 i++;
             }
             return foundBracket ? buffer.ToString().Trim() : null;
-        }
-
-        public override void SetReader(TextReader reader)
-        {
-            input = (TextReader)reader;
-        }
-
-        public override void SetReader(Stream reader)
-        {
-            SetReader(new StreamReader(reader));
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

@@ -69,21 +69,17 @@ namespace NCDK.IO
         private BooleanIOSetting forceReadAs3DCoords;
         private static readonly Regex TRAILING_SPACE = new Regex("\\s+$", RegexOptions.Compiled);
 
-        public MDLReader()
-            : this(new StringReader(""))
-        { }
-
         /// <summary>
         ///  Constructs a new MDLReader that can read Molecule from a given Stream.
         /// </summary>
         /// <param name="ins">The Stream to read from</param>
-        public MDLReader(Stream ins)
-            : this(ins, ChemObjectReaderModes.Relaxed)
+        public MDLReader(Stream input)
+            : this(input, ChemObjectReaderModes.Relaxed)
         {
         }
 
-        public MDLReader(Stream ins, ChemObjectReaderModes mode)
-            : this(new StreamReader(ins))
+        public MDLReader(Stream input, ChemObjectReaderModes mode)
+            : this(new StreamReader(input))
         {
             base.ReaderMode = mode;
         }
@@ -92,29 +88,19 @@ namespace NCDK.IO
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
         /// </summary>
         /// <param name="ins">The Reader to read from</param>
-        public MDLReader(TextReader ins)
-            : this(ins, ChemObjectReaderModes.Relaxed)
+        public MDLReader(TextReader input)
+            : this(input, ChemObjectReaderModes.Relaxed)
         {
         }
 
-        public MDLReader(TextReader ins, ChemObjectReaderModes mode)
+        public MDLReader(TextReader input, ChemObjectReaderModes mode)
         {
             base.ReaderMode = mode;
-            input = ins;
+            this.input = input;
             InitIOSettings();
         }
 
         public override IResourceFormat Format => MDLFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -694,10 +680,25 @@ namespace NCDK.IO
             return molecule;
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings()
         {
@@ -708,11 +709,6 @@ namespace NCDK.IO
         public void CustomizeJob()
         {
             FireIOSettingQuestion(forceReadAs3DCoords);
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

@@ -23,6 +23,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Formats;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -40,9 +41,9 @@ namespace NCDK.IO
         {
             WriterFactory factory = new WriterFactory();
             factory.RegisterWriter(typeof(CMLWriter));
-            IChemObjectWriter writer = factory.CreateWriter((IChemFormat)CMLFormat.Instance);
+            IChemObjectWriter writer = factory.CreateWriter((IChemFormat)CMLFormat.Instance, new StringWriter());
             Assert.IsNotNull(writer);
-            Assert.AreEqual(new CMLWriter().GetType().Name, writer.GetType().Name);
+            Assert.AreEqual(new CMLWriter(new StringWriter()).GetType().Name, writer.GetType().Name);
         }
     }
 }

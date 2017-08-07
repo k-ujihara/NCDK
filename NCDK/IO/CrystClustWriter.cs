@@ -48,21 +48,7 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public CrystClustWriter()
-            : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => CrystClustFormat.Instance;
-
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
-
-        public override void SetWriter(Stream output)
-        {
-            SetWriter(new StreamWriter(output));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -94,15 +80,25 @@ namespace NCDK.IO
         /// <summary>
         /// Flushes the output and closes this object.
         /// </summary>
-        public override void Close()
-        {
-            writer.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         // Private procedures
 

@@ -27,6 +27,7 @@ using NCDK.IO.Listener;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
 using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -37,12 +38,30 @@ namespace NCDK.IO
     [TestClass()]
     public abstract class ChemObjectIOTest : CDKTestCase
     {
-        protected abstract IChemObjectIO ChemObjectIOToTest { get; }
+        protected abstract Type ChemObjectIOToTestType { get; }
 
+        protected IChemObjectIO CreateChemObjectIO(Stream stream)
+        {
+            return (IChemObjectIO)ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { stream });
+        }
+
+        protected IChemObjectIO chemObjectIOToTest;
+        protected virtual IChemObjectIO ChemObjectIOToTest
+        {
+            get
+            {
+                if (chemObjectIOToTest == null)
+                {
+                    chemObjectIOToTest = CreateChemObjectIO(new MemoryStream());
+                }
+                return chemObjectIOToTest;
+            }
+        }
+            
         [TestMethod()]
         public virtual void TestChemObjectIOSet()
         {
-            Assert.IsNotNull(ChemObjectIOToTest, $"You must set {nameof(ChemObjectIOToTest)} to set the {nameof(IChemObjectIO)} object.");
+            Assert.IsNotNull(ChemObjectIOToTestType, $"You must set {nameof(ChemObjectIOToTestType)} to set Type object of the {nameof(IChemObjectIO)}.");
         }
 
         [TestMethod()]

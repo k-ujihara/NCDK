@@ -22,6 +22,8 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -33,14 +35,13 @@ namespace NCDK.IO
     [TestClass()]
     public class SDFReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.test.sdf";
-        static readonly MDLV2000Reader simpleReader = new MDLV2000Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.test.sdf";
+        protected override Type ChemObjectIOToTestType => typeof(MDLV2000Reader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLV2000Reader reader = new MDLV2000Reader();
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(Silent.AtomContainer)));

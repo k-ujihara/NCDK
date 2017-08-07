@@ -54,7 +54,7 @@ namespace NCDK.IO
             if (writer == null) return;
             if (typeof(IChemObjectWriter).IsAssignableFrom(writer))
             {
-                registeredReaders[writer.Name] = writer;
+                registeredReaders[writer.FullName] = writer;
             }
         }
 
@@ -137,7 +137,26 @@ namespace NCDK.IO
         /// <summary>
         /// Creates a new IChemObjectWriter based on the given IChemFormat.
         /// </summary>
-        public IChemObjectWriter CreateWriter(IChemFormat format)
+        public IChemObjectWriter CreateWriter(IChemFormat format, Stream stream)
+        {
+            var type = GetWriterType(format);
+            if (type == null)
+                return null;
+            return (IChemObjectWriter)type.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { stream });
+        }
+
+        /// <summary>
+        /// Creates a new IChemObjectWriter based on the given IChemFormat.
+        /// </summary>
+        public IChemObjectWriter CreateWriter(IChemFormat format, TextWriter writer)
+        {
+            var type = GetWriterType(format);
+            if (type == null)
+                return null;
+            return (IChemObjectWriter)type.GetConstructor(new Type[] { typeof(TextWriter) }).Invoke(new object[] { writer });
+        }
+
+        public Type GetWriterType(IChemFormat format)
         {
             if (format != null)
             {
@@ -146,23 +165,23 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        if (registeredReaders.ContainsKey(writerClassName))
-                        {
-                            Type writer = registeredReaders[writerClassName];
-                            if (writer != null) return (IChemObjectWriter)writer.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-                        }
-                        // make a new instance of this class
                         Type clazz = null;
-                        clazz = this.GetType().Assembly.GetType(writerClassName);
-                        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+                        if (!registeredReaders.TryGetValue(writerClassName, out clazz))
                         {
-                            clazz = asm.GetType(writerClassName);
-                            if (clazz != null)
-                                break;
+                            clazz = this.GetType().Assembly.GetType(writerClassName);
+                            if (clazz == null)
+                            {
+                                foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+                                {
+                                    clazz = asm.GetType(writerClassName);
+                                    if (clazz != null)
+                                        break;
+                                }
+                            }
+                            if (clazz == null)
+                                clazz = this.GetType().Assembly.GetType(writerClassName, true);
                         }
-                        if (clazz == null)
-                            clazz = this.GetType().Assembly.GetType(writerClassName, true);
-                        return (IChemObjectWriter)clazz.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
+                        return clazz;
                     }
                     catch (Exception exception)
                     {

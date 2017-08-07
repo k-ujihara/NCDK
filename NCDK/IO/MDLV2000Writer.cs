@@ -135,6 +135,13 @@ namespace NCDK.IO
         private TextWriter writer;
 
         /// <summary>
+        /// Used only for InitIOSettings
+        /// </summary>
+        internal MDLV2000Writer()
+            : this((TextWriter)null)
+        { }
+
+        /// <summary>
         /// Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
         /// to the MDL molfile format.
         /// </summary>
@@ -152,38 +159,30 @@ namespace NCDK.IO
         /// <param name="output">The Stream to write to</param>
         public MDLV2000Writer(Stream output)
             : this(new StreamWriter(output, Encoding.UTF8))
-        {
-        }
-
-        public MDLV2000Writer()
-            : this(new StringWriter())
-        {
-        }
+        { }
 
         public override IResourceFormat Format => MDLFormat.Instance;
 
-        public override void SetWriter(TextWriter writer)
-        {
-            this.writer = writer;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream stream)
+        protected override void Dispose(bool disposing)
         {
-            SetWriter(new StreamWriter(stream));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (writer != null)
+                        writer.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            writer.Close();
-        }
+                writer = null;
 
-        public override void Dispose()
-        {
-            Close();
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {

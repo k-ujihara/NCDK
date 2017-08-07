@@ -69,25 +69,27 @@ namespace NCDK.IO.Iterator
         private const string SDF_RECORD_SEPARATOR = "$$$$";
         private const string SDF_DATA_HEADER = "> ";
 
-        // map of MDL formats to their readers
-        private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(5);
+        /// <summary>
+        /// map of MDL formats to their type
+        /// </summary>
+        private readonly IDictionary<IChemFormat, Type> readerTypeMap = new Dictionary<IChemFormat, Type>(5);
 
         /// <summary>
         /// Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins">The Reader to read from</param>
+        /// <param name="input">The Reader to read from</param>
         /// <param name="builder">The builder</param>
-        public IteratingSDFReader(TextReader ins, IChemObjectBuilder builder)
-            : this(ins, builder, false)
+        public IteratingSDFReader(TextReader input, IChemObjectBuilder builder)
+            : this(input, builder, false)
         { }
 
         /// <summary>
         /// Constructs a new <see cref="IteratingSDFReader"/> that can read Molecule from a given Stream.
         /// </summary>
-        /// <param name="ins">The Stream to read from</param>
+        /// <param name="input">The Stream to read from</param>
         /// <param name="builder">The builder</param>
-        public IteratingSDFReader(Stream ins, IChemObjectBuilder builder)
-            : this(new StreamReader(ins), builder)
+        public IteratingSDFReader(Stream input, IChemObjectBuilder builder)
+            : this(new StreamReader(input), builder)
         { }
 
         /// <summary>
@@ -98,11 +100,11 @@ namespace NCDK.IO.Iterator
         /// skip is set to true then the reader will keep trying to read more molecules
         /// until the end of the file is reached.
         /// </summary>
-        /// <param name="ins">the <see cref="Stream"/> to read from</param>
+        /// <param name="input">the <see cref="Stream"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        public IteratingSDFReader(Stream ins, IChemObjectBuilder builder, bool skip)
-            : this(new StreamReader(ins), builder, skip)
+        public IteratingSDFReader(Stream input, IChemObjectBuilder builder, bool skip)
+            : this(new StreamReader(input), builder, skip)
         { }
 
         /// <summary>
@@ -113,13 +115,13 @@ namespace NCDK.IO.Iterator
         /// skip is set to true then the reader will keep trying to read more molecules
         /// until the end of the file is reached.
         /// </summary>
-        /// <param name="ins">the <see cref="TextReader"/> to read from</param>
+        /// <param name="input">the <see cref="TextReader"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        public IteratingSDFReader(TextReader ins, IChemObjectBuilder builder, bool skip)
+        public IteratingSDFReader(TextReader input, IChemObjectBuilder builder, bool skip)
         {
             this.builder = builder;
-            SetReader(ins);
+            this.input = input;
             InitIOSettings();
             Skip = skip;
         }
@@ -134,23 +136,16 @@ namespace NCDK.IO.Iterator
         /// </summary>
         /// <param name="format">The format to obtain a reader for</param>
         /// <returns>instance of a reader appropriate for the provided format</returns>
-        private ISimpleChemObjectReader GetReader(IChemFormat format)
+        private ISimpleChemObjectReader GetReader(IChemFormat format, TextReader input)
         {
-            // create a new reader if not mapped
-            if (!readerMap.ContainsKey(format))
+            ISimpleChemObjectReader reader = factory.CreateReader(format, input);
+            reader.ErrorHandler = this.ErrorHandler;
+            reader.ReaderMode = this.ReaderMode;
+            if (currentFormat is MDLV2000Format)
             {
-                ISimpleChemObjectReader reader = factory.CreateReader(format);
-                reader.ErrorHandler = this.ErrorHandler;
-                reader.ReaderMode = this.ReaderMode;
-                if (currentFormat is MDLV2000Format)
-                {
-                    reader.AddSettings(IOSettings.Settings);
-                }
-                readerMap[format] = reader;
-
+                reader.AddSettings(IOSettings.Settings);
             }
-
-            return readerMap[format];
+            return reader;
         }
 
         public override IEnumerator<IAtomContainer> GetEnumerator()
@@ -188,8 +183,7 @@ namespace NCDK.IO.Iterator
 
                     try
                     {
-                        ISimpleChemObjectReader reader = GetReader(currentFormat);
-                        reader.SetReader(new StringReader(buffer.ToString()));
+                        ISimpleChemObjectReader reader = GetReader(currentFormat, new StringReader(buffer.ToString()));
                         molecule = reader.Read(builder.CreateAtomContainer());
                     }
                     catch (Exception exception)
@@ -319,20 +313,25 @@ namespace NCDK.IO.Iterator
             return null;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetReader(TextReader reader)
+        protected override void Dispose(bool disposing)
         {
-            input = reader;
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
 
-        public override void SetReader(Stream reader)
-        {
-            SetReader(new StreamReader(reader));
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings()
         {
@@ -344,11 +343,6 @@ namespace NCDK.IO.Iterator
         public void CustomizeJob()
         {
             FireIOSettingQuestion(forceReadAs3DCoords);
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

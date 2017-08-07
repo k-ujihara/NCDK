@@ -128,17 +128,17 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
+            IteratingSMILESReader reader1 = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
-            foreach (var mol in reader)
+            foreach (var mol in reader1)
             {
                 molCount++;
             }
             filename = "NCDK.Data.Smiles.tabs.smi";
             var ins2 = ResourceLoader.GetAsStream(filename);
-            reader.SetReader(ins2);
+            IteratingSMILESReader reader2 = new IteratingSMILESReader(ins2, Default.ChemObjectBuilder.Instance);
             molCount = 0;
-            foreach (var mol in reader)
+            foreach (var mol in reader2)
             {
                 molCount++;
             }

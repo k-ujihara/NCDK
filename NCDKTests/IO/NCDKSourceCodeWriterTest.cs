@@ -36,7 +36,7 @@ namespace NCDK.IO
     [TestClass()]
     public class NCDKSourceCodeWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new NCDKSourceCodeWriter();
+        protected override Type ChemObjectIOToTestType => typeof(NCDKSourceCodeWriter);
 
         [TestMethod()]
         public void TestAccepts()

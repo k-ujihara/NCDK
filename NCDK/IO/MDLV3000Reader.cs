@@ -77,22 +77,7 @@ namespace NCDK.IO
             : this(new StreamReader(input), mode)
         { }
 
-        public MDLV3000Reader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => MDLV3000Format.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-            lineNumber = 0;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -786,10 +771,25 @@ namespace NCDK.IO
             return line;
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings() { }
 
@@ -829,11 +829,6 @@ namespace NCDK.IO
                     atom.ImplicitHydrogenCount = implicitValence - explicitValence;
                 }
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

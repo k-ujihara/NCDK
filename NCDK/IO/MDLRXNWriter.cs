@@ -71,21 +71,7 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public MDLRXNWriter()
-            : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => MDLFormat.Instance;
-
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
-
-        public override void SetWriter(Stream output)
-        {
-            SetWriter(new StreamWriter(output));
-        }
 
         /// <summary>
         /// Here you can set a map which will be used to build rd fields in the file.
@@ -101,14 +87,25 @@ namespace NCDK.IO
         {
             rdFields = map;
         }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
+        protected override void Dispose(bool disposing)
         {
-            writer.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -282,11 +279,6 @@ namespace NCDK.IO
             var s = i.ToString(CultureInfo.InvariantCulture.NumberFormat);
             l = Math.Max(s.Length, l);
             return new string(' ', l - s.Length) + s;
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

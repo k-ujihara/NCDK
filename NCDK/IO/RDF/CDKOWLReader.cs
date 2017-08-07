@@ -48,33 +48,14 @@ namespace NCDK.IO.RDF
             this.input = input;
         }
 
-        /// <summary>
-        /// Creates a new CDKOWLReader with an undefined input.
-        /// </summary>
-        public CDKOWLReader()
-        {
-            this.input = null;
-        }
+        public CDKOWLReader(Stream input)
+            : this(new StreamReader(input))
+        { }
 
         /// <summary>
         /// The <see cref="IResourceFormat"/> for this reader.
         /// </summary>
         public override IResourceFormat Format => CDKOWLFormat.Instance;
-
-        /// <summary>
-        /// This method must not be used; XML reading requires the use of a <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="reader">reader to which should be written.</param>
-        [Obsolete("Use " + nameof(SetReader) + "(" + nameof(Stream) + ") instead.")]
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            this.input = new StreamReader(input);
-        }
 
         public override bool Accepts(Type type)
         {
@@ -105,14 +86,25 @@ namespace NCDK.IO.RDF
             return result;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (input != null)
+                        input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

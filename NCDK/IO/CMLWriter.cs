@@ -96,10 +96,25 @@ namespace NCDK.IO
                 writer.Write((char)value);
             }
 
-            public override void Close()
+            #region IDisposable Support
+            private bool disposedValue = false; // To detect redundant calls
+
+            protected override void Dispose(bool disposing)
             {
-                writer.Close();
+                if (!disposedValue)
+                {
+                    if (disposing)
+                    {
+                        writer.Close();
+                    }
+
+                    writer = null;
+
+                    disposedValue = true;
+                    base.Dispose(disposing);
+                }
             }
+            #endregion
         }
 
         /// <summary>
@@ -122,10 +137,6 @@ namespace NCDK.IO
             InitIOSettings();
         }
 
-        public CMLWriter()
-            : this(new MemoryStream())
-        { }
-
         public void RegisterCustomizer(ICMLCustomizer customizer)
         {
             if (customizers == null) customizers = new List<ICMLCustomizer>();
@@ -136,25 +147,25 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => CMLFormat.Instance;
 
-        public override void SetWriter(TextWriter writer)
-        {
-            // Stream doesn't handle encoding - the serializers read/write in the same format we're okay
-            Trace.TraceWarning("possible loss of encoding when using a Writer with CMLWriter");
-            this.output = new SteamByWriter(writer);
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetWriter(Stream output)
+        protected override void Dispose(bool disposing)
         {
-            this.output = output;
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    output.Dispose();
+                }
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
-        {
-            if (output != null) output.Close();
+                output = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -312,11 +323,6 @@ namespace NCDK.IO
             }
             FireIOSettingQuestion(indent);
             FireIOSettingQuestion(xmlDeclaration);
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

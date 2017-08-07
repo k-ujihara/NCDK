@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.IO;
+using System;
 
 namespace NCDK.IO
 {
@@ -11,11 +12,11 @@ namespace NCDK.IO
     [TestClass()]
     public class GamessReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.Gamess.Cl2O.log";
-        private GamessReader gamessReaderUnderTest;
-        protected override IChemObjectIO ChemObjectIOToTest => gamessReaderUnderTest;
+        protected override string TestFile => "NCDK.Data.Gamess.Cl2O.log";
+        protected override Type ChemObjectIOToTestType => typeof(GamessReader);
 
         private TextReader inputReader;
+        private GamessReader gamessReaderUnderTest;
 
         /// <summary>
         /// Sets up the fixture.
@@ -30,7 +31,7 @@ namespace NCDK.IO
         /// </summary>
         public GamessReaderTest()
         {
-            Stream ins = ResourceLoader.GetAsStream(testFile);
+            Stream ins = ResourceLoader.GetAsStream(TestFile);
             this.inputReader = new StreamReader(ins);
             this.gamessReaderUnderTest = new GamessReader(this.inputReader);
         }

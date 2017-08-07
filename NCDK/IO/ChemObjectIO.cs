@@ -91,7 +91,27 @@ namespace NCDK.IO
         }
 
         public abstract bool Accepts(Type type);
-        public abstract void Close();
-        public abstract void Dispose();
+
+        #region IDisposable Support
+        protected virtual void Dispose(bool disposing)
+        {
+        }
+
+        ~ChemObjectIO()
+        {
+            Dispose(false);
+        }
+
+        public virtual void Close()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public void Dispose()
+        {
+            Close();
+        }
+        #endregion
     }
 }

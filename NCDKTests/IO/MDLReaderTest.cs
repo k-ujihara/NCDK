@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -40,14 +41,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.Strychnine_nichtOK.mol";
-        static readonly ISimpleChemObjectReader simpleReader = new MDLReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.Strychnine_nichtOK.mol";
+        protected override Type ChemObjectIOToTestType => typeof(MDLReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLReader reader = new MDLReader();
+            MDLReader reader = new MDLReader(new StringReader(""));
             reader.ReaderMode = ChemObjectReaderModes.Strict;
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));

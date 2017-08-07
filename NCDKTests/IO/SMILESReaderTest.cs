@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Iterator;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -36,14 +37,13 @@ namespace NCDK.IO
     [TestClass()]
     public class SMILESReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.Smiles.smiles.smi";
-        static readonly ISimpleChemObjectReader simpleReader = new SMILESReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.Smiles.smiles.smi";
+        protected override Type ChemObjectIOToTestType => typeof(SMILESReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            SMILESReader reader = new SMILESReader();
+            SMILESReader reader = new SMILESReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
         }

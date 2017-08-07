@@ -23,7 +23,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Geometries;
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -31,14 +33,13 @@ namespace NCDK.IO
     [TestClass()]
     public class ShelXReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.ShelX.frame_1.res";
-        static readonly ShelXReader simpleReader = new ShelXReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.ShelX.frame_1.res";
+        protected override Type ChemObjectIOToTestType => typeof(ShelXReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            ShelXReader reader = new ShelXReader();
+            ShelXReader reader = new ShelXReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(Crystal)));
         }

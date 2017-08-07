@@ -38,20 +38,8 @@ namespace NCDK.IO
         /// <summary>
         /// Writes the content of "object" to output.
         /// </summary>
-        /// <param name="obj">the object of which the content is outputed</param>
+        /// <param name="obj">the object of which the content is outputted</param>
         /// <exception cref="CDKException">is thrown if the output does not support the data in the object</exception>
         void Write(IChemObject obj);
-
-        /// <summary>
-        /// Sets the Writer from which this ChemObjectWriter should write
-        /// the contents.
-        /// </summary>
-        void SetWriter(TextWriter writer);
-
-        /// <summary>
-        /// Sets the Stream from which this ChemObjectWriter should write
-        /// the contents.
-        /// </summary>
-        void SetWriter(Stream writer);
     }
 }

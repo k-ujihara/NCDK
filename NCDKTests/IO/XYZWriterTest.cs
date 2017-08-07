@@ -24,6 +24,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.IO;
+using System;
 
 namespace NCDK.IO
 {
@@ -35,12 +36,12 @@ namespace NCDK.IO
     [TestClass()]
     public class XYZWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new XYZWriter();
+        protected override Type ChemObjectIOToTestType => typeof(XYZWriter);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            XYZWriter reader = new XYZWriter();
+            XYZWriter reader = new XYZWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 

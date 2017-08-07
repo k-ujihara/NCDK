@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.IO;
+using System;
 
 namespace NCDK.IO.RDF
 {
@@ -33,7 +34,7 @@ namespace NCDK.IO.RDF
     [TestClass()]
     public class CDKOWLWriterTest : ChemObjectWriterTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new CDKOWLWriter();
+        protected override Type ChemObjectIOToTestType => typeof(CDKOWLWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]

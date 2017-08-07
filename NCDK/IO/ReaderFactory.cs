@@ -88,12 +88,12 @@ namespace NCDK.IO
             {
                 var istreamToRead = new ReadSeekableStream(input, 65536);
                 format = formatFactory.GuessFormat(istreamToRead);
-                reader = CreateReader(format);
-                if (reader != null)
+                var type = GetReaderType(format);
+                if (type != null)
                 {
                     try
                     {
-                        reader.SetReader(istreamToRead);
+                        reader = (ISimpleChemObjectReader)type.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { istreamToRead });
                     }
                     catch (CDKException e1)
                     {
@@ -120,12 +120,12 @@ namespace NCDK.IO
                     }
                 }
                 format = formatFactory.GuessFormat(istreamToRead);
-                reader = CreateReader(format);
-                if (reader != null)
+                var type = GetReaderType(format);
+                if (type != null)
                 {
                     try
                     {
-                        reader.SetReader(istreamToRead);
+                        reader = (ISimpleChemObjectReader)type.GetConstructor(new Type[] { typeof(Stream) }).Invoke(new object[] { istreamToRead });
                     }
                     catch (CDKException e1)
                     {
@@ -137,21 +137,26 @@ namespace NCDK.IO
             return reader;
         }
 
+        private Dictionary<IChemFormat, Type> formatToTypeMap = new Dictionary<IChemFormat, Type>();
+        
         /// <summary>
         /// Creates a new IChemObjectReader based on the given <see cref="IChemFormat"/>.
         /// </summary>
         /// <seealso cref="CreateReader(Stream)"/>
-        public ISimpleChemObjectReader CreateReader(IChemFormat format)
+        public Type GetReaderType(IChemFormat format)
         {
             if (format != null)
             {
+                Type clazz = null;
+                if (formatToTypeMap.TryGetValue(format, out clazz))
+                    return clazz;
+
                 string readerClassName = format.ReaderClassName;
                 if (readerClassName != null)
                 {
                     try
                     {
                         // make a new instance of this class
-                        Type clazz = null;
                         clazz = this.GetType().Assembly.GetType(readerClassName);
                         foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
                         {
@@ -161,7 +166,9 @@ namespace NCDK.IO
                         }
                         if (clazz == null)
                             clazz = this.GetType().Assembly.GetType(readerClassName, true);
-                        return (ISimpleChemObjectReader)clazz.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
+
+                        formatToTypeMap[format] = clazz;
+                        return clazz;
                     }
                     catch (Exception exception)
                     {
@@ -190,18 +197,24 @@ namespace NCDK.IO
         /// <seealso cref="CreateReader(Stream)"/>
         public ISimpleChemObjectReader CreateReader(TextReader input)
         {
-            IChemFormat chemFormat = formatFactory.GuessFormat(input);
-            ISimpleChemObjectReader coReader = CreateReader(chemFormat);
+            IChemFormat format = formatFactory.GuessFormat(input);
+            return CreateReader(format, input);
+        }
+
+        public ISimpleChemObjectReader CreateReader(IChemFormat format, TextReader input)
+        {
+            var type = GetReaderType(format);
             try
             {
-                coReader.SetReader(input);
+                ISimpleChemObjectReader coReader = (ISimpleChemObjectReader)type.GetConstructor(new Type[] { typeof(TextReader) }).Invoke(new object[] { input });
+                return coReader;
             }
             catch (Exception exception)
             {
                 Trace.TraceError("Could not set the Reader source: ", exception.Message);
                 Debug.WriteLine(exception);
             }
-            return coReader;
+            return null;
         }
     }
 }

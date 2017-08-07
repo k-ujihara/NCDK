@@ -87,8 +87,6 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        public abstract void SetReader(TextReader reader);
-        public abstract void SetReader(Stream reader);
         public abstract IEnumerator<T> GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()

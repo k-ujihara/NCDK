@@ -27,6 +27,7 @@ using NCDK.Templates;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace NCDK.IO
 {
@@ -39,7 +40,7 @@ namespace NCDK.IO
     [TestClass()]
     public class PDBWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new MDLRXNWriter();
+        protected override Type ChemObjectIOToTestType => typeof(MDLRXNWriter);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
@@ -64,7 +65,7 @@ namespace NCDK.IO
             Assert.IsNotNull(output);
             Assert.IsTrue(output.Length > 0);
 
-            PDBReader reader = new PDBReader();
+            PDBReader reader = new PDBReader(new StringReader(""));
             ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
 
@@ -101,7 +102,7 @@ namespace NCDK.IO
             Assert.IsNotNull(output);
             Assert.IsTrue(output.Length > 0);
 
-            PDBReader reader = new PDBReader();
+            PDBReader reader = new PDBReader(new StringReader(""));
             ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
 

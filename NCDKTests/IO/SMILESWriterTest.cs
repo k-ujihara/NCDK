@@ -26,6 +26,7 @@ using NCDK.Default;
 using NCDK.IO.Listener;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Specialized;
 using System.IO;
 
@@ -39,12 +40,12 @@ namespace NCDK.IO
     [TestClass()]
     public class SMILESWriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new SMILESWriter();
+        protected override Type ChemObjectIOToTestType => typeof(SMILESWriter);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            SMILESWriter reader = new SMILESWriter();
+            SMILESWriter reader = new SMILESWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
         }

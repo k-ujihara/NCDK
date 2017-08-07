@@ -23,7 +23,9 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -35,14 +37,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLRXNV3000ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.reaction_v3.rxn";
-        static readonly MDLRXNV3000Reader simpleReader = new MDLRXNV3000Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.reaction_v3.rxn";
+        protected override Type ChemObjectIOToTestType => typeof(MDLRXNV3000Reader);
         
         [TestMethod()]
         public void TestAccepts()
         {
-            MDLRXNV3000Reader reader = new MDLRXNV3000Reader();
+            MDLRXNV3000Reader reader = new MDLRXNV3000Reader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }

@@ -20,11 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.IO;
 using System;
-using System.IO;
-using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.IO
 {
@@ -52,18 +48,6 @@ namespace NCDK.IO
     // @author     Egon Willighagen <egonw@users.sf.net>
     public interface IChemObjectReader : IChemObjectIO
     {
-        /// <summary>
-        /// Sets the Reader from which this ChemObjectReader should read
-        /// the contents.
-        /// </summary>
-         void SetReader(TextReader reader);
-
-        /// <summary>
-        /// Sets the Stream from which this ChemObjectReader should read
-        /// the contents.
-        /// </summary>
-         void SetReader(Stream reader);
-
         /// <summary>
         /// The reader mode. If <see cref="ChemObjectReaderModes.Strict"/>, then the reader will fail on
         /// any problem in the format of the read file, instead of trying to

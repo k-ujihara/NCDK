@@ -24,6 +24,8 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -31,12 +33,12 @@ namespace NCDK.IO
     [TestClass()]
     public class ZMatrixReaderTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new ZMatrixReader();
+        protected override Type ChemObjectIOToTestType => typeof(ZMatrixReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            ZMatrixReader reader = new ZMatrixReader();
+            ZMatrixReader reader = new ZMatrixReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
     }

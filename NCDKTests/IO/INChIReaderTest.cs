@@ -22,7 +22,9 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -34,9 +36,8 @@ namespace NCDK.IO
     [TestClass()]
     public class InChIReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.InChI.guanine.inchi.xml";
-        static readonly InChIReader simpleReader = new InChIReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.InChI.guanine.inchi.xml";
+        protected override Type ChemObjectIOToTestType => typeof(InChIReader);
         
         [TestMethod()]
         public void TestAccepts()
@@ -74,12 +75,12 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(CDKException))]
         public override void TestSetReader_Reader()
         {
             // CDKException expected as these INChI files are XML, which must
-            // be read via InputStreams
-            base.TestSetReader_Reader();
+            // be read via Stream
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextReader) });
+            Assert.IsNull(ctor);
         }
     }
 }

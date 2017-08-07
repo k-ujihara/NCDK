@@ -36,11 +36,6 @@ namespace NCDK.IO
         private TextReader input;
         private IChemFile file;
 
-        public CTXReader()
-            : this(new StringReader(""))
-        {
-        }
-
         public CTXReader(TextReader input)
         {
             this.input = input;
@@ -52,16 +47,6 @@ namespace NCDK.IO
         { }
 
         public override IResourceFormat Format => CTXFormat.Instance;
-
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -213,13 +198,24 @@ namespace NCDK.IO
             return (line.Length > 1 && line[0] == ' ' && line[1] == '/');
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
-        public override void Dispose()
-        {
-            Close();
-        }
+        #endregion
     }
 }

@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -35,14 +36,13 @@ namespace NCDK.IO
     [TestClass()]
     public class InChIPlainTextReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.InChI.guanine.inchi";
-        static readonly InChIPlainTextReader simpleReader = new InChIPlainTextReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.InChI.guanine.inchi";
+        protected override Type ChemObjectIOToTestType => typeof(InChIPlainTextReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            InChIPlainTextReader reader = new InChIPlainTextReader();
+            InChIPlainTextReader reader = new InChIPlainTextReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             reader.Close();
         }

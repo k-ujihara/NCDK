@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -32,23 +33,57 @@ namespace NCDK.IO
     [TestClass()]
     public abstract class ChemObjectReaderTest : ChemObjectIOTest
     {
-        protected IChemObjectReader ChemObjectReaderToTest => (IChemObjectReader)ChemObjectIOToTest;
-        protected abstract string testFile { get; }
+        protected abstract string TestFile { get; }
+
+        protected IChemObjectReader CreateChemObjectReader(TextReader reader)
+        {
+            return (IChemObjectReader)ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextReader) }).Invoke(new object[] { reader });
+        }
+
+        protected IChemObjectReader CreateChemObjectReader(Stream stream)
+        {
+            return (IChemObjectReader)CreateChemObjectIO(stream);
+        }
+
+        protected override IChemObjectIO ChemObjectIOToTest
+        {
+            get
+            {
+                try
+                {
+                    return base.ChemObjectIOToTest;
+                }
+                catch (Exception)
+                {
+                    chemObjectIOToTest = CreateChemObjectReader(new StringReader(""));
+                }
+                return chemObjectIOToTest;
+            }
+        }
 
         [TestMethod()]
         public virtual void TestSetReader_InputStream()
         {
-            Assert.IsNotNull(testFile, "No test file has been set!");
-            var ins = ResourceLoader.GetAsStream(testFile);
-            ChemObjectReaderToTest.SetReader(ins);
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(Stream) });
+            if (ctor != null)
+            {
+                Assert.IsNotNull(TestFile, "No test file has been set!");
+                var ins = ResourceLoader.GetAsStream(TestFile);
+                CreateChemObjectReader(ins);
+            }
         }
 
         [TestMethod()]
         public virtual void TestSetReader_Reader()
         {
-            Assert.IsNotNull(testFile, "No test file has been set!");
-            var ins = ResourceLoader.GetAsStream(testFile);
-            ChemObjectReaderToTest.SetReader(new StreamReader(ins));
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextReader) });
+
+            if (ctor != null)
+            {
+                Assert.IsNotNull(TestFile, "No test file has been set!");
+                var ins = ResourceLoader.GetAsStream(TestFile);
+                CreateChemObjectReader(new StreamReader(ins));
+            }
         }
     }
 }

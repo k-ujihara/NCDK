@@ -21,6 +21,8 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -28,14 +30,13 @@ namespace NCDK.IO
     [TestClass()]
     public class MoSSOutputReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MoSS.TKO.mossoutput";
-        static readonly MoSSOutputReader simpleReader = new MoSSOutputReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MoSS.TKO.mossoutput";
+        protected override Type ChemObjectIOToTestType => typeof(MoSSOutputReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            MoSSOutputReader reader = new MoSSOutputReader();
+            MoSSOutputReader reader = new MoSSOutputReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
         }
 

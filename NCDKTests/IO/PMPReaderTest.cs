@@ -22,6 +22,8 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -33,14 +35,13 @@ namespace NCDK.IO
     [TestClass()]
     public class PMPReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.PMP.aceticacid.pmp";
-        static readonly PMPReader simpleReader = new PMPReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.PMP.aceticacid.pmp";
+        protected override Type ChemObjectIOToTestType => typeof(PMPReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            PMPReader reader = new PMPReader();
+            PMPReader reader = new PMPReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

@@ -99,10 +99,6 @@ namespace NCDK.IO
                     "L", "LP", "R", // XXX: not in spec
                     "R#"});
 
-        public MDLV2000Reader()
-            : this(new StringReader(""))
-        { }
-
         /// <summary>
         /// Constructs a new <see cref="MDLReader"/> that can read Molecule from a given <see cref="Stream"/>.
         /// </summary>
@@ -114,7 +110,6 @@ namespace NCDK.IO
         public MDLV2000Reader(Stream input, ChemObjectReaderModes mode)
             : this(new StreamReader(input), mode)
         { }
-
 
         /// <summary>
         /// Constructs a new <see cref="MDLReader"/> that can read Molecule from a given <see cref="TextReader"/>.
@@ -131,23 +126,7 @@ namespace NCDK.IO
             base.ReaderMode = mode;
         }
 
-        public override IResourceFormat Format
-        {
-            get
-            {
-                return MDLV2000Format.Instance;
-            }
-        }
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
+        public override IResourceFormat Format => MDLV2000Format.Instance;
 
         public override bool Accepts(Type type)
         {
@@ -603,15 +582,25 @@ namespace NCDK.IO
             }
         }
 
-        public override void Dispose()
-        {
-            Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Close()
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private void InitIOSettings()
         {

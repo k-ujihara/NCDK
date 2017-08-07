@@ -38,9 +38,8 @@ namespace NCDK.IO
     [TestClass()]
     public class CMLReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.CML.3.cml";
-        static readonly CMLReader simpleReader = new CMLReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.CML.3.cml";
+        protected override Type ChemObjectIOToTestType => typeof(CMLReader);
 
         [TestMethod()]
         public void TestAccepts()
@@ -49,11 +48,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(CDKException))]
         public override void TestSetReader_Reader()
         {
-            var ins = ResourceLoader.GetAsStream(testFile);
-            simpleReader.SetReader(new StreamReader(ins));
+            var ctor = ChemObjectIOToTestType.GetConstructor(new Type[] { typeof(TextReader) });
+            Assert.IsNull(ctor);
         }
 
         /// <summary>

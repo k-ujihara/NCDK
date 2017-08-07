@@ -60,29 +60,28 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public XYZWriter()
-            : this(new StringWriter())
-        { }
-
         public override IResourceFormat Format => XYZFormat.Instance;
 
-        public override void SetWriter(TextWriter output)
-        {
-            writer = output;
-        }
 
-        public override void SetWriter(Stream output)
-        {
-            SetWriter(new StreamWriter(output));
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        /// <summary>
-        /// Flushes the output and closes this object.
-        /// </summary>
-        public override void Close()
+        protected override void Dispose(bool disposing)
         {
-            writer.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {
@@ -165,11 +164,6 @@ namespace NCDK.IO
                 Trace.TraceError("Error while writing file: ", e.Message);
                 Debug.WriteLine(e);
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -31,24 +32,26 @@ namespace NCDK.IO
     [TestClass()]
     public abstract class SimpleChemObjectReaderTest : ChemObjectReaderTest
     {
-        protected ISimpleChemObjectReader SimpleChemObjectReaderToTest => (ISimpleChemObjectReader)ChemObjectIOToTest;
+        protected ISimpleChemObjectReader CreateSimpleChemObjectReader(Stream stream) => (ISimpleChemObjectReader)CreateChemObjectIO(stream);
+        protected ISimpleChemObjectReader CreateSimpleChemObjectReader(TextReader reader) => (ISimpleChemObjectReader)CreateChemObjectReader(reader);
 
         [TestMethod()]
         public virtual void TestRead_IChemObject()
         {
-            Assert.IsNotNull(testFile, "No test file has been set!");
+            Assert.IsNotNull(TestFile, "No test file has been set!");
 
             bool read = false;
             foreach (var obj in AcceptableChemObjects())
             {
                 if (ChemObjectIOToTest.Accepts(obj.GetType()))
                 {
-                    var ins = ResourceLoader.GetAsStream(testFile);
-                    SimpleChemObjectReaderToTest.SetReader(ins);
-                    IChemObject readObject = SimpleChemObjectReaderToTest.Read(obj);
-                    SimpleChemObjectReaderToTest.Close();
-                    Assert.IsNotNull(readObject, "Failed attempt to read the file as " + obj.GetType().Name);
-                    read = true;
+                    var ins = ResourceLoader.GetAsStream(TestFile);
+                    using (var reader = CreateSimpleChemObjectReader(ins))
+                    {
+                        IChemObject readObject = reader.Read(obj);
+                        Assert.IsNotNull(readObject, "Failed attempt to read the file as " + obj.GetType().Name);
+                        read = true;
+                    }
                 }
             }
             if (!read)

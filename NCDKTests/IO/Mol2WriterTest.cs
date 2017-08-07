@@ -25,6 +25,7 @@ using Moq;
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -39,13 +40,13 @@ namespace NCDK.IO
     [TestClass()]
     public class Mol2WriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new Mol2Writer();
+        protected override Type ChemObjectIOToTestType => typeof(Mol2Writer);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]
         public void TestAccepts()
         {
-            Mol2Writer writer = new Mol2Writer();
+            Mol2Writer writer = new Mol2Writer(new StringWriter());
             Assert.IsTrue(writer.Accepts(typeof(AtomContainer)));
         }
 

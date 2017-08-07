@@ -61,11 +61,6 @@ namespace NCDK.IO
             this.input = input;
         }
 
-        public CMLReader()
-            : this(new MemoryStream(new byte[0]))
-        {
-        }
-
         public void RegisterConvention(string convention, ICMLModule conv)
         {
             userConventions[convention] = conv;
@@ -81,20 +76,6 @@ namespace NCDK.IO
         }
 
         public override IResourceFormat Format => CMLFormat.Instance;
-
-        /// <summary>
-        /// This method must not be used; XML reading requires the use of an Stream.
-        /// Use SetReader(Stream) instead.
-        /// </summary>
-        /// <param name="reader"></param>
-        public override void SetReader(TextReader reader)
-        {
-            throw new CDKException("Invalid method call; use SetReader(Stream) instead.");
-        }
-
-        public override void SetReader(Stream input) {
-            this.input = input;
-        }
 
         public override bool Accepts(Type type)
         {
@@ -174,14 +155,25 @@ namespace NCDK.IO
             return file;
         }
 
-        public override void Close()
-        {
-            if (input != null) input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (input != null)
+                        input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

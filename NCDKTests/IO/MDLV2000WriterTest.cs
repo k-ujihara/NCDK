@@ -44,7 +44,7 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLV2000WriterTest : ChemObjectIOTest
     {
-        protected override IChemObjectIO ChemObjectIOToTest { get; } = new MDLV2000Writer();
+        protected override Type ChemObjectIOToTestType => typeof(MDLV2000Writer);
         private static IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
         [TestMethod()]

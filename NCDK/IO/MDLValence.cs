@@ -40,10 +40,8 @@ namespace NCDK.IO
     /// <seealso href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens: taking liberties with valence</seealso>
     // @author John May
     // @cdk.module io
-    internal sealed class MDLValence
+    internal static class MDLValence
     {
-        private MDLValence() { }
-
         /// <summary>
         /// Apply the MDL valence model to the provided atom container.
         /// </summary>

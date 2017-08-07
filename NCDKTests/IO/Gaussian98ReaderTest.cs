@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -14,9 +15,8 @@ namespace NCDK.IO
     [TestClass()]
     public class Gaussian98ReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
-        static readonly Gaussian98Reader simpleReader = new Gaussian98Reader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
+        protected override Type ChemObjectIOToTestType => typeof(Gaussian98Reader);
 
         [TestMethod()]
         public void TestAccepts()

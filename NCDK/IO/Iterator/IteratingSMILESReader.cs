@@ -58,24 +58,24 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins">The Reader to read from</param>
+        /// <param name="input">The Reader to read from</param>
         /// <param name="builder">The builder to use</param>
         /// <seealso cref="Default.ChemObjectBuilder"/>
         /// <seealso cref="Silent.ChemObjectBuilder"/>
-        public IteratingSMILESReader(TextReader ins, IChemObjectBuilder builder)
+        public IteratingSMILESReader(TextReader input, IChemObjectBuilder builder)
         {
             sp = new SmilesParser(builder);
-            SetReader(ins);
+            this.input = input;
             this.builder = builder;
         }
 
         /// <summary>
         /// Constructs a new <see cref="IteratingSMILESReader"/> that can read Molecule from a given <see cref="Stream"/>  and <see cref="IChemObjectBuilder"/> .
         /// </summary>
-        /// <param name="ins">The input stream</param>
+        /// <param name="input">The input stream</param>
         /// <param name="builder">The builder</param>
-        public IteratingSMILESReader(Stream ins, IChemObjectBuilder builder)
-           : this(new StreamReader(ins), builder)
+        public IteratingSMILESReader(Stream input, IChemObjectBuilder builder)
+           : this(new StreamReader(input), builder)
         { }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NCDK.IO.Iterator
                 }
                 catch (Exception exception)
                 {
-                    Trace.TraceError("Unexpeced problem: ", exception.Message);
+                    Trace.TraceError("Unexpected problem: ", exception.Message);
                     Debug.WriteLine(exception);
                     yield break;
                 }
@@ -148,32 +148,29 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        /// <summary>
-        /// Close the reader.
-        /// </summary>
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            if (input != null) input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override void Remove()
         {
             throw new NotSupportedException();
-        }
-
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader;
-        }
-
-        public override void SetReader(Stream reader)
-        {
-            SetReader(new StreamReader(reader));
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

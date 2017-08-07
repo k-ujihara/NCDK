@@ -22,8 +22,9 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-
+using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -35,14 +36,13 @@ namespace NCDK.IO
     [TestClass()]
     public class CTXReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.CTX.methanol_with_descriptors.ctx";
-        static readonly CTXReader simpleReader = new CTXReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.CTX.methanol_with_descriptors.ctx";
+        protected override Type ChemObjectIOToTestType => typeof(CTXReader);
 
         [TestMethod()]
         public void TestAccepts()
         {
-            CTXReader reader = new CTXReader();
+            CTXReader reader = new CTXReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
         }
 

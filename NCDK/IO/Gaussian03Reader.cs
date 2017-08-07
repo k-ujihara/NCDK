@@ -67,21 +67,7 @@ namespace NCDK.IO
                 : this(new StreamReader(input))
         { }
 
-        public Gaussian03Reader()
-                : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => Gaussian03Format.Instance;
-
-        public override void SetReader(TextReader reader)
-        {
-            this.input = reader; 
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         public override bool Accepts(Type type)
         {
@@ -106,10 +92,25 @@ namespace NCDK.IO
             }
         }
 
-        public override void Close()
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected override void Dispose(bool disposing)
         {
-            input.Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
@@ -333,11 +334,6 @@ namespace NCDK.IO
                     atom.Charge = charge;
                 }
             }
-        }
-
-        public override void Dispose()
-        {
-            Close();
         }
     }
 }

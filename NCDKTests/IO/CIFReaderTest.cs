@@ -22,6 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 
 namespace NCDK.IO
 {
@@ -32,9 +33,7 @@ namespace NCDK.IO
     [TestClass()]
     public class CIFReaderTest : ChemObjectIOTest
     {
-        protected IChemObjectReader ChemObjectReaderToTest => (IChemObjectReader)ChemObjectIOToTest;
-        static readonly CIFReader simpleReader = new CIFReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override Type ChemObjectIOToTestType => typeof(CIFReader);
 
         /// <summary>
         /// Ensure a CIF file from the crystallography open database can be read.

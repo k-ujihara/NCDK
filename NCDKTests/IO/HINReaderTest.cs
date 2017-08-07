@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -36,9 +37,8 @@ namespace NCDK.IO
     [TestClass()]
     public class HINReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.HIN.benzene.hin";
-        static readonly HINReader simpleReader = new HINReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.HIN.benzene.hin";
+        protected override Type ChemObjectIOToTestType => typeof(HINReader);
 
         [TestMethod()]
         public void TestAccepts()

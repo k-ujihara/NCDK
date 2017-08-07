@@ -61,7 +61,7 @@ namespace NCDK.IO
         public InChIPlainTextReader(TextReader input)
         {
             this.Init();
-            SetReader(input);
+            this.input = input;
             inchiTool = new InChIContentProcessorTool();
         }
 
@@ -69,21 +69,7 @@ namespace NCDK.IO
             : this(new StreamReader(input))
         { }
 
-        public InChIPlainTextReader()
-            : this(new StringReader(""))
-        { }
-
         public override IResourceFormat Format => InChIPlainTextFormat.Instance;
-
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
-
-        public override void SetReader(Stream input)
-        {
-            SetReader(new StreamReader(input));
-        }
 
         /// <summary>
         /// Initializes this reader.
@@ -172,14 +158,24 @@ namespace NCDK.IO
             return cf;
         }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
+
+                input = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
     }
 }

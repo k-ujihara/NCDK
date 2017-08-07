@@ -46,9 +46,9 @@ namespace NCDK.IO.RandomAccess
                 : base(file, builder, listener)
         { }
 
-        public override ISimpleChemObjectReader CreateChemObjectReader()
+        public override ISimpleChemObjectReader CreateChemObjectReader(TextReader reader)
         {
-            return new MDLV2000Reader();
+            return new MDLV2000Reader(reader);
         }
 
         protected override bool IsRecordEnd(string line)

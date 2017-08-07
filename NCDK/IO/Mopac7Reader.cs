@@ -68,14 +68,6 @@ namespace NCDK.IO
             : this(new StreamReader(input))
         { }
 
-        /// <summary>
-        /// Constructs a new Mopac7reader that can read a molecule. The reader to read from has
-        /// yet to be set.
-        /// </summary>
-        public Mopac7Reader()
-            : this(new StringReader(""))
-        { }
-
         // FINAL HEAT OF FORMATION = -32.90826 KCAL = -137.68818 KJ TOTAL ENERGY =
         // -1618.31024 EV ELECTRONIC ENERGY = -6569.42640 EV POINT GROUP: C1
         // CORE-CORE REPULSION = 4951.11615 EV IONIZATION POTENTIAL = 10.76839 NO.
@@ -253,25 +245,25 @@ namespace NCDK.IO
             }
         }
 
-        public override void SetReader(TextReader input)
-        {
-            this.input = input;
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void SetReader(Stream input)
+        protected override void Dispose(bool disposing)
         {
-            this.input = new StreamReader(input);
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    input.Dispose();
+                }
 
-        public override void Close()
-        {
-            input.Close();
-        }
+                input = null;
 
-        public override void Dispose()
-        {
-            Close();
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         public override bool Accepts(Type type)
         {

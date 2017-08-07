@@ -29,6 +29,8 @@ using NCDK.Isomorphisms.Matchers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -40,16 +42,15 @@ namespace NCDK.IO
     [TestClass()]
     public class RGroupQueryReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MDL.rgfile.1.mol";
-        static readonly RGroupQueryReader simpleReader = new RGroupQueryReader();
-        protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
+        protected override string TestFile => "NCDK.Data.MDL.rgfile.1.mol";
+        protected override Type ChemObjectIOToTestType => typeof(RGroupQueryReader);
 
         public RGroupQueryReaderTest() { }
 
         [TestMethod()]
         public void TestAccepts()
         {
-            RGroupQueryReader reader = new RGroupQueryReader();
+            RGroupQueryReader reader = new RGroupQueryReader(new StringReader(""));
             Assert.IsFalse(reader.Accepts(typeof(AtomContainer)));
             Assert.IsTrue(reader.Accepts(typeof(RGroupQuery)));
         }
@@ -57,7 +58,7 @@ namespace NCDK.IO
         [TestMethod()]
         public override void TestAcceptsAtLeastOneChemObjectClass()
         {
-            RGroupQueryReader reader = new RGroupQueryReader();
+            RGroupQueryReader reader = new RGroupQueryReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(RGroupQuery)));
         }
 

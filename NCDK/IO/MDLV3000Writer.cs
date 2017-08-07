@@ -59,6 +59,12 @@ namespace NCDK.IO
         private V30LineWriter writer;
 
         /// <summary>
+        /// Used only for InitIOSettings
+        /// </summary>
+        internal MDLV3000Writer()
+        { }
+
+        /// <summary>
         /// Create a new V3000 writer, output to the provided JDK writer.
         /// </summary>
         /// <param name="writer">output location</param>
@@ -72,17 +78,9 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="output">output location</param>
         public MDLV3000Writer(Stream output)
-        {
-            this.SetWriter(output);
-        }
+            : this(new StreamWriter(output))
+        { }
         
-        /// <summary>
-        /// Default empty constructor.
-        /// </summary>
-        public MDLV3000Writer()
-        {
-        }
-
         /// <summary>
         /// Safely access nullable int fields by defaulting to zero.
         /// </summary>
@@ -677,16 +675,6 @@ namespace NCDK.IO
             }
         }
 
-        public override void SetWriter(TextWriter writer)
-        {
-            this.writer = new V30LineWriter(writer);
-        }
-
-        public override void SetWriter(Stream writer)
-        {
-            SetWriter(new StreamWriter(writer, Encoding.UTF8));
-        }
-
         public override IResourceFormat Format => MDLV3000Format.Instance;
 
         public override bool Accepts(Type c)
@@ -695,16 +683,26 @@ namespace NCDK.IO
             return false;
         }
 
-        public override void Close()
-        {
-            if (writer != null)
-                writer.Close();
-        }
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            Close();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (writer != null)
+                        writer.Dispose();
+                }
+
+                writer = null;
+
+                disposedValue = true;
+                base.Dispose(disposing);
+            }
         }
+        #endregion
 
         /// <summary>
         /// A convenience function for writing V3000 lines that auto

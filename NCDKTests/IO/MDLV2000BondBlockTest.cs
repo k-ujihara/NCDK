@@ -25,6 +25,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Isomorphisms.Matchers;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -33,7 +34,7 @@ namespace NCDK.IO
     [TestClass()]
     public class MDLV2000BondBlockTest
     {
-        private readonly MDLV2000Reader reader = new MDLV2000Reader();
+        private readonly MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
         private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private readonly IAtom[] atoms = new IAtom[]
             {
