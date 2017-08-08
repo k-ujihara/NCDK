@@ -213,9 +213,7 @@ namespace NCDK.AtomTypes
             AssertAtomType(testedAtomTypes, "F1", matched);
         }
 
-        /*
-        /// Tests As3, Cl1
-        /// </summary>
+        // Tests As3, Cl1
         [TestMethod()]
         public void TestArsenic()
         {
@@ -244,9 +242,7 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /*
-        /// Tests C4, O2
-        /// </summary>
+        // Tests C4, O2
         [TestMethod()]
         public void TestOxygen1()
         {
@@ -281,9 +277,7 @@ namespace NCDK.AtomTypes
             AssertAtomType(testedAtomTypes, "O2", matched);
         }
 
-        /*
-        /// Tests O2, H1
-        /// </summary>
+        // Tests O2, H1
         [TestMethod()]
         public void TestOxygen2()
         {
@@ -322,9 +316,7 @@ namespace NCDK.AtomTypes
             AssertAtomType(testedAtomTypes, "H1", matched);
         }
 
-        /*
-        /// Tests P4, S2, Cl1
-        /// </summary>
+        // Tests P4, S2, Cl1
         [TestMethod()]
         public void TestP4()
         {
@@ -367,9 +359,7 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /*
-        /// Tests P3, O2, C4
-        /// </summary>
+        // Tests P3, O2, C4
         [TestMethod()]
         public void TestP3()
         {

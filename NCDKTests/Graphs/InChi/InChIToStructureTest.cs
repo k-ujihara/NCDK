@@ -33,7 +33,6 @@ namespace NCDK.Graphs.InChI
     [TestClass()]
     public class InChIToStructureTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestConstructor_String_IChemObjectBuilder()
         {
