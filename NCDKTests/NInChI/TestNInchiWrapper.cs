@@ -26,7 +26,6 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiWrapper
     {
-
         // Test molecules
 
         /// <summary>
@@ -1274,7 +1273,6 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetChargeFromSodiumHydroxide()
         {
-
             NInchiInputInchi input = new NInchiInputInchi("InChI=1S/Na.H2O/h;1H2/q+1;/p-1");
             NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(2, output.Atoms.Count);
@@ -2067,7 +2065,7 @@ namespace NCDK.NInChI
         {
             string inchi = "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1";
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, false);
-            Assert.AreEqual(INCHI_STATUS.VALID_STANDARD, ret);
+            Assert.AreEqual(INCHI_STATUS.INCHI_VALID_STANDARD, ret);
         }
 
         //@Ignore     // TODO -- this seems to be an InChI bug
@@ -2075,7 +2073,7 @@ namespace NCDK.NInChI
         {
             string inchi = "InChI=1S/C4H6/c1-3-4-2/h3-4H,1-2H2";
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, true);
-            Assert.AreEqual(INCHI_STATUS.VALID_STANDARD, ret);
+            Assert.AreEqual(INCHI_STATUS.INCHI_VALID_STANDARD, ret);
         }
 
         [TestMethod()]
@@ -2083,7 +2081,7 @@ namespace NCDK.NInChI
         {
             string inchi = "InChI=1/C8H10N4O2/c1-10-4-9-6-5(10)7(13)12(3)8(14)11(6)2/h4H,1-3H3";
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, false);
-            Assert.AreEqual(INCHI_STATUS.VALID_NON_STANDARD, ret);
+            Assert.AreEqual(INCHI_STATUS.INCHI_VALID_NON_STANDARD, ret);
         }
 
         [TestMethod()]
@@ -2091,7 +2089,7 @@ namespace NCDK.NInChI
         {
             string inchi = "InChI=2/C8H10N4O2/c1-10-4-9-6-5(10)7(13)12(3)8(14)11(6)2/h4H,1-3H3";
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, false);
-            Assert.AreEqual(INCHI_STATUS.INVALID_VERSION, ret);
+            Assert.AreEqual(INCHI_STATUS.INCHI_INVALID_VERSION, ret);
         }
 
         [TestMethod()]
@@ -2099,7 +2097,7 @@ namespace NCDK.NInChI
         {
             string inchi = "foo=1/C8H10N4O2/c1-10-4-9-6-5(10)7(13)12(3)8(14)11(6)2/h4H,1-3H3";
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, false);
-            Assert.AreEqual(INCHI_STATUS.INVALID_PREFIX, ret);
+            Assert.AreEqual(INCHI_STATUS.INCHI_INVALID_PREFIX, ret);
         }
 
 

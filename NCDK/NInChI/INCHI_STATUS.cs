@@ -22,11 +22,12 @@ namespace NCDK.NInChI
     // @author sea36
     public enum INCHI_STATUS
     {
-        VALID_STANDARD = 0,
-        VALID_NON_STANDARD = -1,
-        INVALID_PREFIX = 1,
-        INVALID_VERSION = 2,
-        INVALID_LAYOUT = 3,
-        FAIL_I2I = 4,
+        INCHI_VALID_STANDARD = 0,
+        INCHI_VALID_NON_STANDARD = 1,
+        INCHI_VALID_BETA = 2,
+        INCHI_INVALID_PREFIX = 3,
+        INCHI_INVALID_VERSION = 4,
+        INCHI_INVALID_LAYOUT = 5,
+        INCHI_FAIL_I2I = 6,
     }
 }

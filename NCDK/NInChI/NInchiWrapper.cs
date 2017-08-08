@@ -143,12 +143,12 @@ namespace NCDK.NInChI
         }
 
         /* InChI -> Structure, GetStructFromINCHI()/GetStructFromStdINCHI() */
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         public struct Inchi_InputINCHI
         {
             /* the caller is responsible for the data allocation and deallocation */
-            public string/*char**/ szInChI;     /* InChI ASCIIZ string to be converted to a structure */
-            public string/*char**/ szOptions;   /* InChI options: space-delimited; each is preceded by */
+            public IntPtr/*char**/ szInChI;     /* InChI ASCIIZ string to be converted to a structure */
+            public IntPtr/*char**/ szOptions;   /* InChI options: space-delimited; each is preceded by */
                                                 /* '/' or '-' depending on OS and compiler */
         }
 
@@ -183,8 +183,8 @@ namespace NCDK.NInChI
             public IntPtr stereo0D;
             public Int16/*AT_NUM*/          num_atoms;    /* number of atoms in the structure < 1024 */
             public Int16/*AT_NUM*/          num_stereo0D; /* number of 0D stereo elements */
-            public string/*char**/ szMessage;    /* Error/warning ASCIIZ message */
-            public string/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list  of recognized options and possibly an Error/warning message */
+            public IntPtr/*char**/ szMessage;    /* Error/warning ASCIIZ message */
+            public IntPtr/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list  of recognized options and possibly an Error/warning message */
             public fixed ulong/*unsigned long[2][2]*/ WarningFlags[4]; /* warnings, see INCHIDIFF in inchicmp.h */
                                                                        /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
                                                                                   x=1 => Disconnected layer if Reconnected layer is present
@@ -230,7 +230,7 @@ namespace NCDK.NInChI
             [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int GetINCHIfromINCHI([In] ref Inchi_InputINCHI pinpInChI, [Out] out Inchi_Output pOut);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping =false, ThrowOnUnmappableChar =true)]
+            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int Get_inchi_Input_FromAuxInfo([MarshalAs(UnmanagedType.LPStr)] string szInchiAuxInfo,
                                                       int bDoNotAddH,
                                                       int bDiffUnkUndfStereo,
@@ -246,25 +246,25 @@ namespace NCDK.NInChI
             internal static extern void Free_inchi_Input(Inchi_Input* pInp);
             [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void Free_std_inchi_Input([In] ref Inchi_Input pInp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int CheckINCHI([MarshalAs(UnmanagedType.LPStr)] [In] string szINCHI, int strict);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int GetINCHIKeyFromINCHI([MarshalAs(UnmanagedType.LPStr)][In] string szINCHISource,
                                                int xtra1,
                                                int xtra2,
                                                IntPtr szINCHIKey,
                                                IntPtr szXtra1,
                                                IntPtr szXtra2);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int GetStdINCHIKeyFromStdINCHI([MarshalAs(UnmanagedType.LPStr)] string szINCHISource,
                                                      [MarshalAs(UnmanagedType.LPStr)] string szINCHIKey);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int CheckINCHIKey([MarshalAs(UnmanagedType.LPStr)] string szINCHIKey);
         }
 
         private const string ID = "NInChI";
-        private const string VERSION = "1.04_1";
+        private const string VERSION = "1.05_0";
 
         /// <summary>
         /// Flag indicating windows or linux.
@@ -389,7 +389,6 @@ namespace NCDK.NInChI
 
                     var iaO = input.Atoms.IndexOf(atomO);
                     var iaT = input.Atoms.IndexOf(atomT);
-
 
                     var iatom = atoms[iaO];
                     int numbonds = atoms[iaO].num_bonds;
@@ -570,16 +569,27 @@ namespace NCDK.NInChI
             }
 
             var native_input = new Inchi_InputINCHI();
-            native_input.szInChI = input.Inchi;
-            native_input.szOptions = input.Options;
 
-            var native_output = new Inchi_Output();
+            var szInChI = Marshal.StringToHGlobalAnsi(input.Inchi);
+            var szOptions = Marshal.StringToHGlobalAnsi(input.Options);
+            try
+            {
+                native_input.szInChI = szInChI;
+                native_input.szOptions = szOptions;
 
-            var ret = SafeNativeMethods.GetINCHIfromINCHI(ref native_input, out native_output);
+                var native_output = new Inchi_Output();
 
-            NInchiOutput oo = ToInchiOutput(ret, native_output);
-            SafeNativeMethods.FreeStdINCHI(ref native_output);
-            return oo;
+                var ret = SafeNativeMethods.GetINCHIfromINCHI(ref native_input, out native_output);
+
+                NInchiOutput oo = ToInchiOutput(ret, native_output);
+                SafeNativeMethods.FreeStdINCHI(ref native_output);
+                return oo;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(szOptions);
+                Marshal.FreeHGlobal(szInChI);
+            }
         }
 
         private static void CreateAtoms(NInchiStructure output, int numatoms, IntPtr intPtrAtoms)
@@ -657,24 +667,36 @@ namespace NCDK.NInChI
             }
 
             var native_input = new Inchi_InputINCHI();
-            native_input.szInChI = input.Inchi;
-            native_input.szOptions = input.Options;
 
-            var native_output = new Inchi_OutputStruct();
+            var szInChI = Marshal.StringToHGlobalAnsi(input.Inchi);
+            var szOptions = Marshal.StringToHGlobalAnsi(input.Options);
+            try
+            {
+                native_input.szInChI = szInChI;
+                native_input.szOptions = szOptions;
 
-            var ret = SafeNativeMethods.GetStructFromINCHI(ref native_input, out native_output);
+                var native_output = new Inchi_OutputStruct();
 
-            NInchiOutputStructure output = new NInchiOutputStructure(ret,
-                native_output.szMessage, native_output.szLog,
-                native_output.WarningFlags[0], native_output.WarningFlags[1],
-                native_output.WarningFlags[2], native_output.WarningFlags[3]);
+                var ret = SafeNativeMethods.GetStructFromINCHI(ref native_input, out native_output);
 
-            CreateAtoms(output, native_output.num_atoms, native_output.atom);
-            CreateBonds(output, native_output.num_atoms, native_output.atom);
-            CreateStereos(output, native_output.num_stereo0D, native_output.stereo0D);
+                NInchiOutputStructure output = new NInchiOutputStructure(ret,
+                    Marshal.PtrToStringAnsi(native_output.szMessage),
+                    Marshal.PtrToStringAnsi(native_output.szLog),
+                    native_output.WarningFlags[0], native_output.WarningFlags[1],
+                    native_output.WarningFlags[2], native_output.WarningFlags[3]);
 
-            SafeNativeMethods.FreeStructFromINCHI(ref native_output);
-            return output;
+                CreateAtoms(output, native_output.num_atoms, native_output.atom);
+                CreateBonds(output, native_output.num_atoms, native_output.atom);
+                CreateStereos(output, native_output.num_stereo0D, native_output.stereo0D);
+
+                SafeNativeMethods.FreeStructFromINCHI(ref native_output);
+                return output;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(szOptions);
+                Marshal.FreeHGlobal(szInChI);
+            }
         }
 
         /// <summary>
