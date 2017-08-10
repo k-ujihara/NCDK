@@ -49,7 +49,6 @@ namespace NCDK.Config
     public class XMLIsotopeFactory : IsotopeFactory
     {
         private static XMLIsotopeFactory ifac = null;
-        private const bool debug = false;
 
         /// <summary>
         /// Private constructor for the IsotopeFactory object.
@@ -66,7 +65,7 @@ namespace NCDK.Config
             try
             {
                 string configFile = "NCDK.Config.Data.isotopes.xml";
-                if (debug) Debug.WriteLine("Getting stream for ", configFile);
+                Debug.WriteLine("Getting stream for ", configFile);
                 ins = ResourceLoader.GetAsStream(configFile);
             }
             catch (Exception exception)
@@ -86,7 +85,7 @@ namespace NCDK.Config
             var isotopes = reader.ReadIsotopes();
             foreach (var isotope in isotopes)
                 Add(isotope);
-            if (debug) Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
+            Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
 
             // for (int f = 0; f < isotopes.Size(); f++) { Isotope isotope =
             // (Isotope)isotopes.elementAt(f); } What's this loop for??
