@@ -57,22 +57,23 @@
   <ItemGroup>
     <Compile Include="Depict\Dimension.cs" />
     <Compile Include="Renderers\Elements\Path\ArcTo.cs" />
+    <Compile Include="Renderers\Elements\TextGroupElement.cs" />
+    <Compile Include="Renderers\Elements\TextGroupElement.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextGroupElement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Renderers\Generators\Standards\HydrogenPosition.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HydrogenPosition.tt</DependentUpon>
+    </Compile>
     <Compile Include="Renderers\WPFUtil.cs" />
     <Compile Include="Depict\Depiction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Renderers\Elements\TextGroupElement1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TextGroupElement.tt</DependentUpon>
-    </Compile>
     <Compile Include="Renderers\Generators\ReactionArrowGenerator.cs" />
-    <Compile Include="Renderers\Generators\Standards\HydrogenPosition1.cs">
-      <DependentUpon>HydrogenPosition.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Renderers\IRenderer.cs" />
     <Compile Include="Renderers\RendererModel.cs" />
     <Compile Include="Depict\Abbreviations.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="Renderers\Generators\Parameters\AbstractGeneratorParameter.cs" />
     <Compile Include="Renderers\Selection\IChemObjectSelection.cs" />
     <Compile Include="Renderers\Visitors\IDrawVisitor.cs" />
-    <Compile Include="Renderers\Elements\TextGroupElement.cs" />
     <Compile Include="Renderers\Elements\WedgeLineElement.cs" />
     <Compile Include="Renderers\Fonts\AbstractFontManager.cs" />
     <Compile Include="Renderers\Fonts\WPFFontManager.cs" />
@@ -139,7 +139,7 @@
     </Content>
     <Content Include="Renderers\Elements\TextGroupElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TextGroupElement1.cs</LastGenOutput>
+      <LastGenOutput>TextGroupElement.tt.cs</LastGenOutput>
     </Content>
     <Compile Include="Renderers\Generators\AtomContainerBoundsGenerator.cs" />
     <Compile Include="Renderers\Generators\AtomMassGenerator.cs" />
@@ -178,7 +178,7 @@
     <Compile Include="Renderers\SymbolVisibility.cs" />
     <Content Include="Renderers\Generators\Standards\HydrogenPosition.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HydrogenPosition1.cs</LastGenOutput>
+      <LastGenOutput>HydrogenPosition.tt.cs</LastGenOutput>
     </Content>
     <Compile Include="Renderers\Visitors\AbstractWPFDrawVisitor.cs" />
     <Compile Include="Renderers\Visitors\WPFDrawVisitor.cs" />

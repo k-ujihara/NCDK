@@ -114,27 +114,32 @@ namespace NCDK.Renderers.Elements
         };
         public static System.Collections.Generic.IEnumerable<Position> Values => values;
 
-        /* In order to cause compiling error */
+        /* Avoid to cause compiling error */
 
-        public static bool operator==(Position a, object b)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+		public static bool operator==(Position a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(Position a, object b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator==(object a, Position b)
         {
             throw new System.Exception();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
         public static bool operator!=(object a, Position b)
         {
             throw new System.Exception();
         }
+
 
         public static bool operator==(Position a, Position b)
         {
