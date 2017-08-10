@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +35,7 @@ namespace NCDK.IO.Iterator
     // @see org.openscience.cdk.ConformerContainer
     // @cdk.keyword file format SDF
     // @cdk.keyword conformer conformation
-    public class IteratingMDLConformerReader : IEnumerable<ConformerContainer>
+    public class IteratingMDLConformerReader : IEnumerable<ConformerContainer>, IDisposable
     {
         private IteratingSDFReader imdlr;
 
@@ -75,5 +76,35 @@ namespace NCDK.IO.Iterator
         {
             return GetEnumerator();
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    imdlr.Dispose();
+                }
+
+                imdlr = null;
+
+                disposedValue = true;
+            }
+        }
+
+        ~IteratingMDLConformerReader()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

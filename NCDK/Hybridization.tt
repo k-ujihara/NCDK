@@ -24,6 +24,7 @@ namespace NCDK
     /// <summary>
     /// Hybridization states.
     /// </summary>
+    [System.Serializable]
 <# 
     GenerateEnumBody(
         "Hybridization", 

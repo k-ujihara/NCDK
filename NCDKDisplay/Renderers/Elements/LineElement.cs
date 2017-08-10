@@ -38,10 +38,8 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Make a line element.
         /// </summary>
-        /// <param name="firstPointX">x-coordinate of the first point</param>
-        /// <param name="firstPointY">y-coordinate of the first point</param>
-        /// <param name="secondPointX">x-coordinate of the second point</param>
-        /// <param name="secondPointY">y-coordinate of the second point</param>
+        /// <param name="firstPoint">coordinate of the first point</param>
+        /// <param name="secondPoint">coordinate of the second point</param>
         /// <param name="width">the width of the line</param>
         /// <param name="color">the color of the line</param>
         public LineElement(Point firstPoint, Point secondPoint, double width, Color color)

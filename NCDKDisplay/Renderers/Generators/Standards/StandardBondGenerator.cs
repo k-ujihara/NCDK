@@ -1295,7 +1295,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="a">first point</param>
         /// <param name="b">second point</param>
         /// <param name="c">third point</param>
-        /// <returns>< 0 = clockwise, 0 = linear, > 0 anti-clockwise</returns>
+        /// <returns>&lt; 0 = clockwise, 0 = linear, &gt; 0 anti-clockwise</returns>
         internal static int Winding(Vector2 a, Vector2 b, Vector2 c)
         {
             return (int)Math.Sign((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X));
@@ -1387,12 +1387,11 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             /// <summary>
-            /// Count the light elements (atomic number < 19) in an atom container. The count is provided
+            /// Count the light elements (atomic number &lt; 19) in an atom container. The count is provided
             /// as a frequency vector indexed by atomic number.
-            ///
+            /// </summary>
             /// <param name="container">structure representation</param>
             /// <returns>frequency vector of atomic numbers 0-18</returns>
-            /// </summary>
             internal static int[] CountLightElements(IAtomContainer container)
             {
                 // count elements up to Argon (number=18)

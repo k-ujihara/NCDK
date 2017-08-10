@@ -44,7 +44,7 @@ namespace NCDK.Renderers.Generators
         public class AtomColor : AbstractGeneratorParameter<Color?>
         {
             /// <summary>
-            /// Returns the default value, <see cref="Color.Black"/>.
+            /// Returns the default value, <see cref="WPF.Media.Colors.Black"/>.
             /// </summary>
             public override Color? Default => WPF.Media.Colors.Black;
         }
@@ -76,8 +76,8 @@ namespace NCDK.Renderers.Generators
         /// <summary>If true, colors atoms by their type.</summary>
         private IGeneratorParameter<bool?> colorByType = new ColorByType();
 
-        /// <summary> bool property that triggers explicit hydrogens to be
-        ///  drawn if set to true. */
+        /// <summary>bool property that triggers explicit hydrogens to be
+        ///  drawn if set to true.</summary>
         public class ShowExplicitHydrogens : AbstractGeneratorParameter<bool?>
         {
             /// <summary> Returns the default value.</summary>
@@ -92,8 +92,9 @@ namespace NCDK.Renderers.Generators
         ///  around an atom, e.g. used for highlighting atoms.</summary>
         public class AtomRadius : AbstractGeneratorParameter<double?>
         {
-            /// <summary> Returns the default value.
-            /// <returns>8.0</returns>
+            /// <summary>
+            /// Returns the default value. 8.0
+            /// </summary>
             public override double? Default => 8;
         }
 

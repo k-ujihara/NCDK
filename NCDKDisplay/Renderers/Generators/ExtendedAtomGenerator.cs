@@ -47,7 +47,7 @@ namespace NCDK.Renderers.Generators
         private IGeneratorParameter<bool?> showImplicitHydrogens = new ShowImplicitHydrogens();
 
         /// <summary> bool that indicates if atom type names should be given instead
-        /// of element symbols. */
+        /// of element symbols. </summary>
         public class ShowAtomTypeNames : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>

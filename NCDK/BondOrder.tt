@@ -24,6 +24,7 @@ namespace NCDK
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
+    [System.Serializable]
 <# 
     GenerateEnumBody(
         "BondOrder", 

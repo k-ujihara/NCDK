@@ -1825,7 +1825,6 @@ namespace NCDK.NInChI
                 "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar" };
             
             bool stop = false;
-            bool done = false;
 
             int failCount = 0;
             int runCount = 0;
@@ -1872,7 +1871,6 @@ namespace NCDK.NInChI
 
                             Thread.Yield();
                         }
-                        done = true;
                     });
                     tts[i] = new Thread(ts);
                 }

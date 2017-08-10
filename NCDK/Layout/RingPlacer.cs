@@ -298,8 +298,6 @@ namespace NCDK.Layout
             Debug.WriteLine($"placeBridgedRing->tStep: {Vectors.RadianToDegree(tStep)}");
 
             double startAngle;
-            int direction = -1;
-
             startAngle = GeometryUtil.GetAngle(bondAtom1.Point2D.Value.X - ringCenter.X, bondAtom1.Point2D.Value.Y - ringCenter.Y);
 
             IAtom currentAtom = bondAtom1;

@@ -40,8 +40,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class ShowAromaticity : AbstractGeneratorParameter<bool?>
         {
-            /// <summary> Returns the default value.
-            /// <returns><see langword="true"/></returns>
+            /// <summary> Returns the default value. <see langword="true"/></summary>
             public override bool? Default => true;
         }
 
@@ -52,8 +51,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class CDKStyleAromaticity : AbstractGeneratorParameter<bool?>
         {
-            /// <summary> Returns the default value.
-            /// <returns><see langword="false"/></returns>
+            /// <summary> Returns the default value. <see langword="false"/></summary>
             public override bool? Default => false;
         }
 
@@ -79,8 +77,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class RingProportion : AbstractGeneratorParameter<double?>
         {
-            /// <summary> Returns the default value.
-            /// <returns>0.35</returns>
+            /// <summary>The default value. 0.35</summary>
             public override double? Default => 0.35;
         }
 

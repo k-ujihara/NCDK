@@ -161,8 +161,8 @@ namespace NCDK.FaulonSignatures.Chemistry
         public void DrawTrees(MoleculeQuotientGraph mqg, string directoryPath)
         {
             var signatureStrings = mqg.GetVertexSignatureStrings();
-            int w = 1200;
-            int h = 400;
+            //int w = 1200;
+            //int h = 400;
 
             //TreeDrawer.MakeTreeImages(signatureStrings, directoryPath, w, h);
             Trace.TraceWarning("TreeDrawer is not implemented yet.");

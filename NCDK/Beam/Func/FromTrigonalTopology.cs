@@ -71,7 +71,6 @@ namespace NCDK.Beam
             private readonly Graph g;
             private readonly bool[] visited;
             private readonly int[] ordering;
-            private int i;
             public IDictionary<Edge, Edge> replacement = new Dictionary<Edge, Edge>();
 
             private static readonly Bond[] labels = new Bond[] { Bond.Down, Bond.Up };

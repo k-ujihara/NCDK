@@ -148,7 +148,6 @@ namespace NCDK.Fingerprints
         /// <returns>A <see cref="BitArray"/> representing the fingerprint</returns>
         public IBitFingerprint GetBitFingerprint(IAtomContainer container, AllRingsFinder ringFinder)
         {
-            int position = -1;
             Debug.WriteLine("Entering Fingerprinter");
             Debug.WriteLine("Starting Aromaticity Detection");
             long before = DateTime.Now.Ticks;

@@ -50,18 +50,17 @@ namespace NCDK.Renderers.Generators
 
         /// <summary>
         /// Determines if tooltips are to be shown.
-        /// 
+        /// </summary>
         public class ShowTooltip : AbstractGeneratorParameter<bool?>
         {
-            /// <summary> Returns the default value.
-            /// <returns><see langword="false"/></returns>
+            /// <summary> Returns the default value. <see langword="false"/></summary>
             public override bool? Default => false;
         }
 
         private ShowTooltip showTooltip = new ShowTooltip();
 
         /// <summary>
-        /// Determines if the molecule's title is depicted.</summary>
+        /// Determines if the molecule's title is depicted.
         /// </summary>
         public class ShowMoleculeTitle : AbstractGeneratorParameter<bool?>
         {
@@ -113,8 +112,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class BackgroundColor : AbstractGeneratorParameter<Color?>
         {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see cref="System.Drawing.Color.White"/></returns>
+            /// <summary> Returns the default value. <see cref="WPF.Media.Colors.White"/></summary>
             public override Color? Default => WPF.Media.Colors.White;
         }
 
@@ -184,8 +182,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class FontName : AbstractGeneratorParameter<string>
         {
-            /// <summary> Returns the default value.
-            /// <returns>Arial</returns>
+            /// <summary> Returns the default value. "Arial"</summary>
             public override string Default => "Arial";
         }
 

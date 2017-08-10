@@ -254,7 +254,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="path">output destination path</param>
         /// <exception cref="IOException">depiction could not be written, low level IO problem</exception>
-        /// <seealso cref="listFormats"/>
+        /// <seealso cref="ListFormats"/>
         public void WriteTo(string path)
         {
             int i = path.LastIndexOf(DOT);

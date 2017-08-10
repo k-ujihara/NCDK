@@ -25,11 +25,22 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;0612,0618,0162,0164</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\NCDKDisplay.xml</DocumentationFile>
     <NoWarn>0162,0164,0219,0612,0618,0672,1591</NoWarn>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Analysis|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Analysis\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -117,16 +128,14 @@
     <Compile Include="Renderers\Elements\WedgeLineElement.cs" />
     <Compile Include="Renderers\Fonts\AbstractFontManager.cs" />
     <Compile Include="Renderers\Fonts\WPFFontManager.cs" />
-    <Content Include="..\NCDK\IncludeExamples.tt">
-      <Link>IncludeExamples.tt</Link>
+    <Content Include="IncludeExamples.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IncludeExamples.xml</LastGenOutput>
     </Content>
-    <Content Include="..\NCDK\IncludeExamples.xml">
-      <Link>IncludeExamples.xml</Link>
+    <Content Include="IncludeExamples.xml">
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IncludeExamples.tt</DependentUpon>
     </Content>
     <Content Include="Renderers\Elements\TextGroupElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

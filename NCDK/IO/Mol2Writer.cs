@@ -238,9 +238,9 @@ namespace NCDK.IO
                 }
 
             }
-            catch (IOException e)
+            catch (IOException)
             {
-                throw e;
+                throw;
             }
         }
     }

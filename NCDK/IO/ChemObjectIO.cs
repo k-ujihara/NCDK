@@ -102,7 +102,7 @@ namespace NCDK.IO
             Dispose(false);
         }
 
-        public virtual void Close()
+        public void Close()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

@@ -137,10 +137,7 @@ namespace NCDK.Beam
             IList<Edge> es = g.GetEdges(u);
             int offset = es.IndexOf(e);
 
-            int parity = 0;
-
             // vertex information for topology
-            int j = 0;
             int[] vs = new int[] {
                 e.Other(u), // double bond
                 u,          // for implicit H

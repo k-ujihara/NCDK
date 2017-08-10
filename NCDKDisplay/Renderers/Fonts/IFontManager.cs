@@ -51,7 +51,6 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font name ('Arial', 'Times New Roman' and so on).
         /// </summary>
-        /// <param name="fontName">name of the font to use</param>
         string FontName { get; set; }
     }
 }

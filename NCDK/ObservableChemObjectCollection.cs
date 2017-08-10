@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
+    [Serializable]
     internal class ObservableChemObjectCollection<T>
         : IList<T>
         where T : IChemObject

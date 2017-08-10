@@ -125,6 +125,7 @@ namespace NCDK.Tools
             HOSECode = new StringBuilder();
         }
 
+        [NonSerialized]
         private IsotopeFactory isotopeFac = null;
 
         private void EnsureIsotopeFactory()
@@ -714,6 +715,7 @@ namespace NCDK.Tools
         /// </summary>
         // @author     steinbeck
         // @cdk.created    2002-11-16
+        [Serializable]
         public class TreeNode
         {
             private HOSECodeGenerator parent;

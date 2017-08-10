@@ -67,7 +67,7 @@ namespace NCDK.Renderers.Selection
         /// <summary>
         /// Returns a <see cref="ICollection{T}"/> of all selected <see cref="IChemObject"/>s of the given type.
         /// </summary>
-        /// <param name="clazz">type of <see cref="IChemObject"/>s that should be returned.</param>
+        /// <typeparam name="T">type of <see cref="IChemObject"/>s that should be returned.</typeparam>
         /// <returns>a <see cref="ICollection{T}"/>  of <see cref="IChemObject"/> of the given type</returns>
         ICollection<T> Elements<T>() where T: IChemObject;
     }

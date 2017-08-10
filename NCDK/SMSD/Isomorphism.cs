@@ -39,37 +39,37 @@ using System.Runtime.CompilerServices;
 namespace NCDK.SMSD
 {
     /// <summary>
-    ///  <para>This class implements the Isomorphism- a multipurpose structure comparison tool.
-    ///  It allows users to, i) find the maximal common Substructure(s) (MCS);
-    ///  ii) perform the mapping of a substructure in another structure, and;
-    ///  iii) map two isomorphic structures.</para>
-    ///  <para>It also comes with various published algorithms. The user is free to
-    ///  choose his favorite algorithm to perform MCS or substructure search.
-    ///  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
-    ///  Substructure</para>
-    ///
-    ///  <para>It also has a set of robust chemical filters (i.e. bond energy, fragment
-    ///  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
-    ///  relevant manner. Each comparison can be made with or without using the bond
-    ///  sensitive mode and with implicit or explicit hydrogens.</para>
-    ///
-    ///  <para>If you are using <b>Isomorphism, please cite Rahman <i>et.al. 2009</i></b>
-    ///  <token>cdk-cite-SMSD2009</token>. The Isomorphism algorithm is described in this paper.
-    ///  </para>
+    ///  This class implements the Isomorphism- a multipurpose structure comparison tool.
     /// </summary>
-    /// 
+    /// <remarks>
+    /// <para>
+    /// It allows users to, i) find the maximal common Substructure(s) (MCS);
+    /// ii) perform the mapping of a substructure in another structure, and;
+    /// iii) map two isomorphic structures.</para>
+    /// <para>It also comes with various published algorithms. The user is free to
+    /// choose his favorite algorithm to perform MCS or substructure search.
+    /// For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
+    /// Substructure</para>
+    ///
+    /// <para>It also has a set of robust chemical filters (i.e. bond energy, fragment
+    /// count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
+    /// relevant manner. Each comparison can be made with or without using the bond
+    /// sensitive mode and with implicit or explicit hydrogens.</para>
+    ///
+    /// <para>If you are using <b>Isomorphism, please cite Rahman <i>et.al. 2009</i></b>
+    /// <token>cdk-cite-SMSD2009</token>. The Isomorphism algorithm is described in this paper.
+    /// </para>
+    /// </remarks>
     /// <example>
     /// <para>An example for <b>Substructure search</b>:</para>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMSD.Isomorphism_Example.cs+1"]/*' />
     /// <para>An example for <b>MCS search</b>:</para>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMSD.Isomorphism_Example.cs+2"]/*' />
-    ///  </example>
-    // @cdk.require java1.5+
+    /// </example>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
-    [Serializable]
     public sealed class Isomorphism : AbstractMCS
     {
         private List<IDictionary<int, int>> allMCS = null;

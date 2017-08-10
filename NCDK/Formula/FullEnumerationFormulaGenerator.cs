@@ -90,6 +90,7 @@ namespace NCDK.Formula
         /// currentCounts that was increased by calling increaseCounter(position)
         /// </summary>
         private readonly IIsotope[] isotopes;
+        private object sync_currentCounts = new object();
         private readonly int[] minCounts, maxCounts, currentCounts;
         private int lastIncreasedPosition = 0;
 
@@ -192,7 +193,7 @@ namespace NCDK.Formula
                     // Keep a lock on the currentCounts, because
                     // getFinishedPercentage() might be called from another
                     // thread
-                    lock (currentCounts)
+                    lock (sync_currentCounts)
                     {
                         currentCounts[lastIncreasedPosition] = maxCounts[lastIncreasedPosition];
                         IncreaseCounter(lastIncreasedPosition);
@@ -265,7 +266,7 @@ namespace NCDK.Formula
 
             // Keep a lock on the currentCounts, because
             // getFinishedPercentage() might be called from another thread
-            lock (currentCounts)
+            lock (sync_currentCounts)
             {
                 if (currentCounts[position] < maxCounts[position])
                 {
@@ -344,7 +345,7 @@ namespace NCDK.Formula
 
             // Keep a lock on currentCounts, otherwise it might change during the
             // calculation
-            lock (currentCounts)
+            lock (sync_currentCounts)
             {
                 for (int i = currentCounts.Length - 1; i >= 0; i--)
                 {

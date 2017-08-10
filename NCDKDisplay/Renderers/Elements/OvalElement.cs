@@ -43,8 +43,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Make an oval with a default radius of 10.
         /// </summary>
-        /// <param name="xCoord">the x-coordinate of the center of the oval</param>
-        /// <param name="yCoord">the y-coordinate of the center of the oval</param>
+        /// <param name="coord">the coordinate of the center of the oval</param>
         /// <param name="color">the color of the oval</param>
         public OvalElement(Point coord, Color color)
             : this(coord, 10, color)

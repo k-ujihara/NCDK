@@ -51,11 +51,9 @@ namespace NCDK.IO
         double[] acell = new double[3];
         double[][] rprim = Arrays.CreateJagged<double>(3, 3);
         string info = "";
-        string line;
         /// <summary>size is ntype. Contains the names of the atoms</summary>
         string[] anames;
-        /// <summary>size is natom. Contain the atomic number</summary>
-        int[] natom_type;
+
         /// <summary>"Direct" only so far</summary>
         string representation;
 

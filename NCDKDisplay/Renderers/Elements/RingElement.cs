@@ -14,7 +14,6 @@ namespace NCDK.Renderers.Elements
         /// Make a ring element centered on (x, y) with radius and color given.
         /// </summary>
         /// <param name="center">the coordinate of the ring center</param>
-        /// <param name="y">the y-coordinate of the ring center</param>
         /// <param name="radius">the radius of the circle</param>
         /// <param name="color">the color of the circle</param>
         public RingElement(Point center, double radius, Color color)

@@ -47,6 +47,7 @@ namespace NCDK
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
+    [System.Serializable]
     public partial struct BondOrder : System.IComparable<BondOrder>, System.IComparable
     {
 		/// <summary>

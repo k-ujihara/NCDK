@@ -41,8 +41,7 @@ namespace NCDK.Renderers.Elements
         /// Constructs a new TextElement with the content <paramref name="text"/> to be
         /// drawn at position (x,y) in the color <paramref name="color"/>.
         /// </summary>
-        /// <param name="xCoord">x coordinate where the text should be displayed</param>
-        /// <param name="yCoord">y coordinate where the text should be displayed</param>
+        /// <param name="coord">coordinate where the text should be displayed</param>
         /// <param name="text">the text to be drawn</param>
         /// <param name="color">the color of the text</param>
         public TextElement(Point coord, string text, Color color)

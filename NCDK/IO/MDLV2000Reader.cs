@@ -199,9 +199,9 @@ namespace NCDK.IO
                     sequence.Add(NewModel(m));
                 }
             }
-            catch (CDKException e)
+            catch (CDKException)
             {
-                throw e;
+                throw;
             }
             catch (ArgumentException exception)
             {
@@ -505,7 +505,7 @@ namespace NCDK.IO
             {
                 string error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.Message;
                 Trace.TraceError(error);
-                throw exception;
+                throw;
             }
             catch (IOException exception)
             {

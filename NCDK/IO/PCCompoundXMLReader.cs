@@ -97,9 +97,9 @@ namespace NCDK.IO
                 {
                     throw new CDKException("An IO Exception occurred while reading the file.", e);
                 }
-                catch (CDKException e)
+                catch (CDKException)
                 {
-                    throw e;
+                    throw;
                 }
                 catch (Exception e)
                 {

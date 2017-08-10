@@ -47,6 +47,7 @@ namespace NCDK
     /// <summary>
     /// Hybridization states.
     /// </summary>
+    [System.Serializable]
     public partial struct Hybridization : System.IComparable<Hybridization>, System.IComparable
     {
 		/// <summary>

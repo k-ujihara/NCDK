@@ -190,9 +190,9 @@ namespace NCDK.IO
                     writer.Write(buf, 0, buf.Length);
                     writer.WriteLine();
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
-                    throw e;
+                    throw;
                 }
             }
         }

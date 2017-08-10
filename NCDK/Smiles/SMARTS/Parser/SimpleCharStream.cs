@@ -139,8 +139,9 @@ namespace NCDK.Smiles.SMARTS.Parser
                     maxNextCharInd += i;
                 return;
             }
-            catch (System.Exception e)
+            catch (System.Exception ee)
             {
+                var e = ee;
                 if (e is System.ObjectDisposedException)
                     e = new System.IO.IOException(e.Message);
                 if (e is System.IO.IOException)

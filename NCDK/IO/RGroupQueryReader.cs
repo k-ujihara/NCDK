@@ -424,7 +424,7 @@ namespace NCDK.IO
                 string error = $"CDK Error while parsing line {lineCount}: {line} -> {exception.Message}";
                 Trace.TraceError(error);
                 Debug.WriteLine(exception);
-                throw exception;
+                throw;
             }
             catch (Exception exception)
             {

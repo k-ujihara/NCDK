@@ -165,9 +165,9 @@ namespace NCDK.Smiles
             {
                 ringSet = RemoveExtraRings(mNew);
             }
-            catch (CDKException x)
+            catch (CDKException)
             {
-                throw x;
+                throw;
             }
             catch (Exception x)
             {

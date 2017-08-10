@@ -85,7 +85,7 @@ namespace NCDK.Renderers.Elements
 
         /// <summary>
         /// Outline the general path with the specified stroke size.
-        ///
+        /// </summary>
         /// <param name="newStroke">new stroke size</param>
         /// <returns>the outlined path</returns>
         public GeneralPath Outline(double newStroke)

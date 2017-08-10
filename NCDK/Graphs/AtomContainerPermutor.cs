@@ -98,13 +98,27 @@ namespace NCDK.Graphs
             }
         }
 
-        public void Dispose()
-        {
-        }
-
         public void Reset()
         {
             throw new NotSupportedException();
         }
+
+        #region IDisposable Support
+        protected virtual void Dispose(bool disposing)
+        {
+        }
+
+         ~AtomContainerPermutor()
+        {
+            Dispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

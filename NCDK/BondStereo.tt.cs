@@ -51,6 +51,7 @@ namespace NCDK
     /// The first atom in the IBond (index = 0) is the <i>start</i> atom, while
     /// the second atom (index = 1) is the <i>end</i> atom.
     /// </summary>
+    [System.Serializable]
     public partial struct BondStereo : System.IComparable<BondStereo>, System.IComparable
     {
 		/// <summary>

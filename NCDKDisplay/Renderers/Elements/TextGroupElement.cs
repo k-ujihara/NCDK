@@ -86,8 +86,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Make a text group at (x, y) with the text and color given.
         /// </summary>
-        /// <param name="x">the x-coordinate of the center of the text</param>
-        /// <param name="y">the y-coordinate of the center of the text</param>
+        /// <param name="coord">the coordinate of the center of the text</param>
         /// <param name="text">the text to render</param>
         /// <param name="color">the color of the text</param>
         public TextGroupElement(Point coord, string text, Color color)

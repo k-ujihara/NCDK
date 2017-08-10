@@ -1,0 +1,96 @@
+﻿<#
+// Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+// This file is under LGPL-2.1 
+#>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".xml" #>
+<#
+        {
+            var source = new FileInfo(this.Host.TemplateFile).Directory.Parent;
+            source = new DirectoryInfo(Path.Combine(source.FullName, "ExampleCodes"));
+
+            var doc = new XDocument();
+            var root = new XElement("Comments");
+            doc.Add(root);
+            AddElements(root, "NCDK", source);
+            var stringWriter = new StringWriter();
+
+            doc.Save(stringWriter);
+
+            var str = stringWriter.ToString();
+            str = doc.ToString();
+#>
+<?xml version="1.0" encoding="utf-8" ?>
+<#= str #>
+<#            
+        }
+#>
+
+<#+
+        static HashSet<string> excludeDirs = new HashSet<string>()
+        {
+            "bin", "obj",
+        };
+
+        static HashSet<string> excludeFileNames = new HashSet<string>()
+        {
+            "AssemblyInfo", "Program",
+        };
+
+        static Regex a = new Regex(@"^\s*#region([ ]+(?<name>[0-9A-Za-z_\-]+))?\s*\n(?<content>.+?)^\s*#endregion\s*$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline | RegexOptions.Multiline);
+
+        static void AddElements(XElement parent, string parentId, DirectoryInfo dir)
+        {
+            foreach (var cd in dir.GetDirectories().Where(n => !excludeDirs.Contains(n.Name)))
+            {
+                AddElements(parent, parentId + "." + cd.Name, cd);
+            }
+            foreach (var cs in dir.GetFiles()
+                .Where(fn => fn.Extension == ".cs")
+                .Where(fn => !excludeFileNames.Contains(Path.GetFileNameWithoutExtension(fn.Name))))
+            {
+                string allContent;
+                using (var r = new StreamReader(cs.FullName))
+                {
+                    allContent = r.ReadToEnd();
+                }
+                var ms = a.Matches(allContent);
+                if (ms.Count == 0)
+                {
+                    var aCode = new XElement("Codes");
+                    aCode.SetAttributeValue("id", parentId + "." + cs.Name);
+                    var code = new XElement("code");
+                    code.Add(new XText(allContent));
+                    aCode.Add(code);
+                    parent.Add(aCode);
+                }
+                else
+                {
+                    foreach (var m in ms.Cast<Match>())
+                    {
+                        var name = m.Groups["name"].Value;
+                        var content = m.Groups["content"].Value;
+                        string id = parentId + "." + cs.Name;
+                        if (!string.IsNullOrEmpty(name))
+                            id = id + "+" + name;
+                        var aCode = new XElement("Codes");
+                        aCode.SetAttributeValue("id", id);
+                        var code = new XElement("code");
+                        code.Add(new XText(content));
+                        aCode.Add(code);
+                        parent.Add(aCode);
+                    }
+                }
+            }
+        }
+#>

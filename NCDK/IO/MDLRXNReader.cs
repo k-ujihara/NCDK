@@ -247,9 +247,9 @@ namespace NCDK.IO
                     }
                 }
             }
-            catch (CDKException cdkexc)
+            catch (CDKException)
             {
-                throw cdkexc;
+                throw;
             }
             catch (IOException exception)
             {
@@ -343,10 +343,10 @@ namespace NCDK.IO
                     reaction.Reactants.Add(reactant);
                 }
             }
-            catch (CDKException exception)
+            catch (CDKException)
             {
                 // rethrow exception from MDLReader
-                throw exception;
+                throw;
             }
             catch (Exception exception)
             {
@@ -382,10 +382,10 @@ namespace NCDK.IO
                     reaction.Products.Add(product);
                 }
             }
-            catch (CDKException exception)
+            catch (CDKException)
             {
                 // rethrow exception from MDLReader
-                throw exception;
+                throw;
             }
             catch (Exception exception)
             {

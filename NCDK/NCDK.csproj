@@ -39,6 +39,17 @@
     <DocumentationFile>bin\Release\NCDK.xml</DocumentationFile>
     <NoWarn>0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Analysis|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Analysis\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
       <HintPath>..\packages\dotNetRDF.1.0.12\lib\net40\dotNetRDF.dll</HintPath>
@@ -296,10 +307,9 @@
       <LastGenOutput>IncludeExamples.xml</LastGenOutput>
     </Content>
     <Content Include="IncludeExamples.xml">
-      <DependentUpon>IncludeExamples.tt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
     </Content>
     <Content Include="LibIO\CML\CMLElementDefines.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

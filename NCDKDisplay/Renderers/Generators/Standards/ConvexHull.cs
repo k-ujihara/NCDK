@@ -216,7 +216,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// Determine the minimum intersection of a line and the outline of a shape (specified as a list of points).
         /// </summary>
         /// <param name="outline">the outline of a shape</param>
-        /// <param name="line">the line</param>
+        /// <param name="point1">start of the line</param>
+        /// <param name="point2">end of the line</param>
         /// <returns>the intersection</returns>
         private Point Intersect(IList<Point> outline, Point point1, Point point2)
         {
@@ -254,8 +255,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Calculate the intersection of two lines.
         /// </summary>
-        /// <param name="lineA">a line</param>
-        /// <param name="lineB">another line</param>
+        /// <param name="lineA1">start of the line</param>
+        /// <param name="lineA2">end of the line</param>
+        /// <param name="lineB1">start of another line</param>
+        /// <param name="lineB2">end of another line</param>
         /// <returns>the point where the two lines intersect (or null)</returns>
         public static Point LineLineIntersect(Point lineA1, Point lineA2, Point lineB1, Point lineB2)
         {

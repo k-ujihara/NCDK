@@ -73,8 +73,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public class DefaultBondColor : AbstractGeneratorParameter<Color?>
         {
-            /// <summary> Returns the default value.
-            /// <returns><see cref="Color.Black"/></returns>
+            /// <summary> Returns the default value <see cref="WPF.Media.Colors.Black"/>.</summary>
             public override Color? Default => WPF.Media.Colors.Black;
         }
 

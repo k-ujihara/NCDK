@@ -255,9 +255,9 @@ namespace NCDK.IO
                     }
                 }
             }
-            catch (CDKException cdkexc)
+            catch (CDKException)
             {
-                throw cdkexc;
+                throw;
             }
             catch (Exception exception)
             {

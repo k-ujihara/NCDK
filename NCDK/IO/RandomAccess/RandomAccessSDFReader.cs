@@ -59,13 +59,7 @@ namespace NCDK.IO.RandomAccess
         /// <seealso cref="IChemObjectIO.Format"/>
         public IResourceFormat Format => MDLFormat.Instance;
 
-        public override bool IsReadOnly
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public override bool IsReadOnly => true;
 
         public override IChemObject this[int index]
         {
