@@ -503,8 +503,6 @@ namespace NCDK.Layout
                         bw.Write('\n');
                     }
                 }
-
-                bw.Close();
             }
         }
     }
