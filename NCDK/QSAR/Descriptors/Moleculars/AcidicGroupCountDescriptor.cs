@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     throw new CDKException("The parameter must be of type bool");
                 }
 
-                // ok, all should be fine
+                // OK, all should be fine
                 this.checkAromaticity = (bool)value[0];
             }
             get
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             if (!tools.Any())
             {
-                throw new InvalidOperationException("descriptor is not initalised, invoke 'initalise' first");
+                throw new InvalidOperationException("descriptor is not initialised, invoke 'initialise' first");
             }
 
             // do aromaticity detection

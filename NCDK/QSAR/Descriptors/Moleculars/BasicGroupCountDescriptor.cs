@@ -91,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             if (!tools.Any())
             {
-                throw new InvalidOperationException("descriptor is not initalised, invoke 'initalise' first");
+                throw new InvalidOperationException("descriptor is not initialised, invoke 'initialise' first");
             }
 
             try

@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// This method calculates the valence of an atom.
         /// </summary>
-        /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The valence of an atom</returns>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)

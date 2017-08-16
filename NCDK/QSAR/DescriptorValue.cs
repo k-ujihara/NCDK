@@ -38,8 +38,9 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
-        ///
+        /// <para>
         /// This constructor should be used when there has been no error during the descriptor calculation
+        /// </para>
         /// </summary>
         /// <param name="specification">The specification</param>
         /// <param name="parameterNames">The parameter names for the descriptors</param>
@@ -53,8 +54,9 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
-        ///
+        /// <para>
         /// This constructor should be used when there has been an error during the descriptor calculation
+        /// </para>
         /// </summary>
         /// <param name="specification">The specification</param>
         /// <param name="parameterNames">The parameter names for the descriptors</param>
@@ -81,24 +83,30 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// An array of names for each descriptor value calculated.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
+        /// <para>
         /// Many descriptors return multiple values. In general it is useful for the
         /// descriptor to indicate the names for each value. When a descriptor creates
         /// a <see cref="DescriptorValue"/> object, it should supply an array of names equal
         /// in length to the number of descriptor calculated.
-        /// <p/>
+        /// </para>
+        /// <para>
         /// In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
         /// and 1, 2, ..., N are the indices. On the other hand it is also possible to return
         /// other arbitrary names, which should be documented in the JavaDocs for the descriptor
         /// (e.g., the CPSA descriptor).
-        /// <p/>
+        /// </para>
+        /// <para>
         /// Note that by default if a descriptor returns a single value (such as <see cref="NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor"/>
         /// the return array will have a single element
-        /// <p/>
+        /// </para>
+        /// <para>
         /// In case a descriptor creates a <see cref="DescriptorValue"/> object with no names, this
         /// method will generate a set of names based on the <see cref="DescriptorSpecification"/> object
         /// supplied at instantiation.
-        /// </summary>
+        /// </para>
+        /// </remarks>
         public string[] Names
         {
             get

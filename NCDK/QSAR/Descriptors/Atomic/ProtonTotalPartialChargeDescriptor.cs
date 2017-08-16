@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  The method returns partial charges assigned to an heavy atom and its protons through Gasteiger Marsili
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>an array of doubles with partial charges of [heavy, proton_1 ... proton_n]</returns>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)

@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  The method calculates the pi electronegativity of a given atom
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>return the pi electronegativity</returns>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer)

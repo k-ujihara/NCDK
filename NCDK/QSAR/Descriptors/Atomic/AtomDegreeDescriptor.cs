@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// This method calculates the number of not-H substituents of an atom.
         /// </summary>
-        /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated for</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)

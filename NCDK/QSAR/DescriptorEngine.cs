@@ -281,7 +281,7 @@ namespace NCDK.QSAR
         }
 
         /// <summary>
-        /// Returns the class(es) of the decsriptor as defined in the descriptor dictionary.
+        /// Returns the class(es) of the descriptor as defined in the descriptor dictionary.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -369,7 +369,7 @@ namespace NCDK.QSAR
         /// Gets the definition of the descriptor.
         /// </summary>
         /// <remarks>
-        /// All descriptors in the descriptor dictioanry will have a definition element. This function
+        /// All descriptors in the descriptor dictionary will have a definition element. This function
         /// returns the value of that element. Many descriptors also have a description element which is
         /// more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
         /// and I'm not sure what I should return it as
@@ -405,7 +405,7 @@ namespace NCDK.QSAR
         /// Gets the definition of the descriptor.
         /// </summary>
         /// <remarks>
-        /// All descriptors in the descriptor dictioanry will have a definition element. This function
+        /// All descriptors in the descriptor dictionary will have a definition element. This function
         /// returns the value of that element. Many descriptors also have a description element which is
         /// more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
         /// and I'm not sure what I should return it as
@@ -535,7 +535,7 @@ namespace NCDK.QSAR
         /// </summary>
         /// <remarks>
         /// The interface name specified can be null or an empty string. In this case the interface name
-        /// is automatcally set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
+        /// is automatically set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
         /// return all available descriptor classes. Valid interface names are
         /// <list type="bullet">
         /// <item>IMolecularDescriptor</item>
@@ -585,7 +585,7 @@ namespace NCDK.QSAR
         /// Returns a list containing the classes found in the specified descriptor package.
         /// <para>
         /// The package name specified can be null or an empty string. In this case the package name
-        /// is automatcally set to "NCDK.QSAR.Descriptors" and as a result will return
+        /// is automatically set to "NCDK.QSAR.Descriptors" and as a result will return
         /// classes corresponding to both atomic and molecular descriptors.
         /// </para>
         /// </summary>

@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         ///  For this method will be only possible if the heavy atom has single bond.
         /// </summary>
-        /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>Value of the alpha partial charge</returns>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
