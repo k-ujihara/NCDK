@@ -62,13 +62,13 @@ namespace NCDK.RingSearches
             if (!ringSet.Any()) return ringSets;
             var ring = ringSet.First();
             if (ring == null) return ringSets;
-            IRingSet rs = ring.Builder.CreateRingSet();
+            IRingSet rs = ring.Builder.NewRingSet();
             foreach (var r in ringSet)
                 rs.Add(r);
             do
             {
                 ring = rs[0];
-                var newRs = ring.Builder.CreateRingSet();
+                var newRs = ring.Builder.NewRingSet();
                 newRs.Add(ring);
                 ringSets.Add(WalkRingSystem(rs, ring, newRs));
             } while (rs.Count > 0);
@@ -85,7 +85,7 @@ namespace NCDK.RingSearches
         {
             IRing ring = (IRing)ringSet[0];
             if (ring == null) return null;
-            IAtomContainer ac = ring.Builder.CreateAtomContainer();
+            IAtomContainer ac = ring.Builder.NewAtomContainer();
             for (int i = 0; i < ringSet.Count; i++)
             {
                 ring = (IRing)ringSet[i];

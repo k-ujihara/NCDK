@@ -33,7 +33,7 @@ namespace NCDK
         public virtual void TestGetReactionSchemeCount()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
             Assert.AreEqual(1, scheme.Schemes.Count);
         }
 
@@ -41,8 +41,8 @@ namespace NCDK
         public override void TestGetReactionCount()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReaction());
-            scheme.Add(scheme.Builder.CreateReaction());
+            scheme.Add(scheme.Builder.NewReaction());
+            scheme.Add(scheme.Builder.NewReaction());
             Assert.AreEqual(2, scheme.Count);
         }
 
@@ -50,9 +50,9 @@ namespace NCDK
         public virtual void TestReactionSchemes()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
 
             Assert.AreEqual(3, scheme.Schemes.Count);
             int count = 0;
@@ -68,9 +68,9 @@ namespace NCDK
         public override void TestReactions()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReaction());
-            scheme.Add(scheme.Builder.CreateReaction());
-            scheme.Add(scheme.Builder.CreateReaction());
+            scheme.Add(scheme.Builder.NewReaction());
+            scheme.Add(scheme.Builder.NewReaction());
+            scheme.Add(scheme.Builder.NewReaction());
 
             Assert.AreEqual(3, scheme.Count);
             int count = 0;
@@ -85,11 +85,11 @@ namespace NCDK
         public virtual void TestAdd_IReactionScheme()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
 
-            IReactionScheme tested = scheme.Builder.CreateReactionScheme();
+            IReactionScheme tested = scheme.Builder.NewReactionScheme();
             Assert.AreEqual(0, tested.Schemes.Count);
             tested.Add(scheme);
             Assert.AreEqual(1, tested.Schemes.Count);
@@ -99,11 +99,11 @@ namespace NCDK
         public virtual void TestAdd_IReaction()
         {
             IReactionScheme scheme = (IReactionScheme)NewChemObject();
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
-            scheme.Add(scheme.Builder.CreateReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
+            scheme.Add(scheme.Builder.NewReactionScheme());
 
-            IReactionScheme tested = scheme.Builder.CreateReactionScheme();
+            IReactionScheme tested = scheme.Builder.NewReactionScheme();
             Assert.AreEqual(0, tested.Schemes.Count);
             tested.Add(scheme);
             Assert.AreEqual(1, tested.Schemes.Count);

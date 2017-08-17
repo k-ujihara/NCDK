@@ -757,7 +757,7 @@ namespace NCDK.Graphs
             // note currently no way to say the size of the RingSet
             // even through we know it
             IChemObjectBuilder builder = container.Builder;
-            IRingSet rings = builder.CreateRingSet();
+            IRingSet rings = builder.NewRingSet();
 
             foreach (var cycle in cycles)
             {
@@ -788,9 +788,9 @@ namespace NCDK.Graphs
             }
 
             IChemObjectBuilder builder = container.Builder;
-            IAtomContainer ring = builder.CreateAtomContainer(atoms, bonds);
+            IAtomContainer ring = builder.NewAtomContainer(atoms, bonds);
 
-            return builder.CreateRing(ring);
+            return builder.NewRing(ring);
         }
 
         /// <summary>

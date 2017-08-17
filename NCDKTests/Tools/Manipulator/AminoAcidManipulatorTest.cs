@@ -34,7 +34,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveAcidicOxygen_IAminoAcid()
         {
-            IAminoAcid glycine = builder.CreateAminoAcid();
+            IAminoAcid glycine = builder.NewAminoAcid();
             glycine.Add(new SmilesParser(builder).ParseSmiles("C(C(=O)O)N"));
             Assert.AreEqual(5, glycine.Atoms.Count);
             glycine.AddCTerminus(glycine.Atoms[1]);
@@ -47,7 +47,7 @@ namespace NCDK.Tools.Manipulator
         public void TestAddAcidicOxygen_IAminoAcid()
         {
             // FIXME: I think this is the proper test, but it currently fails
-            IAminoAcid glycine = builder.CreateAminoAcid();
+            IAminoAcid glycine = builder.NewAminoAcid();
             glycine.Add(new SmilesParser(builder).ParseSmiles("C(C=O)N"));
             Assert.AreEqual(4, glycine.Atoms.Count);
             glycine.AddCTerminus(glycine.Atoms[1]);

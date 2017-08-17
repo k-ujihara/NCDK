@@ -228,7 +228,7 @@ namespace NCDK.RingSearches
             mock_cyclicSearch.Setup(n => n.Isolated()).Returns(new int[][] { new[] { 0, 1, 2 } });
             mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[0][]);
             mock_container.Setup(n => n.Atoms.Count).Returns(3);
-            mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
+            mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
 
@@ -242,7 +242,7 @@ namespace NCDK.RingSearches
             mock_container.Verify(n => n.Atoms[2], Times.Once());
 
             // builder was invoked
-            mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Once());
+            mock_builder.Verify(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Once());
         }
 
         [TestMethod()]
@@ -259,7 +259,7 @@ namespace NCDK.RingSearches
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
-            mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
+            mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
 
             ringSearch.IsolatedRingFragments();
 
@@ -271,7 +271,7 @@ namespace NCDK.RingSearches
             mock_container.Verify(n => n.Atoms[2], Times.Once());
 
             // builder was invoked
-            mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
+            mock_builder.Verify(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
         }
 
         [TestMethod()]
@@ -286,7 +286,7 @@ namespace NCDK.RingSearches
 
             mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[][] { new[] { 0, 1 }, new[] { 2 } });
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
-            mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
+            mock_builder.Setup(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
 
@@ -300,7 +300,7 @@ namespace NCDK.RingSearches
             mock_container.Verify(n => n.Atoms[2], Times.Once());
 
             // builder was invoked
-            mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
+            mock_builder.Verify(n => n.NewAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
         }
 
         [TestMethod()]
@@ -331,62 +331,62 @@ namespace NCDK.RingSearches
         {
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IAtom a8 = builder.CreateAtom("C");
+            IAtom a8 = builder.NewAtom("C");
             a8.FormalCharge = 0;
             mol.Atoms.Add(a8);
-            IAtom a9 = builder.CreateAtom("C");
+            IAtom a9 = builder.NewAtom("C");
             a9.FormalCharge = 0;
             mol.Atoms.Add(a9);
-            IAtom a10 = builder.CreateAtom("C");
+            IAtom a10 = builder.NewAtom("C");
             a10.FormalCharge = 0;
             mol.Atoms.Add(a10);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b4 = builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
+            IBond b5 = builder.NewBond(a4, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b6 = builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = builder.CreateBond(a3, a6, BondOrder.Single);
+            IBond b7 = builder.NewBond(a3, a6, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = builder.CreateBond(a6, a7, BondOrder.Single);
+            IBond b8 = builder.NewBond(a6, a7, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = builder.CreateBond(a7, a8, BondOrder.Single);
+            IBond b9 = builder.NewBond(a7, a8, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
+            IBond b10 = builder.NewBond(a6, a8, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = builder.CreateBond(a6, a9, BondOrder.Single);
+            IBond b11 = builder.NewBond(a6, a9, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
+            IBond b12 = builder.NewBond(a9, a10, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = builder.CreateBond(a6, a10, BondOrder.Single);
+            IBond b13 = builder.NewBond(a6, a10, BondOrder.Single);
             mol.Bonds.Add(b13);
             return mol;
         }
@@ -399,69 +399,69 @@ namespace NCDK.RingSearches
         {
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IAtom a8 = builder.CreateAtom("C");
+            IAtom a8 = builder.NewAtom("C");
             a8.FormalCharge = 0;
             mol.Atoms.Add(a8);
-            IAtom a9 = builder.CreateAtom("C");
+            IAtom a9 = builder.NewAtom("C");
             a9.FormalCharge = 0;
             mol.Atoms.Add(a9);
-            IAtom a10 = builder.CreateAtom("C");
+            IAtom a10 = builder.NewAtom("C");
             a10.FormalCharge = 0;
             mol.Atoms.Add(a10);
-            IAtom a11 = builder.CreateAtom("C");
+            IAtom a11 = builder.NewAtom("C");
             a11.FormalCharge = 0;
             mol.Atoms.Add(a11);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b4 = builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
+            IBond b5 = builder.NewBond(a4, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b6 = builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = builder.CreateBond(a6, a7, BondOrder.Single);
+            IBond b7 = builder.NewBond(a6, a7, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = builder.CreateBond(a7, a8, BondOrder.Single);
+            IBond b8 = builder.NewBond(a7, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = builder.CreateBond(a3, a8, BondOrder.Single);
+            IBond b9 = builder.NewBond(a3, a8, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
+            IBond b10 = builder.NewBond(a6, a8, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = builder.CreateBond(a8, a9, BondOrder.Single);
+            IBond b11 = builder.NewBond(a8, a9, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
+            IBond b12 = builder.NewBond(a9, a10, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = builder.CreateBond(a8, a10, BondOrder.Single);
+            IBond b13 = builder.NewBond(a8, a10, BondOrder.Single);
             mol.Bonds.Add(b13);
-            IBond b14 = builder.CreateBond(a8, a11, BondOrder.Single);
+            IBond b14 = builder.NewBond(a8, a11, BondOrder.Single);
             mol.Bonds.Add(b14);
-            IBond b15 = builder.CreateBond(a3, a11, BondOrder.Single);
+            IBond b15 = builder.NewBond(a3, a11, BondOrder.Single);
             mol.Bonds.Add(b15);
             return mol;
         }

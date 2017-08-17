@@ -205,18 +205,18 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateHexane()
         {
-            IAtomContainer result = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer result = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c4 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c5 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c6 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);
@@ -245,19 +245,19 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         public static IAtomContainer CreateBenzene()
         {
-            IAtomContainer result = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer result = Default.ChemObjectBuilder.Instance.NewAtomContainer();
 
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c1.Id = "1";
-            IAtom c2 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c2.Id = "2";
-            IAtom c3 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c3.Id = "3";
-            IAtom c4 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c4 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c4.Id = "4";
-            IAtom c5 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c5 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c5.Id = "5";
-            IAtom c6 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtom c6 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             c6.Id = "6";
 
             result.Atoms.Add(c1);

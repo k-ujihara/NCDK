@@ -102,7 +102,7 @@ namespace NCDK.IO
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             string input = "C\nn1cccc1\nc1ccccc1\n";
             DefaultChemObjectReader cor = new SMILESReader(new StringReader(input));
-            IAtomContainerSet<IAtomContainer> mols = cor.Read(bldr.CreateAtomContainerSet());
+            IAtomContainerSet<IAtomContainer> mols = cor.Read(bldr.NewAtomContainerSet());
             Assert.AreEqual(3, mols.Count);
             Assert.AreEqual(1, mols[0].Atoms.Count);
             Assert.IsNull(mols[0].GetProperty<string>(IteratingSMILESReader.BadSmilesInput));

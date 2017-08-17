@@ -66,7 +66,7 @@ namespace NCDK.Default
         /// <returns>All the rings that share one or more atoms with a given ring.</returns>
         public IEnumerable<IRing> GetConnectedRings(IRing ring)
         {
-            IRingSet connectedRings = ring.Builder.CreateRingSet();
+            IRingSet connectedRings = ring.Builder.NewRingSet();
             foreach (var atom in ring.Atoms)
                 foreach (var tempRing in this)
                     if (tempRing != ring
@@ -158,7 +158,7 @@ namespace NCDK.Silent
         /// <returns>All the rings that share one or more atoms with a given ring.</returns>
         public IEnumerable<IRing> GetConnectedRings(IRing ring)
         {
-            IRingSet connectedRings = ring.Builder.CreateRingSet();
+            IRingSet connectedRings = ring.Builder.NewRingSet();
             foreach (var atom in ring.Atoms)
                 foreach (var tempRing in this)
                     if (tempRing != ring

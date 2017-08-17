@@ -34,7 +34,7 @@ namespace NCDK
         public virtual void TestGetBondOrderSum()
         {
             IChemObject obj = NewChemObject();
-            IRing r = obj.Builder.CreateRing(5, "C");
+            IRing r = obj.Builder.NewRing(5, "C");
             Assert.AreEqual(5, r.BondOrderSum);
 
             BondManipulator.IncreaseBondOrder(r.Bonds[0]);
@@ -51,7 +51,7 @@ namespace NCDK
         public virtual void TestGetRingSize()
         {
             IChemObject obj = NewChemObject();
-            IRing r = obj.Builder.CreateRing(5, "C");
+            IRing r = obj.Builder.NewRing(5, "C");
             Assert.AreEqual(5, r.RingSize);
         }
 
@@ -59,12 +59,12 @@ namespace NCDK
         public virtual void TestGetNextBond_IBond_IAtom()
         {
             IRing ring = (IRing)NewChemObject();
-            IAtom c1 = ring.Builder.CreateAtom("C");
-            IAtom c2 = ring.Builder.CreateAtom("C");
-            IAtom c3 = ring.Builder.CreateAtom("C");
-            IBond b1 = ring.Builder.CreateBond(c1, c2, BondOrder.Single);
-            IBond b2 = ring.Builder.CreateBond(c3, c2, BondOrder.Single);
-            IBond b3 = ring.Builder.CreateBond(c1, c3, BondOrder.Single);
+            IAtom c1 = ring.Builder.NewAtom("C");
+            IAtom c2 = ring.Builder.NewAtom("C");
+            IAtom c3 = ring.Builder.NewAtom("C");
+            IBond b1 = ring.Builder.NewBond(c1, c2, BondOrder.Single);
+            IBond b2 = ring.Builder.NewBond(c3, c2, BondOrder.Single);
+            IBond b3 = ring.Builder.NewBond(c1, c3, BondOrder.Single);
             ring.Atoms.Add(c1);
             ring.Atoms.Add(c2);
             ring.Atoms.Add(c3);
@@ -85,7 +85,7 @@ namespace NCDK
         public override void TestToString()
         {
             IChemObject obj = NewChemObject();
-            IRing r = obj.Builder.CreateRing(5, "C");
+            IRing r = obj.Builder.NewRing(5, "C");
             string description = r.ToString();
             for (int i = 0; i < description.Length; i++)
             {

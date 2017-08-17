@@ -188,13 +188,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestCompareIonized()
         {
-            IAtomContainer molA = builder.CreateAtomContainer();
-            molA.Atoms.Add(builder.CreateAtom("C"));
-            molA.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molA = builder.NewAtomContainer();
+            molA.Atoms.Add(builder.NewAtom("C"));
+            molA.Atoms.Add(builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[0], molA.Atoms[1], BondOrder.Single);
-            molA.Atoms.Add(builder.CreateAtom("C"));
+            molA.Atoms.Add(builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[1], molA.Atoms[2], BondOrder.Single);
-            molA.Atoms.Add(builder.CreateAtom("Cl"));
+            molA.Atoms.Add(builder.NewAtom("Cl"));
             molA.AddBond(molA.Atoms[2], molA.Atoms[3], BondOrder.Single);
 
             AddExplicitHydrogens(molA);
@@ -203,13 +203,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).GetValue()).Value;
 
-            IAtomContainer molB = builder.CreateAtomContainer();
-            molB.Atoms.Add(builder.CreateAtom("C"));
-            molB.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molB = builder.NewAtomContainer();
+            molB.Atoms.Add(builder.NewAtom("C"));
+            molB.Atoms.Add(builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[0], molB.Atoms[1], BondOrder.Single);
-            molB.Atoms.Add(builder.CreateAtom("C"));
+            molB.Atoms.Add(builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[1], molB.Atoms[2], BondOrder.Single);
-            molB.Atoms.Add(builder.CreateAtom("Cl"));
+            molB.Atoms.Add(builder.NewAtom("Cl"));
             molB.Atoms[3].FormalCharge = 1;
             molB.AddSingleElectronTo(molB.Atoms[3]);
             molB.AddLonePairTo(molB.Atoms[3]);

@@ -97,14 +97,14 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            ICrystal crystal = chemObject.Builder.CreateCrystal();
+            ICrystal crystal = chemObject.Builder.NewCrystal();
             chemObject.Crystal = crystal;
             Assert.IsFalse(listener.Changed);
             // reset the listener
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set should trigger a change event in the IChemModel
-            crystal.Add(chemObject.Builder.CreateAtomContainer());
+            crystal.Add(chemObject.Builder.NewAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -115,14 +115,14 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            var molSet = chemObject.Builder.CreateAtomContainerSet();
+            var molSet = chemObject.Builder.NewAtomContainerSet();
             chemObject.MoleculeSet = molSet;
             Assert.IsFalse(listener.Changed);
             // reset the listener
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set should trigger a change event in the IChemModel
-            molSet.Add(chemObject.Builder.CreateAtomContainer());
+            molSet.Add(chemObject.Builder.NewAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -133,14 +133,14 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IReactionSet reactionSet = chemObject.Builder.CreateReactionSet();
+            IReactionSet reactionSet = chemObject.Builder.NewReactionSet();
             chemObject.ReactionSet = reactionSet;
             Assert.IsFalse(listener.Changed);
             // reset the listener
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set should trigger a change event in the IChemModel
-            reactionSet.Add(chemObject.Builder.CreateReaction());
+            reactionSet.Add(chemObject.Builder.NewReaction());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -151,14 +151,14 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IRingSet ringSet = chemObject.Builder.CreateRingSet();
+            IRingSet ringSet = chemObject.Builder.NewRingSet();
             chemObject.RingSet = ringSet;
             Assert.IsFalse(listener.Changed);
             // reset the listener
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set should trigger a change event in the IChemModel
-            ringSet.Add(chemObject.Builder.CreateRing());
+            ringSet.Add(chemObject.Builder.NewRing());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -169,7 +169,7 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            ICrystal crystal = chemObject.Builder.CreateCrystal();
+            ICrystal crystal = chemObject.Builder.NewCrystal();
             chemObject.Crystal = crystal;
             Assert.IsFalse(listener.Changed);
             // remove the set from the IChemModel
@@ -178,7 +178,7 @@ namespace NCDK.Silent
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set must *not* trigger a change event in the IChemModel
-            crystal.Add(chemObject.Builder.CreateAtomContainer());
+            crystal.Add(chemObject.Builder.NewAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -189,7 +189,7 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            var molSet = chemObject.Builder.CreateAtomContainerSet();
+            var molSet = chemObject.Builder.NewAtomContainerSet();
             chemObject.MoleculeSet = molSet;
             Assert.IsFalse(listener.Changed);
             // remove the set from the IChemModel
@@ -198,7 +198,7 @@ namespace NCDK.Silent
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set must *not* trigger a change event in the IChemModel
-            molSet.Add(chemObject.Builder.CreateAtomContainer());
+            molSet.Add(chemObject.Builder.NewAtomContainer());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -209,7 +209,7 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IReactionSet reactionSet = chemObject.Builder.CreateReactionSet();
+            IReactionSet reactionSet = chemObject.Builder.NewReactionSet();
             chemObject.ReactionSet = reactionSet;
             Assert.IsFalse(listener.Changed);
             // remove the set from the IChemModel
@@ -218,7 +218,7 @@ namespace NCDK.Silent
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set must *not* trigger a change event in the IChemModel
-            reactionSet.Add(chemObject.Builder.CreateReaction());
+            reactionSet.Add(chemObject.Builder.NewReaction());
             Assert.IsFalse(listener.Changed);
         }
 
@@ -229,7 +229,7 @@ namespace NCDK.Silent
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IRingSet ringSet = chemObject.Builder.CreateRingSet();
+            IRingSet ringSet = chemObject.Builder.NewRingSet();
             chemObject.RingSet = ringSet;
             Assert.IsFalse(listener.Changed);
             // remove the set from the IChemModel
@@ -238,7 +238,7 @@ namespace NCDK.Silent
             listener.Reset();
             Assert.IsFalse(listener.Changed);
             // changing the set must *not* trigger a change event in the IChemModel
-            ringSet.Add(chemObject.Builder.CreateRing());
+            ringSet.Add(chemObject.Builder.NewRing());
             Assert.IsFalse(listener.Changed);
         }
 

@@ -39,7 +39,7 @@ namespace NCDK.StructGen.Stochastic.Operator
             using (Stream ins = ResourceLoader.GetAsStream(filename))
             using (SMILESReader reader = new SMILESReader(ins))
             {
-                som = reader.Read(Silent.ChemObjectBuilder.Instance.CreateAtomContainerSet());
+                som = reader.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainerSet());
                 Assert.AreEqual(99, som.Count, "We must have read 99 structures");
             }
 

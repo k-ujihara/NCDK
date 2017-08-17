@@ -32,15 +32,15 @@ namespace NCDK.Isomorphisms.Matchers
         public void Test12DimethylBenzene()
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -51,13 +51,13 @@ namespace NCDK.Isomorphisms.Matchers
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[7], BondOrder.Single);
 
             // 2,3-dimethyl-1,3-butadiene matches
-            IAtomContainer query1 = builder.CreateAtomContainer();
-            query1.Atoms.Add(builder.CreateAtom("C"));
-            query1.Atoms.Add(builder.CreateAtom("C"));
-            query1.Atoms.Add(builder.CreateAtom("C"));
-            query1.Atoms.Add(builder.CreateAtom("C"));
-            query1.Atoms.Add(builder.CreateAtom("C"));
-            query1.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer query1 = builder.NewAtomContainer();
+            query1.Atoms.Add(builder.NewAtom("C"));
+            query1.Atoms.Add(builder.NewAtom("C"));
+            query1.Atoms.Add(builder.NewAtom("C"));
+            query1.Atoms.Add(builder.NewAtom("C"));
+            query1.Atoms.Add(builder.NewAtom("C"));
+            query1.Atoms.Add(builder.NewAtom("C"));
             query1.AddBond(query1.Atoms[0], query1.Atoms[1], BondOrder.Single);
             query1.AddBond(query1.Atoms[1], query1.Atoms[2], BondOrder.Double);
             query1.AddBond(query1.Atoms[3], query1.Atoms[0], BondOrder.Double);
@@ -67,13 +67,13 @@ namespace NCDK.Isomorphisms.Matchers
             Assert.IsTrue(new UniversalIsomorphismTester().IsSubgraph(molecule, queryContainer1));
 
             // 2,3-dimethyl-2-butene does not match
-            IAtomContainer query2 = builder.CreateAtomContainer();
-            query2.Atoms.Add(builder.CreateAtom("C"));
-            query2.Atoms.Add(builder.CreateAtom("C"));
-            query2.Atoms.Add(builder.CreateAtom("C"));
-            query2.Atoms.Add(builder.CreateAtom("C"));
-            query2.Atoms.Add(builder.CreateAtom("C"));
-            query2.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer query2 = builder.NewAtomContainer();
+            query2.Atoms.Add(builder.NewAtom("C"));
+            query2.Atoms.Add(builder.NewAtom("C"));
+            query2.Atoms.Add(builder.NewAtom("C"));
+            query2.Atoms.Add(builder.NewAtom("C"));
+            query2.Atoms.Add(builder.NewAtom("C"));
+            query2.Atoms.Add(builder.NewAtom("C"));
             query2.AddBond(query2.Atoms[0], query2.Atoms[1], BondOrder.Double);
             query2.AddBond(query2.Atoms[1], query2.Atoms[2], BondOrder.Single);
             query2.AddBond(query2.Atoms[3], query2.Atoms[0], BondOrder.Single);

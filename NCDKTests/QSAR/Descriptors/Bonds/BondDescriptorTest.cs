@@ -129,12 +129,12 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private IAtomContainer SomeoneBringMeSomeWater()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
             c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
             h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            IAtom h2 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
             h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
             mol.Atoms.Add(c1);
             mol.Atoms.Add(h1);

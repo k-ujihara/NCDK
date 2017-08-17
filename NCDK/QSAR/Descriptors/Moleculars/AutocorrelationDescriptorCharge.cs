@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double[] charges = new double[natom];
             try
             {
-                IAtomContainer mol = container.Builder.CreateAtomContainer(((IAtomContainer)container.Clone()));
+                IAtomContainer mol = container.Builder.NewAtomContainer(((IAtomContainer)container.Clone()));
                 GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(mol, true);
                 for (int i = 0; i < natom; i++)

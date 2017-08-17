@@ -150,8 +150,8 @@ namespace NCDK.IO
                 }
                 else if (obj is IChemModel)
                 {
-                    IChemFile file = obj.Builder.CreateChemFile();
-                    IChemSequence sequence = obj.Builder.CreateChemSequence();
+                    IChemFile file = obj.Builder.NewChemFile();
+                    IChemSequence sequence = obj.Builder.NewChemSequence();
                     sequence.Add((IChemModel)obj);
                     file.Add(sequence);
                     WriteChemFile((IChemFile)file);

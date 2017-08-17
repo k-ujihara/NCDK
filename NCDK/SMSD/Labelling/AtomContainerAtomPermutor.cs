@@ -42,7 +42,7 @@ namespace NCDK.SMSD.Labelling
         private static IAtomContainer PermuteA(int[] p, IAtomContainer atomContainer)
         {
             IAtomContainer permutedContainer = null;
-            permutedContainer = atomContainer.Builder.CreateAtomContainer();
+            permutedContainer = atomContainer.Builder.NewAtomContainer();
             foreach (var pp in p)
             {
                 IAtom atom = atomContainer.Atoms[pp];

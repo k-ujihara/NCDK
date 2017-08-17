@@ -44,7 +44,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement();
+            IElement element = NewChemObject().Builder.NewElement();
             IAtom a = new Atom(element);
             Assert.IsNotNull(a);
         }

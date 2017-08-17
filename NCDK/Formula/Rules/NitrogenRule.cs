@@ -76,7 +76,7 @@ namespace NCDK.Formula.Rules
             if (mass == 0) return 0.0;
 
             int numberN = MolecularFormulaManipulator.GetElementCount(formula,
-                    formula.Builder.CreateElement("N"));
+                    formula.Builder.NewElement("N"));
             numberN += GetOthers(formula);
 
             if (formula.Charge == null || formula.Charge == 0 || !IsOdd(Math.Abs(formula.Charge.Value)))
@@ -119,7 +119,7 @@ namespace NCDK.Formula.Rules
             string[] elements = { "Co", "Hg", "Pt", "As" };
             for (int i = 0; i < elements.Length; i++)
                 number += MolecularFormulaManipulator.GetElementCount(formula,
-                        formula.Builder.CreateElement(elements[i]));
+                        formula.Builder.NewElement(elements[i]));
 
             return number;
         }

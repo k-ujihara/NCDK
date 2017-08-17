@@ -89,7 +89,7 @@ namespace NCDK.Reactions.Mechanisms
                 var selectron = reactantCloned.GetConnectedSingleElectrons(atom1C);
                 reactantCloned.SingleElectrons.Remove(selectron.Last());
 
-                reactantCloned.SingleElectrons.Add(bond2.Builder.CreateSingleElectron(atom3C));
+                reactantCloned.SingleElectrons.Add(bond2.Builder.NewSingleElectron(atom3C));
 
             }
             else if (atom1C.FormalCharge > 0)
@@ -111,7 +111,7 @@ namespace NCDK.Reactions.Mechanisms
 
                 charge = atom3C.FormalCharge.Value;
                 atom3C.FormalCharge = charge - 1;
-                reactantCloned.LonePairs.Add(bond2.Builder.CreateLonePair(atom3C));
+                reactantCloned.LonePairs.Add(bond2.Builder.NewLonePair(atom3C));
                 atom3C.IsAromatic = false;
             }
             else
@@ -127,13 +127,13 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = bond2.Builder.CreateReaction();
+            IReaction reaction = bond2.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = bond2.Builder.CreateMapping(atom,
+                IMapping mapping = bond2.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

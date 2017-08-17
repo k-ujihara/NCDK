@@ -60,8 +60,8 @@ namespace NCDK.Formula
         public void TestAddIsotope_IIsotope_int_int()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
-            mfRange.AddIsotope(builder.CreateIsotope("H"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("H"), 0, 10);
 
             Assert.AreEqual(2, mfRange.Count);
         }
@@ -70,10 +70,10 @@ namespace NCDK.Formula
         public void TestAddIsotope2()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
-            mfRange.AddIsotope(builder.CreateIsotope("H"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("H"), 0, 10);
 
-            IIsotope hy = builder.CreateIsotope("C");
+            IIsotope hy = builder.NewIsotope("C");
             hy.NaturalAbundance = 2.00342342;
             mfRange.AddIsotope(hy, 0, 10);
 
@@ -85,8 +85,8 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope h1 = builder.NewIsotope("H");
             mfRange.AddIsotope(carb, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
 
@@ -100,9 +100,9 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope h1 = builder.CreateIsotope("H");
-            IIsotope flu = builder.CreateIsotope("F");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope h1 = builder.NewIsotope("H");
+            IIsotope flu = builder.NewIsotope("F");
             mfRange.AddIsotope(carb, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
 
@@ -117,8 +117,8 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope h1 = builder.NewIsotope("H");
             mfRange.AddIsotope(carb, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
 
@@ -135,11 +135,11 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb1 = builder.CreateIsotope("C");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb1 = builder.NewIsotope("C");
+            IIsotope h1 = builder.NewIsotope("H");
 
-            IIsotope carb2 = builder.CreateIsotope("C");
-            IIsotope h2 = builder.CreateIsotope("H");
+            IIsotope carb2 = builder.NewIsotope("C");
+            IIsotope h2 = builder.NewIsotope("H");
 
             mfRange.AddIsotope(carb1, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
@@ -160,12 +160,12 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb1 = builder.CreateIsotope("C");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb1 = builder.NewIsotope("C");
+            IIsotope h1 = builder.NewIsotope("H");
 
-            IIsotope carb2 = builder.CreateIsotope("C");
+            IIsotope carb2 = builder.NewIsotope("C");
             carb2.NaturalAbundance = 13.0876689;
-            IIsotope h2 = builder.CreateIsotope("H");
+            IIsotope h2 = builder.NewIsotope("H");
             h2.NaturalAbundance = 2.0968768;
 
             mfRange.AddIsotope(carb1, 0, 10);
@@ -185,8 +185,8 @@ namespace NCDK.Formula
         public void TestIsotopes()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
-            mfRange.AddIsotope(builder.CreateIsotope("F"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.NewIsotope("F"), 0, 10);
 
             IEnumerator<IIsotope> istoIter = mfRange.GetIsotopes().GetEnumerator();
             int counter = 0;
@@ -202,10 +202,10 @@ namespace NCDK.Formula
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope cl = builder.CreateIsotope("Cl");
-            IIsotope h1 = builder.CreateIsotope("H");
-            IIsotope h2 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope cl = builder.NewIsotope("Cl");
+            IIsotope h1 = builder.NewIsotope("H");
+            IIsotope h2 = builder.NewIsotope("H");
             h2.ExactMass = 2.0004;
 
             mfRange.AddIsotope(carb, 0, 10);
@@ -221,9 +221,9 @@ namespace NCDK.Formula
         {
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope flu = builder.CreateIsotope("F");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope flu = builder.NewIsotope("F");
+            IIsotope h1 = builder.NewIsotope("H");
             mfRange.AddIsotope(carb, 0, 10);
             mfRange.AddIsotope(flu, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
@@ -241,9 +241,9 @@ namespace NCDK.Formula
         public void TestRemoveAllIsotopes()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope flu = builder.CreateIsotope("F");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope flu = builder.NewIsotope("F");
+            IIsotope h1 = builder.NewIsotope("H");
             mfRange.AddIsotope(carb, 0, 10);
             mfRange.AddIsotope(flu, 0, 10);
             mfRange.AddIsotope(h1, 0, 10);
@@ -277,9 +277,9 @@ namespace NCDK.Formula
         public void TestClone_Isotopes()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            IIsotope carb = builder.CreateIsotope("C");
-            IIsotope flu = builder.CreateIsotope("F");
-            IIsotope h1 = builder.CreateIsotope("H");
+            IIsotope carb = builder.NewIsotope("C");
+            IIsotope flu = builder.NewIsotope("F");
+            IIsotope h1 = builder.NewIsotope("H");
             mfRange.AddIsotope(carb, 0, 5);
             mfRange.AddIsotope(flu, 2, 8);
             mfRange.AddIsotope(h1, 4, 10);
@@ -315,7 +315,7 @@ namespace NCDK.Formula
         public void TestNull()
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            IIsotope carb = builder.CreateIsotope("C");
+            IIsotope carb = builder.NewIsotope("C");
             IIsotope nul = null;
             mfRange.AddIsotope(carb, 2, 5);
             mfRange.AddIsotope(nul, 3, 7);

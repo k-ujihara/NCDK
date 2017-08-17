@@ -108,7 +108,7 @@ namespace NCDK.RingSearches
 
             RingSearch rs = new RingSearch(container, graph);
 
-            IRingSet ringSet = container.Builder.CreateRingSet();
+            IRingSet ringSet = container.Builder.NewRingSet();
 
             // don't need to run on isolated rings, just need to put vertices in
             // cyclic order
@@ -169,7 +169,7 @@ namespace NCDK.RingSearches
 
             if (!ac.Completed) throw new CDKException("Threshold exceeded for AllRingsFinder");
 
-            IRingSet ringSet = atomContainer.Builder.CreateRingSet();
+            IRingSet ringSet = atomContainer.Builder.NewRingSet();
 
             foreach (var path in ac.GetPaths())
             {
@@ -230,7 +230,7 @@ namespace NCDK.RingSearches
                 bonds[i] = edges[cycle[i], cycle[i + 1]];
                 atoms[i].IsInRing = true;
             }
-            IRing ring = container.Builder.CreateRing(atoms, bonds);
+            IRing ring = container.Builder.NewRing(atoms, bonds);
             return ring;
         }
 
@@ -253,7 +253,7 @@ namespace NCDK.RingSearches
                 bonds[i] = edges[mapping[cycle[i]], mapping[cycle[i + 1]]];
                 atoms[i].IsInRing = true;
             }
-            IRing ring = container.Builder.CreateRing(atoms, bonds);
+            IRing ring = container.Builder.NewRing(atoms, bonds);
             return ring;
         }
 

@@ -142,7 +142,7 @@ namespace NCDK.IO.Iterator
             catch (CDKException e)
             {
                 Trace.TraceError("Error while reading the SMILES from: " + line + ", ", e);
-                IAtomContainer empty = builder.CreateAtomContainer();
+                IAtomContainer empty = builder.NewAtomContainer();
                 empty.SetProperty(BadSmilesInput, line);
                 return empty;
             }

@@ -303,10 +303,10 @@ namespace NCDK.IO.CML
         {
             Trace.TraceInformation("Start XML Doc");
             // cdo.StartDocument();
-            CurrentChemSequence = CurrentChemFile.Builder.CreateChemSequence();
-            CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
-            CurrentMoleculeSet = CurrentChemFile.Builder.CreateAtomContainerSet();
-            CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+            CurrentChemSequence = CurrentChemFile.Builder.NewChemSequence();
+            CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
+            CurrentMoleculeSet = CurrentChemFile.Builder.NewAtomContainerSet();
+            CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
             AtomEnumeration = new Dictionary<string, IAtom>();
             MoleculeCustomProperty = new List<string>();
 
@@ -701,10 +701,10 @@ namespace NCDK.IO.CML
                 BUILTIN = "";
                 //            cdo.StartObject("Molecule");
                 if (CurrentChemModel == null)
-                    CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
+                    CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
                 if (CurrentMoleculeSet == null)
-                    CurrentMoleculeSet = CurrentChemFile.Builder.CreateAtomContainerSet();
-                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                    CurrentMoleculeSet = CurrentChemFile.Builder.NewAtomContainerSet();
+                CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
                 foreach (var attribute in element.Attributes())
                 {
                     var xname = attribute.Name;
@@ -725,7 +725,7 @@ namespace NCDK.IO.CML
             {
                 NewCrystalData();
                 //            cdo.StartObject("Crystal");
-                CurrentMolecule = CurrentChemFile.Builder.CreateCrystal(CurrentMolecule);
+                CurrentMolecule = CurrentChemFile.Builder.NewCrystal(CurrentMolecule);
                 foreach (var attribute in element.Attributes())
                 {
                     var xname = attribute.Name;
@@ -777,7 +777,7 @@ namespace NCDK.IO.CML
                 //            cdo.StartObject("MoleculeSet");
                 if (DICTREF.Equals("cdk:model"))
                 {
-                    CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
+                    CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
                     // see if there is an ID attribute
                     foreach (var attribute in element.Attributes())
                     {
@@ -791,7 +791,7 @@ namespace NCDK.IO.CML
                 }
                 else if (DICTREF.Equals("cdk:moleculeSet"))
                 {
-                    CurrentMoleculeSet = CurrentChemFile.Builder.CreateAtomContainerSet();
+                    CurrentMoleculeSet = CurrentChemFile.Builder.NewAtomContainerSet();
                     // see if there is an ID attribute
                     foreach (var attribute in element.Attributes())
                     {
@@ -802,12 +802,12 @@ namespace NCDK.IO.CML
                             CurrentMoleculeSet.Id = attribute.Value;
                         }
                     }
-                    CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                    CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
                 }
                 else
                 {
                     // the old default
-                    CurrentMoleculeSet = CurrentChemFile.Builder.CreateAtomContainerSet();
+                    CurrentMoleculeSet = CurrentChemFile.Builder.NewAtomContainerSet();
                     // see if there is an ID attribute
                     foreach (var attribute in element.Attributes())
                     {
@@ -818,7 +818,7 @@ namespace NCDK.IO.CML
                             CurrentMoleculeSet.Id = attribute.Value;
                         }
                     }
-                    CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                    CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
                 }
             }
             else if ("formula".Equals(name))
@@ -1754,7 +1754,7 @@ namespace NCDK.IO.CML
             {
                 Trace.TraceInformation("Storing atom: ", i);
                 //            cdo.StartObject("Atom");
-                CurrentAtom = CurrentChemFile.Builder.CreateAtom("H");
+                CurrentAtom = CurrentChemFile.Builder.NewAtom("H");
                 Debug.WriteLine("Atom # " + AtomCounter);
                 if (hasID)
                 {
@@ -1773,7 +1773,7 @@ namespace NCDK.IO.CML
                             //                        cdo.SetObjectProperty("PseudoAtom", "label", (string)eltitles[i]);
                             if (!(CurrentAtom is IPseudoAtom))
                             {
-                                CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
+                                CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
                                 if (hasID) AtomEnumeration[(string)ElId[i]] = CurrentAtom;
                             }
                             ((IPseudoAtom)CurrentAtom).Label = (string)ElTitles[i];
@@ -1805,7 +1805,7 @@ namespace NCDK.IO.CML
                     //                cdo.SetObjectProperty("Atom", "type", symbol);
                     if (symbol.Equals("R") && !(CurrentAtom is IPseudoAtom))
                     {
-                        CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
+                        CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
                         ((IPseudoAtom)CurrentAtom).Label = "R";
                         if (hasID) AtomEnumeration[(string)ElId[i]] = CurrentAtom;
                     }
@@ -1900,7 +1900,7 @@ namespace NCDK.IO.CML
                     int unpairedElectrons = int.Parse((string)SpinMultiplicities[i]) - 1;
                     for (int sm = 0; sm < unpairedElectrons; sm++)
                     {
-                        CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.CreateSingleElectron(CurrentAtom));
+                        CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.NewSingleElectron(CurrentAtom));
                     }
                 }
 
@@ -2011,7 +2011,7 @@ namespace NCDK.IO.CML
                     //                                                          (string)bar2s.Next())).ToString());
                     IAtom a1 = (IAtom)AtomEnumeration[(string)bar1s.Current];
                     IAtom a2 = (IAtom)AtomEnumeration[(string)bar2s.Current];
-                    CurrentBond = CurrentChemFile.Builder.CreateBond(a1, a2);
+                    CurrentBond = CurrentChemFile.Builder.NewBond(a1, a2);
                     if (ids.MoveNext())
                     {
                         CurrentBond.Id = (string)ids.Current;

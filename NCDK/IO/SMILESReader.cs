@@ -96,9 +96,9 @@ namespace NCDK.IO
             else if (obj is IChemFile)
             {
                 IChemFile file = (IChemFile)obj;
-                IChemSequence sequence = file.Builder.CreateChemSequence();
-                IChemModel chemModel = file.Builder.CreateChemModel();
-                chemModel.MoleculeSet = ReadAtomContainerSet(file.Builder.CreateAtomContainerSet());
+                IChemSequence sequence = file.Builder.NewChemSequence();
+                IChemModel chemModel = file.Builder.NewChemModel();
+                chemModel.MoleculeSet = ReadAtomContainerSet(file.Builder.NewAtomContainerSet());
                 sequence.Add(chemModel);
                 file.Add(sequence);
                 return (T)file;
@@ -140,7 +140,7 @@ namespace NCDK.IO
                         Trace.TraceWarning("This SMILES could not be parsed: ", line);
                         Trace.TraceWarning("Because of: ", exception.Message);
                         Debug.WriteLine(exception);
-                        IAtomContainer empty = som.Builder.CreateAtomContainer();
+                        IAtomContainer empty = som.Builder.NewAtomContainer();
                         empty.SetProperty(IteratingSMILESReader.BadSmilesInput, line);
                         som.Add(empty);
                     }

@@ -150,11 +150,11 @@ namespace NCDK.Groups
 
         private IAtomContainer MakeAtomContainer(string elements)
         {
-            IAtomContainer ac = builder.CreateAtomContainer();
+            IAtomContainer ac = builder.NewAtomContainer();
             for (int i = 0; i < elements.Length; i++)
             {
                 string element = elements[i].ToString();
-                ac.Atoms.Add(builder.CreateAtom(element));
+                ac.Atoms.Add(builder.NewAtom(element));
             }
             return ac;
         }

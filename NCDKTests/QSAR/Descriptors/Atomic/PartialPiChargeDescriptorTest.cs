@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("F"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -90,11 +90,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -129,11 +129,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -167,19 +167,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { 0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -216,13 +216,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
             double[] testResult = { -0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -259,17 +259,17 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -351,17 +351,17 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
 
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("N"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("N"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Single);
             mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Double);
 
@@ -484,35 +484,35 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
             double[] testResult = { 0.0914, 0.0193, -0.1107, 0.0, 0.0, 0.0, -0.0063, 0.0, -0.0101, 0.0, 0.0262, -0.0098, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
             // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("F"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("O"));
+            mol.Atoms.Add(builder.NewAtom("O"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Single);
             //aromatic
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[6], mol.Atoms[7], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[7], mol.Atoms[8], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[8], mol.Atoms[9], BondOrder.Single);
             //Fluor
-            mol.Atoms.Add(builder.CreateAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[9], mol.Atoms[10], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));//ring
+            mol.Atoms.Add(builder.NewAtom("C"));//ring
             mol.AddBond(mol.Atoms[9], mol.Atoms[11], BondOrder.Double);
             mol.AddBond(mol.Atoms[5], mol.Atoms[11], BondOrder.Single);
 
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[11], mol.Atoms[12], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

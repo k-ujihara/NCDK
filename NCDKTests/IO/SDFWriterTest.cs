@@ -77,9 +77,9 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = builder.CreateAtomContainerSet();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainerSet<IAtomContainer> molSet = builder.NewAtomContainerSet();
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molSet.Add(molecule);
 
             SDFWriter sdfWriter = new SDFWriter(writer);

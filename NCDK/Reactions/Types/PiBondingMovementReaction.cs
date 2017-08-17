@@ -62,7 +62,7 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
@@ -102,7 +102,7 @@ namespace NCDK.Reactions.Types
                             }
                         if (!ringCompletActive) continue;
 
-                        IReaction reaction = reactants.Builder.CreateReaction();
+                        IReaction reaction = reactants.Builder.NewReaction();
                         reaction.Reactants.Add(reactant);
 
                         IAtomContainer reactantCloned;

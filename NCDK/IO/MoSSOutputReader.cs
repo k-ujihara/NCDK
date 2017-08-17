@@ -100,9 +100,9 @@ namespace NCDK.IO
             else if (obj is IChemFile)
             {
                 IChemFile chemFile = (IChemFile)obj;
-                IChemSequence chemSeq = obj.Builder.CreateChemSequence();
-                IChemModel chemModel = obj.Builder.CreateChemModel();
-                var molSet = obj.Builder.CreateAtomContainerSet();
+                IChemSequence chemSeq = obj.Builder.NewChemSequence();
+                IChemModel chemModel = obj.Builder.NewChemModel();
+                var molSet = obj.Builder.NewAtomContainerSet();
                 try
                 {
                     molSet = ReadAtomContainerSet(molSet);

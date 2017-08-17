@@ -117,7 +117,7 @@ namespace NCDK.IO
                     if (line.StartsWith("INChI=") || line.StartsWith("InChI="))
                     {
                         // ok, the fun starts
-                        cf = cf.Builder.CreateChemFile();
+                        cf = cf.Builder.NewChemFile();
                         // ok, we need to parse things like:
                         // INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
                         string INChI = line.Substring(6);
@@ -131,15 +131,15 @@ namespace NCDK.IO
                                                                //final string hydrogens = tokenizer.NextToken().Substring(1); // 1-6H
 
                         IAtomContainer parsedContent = inchiTool.ProcessFormula(
-                                cf.Builder.CreateAtomContainer(), formula);
+                                cf.Builder.NewAtomContainer(), formula);
                         if (connections != null)
                             inchiTool.ProcessConnections(connections, parsedContent, -1);
 
-                        var moleculeSet = cf.Builder.CreateAtomContainerSet();
-                        moleculeSet.Add(cf.Builder.CreateAtomContainer(parsedContent));
-                        IChemModel model = cf.Builder.CreateChemModel();
+                        var moleculeSet = cf.Builder.NewAtomContainerSet();
+                        moleculeSet.Add(cf.Builder.NewAtomContainer(parsedContent));
+                        IChemModel model = cf.Builder.NewChemModel();
                         model.MoleculeSet = moleculeSet;
-                        IChemSequence sequence = cf.Builder.CreateChemSequence();
+                        IChemSequence sequence = cf.Builder.NewChemSequence();
                         sequence.Add(model);
                         cf.Add(sequence);
                     }

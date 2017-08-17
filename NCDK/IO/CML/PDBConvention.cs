@@ -131,9 +131,9 @@ namespace NCDK.IO.CML
                     if (attj.Name.LocalName.Equals("convention") && attj.Value.Equals("PDB"))
                     {
                         //                    cdo.StartObject("PDBPolymer");
-                        CurrentStrand = CurrentChemFile.Builder.CreateStrand();
+                        CurrentStrand = CurrentChemFile.Builder.NewStrand();
                         CurrentStrand.StrandName = "A";
-                        CurrentMolecule = CurrentChemFile.Builder.CreatePDBPolymer();
+                        CurrentMolecule = CurrentChemFile.Builder.NewPDBPolymer();
                     }
                     else if (attj.Name.LocalName.Equals("dictRef") && attj.Value.Equals("pdb:sequence"))
                     {
@@ -314,7 +314,7 @@ namespace NCDK.IO.CML
                             //                                (new Integer(atom1)).ToString());
                             //                        cdo.SetObjectProperty("Bond", "atom2",
                             //                                (new Integer(atom2)).ToString());
-                            CurrentBond = CurrentMolecule.Builder.CreateBond(CurrentMolecule.Atoms[int.Parse(connect_root) - 1],
+                            CurrentBond = CurrentMolecule.Builder.NewBond(CurrentMolecule.Atoms[int.Parse(connect_root) - 1],
                                     CurrentMolecule.Atoms[int.Parse(atom) - 1], BondOrder.Single);
                             CurrentMolecule.Bonds.Add(CurrentBond);
                         }
@@ -476,14 +476,14 @@ namespace NCDK.IO.CML
             if (AtomCounter > 0)
             {
                 //            cdo.StartObject("PDBMonomer");
-                CurrentMonomer = CurrentChemFile.Builder.CreatePDBMonomer();
+                CurrentMonomer = CurrentChemFile.Builder.NewPDBMonomer();
             }
 
             for (int i = 0; i < AtomCounter; i++)
             {
                 Trace.TraceInformation("Storing atom: ", i);
                 //            cdo.StartObject("PDBAtom");
-                CurrentAtom = CurrentChemFile.Builder.CreatePDBAtom("H");
+                CurrentAtom = CurrentChemFile.Builder.NewPDBAtom("H");
                 if (hasID)
                 {
                     //                cdo.SetObjectProperty("Atom", "id", (string)elid[i]);
@@ -499,7 +499,7 @@ namespace NCDK.IO.CML
                             //                        cdo.SetObjectProperty("PseudoAtom", "label", (string)eltitles[i]);
                             if (!(CurrentAtom is IPseudoAtom))
                             {
-                                CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
+                                CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
                             }
                             ((IPseudoAtom)CurrentAtom).Label = (string)ElTitles[i];
                         }
@@ -529,7 +529,7 @@ namespace NCDK.IO.CML
                     //                cdo.SetObjectProperty("Atom", "type", symbol);
                     if (symbol.Equals("R") && !(CurrentAtom is IPseudoAtom))
                     {
-                        CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
+                        CurrentAtom = CurrentChemFile.Builder.NewPseudoAtom(CurrentAtom);
                     }
                     CurrentAtom.Symbol = symbol;
                     try
@@ -612,7 +612,7 @@ namespace NCDK.IO.CML
                     int unpairedElectrons = int.Parse((string)SpinMultiplicities[i]) - 1;
                     for (int sm = 0; sm < unpairedElectrons; sm++)
                     {
-                        CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.CreateSingleElectron(CurrentAtom));
+                        CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.NewSingleElectron(CurrentAtom));
                     }
                 }
 

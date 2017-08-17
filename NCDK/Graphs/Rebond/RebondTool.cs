@@ -97,7 +97,7 @@ namespace NCDK.Graphs.Rebond
                     bool bonded = IsBonded(myCovalentRadius, atomNear.CovalentRadius.Value, hemiSphere.Distance2);
                     if (bonded)
                     {
-                        IBond bond = atom.Builder.CreateBond(atom, atomNear, BondOrder.Single);
+                        IBond bond = atom.Builder.NewBond(atom, atomNear, BondOrder.Single);
                         container.Bonds.Add(bond);
                     }
                 }

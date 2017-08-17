@@ -44,7 +44,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestAtomType_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement("C");
+            IElement element = NewChemObject().Builder.NewElement("C");
             IAtomType at = new AtomType(element);
             Assert.AreEqual("C", at.Symbol);
         }
@@ -64,7 +64,7 @@ namespace NCDK.Default
             if (at is AtomType)
             {
                 AtomType at1 = (AtomType)at;
-                IAtomType at2 = at.Builder.CreateAtomType("C3", "C");
+                IAtomType at2 = at.Builder.NewAtomType("C3", "C");
                 Assert.IsFalse(at1.Compare("C4"));
                 Assert.IsFalse(at1.Compare(at2));
             }
@@ -78,7 +78,7 @@ namespace NCDK.Default
             {
                 AtomType at = (AtomType)someAt;
                 Assert.IsTrue(at.Compare(at));
-                IAtomType hydrogen = someAt.Builder.CreateAtomType("H");
+                IAtomType hydrogen = someAt.Builder.NewAtomType("H");
                 Assert.IsFalse(at.Compare(hydrogen));
                 Assert.IsFalse(at.Compare("Li"));
             }

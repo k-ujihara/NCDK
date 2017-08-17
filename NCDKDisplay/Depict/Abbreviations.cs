@@ -211,8 +211,8 @@ namespace NCDK.Depict
             evisit.Remove(beg);
 
             IChemObjectBuilder bldr = mol.Builder;
-            IAtomContainer bfrag = bldr.CreateAtomContainer();
-            IAtomContainer efrag = bldr.CreateAtomContainer();
+            IAtomContainer bfrag = bldr.NewAtomContainer();
+            IAtomContainer efrag = bldr.NewAtomContainer();
 
             int diff = bvisit.Count - evisit.Count;
 
@@ -223,7 +223,7 @@ namespace NCDK.Depict
 
             if (bvisit.Any())
             {
-                bfrag.Atoms.Add(bldr.CreatePseudoAtom());
+                bfrag.Atoms.Add(bldr.NewPseudoAtom());
                 foreach (var atom in bvisit)
                     bfrag.Atoms.Add(atom);
                 bfrag.AddBond(bfrag.Atoms[0], bfrag.Atoms[1], cut.Order);
@@ -232,7 +232,7 @@ namespace NCDK.Depict
 
             if (evisit.Any())
             {
-                efrag.Atoms.Add(bldr.CreatePseudoAtom());
+                efrag.Atoms.Add(bldr.NewPseudoAtom());
                 foreach (var atom in evisit)
                     efrag.Atoms.Add(atom);
                 efrag.AddBond(efrag.Atoms[0], efrag.Atoms[1], cut.Order);

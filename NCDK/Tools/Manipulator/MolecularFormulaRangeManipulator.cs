@@ -98,7 +98,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IMolecularFormula containing the maximal occurrence of each isotope</returns>
         public static IMolecularFormula GetMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
 
             foreach (var isotope in mfRange.GetIsotopes())
             {
@@ -116,7 +116,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IMolecularFormula containing the minimal occurrence of each isotope</returns>
         public static IMolecularFormula GetMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
 
             foreach (var isotope in mfRange.GetIsotopes())
             {

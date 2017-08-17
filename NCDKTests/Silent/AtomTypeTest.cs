@@ -44,7 +44,7 @@ namespace NCDK.Silent
         public void TestAtomType_IElement()
         {
             IElement element = new Element("C");
-            IAtomType at = element.Builder.CreateAtomType(element);
+            IAtomType at = element.Builder.NewAtomType(element);
             Assert.AreEqual("C", at.Symbol);
         }
 

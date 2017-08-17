@@ -65,8 +65,8 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence seq = file.Builder.CreateChemSequence();
-            IChemModel model = file.Builder.CreateChemModel();
+            IChemSequence seq = file.Builder.NewChemSequence();
+            IChemModel model = file.Builder.NewChemModel();
             ICrystal crystal = null;
 
             int lineNumber = 0;
@@ -81,8 +81,8 @@ namespace NCDK.IO
                     if (line.StartsWith("frame:"))
                     {
                         Debug.WriteLine("found new frame");
-                        model = file.Builder.CreateChemModel();
-                        crystal = file.Builder.CreateCrystal();
+                        model = file.Builder.NewChemModel();
+                        crystal = file.Builder.NewCrystal();
 
                         // assume the file format is correct
 
@@ -163,7 +163,7 @@ namespace NCDK.IO
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");
                             cart.Z = double.Parse(line); // z
-                            IAtom atom = file.Builder.CreateAtom(symbol);
+                            IAtom atom = file.Builder.NewAtom(symbol);
                             atom.Charge = charge;
                             // convert cartesian coords to fractional
                             Vector3 frac = CrystalGeometryTools.CartesianToFractional(a, b, c, cart);

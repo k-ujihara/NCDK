@@ -523,7 +523,7 @@ namespace NCDK.Isomorphisms
         /// <returns>an AtomContainer</returns>
         public static IAtomContainer Project(IList<RMap> rMapList, IAtomContainer g, int id)
         {
-            IAtomContainer ac = g.Builder.CreateAtomContainer();
+            IAtomContainer ac = g.Builder.NewAtomContainer();
 
             IDictionary<IAtom, IAtom> table = new Dictionary<IAtom, IAtom>();
             IAtom a1;
@@ -557,7 +557,7 @@ namespace NCDK.Isomorphisms
                     ac.Atoms.Add(a2);
                     table.Add(a, a2);
                 }
-                IBond newBond = g.Builder.CreateBond(a1, a2, bond.Order);
+                IBond newBond = g.Builder.NewBond(a1, a2, bond.Order);
                 newBond.IsAromatic = bond.IsAromatic;
                 ac.Bonds.Add(newBond);
             }

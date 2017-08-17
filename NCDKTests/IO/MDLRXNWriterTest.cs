@@ -48,15 +48,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRoundtrip()
         {
-            IReaction reaction = builder.CreateReaction();
-            IAtomContainer hydroxide = builder.CreateAtomContainer();
-            hydroxide.Atoms.Add(builder.CreateAtom("O"));
+            IReaction reaction = builder.NewReaction();
+            IAtomContainer hydroxide = builder.NewAtomContainer();
+            hydroxide.Atoms.Add(builder.NewAtom("O"));
             reaction.Reactants.Add(hydroxide);
-            IAtomContainer proton = builder.CreateAtomContainer();
-            proton.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer proton = builder.NewAtomContainer();
+            proton.Atoms.Add(builder.NewAtom("H"));
             reaction.Reactants.Add(proton);
-            IAtomContainer water = builder.CreateAtomContainer();
-            water.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer water = builder.NewAtomContainer();
+            water.Atoms.Add(builder.NewAtom("O"));
             reaction.Products.Add(water);
             reaction.Mappings.Add(new Mapping(hydroxide.Atoms[0], water.Atoms[0]));
 
@@ -71,7 +71,7 @@ namespace NCDK.IO
             Assert.IsTrue(file.Length > 0);
 
             // now deserialize the MDL RXN output
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
             reaction2 = (IReaction)reader.Read(reaction2);
             reader.Close();
@@ -84,16 +84,16 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReactionSet_1()
         {
-            IReaction reaction11 = builder.CreateReaction();
-            IAtomContainer hydroxide = builder.CreateAtomContainer();
-            hydroxide.Atoms.Add(builder.CreateAtom("O"));
+            IReaction reaction11 = builder.NewReaction();
+            IAtomContainer hydroxide = builder.NewAtomContainer();
+            hydroxide.Atoms.Add(builder.NewAtom("O"));
             reaction11.Reactants.Add(hydroxide);
-            IAtomContainer proton = builder.CreateAtomContainer();
-            proton.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer proton = builder.NewAtomContainer();
+            proton.Atoms.Add(builder.NewAtom("H"));
             reaction11.Reactants.Add(proton);
 
-            IAtomContainer water = builder.CreateAtomContainer();
-            water.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer water = builder.NewAtomContainer();
+            water.Atoms.Add(builder.NewAtom("O"));
             reaction11.Products.Add(water);
 
             IReactionSet reactionSet = new ReactionSet();
@@ -110,7 +110,7 @@ namespace NCDK.IO
             Assert.IsTrue(file.Length > 0);
 
             // now deserialize the MDL RXN output
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
             reaction2 = (IReaction)reader.Read(reaction2);
             reader.Close();
@@ -125,32 +125,32 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReactionSet_2()
         {
-            IReaction reaction11 = builder.CreateReaction();
-            IAtomContainer hydroxide = builder.CreateAtomContainer();
-            hydroxide.Atoms.Add(builder.CreateAtom("O"));
+            IReaction reaction11 = builder.NewReaction();
+            IAtomContainer hydroxide = builder.NewAtomContainer();
+            hydroxide.Atoms.Add(builder.NewAtom("O"));
             reaction11.Reactants.Add(hydroxide);
-            IAtomContainer proton = builder.CreateAtomContainer();
-            proton.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer proton = builder.NewAtomContainer();
+            proton.Atoms.Add(builder.NewAtom("H"));
             reaction11.Reactants.Add(proton);
 
-            IAtomContainer water = builder.CreateAtomContainer();
-            water.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer water = builder.NewAtomContainer();
+            water.Atoms.Add(builder.NewAtom("O"));
             reaction11.Products.Add(water);
 
-            IReaction reaction12 = builder.CreateReaction();
-            IAtomContainer h = builder.CreateAtomContainer();
-            h.Atoms.Add(builder.CreateAtom("H"));
-            IAtomContainer n = builder.CreateAtomContainer();
-            n.Atoms.Add(builder.CreateAtom("N"));
+            IReaction reaction12 = builder.NewReaction();
+            IAtomContainer h = builder.NewAtomContainer();
+            h.Atoms.Add(builder.NewAtom("H"));
+            IAtomContainer n = builder.NewAtomContainer();
+            n.Atoms.Add(builder.NewAtom("N"));
             reaction12.Reactants.Add(h);
             reaction12.Reactants.Add(n);
-            IAtomContainer ammonia = builder.CreateAtomContainer();
-            ammonia.Atoms.Add(builder.CreateAtom("N"));
-            ammonia.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer ammonia = builder.NewAtomContainer();
+            ammonia.Atoms.Add(builder.NewAtom("N"));
+            ammonia.Atoms.Add(builder.NewAtom("H"));
             ammonia.AddBond(ammonia.Atoms[0], ammonia.Atoms[1], BondOrder.Single);
             reaction12.Products.Add(ammonia);
 
-            IReactionSet reactionSet = builder.CreateReactionSet();
+            IReactionSet reactionSet = builder.NewReactionSet();
             reactionSet.Add(reaction11);
             reactionSet.Add(reaction12);
 
@@ -165,7 +165,7 @@ namespace NCDK.IO
             Assert.IsTrue(file.Length > 0);
 
             // now deserialize the MDL RXN output
-            IReactionSet reactionSetF = builder.CreateReactionSet();
+            IReactionSet reactionSetF = builder.NewReactionSet();
             MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
             reactionSetF = (IReactionSet)reader.Read(reactionSetF);
             reader.Close();

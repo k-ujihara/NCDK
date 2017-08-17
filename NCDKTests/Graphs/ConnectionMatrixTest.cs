@@ -48,10 +48,10 @@ namespace NCDK.Graphs
         public void TestLonePairs()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("I"));
-            container.LonePairs.Add(container.Builder.CreateLonePair(container.Atoms[0]));
-            container.Atoms.Add(container.Builder.CreateAtom("H"));
-            container.Builder.CreateBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
+            container.Atoms.Add(container.Builder.NewAtom("I"));
+            container.LonePairs.Add(container.Builder.NewLonePair(container.Atoms[0]));
+            container.Atoms.Add(container.Builder.NewAtom("H"));
+            container.Builder.NewBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
 
             double[][] matrix = ConnectionMatrix.GetMatrix(container);
             Assert.AreEqual(2, matrix.Length);

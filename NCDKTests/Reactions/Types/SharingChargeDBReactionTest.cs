@@ -213,13 +213,13 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms[2].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             try
@@ -243,14 +243,14 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
-            var setOfProducts = builder.CreateAtomContainerSet();
+            var setOfProducts = builder.NewAtomContainerSet();
             //C[C+]O|
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[1].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
 
             try

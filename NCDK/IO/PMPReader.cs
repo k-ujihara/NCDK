@@ -138,9 +138,9 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
-            IChemModel chemModel = chemFile.Builder.CreateChemModel();
-            ICrystal crystal = chemFile.Builder.CreateCrystal();
+            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
+            IChemModel chemModel = chemFile.Builder.NewChemModel();
+            ICrystal crystal = chemFile.Builder.NewCrystal();
 
             try
             {
@@ -167,7 +167,7 @@ namespace NCDK.IO
                     else if (line.StartsWith("%%Model Start"))
                     {
                         // parse Model section
-                        modelStructure = chemFile.Builder.CreateAtomContainer();
+                        modelStructure = chemFile.Builder.NewAtomContainer();
                         while (line != null && !(line.StartsWith("%%Model End")))
                         {
                             var objHeaderMatcher = objHeader.Match(line);
@@ -244,7 +244,7 @@ namespace NCDK.IO
                                 Debug.WriteLine("ones: ", bondAtomOnes[index]);
                                 IAtom atom1 = modelStructure.Atoms[atomids[bondAtomOnes[index]]];
                                 IAtom atom2 = modelStructure.Atoms[atomids[bondAtomTwos[index]]];
-                                IBond bond = modelStructure.Builder.CreateBond(atom1, atom2);
+                                IBond bond = modelStructure.Builder.NewBond(atom1, atom2);
                                 if (order == 1.0)
                                 {
                                     bond.Order = BondOrder.Single;
@@ -267,7 +267,7 @@ namespace NCDK.IO
                     }
                     else if (line.StartsWith("%%Traj Start"))
                     {
-                        chemSequence = chemFile.Builder.CreateChemSequence();
+                        chemSequence = chemFile.Builder.NewChemSequence();
                         double energyFragment = 0.0;
                         double energyTotal = 0.0;
                         int Z = 1;
@@ -275,8 +275,8 @@ namespace NCDK.IO
                         {
                             if (line.StartsWith("%%Start Frame"))
                             {
-                                chemModel = chemFile.Builder.CreateChemModel();
-                                crystal = chemFile.Builder.CreateCrystal();
+                                chemModel = chemFile.Builder.NewChemModel();
+                                crystal = chemFile.Builder.NewCrystal();
                                 while (line != null && !(line.StartsWith("%%End Frame")))
                                 {
                                     // process frame data
@@ -293,11 +293,11 @@ namespace NCDK.IO
                                         int expatoms = modelStructure.Atoms.Count;
                                         for (int molCount = 1; molCount <= Z; molCount++)
                                         {
-                                            IAtomContainer clone = modelStructure.Builder.CreateAtomContainer();
+                                            IAtomContainer clone = modelStructure.Builder.NewAtomContainer();
                                             for (int i = 0; i < expatoms; i++)
                                             {
                                                 line = ReadLine();
-                                                IAtom a = clone.Builder.CreateAtom();
+                                                IAtom a = clone.Builder.NewAtom();
                                                 var st = Strings.Tokenize(line, ' ');
                                                 a.Point3D = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
                                                 a.CovalentRadius = 0.6;
@@ -505,16 +505,16 @@ namespace NCDK.IO
         {
             if ("Atom".Equals(obj))
             {
-                chemObject = builder.CreateAtom("C");
+                chemObject = builder.NewAtom("C");
             }
             else if ("Bond".Equals(obj))
             {
                 bondCounter++;
-                chemObject = builder.CreateBond();
+                chemObject = builder.NewBond();
             }
             else if ("Model".Equals(obj))
             {
-                modelStructure = builder.CreateAtomContainer();
+                modelStructure = builder.NewAtomContainer();
             }
             else
             {

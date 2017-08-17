@@ -210,12 +210,12 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             try
@@ -239,11 +239,11 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
-            var setOfProducts = builder.CreateAtomContainerSet();
+            var setOfProducts = builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms[1].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
 

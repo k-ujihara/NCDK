@@ -138,7 +138,7 @@ namespace NCDK.Smiles
             string agents = smiles.Substring(first + 1, second - (first + 1));
             string products = smiles.Substring(second + 1, smiles.Length - (second + 1));
 
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
 
             // add reactants
             if (!(reactants.Count() == 0))
@@ -448,7 +448,7 @@ namespace NCDK.Smiles
                         continue;
 
                     IAtom old = atoms[e.Key];
-                    IPseudoAtom pseudo = bldr.CreatePseudoAtom();
+                    IPseudoAtom pseudo = bldr.NewPseudoAtom();
                     string val = e.Value;
 
                     // specialised label handling
@@ -529,7 +529,7 @@ namespace NCDK.Smiles
                     IAtom atom = atoms[e.Key];
                     IAtomContainer mol = atomToMol[atom];
                     while (count-- > 0)
-                        mol.SingleElectrons.Add(bldr.CreateSingleElectron(atom));
+                        mol.SingleElectrons.Add(bldr.NewSingleElectron(atom));
                 }
             }
 

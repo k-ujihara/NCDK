@@ -42,7 +42,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [TestMethod()]
         public void TestGetSource()
         {
-            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             handler.Source = expResult;
             IAtomContainer result = handler.Source;
             Assert.AreEqual(expResult, result);
@@ -54,7 +54,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [TestMethod()]
         public void TestSetSource()
         {
-            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             handler.Source = expResult;
             IAtomContainer result = handler.Source;
             Assert.AreEqual(expResult, result);
@@ -66,7 +66,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [TestMethod()]
         public void TestGetTarget()
         {
-            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             handler.Target = expResult;
             IAtomContainer result = handler.Target;
             Assert.AreEqual(expResult, result);
@@ -78,7 +78,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [TestMethod()]
         public void TestSetTarget()
         {
-            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer expResult = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             handler.Target = expResult;
             IAtomContainer result = handler.Target;
             Assert.AreEqual(expResult, result);

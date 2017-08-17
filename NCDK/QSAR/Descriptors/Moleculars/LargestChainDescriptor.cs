@@ -167,7 +167,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private static IAtomContainer SubsetMol(IAtomContainer mol, ISet<IAtom> include)
         {
-            IAtomContainer cpy = mol.Builder.CreateAtomContainer();
+            IAtomContainer cpy = mol.Builder.NewAtomContainer();
             foreach (var atom in mol.Atoms)
             {
                 if (include.Contains(atom))

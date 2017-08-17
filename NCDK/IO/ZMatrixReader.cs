@@ -87,7 +87,7 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.CreateChemSequence();
+            IChemSequence chemSequence = file.Builder.NewChemSequence();
 
             int number_of_atoms;
             try
@@ -103,10 +103,10 @@ namespace NCDK.IO
                 number_of_atoms = int.Parse(token);
                 string info = input.ReadLine();
 
-                IChemModel chemModel = file.Builder.CreateChemModel();
-                var setOfMolecules = file.Builder.CreateAtomContainerSet();
+                IChemModel chemModel = file.Builder.NewChemModel();
+                var setOfMolecules = file.Builder.NewAtomContainerSet();
 
-                IAtomContainer m = file.Builder.CreateAtomContainer();
+                IAtomContainer m = file.Builder.NewAtomContainer();
                 m.SetProperty(CDKPropertyName.Title, info);
 
                 string[] types = new string[number_of_atoms];
@@ -184,7 +184,7 @@ namespace NCDK.IO
 
                 for (i = 0; i < number_of_atoms; i++)
                 {
-                    m.Atoms.Add(file.Builder.CreateAtom(types[i], cartCoords[i]));
+                    m.Atoms.Add(file.Builder.NewAtom(types[i], cartCoords[i]));
                 }
 
                 //        Debug.WriteLine("molecule:"+m);

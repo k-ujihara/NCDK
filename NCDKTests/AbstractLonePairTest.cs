@@ -35,7 +35,7 @@ namespace NCDK
         public virtual void TestSetAtom_IAtom()
         {
             ILonePair lp = (ILonePair)NewChemObject();
-            IAtom atom = lp.Builder.CreateAtom("N");
+            IAtom atom = lp.Builder.NewAtom("N");
             lp.Atom = atom;
             Assert.AreEqual(atom, lp.Atom);
         }
@@ -44,7 +44,7 @@ namespace NCDK
         public virtual void TestGetAtom()
         {
             ILonePair lp = (ILonePair)NewChemObject();
-            IAtom atom = lp.Builder.CreateAtom("N");
+            IAtom atom = lp.Builder.NewAtom("N");
             Assert.IsNull(lp.Atom);
             lp.Atom = atom;
             Assert.AreEqual(atom, lp.Atom);
@@ -56,7 +56,7 @@ namespace NCDK
             ILonePair lp = (ILonePair)NewChemObject();
             Assert.AreEqual(2, lp.ElectronCount.Value);
 
-            lp = lp.Builder.CreateLonePair(lp.Builder.CreateAtom("N"));
+            lp = lp.Builder.NewLonePair(lp.Builder.NewAtom("N"));
             Assert.AreEqual(2, lp.ElectronCount.Value);
         }
 
@@ -64,7 +64,7 @@ namespace NCDK
         public virtual void TestContains_IAtom()
         {
             ILonePair lp = (ILonePair)NewChemObject();
-            IAtom atom = lp.Builder.CreateAtom("N");
+            IAtom atom = lp.Builder.NewAtom("N");
             lp.Atom = atom;
             Assert.IsTrue(lp.Contains(atom));
         }
@@ -81,7 +81,7 @@ namespace NCDK
         public virtual void TestClone_IAtom()
         {
             ILonePair lp = (ILonePair)NewChemObject();
-            IAtom atom = lp.Builder.CreateAtom("N");
+            IAtom atom = lp.Builder.NewAtom("N");
             lp.Atom = atom;
 
             // test cloning of atom

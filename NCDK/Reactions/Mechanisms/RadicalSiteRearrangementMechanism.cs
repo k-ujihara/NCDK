@@ -76,7 +76,7 @@ namespace NCDK.Reactions.Mechanisms
             int posBond1 = molecule.Bonds.IndexOf(bond1);
 
             reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond1]);
-            IBond newBond = atom1.Builder.CreateBond(atom1C, atom2C, BondOrder.Single);
+            IBond newBond = atom1.Builder.NewBond(atom1C, atom2C, BondOrder.Single);
             reactantCloned.Bonds.Add(newBond);
 
             var selectron = reactantCloned.GetConnectedSingleElectrons(atom2C);
@@ -86,19 +86,19 @@ namespace NCDK.Reactions.Mechanisms
             IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            reactantCloned.SingleElectrons.Add(atom2C.Builder.CreateSingleElectron(atom3C));
+            reactantCloned.SingleElectrons.Add(atom2C.Builder.NewSingleElectron(atom3C));
             atom3C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom2C.Builder.CreateReaction();
+            IReaction reaction = atom2C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom2C.Builder.CreateMapping(atom,
+                IMapping mapping = atom2C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

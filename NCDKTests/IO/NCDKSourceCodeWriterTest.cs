@@ -60,8 +60,8 @@ namespace NCDK.IO
             string newline = Environment.NewLine;
             Assert.AreEqual("{" + newline +
                     "  IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;" + newline +
-                    "  IAtomContainer mol = builder.CreateAtomContainer();" + newline +
-                    "  IAtom a1 = builder.CreateAtom(\"C\");" + newline +
+                    "  IAtomContainer mol = builder.NewAtomContainer();" + newline +
+                    "  IAtom a1 = builder.NewAtom(\"C\");" + newline +
                     "  a1.FormalCharge = 0;" + newline +
                     "  mol.Atoms.Add(a1);" + newline +
                     "}" + newline, output);

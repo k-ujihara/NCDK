@@ -149,7 +149,7 @@ namespace NCDK.AtomTypes
             else if (reader.Accepts(typeof(IChemFile)))
             {
                 IChemFile cf = reader.Read(new ChemFile());
-                mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+                mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
                 var containers = ChemFileManipulator.GetAllAtomContainers(cf);
                 foreach (var container in containers)
                     mol.Add(container);

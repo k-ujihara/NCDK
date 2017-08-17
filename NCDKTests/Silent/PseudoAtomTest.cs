@@ -47,7 +47,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestPseudoAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement();
+            IElement element = NewChemObject().Builder.NewElement();
             IPseudoAtom a = new PseudoAtom(element);
             Assert.AreEqual("R", a.Symbol);
             Assert.IsNull(a.Point3D);
@@ -58,7 +58,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public override void TestPseudoAtom_IAtom()
         {
-            IAtom element = NewChemObject().Builder.CreateAtom("C");
+            IAtom element = NewChemObject().Builder.NewAtom("C");
             IPseudoAtom a = new PseudoAtom(element);
             Assert.AreEqual("R", a.Symbol);
             Assert.IsNull(a.Point3D);

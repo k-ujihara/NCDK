@@ -95,7 +95,7 @@ namespace NCDK.Fragments
         /// splitting bond itself
         internal static IAtomContainer MakeAtomContainer(IAtom atom, IEnumerable<IBond> parts, IAtom excludedAtom)
         {
-            IAtomContainer partContainer = atom.Builder.CreateAtomContainer();
+            IAtomContainer partContainer = atom.Builder.NewAtomContainer();
             partContainer.Atoms.Add(atom);
             foreach (var aBond in parts)
             {

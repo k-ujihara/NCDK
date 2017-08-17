@@ -95,11 +95,11 @@ namespace NCDK.Charges
             {
                 if (!ac.Equals(acOldP))
                 {
-                    molPi = ac.Builder.CreateAtomContainer(ac);
+                    molPi = ac.Builder.NewAtomContainer(ac);
 
                     peoe = new GasteigerMarsiliPartialCharges();
                     peoe.AssignGasteigerMarsiliSigmaPartialCharges(molPi, true);
-                    var iSet = ac.Builder.CreateAtomContainerSet();
+                    var iSet = ac.Builder.NewAtomContainerSet();
                     iSet.Add(molPi);
                     iSet.Add(molPi);
 

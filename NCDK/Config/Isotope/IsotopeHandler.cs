@@ -138,7 +138,7 @@ namespace NCDK.Config.Isotope
 
         private IIsotope CreateIsotopeOfElement(string currentElement, XElement element)
         {
-            IIsotope isotope = builder.CreateIsotope(currentElement);
+            IIsotope isotope = builder.NewIsotope(currentElement);
 
             XAttribute att = null;
             try

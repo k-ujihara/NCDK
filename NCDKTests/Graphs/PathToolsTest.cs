@@ -256,7 +256,7 @@ namespace NCDK.Graphs
             foreach (var atom in molecule.Atoms)
                 atom.IsVisited = false;
 
-            IAtomContainer paths = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer paths = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             IAtom root = molecule.Atoms[0];
             IAtom target = null;
 
@@ -283,7 +283,7 @@ namespace NCDK.Graphs
             start = atomContainer.Atoms[0];
             List<IAtom> sphere = new List<IAtom>();
             sphere.Add(start);
-            IAtomContainer result = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer result = atomContainer.Builder.NewAtomContainer();
             PathTools.BreadthFirstSearch(atomContainer, sphere, result);
             Assert.AreEqual(4, result.Atoms.Count);
         }
@@ -297,16 +297,16 @@ namespace NCDK.Graphs
             start = atomContainer.Atoms[0];
             List<IAtom> sphere = new List<IAtom>();
             sphere.Add(start);
-            IAtomContainer result = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer result = atomContainer.Builder.NewAtomContainer();
             PathTools.BreadthFirstSearch(atomContainer, sphere, result, 1);
             Assert.AreEqual(2, result.Atoms.Count);
 
-            result = atomContainer.Builder.CreateAtomContainer();
+            result = atomContainer.Builder.NewAtomContainer();
             PathTools.ResetFlags(atomContainer);
             PathTools.BreadthFirstSearch(atomContainer, sphere, result, 2);
             Assert.AreEqual(3, result.Atoms.Count);
 
-            result = atomContainer.Builder.CreateAtomContainer();
+            result = atomContainer.Builder.NewAtomContainer();
             PathTools.ResetFlags(atomContainer);
             PathTools.BreadthFirstSearch(atomContainer, sphere, result, 3);
             Assert.AreEqual(4, result.Atoms.Count);

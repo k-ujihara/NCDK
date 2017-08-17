@@ -39,9 +39,9 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloPentane = builder.CreateRing(5, "C");
-            IRing cycloHexane = builder.CreateRing(6, "C");
-            IRing cycloHexane2 = builder.CreateRing(6, "C");
+            IRing cycloPentane = builder.NewRing(5, "C");
+            IRing cycloHexane = builder.NewRing(6, "C");
+            IRing cycloHexane2 = builder.NewRing(6, "C");
 
             RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
             Assert.IsTrue(ringSizeComparator.Compare(cycloHexane, cycloPentane) == -1);

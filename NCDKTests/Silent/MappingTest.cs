@@ -36,8 +36,8 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestMapping_IChemObject_IChemObject()
         {
-            IMapping mapping = new Mapping(NewChemObject().Builder.CreateAtom(), NewChemObject()
-                    .Builder.CreateAtom());
+            IMapping mapping = new Mapping(NewChemObject().Builder.NewAtom(), NewChemObject()
+                    .Builder.NewAtom());
             Assert.IsNotNull(mapping);
         }
 

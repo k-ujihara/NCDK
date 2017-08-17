@@ -420,7 +420,7 @@ namespace NCDK.Depict
         {
             Ensure2dLayout(rxn); // can reorder components!
 
-            Color fgcol = GetParameterValue<IAtomColorer>(typeof(StandardGenerator.AtomColor)).GetAtomColor(rxn.Builder.CreateAtom("C"));
+            Color fgcol = GetParameterValue<IAtomColorer>(typeof(StandardGenerator.AtomColor)).GetAtomColor(rxn.Builder.NewAtom("C"));
 
             var reactants = ToList(rxn.Reactants);
             var products = ToList(rxn.Products);

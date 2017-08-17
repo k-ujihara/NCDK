@@ -85,20 +85,20 @@ namespace NCDK.Reactions.Mechanisms
 
             charge = atom2C.FormalCharge.Value;
             atom2C.FormalCharge = charge - 1;
-            reactantCloned.LonePairs.Add(atom1C.Builder.CreateLonePair(atom2C));
+            reactantCloned.LonePairs.Add(atom1C.Builder.NewLonePair(atom2C));
             // check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
             atom2C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom1C.Builder.CreateReaction();
+            IReaction reaction = atom1C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom1C.Builder.CreateMapping(atom,
+                IMapping mapping = atom1C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

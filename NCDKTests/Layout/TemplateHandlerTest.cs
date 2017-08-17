@@ -155,7 +155,7 @@ namespace NCDK.Layout
             ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderModes.Strict);
 
             // Read molecule
-            IAtomContainer molecule = (IAtomContainer)molReader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
+            IAtomContainer molecule = (IAtomContainer)molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
 
             // Map templates
             TemplateHandler th = new TemplateHandler(Default.ChemObjectBuilder.Instance);

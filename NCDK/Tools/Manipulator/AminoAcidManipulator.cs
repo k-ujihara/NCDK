@@ -72,9 +72,9 @@ namespace NCDK.Tools.Manipulator
         {
             if (acid.CTerminus == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
-            IAtom acidicOxygen = acid.Builder.CreateAtom("O");
+            IAtom acidicOxygen = acid.Builder.NewAtom("O");
             acid.Atoms.Add(acidicOxygen);
-            acid.Bonds.Add(acid.Builder.CreateBond(acid.CTerminus, acidicOxygen, BondOrder.Single));
+            acid.Bonds.Add(acid.Builder.NewBond(acid.CTerminus, acidicOxygen, BondOrder.Single));
         }
     }
 }

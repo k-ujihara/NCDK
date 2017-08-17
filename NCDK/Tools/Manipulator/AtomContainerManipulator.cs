@@ -423,11 +423,11 @@ namespace NCDK.Tools.Manipulator
                     {
                         for (int i = 0; i < hCount; i++)
                         {
-                            IAtom hydrogen = atom.Builder.CreateAtom("H");
+                            IAtom hydrogen = atom.Builder.NewAtom("H");
                             hydrogen.AtomTypeName = "H";
                             hydrogen.ImplicitHydrogenCount = 0;
                             hydrogens.Add(hydrogen);
-                            newBonds.Add(atom.Builder.CreateBond(atom, hydrogen, BondOrder.Single));
+                            newBonds.Add(atom.Builder.NewBond(atom, hydrogen, BondOrder.Single));
                             if (!hNeighbor.ContainsKey(atom)) hNeighbor.Add(atom, hydrogen);
                         }
                         atom.ImplicitHydrogenCount = 0;
@@ -520,7 +520,7 @@ namespace NCDK.Tools.Manipulator
             IList<IAtom> remove = new List<IAtom>(); // lists removed Hs.
 
             // Clone atoms except those to be removed.
-            IAtomContainer cpy = org.Builder.CreateAtomContainer();
+            IAtomContainer cpy = org.Builder.NewAtomContainer();
             int count = org.Atoms.Count;
 
             for (int i = 0; i < count; i++)
@@ -1008,7 +1008,7 @@ namespace NCDK.Tools.Manipulator
             // lists removed Hs.
 
             // Clone atoms except those to be removed.
-            IAtomContainer mol = ac.Builder.CreateAtomContainer();
+            IAtomContainer mol = ac.Builder.NewAtomContainer();
             int count = ac.Atoms.Count;
             for (int i = 0; i < count; i++)
             {
@@ -1129,7 +1129,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>An AtomContainer containing the intersection between <paramref name="container1"/> and <paramref name="container2"/></returns>
         public static IAtomContainer GetIntersection(IAtomContainer container1, IAtomContainer container2)
         {
-            IAtomContainer intersection = container1.Builder.CreateAtomContainer();
+            IAtomContainer intersection = container1.Builder.NewAtomContainer();
 
             foreach (var atom1 in container1.Atoms)
                 if (container2.Contains(atom1))
@@ -1355,17 +1355,17 @@ namespace NCDK.Tools.Manipulator
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                atoms[i] = builder.CreateAtom("C");
+                atoms[i] = builder.NewAtom("C");
             }
             for (int i = 0; i < bonds.Length; i++)
             {
                 IBond bond = src.Bonds[i];
                 int u = src.Atoms.IndexOf(bond.Begin);
                 int v = src.Atoms.IndexOf(bond.End);
-                bonds[i] = builder.CreateBond(atoms[u], atoms[v]);
+                bonds[i] = builder.NewBond(atoms[u], atoms[v]);
             }
 
-            IAtomContainer dest = builder.CreateAtomContainer(atoms, bonds);
+            IAtomContainer dest = builder.NewAtomContainer(atoms, bonds);
             return dest;
         }
 
@@ -1387,17 +1387,17 @@ namespace NCDK.Tools.Manipulator
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                atoms[i] = builder.CreateAtom(src.Atoms[i].AtomicNumber.Value);
+                atoms[i] = builder.NewAtom(src.Atoms[i].AtomicNumber.Value);
             }
             for (int i = 0; i < bonds.Length; i++)
             {
                 IBond bond = src.Bonds[i];
                 int u = src.Atoms.IndexOf(bond.Begin);
                 int v = src.Atoms.IndexOf(bond.End);
-                bonds[i] = builder.CreateBond(atoms[u], atoms[v]);
+                bonds[i] = builder.NewBond(atoms[u], atoms[v]);
             }
 
-            IAtomContainer dest = builder.CreateAtomContainer(atoms, bonds);
+            IAtomContainer dest = builder.NewAtomContainer(atoms, bonds);
             return dest;
         }
 

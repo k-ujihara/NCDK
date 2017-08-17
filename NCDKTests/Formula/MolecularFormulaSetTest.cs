@@ -39,7 +39,7 @@ namespace NCDK.Formula
 
         [TestMethod()]
         public void TestMolecularFormulaSet_IMolecularFormula() {
-            IMolecularFormulaSet mfS = new MolecularFormulaSet(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = new MolecularFormulaSet(Builder.NewMolecularFormula());
             Assert.AreEqual(1, mfS.Count);
         }
     }

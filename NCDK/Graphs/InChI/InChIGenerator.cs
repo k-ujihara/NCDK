@@ -194,7 +194,7 @@ namespace NCDK.Graphs.InChI
                 int? isotopeNumber = atom.MassNumber;
                 if (isotopeNumber.HasValue && ifact != null)
                 {
-                    IAtom isotope = atomContainer.Builder.CreateAtom(el);
+                    IAtom isotope = atomContainer.Builder.NewAtom(el);
                     ifact.Configure(isotope);
                     if (isotope.MassNumber.Value == isotopeNumber.Value)
                     {

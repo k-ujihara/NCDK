@@ -40,7 +40,7 @@ namespace NCDK.Graphs.Invariant
         /// <returns>The set of AtomContainers with conjugated pi systems</returns>
         public static IAtomContainerSet<IAtomContainer> Detect(IAtomContainer ac)
         {
-            var piSystemSet = ac.Builder.CreateAtomContainerSet();
+            var piSystemSet = ac.Builder.NewAtomContainerSet();
 
             foreach (var atom in ac.Atoms)
                 atom.IsVisited = false;
@@ -53,7 +53,7 @@ namespace NCDK.Graphs.Invariant
                 {
                     continue;
                 }
-                IAtomContainer piSystem = ac.Builder.CreateAtomContainer();
+                IAtomContainer piSystem = ac.Builder.NewAtomContainer();
                 var stack = new Stack<IAtom>();
 
                 piSystem.Atoms.Add(firstAtom);

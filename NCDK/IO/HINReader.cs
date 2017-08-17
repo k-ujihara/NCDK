@@ -119,9 +119,9 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.CreateChemSequence();
-            IChemModel chemModel = file.Builder.CreateChemModel();
-            IAtomContainerSet<IAtomContainer> setOfMolecules = file.Builder.CreateAtomContainerSet();
+            IChemSequence chemSequence = file.Builder.NewChemSequence();
+            IChemModel chemModel = file.Builder.NewChemModel();
+            IAtomContainerSet<IAtomContainer> setOfMolecules = file.Builder.NewAtomContainerSet();
             string info;
 
             IList<string> aroringText = new List<string>();
@@ -154,7 +154,7 @@ namespace NCDK.IO
                         info = GetMolName(line);
                         line = input.ReadLine();
                     }
-                    IAtomContainer m = file.Builder.CreateAtomContainer();
+                    IAtomContainer m = file.Builder.NewAtomContainer();
                     m.SetProperty(CDKPropertyName.Title, info);
 
                     // Each element of cons is an List of length 3 which stores
@@ -182,7 +182,7 @@ namespace NCDK.IO
                         double z = double.Parse(toks[9]);
                         int nbond = int.Parse(toks[10]);
 
-                        IAtom atom = file.Builder.CreateAtom(sym, new Vector3(x, y, z));
+                        IAtom atom = file.Builder.NewAtom(sym, new Vector3(x, y, z));
                         atom.Charge = charge;
 
                         BondOrder bo = BondOrder.Single;
@@ -223,7 +223,7 @@ namespace NCDK.IO
                         IAtom s = m.Atoms[(int)ar[0]];
                         IAtom e = m.Atoms[(int)ar[1]];
                         BondOrder bo = (BondOrder)ar[2];
-                        if (!IsConnected(m, s, e)) m.Bonds.Add(file.Builder.CreateBond(s, e, bo));
+                        if (!IsConnected(m, s, e)) m.Bonds.Add(file.Builder.NewBond(s, e, bo));
                     }
                     mols.Add(m);
 

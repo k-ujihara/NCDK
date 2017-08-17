@@ -102,11 +102,11 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom o2 = builder.CreateAtom("O");
-            IAtom n3 = builder.CreateAtom("N");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom o2 = builder.NewAtom("O");
+            IAtom n3 = builder.NewAtom("N");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom h5 = builder.NewAtom("H");
 
             // new stereo element
             ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[] { o2, n3, c4, h5 }, TetrahedralStereo.Clockwise);
@@ -151,11 +151,11 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom o2 = builder.CreateAtom("O");
-            IAtom n3 = builder.CreateAtom("N");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom o2 = builder.NewAtom("O");
+            IAtom n3 = builder.NewAtom("N");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom h5 = builder.NewAtom("H");
 
             // new stereo element
             ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[] { o2, n3, c4, h5 }, TetrahedralStereo.Clockwise);
@@ -169,11 +169,11 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom o2 = builder.CreateAtom("O");
-            IAtom n3 = builder.CreateAtom("N");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom o2 = builder.NewAtom("O");
+            IAtom n3 = builder.NewAtom("N");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom h5 = builder.NewAtom("H");
 
             // new stereo element
             ITetrahedralChirality original = new TetrahedralChirality(null, new IAtom[4], TetrahedralStereo.Unset);
@@ -194,11 +194,11 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom o2 = builder.CreateAtom("O");
-            IAtom n3 = builder.CreateAtom("N");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom o2 = builder.NewAtom("O");
+            IAtom n3 = builder.NewAtom("N");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom h5 = builder.NewAtom("H");
 
             // new stereo element
             ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[] { o2, n3, c4, h5 }, TetrahedralStereo.Clockwise);
@@ -217,11 +217,11 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom o2 = builder.CreateAtom("O");
-            IAtom n3 = builder.CreateAtom("N");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom o2 = builder.NewAtom("O");
+            IAtom n3 = builder.NewAtom("N");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom h5 = builder.NewAtom("H");
 
             // new stereo element
             ITetrahedralChirality element = new TetrahedralChirality(c1, new IAtom[] { o2, n3, c4, h5 }, TetrahedralStereo.Clockwise);
@@ -232,7 +232,7 @@ namespace NCDK.Stereo
             Assert.IsTrue(element.Contains(c4));
             Assert.IsTrue(element.Contains(h5));
 
-            Assert.IsFalse(element.Contains(builder.CreateAtom()));
+            Assert.IsFalse(element.Contains(builder.NewAtom()));
             Assert.IsFalse(element.Contains(null));
         }
 

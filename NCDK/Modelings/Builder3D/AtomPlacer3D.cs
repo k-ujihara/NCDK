@@ -623,7 +623,7 @@ namespace NCDK.Modelings.Builder3D
         public IAtomContainer GetPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom)
         {
             var bonds = molecule.GetConnectedBonds(atom);
-            IAtomContainer connectedAtoms = molecule.Builder.CreateAtomContainer();
+            IAtomContainer connectedAtoms = molecule.Builder.NewAtomContainer();
             IAtom connectedAtom = null;
             foreach (var bond in bonds)
             {
@@ -660,7 +660,7 @@ namespace NCDK.Modelings.Builder3D
         /// <returns>The allPlacedAtoms value</returns>
         private IAtomContainer GetAllPlacedAtoms(IAtomContainer molecule)
         {
-            IAtomContainer placedAtoms = molecule.Builder.CreateAtomContainer();    // Changed by Kaz
+            IAtomContainer placedAtoms = molecule.Builder.NewAtomContainer();    // Changed by Kaz
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
                 if (molecule.Atoms[i].IsPlaced)

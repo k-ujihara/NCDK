@@ -70,7 +70,7 @@ namespace NCDK.IO
                         Debug.WriteLine("  occurence: ", occurence);
                         for (int i = 1; i <= occurence; i++)
                         {
-                            parsedContent.Atoms.Add(parsedContent.Builder.CreateAtom(symbol));
+                            parsedContent.Atoms.Add(parsedContent.Builder.NewAtom(symbol));
                         }
                     }
                     remainder = match.Groups[3].Value;
@@ -131,7 +131,7 @@ namespace NCDK.IO
                         if (source != -1)
                         {
                             IAtom sourceAtom = container.Atoms[source - 1];
-                            bondToAdd = container.Builder.CreateBond(sourceAtom, targetAtom,
+                            bondToAdd = container.Builder.NewBond(sourceAtom, targetAtom,
                                                                            BondOrder.Single);
                             container.Bonds.Add(bondToAdd);
                         }

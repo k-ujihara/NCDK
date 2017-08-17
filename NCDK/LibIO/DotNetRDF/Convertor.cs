@@ -448,7 +448,7 @@ namespace NCDK.LibIO.DotNetRDF
             IAtomContainer mol = null;
             foreach (var rdfMol in mols.Select(n => n.Subject))
             {
-                mol = builder.CreateAtomContainer();
+                mol = builder.NewAtomContainer();
                 var rdfToCDKAtomMap = new Dictionary<INode, IAtom>();
                 var atoms = g.GetTriplesWithSubjectPredicate(rdfMol, P_HASATOM).Select(n => n.Object);
                 foreach (var rdfAtom in atoms)
@@ -456,7 +456,7 @@ namespace NCDK.LibIO.DotNetRDF
                     IAtom atom = null;
                     if (g.GetTriplesWithSubjectPredicate(rdfAtom, P_TYPE).Where(n => n.Object.Equals(R_PSEUDOATOM)).Any())
                     {
-                        atom = builder.CreatePseudoAtom();
+                        atom = builder.NewPseudoAtom();
                         atom.StereoParity = 0;
                         var label = g.GetTriplesWithSubjectPredicate(rdfAtom, P_HASLABEL).Select(n => n.Object).FirstOrDefault();
                         if (label != null)
@@ -464,7 +464,7 @@ namespace NCDK.LibIO.DotNetRDF
                     }
                     else
                     {
-                        atom = builder.CreateAtom();
+                        atom = builder.NewAtom();
                     }
                     var symbol = g.GetTriplesWithSubjectPredicate(rdfAtom, P_SYMBOL).Select(n => n.Object).FirstOrDefault();
                     if (symbol != null)
@@ -483,7 +483,7 @@ namespace NCDK.LibIO.DotNetRDF
                         IAtom atom = rdfToCDKAtomMap[rdfAtom];
                         atomList.Add(atom);
                     }
-                    IBond bond = builder.CreateBond(atomList);
+                    IBond bond = builder.NewBond(atomList);
                     var order = g.GetTriplesWithSubjectPredicate(rdfBond, P_HASORDER).Select(n => n.Object).FirstOrDefault();
                     bond.Order = Resource2Order(order);
                     mol.Bonds.Add(bond);

@@ -257,9 +257,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
         //    [TestMethod()]
         //    public void TestItMapsBlockedPropaneOntoPropane() {
         //        IAtomContainer blockedPropane = Molecules.CreatePropane();
-        //        IAtom atom = blockedPropane.Builder.CreateAtom("H");
+        //        IAtom atom = blockedPropane.Builder.NewAtom("H");
         //        blockedPropane.Atoms.Add(atom);
-        //        IBond bond = blockedPropane.Builder.CreateBond(atom, blockedPropane.Atoms[1], BondOrder.Single);
+        //        IBond bond = blockedPropane.Builder.NewBond(atom, blockedPropane.Atoms[1], BondOrder.Single);
         //
         //        blockedPropane.Bonds.Add(bond);
         //

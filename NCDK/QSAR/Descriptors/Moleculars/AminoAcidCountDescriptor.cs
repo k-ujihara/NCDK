@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public AminoAcidCountDescriptor()
         {
             IAminoAcid[] aas = AminoAcids.CreateAAs();
-            substructureSet = aas[0].Builder.CreateAtomContainerSet();
+            substructureSet = aas[0].Builder.NewAtomContainerSet();
             foreach (var aa in aas)
             {
                 substructureSet.Add(aa);

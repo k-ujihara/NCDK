@@ -74,12 +74,12 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer container = new AtomContainer(); // SMILES "CC"
             IAtom carbon = new Atom("C");
-            IAtom carbon2 = carbon.Builder.CreateAtom("C");
+            IAtom carbon2 = carbon.Builder.NewAtom("C");
             carbon.ImplicitHydrogenCount = 3;
             carbon2.ImplicitHydrogenCount = 3;
             container.Atoms.Add(carbon);
             container.Atoms.Add(carbon2);
-            container.Bonds.Add(carbon.Builder.CreateBond(carbon, carbon2, BondOrder.Single));
+            container.Bonds.Add(carbon.Builder.NewBond(carbon, carbon2, BondOrder.Single));
             return container;
         }
 

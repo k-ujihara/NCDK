@@ -66,7 +66,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
 
                 Assert.IsNotNull(cfile, "ChemFile was Null");
 
@@ -101,7 +101,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
 
                 Assert.IsNotNull(cfile, "ChemFile was Null");
 
@@ -158,7 +158,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
 
                 Assert.IsNotNull(cfile, "ChemFile was Null");
 
@@ -193,7 +193,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
 
                 Assert.IsNotNull(cfile, "ChemFile was Null");
 
@@ -223,7 +223,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
                 Assert.IsNotNull(cfile, "ChemFile was Null");
                 var containers = ChemFileManipulator.GetAllAtomContainers(cfile);
                 Assert.AreEqual(1, containers.Count(), "Expected a single atom container");
@@ -298,7 +298,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlContent)));
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
                 Assert.IsNotNull(cfile, "ChemFile was Null");
                 var containers = ChemFileManipulator.GetAllAtomContainers(cfile);
                 Assert.AreEqual(1, containers.Count(), "Expected a single atom container");
@@ -322,7 +322,7 @@ namespace NCDK.IO
             CMLReader reader = new CMLReader(ins);
             try
             {
-                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.CreateChemFile());
+                IChemFile cfile = reader.Read(Default.ChemObjectBuilder.Instance.NewChemFile());
                 Assert.AreEqual(34, ChemFileManipulator.GetAtomCount(cfile));
                 Assert.AreEqual(39, ChemFileManipulator.GetBondCount(cfile));
             }

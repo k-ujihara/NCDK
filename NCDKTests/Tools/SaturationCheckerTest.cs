@@ -393,31 +393,31 @@ namespace NCDK.Tools
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtomContainer proton = builder.CreateAtomContainer();
-            IAtom hplus = builder.CreateAtom("H");
+            IAtomContainer proton = builder.NewAtomContainer();
+            IAtom hplus = builder.NewAtom("H");
             hplus.FormalCharge = 1;
             proton.Atoms.Add(hplus);
             Assert.AreEqual(0, satcheck.CalculateNumberOfImplicitHydrogens(hplus, proton));
 
-            IAtomContainer hydrogenRadical = builder.CreateAtomContainer();
-            IAtom hradical = builder.CreateAtom("H");
+            IAtomContainer hydrogenRadical = builder.NewAtomContainer();
+            IAtom hradical = builder.NewAtom("H");
             hydrogenRadical.Atoms.Add(hradical);
-            hydrogenRadical.SingleElectrons.Add(builder.CreateSingleElectron(hradical));
+            hydrogenRadical.SingleElectrons.Add(builder.NewSingleElectron(hradical));
             Assert.AreEqual(0, satcheck.CalculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
 
-            IAtomContainer hydrogen = builder.CreateAtomContainer();
-            IAtom h = builder.CreateAtom("H");
+            IAtomContainer hydrogen = builder.NewAtomContainer();
+            IAtom h = builder.NewAtom("H");
             hydrogen.Atoms.Add(h);
             Assert.AreEqual(1, satcheck.CalculateNumberOfImplicitHydrogens(h, hydrogen));
 
-            IAtomContainer coRad = builder.CreateAtomContainer();
-            IAtom c = builder.CreateAtom("C");
-            IAtom o = builder.CreateAtom("O");
-            IBond bond = builder.CreateBond(c, o, BondOrder.Double);
+            IAtomContainer coRad = builder.NewAtomContainer();
+            IAtom c = builder.NewAtom("C");
+            IAtom o = builder.NewAtom("O");
+            IBond bond = builder.NewBond(c, o, BondOrder.Double);
             coRad.Atoms.Add(c);
             coRad.Atoms.Add(o);
             coRad.Bonds.Add(bond);
-            coRad.SingleElectrons.Add(builder.CreateSingleElectron(c));
+            coRad.SingleElectrons.Add(builder.NewSingleElectron(c));
             Assert.AreEqual(1, satcheck.CalculateNumberOfImplicitHydrogens(c, coRad));
         }
     }

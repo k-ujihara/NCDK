@@ -181,7 +181,7 @@ namespace NCDK.Graphs
         /// <returns>acyclic tree of the input molecule</returns>
         public IAtomContainer GetSpanningTree()
         {
-            IAtomContainer container = molecule.Builder.CreateAtomContainer();
+            IAtomContainer container = molecule.Builder.NewAtomContainer();
             for (int a = 0; a < totalVertexCount; a++)
                 container.Atoms.Add(molecule.Atoms[a]);
             for (int b = 0; b < totalEdgeCount; b++)
@@ -200,7 +200,7 @@ namespace NCDK.Graphs
         /// <exception cref="NoSuchAtomException">if the atom is not in the spanning tree</exception>
         public IAtomContainer GetPath(IAtomContainer spt, IAtom atom1, IAtom atom2)
         {
-            IAtomContainer path = spt.Builder.CreateAtomContainer();
+            IAtomContainer path = spt.Builder.NewAtomContainer();
             PathTools.ResetFlags(spt);
             path.Atoms.Add(atom1);
             PathTools.DepthFirstTargetSearch(spt, atom1, atom2, path);
@@ -210,7 +210,7 @@ namespace NCDK.Graphs
 
         private IRing GetRing(IAtomContainer spt, IBond bond)
         {
-            IRing ring = spt.Builder.CreateRing();
+            IRing ring = spt.Builder.NewRing();
             PathTools.ResetFlags(spt);
             ring.Atoms.Add(bond.Begin);
             PathTools.DepthFirstTargetSearch(spt, bond.Begin, bond.End, ring);
@@ -236,7 +236,7 @@ namespace NCDK.Graphs
         /// <exception cref="NoSuchAtomException">atoms not found in the molecule</exception>
         public IRingSet GetBasicRings()
         {
-            IRingSet ringset = molecule.Builder.CreateRingSet();
+            IRingSet ringset = molecule.Builder.NewRingSet();
             IAtomContainer spt = GetSpanningTree();
             for (int i = 0; i < totalEdgeCount; i++)
                 if (!bondsInTree[i]) ringset.Add(GetRing(spt, molecule.Bonds[i]));
@@ -252,7 +252,7 @@ namespace NCDK.Graphs
         /// <returns>the IAtomContainer as described above</returns>
         public IAtomContainer GetCyclicFragmentsContainer()
         {
-            IAtomContainer fragContainer = this.molecule.Builder.CreateAtomContainer();
+            IAtomContainer fragContainer = this.molecule.Builder.NewAtomContainer();
             IAtomContainer spt = GetSpanningTree();
 
             for (int i = 0; i < totalEdgeCount; i++)
@@ -379,7 +379,7 @@ namespace NCDK.Graphs
                 if (c > 1) break; //at least one common bond
             }
             if (c < 2) return null;
-            IRing ring = molecule.Builder.CreateRing();
+            IRing ring = molecule.Builder.NewRing();
             IRing ring1 = (IRing)ringset[i];
             IRing ring2 = (IRing)ringset[j];
             for (int b = 0; b < cb[i].Length; b++)

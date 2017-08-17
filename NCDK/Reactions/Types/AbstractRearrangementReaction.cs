@@ -44,7 +44,7 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
@@ -84,7 +84,7 @@ namespace NCDK.Reactions.Types
                                             bondList.Add(bondi);
                                             bondList.Add(bondj);
 
-                                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet<IAtomContainer>();
+                                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
 
                                             moleculeSet.Add(reactant);
                                             IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);

@@ -34,12 +34,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDeltaVSulphurSO()
         {
-            IAtom s = builder.CreateAtom("S");
-            IAtom o = builder.CreateAtom("O");
-            IBond b = builder.CreateBond(s, o);
+            IAtom s = builder.NewAtom("S");
+            IAtom o = builder.NewAtom("O");
+            IBond b = builder.NewBond(s, o);
             b.Order = BondOrder.Double;
 
-            IAtomContainer m = builder.CreateAtomContainer();
+            IAtomContainer m = builder.NewAtomContainer();
             m.Atoms.Add(s);
             m.Atoms.Add(o);
             m.Bonds.Add(b);
@@ -51,15 +51,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDeltaVSulphurSO2()
         {
-            IAtom s = builder.CreateAtom("S");
-            IAtom o1 = builder.CreateAtom("O");
-            IAtom o2 = builder.CreateAtom("O");
-            IBond b1 = builder.CreateBond(s, o1);
-            IBond b2 = builder.CreateBond(s, o2);
+            IAtom s = builder.NewAtom("S");
+            IAtom o1 = builder.NewAtom("O");
+            IAtom o2 = builder.NewAtom("O");
+            IBond b1 = builder.NewBond(s, o1);
+            IBond b2 = builder.NewBond(s, o2);
             b1.Order = BondOrder.Double;
             b2.Order = BondOrder.Double;
 
-            IAtomContainer m = builder.CreateAtomContainer();
+            IAtomContainer m = builder.NewAtomContainer();
             m.Atoms.Add(s);
             m.Atoms.Add(o1);
             m.Bonds.Add(b1);

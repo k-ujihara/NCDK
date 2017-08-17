@@ -35,9 +35,9 @@ namespace NCDK
         public virtual void TestAddChemModel_IChemModel()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
             Assert.AreEqual(3, cs.Count);
         }
 
@@ -45,9 +45,9 @@ namespace NCDK
         public virtual void TestRemoveChemModel_int()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
             Assert.AreEqual(3, cs.Count);
             cs.RemoveAt(1);
             Assert.AreEqual(2, cs.Count);
@@ -57,13 +57,13 @@ namespace NCDK
         public virtual void TestGrowChemModelArray()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
             Assert.AreEqual(3, cs.Count);
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel()); // this one should enfore array grow
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel()); // this one should enfore array grow
             Assert.AreEqual(6, cs.Count);
         }
 
@@ -71,9 +71,9 @@ namespace NCDK
         public virtual void TestGetChemModelCount()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
             Assert.AreEqual(3, cs.Count);
         }
 
@@ -81,10 +81,10 @@ namespace NCDK
         public virtual void TestGetChemModel_int()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            IChemModel second = cs.Builder.CreateChemModel();
+            cs.Add(cs.Builder.NewChemModel());
+            IChemModel second = cs.Builder.NewChemModel();
             cs.Add(second);
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
 
             Assert.AreEqual(second, cs[1]);
         }
@@ -93,9 +93,9 @@ namespace NCDK
         public virtual void TestChemModels()
         {
             IChemSequence cs = (IChemSequence)NewChemObject();
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
-            cs.Add(cs.Builder.CreateChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
+            cs.Add(cs.Builder.NewChemModel());
 
             Assert.AreEqual(3, cs.Count);
             IEnumerator<IChemModel> models = cs.GetEnumerator();
@@ -128,7 +128,7 @@ namespace NCDK
             IChemSequence chemObject = (IChemSequence)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            chemObject.Add(chemObject.Builder.CreateChemModel());
+            chemObject.Add(chemObject.Builder.NewChemModel());
             Assert.IsTrue(listener.Changed);
         }
 
@@ -168,10 +168,10 @@ namespace NCDK
         public virtual void TestClone_IChemModel()
         {
             IChemSequence sequence = (IChemSequence)NewChemObject();
-            sequence.Add(sequence.Builder.CreateChemModel()); // 1
-            sequence.Add(sequence.Builder.CreateChemModel()); // 2
-            sequence.Add(sequence.Builder.CreateChemModel()); // 3
-            sequence.Add(sequence.Builder.CreateChemModel()); // 4
+            sequence.Add(sequence.Builder.NewChemModel()); // 1
+            sequence.Add(sequence.Builder.NewChemModel()); // 2
+            sequence.Add(sequence.Builder.NewChemModel()); // 3
+            sequence.Add(sequence.Builder.NewChemModel()); // 4
 
             IChemSequence clone = (IChemSequence)sequence.Clone();
             Assert.AreEqual(sequence.Count, clone.Count);

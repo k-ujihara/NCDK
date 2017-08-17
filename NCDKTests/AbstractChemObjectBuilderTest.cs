@@ -37,7 +37,7 @@ namespace NCDK
         //{
         //    // throw random stuff; it should fail
         //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.CreateAtom(new object[2]);
+        //    builder.NewAtom(new object[2]);
         //}
 
         //[TestMethod()]
@@ -45,14 +45,14 @@ namespace NCDK
         //public void TestIncorrectNumberOf()
         //{
         //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.CreateAtom(builder.CreateAtomContainer());
+        //    builder.NewAtom(builder.NewAtomContainer());
         //}
 
         [TestMethod()]
         public void TestNewAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtom atom = builder.CreateAtom();
+            IAtom atom = builder.NewAtom();
             Assert.IsNotNull(atom);
             Assert.IsNull(atom.Symbol);
         }
@@ -61,7 +61,7 @@ namespace NCDK
         public void TestNewAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtom atom = builder.CreateAtom(builder.CreateElement("N"));
+            IAtom atom = builder.NewAtom(builder.NewElement("N"));
             Assert.IsNotNull(atom);
             Assert.AreEqual("N", atom.Symbol);
         }
@@ -70,7 +70,7 @@ namespace NCDK
         public void TestNewAminoAcid()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAminoAcid aa = builder.CreateAminoAcid();
+            IAminoAcid aa = builder.NewAminoAcid();
             Assert.IsNotNull(aa);
         }
 
@@ -78,7 +78,7 @@ namespace NCDK
         public void TestNewAtom_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtom atom = builder.CreateAtom("C");
+            IAtom atom = builder.NewAtom("C");
             Assert.IsNotNull(atom);
             Assert.AreEqual("C", atom.Symbol);
         }
@@ -88,7 +88,7 @@ namespace NCDK
         {
             IChemObjectBuilder builder = RootObject.Builder;
             Vector2 coord = new Vector2(1, 2);
-            IAtom atom = builder.CreateAtom("C", coord);
+            IAtom atom = builder.NewAtom("C", coord);
             Assert.IsNotNull(atom);
             Assert.AreEqual("C", atom.Symbol);
             AssertAreEqual(coord, atom.Point2D, 0.0);
@@ -99,7 +99,7 @@ namespace NCDK
         {
             IChemObjectBuilder builder = RootObject.Builder;
             Vector3 coord = new Vector3(1, 2, 3);
-            IAtom atom = builder.CreateAtom("C", coord);
+            IAtom atom = builder.NewAtom("C", coord);
             Assert.IsNotNull(atom);
             Assert.AreEqual("C", atom.Symbol);
             AssertAreEqual(coord, atom.Point3D, 0.0);
@@ -109,7 +109,7 @@ namespace NCDK
         public void TestNewAtomContainer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
             Assert.IsNotNull(container);
         }
 
@@ -117,7 +117,7 @@ namespace NCDK
         //public void TestNewAtomContainer_int_int_int_int()
         //{
         //    IChemObjectBuilder builder = RootObject.Builder;
-        //    IAtomContainer container = builder.CreateAtomContainer(1, 2, 3, 4);
+        //    IAtomContainer container = builder.NewAtomContainer(1, 2, 3, 4);
         //    Assert.IsNotNull(container);
         //}
 
@@ -125,9 +125,9 @@ namespace NCDK
         public void TestNewAtomContainer_IAtomContainer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
             Assert.IsNotNull(container);
-            IAtomContainer second = builder.CreateAtomContainer(container);
+            IAtomContainer second = builder.NewAtomContainer(container);
             Assert.IsNotNull(second);
         }
 
@@ -135,7 +135,7 @@ namespace NCDK
         public void TestNewAtomType_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomType type = builder.CreateAtomType("C");
+            IAtomType type = builder.NewAtomType("C");
             Assert.IsNotNull(type);
         }
 
@@ -143,7 +143,7 @@ namespace NCDK
         public void TestNewAtomType_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomType type = builder.CreateAtomType(builder.CreateElement("C"));
+            IAtomType type = builder.NewAtomType(builder.NewElement("C"));
             Assert.IsNotNull(type);
         }
 
@@ -151,7 +151,7 @@ namespace NCDK
         public void TestNewAtomType_String_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomType type = builder.CreateAtomType("C", "C.sp2");
+            IAtomType type = builder.NewAtomType("C", "C.sp2");
             Assert.IsNotNull(type);
         }
 
@@ -159,7 +159,7 @@ namespace NCDK
         public void TestNewBioPolymer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBioPolymer polymer = builder.CreateBioPolymer();
+            IBioPolymer polymer = builder.NewBioPolymer();
             Assert.IsNotNull(polymer);
         }
 
@@ -167,7 +167,7 @@ namespace NCDK
         public void TestNewBond()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond();
+            IBond bond = builder.NewBond();
             Assert.IsNotNull(bond);
         }
 
@@ -175,8 +175,8 @@ namespace NCDK
         public void TestNewBond_IAtom_IAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond(builder.CreateAtom(),
-                    builder.CreateAtom());
+            IBond bond = builder.NewBond(builder.NewAtom(),
+                    builder.NewAtom());
             Assert.IsNotNull(bond);
         }
 
@@ -188,15 +188,15 @@ namespace NCDK
         //public void TestNewBond_IAtom_IAtomContainer()
         //{
         //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.CreateBond(builder.CreateAtom(), builder.CreateAtomContainer());
+        //    builder.NewBond(builder.NewAtom(), builder.NewAtomContainer());
         //}
 
         [TestMethod()]
         public void TestNewBond_IAtom_IAtom_BondOrder()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond(builder.CreateAtom(),
-                    builder.CreateAtom(), BondOrder.Single);
+            IBond bond = builder.NewBond(builder.NewAtom(),
+                    builder.NewAtom(), BondOrder.Single);
             Assert.IsNotNull(bond);
         }
 
@@ -204,8 +204,8 @@ namespace NCDK
         public void TestNewBond_IAtom_IAtom_BondOrder_IBond_Stereo()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond(builder.CreateAtom(),
-                    builder.CreateAtom(), BondOrder.Single, BondStereo.EOrZ);
+            IBond bond = builder.NewBond(builder.NewAtom(),
+                    builder.NewAtom(), BondOrder.Single, BondStereo.EOrZ);
             Assert.IsNotNull(bond);
         }
 
@@ -213,7 +213,7 @@ namespace NCDK
         public void TestNewBond_arrayIAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond(new IAtom[] { builder.CreateAtom(), builder.CreateAtom() });
+            IBond bond = builder.NewBond(new IAtom[] { builder.NewAtom(), builder.NewAtom() });
             Assert.IsNotNull(bond);
         }
 
@@ -221,7 +221,7 @@ namespace NCDK
         public void TestNewBond_arrayIAtom_BondOrder()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IBond bond = builder.CreateBond(new IAtom[] { builder.CreateAtom(), builder.CreateAtom() },
+            IBond bond = builder.NewBond(new IAtom[] { builder.NewAtom(), builder.NewAtom() },
                     BondOrder.Double);
             Assert.IsNotNull(bond);
         }
@@ -230,7 +230,7 @@ namespace NCDK
         public void TestNewChemFile()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemFile file = builder.CreateChemFile();
+            IChemFile file = builder.NewChemFile();
             Assert.IsNotNull(file);
         }
 
@@ -238,7 +238,7 @@ namespace NCDK
         public void TestNewChemModel()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemModel model = builder.CreateChemModel();
+            IChemModel model = builder.NewChemModel();
             Assert.IsNotNull(model);
         }
 
@@ -246,7 +246,7 @@ namespace NCDK
         public void TestNewChemObject()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemObject model = builder.CreateChemObject();
+            IChemObject model = builder.NewChemObject();
             Assert.IsNotNull(model);
         }
 
@@ -254,7 +254,7 @@ namespace NCDK
         public void TestNewChemObject_IChemObject()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemObject model = builder.CreateChemObject(builder.CreateChemObject());
+            IChemObject model = builder.NewChemObject(builder.NewChemObject());
             Assert.IsNotNull(model);
         }
 
@@ -262,7 +262,7 @@ namespace NCDK
         public void TestNewChemSequence()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IChemSequence sequence = builder.CreateChemSequence();
+            IChemSequence sequence = builder.NewChemSequence();
             Assert.IsNotNull(sequence);
         }
 
@@ -270,7 +270,7 @@ namespace NCDK
         public void TestNewCrystal()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ICrystal crystal = builder.CreateCrystal();
+            ICrystal crystal = builder.NewCrystal();
             Assert.IsNotNull(crystal);
         }
 
@@ -278,7 +278,7 @@ namespace NCDK
         public void TestNewCrystal_IAtomContainer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ICrystal crystal = builder.CreateCrystal(builder.CreateAtomContainer());
+            ICrystal crystal = builder.NewCrystal(builder.NewAtomContainer());
             Assert.IsNotNull(crystal);
         }
 
@@ -286,7 +286,7 @@ namespace NCDK
         public void TestNewElectronContainer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IElectronContainer container = builder.CreateElectronContainer();
+            IElectronContainer container = builder.NewElectronContainer();
             Assert.IsNotNull(container);
         }
 
@@ -294,7 +294,7 @@ namespace NCDK
         public void TestNewElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.CreateElement();
+            IElement element = builder.NewElement();
             Assert.IsNotNull(element);
         }
 
@@ -302,7 +302,7 @@ namespace NCDK
         public void TestNewElement_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.CreateElement(builder.CreateElement());
+            IElement element = builder.NewElement(builder.NewElement());
             Assert.IsNotNull(element);
         }
 
@@ -310,7 +310,7 @@ namespace NCDK
         public void TestNewElement_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.CreateElement("C");
+            IElement element = builder.NewElement("C");
             Assert.IsNotNull(element);
         }
 
@@ -318,7 +318,7 @@ namespace NCDK
         public void TestNewElement_String_int()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IElement element = builder.CreateElement("C", 13);
+            IElement element = builder.NewElement("C", 13);
             Assert.IsNotNull(element);
         }
 
@@ -326,7 +326,7 @@ namespace NCDK
         public void TestNewIsotope_int_String_Double_double()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.CreateIsotope(6, "C", 1.0, 1.0);
+            IIsotope isotope = builder.NewIsotope(6, "C", 1.0, 1.0);
             Assert.IsNotNull(isotope);
         }
 
@@ -334,7 +334,7 @@ namespace NCDK
         public void TestNewIsotope_int_String_int_Double_double()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.CreateIsotope(6, "C", 13, 1.0, 1.0);
+            IIsotope isotope = builder.NewIsotope(6, "C", 13, 1.0, 1.0);
             Assert.IsNotNull(isotope);
         }
 
@@ -342,7 +342,7 @@ namespace NCDK
         public void TestNewIsotope_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.CreateIsotope(builder.CreateElement());
+            IIsotope isotope = builder.NewIsotope(builder.NewElement());
             Assert.IsNotNull(isotope);
         }
 
@@ -350,7 +350,7 @@ namespace NCDK
         public void TestNewIsotope_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.CreateIsotope("C");
+            IIsotope isotope = builder.NewIsotope("C");
             Assert.IsNotNull(isotope);
         }
 
@@ -358,7 +358,7 @@ namespace NCDK
         public void TestNewIsotope_String_int()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IIsotope isotope = builder.CreateIsotope("C", 13);
+            IIsotope isotope = builder.NewIsotope("C", 13);
             Assert.IsNotNull(isotope);
         }
 
@@ -366,7 +366,7 @@ namespace NCDK
         public void TestNewLonePair()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ILonePair lonePair = builder.CreateLonePair();
+            ILonePair lonePair = builder.NewLonePair();
             Assert.IsNotNull(lonePair);
         }
 
@@ -374,7 +374,7 @@ namespace NCDK
         public void TestNewLonePair_IAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ILonePair lonePair = builder.CreateLonePair(builder.CreateAtom());
+            ILonePair lonePair = builder.NewLonePair(builder.NewAtom());
             Assert.IsNotNull(lonePair);
         }
 
@@ -382,8 +382,8 @@ namespace NCDK
         public void TestNewMapping_IChemObject_IChemObject()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IMapping mapping = builder.CreateMapping(builder.CreateChemObject(),
-                    builder.CreateChemObject());
+            IMapping mapping = builder.NewMapping(builder.NewChemObject(),
+                    builder.NewChemObject());
             Assert.IsNotNull(mapping);
         }
 
@@ -391,7 +391,7 @@ namespace NCDK
         public void TestNewMonomer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IMonomer monomer = builder.CreateMonomer();
+            IMonomer monomer = builder.NewMonomer();
             Assert.IsNotNull(monomer);
         }
 
@@ -399,7 +399,7 @@ namespace NCDK
         public void TestNewPolymer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPolymer polymer = builder.CreatePolymer();
+            IPolymer polymer = builder.NewPolymer();
             Assert.IsNotNull(polymer);
         }
 
@@ -407,7 +407,7 @@ namespace NCDK
         public void TestNewPDBAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom(builder.CreateElement());
+            IPDBAtom atom = builder.NewPDBAtom(builder.NewElement());
             Assert.IsNotNull(atom);
         }
 
@@ -415,7 +415,7 @@ namespace NCDK
         public void TestNewPDBAtom_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("O");
+            IPDBAtom atom = builder.NewPDBAtom("O");
             Assert.IsNotNull(atom);
         }
 
@@ -423,7 +423,7 @@ namespace NCDK
         public void TestNewPDBAtom_String_Point3D()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("O", new Vector3(1, 2, 3));
+            IPDBAtom atom = builder.NewPDBAtom("O", new Vector3(1, 2, 3));
             Assert.IsNotNull(atom);
         }
 
@@ -431,7 +431,7 @@ namespace NCDK
         public void TestNewPDBPolymer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBPolymer polymer = builder.CreatePDBPolymer();
+            IPDBPolymer polymer = builder.NewPDBPolymer();
             Assert.IsNotNull(polymer);
         }
 
@@ -439,7 +439,7 @@ namespace NCDK
         public void TestNewPDBStructure()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBStructure structure = builder.CreatePDBStructure();
+            IPDBStructure structure = builder.NewPDBStructure();
             Assert.IsNotNull(structure);
         }
 
@@ -447,7 +447,7 @@ namespace NCDK
         public void TestNewPDBMonomer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBMonomer monomer = builder.CreatePDBMonomer();
+            IPDBMonomer monomer = builder.NewPDBMonomer();
             Assert.IsNotNull(monomer);
         }
 
@@ -455,7 +455,7 @@ namespace NCDK
         public void TestNewPseudoAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom();
+            IPseudoAtom atom = builder.NewPseudoAtom();
             Assert.IsNotNull(atom);
         }
 
@@ -463,7 +463,7 @@ namespace NCDK
         public void TestNewPseudoAtom_IElement()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom(builder.CreateElement());
+            IPseudoAtom atom = builder.NewPseudoAtom(builder.NewElement());
             Assert.IsNotNull(atom);
         }
 
@@ -471,7 +471,7 @@ namespace NCDK
         public void TestNewPseudoAtom_IAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom(builder.CreateAtom());
+            IPseudoAtom atom = builder.NewPseudoAtom(builder.NewAtom());
             Assert.IsNotNull(atom);
         }
 
@@ -479,7 +479,7 @@ namespace NCDK
         public void TestNewPseudoAtom_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom("Foo");
+            IPseudoAtom atom = builder.NewPseudoAtom("Foo");
             Assert.IsNotNull(atom);
         }
 
@@ -487,7 +487,7 @@ namespace NCDK
         public void TestNewPseudoAtom_String_Point2d()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom("Foo", new Vector2(1, 2));
+            IPseudoAtom atom = builder.NewPseudoAtom("Foo", new Vector2(1, 2));
             Assert.IsNotNull(atom);
         }
 
@@ -495,7 +495,7 @@ namespace NCDK
         public void TestNewPseudoAtom_String_Point3d()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPseudoAtom atom = builder.CreatePseudoAtom("Foo", new Vector3(1, 2, 3));
+            IPseudoAtom atom = builder.NewPseudoAtom("Foo", new Vector3(1, 2, 3));
             Assert.IsNotNull(atom);
         }
 
@@ -503,7 +503,7 @@ namespace NCDK
         public void TestNewPDBAtom_String_Point3d()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IPDBAtom atom = builder.CreatePDBAtom("C", new Vector3(1, 2, 3));
+            IPDBAtom atom = builder.NewPDBAtom("C", new Vector3(1, 2, 3));
             Assert.IsNotNull(atom);
         }
 
@@ -511,7 +511,7 @@ namespace NCDK
         public void TestNewReaction()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             Assert.IsNotNull(reaction);
         }
 
@@ -519,7 +519,7 @@ namespace NCDK
         public void TestNewRing()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IRing ring = builder.CreateRing();
+            IRing ring = builder.NewRing();
             Assert.IsNotNull(ring);
         }
 
@@ -527,7 +527,7 @@ namespace NCDK
         //public void TestNewRing_int()
         //{
         //    IChemObjectBuilder builder = RootObject.Builder;
-        //    IRing ring = builder.CreateRing(4);
+        //    IRing ring = builder.NewRing(4);
         //    Assert.IsNotNull(ring);
         //}
 
@@ -535,7 +535,7 @@ namespace NCDK
         public void TestNewRing_int_String()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IRing ring = builder.CreateRing(5, "C");
+            IRing ring = builder.NewRing(5, "C");
             Assert.IsNotNull(ring);
         }
 
@@ -543,7 +543,7 @@ namespace NCDK
         public void TestNewRing_IAtomContainer()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IRing ring = builder.CreateRing(builder.CreateAtomContainer());
+            IRing ring = builder.NewRing(builder.NewAtomContainer());
             Assert.IsNotNull(ring);
         }
 
@@ -551,7 +551,7 @@ namespace NCDK
         public void TestNewRingSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IRingSet set = builder.CreateRingSet();
+            IRingSet set = builder.NewRingSet();
             Assert.IsNotNull(set);
         }
 
@@ -559,7 +559,7 @@ namespace NCDK
         public void TestNewAtomContainerSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainerSet set = builder.CreateAtomContainerSet();
+            IAtomContainerSet set = builder.NewAtomContainerSet();
             Assert.IsNotNull(set);
         }
 
@@ -567,7 +567,7 @@ namespace NCDK
         public void TestNewMoleculeSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainerSet set = builder.CreateAtomContainerSet();
+            IAtomContainerSet set = builder.NewAtomContainerSet();
             Assert.IsNotNull(set);
         }
 
@@ -575,7 +575,7 @@ namespace NCDK
         public void TestNewReactionSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IReactionSet set = builder.CreateReactionSet();
+            IReactionSet set = builder.NewReactionSet();
             Assert.IsNotNull(set);
         }
 
@@ -583,7 +583,7 @@ namespace NCDK
         public void TestNewReactionScheme()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IReactionScheme scheme = builder.CreateReactionScheme();
+            IReactionScheme scheme = builder.NewReactionScheme();
             Assert.IsNotNull(scheme);
         }
 
@@ -591,7 +591,7 @@ namespace NCDK
         public void TestNewSingleElectron()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ISingleElectron electron = builder.CreateSingleElectron();
+            ISingleElectron electron = builder.NewSingleElectron();
             Assert.IsNotNull(electron);
         }
 
@@ -599,7 +599,7 @@ namespace NCDK
         public void TestNewSingleElectron_IAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ISingleElectron electron = builder.CreateSingleElectron(builder.CreateAtom());
+            ISingleElectron electron = builder.NewSingleElectron(builder.NewAtom());
             Assert.IsNotNull(electron);
         }
 
@@ -607,7 +607,7 @@ namespace NCDK
         public void TestNewStrand()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IStrand strand = builder.CreateStrand();
+            IStrand strand = builder.NewStrand();
             Assert.IsNotNull(strand);
         }
 
@@ -615,7 +615,7 @@ namespace NCDK
         public void TestNewFragmentAtom()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IFragmentAtom fragAtom = builder.CreateFragmentAtom();
+            IFragmentAtom fragAtom = builder.NewFragmentAtom();
             Assert.IsNotNull(fragAtom);
         }
 
@@ -623,7 +623,7 @@ namespace NCDK
         public void TestNewMolecularFormula()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IMolecularFormula mf = builder.CreateMolecularFormula();
+            IMolecularFormula mf = builder.NewMolecularFormula();
             Assert.IsNotNull(mf);
         }
 
@@ -631,7 +631,7 @@ namespace NCDK
         public void TestNewMolecularFormulaSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IMolecularFormulaSet mfSet = builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet mfSet = builder.NewMolecularFormulaSet();
             Assert.IsNotNull(mfSet);
         }
 
@@ -639,7 +639,7 @@ namespace NCDK
         public void TestNewMolecularFormulaSet_IMolecularFormula()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IMolecularFormulaSet mfSet = builder.CreateMolecularFormulaSet(builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfSet = builder.NewMolecularFormulaSet(builder.NewMolecularFormula());
             Assert.IsNotNull(mfSet);
         }
 
@@ -647,7 +647,7 @@ namespace NCDK
         public void TestNewAdductFormula()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAdductFormula af = builder.CreateAdductFormula();
+            IAdductFormula af = builder.NewAdductFormula();
             Assert.IsNotNull(af);
         }
 
@@ -655,7 +655,7 @@ namespace NCDK
         public void TestNewAdductFormula_IMolecularFormula()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAdductFormula af = builder.CreateAdductFormula(builder.CreateMolecularFormula());
+            IAdductFormula af = builder.NewAdductFormula(builder.NewMolecularFormula());
             Assert.IsNotNull(af);
         }
 
@@ -663,19 +663,19 @@ namespace NCDK
         public void TestNewTetrahedralChirality()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("Cl"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("Br"));
-            molecule.Atoms.Add(builder.CreateAtom("I"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("Cl"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("Br"));
+            molecule.Atoms.Add(builder.NewAtom("I"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
             IAtom[] ligands = new IAtom[]{molecule.Atoms[4], molecule.Atoms[3], molecule.Atoms[2],
                 molecule.Atoms[0]};
-            ITetrahedralChirality chirality = builder.CreateTetrahedralChirality(molecule.Atoms[1],
+            ITetrahedralChirality chirality = builder.NewTetrahedralChirality(molecule.Atoms[1],
                     ligands, TetrahedralStereo.Clockwise);
             Assert.IsNotNull(chirality);
             Assert.AreEqual(builder, chirality.Builder);
@@ -687,7 +687,7 @@ namespace NCDK
         //    IChemObjectBuilder builder = RootObject.Builder;
         //    try
         //    {
-        //        builder.CreateAtom(true);
+        //        builder.NewAtom(true);
         //        Assert.Fail("I expected an exception, because this constructor does not exist.");
         //    }
         //    catch (Exception exception)
@@ -701,7 +701,7 @@ namespace NCDK
         public void TestSubstance()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            ISubstance substance = builder.CreateSubstance();
+            ISubstance substance = builder.NewSubstance();
             Assert.IsNotNull(substance);
         }
     }

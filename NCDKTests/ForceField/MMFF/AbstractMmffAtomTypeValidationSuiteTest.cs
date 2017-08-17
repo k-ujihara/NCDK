@@ -45632,7 +45632,7 @@ namespace NCDK.ForceField.MMFF
         // helper method for creating atoms
         static IAtom NewAtm(string symbol, int charge)
         {
-            IAtom atom = Silent.ChemObjectBuilder.Instance.CreateAtom(symbol);
+            IAtom atom = Silent.ChemObjectBuilder.Instance.NewAtom(symbol);
             atom.ImplicitHydrogenCount = 0;
             atom.FormalCharge = charge;
             return atom;

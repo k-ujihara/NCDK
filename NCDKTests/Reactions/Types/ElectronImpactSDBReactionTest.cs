@@ -125,12 +125,12 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
 
-            IAtomContainer reactant = builder.CreateAtomContainer();//CreateFromSmiles("C=CC")
-            reactant.Atoms.Add(builder.CreateAtom("C"));
-            reactant.Atoms.Add(builder.CreateAtom("C"));
-            reactant.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CC")
+            reactant.Atoms.Add(builder.NewAtom("C"));
+            reactant.Atoms.Add(builder.NewAtom("C"));
+            reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.AddBond(reactant.Atoms[0], reactant.Atoms[1], BondOrder.Double);
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             try
@@ -153,7 +153,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
-            var setOfProducts = builder.CreateAtomContainerSet();
+            var setOfProducts = builder.NewAtomContainerSet();
 
             setOfProducts.Add(null);
             return setOfProducts;

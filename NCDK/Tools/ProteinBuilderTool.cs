@@ -56,7 +56,7 @@ namespace NCDK.Tools
             {
                 // make the connection between that aminoAcid's C-terminus and the
                 // protein's N-terminus
-                protein.Bonds.Add(aaToAdd.Builder.CreateBond(aaToAddTo.NTerminus,
+                protein.Bonds.Add(aaToAdd.Builder.NewBond(aaToAddTo.NTerminus,
                         aaToAdd.CTerminus, BondOrder.Single));
             } // else : no current N-terminus, so nothing special to do
             return protein;
@@ -81,7 +81,7 @@ namespace NCDK.Tools
             {
                 // make the connection between that aminoAcid's N-terminus and the
                 // protein's C-terminus
-                protein.Bonds.Add(aaToAdd.Builder.CreateBond(aaToAddTo.CTerminus,
+                protein.Bonds.Add(aaToAdd.Builder.NewBond(aaToAddTo.CTerminus,
                         aaToAdd.NTerminus, BondOrder.Single));
             } // else : no current C-terminus, so nothing special to do
             return protein;
@@ -121,8 +121,8 @@ namespace NCDK.Tools
         public static IBioPolymer CreateProtein(string sequence, IChemObjectBuilder builder)
         {
             IDictionary < string, IAminoAcid> templates = AminoAcids.GetHashMapBySingleCharCode();
-            IBioPolymer protein = builder.CreateBioPolymer();
-            IStrand strand = builder.CreateStrand();
+            IBioPolymer protein = builder.NewBioPolymer();
+            IStrand strand = builder.NewStrand();
             IAminoAcid previousAA = null;
             for (int i = 0; i < sequence.Length; i++)
             {
@@ -148,10 +148,10 @@ namespace NCDK.Tools
                 }
             }
             // add the last oxygen of the protein
-            IAtom oxygen = builder.CreateAtom("O");
+            IAtom oxygen = builder.NewAtom("O");
             // ... to amino acid
             previousAA.Atoms.Add(oxygen);
-            IBond bond = builder.CreateBond(oxygen, previousAA.CTerminus, BondOrder.Single);
+            IBond bond = builder.NewBond(oxygen, previousAA.CTerminus, BondOrder.Single);
             previousAA.Bonds.Add(bond);
             // ... and to protein
             protein.AddAtom(oxygen, previousAA, strand);

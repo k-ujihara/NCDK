@@ -69,10 +69,10 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile()
         {
-            IChemSequence seq = file.Builder.CreateChemSequence();
-            IChemModel model = file.Builder.CreateChemModel();
-            var containerSet = file.Builder.CreateAtomContainerSet();
-            IAtomContainer container = file.Builder.CreateAtomContainer();
+            IChemSequence seq = file.Builder.NewChemSequence();
+            IChemModel model = file.Builder.NewChemModel();
+            var containerSet = file.Builder.NewAtomContainerSet();
+            IAtomContainer container = file.Builder.NewAtomContainer();
 
             int lineNumber = 0;
 
@@ -158,7 +158,7 @@ namespace NCDK.IO
             {
                 string line = input.ReadLine();
                 int atomicNumber = int.Parse(line.Substring(7, 3).Trim());
-                IAtom atom = container.Builder.CreateAtom();
+                IAtom atom = container.Builder.NewAtom();
                 atom.AtomicNumber = atomicNumber;
                 atom.Symbol = PeriodicTable.GetSymbol(atomicNumber);
                 container.Atoms.Add(atom);
@@ -174,7 +174,7 @@ namespace NCDK.IO
                 int atom2 = int.Parse(line.Substring(16, 3).Trim()) - 1;
                 if (container.GetBond(container.Atoms[atom1], container.Atoms[atom2]) == null)
                 {
-                    IBond bond = container.Builder.CreateBond(container.Atoms[atom1],
+                    IBond bond = container.Builder.NewBond(container.Atoms[atom1],
                             container.Atoms[atom2]);
                     int order = int.Parse(line.Substring(23).Trim());
                     bond.Order = BondManipulator.CreateBondOrder((double)order);

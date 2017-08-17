@@ -83,7 +83,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetElementCount(IMolecularFormula, IElement)"/>
         public static int GetElementCount(IMolecularFormula formula, IIsotope isotope)
         {
-            return GetElementCount(formula, formula.Builder.CreateElement(isotope));
+            return GetElementCount(formula, formula.Builder.NewElement(isotope));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetElementCount(IMolecularFormula, IElement)"/>
         public static int GetElementCount(IMolecularFormula formula, string symbol)
         {
-            return GetElementCount(formula, formula.Builder.CreateElement(symbol));
+            return GetElementCount(formula, formula.Builder.NewElement(symbol));
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace NCDK.Tools.Manipulator
         public static string GetString(IMolecularFormula formula, bool setOne)
         {
 
-            if (ContainsElement(formula, formula.Builder.CreateElement("C")))
+            if (ContainsElement(formula, formula.Builder.NewElement("C")))
                 return GetString(formula, GenerateOrderEle_Hill_WithCarbons(), setOne);
             else
                 return GetString(formula, GenerateOrderEle_Hill_NoCarbons(), setOne);
@@ -246,7 +246,7 @@ namespace NCDK.Tools.Manipulator
             List<IIsotope> isotopesList = new List<IIsotope>();
             foreach (var orderElement in orderElements)
             {
-                IElement element = formula.Builder.CreateElement(orderElement);
+                IElement element = formula.Builder.NewElement(orderElement);
                 if (ContainsElement(formula, element))
                 {
                     var isotopes = GetIsotopes(formula, element);
@@ -330,7 +330,7 @@ namespace NCDK.Tools.Manipulator
         public static string GetHTML(IMolecularFormula formula, bool chargeB, bool isotopeB)
         {
             string[] orderElements;
-            if (ContainsElement(formula, formula.Builder.CreateElement("C")))
+            if (ContainsElement(formula, formula.Builder.NewElement("C")))
                 orderElements = GenerateOrderEle_Hill_WithCarbons();
             else
                 orderElements = GenerateOrderEle_Hill_NoCarbons();
@@ -355,7 +355,7 @@ namespace NCDK.Tools.Manipulator
             StringBuilder sb = new StringBuilder();
             foreach (var orderElement in orderElements)
             {
-                IElement element = formula.Builder.CreateElement(orderElement);
+                IElement element = formula.Builder.NewElement(orderElement);
                 if (ContainsElement(formula, element))
                 {
                     if (!showIsotopes)
@@ -440,7 +440,7 @@ namespace NCDK.Tools.Manipulator
         private static IMolecularFormula GetMolecularFormula(string stringMF, bool assumeMajorIsotope,
                 IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
 
             return GetMolecularFormula(stringMF, formula, assumeMajorIsotope);
         }
@@ -537,7 +537,7 @@ namespace NCDK.Tools.Manipulator
                         RecentElementCount = 1;
                     }
 
-                    IIsotope isotope = formula.Builder.CreateIsotope(RecentElementSymbol);
+                    IIsotope isotope = formula.Builder.NewIsotope(RecentElementSymbol);
                     if (assumeMajorIsotope)
                     {
                         try
@@ -719,7 +719,7 @@ namespace NCDK.Tools.Manipulator
             }
             foreach (var isotope in formula.Isotopes)
             {
-                IElement isotopesElement = formula.Builder.CreateElement(isotope);
+                IElement isotopesElement = formula.Builder.NewElement(isotope);
                 mass += factory.GetNaturalMass(isotopesElement) * formula.GetCount(isotope);
             }
             return mass;
@@ -808,7 +808,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMolecularFormula(IAtomContainer, IMolecularFormula)"/>
         public static IMolecularFormula GetMolecularFormula(IAtomContainer atomContainer)
         {
-            IMolecularFormula formula = atomContainer.Builder.CreateMolecularFormula();
+            IMolecularFormula formula = atomContainer.Builder.NewMolecularFormula();
 
             return GetMolecularFormula(atomContainer, formula);
         }
@@ -833,7 +833,7 @@ namespace NCDK.Tools.Manipulator
 
                 if (iAtom.ImplicitHydrogenCount != null && (iAtom.ImplicitHydrogenCount.Value > 0))
                 {
-                    if (hAtom == null) hAtom = atomContainer.Builder.CreateAtom("H");
+                    if (hAtom == null) hAtom = atomContainer.Builder.NewAtom("H");
                     formula.Add(hAtom, iAtom.ImplicitHydrogenCount.Value);
                 }
             }
@@ -852,7 +852,7 @@ namespace NCDK.Tools.Manipulator
         public static IAtomContainer GetAtomContainer(IMolecularFormula formula)
         {
 
-            IAtomContainer atomContainer = formula.Builder.CreateAtomContainer();
+            IAtomContainer atomContainer = formula.Builder.NewAtomContainer();
             return GetAtomContainer(formula, atomContainer);
         }
 
@@ -873,7 +873,7 @@ namespace NCDK.Tools.Manipulator
                 int occur = formula.GetCount(isotope);
                 for (int i = 0; i < occur; i++)
                 {
-                    IAtom atom = formula.Builder.CreateAtom(isotope);
+                    IAtom atom = formula.Builder.NewAtom(isotope);
                     atomContainer.Atoms.Add(atom);
                 }
             }
@@ -1298,7 +1298,7 @@ namespace NCDK.Tools.Manipulator
             }
             else if (proton == null && hcnt > 0)
             {
-                proton = bldr.CreateIsotope("H");
+                proton = bldr.NewIsotope("H");
                 proton.MassNumber = 1;
             }
 

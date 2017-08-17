@@ -80,9 +80,9 @@ namespace NCDK.Graphs
             IDictionary<IAtom, IAtomContainer> componentsMap = new Dictionary<IAtom, IAtomContainer>(2 * container.Atoms.Count);
 
             for (int i = 1; i < containers.Length; i++)
-                containers[i] = container.Builder.CreateAtomContainer();
+                containers[i] = container.Builder.NewAtomContainer();
 
-            IAtomContainerSet<IAtomContainer> containerSet = container.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> containerSet = container.Builder.NewAtomContainerSet();
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {

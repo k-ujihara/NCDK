@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             var originalCharge2 = bond.Atoms[1].Charge;
             if (!IsCachedAtomContainer(ac))
             {
-                IAtomContainer mol = ac.Builder.CreateAtomContainer(ac);
+                IAtomContainer mol = ac.Builder.NewAtomContainer(ac);
                 if (maxIterations != 0) peoe.MaxGasteigerIterations = maxIterations;
                 try
                 {

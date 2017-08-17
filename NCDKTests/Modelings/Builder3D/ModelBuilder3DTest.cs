@@ -250,23 +250,23 @@ namespace NCDK.Modelings.Builder3D
             IAtomContainer methanol = new Silent.AtomContainer();
             IChemObjectBuilder builder = methanol.Builder;
 
-            IAtom carbon1 = builder.CreateAtom("C");
+            IAtom carbon1 = builder.NewAtom("C");
             carbon1.Id = "carbon1";
             methanol.Atoms.Add(carbon1);
             for (int i = 0; i < 3; i++)
             {
-                IAtom hydrogen = builder.CreateAtom("H");
+                IAtom hydrogen = builder.NewAtom("H");
                 methanol.Atoms.Add(hydrogen);
-                methanol.Bonds.Add(builder.CreateBond(carbon1, hydrogen, BondOrder.Single));
+                methanol.Bonds.Add(builder.NewBond(carbon1, hydrogen, BondOrder.Single));
             }
-            IAtom oxygen1 = builder.CreateAtom("O");
+            IAtom oxygen1 = builder.NewAtom("O");
             oxygen1.Id = "oxygen1";
             methanol.Atoms.Add(oxygen1);
-            methanol.Bonds.Add(builder.CreateBond(carbon1, oxygen1, BondOrder.Single));
+            methanol.Bonds.Add(builder.NewBond(carbon1, oxygen1, BondOrder.Single));
             {
-                IAtom hydrogen = builder.CreateAtom("H");
+                IAtom hydrogen = builder.NewAtom("H");
                 methanol.Atoms.Add(hydrogen);
-                methanol.Bonds.Add(builder.CreateBond(hydrogen, oxygen1, BondOrder.Single));
+                methanol.Bonds.Add(builder.NewBond(hydrogen, oxygen1, BondOrder.Single));
             }
 
             Assert.AreEqual(6, methanol.Atoms.Count);
@@ -334,7 +334,7 @@ namespace NCDK.Modelings.Builder3D
                 var input = inputList[i];
                 {
                     // shallow copy
-                    IAtomContainer mol = builder.CreateAtomContainer(input);
+                    IAtomContainer mol = builder.NewAtomContainer(input);
                     try
                     {
                         mol = mb3d.Generate3DCoordinates(mol, false);

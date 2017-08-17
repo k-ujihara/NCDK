@@ -141,7 +141,7 @@ namespace NCDK.Modelings.Builder3D
 
         private IAtomContainer GetAllInOneContainer(IRingSet ringSet)
         {
-            IAtomContainer resultContainer = ringSet.Builder.CreateAtomContainer();
+            IAtomContainer resultContainer = ringSet.Builder.NewAtomContainer();
             var containers = RingSetManipulator.GetAllAtomContainers(ringSet);
             foreach (var container in containers)
                 resultContainer.Add(container);

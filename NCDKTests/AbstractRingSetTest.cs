@@ -34,8 +34,8 @@ namespace NCDK
         public virtual void TestAdd_IRingSet()
         {
             IRingSet rs = (IRingSet)NewChemObject();
-            IRing r1 = rs.Builder.CreateRing(5, "C");
-            IRing r2 = rs.Builder.CreateRing(3, "C");
+            IRing r1 = rs.Builder.NewRing(5, "C");
+            IRing r2 = rs.Builder.NewRing(3, "C");
             rs.Add(r1);
 
             IRingSet rs2 = (IRingSet)NewChemObject();
@@ -62,7 +62,7 @@ namespace NCDK
         public override void TestClone()
         {
             IRingSet ringset = (IRingSet)NewChemObject();
-            IRing ring = ringset.Builder.CreateRing();
+            IRing ring = ringset.Builder.NewRing();
             ringset.Add(ring);
 
             IRingSet clone = (IRingSet)ringset.Clone();
@@ -77,21 +77,21 @@ namespace NCDK
         {
             IRingSet ringset = (IRingSet)NewChemObject();
 
-            IAtom ring1Atom1 = ringset.Builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom1 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom2 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom1 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom2 = ringset.Builder.CreateAtom("C");
-            IBond ring1Bond1 = ringset.Builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring1Atom1);
-            IBond ring1Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring1Atom2);
-            IBond sharedBond = ringset.Builder.CreateBond(sharedAtom1, sharedAtom2);
-            IBond ring2Bond1 = ringset.Builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring2Atom1);
-            IBond ring2Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring2Atom2);
+            IAtom ring1Atom1 = ringset.Builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom1 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom2 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom1 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom2 = ringset.Builder.NewAtom("C");
+            IBond ring1Bond1 = ringset.Builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = ringset.Builder.NewBond(sharedAtom1, ring1Atom1);
+            IBond ring1Bond3 = ringset.Builder.NewBond(sharedAtom2, ring1Atom2);
+            IBond sharedBond = ringset.Builder.NewBond(sharedAtom1, sharedAtom2);
+            IBond ring2Bond1 = ringset.Builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = ringset.Builder.NewBond(sharedAtom1, ring2Atom1);
+            IBond ring2Bond3 = ringset.Builder.NewBond(sharedAtom2, ring2Atom2);
 
-            IRing ring1 = ringset.Builder.CreateRing();
+            IRing ring1 = ringset.Builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(sharedAtom1);
@@ -100,7 +100,7 @@ namespace NCDK
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
             ring1.Bonds.Add(sharedBond);
-            IRing ring2 = ringset.Builder.CreateRing();
+            IRing ring2 = ringset.Builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(sharedAtom1);
@@ -126,21 +126,21 @@ namespace NCDK
         {
             IRingSet ringset = (IRingSet)NewChemObject();
 
-            IAtom ring1Atom1 = ringset.Builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom1 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom2 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom1 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom2 = ringset.Builder.CreateAtom("C");
-            IBond ring1Bond1 = ringset.Builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring1Atom1);
-            IBond ring1Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring1Atom2);
-            IBond sharedBond = ringset.Builder.CreateBond(sharedAtom1, sharedAtom2);
-            IBond ring2Bond1 = ringset.Builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring2Atom1);
-            IBond ring2Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring2Atom2);
+            IAtom ring1Atom1 = ringset.Builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom1 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom2 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom1 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom2 = ringset.Builder.NewAtom("C");
+            IBond ring1Bond1 = ringset.Builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = ringset.Builder.NewBond(sharedAtom1, ring1Atom1);
+            IBond ring1Bond3 = ringset.Builder.NewBond(sharedAtom2, ring1Atom2);
+            IBond sharedBond = ringset.Builder.NewBond(sharedAtom1, sharedAtom2);
+            IBond ring2Bond1 = ringset.Builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = ringset.Builder.NewBond(sharedAtom1, ring2Atom1);
+            IBond ring2Bond3 = ringset.Builder.NewBond(sharedAtom2, ring2Atom2);
 
-            IRing ring1 = ringset.Builder.CreateRing();
+            IRing ring1 = ringset.Builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(sharedAtom1);
@@ -149,7 +149,7 @@ namespace NCDK
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
             ring1.Bonds.Add(sharedBond);
-            IRing ring2 = ringset.Builder.CreateRing();
+            IRing ring2 = ringset.Builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(sharedAtom1);
@@ -171,21 +171,21 @@ namespace NCDK
         {
             IRingSet ringset = (IRingSet)NewChemObject();
 
-            IAtom ring1Atom1 = ringset.Builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom1 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom2 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom1 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom2 = ringset.Builder.CreateAtom("C");
-            IBond ring1Bond1 = ringset.Builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring1Atom1);
-            IBond ring1Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring1Atom2);
-            IBond sharedBond = ringset.Builder.CreateBond(sharedAtom1, sharedAtom2);
-            IBond ring2Bond1 = ringset.Builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring2Atom1);
-            IBond ring2Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring2Atom2);
+            IAtom ring1Atom1 = ringset.Builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom1 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom2 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom1 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom2 = ringset.Builder.NewAtom("C");
+            IBond ring1Bond1 = ringset.Builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = ringset.Builder.NewBond(sharedAtom1, ring1Atom1);
+            IBond ring1Bond3 = ringset.Builder.NewBond(sharedAtom2, ring1Atom2);
+            IBond sharedBond = ringset.Builder.NewBond(sharedAtom1, sharedAtom2);
+            IBond ring2Bond1 = ringset.Builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = ringset.Builder.NewBond(sharedAtom1, ring2Atom1);
+            IBond ring2Bond3 = ringset.Builder.NewBond(sharedAtom2, ring2Atom2);
 
-            IRing ring1 = ringset.Builder.CreateRing();
+            IRing ring1 = ringset.Builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(sharedAtom1);
@@ -194,7 +194,7 @@ namespace NCDK
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
             ring1.Bonds.Add(sharedBond);
-            IRing ring2 = ringset.Builder.CreateRing();
+            IRing ring2 = ringset.Builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(sharedAtom1);
@@ -221,21 +221,21 @@ namespace NCDK
         {
             IRingSet ringset = (IRingSet)NewChemObject();
 
-            IAtom ring1Atom1 = ringset.Builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom1 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom2 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom1 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom2 = ringset.Builder.CreateAtom("C");
-            IBond ring1Bond1 = ringset.Builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring1Atom1);
-            IBond ring1Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring1Atom2);
-            IBond sharedBond = ringset.Builder.CreateBond(sharedAtom1, sharedAtom2);
-            IBond ring2Bond1 = ringset.Builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring2Atom1);
-            IBond ring2Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring2Atom2);
+            IAtom ring1Atom1 = ringset.Builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom1 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom2 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom1 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom2 = ringset.Builder.NewAtom("C");
+            IBond ring1Bond1 = ringset.Builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = ringset.Builder.NewBond(sharedAtom1, ring1Atom1);
+            IBond ring1Bond3 = ringset.Builder.NewBond(sharedAtom2, ring1Atom2);
+            IBond sharedBond = ringset.Builder.NewBond(sharedAtom1, sharedAtom2);
+            IBond ring2Bond1 = ringset.Builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = ringset.Builder.NewBond(sharedAtom1, ring2Atom1);
+            IBond ring2Bond3 = ringset.Builder.NewBond(sharedAtom2, ring2Atom2);
 
-            IRing ring1 = ringset.Builder.CreateRing();
+            IRing ring1 = ringset.Builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(sharedAtom1);
@@ -244,7 +244,7 @@ namespace NCDK
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
             ring1.Bonds.Add(sharedBond);
-            IRing ring2 = ringset.Builder.CreateRing();
+            IRing ring2 = ringset.Builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(sharedAtom1);
@@ -270,21 +270,21 @@ namespace NCDK
         {
             IRingSet ringset = (IRingSet)NewChemObject();
 
-            IAtom ring1Atom1 = ringset.Builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom1 = ringset.Builder.CreateAtom("C");
-            IAtom sharedAtom2 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom1 = ringset.Builder.CreateAtom("C");
-            IAtom ring2Atom2 = ringset.Builder.CreateAtom("C");
-            IBond ring1Bond1 = ringset.Builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring1Atom1);
-            IBond ring1Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring1Atom2);
-            IBond sharedBond = ringset.Builder.CreateBond(sharedAtom1, sharedAtom2);
-            IBond ring2Bond1 = ringset.Builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = ringset.Builder.CreateBond(sharedAtom1, ring2Atom1);
-            IBond ring2Bond3 = ringset.Builder.CreateBond(sharedAtom2, ring2Atom2);
+            IAtom ring1Atom1 = ringset.Builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom1 = ringset.Builder.NewAtom("C");
+            IAtom sharedAtom2 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom1 = ringset.Builder.NewAtom("C");
+            IAtom ring2Atom2 = ringset.Builder.NewAtom("C");
+            IBond ring1Bond1 = ringset.Builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = ringset.Builder.NewBond(sharedAtom1, ring1Atom1);
+            IBond ring1Bond3 = ringset.Builder.NewBond(sharedAtom2, ring1Atom2);
+            IBond sharedBond = ringset.Builder.NewBond(sharedAtom1, sharedAtom2);
+            IBond ring2Bond1 = ringset.Builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = ringset.Builder.NewBond(sharedAtom1, ring2Atom1);
+            IBond ring2Bond3 = ringset.Builder.NewBond(sharedAtom2, ring2Atom2);
 
-            IRing ring1 = ringset.Builder.CreateRing();
+            IRing ring1 = ringset.Builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(sharedAtom1);
@@ -293,7 +293,7 @@ namespace NCDK
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
             ring1.Bonds.Add(sharedBond);
-            IRing ring2 = ringset.Builder.CreateRing();
+            IRing ring2 = ringset.Builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(sharedAtom1);
@@ -323,12 +323,12 @@ namespace NCDK
             // Build a bridged and fused norbomane like ring system
             // C1CCC2C(C1)C4CC2C3CCCCC34
             IRingSet ringSet = (IRingSet)NewChemObject();
-            IRing leftCyclohexane = ringSet.Builder.CreateRing(6, "C");
-            IRing rightCyclopentane = ringSet.Builder.CreateRing(5, "C");
+            IRing leftCyclohexane = ringSet.Builder.NewRing(6, "C");
+            IRing rightCyclopentane = ringSet.Builder.NewRing(5, "C");
 
-            IRing leftCyclopentane = ringSet.Builder.CreateRing();
-            IBond leftCyclohexane0RightCyclopentane4 = ringSet.Builder.CreateBond(leftCyclohexane.Atoms[0], rightCyclopentane.Atoms[4]);
-            IBond leftCyclohexane1RightCyclopentane2 = ringSet.Builder.CreateBond(leftCyclohexane.Atoms[1], rightCyclopentane.Atoms[2]);
+            IRing leftCyclopentane = ringSet.Builder.NewRing();
+            IBond leftCyclohexane0RightCyclopentane4 = ringSet.Builder.NewBond(leftCyclohexane.Atoms[0], rightCyclopentane.Atoms[4]);
+            IBond leftCyclohexane1RightCyclopentane2 = ringSet.Builder.NewBond(leftCyclohexane.Atoms[1], rightCyclopentane.Atoms[2]);
             leftCyclopentane.Atoms.Add(leftCyclohexane.Atoms[0]);
             leftCyclopentane.Atoms.Add(leftCyclohexane.Atoms[1]);
             leftCyclopentane.Atoms.Add(rightCyclopentane.Atoms[2]);
@@ -340,18 +340,18 @@ namespace NCDK
             leftCyclopentane.Bonds.Add(rightCyclopentane.GetBond(rightCyclopentane.Atoms[3], rightCyclopentane.Atoms[4]));
             leftCyclopentane.Bonds.Add(leftCyclohexane0RightCyclopentane4);
 
-            IRing rightCyclohexane = ringSet.Builder.CreateRing();
-            IAtom rightCyclohexaneAtom0 = ringSet.Builder.CreateAtom("C");
-            IAtom rightCyclohexaneAtom1 = ringSet.Builder.CreateAtom("C");
-            IAtom rightCyclohexaneAtom2 = ringSet.Builder.CreateAtom("C");
-            IAtom rightCyclohexaneAtom5 = ringSet.Builder.CreateAtom("C");
-            IBond rightCyclohexaneAtom0Atom1 = ringSet.Builder.CreateBond(rightCyclohexaneAtom0,
+            IRing rightCyclohexane = ringSet.Builder.NewRing();
+            IAtom rightCyclohexaneAtom0 = ringSet.Builder.NewAtom("C");
+            IAtom rightCyclohexaneAtom1 = ringSet.Builder.NewAtom("C");
+            IAtom rightCyclohexaneAtom2 = ringSet.Builder.NewAtom("C");
+            IAtom rightCyclohexaneAtom5 = ringSet.Builder.NewAtom("C");
+            IBond rightCyclohexaneAtom0Atom1 = ringSet.Builder.NewBond(rightCyclohexaneAtom0,
                     rightCyclohexaneAtom1);
-            IBond rightCyclohexaneAtom1Atom2 = ringSet.Builder.CreateBond(rightCyclohexaneAtom1,
+            IBond rightCyclohexaneAtom1Atom2 = ringSet.Builder.NewBond(rightCyclohexaneAtom1,
                     rightCyclohexaneAtom2);
-            IBond rightCyclohexane2rightCyclopentane1 = ringSet.Builder.CreateBond(rightCyclohexaneAtom2, rightCyclopentane.Atoms[1]);
-            IBond rightCyclohexane5rightCyclopentane0 = ringSet.Builder.CreateBond(rightCyclohexaneAtom5, rightCyclopentane.Atoms[0]);
-            IBond rightCyclohexaneAtom0Atom5 = ringSet.Builder.CreateBond(rightCyclohexaneAtom0,
+            IBond rightCyclohexane2rightCyclopentane1 = ringSet.Builder.NewBond(rightCyclohexaneAtom2, rightCyclopentane.Atoms[1]);
+            IBond rightCyclohexane5rightCyclopentane0 = ringSet.Builder.NewBond(rightCyclohexaneAtom5, rightCyclopentane.Atoms[0]);
+            IBond rightCyclohexaneAtom0Atom5 = ringSet.Builder.NewBond(rightCyclohexaneAtom0,
                     rightCyclohexaneAtom5);
             rightCyclohexane.Atoms.Add(rightCyclohexaneAtom0);
             rightCyclohexane.Atoms.Add(rightCyclohexaneAtom1);
@@ -392,7 +392,7 @@ namespace NCDK
 
             Assert.IsTrue(ringSet.IsEmpty(), "new ringset should be empty");
 
-            ringSet.Add(ringSet.Builder.CreateRing());    // NCDK does not suppor to add AtomContainer object to RingSet object
+            ringSet.Add(ringSet.Builder.NewRing());    // NCDK does not suppor to add AtomContainer object to RingSet object
 
             Assert.IsFalse(ringSet.IsEmpty(), "ringset with an atom container should not be empty");
 

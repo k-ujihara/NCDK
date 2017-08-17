@@ -143,9 +143,9 @@ namespace NCDK.IO
             IAtomContainerSet<IAtomContainer> setOfMolecules = chemModel.MoleculeSet;
             if (setOfMolecules == null)
             {
-                setOfMolecules = chemModel.Builder.CreateAtomContainerSet();
+                setOfMolecules = chemModel.Builder.NewAtomContainerSet();
             }
-            IAtomContainer m = ReadMolecule(chemModel.Builder.CreateAtomContainer());
+            IAtomContainer m = ReadMolecule(chemModel.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -160,11 +160,11 @@ namespace NCDK.IO
         /// <returns>The ChemFile that was read from the MDL file.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
+            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
 
-            IChemModel chemModel = chemFile.Builder.CreateChemModel();
-            IAtomContainerSet<IAtomContainer> setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-            IAtomContainer m = ReadMolecule(chemFile.Builder.CreateAtomContainer());
+            IChemModel chemModel = chemFile.Builder.NewChemModel();
+            IAtomContainerSet<IAtomContainer> setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+            IAtomContainer m = ReadMolecule(chemFile.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -172,8 +172,8 @@ namespace NCDK.IO
             chemModel.MoleculeSet = setOfMolecules;
             chemSequence.Add(chemModel);
 
-            setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-            chemModel = chemFile.Builder.CreateChemModel();
+            setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+            chemModel = chemFile.Builder.NewChemModel();
             string str;
             try
             {
@@ -188,7 +188,7 @@ namespace NCDK.IO
                         continue;
                     if (str.Equals("$$$$"))
                     {
-                        m = ReadMolecule(chemFile.Builder.CreateAtomContainer());
+                        m = ReadMolecule(chemFile.Builder.NewAtomContainer());
 
                         if (m != null)
                         {
@@ -197,8 +197,8 @@ namespace NCDK.IO
                             chemModel.MoleculeSet = setOfMolecules;
                             chemSequence.Add(chemModel);
 
-                            setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-                            chemModel = chemFile.Builder.CreateChemModel();
+                            setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+                            chemModel = chemFile.Builder.NewChemModel();
 
                         }
                     }
@@ -393,27 +393,27 @@ namespace NCDK.IO
                     Debug.WriteLine("Atom type: ", element);
                     if (isotopeFactory.IsElement(element))
                     {
-                        atom = isotopeFactory.Configure(molecule.Builder.CreateAtom(element));
+                        atom = isotopeFactory.Configure(molecule.Builder.NewAtom(element));
                     }
                     else if ("A".Equals(element))
                     {
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else if ("Q".Equals(element))
                     {
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else if ("*".Equals(element))
                     {
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else if ("LP".Equals(element))
                     {
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else if ("L".Equals(element))
                     {
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else if (element.Length > 0 && element[0] == 'R')
                     {
@@ -430,7 +430,7 @@ namespace NCDK.IO
                             RGroupCounter++;
                         }
                         element = "R" + Rnumber;
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
                     else
                     {
@@ -439,7 +439,7 @@ namespace NCDK.IO
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                         }
-                        atom = molecule.Builder.CreatePseudoAtom(element);
+                        atom = molecule.Builder.NewPseudoAtom(element);
                     }
 
                     // store as 3D for now, convert to 2D (if totalZ == 0.0) later
@@ -638,11 +638,11 @@ namespace NCDK.IO
                         if (order == 3) cdkOrder = BondOrder.Triple;
                         if (stereo != BondStereo.None)
                         {
-                            newBond = molecule.Builder.CreateBond(a1, a2, cdkOrder, stereo);
+                            newBond = molecule.Builder.NewBond(a1, a2, cdkOrder, stereo);
                         }
                         else
                         {
-                            newBond = molecule.Builder.CreateBond(a1, a2, cdkOrder);
+                            newBond = molecule.Builder.NewBond(a1, a2, cdkOrder);
                         }
                     }
                     else if (order == 4)
@@ -650,11 +650,11 @@ namespace NCDK.IO
                         // aromatic bond
                         if (stereo != BondStereo.None)
                         {
-                            newBond = molecule.Builder.CreateBond(a1, a2, BondOrder.Single, stereo);
+                            newBond = molecule.Builder.NewBond(a1, a2, BondOrder.Single, stereo);
                         }
                         else
                         {
-                            newBond = molecule.Builder.CreateBond(a1, a2, BondOrder.Single);
+                            newBond = molecule.Builder.NewBond(a1, a2, BondOrder.Single);
                         }
                         // mark both atoms and the bond as aromatic
                         newBond.IsAromatic = true;

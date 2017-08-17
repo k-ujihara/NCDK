@@ -73,9 +73,9 @@ namespace NCDK.Default
         /// </summary>
         public Reaction()
         {
-            this.reactants = Builder.CreateAtomContainerSet();
-            this.products = Builder.CreateAtomContainerSet();
-            this.agents = Builder.CreateAtomContainerSet();
+            this.reactants = Builder.NewAtomContainerSet();
+            this.products = Builder.NewAtomContainerSet();
+            this.agents = Builder.NewAtomContainerSet();
             this.mappings = new List<IMapping>();
             direction = ReactionDirections.Forward;
         }
@@ -154,9 +154,9 @@ namespace NCDK.Silent
         /// </summary>
         public Reaction()
         {
-            this.reactants = Builder.CreateAtomContainerSet();
-            this.products = Builder.CreateAtomContainerSet();
-            this.agents = Builder.CreateAtomContainerSet();
+            this.reactants = Builder.NewAtomContainerSet();
+            this.products = Builder.NewAtomContainerSet();
+            this.agents = Builder.NewAtomContainerSet();
             this.mappings = new List<IMapping>();
             direction = ReactionDirections.Forward;
         }

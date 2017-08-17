@@ -72,8 +72,8 @@ namespace NCDK.Reactions.Mechanisms
             else
                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
 
-            reactantCloned.SingleElectrons.Add(bond1.Builder.CreateSingleElectron(atom1C));
-            reactantCloned.SingleElectrons.Add(bond1.Builder.CreateSingleElectron(atom2C));
+            reactantCloned.SingleElectrons.Add(bond1.Builder.NewSingleElectron(atom1C));
+            reactantCloned.SingleElectrons.Add(bond1.Builder.NewSingleElectron(atom2C));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
 
             // check if resulting atom type is reasonable
@@ -86,13 +86,13 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom2C.Builder.CreateReaction();
+            IReaction reaction = atom2C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom2C.Builder.CreateMapping(atom,
+                IMapping mapping = atom2C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

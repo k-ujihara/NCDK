@@ -61,7 +61,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void GenerateElementTest()
         {
-            IAtom atom = base.builder.CreateAtom("C");
+            IAtom atom = base.builder.NewAtom("C");
             atom.Point2D = new Vector2(2, 3);
             atom.ImplicitHydrogenCount = 0;
             int alignment = 1;
@@ -78,11 +78,11 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void HasCoordinatesTest()
         {
-            IAtom atomWithCoordinates = base.builder.CreateAtom();
+            IAtom atomWithCoordinates = base.builder.NewAtom();
             atomWithCoordinates.Point2D = new Vector2(0, 0);
             Assert.IsTrue(generator.HasCoordinates(atomWithCoordinates));
 
-            IAtom atomWithoutCoordinates = base.builder.CreateAtom();
+            IAtom atomWithoutCoordinates = base.builder.NewAtom();
             atomWithoutCoordinates.Point2D = null;
             Assert.IsFalse(generator.HasCoordinates(atomWithoutCoordinates));
 
@@ -93,13 +93,13 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void CanDrawTest()
         {
-            IAtom drawableCAtom = base.builder.CreateAtom("C");
+            IAtom drawableCAtom = base.builder.NewAtom("C");
             drawableCAtom.Point2D = new Vector2(0, 0);
 
-            IAtom drawableHAtom = base.builder.CreateAtom("H");
+            IAtom drawableHAtom = base.builder.NewAtom("H");
             drawableHAtom.Point2D = new Vector2(0, 0);
 
-            IAtomContainer dummyContainer = base.builder.CreateAtomContainer();
+            IAtomContainer dummyContainer = base.builder.NewAtomContainer();
             model.SetV(typeof(KekuleStructure), true);
             model.SetV(typeof(ShowExplicitHydrogens), true);
 
@@ -110,14 +110,14 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void InvisibleHydrogenTest()
         {
-            IAtom hydrogen = base.builder.CreateAtom("H");
+            IAtom hydrogen = base.builder.NewAtom("H");
             model.SetV(typeof(ShowExplicitHydrogens), false);
             Assert.IsTrue(generator.InvisibleHydrogen(hydrogen, model));
 
             model.SetV(typeof(ShowExplicitHydrogens), true);
             Assert.IsFalse(generator.InvisibleHydrogen(hydrogen, model));
 
-            IAtom nonHydrogen = base.builder.CreateAtom("C");
+            IAtom nonHydrogen = base.builder.NewAtom("C");
             model.SetV(typeof(ShowExplicitHydrogens), false);
             Assert.IsFalse(generator.InvisibleHydrogen(nonHydrogen, model));
 
@@ -130,8 +130,8 @@ namespace NCDK.Renderers.Generators
         {
             // NOTE : just testing the element symbol here, see showCarbonTest
             // for the full range of possibilities...
-            IAtom carbon = base.builder.CreateAtom("C");
-            IAtomContainer dummyContainer = base.builder.CreateAtomContainer();
+            IAtom carbon = base.builder.NewAtom("C");
+            IAtomContainer dummyContainer = base.builder.NewAtomContainer();
 
             // we force the issue by making isKekule=true
             model.SetV(typeof(KekuleStructure), true);

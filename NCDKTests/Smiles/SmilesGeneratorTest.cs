@@ -142,7 +142,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestCIsResorcinol()
         {
-            IAtomContainer mol1 = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer mol1 = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             SmilesGenerator sg = SmilesGenerator.Isomeric();
             mol1.Atoms.Add(new Atom("O", new Vector2(3, 1)));
             // 1
@@ -620,11 +620,11 @@ namespace NCDK.Smiles
             string filename = "NCDK.Data.MDL.l-ala.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
-            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
+            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             filename = "NCDK.Data.MDL.d-ala.mol";
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
-            IAtomContainer mol2 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
+            IAtomContainer mol2 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             SmilesGenerator sg = SmilesGenerator.Isomeric();
 
             Define(mol1, Anticlockwise(mol1, 1, 0, 2, 3, 6));
@@ -697,7 +697,7 @@ namespace NCDK.Smiles
             string filename = "NCDK.Data.MDL.cyclooctadien.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
-            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
+            IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
             Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);

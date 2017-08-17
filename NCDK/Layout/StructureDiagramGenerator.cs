@@ -431,7 +431,7 @@ namespace NCDK.Layout
         {
             // first make a shallow copy: Atom/Bond references are kept
             IAtomContainer original = molecule;
-            IAtomContainer shallowCopy = molecule.Builder.CreateAtomContainer(molecule);
+            IAtomContainer shallowCopy = molecule.Builder.NewAtomContainer(molecule);
             // delete single-bonded H's from
             //IAtom[] atoms = shallowCopy.Atoms;
             foreach (var curAtom in shallowCopy.Atoms)
@@ -730,7 +730,7 @@ namespace NCDK.Layout
             }
             else
             {
-                sssr = molecule.Builder.CreateRingSet();
+                sssr = molecule.Builder.NewRingSet();
                 ringSystems = new List<IRingSet>();
             }
             return numRings;
@@ -1114,7 +1114,7 @@ namespace NCDK.Layout
             if (!ionicBonds.Any())
                 return;
 
-            IAtomContainer newfrag = bldr.CreateAtomContainer();
+            IAtomContainer newfrag = bldr.NewAtomContainer();
             IAtom[] atoms = new IAtom[fragment.Atoms.Count];
             for (int i = 0; i < atoms.Length; i++)
                 atoms[i] = fragment.Atoms[i];
@@ -1170,7 +1170,7 @@ namespace NCDK.Layout
                     continue;
                 }
 
-                IAtomContainer endFrags = bldr.CreateAtomContainer();
+                IAtomContainer endFrags = bldr.NewAtomContainer();
                 IAtomContainer begFrag;
                 if (!atomToFrag.TryGetValue(beg, out begFrag))
                     continue;
@@ -1208,7 +1208,7 @@ namespace NCDK.Layout
 
                 if (frag.Bonds.Count > 0 || res.Count == 0)
                 {
-                    res.Add(bldr.CreateAtomContainer(frag));
+                    res.Add(bldr.NewAtomContainer(frag));
                 }
                 else
                 {
@@ -1236,7 +1236,7 @@ namespace NCDK.Layout
                     }
                     else
                     {
-                        res.Add(bldr.CreateAtomContainer(frag));
+                        res.Add(bldr.NewAtomContainer(frag));
                     }
                 }
             }
@@ -1389,7 +1389,7 @@ namespace NCDK.Layout
                         unique = false;
 
                 if (unique)
-                    ionicBonds.Add(bldr.CreateBond(beg, end));
+                    ionicBonds.Add(bldr.NewBond(beg, end));
             }
 
             // we could merge the fragments here using union-find structures
@@ -1449,7 +1449,7 @@ namespace NCDK.Layout
 
             IChemObjectBuilder bldr = molecule.Builder;
 
-            IAtomContainer ringSystem = bldr.CreateAtomContainer();
+            IAtomContainer ringSystem = bldr.NewAtomContainer();
             foreach (var container in rs)
                 ringSystem.Add(container);
 
@@ -1458,7 +1458,7 @@ namespace NCDK.Layout
                 ringAtoms.Add(atom);
 
             // a temporary molecule of the ring system and 'stubs' of the attached substituents
-            IAtomContainer ringWithStubs = bldr.CreateAtomContainer();
+            IAtomContainer ringWithStubs = bldr.NewAtomContainer();
             ringWithStubs.Add(ringSystem);
             foreach (var bond in molecule.Bonds)
             {
@@ -1665,7 +1665,7 @@ namespace NCDK.Layout
                     ringsystem.Remove(item);
             } while (toremove.Count != 0);
 
-            IRingSet core = rs.Builder.CreateRingSet();
+            IRingSet core = rs.Builder.NewRingSet();
             foreach (var ring in ringsystem)
                 core.Add(ring);
 
@@ -1894,7 +1894,7 @@ namespace NCDK.Layout
         /// <returns>an AtomContainer with all unplaced atoms connected to a given atom</returns>
         private IAtomContainer GetUnplacedAtoms(IAtom atom)
         {
-            IAtomContainer unplacedAtoms = atom.Builder.CreateAtomContainer();
+            IAtomContainer unplacedAtoms = atom.Builder.NewAtomContainer();
             var bonds = molecule.GetConnectedBonds(atom);
             IAtom connectedAtom;
             foreach (var bond in bonds)
@@ -1915,7 +1915,7 @@ namespace NCDK.Layout
         /// <returns>an AtomContainer with all placed atoms connected to a given atom</returns>
         private IAtomContainer GetPlacedAtoms(IAtom atom)
         {
-            IAtomContainer placedAtoms = atom.Builder.CreateAtomContainer();
+            IAtomContainer placedAtoms = atom.Builder.NewAtomContainer();
             var bonds = molecule.GetConnectedBonds(atom);
             IAtom connectedAtom;
             foreach (var bond in bonds)
@@ -2009,7 +2009,7 @@ namespace NCDK.Layout
                 // already been draw and to which the new ring is somehow connected,
                 // or some other system of atoms in an aliphatic chain. In this
                 // case, it's the first bond that we layout by hand.
-                sharedAtoms = atom.Builder.CreateAtomContainer();
+                sharedAtoms = atom.Builder.NewAtomContainer();
                 sharedAtoms.Bonds.Add(bond);
                 sharedAtoms.Atoms.Add(bond.Begin);
                 sharedAtoms.Atoms.Add(bond.End);
@@ -2152,7 +2152,7 @@ namespace NCDK.Layout
                     continue;
 
                 // extract substructure
-                IAtomContainer substructure = mol.Builder.CreateAtomContainer();
+                IAtomContainer substructure = mol.Builder.NewAtomContainer();
                 var visit = new HashSet<IAtom>();
                 var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
                 if (patoms == null)
@@ -2269,7 +2269,7 @@ namespace NCDK.Layout
                     iVisit.Add(idxs[beg]);
                     Visit(iVisit, adjlist, idxs[bond.GetOther(beg)]);
                     iVisit.Remove(idxs[beg]);
-                    IAtomContainer frag = mol.Builder.CreateAtomContainer();
+                    IAtomContainer frag = mol.Builder.NewAtomContainer();
                     foreach (var idx in iVisit)
                         frag.Atoms.Add(mol.Atoms[idx]);
 
@@ -2346,7 +2346,7 @@ namespace NCDK.Layout
             {
                 var bonds = new LinkedHashSet<IBond>();
 
-                IAtomContainer shared = mol.Builder.CreateAtomContainer();
+                IAtomContainer shared = mol.Builder.NewAtomContainer();
                 foreach (var atom in e.Key)
                     shared.Atoms.Add(atom);
                 Vector2 center = GeometryUtil.Get2DCenter(shared);
@@ -2443,7 +2443,7 @@ namespace NCDK.Layout
                                 visited.Add(visit);
                         } while (newvisit.Any());
 
-                        IAtomContainer frag = mol.Builder.CreateAtomContainer();
+                        IAtomContainer frag = mol.Builder.NewAtomContainer();
                         foreach (var visit in visited)
                             frag.Atoms.Add(mol.Atoms[visit]);
 
@@ -2597,7 +2597,7 @@ namespace NCDK.Layout
                 // <= 1 crossing bonds so simply wrap the entire fragment
                 else
                 {
-                    IAtomContainer tmp = mol.Builder.CreateAtomContainer();
+                    IAtomContainer tmp = mol.Builder.NewAtomContainer();
                     foreach (var atom in atoms)
                         tmp.Atoms.Add(atom);
                     double[] minmax = GeometryUtil.GetMinMax(tmp);

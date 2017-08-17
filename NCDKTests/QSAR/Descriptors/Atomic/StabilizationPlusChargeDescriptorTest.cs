@@ -43,13 +43,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].FormalCharge = 1;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -65,12 +65,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestNotCharged()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -86,13 +86,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor2()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].FormalCharge = -1;
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[1].FormalCharge = 1;
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("F"));
+            mol.Atoms.Add(builder.NewAtom("F"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -108,14 +108,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestStabilizationComparative()
         {
-            IAtomContainer mol1 = builder.CreateAtomContainer();
-            mol1.Atoms.Add(builder.CreateAtom("C"));
-            mol1.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol1 = builder.NewAtomContainer();
+            mol1.Atoms.Add(builder.NewAtom("C"));
+            mol1.Atoms.Add(builder.NewAtom("C"));
             mol1.Atoms[1].FormalCharge = 1;
             mol1.AddBond(mol1.Atoms[0], mol1.Atoms[1], BondOrder.Single);
-            mol1.Atoms.Add(builder.CreateAtom("C"));
+            mol1.Atoms.Add(builder.NewAtom("C"));
             mol1.AddBond(mol1.Atoms[1], mol1.Atoms[2], BondOrder.Single);
-            mol1.Atoms.Add(builder.CreateAtom("O"));
+            mol1.Atoms.Add(builder.NewAtom("O"));
             mol1.AddBond(mol1.Atoms[1], mol1.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             AddExplicitHydrogens(mol1);
@@ -123,12 +123,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             DoubleResult result1 = ((DoubleResult)descriptor.Calculate(mol1.Atoms[1], mol1).GetValue());
 
-            IAtomContainer mol2 = builder.CreateAtomContainer();
-            mol2.Atoms.Add(builder.CreateAtom("C"));
-            mol2.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol2 = builder.NewAtomContainer();
+            mol2.Atoms.Add(builder.NewAtom("C"));
+            mol2.Atoms.Add(builder.NewAtom("C"));
             mol2.Atoms[1].FormalCharge = 1;
             mol2.AddBond(mol2.Atoms[0], mol2.Atoms[1], BondOrder.Single);
-            mol2.Atoms.Add(builder.CreateAtom("O"));
+            mol2.Atoms.Add(builder.NewAtom("O"));
             mol2.AddBond(mol2.Atoms[1], mol2.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
             AddExplicitHydrogens(mol2);
@@ -136,12 +136,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             DoubleResult result2 = ((DoubleResult)descriptor.Calculate(mol2.Atoms[1], mol2).GetValue());
 
-            IAtomContainer mol3 = builder.CreateAtomContainer();
-            mol3.Atoms.Add(builder.CreateAtom("C"));
-            mol3.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol3 = builder.NewAtomContainer();
+            mol3.Atoms.Add(builder.NewAtom("C"));
+            mol3.Atoms.Add(builder.NewAtom("C"));
             mol3.Atoms[1].FormalCharge = 1;
             mol3.AddBond(mol3.Atoms[0], mol3.Atoms[1], BondOrder.Single);
-            mol3.Atoms.Add(builder.CreateAtom("C"));
+            mol3.Atoms.Add(builder.NewAtom("C"));
             mol3.AddBond(mol3.Atoms[1], mol3.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol3);
             AddExplicitHydrogens(mol3);
@@ -161,13 +161,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestCategory("SlowTest")]
         public void TestCompareIonized()
         {
-            IAtomContainer molA = builder.CreateAtomContainer();
-            molA.Atoms.Add(builder.CreateAtom("C"));
-            molA.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molA = builder.NewAtomContainer();
+            molA.Atoms.Add(builder.NewAtom("C"));
+            molA.Atoms.Add(builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[0], molA.Atoms[1], BondOrder.Single);
-            molA.Atoms.Add(builder.CreateAtom("C"));
+            molA.Atoms.Add(builder.NewAtom("C"));
             molA.AddBond(molA.Atoms[1], molA.Atoms[2], BondOrder.Single);
-            molA.Atoms.Add(builder.CreateAtom("Cl"));
+            molA.Atoms.Add(builder.NewAtom("Cl"));
             molA.AddBond(molA.Atoms[2], molA.Atoms[3], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molA);
@@ -176,13 +176,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).GetValue()).Value;
 
-            IAtomContainer molB = builder.CreateAtomContainer();
-            molB.Atoms.Add(builder.CreateAtom("C"));
-            molB.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molB = builder.NewAtomContainer();
+            molB.Atoms.Add(builder.NewAtom("C"));
+            molB.Atoms.Add(builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[0], molB.Atoms[1], BondOrder.Single);
-            molB.Atoms.Add(builder.CreateAtom("C"));
+            molB.Atoms.Add(builder.NewAtom("C"));
             molB.AddBond(molB.Atoms[1], molB.Atoms[2], BondOrder.Single);
-            molB.Atoms.Add(builder.CreateAtom("Cl"));
+            molB.Atoms.Add(builder.NewAtom("Cl"));
             molB.Atoms[3].FormalCharge = 1;
             molB.AddSingleElectronTo(molB.Atoms[3]);
             molB.AddLonePairTo(molB.Atoms[3]);

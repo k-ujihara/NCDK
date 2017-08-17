@@ -48,7 +48,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestEmptyContainer()
         {
-            IAtomContainer emptyContainer = base.builder.CreateAtomContainer();
+            IAtomContainer emptyContainer = base.builder.NewAtomContainer();
 
             // nothing should be made
             var root = generator.Generate(emptyContainer, model);

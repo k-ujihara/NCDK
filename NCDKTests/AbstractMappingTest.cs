@@ -54,9 +54,9 @@ namespace NCDK
         public virtual void TestGetChemObject_int()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom0 = obj.Builder.CreateAtom();
-            IAtom atom1 = obj.Builder.CreateAtom();
-            IMapping mapping = obj.Builder.CreateMapping(atom0, atom1);
+            IAtom atom0 = obj.Builder.NewAtom();
+            IAtom atom1 = obj.Builder.NewAtom();
+            IMapping mapping = obj.Builder.NewMapping(atom0, atom1);
             Assert.AreEqual(atom0, mapping[0]);
             Assert.AreEqual(atom1, mapping[1]);
         }
@@ -64,9 +64,9 @@ namespace NCDK
         public virtual void TestRelatedChemObjects()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom0 = obj.Builder.CreateAtom();
-            IAtom atom1 = obj.Builder.CreateAtom();
-            IMapping mapping = obj.Builder.CreateMapping(atom0, atom1);
+            IAtom atom0 = obj.Builder.NewAtom();
+            IAtom atom1 = obj.Builder.NewAtom();
+            IMapping mapping = obj.Builder.NewMapping(atom0, atom1);
 
             IEnumerator<IChemObject> iter = mapping.GetRelatedChemObjects().GetEnumerator();
             Assert.IsTrue(iter.MoveNext());

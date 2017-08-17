@@ -229,7 +229,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             GeometryUtil.Rotate(ac, Vector2.Zero, Math.PI / 2);
@@ -250,7 +250,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             double[] minmax = GeometryUtil.GetMinMax(ac);
@@ -268,7 +268,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(-2, -1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(-5, -1);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             double[] minmax = GeometryUtil.GetMinMax(ac);
@@ -304,7 +304,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2 p = GeometryUtil.Get2DCenter(ac);
@@ -321,7 +321,7 @@ namespace NCDK.Geometries
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
             atom2.ExactMass = 12.0;
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2? p = GeometryUtil.Get2DCentreOfMass(ac);
@@ -352,10 +352,10 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IRing ac = Default.ChemObjectBuilder.Instance.CreateRing();
+            IRing ac = Default.ChemObjectBuilder.Instance.NewRing();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
-            IRingSet ringset = Default.ChemObjectBuilder.Instance.CreateRingSet();
+            IRingSet ringset = Default.ChemObjectBuilder.Instance.NewRingSet();
             ringset.Add(ac);
             Vector2 p = GeometryUtil.Get2DCenter(ac);
             Assert.AreEqual(p.X, 1.0, .1);
@@ -369,7 +369,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(1, 1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Vector2 p = GeometryUtil.Get2DCenter(ac.Atoms);
@@ -543,7 +543,7 @@ namespace NCDK.Geometries
             atom1.Point2D = new Vector2(-1, -1);
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             GeometryUtil.TranslateAllPositive(ac);
@@ -561,7 +561,7 @@ namespace NCDK.Geometries
             Atom atom2 = new Atom("C");
             atom2.Point2D = new Vector2(1, 0);
             IBond bond = new Bond(atom1, atom2);
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             Assert.AreEqual(GeometryUtil.GetLength2D(bond), 2.23, 0.01);

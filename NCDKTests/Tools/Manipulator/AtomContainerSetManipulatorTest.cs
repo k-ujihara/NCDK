@@ -186,16 +186,16 @@ namespace NCDK.Tools.Manipulator
         {
             // Create some IAtomContainers
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloPentane = builder.CreateRing(5, "C");
-            IRing cycloHexane = builder.CreateRing(6, "C");
-            IAtomContainer hexaneNitrogen = builder.CreateRing(6, "N");
+            IRing cycloPentane = builder.NewRing(5, "C");
+            IRing cycloHexane = builder.NewRing(6, "C");
+            IAtomContainer hexaneNitrogen = builder.NewRing(6, "N");
             hexaneNitrogen.Bonds.RemoveAt(0);
-            IRing cycloHexaneNitrogen = builder.CreateRing(6, "N");
-            IRing cycloHexeneNitrogen = builder.CreateRing(6, "N");
+            IRing cycloHexaneNitrogen = builder.NewRing(6, "N");
+            IRing cycloHexeneNitrogen = builder.NewRing(6, "N");
             cycloHexeneNitrogen.Bonds[0].Order = BondOrder.Double;
 
             // Add them to a IAtomContainerSet
-            var atomContainerSet = builder.CreateAtomContainerSet();
+            var atomContainerSet = builder.NewAtomContainerSet();
             atomContainerSet.Add(cycloHexane);
             atomContainerSet.Add(cycloHexeneNitrogen);
             atomContainerSet.Add(cycloPentane);
@@ -216,9 +216,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestContainsByID_IAtomContainerSet_IAtomContainer()
         {
-            IAtomContainer relevantAtomContainer = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer relevantAtomContainer = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             var atomContainerSet = Default.ChemObjectBuilder.Instance
-                    .CreateAtomContainerSet();
+                    .NewAtomContainerSet();
             atomContainerSet.Add(relevantAtomContainer);
             Assert.IsFalse(AtomContainerSetManipulator.ContainsByID(atomContainerSet, relevantAtomContainer.Id));
             relevantAtomContainer.Id = "1";

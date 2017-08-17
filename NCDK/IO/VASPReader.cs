@@ -104,14 +104,14 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence seq = ReadChemSequence(file.Builder.CreateChemSequence());
+            IChemSequence seq = ReadChemSequence(file.Builder.NewChemSequence());
             file.Add(seq);
             return file;
         }
 
         private IChemSequence ReadChemSequence(IChemSequence sequence)
         {
-            IChemModel chemModel = sequence.Builder.CreateChemModel();
+            IChemModel chemModel = sequence.Builder.NewChemModel();
             ICrystal crystal = null;
 
             string buf = inputBuffer.ReadToEnd();
@@ -165,8 +165,8 @@ namespace NCDK.IO
             {
                 Debug.WriteLine("New crystal started...");
 
-                crystal = sequence.Builder.CreateCrystal();
-                chemModel = sequence.Builder.CreateChemModel();
+                crystal = sequence.Builder.NewCrystal();
+                chemModel = sequence.Builder.NewChemModel();
 
                 // Get acell
                 for (int i = 0; i < 3; i++)
@@ -230,7 +230,7 @@ namespace NCDK.IO
                     {
                         throw new CDKException("Could not determine element symbol!", exception);
                     }
-                    IAtom atom = sequence.Builder.CreateAtom(symbol);
+                    IAtom atom = sequence.Builder.NewAtom(symbol);
                     atom.AtomicNumber = atomType[i];
                     // convert fractional to cartesian
                     double[] frac = new double[3];

@@ -44,7 +44,7 @@ namespace NCDK.Silent
         public void TestElement_IElement()
         {
             IElement element = new Element();
-            IElement e = element.Builder.CreateElement(element);
+            IElement e = element.Builder.NewElement(element);
             Assert.IsTrue(e is IChemObject);
         }
 

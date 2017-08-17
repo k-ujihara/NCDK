@@ -216,21 +216,21 @@ namespace NCDK.Reactions.Types
 
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[6], BondOrder.Single);
 
             IAtom atom = molecule.Atoms[0];
@@ -252,23 +252,23 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
-            var setOfProducts = builder.CreateAtomContainerSet();
+            var setOfProducts = builder.NewAtomContainerSet();
 
-            IAtomContainer molecule1 = builder.CreateAtomContainer();
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
-            molecule1.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer molecule1 = builder.NewAtomContainer();
+            molecule1.Atoms.Add(builder.NewAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[1], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(builder.NewAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[2], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[3], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(builder.NewAtom("H"));
             molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[4], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(builder.NewAtom("H"));
             molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[5], BondOrder.Single);
 
             /* [H*] */
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
+            IAtomContainer molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(new Atom("H"));
             molecule2.SingleElectrons.Add(new SingleElectron(molecule2.Atoms[0]));
 

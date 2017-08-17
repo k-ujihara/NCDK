@@ -38,7 +38,7 @@ namespace NCDK.Default
         public virtual void TestMapping_IChemObject_IChemObject()
         {
             IChemObject obj = NewChemObject();
-            IMapping mapping = new Mapping(obj.Builder.CreateAtom(), obj.Builder.CreateAtom());
+            IMapping mapping = new Mapping(obj.Builder.NewAtom(), obj.Builder.NewAtom());
 
             Assert.IsNotNull(mapping);
         }

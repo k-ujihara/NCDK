@@ -48,16 +48,16 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMinOccurrenceElements(IMolecularFormulaSet)"/> 
         public static IMolecularFormula GetMaxOccurrenceElements(IMolecularFormulaSet mfSet)
         {
-            IMolecularFormula molecularFormula = mfSet.Builder.CreateMolecularFormula();
+            IMolecularFormula molecularFormula = mfSet.Builder.NewMolecularFormula();
             foreach (var mf in mfSet)
             {
                 foreach (var isotope in mf.Isotopes)
                 {
-                    IElement element = mfSet.Builder.CreateElement(isotope);
+                    IElement element = mfSet.Builder.NewElement(isotope);
                     int occur_new = MolecularFormulaManipulator.GetElementCount(mf, element);
                     if (!MolecularFormulaManipulator.ContainsElement(molecularFormula, element))
                     {
-                        molecularFormula.Add(mfSet.Builder.CreateIsotope(element), occur_new);
+                        molecularFormula.Add(mfSet.Builder.NewIsotope(element), occur_new);
                     }
                     else
                     {
@@ -65,7 +65,7 @@ namespace NCDK.Tools.Manipulator
                         if (occur_new > occur_old)
                         {
                             MolecularFormulaManipulator.RemoveElement(molecularFormula, element);
-                            molecularFormula.Add(mfSet.Builder.CreateIsotope(element), occur_new);
+                            molecularFormula.Add(mfSet.Builder.NewIsotope(element), occur_new);
                         }
                     }
                 }
@@ -83,16 +83,16 @@ namespace NCDK.Tools.Manipulator
         public static IMolecularFormula GetMinOccurrenceElements(IMolecularFormulaSet mfSet)
         {
 
-            IMolecularFormula molecularFormula = mfSet.Builder.CreateMolecularFormula();
+            IMolecularFormula molecularFormula = mfSet.Builder.NewMolecularFormula();
             foreach (var mf in mfSet)
             {
                 foreach (var isotope in mf.Isotopes)
                 {
-                    IElement element = mfSet.Builder.CreateElement(isotope);
+                    IElement element = mfSet.Builder.NewElement(isotope);
                     int occur_new = MolecularFormulaManipulator.GetElementCount(mf, element);
                     if (!MolecularFormulaManipulator.ContainsElement(molecularFormula, element))
                     {
-                        molecularFormula.Add(mfSet.Builder.CreateIsotope(element), occur_new);
+                        molecularFormula.Add(mfSet.Builder.NewIsotope(element), occur_new);
                     }
                     else
                     {
@@ -100,7 +100,7 @@ namespace NCDK.Tools.Manipulator
                         if (occur_new < occur_old)
                         {
                             MolecularFormulaManipulator.RemoveElement(molecularFormula, element);
-                            molecularFormula.Add(mfSet.Builder.CreateIsotope(element), occur_new);
+                            molecularFormula.Add(mfSet.Builder.NewIsotope(element), occur_new);
                         }
                     }
                 }
@@ -126,7 +126,7 @@ namespace NCDK.Tools.Manipulator
             // prove the correlation between maximum and minimum molecularFormula
             if (!ValidCorrelation(formulaMin, formulaMax)) return null;
 
-            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
 
             foreach (var formula in formulaSet)
             {
@@ -203,7 +203,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formulaRange">A IMolecularFormulaRange which contains the range representation of the IIsotope</param>
         public static IMolecularFormulaSet Remove(IMolecularFormulaSet formulaSet, MolecularFormulaRange formulaRange)
         {
-            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet newFormulaSet = formulaSet.Builder.NewMolecularFormulaSet();
 
             foreach (var formula in formulaSet)
             {

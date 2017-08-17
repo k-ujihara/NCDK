@@ -95,7 +95,7 @@ namespace NCDK.Fingerprints
                 Assert.IsNotNull(reader, "Could not create reader");
                 if (reader.Accepts(typeof(AtomContainer)))
                 {
-                    structure = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
+                    structure = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
                 }
             }
             return structure;

@@ -41,7 +41,7 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
@@ -58,13 +58,13 @@ namespace NCDK.Reactions.Types
                 {
                     var atomList = new List<IAtom>();
                     atomList.Add(atomi);
-                    IAtom atomH = reactant.Builder.CreateAtom(atomSymbol);
+                    IAtom atomH = reactant.Builder.NewAtom(atomSymbol);
                     atomH.FormalCharge = 1;
                     atomList.Add(atomH);
 
-                    var moleculeSet = reactant.Builder.CreateAtomContainerSet();
+                    var moleculeSet = reactant.Builder.NewAtomContainerSet();
                     moleculeSet.Add(reactant);
-                    IAtomContainer adduct = reactant.Builder.CreateAtomContainer();
+                    IAtomContainer adduct = reactant.Builder.NewAtomContainer();
                     adduct.Atoms.Add(atomH);
                     moleculeSet.Add(adduct);
 

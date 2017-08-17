@@ -116,7 +116,7 @@ namespace NCDK.Layout
                         try
                         {
                             CMLReader structureReader = new CMLReader(ResourceLoader.GetAsStream(line));
-                            IChemFile file = structureReader.Read(builder.CreateChemFile());
+                            IChemFile file = structureReader.Read(builder.NewChemFile());
                             var files = ChemFileManipulator.GetAllAtomContainers(file);
                             foreach (var f in files)
                                 AddMolecule(f);
@@ -268,7 +268,7 @@ namespace NCDK.Layout
         /// <exception cref="CDKException">if an error occurs</exception>
         public IAtomContainerSet<IAtomContainer> GetMappedSubstructures(IAtomContainer molecule)
         {
-            var matchedSubstructures = molecule.Builder.CreateAtomContainerSet();
+            var matchedSubstructures = molecule.Builder.NewAtomContainerSet();
             var matchedChemObjs = new HashSet<IChemObject>();
 
             foreach (var anonPattern in anonPatterns)
@@ -277,7 +277,7 @@ namespace NCDK.Layout
                 {
                     bool overlaps = false;
                     IAtomContainer matched = molecule.Builder
-                                                     .CreateAtomContainer();
+                                                     .NewAtomContainer();
                     foreach (var e in map)
                     {
                         if (matchedChemObjs.Contains(e.Value))

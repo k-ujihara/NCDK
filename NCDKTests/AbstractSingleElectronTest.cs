@@ -42,8 +42,8 @@ namespace NCDK
         public virtual void TestContains_IAtom()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom = obj.Builder.CreateAtom("N");
-            ISingleElectron radical = obj.Builder.CreateSingleElectron(atom);
+            IAtom atom = obj.Builder.NewAtom("N");
+            ISingleElectron radical = obj.Builder.NewSingleElectron(atom);
             Assert.IsTrue(radical.Contains(atom));
         }
 
@@ -51,7 +51,7 @@ namespace NCDK
         public virtual void TestSetAtom_IAtom()
         {
             ISingleElectron radical = (ISingleElectron)NewChemObject();
-            IAtom atom = radical.Builder.CreateAtom("N");
+            IAtom atom = radical.Builder.NewAtom("N");
             Assert.IsNull(radical.Atom);
             radical.Atom = atom;
             Assert.AreEqual(atom, radical.Atom);
@@ -61,8 +61,8 @@ namespace NCDK
         public virtual void TestGetAtom()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom = obj.Builder.CreateAtom("N");
-            ISingleElectron radical = obj.Builder.CreateSingleElectron(atom);
+            IAtom atom = obj.Builder.NewAtom("N");
+            ISingleElectron radical = obj.Builder.NewSingleElectron(atom);
             Assert.AreEqual(atom, radical.Atom);
         }
 
@@ -80,7 +80,7 @@ namespace NCDK
         public virtual void TestClone_IAtom()
         {
             ISingleElectron radical = (ISingleElectron)NewChemObject();
-            IAtom atom = radical.Builder.CreateAtom("N");
+            IAtom atom = radical.Builder.NewAtom("N");
             radical.Atom = atom;
 
             // test cloning of atom

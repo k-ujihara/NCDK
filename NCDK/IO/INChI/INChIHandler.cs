@@ -99,7 +99,7 @@ namespace NCDK.IO.InChI
                 {
                     Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
                     tautomer = new AtomContainer(inchiTool.ProcessFormula(
-                            setOfMolecules.Builder.CreateAtomContainer(), element.Value));
+                            setOfMolecules.Builder.NewAtomContainer(), element.Value));
                 }
                 else
                 {

@@ -71,10 +71,10 @@ namespace NCDK.Isomorphisms
         public void TestSFBug1708336()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer atomContainer = builder.CreateAtomContainer();
-            atomContainer.Atoms.Add(builder.CreateAtom("C"));
-            atomContainer.Atoms.Add(builder.CreateAtom("C"));
-            atomContainer.Atoms.Add(builder.CreateAtom("N"));
+            IAtomContainer atomContainer = builder.NewAtomContainer();
+            atomContainer.Atoms.Add(builder.NewAtom("C"));
+            atomContainer.Atoms.Add(builder.NewAtom("C"));
+            atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
             IQueryAtomContainer query = new QueryAtomContainer(Default.ChemObjectBuilder.Instance);

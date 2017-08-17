@@ -64,8 +64,8 @@ namespace NCDK.Default
         public void TestRing_IAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
 
             IRing ring = new Ring(container);
             Assert.IsNotNull(ring);

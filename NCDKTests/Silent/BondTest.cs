@@ -50,11 +50,11 @@ namespace NCDK.Silent
         public void TestBond_arrayIAtom()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.CreateAtom("C");
-            IAtom atom2 = obj.Builder.CreateAtom("O");
-            IAtom atom3 = obj.Builder.CreateAtom("C");
-            IAtom atom4 = obj.Builder.CreateAtom("C");
-            IAtom atom5 = obj.Builder.CreateAtom("C");
+            IAtom atom1 = obj.Builder.NewAtom("C");
+            IAtom atom2 = obj.Builder.NewAtom("O");
+            IAtom atom3 = obj.Builder.NewAtom("C");
+            IAtom atom4 = obj.Builder.NewAtom("C");
+            IAtom atom5 = obj.Builder.NewAtom("C");
 
             IBond bond1 = new Bond(new IAtom[] { atom1, atom2, atom3, atom4, atom5 });
             Assert.AreEqual(5, bond1.Atoms.Count);
@@ -66,11 +66,11 @@ namespace NCDK.Silent
         public void TestBond_arrayIAtom_BondOrder()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.CreateAtom("C");
-            IAtom atom2 = obj.Builder.CreateAtom("O");
-            IAtom atom3 = obj.Builder.CreateAtom("C");
-            IAtom atom4 = obj.Builder.CreateAtom("C");
-            IAtom atom5 = obj.Builder.CreateAtom("C");
+            IAtom atom1 = obj.Builder.NewAtom("C");
+            IAtom atom2 = obj.Builder.NewAtom("O");
+            IAtom atom3 = obj.Builder.NewAtom("C");
+            IAtom atom4 = obj.Builder.NewAtom("C");
+            IAtom atom5 = obj.Builder.NewAtom("C");
 
             IBond bond1 = new Bond(new IAtom[] { atom1, atom2, atom3, atom4, atom5 }, BondOrder.Single);
             Assert.AreEqual(5, bond1.Atoms.Count);
@@ -83,8 +83,8 @@ namespace NCDK.Silent
         public void TestBond_IAtom_IAtom()
         {
             IChemObject obj = NewChemObject();
-            IAtom c = obj.Builder.CreateAtom("C");
-            IAtom o = obj.Builder.CreateAtom("O");
+            IAtom c = obj.Builder.NewAtom("C");
+            IAtom o = obj.Builder.NewAtom("O");
             IBond bond = new Bond(c, o);
 
             Assert.AreEqual(2, bond.Atoms.Count);
@@ -98,8 +98,8 @@ namespace NCDK.Silent
         public void TestBond_IAtom_IAtom_BondOrder()
         {
             IChemObject obj = NewChemObject();
-            IAtom c = obj.Builder.CreateAtom("C");
-            IAtom o = obj.Builder.CreateAtom("O");
+            IAtom c = obj.Builder.NewAtom("C");
+            IAtom o = obj.Builder.NewAtom("O");
             IBond bond = new Bond(c, o, BondOrder.Double);
 
             Assert.AreEqual(2, bond.Atoms.Count);
@@ -113,8 +113,8 @@ namespace NCDK.Silent
         public void TestBond_IAtom_IAtom_BondOrder_IBond_Stereo()
         {
             IChemObject obj = NewChemObject();
-            IAtom c = obj.Builder.CreateAtom("C");
-            IAtom o = obj.Builder.CreateAtom("O");
+            IAtom c = obj.Builder.NewAtom("C");
+            IAtom o = obj.Builder.NewAtom("O");
             IBond bond = new Bond(c, o, BondOrder.Single, BondStereo.Up);
 
             Assert.AreEqual(2, bond.Atoms.Count);

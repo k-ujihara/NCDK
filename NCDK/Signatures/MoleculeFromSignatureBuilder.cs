@@ -69,7 +69,7 @@ namespace NCDK.Signatures
             }
             else if (edgeLabel.Equals("p"))
             {
-                IBond bond = builder.CreateBond(container.Atoms[vertexIndex1],
+                IBond bond = builder.NewBond(container.Atoms[vertexIndex1],
                         container.Atoms[vertexIndex2], BondOrder.Single);
                 bond.IsAromatic = true;
                 container.Bonds.Add(bond);
@@ -79,13 +79,13 @@ namespace NCDK.Signatures
         /// <inheritdoc/>
         public override void MakeGraph()
         {
-            this.container = this.builder.CreateAtomContainer();
+            this.container = this.builder.NewAtomContainer();
         }
 
         /// <inheritdoc/>
         public override void MakeVertex(string label)
         {
-            this.container.Atoms.Add(this.builder.CreateAtom(label));
+            this.container.Atoms.Add(this.builder.NewAtom(label));
         }
 
         /// <summary>

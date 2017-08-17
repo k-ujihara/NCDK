@@ -411,7 +411,7 @@ namespace NCDK.ForceField.MMFF
 
         static IAtom Atom(string symb, int h)
         {
-            IAtom atom = Silent.ChemObjectBuilder.Instance.CreateAtom(symb);
+            IAtom atom = Silent.ChemObjectBuilder.Instance.NewAtom(symb);
             atom.ImplicitHydrogenCount = h;
             return atom;
         }

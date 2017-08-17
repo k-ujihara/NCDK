@@ -190,7 +190,7 @@ namespace NCDK.Tools
         public IAtomContainerSet<IAtomContainer> GetStructures(IAtomContainer molecule)
         {
             int countStructure = 0;
-            var setOfMol = molecule.Builder.CreateAtomContainerSet();
+            var setOfMol = molecule.Builder.NewAtomContainerSet();
             setOfMol.Add(molecule);
 
             for (int i = 0; i < setOfMol.Count; i++)
@@ -199,7 +199,7 @@ namespace NCDK.Tools
                 foreach (var aReactionsList in Reactions)
                 {
                     IReactionProcess reaction = aReactionsList;
-                    var setOfReactants = molecule.Builder.CreateAtomContainerSet();
+                    var setOfReactants = molecule.Builder.NewAtomContainerSet();
                     setOfReactants.Add(mol);
                     try
                     {
@@ -234,7 +234,7 @@ namespace NCDK.Tools
         /// <returns>The different containers</returns>
         public IAtomContainerSet<IAtomContainer> GetContainers(IAtomContainer molecule)
         {
-            var setOfCont = molecule.Builder.CreateAtomContainerSet();
+            var setOfCont = molecule.Builder.NewAtomContainerSet();
             var setOfMol = GetStructures(molecule);
 
             if (setOfMol.Count == 0) return setOfCont;
@@ -311,7 +311,7 @@ namespace NCDK.Tools
             /* creating containers according groups */
             for (int i = 0; i < maxGroup; i++)
             {
-                IAtomContainer container = molecule.Builder.CreateAtomContainer();
+                IAtomContainer container = molecule.Builder.NewAtomContainer();
                 for (int j = 0; j < bondList.Count; j++)
                 {
                     if (flagBelonging[j] != i + 1) continue;

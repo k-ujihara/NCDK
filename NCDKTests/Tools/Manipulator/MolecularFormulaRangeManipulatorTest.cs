@@ -42,21 +42,21 @@ namespace NCDK.Tools.Manipulator
         public void TestGetRange_IMolecularFormulaSet()
         {
             IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
-            mf1.Add(builder.CreateIsotope("C"), 4);
-            mf1.Add(builder.CreateIsotope("H"), 12);
-            mf1.Add(builder.CreateIsotope("N"), 1);
-            mf1.Add(builder.CreateIsotope("O"), 4);
+            mf1.Add(builder.NewIsotope("C"), 4);
+            mf1.Add(builder.NewIsotope("H"), 12);
+            mf1.Add(builder.NewIsotope("N"), 1);
+            mf1.Add(builder.NewIsotope("O"), 4);
 
             IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
-            mf2.Add(builder.CreateIsotope("C"), 7);
-            mf2.Add(builder.CreateIsotope("H"), 20);
-            mf2.Add(builder.CreateIsotope("N"), 4);
-            mf2.Add(builder.CreateIsotope("O"), 2);
+            mf2.Add(builder.NewIsotope("C"), 7);
+            mf2.Add(builder.NewIsotope("H"), 20);
+            mf2.Add(builder.NewIsotope("N"), 4);
+            mf2.Add(builder.NewIsotope("O"), 2);
 
             IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
-            mf3.Add(builder.CreateIsotope("C"), 9);
-            mf3.Add(builder.CreateIsotope("H"), 5);
-            mf3.Add(builder.CreateIsotope("O"), 7);
+            mf3.Add(builder.NewIsotope("C"), 9);
+            mf3.Add(builder.NewIsotope("H"), 5);
+            mf3.Add(builder.NewIsotope("O"), 7);
 
             IMolecularFormulaSet mfSet = new MolecularFormulaSet();
             mfSet.Add(mf1);
@@ -68,35 +68,35 @@ namespace NCDK.Tools.Manipulator
             /* Result: C4-9H5-20N0-4O2-7 */
 
             Assert.AreEqual(4, mfRange.GetIsotopes().Count());
-            Assert.AreEqual(4, mfRange.GetIsotopeCountMin(builder.CreateIsotope("C")));
-            Assert.AreEqual(9, mfRange.GetIsotopeCountMax(builder.CreateIsotope("C")));
-            Assert.AreEqual(5, mfRange.GetIsotopeCountMin(builder.CreateIsotope("H")));
-            Assert.AreEqual(20, mfRange.GetIsotopeCountMax(builder.CreateIsotope("H")));
-            Assert.AreEqual(0, mfRange.GetIsotopeCountMin(builder.CreateIsotope("N")));
-            Assert.AreEqual(4, mfRange.GetIsotopeCountMax(builder.CreateIsotope("N")));
-            Assert.AreEqual(2, mfRange.GetIsotopeCountMin(builder.CreateIsotope("O")));
-            Assert.AreEqual(7, mfRange.GetIsotopeCountMax(builder.CreateIsotope("O")));
+            Assert.AreEqual(4, mfRange.GetIsotopeCountMin(builder.NewIsotope("C")));
+            Assert.AreEqual(9, mfRange.GetIsotopeCountMax(builder.NewIsotope("C")));
+            Assert.AreEqual(5, mfRange.GetIsotopeCountMin(builder.NewIsotope("H")));
+            Assert.AreEqual(20, mfRange.GetIsotopeCountMax(builder.NewIsotope("H")));
+            Assert.AreEqual(0, mfRange.GetIsotopeCountMin(builder.NewIsotope("N")));
+            Assert.AreEqual(4, mfRange.GetIsotopeCountMax(builder.NewIsotope("N")));
+            Assert.AreEqual(2, mfRange.GetIsotopeCountMin(builder.NewIsotope("O")));
+            Assert.AreEqual(7, mfRange.GetIsotopeCountMax(builder.NewIsotope("O")));
         }
 
         [TestMethod()]
         public void TestGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {
             IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
-            mf1.Add(builder.CreateIsotope("C"), 4);
-            mf1.Add(builder.CreateIsotope("H"), 12);
-            mf1.Add(builder.CreateIsotope("N"), 1);
-            mf1.Add(builder.CreateIsotope("O"), 4);
+            mf1.Add(builder.NewIsotope("C"), 4);
+            mf1.Add(builder.NewIsotope("H"), 12);
+            mf1.Add(builder.NewIsotope("N"), 1);
+            mf1.Add(builder.NewIsotope("O"), 4);
 
             IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
-            mf2.Add(builder.CreateIsotope("C"), 7);
-            mf2.Add(builder.CreateIsotope("H"), 20);
-            mf2.Add(builder.CreateIsotope("N"), 4);
-            mf2.Add(builder.CreateIsotope("O"), 2);
+            mf2.Add(builder.NewIsotope("C"), 7);
+            mf2.Add(builder.NewIsotope("H"), 20);
+            mf2.Add(builder.NewIsotope("N"), 4);
+            mf2.Add(builder.NewIsotope("O"), 2);
 
             IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
-            mf3.Add(builder.CreateIsotope("C"), 9);
-            mf3.Add(builder.CreateIsotope("H"), 5);
-            mf3.Add(builder.CreateIsotope("O"), 7);
+            mf3.Add(builder.NewIsotope("C"), 9);
+            mf3.Add(builder.NewIsotope("H"), 5);
+            mf3.Add(builder.NewIsotope("O"), 7);
 
             IMolecularFormulaSet mfSet = new MolecularFormulaSet();
             mfSet.Add(mf1);
@@ -109,35 +109,35 @@ namespace NCDK.Tools.Manipulator
             /* Result: C4-9H5-20N0-4O2-7 */
 
             Assert.AreEqual(4, mfRange.GetIsotopes().Count());
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("C")),
-                    mfRange.GetIsotopeCountMax(builder.CreateIsotope("C")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("H")),
-                    mfRange.GetIsotopeCountMax(builder.CreateIsotope("H")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("N")),
-                    mfRange.GetIsotopeCountMax(builder.CreateIsotope("N")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("O")),
-                    mfRange.GetIsotopeCountMax(builder.CreateIsotope("O")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("C")),
+                    mfRange.GetIsotopeCountMax(builder.NewIsotope("C")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("H")),
+                    mfRange.GetIsotopeCountMax(builder.NewIsotope("H")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("N")),
+                    mfRange.GetIsotopeCountMax(builder.NewIsotope("N")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("O")),
+                    mfRange.GetIsotopeCountMax(builder.NewIsotope("O")));
         }
 
         [TestMethod()]
         public void TestGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {
             IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
-            mf1.Add(builder.CreateIsotope("C"), 4);
-            mf1.Add(builder.CreateIsotope("H"), 12);
-            mf1.Add(builder.CreateIsotope("N"), 1);
-            mf1.Add(builder.CreateIsotope("O"), 4);
+            mf1.Add(builder.NewIsotope("C"), 4);
+            mf1.Add(builder.NewIsotope("H"), 12);
+            mf1.Add(builder.NewIsotope("N"), 1);
+            mf1.Add(builder.NewIsotope("O"), 4);
 
             IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
-            mf2.Add(builder.CreateIsotope("C"), 7);
-            mf2.Add(builder.CreateIsotope("H"), 20);
-            mf2.Add(builder.CreateIsotope("N"), 4);
-            mf2.Add(builder.CreateIsotope("O"), 2);
+            mf2.Add(builder.NewIsotope("C"), 7);
+            mf2.Add(builder.NewIsotope("H"), 20);
+            mf2.Add(builder.NewIsotope("N"), 4);
+            mf2.Add(builder.NewIsotope("O"), 2);
 
             IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
-            mf3.Add(builder.CreateIsotope("C"), 9);
-            mf3.Add(builder.CreateIsotope("H"), 5);
-            mf3.Add(builder.CreateIsotope("O"), 7);
+            mf3.Add(builder.NewIsotope("C"), 9);
+            mf3.Add(builder.NewIsotope("H"), 5);
+            mf3.Add(builder.NewIsotope("O"), 7);
 
             IMolecularFormulaSet mfSet = new MolecularFormulaSet();
             mfSet.Add(mf1);
@@ -150,14 +150,14 @@ namespace NCDK.Tools.Manipulator
             /* Result: C4-9H5-20N0-4O2-7 */
 
             Assert.AreEqual(4, mfRange.GetIsotopes().Count());
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("C")),
-                    mfRange.GetIsotopeCountMin(builder.CreateIsotope("C")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("H")),
-                    mfRange.GetIsotopeCountMin(builder.CreateIsotope("H")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("N")),
-                    mfRange.GetIsotopeCountMin(builder.CreateIsotope("N")));
-            Assert.AreEqual(formula.GetCount(builder.CreateIsotope("O")),
-                    mfRange.GetIsotopeCountMin(builder.CreateIsotope("O")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("C")),
+                    mfRange.GetIsotopeCountMin(builder.NewIsotope("C")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("H")),
+                    mfRange.GetIsotopeCountMin(builder.NewIsotope("H")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("N")),
+                    mfRange.GetIsotopeCountMin(builder.NewIsotope("N")));
+            Assert.AreEqual(formula.GetCount(builder.NewIsotope("O")),
+                    mfRange.GetIsotopeCountMin(builder.NewIsotope("O")));
         }
     }
 }

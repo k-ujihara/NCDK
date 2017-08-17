@@ -72,7 +72,7 @@ namespace NCDK.Reactions.Mechanisms
             var lps = reactantCloned.GetConnectedLonePairs(reactantCloned.Atoms[posAtom]);
             reactantCloned.LonePairs.Remove(lps.Last());
 
-            reactantCloned.SingleElectrons.Add(molecule.Builder.CreateSingleElectron(reactantCloned.Atoms[posAtom]));
+            reactantCloned.SingleElectrons.Add(molecule.Builder.NewSingleElectron(reactantCloned.Atoms[posAtom]));
             int charge = reactantCloned.Atoms[posAtom].FormalCharge.Value;
             reactantCloned.Atoms[posAtom].FormalCharge = charge + 1;
 
@@ -82,13 +82,13 @@ namespace NCDK.Reactions.Mechanisms
             IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, reactantCloned.Atoms[posAtom]);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = molecule.Builder.CreateReaction();
+            IReaction reaction = molecule.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = molecule.Builder.CreateMapping(atom,
+                IMapping mapping = molecule.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

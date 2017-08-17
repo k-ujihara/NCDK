@@ -73,8 +73,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new MMElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(builder.CreateIsotope("C"), 2);
-            formula.Add(builder.CreateIsotope("H"), 200);
+            formula.Add(builder.NewIsotope("C"), 2);
+            formula.Add(builder.NewIsotope("H"), 200);
 
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
@@ -85,8 +85,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new MMElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(builder.CreateIsotope("C"), 2);
-            formula.Add(builder.CreateIsotope("H"), 6);
+            formula.Add(builder.NewIsotope("C"), 2);
+            formula.Add(builder.NewIsotope("H"), 6);
 
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }

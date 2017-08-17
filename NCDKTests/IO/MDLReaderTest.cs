@@ -221,7 +221,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
             MDLReader reader = new MDLReader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(9, molecule.Atoms.Count);
@@ -233,7 +233,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(ins);
-            IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
+            IChemFile chemfile = Default.ChemObjectBuilder.Instance.NewChemFile();
             chemfile = reader.Read(chemfile);
             IAtomContainer container = ChemFileManipulator.GetAllAtomContainers(chemfile).First();
             Assert.IsNotNull(container.GetProperty<object>("first"));
@@ -247,7 +247,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
-            IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
+            IChemFile chemfile = Default.ChemObjectBuilder.Instance.NewChemFile();
             chemfile = reader.Read(chemfile);
         }
     }

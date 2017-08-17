@@ -154,10 +154,10 @@ namespace NCDK.Silent
             IAtomContainer container = (IAtomContainer)newChemObject;
 
             IAtom[] atoms = new IAtom[4];
-            atoms[0] = container.Builder.CreateAtom("C");
-            atoms[1] = container.Builder.CreateAtom("C");
-            atoms[2] = container.Builder.CreateAtom("C");
-            atoms[3] = container.Builder.CreateAtom("O");
+            atoms[0] = container.Builder.NewAtom("C");
+            atoms[1] = container.Builder.NewAtom("C");
+            atoms[2] = container.Builder.NewAtom("C");
+            atoms[3] = container.Builder.NewAtom("O");
             container.SetAtoms(atoms);
 
             // if an atom changes, the atomcontainer will throw a change event too

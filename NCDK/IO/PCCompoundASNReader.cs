@@ -116,10 +116,10 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.CreateChemSequence();
-            IChemModel chemModel = file.Builder.CreateChemModel();
-            var moleculeSet = file.Builder.CreateAtomContainerSet();
-            molecule = file.Builder.CreateAtomContainer();
+            IChemSequence chemSequence = file.Builder.NewChemSequence();
+            IChemModel chemModel = file.Builder.NewChemModel();
+            var moleculeSet = file.Builder.NewAtomContainerSet();
+            molecule = file.Builder.NewAtomContainer();
             atomIDs = new Dictionary<string, IAtom>();
 
             string line = input.ReadLine();
@@ -311,7 +311,7 @@ namespace NCDK.IO
         {
             if (molecule.Atoms.Count <= i)
             {
-                molecule.Atoms.Add(molecule.Builder.CreateAtom());
+                molecule.Atoms.Add(molecule.Builder.NewAtom());
             }
             return molecule.Atoms[i];
         }
@@ -320,7 +320,7 @@ namespace NCDK.IO
         {
             if (molecule.Bonds.Count <= i)
             {
-                molecule.Bonds.Add(molecule.Builder.CreateBond(null, null));
+                molecule.Bonds.Add(molecule.Builder.NewBond(null, null));
             }
             return molecule.Bonds[i];
         }

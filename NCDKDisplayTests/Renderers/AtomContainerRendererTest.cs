@@ -54,11 +54,11 @@ namespace NCDK.Renderers
 
         public IAtomContainer MakeSquare()
         {
-            IAtomContainer square = builder.CreateAtomContainer();
-            square.Atoms.Add(builder.CreateAtom("C"));
-            square.Atoms.Add(builder.CreateAtom("C"));
-            square.Atoms.Add(builder.CreateAtom("C"));
-            square.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer square = builder.NewAtomContainer();
+            square.Atoms.Add(builder.NewAtom("C"));
+            square.Atoms.Add(builder.NewAtom("C"));
+            square.Atoms.Add(builder.NewAtom("C"));
+            square.Atoms.Add(builder.NewAtom("C"));
             square.AddBond(square.Atoms[0], square.Atoms[1], BondOrder.Single);
             square.AddBond(square.Atoms[0], square.Atoms[3], BondOrder.Single);
             square.AddBond(square.Atoms[1], square.Atoms[2], BondOrder.Single);

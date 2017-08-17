@@ -41,7 +41,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestAdductFormula_IMolecularFormula()
         {
-            IAdductFormula mfS = new AdductFormula(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = new AdductFormula(Builder.NewMolecularFormula());
             Assert.AreEqual(1, mfS.Count);
         }
     }

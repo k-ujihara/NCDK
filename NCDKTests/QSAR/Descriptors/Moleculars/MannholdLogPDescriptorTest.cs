@@ -38,9 +38,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestMethanol()
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-            IAtomContainer methanol = builder.CreateAtomContainer();
-            methanol.Atoms.Add(builder.CreateAtom("C"));
-            methanol.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer methanol = builder.NewAtomContainer();
+            methanol.Atoms.Add(builder.NewAtom("C"));
+            methanol.Atoms.Add(builder.NewAtom("O"));
             methanol.AddBond(methanol.Atoms[0], methanol.Atoms[1], BondOrder.Single);
             IDescriptorResult result = Descriptor.Calculate(methanol).GetValue();
             Assert.IsTrue(result is DoubleResult);
@@ -51,8 +51,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestMethane()
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-            IAtomContainer methane = builder.CreateAtomContainer();
-            methane.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer methane = builder.NewAtomContainer();
+            methane.Atoms.Add(builder.NewAtom("C"));
             IDescriptorResult result = Descriptor.Calculate(methane).GetValue();
             Assert.IsTrue(result is DoubleResult);
             Assert.AreEqual(1.57, ((DoubleResult)result).Value, 0.01);
@@ -62,11 +62,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestChloroform()
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-            IAtomContainer chloroform = builder.CreateAtomContainer();
-            chloroform.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer chloroform = builder.NewAtomContainer();
+            chloroform.Atoms.Add(builder.NewAtom("C"));
             for (int i = 0; i < 3; i++)
             {
-                chloroform.Atoms.Add(builder.CreateAtom("Cl"));
+                chloroform.Atoms.Add(builder.NewAtom("Cl"));
                 chloroform.AddBond(chloroform.Atoms[0], chloroform.Atoms[i + 1], BondOrder.Single);
             }
             IDescriptorResult result = Descriptor.Calculate(chloroform).GetValue();

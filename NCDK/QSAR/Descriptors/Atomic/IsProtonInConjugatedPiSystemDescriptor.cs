@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtom clonedAtom = clonedAtomContainer.Atoms[atomContainer.Atoms.IndexOf(atom)];
 
             bool isProtonInPiSystem = false;
-            IAtomContainer mol = clonedAtom.Builder.CreateAtomContainer(clonedAtomContainer);
+            IAtomContainer mol = clonedAtom.Builder.NewAtomContainer(clonedAtomContainer);
             if (checkAromaticity)
             {
                 try

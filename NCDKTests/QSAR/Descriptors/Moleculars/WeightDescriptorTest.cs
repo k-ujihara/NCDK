@@ -49,8 +49,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             Descriptor.Parameters = new object[] { "*" };
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             Assert.AreEqual(12.00, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1);
         }
 
@@ -60,12 +60,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             Descriptor.Parameters = new object[] { "*" };
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("H"));
-            mol.Atoms.Add(builder.CreateAtom("H"));
-            mol.Atoms.Add(builder.CreateAtom("H"));
-            mol.Atoms.Add(builder.CreateAtom("H"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
+            mol.Atoms.Add(builder.NewAtom("H"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -79,8 +79,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             Descriptor.Parameters = new object[] { "*" };
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 4;
             Assert.AreEqual(16.01, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1);
         }

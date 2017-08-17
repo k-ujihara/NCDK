@@ -112,11 +112,11 @@ namespace NCDK.SMSD.Ring
         {
             var cycles = FindRings(molecule);
 
-            IRingSet ringSet = molecule.Builder.CreateRingSet();
+            IRingSet ringSet = molecule.Builder.NewRingSet();
 
             foreach (var ringAtoms in cycles)
             {
-                IRing ring = molecule.Builder.CreateRing();
+                IRing ring = molecule.Builder.NewRing();
                 foreach (var atom in ringAtoms)
                 {
                     atom.IsInRing = true;

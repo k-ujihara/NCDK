@@ -110,7 +110,7 @@ namespace NCDK.Tools
 
             for (int j = 0; j < missingLPs; j++)
             {
-                ILonePair lp = atom.Builder.CreateLonePair(atom);
+                ILonePair lp = atom.Builder.NewLonePair(atom);
                 ac.LonePairs.Add(lp);
             }
         }

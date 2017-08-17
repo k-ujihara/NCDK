@@ -36,9 +36,9 @@ namespace NCDK.Default
     /// <code>    
     ///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
     /// 
-    ///     IAtom a = builder.CreateAtom();
-    ///     IAtom c12 = builder.CreateAtom("C");
-    ///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
+    ///     IAtom a = builder.NewAtom();
+    ///     IAtom c12 = builder.NewAtom("C");
+    ///     IAtom c13 = builder.NewAtom(builder.NewIsotope("C", 13));
     /// </code>
     /// </example>
     // @author        egonw
@@ -53,92 +53,92 @@ namespace NCDK.Default
         public T Create<T>() where T : IAtomContainer, new() => new T();
 
         // elements
-        public IAtom CreateAtom() => new Atom();
-        public IAtom CreateAtom(IElement element) => new Atom(element);
-		public IAtom CreateAtom(int elem) => new Atom(elem);
-		public IAtom CreateAtom(int elem, int hcnt) => new Atom(elem, hcnt);
-		public IAtom CreateAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
-        public IAtom CreateAtom(string elementSymbol) => new Atom(elementSymbol);
-        public IAtom CreateAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
-        public IAtom CreateAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
-        public IPseudoAtom CreatePseudoAtom() => new PseudoAtom();
-        public IPseudoAtom CreatePseudoAtom(string label) => new PseudoAtom(label);
-        public IPseudoAtom CreatePseudoAtom(IElement element) => new PseudoAtom(element);
-        public IPseudoAtom CreatePseudoAtom(string label, Vector2 point2d) => new PseudoAtom(label, point2d);
-        public IPseudoAtom CreatePseudoAtom(string label, Vector3 point3d) => new PseudoAtom(label, point3d);
-        public IElement CreateElement() => new Element();
-        public IElement CreateElement(IElement element) => new Element(element);
-        public IElement CreateElement(string symbol) => new Element(symbol);
-        public IElement CreateElement(string symbol, int? atomicNumber) => new Element(symbol, atomicNumber);
-        public IAtomType CreateAtomType(IElement element) => new AtomType(element);
-        public IAtomType CreateAtomType(string elementSymbol) => new AtomType(elementSymbol);
-        public IAtomType CreateAtomType(string identifier, string elementSymbol) => new AtomType(identifier, elementSymbol);
-        public IFragmentAtom CreateFragmentAtom() => new FragmentAtom();
-        public IPDBAtom CreatePDBAtom(IElement element) => new PDBAtom(element);
-        public IPDBAtom CreatePDBAtom(string symbol) => new PDBAtom(symbol);
-        public IPDBAtom CreatePDBAtom(string symbol, Vector3 coordinate) => new PDBAtom(symbol, coordinate);
-        public IIsotope CreateIsotope(string elementSymbol) => new Isotope(elementSymbol);
-        public IIsotope CreateIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-        public IIsotope CreateIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-        public IIsotope CreateIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
-        public IIsotope CreateIsotope(IElement element) => new Isotope(element);
+        public IAtom NewAtom() => new Atom();
+        public IAtom NewAtom(IElement element) => new Atom(element);
+		public IAtom NewAtom(int elem) => new Atom(elem);
+		public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
+		public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
+        public IAtom NewAtom(string elementSymbol) => new Atom(elementSymbol);
+        public IAtom NewAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
+        public IAtom NewAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
+        public IPseudoAtom NewPseudoAtom() => new PseudoAtom();
+        public IPseudoAtom NewPseudoAtom(string label) => new PseudoAtom(label);
+        public IPseudoAtom NewPseudoAtom(IElement element) => new PseudoAtom(element);
+        public IPseudoAtom NewPseudoAtom(string label, Vector2 point2d) => new PseudoAtom(label, point2d);
+        public IPseudoAtom NewPseudoAtom(string label, Vector3 point3d) => new PseudoAtom(label, point3d);
+        public IElement NewElement() => new Element();
+        public IElement NewElement(IElement element) => new Element(element);
+        public IElement NewElement(string symbol) => new Element(symbol);
+        public IElement NewElement(string symbol, int? atomicNumber) => new Element(symbol, atomicNumber);
+        public IAtomType NewAtomType(IElement element) => new AtomType(element);
+        public IAtomType NewAtomType(string elementSymbol) => new AtomType(elementSymbol);
+        public IAtomType NewAtomType(string identifier, string elementSymbol) => new AtomType(identifier, elementSymbol);
+        public IFragmentAtom NewFragmentAtom() => new FragmentAtom();
+        public IPDBAtom NewPDBAtom(IElement element) => new PDBAtom(element);
+        public IPDBAtom NewPDBAtom(string symbol) => new PDBAtom(symbol);
+        public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => new PDBAtom(symbol, coordinate);
+        public IIsotope NewIsotope(string elementSymbol) => new Isotope(elementSymbol);
+        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
+        public IIsotope NewIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
+        public IIsotope NewIsotope(IElement element) => new Isotope(element);
 
         // electron containers
-        public IBond CreateBond() => new Bond();
-        public IBond CreateBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
-        public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
-        public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => new Bond(atom1, atom2, order, stereo);
-        public IBond CreateBond(IEnumerable<IAtom> atoms) => new Bond(atoms);
-        public IBond CreateBond(IEnumerable<IAtom> atoms, BondOrder order) => new Bond(atoms, order);
-        public IBond CreateBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => new Bond(atoms, order, stereo);
-        public IElectronContainer CreateElectronContainer() => new ElectronContainer();
-        public ISingleElectron CreateSingleElectron() => new SingleElectron();
-        public ISingleElectron CreateSingleElectron(IAtom atom) => new SingleElectron(atom);
-        public ILonePair CreateLonePair() => new LonePair();
-        public ILonePair CreateLonePair(IAtom atom) => new LonePair(atom);
+        public IBond NewBond() => new Bond();
+        public IBond NewBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
+        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
+        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => new Bond(atom1, atom2, order, stereo);
+        public IBond NewBond(IEnumerable<IAtom> atoms) => new Bond(atoms);
+        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order) => new Bond(atoms, order);
+        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => new Bond(atoms, order, stereo);
+        public IElectronContainer NewElectronContainer() => new ElectronContainer();
+        public ISingleElectron NewSingleElectron() => new SingleElectron();
+        public ISingleElectron NewSingleElectron(IAtom atom) => new SingleElectron(atom);
+        public ILonePair NewLonePair() => new LonePair();
+        public ILonePair NewLonePair(IAtom atom) => new LonePair(atom);
         
         // atom containers
-        public IAtomContainer CreateAtomContainer() => new AtomContainer();
-        public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
-        public IAtomContainer CreateAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
-        public IRing CreateRing() => new Ring();
-        public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
-        public IRing CreateRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-        public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
-        public ICrystal CreateCrystal() => new Crystal();
-        public ICrystal CreateCrystal(IAtomContainer container) => new Crystal(container);
-        public IPolymer CreatePolymer() => new Polymer();
-        public IPDBPolymer CreatePDBPolymer() => new PDBPolymer();
-        public IMonomer CreateMonomer() => new Monomer();
-        public IPDBMonomer CreatePDBMonomer() => new PDBMonomer();
-        public IBioPolymer CreateBioPolymer() => new BioPolymer();
-        public IPDBStructure CreatePDBStructure() => new PDBStructure();
-        public IAminoAcid CreateAminoAcid() => new AminoAcid();
-        public IStrand CreateStrand() => new Strand();
+        public IAtomContainer NewAtomContainer() => new AtomContainer();
+        public IAtomContainer NewAtomContainer(IAtomContainer container) => new AtomContainer(container);
+        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
+        public IRing NewRing() => new Ring();
+        public IRing NewRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
+        public IRing NewRing(IAtomContainer atomContainer) => new Ring(atomContainer);
+        public IRing NewRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
+        public ICrystal NewCrystal() => new Crystal();
+        public ICrystal NewCrystal(IAtomContainer container) => new Crystal(container);
+        public IPolymer NewPolymer() => new Polymer();
+        public IPDBPolymer NewPDBPolymer() => new PDBPolymer();
+        public IMonomer NewMonomer() => new Monomer();
+        public IPDBMonomer NewPDBMonomer() => new PDBMonomer();
+        public IBioPolymer NewBioPolymer() => new BioPolymer();
+        public IPDBStructure NewPDBStructure() => new PDBStructure();
+        public IAminoAcid NewAminoAcid() => new AminoAcid();
+        public IStrand NewStrand() => new Strand();
 
         // reactions
-        public IReaction CreateReaction() => new Reaction();
-        public IReactionScheme CreateReactionScheme() => new ReactionScheme();
+        public IReaction NewReaction() => new Reaction();
+        public IReactionScheme NewReactionScheme() => new ReactionScheme();
 
         // formula
-        public IMolecularFormula CreateMolecularFormula() => new MolecularFormula();
-        public IAdductFormula CreateAdductFormula() => new AdductFormula();
-        public IAdductFormula CreateAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
+        public IMolecularFormula NewMolecularFormula() => new MolecularFormula();
+        public IAdductFormula NewAdductFormula() => new AdductFormula();
+        public IAdductFormula NewAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
 
         // chem object sets
-        public IAtomContainerSet<T> CreateAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
-        public IAtomContainerSet<IAtomContainer> CreateAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
-        public IMolecularFormulaSet CreateMolecularFormulaSet() => new MolecularFormulaSet();
-        public IMolecularFormulaSet CreateMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-        public IReactionSet CreateReactionSet() => new ReactionSet();
-        public IRingSet CreateRingSet() => new RingSet();
-        public IChemModel CreateChemModel() => new ChemModel();
-        public IChemFile CreateChemFile() => new ChemFile();
-        public IChemSequence CreateChemSequence() => new ChemSequence();
-        public ISubstance CreateSubstance() => new Substance();
+        public IAtomContainerSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
+        public IAtomContainerSet<IAtomContainer> NewAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
+        public IMolecularFormulaSet NewMolecularFormulaSet() => new MolecularFormulaSet();
+        public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
+        public IReactionSet NewReactionSet() => new ReactionSet();
+        public IRingSet NewRingSet() => new RingSet();
+        public IChemModel NewChemModel() => new ChemModel();
+        public IChemFile NewChemFile() => new ChemFile();
+        public IChemSequence NewChemSequence() => new ChemSequence();
+        public ISubstance NewSubstance() => new Substance();
         
         // stereo components (requires some modification after instantiation)
-        public ITetrahedralChirality CreateTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
+        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
             o.Builder = this;
@@ -153,9 +153,9 @@ namespace NCDK.Default
         }
 
         // miscellaneous
-        public IMapping CreateMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
-        public IChemObject CreateChemObject() => new ChemObject();
-        public IChemObject CreateChemObject(IChemObject chemObject) => new ChemObject(chemObject);
+        public IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
+        public IChemObject NewChemObject() => new ChemObject();
+        public IChemObject NewChemObject(IChemObject chemObject) => new ChemObject(chemObject);
     }
 }
 namespace NCDK.Silent
@@ -167,9 +167,9 @@ namespace NCDK.Silent
     /// <code>    
     ///     IChemObjectBuilder builder = ChemObjectBuilder.Instance;
     /// 
-    ///     IAtom a = builder.CreateAtom();
-    ///     IAtom c12 = builder.CreateAtom("C");
-    ///     IAtom c13 = builder.CreateAtom(builder.CreateIsotope("C", 13));
+    ///     IAtom a = builder.NewAtom();
+    ///     IAtom c12 = builder.NewAtom("C");
+    ///     IAtom c13 = builder.NewAtom(builder.NewIsotope("C", 13));
     /// </code>
     /// </example>
     // @author        egonw
@@ -184,92 +184,92 @@ namespace NCDK.Silent
         public T Create<T>() where T : IAtomContainer, new() => new T();
 
         // elements
-        public IAtom CreateAtom() => new Atom();
-        public IAtom CreateAtom(IElement element) => new Atom(element);
-		public IAtom CreateAtom(int elem) => new Atom(elem);
-		public IAtom CreateAtom(int elem, int hcnt) => new Atom(elem, hcnt);
-		public IAtom CreateAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
-        public IAtom CreateAtom(string elementSymbol) => new Atom(elementSymbol);
-        public IAtom CreateAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
-        public IAtom CreateAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
-        public IPseudoAtom CreatePseudoAtom() => new PseudoAtom();
-        public IPseudoAtom CreatePseudoAtom(string label) => new PseudoAtom(label);
-        public IPseudoAtom CreatePseudoAtom(IElement element) => new PseudoAtom(element);
-        public IPseudoAtom CreatePseudoAtom(string label, Vector2 point2d) => new PseudoAtom(label, point2d);
-        public IPseudoAtom CreatePseudoAtom(string label, Vector3 point3d) => new PseudoAtom(label, point3d);
-        public IElement CreateElement() => new Element();
-        public IElement CreateElement(IElement element) => new Element(element);
-        public IElement CreateElement(string symbol) => new Element(symbol);
-        public IElement CreateElement(string symbol, int? atomicNumber) => new Element(symbol, atomicNumber);
-        public IAtomType CreateAtomType(IElement element) => new AtomType(element);
-        public IAtomType CreateAtomType(string elementSymbol) => new AtomType(elementSymbol);
-        public IAtomType CreateAtomType(string identifier, string elementSymbol) => new AtomType(identifier, elementSymbol);
-        public IFragmentAtom CreateFragmentAtom() => new FragmentAtom();
-        public IPDBAtom CreatePDBAtom(IElement element) => new PDBAtom(element);
-        public IPDBAtom CreatePDBAtom(string symbol) => new PDBAtom(symbol);
-        public IPDBAtom CreatePDBAtom(string symbol, Vector3 coordinate) => new PDBAtom(symbol, coordinate);
-        public IIsotope CreateIsotope(string elementSymbol) => new Isotope(elementSymbol);
-        public IIsotope CreateIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
-        public IIsotope CreateIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
-        public IIsotope CreateIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
-        public IIsotope CreateIsotope(IElement element) => new Isotope(element);
+        public IAtom NewAtom() => new Atom();
+        public IAtom NewAtom(IElement element) => new Atom(element);
+		public IAtom NewAtom(int elem) => new Atom(elem);
+		public IAtom NewAtom(int elem, int hcnt) => new Atom(elem, hcnt);
+		public IAtom NewAtom(int elem, int hcnt, int fchg) => new Atom(elem, hcnt, fchg);
+        public IAtom NewAtom(string elementSymbol) => new Atom(elementSymbol);
+        public IAtom NewAtom(string elementSymbol, Vector2 point2d) => new Atom(elementSymbol, point2d);
+        public IAtom NewAtom(string elementSymbol, Vector3 point3d) => new Atom(elementSymbol, point3d);
+        public IPseudoAtom NewPseudoAtom() => new PseudoAtom();
+        public IPseudoAtom NewPseudoAtom(string label) => new PseudoAtom(label);
+        public IPseudoAtom NewPseudoAtom(IElement element) => new PseudoAtom(element);
+        public IPseudoAtom NewPseudoAtom(string label, Vector2 point2d) => new PseudoAtom(label, point2d);
+        public IPseudoAtom NewPseudoAtom(string label, Vector3 point3d) => new PseudoAtom(label, point3d);
+        public IElement NewElement() => new Element();
+        public IElement NewElement(IElement element) => new Element(element);
+        public IElement NewElement(string symbol) => new Element(symbol);
+        public IElement NewElement(string symbol, int? atomicNumber) => new Element(symbol, atomicNumber);
+        public IAtomType NewAtomType(IElement element) => new AtomType(element);
+        public IAtomType NewAtomType(string elementSymbol) => new AtomType(elementSymbol);
+        public IAtomType NewAtomType(string identifier, string elementSymbol) => new AtomType(identifier, elementSymbol);
+        public IFragmentAtom NewFragmentAtom() => new FragmentAtom();
+        public IPDBAtom NewPDBAtom(IElement element) => new PDBAtom(element);
+        public IPDBAtom NewPDBAtom(string symbol) => new PDBAtom(symbol);
+        public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => new PDBAtom(symbol, coordinate);
+        public IIsotope NewIsotope(string elementSymbol) => new Isotope(elementSymbol);
+        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, int massNumber, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
+        public IIsotope NewIsotope(int atomicNumber, string elementSymbol, double exactMass, double abundance) => new Isotope(atomicNumber, elementSymbol, exactMass, abundance);
+        public IIsotope NewIsotope(string elementSymbol, int massNumber) => new Isotope(elementSymbol, massNumber);
+        public IIsotope NewIsotope(IElement element) => new Isotope(element);
 
         // electron containers
-        public IBond CreateBond() => new Bond();
-        public IBond CreateBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
-        public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
-        public IBond CreateBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => new Bond(atom1, atom2, order, stereo);
-        public IBond CreateBond(IEnumerable<IAtom> atoms) => new Bond(atoms);
-        public IBond CreateBond(IEnumerable<IAtom> atoms, BondOrder order) => new Bond(atoms, order);
-        public IBond CreateBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => new Bond(atoms, order, stereo);
-        public IElectronContainer CreateElectronContainer() => new ElectronContainer();
-        public ISingleElectron CreateSingleElectron() => new SingleElectron();
-        public ISingleElectron CreateSingleElectron(IAtom atom) => new SingleElectron(atom);
-        public ILonePair CreateLonePair() => new LonePair();
-        public ILonePair CreateLonePair(IAtom atom) => new LonePair(atom);
+        public IBond NewBond() => new Bond();
+        public IBond NewBond(IAtom atom1, IAtom atom2) => new Bond(atom1, atom2);
+        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order) => new Bond(atom1, atom2, order);
+        public IBond NewBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo) => new Bond(atom1, atom2, order, stereo);
+        public IBond NewBond(IEnumerable<IAtom> atoms) => new Bond(atoms);
+        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order) => new Bond(atoms, order);
+        public IBond NewBond(IEnumerable<IAtom> atoms, BondOrder order, BondStereo stereo) => new Bond(atoms, order, stereo);
+        public IElectronContainer NewElectronContainer() => new ElectronContainer();
+        public ISingleElectron NewSingleElectron() => new SingleElectron();
+        public ISingleElectron NewSingleElectron(IAtom atom) => new SingleElectron(atom);
+        public ILonePair NewLonePair() => new LonePair();
+        public ILonePair NewLonePair(IAtom atom) => new LonePair(atom);
         
         // atom containers
-        public IAtomContainer CreateAtomContainer() => new AtomContainer();
-        public IAtomContainer CreateAtomContainer(IAtomContainer container) => new AtomContainer(container);
-        public IAtomContainer CreateAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
-        public IRing CreateRing() => new Ring();
-        public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
-        public IRing CreateRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-        public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
-        public ICrystal CreateCrystal() => new Crystal();
-        public ICrystal CreateCrystal(IAtomContainer container) => new Crystal(container);
-        public IPolymer CreatePolymer() => new Polymer();
-        public IPDBPolymer CreatePDBPolymer() => new PDBPolymer();
-        public IMonomer CreateMonomer() => new Monomer();
-        public IPDBMonomer CreatePDBMonomer() => new PDBMonomer();
-        public IBioPolymer CreateBioPolymer() => new BioPolymer();
-        public IPDBStructure CreatePDBStructure() => new PDBStructure();
-        public IAminoAcid CreateAminoAcid() => new AminoAcid();
-        public IStrand CreateStrand() => new Strand();
+        public IAtomContainer NewAtomContainer() => new AtomContainer();
+        public IAtomContainer NewAtomContainer(IAtomContainer container) => new AtomContainer(container);
+        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
+        public IRing NewRing() => new Ring();
+        public IRing NewRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
+        public IRing NewRing(IAtomContainer atomContainer) => new Ring(atomContainer);
+        public IRing NewRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
+        public ICrystal NewCrystal() => new Crystal();
+        public ICrystal NewCrystal(IAtomContainer container) => new Crystal(container);
+        public IPolymer NewPolymer() => new Polymer();
+        public IPDBPolymer NewPDBPolymer() => new PDBPolymer();
+        public IMonomer NewMonomer() => new Monomer();
+        public IPDBMonomer NewPDBMonomer() => new PDBMonomer();
+        public IBioPolymer NewBioPolymer() => new BioPolymer();
+        public IPDBStructure NewPDBStructure() => new PDBStructure();
+        public IAminoAcid NewAminoAcid() => new AminoAcid();
+        public IStrand NewStrand() => new Strand();
 
         // reactions
-        public IReaction CreateReaction() => new Reaction();
-        public IReactionScheme CreateReactionScheme() => new ReactionScheme();
+        public IReaction NewReaction() => new Reaction();
+        public IReactionScheme NewReactionScheme() => new ReactionScheme();
 
         // formula
-        public IMolecularFormula CreateMolecularFormula() => new MolecularFormula();
-        public IAdductFormula CreateAdductFormula() => new AdductFormula();
-        public IAdductFormula CreateAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
+        public IMolecularFormula NewMolecularFormula() => new MolecularFormula();
+        public IAdductFormula NewAdductFormula() => new AdductFormula();
+        public IAdductFormula NewAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
 
         // chem object sets
-        public IAtomContainerSet<T> CreateAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
-        public IAtomContainerSet<IAtomContainer> CreateAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
-        public IMolecularFormulaSet CreateMolecularFormulaSet() => new MolecularFormulaSet();
-        public IMolecularFormulaSet CreateMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-        public IReactionSet CreateReactionSet() => new ReactionSet();
-        public IRingSet CreateRingSet() => new RingSet();
-        public IChemModel CreateChemModel() => new ChemModel();
-        public IChemFile CreateChemFile() => new ChemFile();
-        public IChemSequence CreateChemSequence() => new ChemSequence();
-        public ISubstance CreateSubstance() => new Substance();
+        public IAtomContainerSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
+        public IAtomContainerSet<IAtomContainer> NewAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
+        public IMolecularFormulaSet NewMolecularFormulaSet() => new MolecularFormulaSet();
+        public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
+        public IReactionSet NewReactionSet() => new ReactionSet();
+        public IRingSet NewRingSet() => new RingSet();
+        public IChemModel NewChemModel() => new ChemModel();
+        public IChemFile NewChemFile() => new ChemFile();
+        public IChemSequence NewChemSequence() => new ChemSequence();
+        public ISubstance NewSubstance() => new Substance();
         
         // stereo components (requires some modification after instantiation)
-        public ITetrahedralChirality CreateTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
+        public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
             o.Builder = this;
@@ -284,8 +284,8 @@ namespace NCDK.Silent
         }
 
         // miscellaneous
-        public IMapping CreateMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
-        public IChemObject CreateChemObject() => new ChemObject();
-        public IChemObject CreateChemObject(IChemObject chemObject) => new ChemObject(chemObject);
+        public IMapping NewMapping(IChemObject objectOne, IChemObject objectTwo) => new Mapping(objectOne, objectTwo);
+        public IChemObject NewChemObject() => new ChemObject();
+        public IChemObject NewChemObject(IChemObject chemObject) => new ChemObject(chemObject);
     }
 }

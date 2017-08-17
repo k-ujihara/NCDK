@@ -42,12 +42,12 @@ namespace NCDK
         public virtual void TestGetReactionCount()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 3
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 4
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 5
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 6 (force growing)
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 3
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 4
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 5
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 6 (force growing)
             Assert.AreEqual(6, reactionSet.Count);
         }
 
@@ -55,7 +55,7 @@ namespace NCDK
         public virtual void TestRemoveAllReactions()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction());
+            reactionSet.Add(reactionSet.Builder.NewReaction());
             reactionSet.Clear();
             Assert.AreEqual(0, reactionSet.Count);
         }
@@ -64,10 +64,10 @@ namespace NCDK
         public virtual void TestReactions()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 3
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 4
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 3
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 4
 
             IEnumerator<IReaction> reactionIter = reactionSet.GetEnumerator();
             Assert.IsNotNull(reactionIter);
@@ -85,10 +85,10 @@ namespace NCDK
         public virtual void TestGetReaction_int()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 3
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 4
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 3
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 4
 
             for (int i = 0; i < reactionSet.Count; i++)
             {
@@ -100,11 +100,11 @@ namespace NCDK
         public virtual void TestAddReaction_IReaction()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            IReaction third = reactionSet.Builder.CreateReaction();
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            IReaction third = reactionSet.Builder.NewReaction();
             reactionSet.Add(third); // 3
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 4
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 4
 
             Assert.AreEqual(4, reactionSet.Count);
             Assert.AreEqual(third, reactionSet[2]);
@@ -114,9 +114,9 @@ namespace NCDK
         public virtual void TestRemoveReaction_int()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 3
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 3
             Assert.AreEqual(3, reactionSet.Count);
             reactionSet.RemoveAt(1);
             Assert.AreEqual(2, reactionSet.Count);
@@ -128,10 +128,10 @@ namespace NCDK
         public virtual void TestClone_Reaction()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 1
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 2
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 3
-            reactionSet.Add(reactionSet.Builder.CreateReaction()); // 4
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 1
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 2
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 3
+            reactionSet.Add(reactionSet.Builder.NewReaction()); // 4
 
             IReactionSet clone = (IReactionSet)reactionSet.Clone();
             Assert.AreEqual(reactionSet.Count, clone.Count);
@@ -160,7 +160,7 @@ namespace NCDK
                 Assert.IsTrue(description[i] != '\r');
             }
 
-            IReaction reaction = reactionSet.Builder.CreateReaction();
+            IReaction reaction = reactionSet.Builder.NewReaction();
             reactionSet.Add(reaction);
             description = reactionSet.ToString();
             for (int i = 0; i < description.Length; i++)
@@ -177,7 +177,7 @@ namespace NCDK
             IReactionSet chemObject = (IReactionSet)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            chemObject.Add(chemObject.Builder.CreateReaction());
+            chemObject.Add(chemObject.Builder.NewReaction());
             Assert.IsTrue(listener.Changed);
 
             listener.Reset();
@@ -188,10 +188,10 @@ namespace NCDK
         public virtual void TestRemoveReaction_IReaction()
         {
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
-            IReaction reaction = reactionSet.Builder.CreateReaction();
+            IReaction reaction = reactionSet.Builder.NewReaction();
             reaction.Id = "1";
             reactionSet.Add(reaction);
-            IReaction relevantReaction = reactionSet.Builder.CreateReaction();
+            IReaction relevantReaction = reactionSet.Builder.NewReaction();
             relevantReaction.Id = "2";
             reactionSet.Add(relevantReaction);
             Assert.AreEqual(2, reactionSet.Count);
@@ -233,7 +233,7 @@ namespace NCDK
 
             Assert.IsTrue(set.IsEmpty(), "new reaction set should be empty");
 
-            set.Add(set.Builder.CreateReaction());
+            set.Add(set.Builder.NewReaction());
 
             Assert.IsFalse(set.IsEmpty(), "reaction set with a single reaction should not be empty");
 

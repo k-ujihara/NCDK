@@ -295,7 +295,7 @@ namespace NCDK
         {
             IChemObject chemObject1 = NewChemObject();
             var props1 = new Dictionary<object, object>();
-            IAtom atom = chemObject1.Builder.CreateAtom("C");
+            IAtom atom = chemObject1.Builder.NewAtom("C");
             props1.Add("atom", atom);
             chemObject1.AddProperties(props1);
             IChemObject chemObject2 = (IChemObject)chemObject1.Clone();

@@ -38,7 +38,7 @@ namespace NCDK.Default
         [TestMethod()]
         public void TestPDBAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement();
+            IElement element = NewChemObject().Builder.NewElement();
             IAtom a = new PDBAtom(element);
             Assert.IsNotNull(a);
         }
@@ -82,7 +82,7 @@ namespace NCDK.Default
             {
                 Atom atom = (Atom)someAtom;
                 Assert.IsTrue(atom.Compare(atom));
-                IAtom hydrogen = atom.Builder.CreateAtom("H");
+                IAtom hydrogen = atom.Builder.NewAtom("H");
                 Assert.IsFalse(atom.Compare(hydrogen));
                 Assert.IsFalse(atom.Compare("C"));
             }

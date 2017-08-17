@@ -211,8 +211,8 @@ namespace NCDK.IO
                 }
                 else if (obj is IChemModel)
                 {
-                    IChemFile file = obj.Builder.CreateChemFile();
-                    IChemSequence sequence = obj.Builder.CreateChemSequence();
+                    IChemFile file = obj.Builder.NewChemFile();
+                    IChemSequence sequence = obj.Builder.NewChemSequence();
                     sequence.Add((IChemModel)obj);
                     file.Add(sequence);
                     WriteChemFile((IChemFile)file);
@@ -235,7 +235,7 @@ namespace NCDK.IO
 
         private void WriteChemFile(IChemFile file)
         {
-            IAtomContainer bigPile = file.Builder.CreateAtomContainer();
+            IAtomContainer bigPile = file.Builder.NewAtomContainer();
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(file))
             {
                 bigPile.Add(container);

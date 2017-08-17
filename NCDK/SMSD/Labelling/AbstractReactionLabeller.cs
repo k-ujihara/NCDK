@@ -147,7 +147,7 @@ namespace NCDK.SMSD.Labelling
 
             IDictionary<IAtomContainer, int[]> permutationMap = new Dictionary<IAtomContainer, int[]>();
 
-            IAtomContainerSet<IAtomContainer> canonicalProducts = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet<IAtomContainer>();
+            IAtomContainerSet<IAtomContainer> canonicalProducts = Default.ChemObjectBuilder.Instance.NewAtomContainerSet<IAtomContainer>();
             foreach (var product in reaction.Products)
             {
                 IAtomContainer canonicalForm = labeller.GetCanonicalMolecule(product);
@@ -155,11 +155,11 @@ namespace NCDK.SMSD.Labelling
                 {
                     FixAtomMapping(canonicalForm);
                 }
-                IAtomContainer canonicalMolecule = canonicalForm.Builder.CreateAtomContainer(canonicalForm);
+                IAtomContainer canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
                 permutationMap[canonicalMolecule] = labeller.GetCanonicalPermutation(product);
                 canonicalProducts.Add(canonicalMolecule);
             }
-            IAtomContainerSet<IAtomContainer> canonicalReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet<IAtomContainer>();
+            IAtomContainerSet<IAtomContainer> canonicalReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet<IAtomContainer>();
             foreach (var reactant in reaction.Reactants)
             {
                 IAtomContainer canonicalForm = labeller.GetCanonicalMolecule(reactant);
@@ -167,7 +167,7 @@ namespace NCDK.SMSD.Labelling
                 {
                     FixAtomMapping(canonicalForm);
                 }
-                IAtomContainer canonicalMolecule = canonicalForm.Builder.CreateAtomContainer(canonicalForm);
+                IAtomContainer canonicalMolecule = canonicalForm.Builder.NewAtomContainer(canonicalForm);
                 permutationMap[canonicalMolecule] = labeller.GetCanonicalPermutation(reactant);
                 canonicalReactants.Add(canonicalMolecule);
             }

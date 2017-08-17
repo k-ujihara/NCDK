@@ -98,13 +98,13 @@ namespace NCDK.Validate
         public override ValidationReport ValidateReaction(IReaction subject)
         {
             ValidationReport report = new ValidationReport();
-            IAtomContainer container1 = subject.Builder.CreateAtomContainer();
+            IAtomContainer container1 = subject.Builder.NewAtomContainer();
             var reactants = subject.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 container1.Add(reactants[i]);
             }
-            IAtomContainer container2 = subject.Builder.CreateAtomContainer();
+            IAtomContainer container2 = subject.Builder.NewAtomContainer();
             var products = subject.Products;
             for (int i = 0; i < products.Count; i++)
             {

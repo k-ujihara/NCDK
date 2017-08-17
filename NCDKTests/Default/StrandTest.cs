@@ -46,17 +46,17 @@ namespace NCDK.Default
             Assert.IsNotNull(oStrand);
             Assert.AreEqual(oStrand.GetMonomerMap().Count(), 0);
 
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IMonomer oMono3 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono3 = oStrand.Builder.NewMonomer();
             oMono3.MonomerName = "GLYA16";
-            IAtom oAtom1 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom4 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom5 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom1 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom4 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom5 = oStrand.Builder.NewAtom("C");
 
             oStrand.AddAtom(oAtom1);
             oStrand.AddAtom(oAtom2);

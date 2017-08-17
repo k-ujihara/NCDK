@@ -224,7 +224,7 @@ namespace NCDK.StructGen
             {
                 if (b1 == null)
                 {
-                    b1 = ac.Builder.CreateBond(ax1, ay1, BondManipulator.CreateBondOrder(b11));
+                    b1 = ac.Builder.NewBond(ax1, ay1, BondManipulator.CreateBondOrder(b11));
                     ac.Bonds.Add(b1);
                 }
                 else
@@ -241,7 +241,7 @@ namespace NCDK.StructGen
             {
                 if (b2 == null)
                 {
-                    b2 = ac.Builder.CreateBond(ax1, ay2, BondManipulator.CreateBondOrder(b12));
+                    b2 = ac.Builder.NewBond(ax1, ay2, BondManipulator.CreateBondOrder(b12));
                     ac.Bonds.Add(b2);
                 }
                 else
@@ -258,7 +258,7 @@ namespace NCDK.StructGen
             {
                 if (b3 == null)
                 {
-                    b3 = ac.Builder.CreateBond(ax2, ay1, BondManipulator.CreateBondOrder(b21));
+                    b3 = ac.Builder.NewBond(ax2, ay1, BondManipulator.CreateBondOrder(b21));
                     ac.Bonds.Add(b3);
                 }
                 else
@@ -275,7 +275,7 @@ namespace NCDK.StructGen
             {
                 if (b4 == null)
                 {
-                    b4 = ac.Builder.CreateBond(ax2, ay2, BondManipulator.CreateBondOrder(b22));
+                    b4 = ac.Builder.NewBond(ax2, ay2, BondManipulator.CreateBondOrder(b22));
                     ac.Bonds.Add(b4);
                 }
                 else

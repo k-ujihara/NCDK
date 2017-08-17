@@ -68,7 +68,7 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.CreateAtom(Elements.Carbon.ToIElement()));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(Elements.Carbon.ToIElement()));
             molecule.Atoms[0].ImplicitHydrogenCount = 4;
             CMLWriter cmlWriter = new CMLWriter(writer);
 
@@ -85,7 +85,7 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.CreateAtom(Elements.Carbon.ToIElement()));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(Elements.Carbon.ToIElement()));
             molecule.Atoms[0].FormalCharge = null;
             CMLWriter cmlWriter = new CMLWriter(writer);
 
@@ -129,8 +129,8 @@ namespace NCDK.IO.CML
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer(); // methane
-            molecule.Atoms.Add(molecule.Builder.CreateAtom(Elements.Carbon.ToIElement()));
-            molecule.Atoms.Add(molecule.Builder.CreateAtom(Elements.Hydrogen.ToIElement()));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(Elements.Carbon.ToIElement()));
+            molecule.Atoms.Add(molecule.Builder.NewAtom(Elements.Hydrogen.ToIElement()));
             molecule.Atoms[0].ImplicitHydrogenCount = 3;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             CMLWriter cmlWriter = new CMLWriter(writer);
@@ -172,11 +172,11 @@ namespace NCDK.IO.CML
             StringWriter writer = new StringWriter();
             IReaction reaction = new Reaction();
             reaction.Id = "reaction1";
-            IAtomContainer reactant = reaction.Builder.CreateAtomContainer();
+            IAtomContainer reactant = reaction.Builder.NewAtomContainer();
             reactant.Id = "react";
-            IAtomContainer product = reaction.Builder.CreateAtomContainer();
+            IAtomContainer product = reaction.Builder.NewAtomContainer();
             product.Id = "product";
-            IAtomContainer agent = reaction.Builder.CreateAtomContainer();
+            IAtomContainer agent = reaction.Builder.NewAtomContainer();
             agent.Id = "agent";
 
             reaction.Reactants.Add(reactant);
@@ -200,26 +200,26 @@ namespace NCDK.IO.CML
         public void TestReactionScheme1()
         {
             StringWriter writer = new StringWriter();
-            IReactionScheme scheme1 = Default.ChemObjectBuilder.Instance.CreateReactionScheme();
+            IReactionScheme scheme1 = Default.ChemObjectBuilder.Instance.NewReactionScheme();
             scheme1.Id = "rs0";
-            IReactionScheme scheme2 = scheme1.Builder.CreateReactionScheme();
+            IReactionScheme scheme2 = scheme1.Builder.NewReactionScheme();
             scheme2.Id = "rs1";
             scheme1.Add(scheme2);
 
-            IReaction reaction = scheme1.Builder.CreateReaction();
+            IReaction reaction = scheme1.Builder.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
-            IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme2.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.CreateReaction();
+            IReaction reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
@@ -249,20 +249,20 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
+            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
-            IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.CreateReaction();
+            IReaction reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
@@ -291,26 +291,26 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
+            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(reaction.Builder.CreateIsotope("C"), 10);
-            formula.Add(reaction.Builder.CreateIsotope("H"), 15);
-            formula.Add(reaction.Builder.CreateIsotope("N"), 2);
-            formula.Add(reaction.Builder.CreateIsotope("O"), 1);
+            formula.Add(reaction.Builder.NewIsotope("C"), 10);
+            formula.Add(reaction.Builder.NewIsotope("H"), 15);
+            formula.Add(reaction.Builder.NewIsotope("N"), 2);
+            formula.Add(reaction.Builder.NewIsotope("O"), 1);
             moleculeA.SetProperty(CDKPropertyName.Formula, formula);
-            IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.CreateReaction();
+            IReaction reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
@@ -341,21 +341,21 @@ namespace NCDK.IO.CML
             ReactionScheme scheme1 = new ReactionScheme();
             scheme1.Id = "rs0";
 
-            IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
+            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
-            IAtomContainer moleculeA = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeA = reaction.Builder.NewAtomContainer();
             moleculeA.Id = "A";
             moleculeA.SetProperty(CDKPropertyName.Formula, "C 10 H 15 N 2 O 1");
-            IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeB = reaction.Builder.NewAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
             reaction.Products.Add(moleculeB);
 
             scheme1.Add(reaction);
 
-            IReaction reaction2 = reaction.Builder.CreateReaction();
+            IReaction reaction2 = reaction.Builder.NewReaction();
             reaction2.Id = "r2";
-            IAtomContainer moleculeC = reaction.Builder.CreateAtomContainer();
+            IAtomContainer moleculeC = reaction.Builder.NewAtomContainer();
             moleculeC.Id = "C";
             reaction2.Reactants.Add(moleculeB);
             reaction2.Products.Add(moleculeC);
@@ -416,7 +416,7 @@ namespace NCDK.IO.CML
         public void TestReactionProperty()
         {
             StringWriter writer = new StringWriter();
-            IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
+            IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
             reaction.Id = "r1";
             reaction.SetProperty("blabla", "blabla2");
             CMLWriter cmlWriter = new CMLWriter(writer);
@@ -438,20 +438,20 @@ namespace NCDK.IO.CML
         //        chain.Id = "rsl1";
         //
         //
-        //        IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
+        //        IReaction reaction = Default.ChemObjectBuilder.Instance.NewReaction();
         //        reaction.Id = "r1";
-        //        IAtomContainer moleculeA = reaction.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeA = reaction.GetNewBuilder().NewAtomContainer();
         //        moleculeA.Id = "A";
-        //        IAtomContainer moleculeB = reaction.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeB = reaction.GetNewBuilder().NewAtomContainer();
         //        moleculeB.Id = "B";
         //        reaction.Reactants.Add(moleculeA);
         //        reaction.Products.Add(moleculeB);
         //
         //        chain.AddReaction(reaction);
         //
-        //        IReaction reaction2 = reaction.GetNewBuilder().CreateReaction();
+        //        IReaction reaction2 = reaction.GetNewBuilder().NewReaction();
         //        reaction2.Id = "r2";
-        //        IAtomContainer moleculeC = reaction.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeC = reaction.GetNewBuilder().NewAtomContainer();
         //        moleculeC.Id = "C";
         //        reaction2.Reactants.Add(moleculeB);
         //        reaction2.Products.Add(moleculeC);
@@ -481,20 +481,20 @@ namespace NCDK.IO.CML
         //        scheme1.Add(scheme2);
         //
         //
-        //        IReaction reaction1 = Default.ChemObjectBuilder.Instance.CreateReaction();
+        //        IReaction reaction1 = Default.ChemObjectBuilder.Instance.NewReaction();
         //        reaction1.Id = "r1.1";
-        //        IAtomContainer moleculeA = reaction1.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeA = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeA.Id = "A";
-        //        IAtomContainer moleculeB = reaction1.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeB = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeB.Id = "B";
         //        reaction1.Reactants.Add(moleculeA);
         //        reaction1.Products.Add(moleculeB);
         //
         //        scheme2.AddReaction(reaction1);
         //
-        //        IReaction reaction2 = reaction1.GetNewBuilder().CreateReaction();
+        //        IReaction reaction2 = reaction1.GetNewBuilder().NewReaction();
         //        reaction2.Id = "r1.2";
-        //        IAtomContainer moleculeC = reaction1.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeC = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeC.Id = "C";
         //        reaction2.Reactants.Add(moleculeB);
         //        reaction2.Products.Add(moleculeC);
@@ -504,18 +504,18 @@ namespace NCDK.IO.CML
         //        ReactionChain chain = new ReactionChain();
         //        chain.Id = "rsl1";
         //
-        //        IReaction reaction3 = reaction1.GetNewBuilder().CreateReaction();
+        //        IReaction reaction3 = reaction1.GetNewBuilder().NewReaction();
         //        reaction3.Id = "r2.1";
-        //        IAtomContainer moleculeD = reaction1.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeD = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeD.Id = "D";
         //        reaction3.Reactants.Add(moleculeA);
         //        reaction3.Products.Add(moleculeD);
         //
         //        chain.AddReaction(reaction3,0);
         //
-        //        IReaction reaction4 = reaction1.GetNewBuilder().CreateReaction();
+        //        IReaction reaction4 = reaction1.GetNewBuilder().NewReaction();
         //        reaction4.Id = "r2.2";
-        //        IAtomContainer moleculeE = reaction1.GetNewBuilder().CreateAtomContainer();
+        //        IAtomContainer moleculeE = reaction1.GetNewBuilder().NewAtomContainer();
         //        moleculeE.Id = "E";
         //        reaction4.Reactants.Add(moleculeD);
         //        reaction4.Products.Add(moleculeE);

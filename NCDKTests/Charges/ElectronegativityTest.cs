@@ -80,7 +80,7 @@ namespace NCDK.Charges
             double[] testResult = { 11.308338, 8.7184094, 7.5289848, 7.5289848, 7.5289848 };
             Electronegativity pe = new Electronegativity();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("F"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -108,7 +108,7 @@ namespace NCDK.Charges
             double[] testResult = { 11.308338, 8.7184094, 7.5289848, 7.5289848, 7.5289848 };
             Electronegativity pe = new Electronegativity();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("F"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);

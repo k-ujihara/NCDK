@@ -16,8 +16,8 @@ namespace NCDK.Fingerprints
 
             SimpleAtomComparator comparator = new SimpleAtomComparator();
 
-            IAtom a1 = builder.CreateAtom("C");
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a1 = builder.NewAtom("C");
+            IAtom a2 = builder.NewAtom("C");
 
             Assert.AreEqual(0, comparator.Compare(a1, a2), "Null hybridzation should be equals");
         }
@@ -27,8 +27,8 @@ namespace NCDK.Fingerprints
         {
             SimpleAtomComparator comparator = new SimpleAtomComparator();
 
-            IAtom a1 = builder.CreateAtom("C");
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a1 = builder.NewAtom("C");
+            IAtom a2 = builder.NewAtom("C");
 
             a1.Hybridization = Hybridization.SP3;
             a2.Hybridization = Hybridization.SP3;
@@ -41,8 +41,8 @@ namespace NCDK.Fingerprints
         {
             SimpleAtomComparator comparator = new SimpleAtomComparator();
 
-            IAtom a1 = builder.CreateAtom("C");
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a1 = builder.NewAtom("C");
+            IAtom a2 = builder.NewAtom("C");
 
             a1.Hybridization = Hybridization.SP2;
             a2.Hybridization = Hybridization.SP3;
@@ -55,8 +55,8 @@ namespace NCDK.Fingerprints
         {
             SimpleAtomComparator comparator = new SimpleAtomComparator();
 
-            IAtom a1 = builder.CreateAtom("C");
-            IAtom a2 = builder.CreateAtom("O");
+            IAtom a1 = builder.NewAtom("C");
+            IAtom a2 = builder.NewAtom("O");
 
             // can't do less than correctly without hamcrest?
             Assert.IsTrue(comparator.Compare(a1, a2) < 0, "oxygen should rank above carbon");

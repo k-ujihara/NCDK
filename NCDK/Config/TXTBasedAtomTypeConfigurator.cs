@@ -53,7 +53,7 @@ namespace NCDK.Config
                         var colorG = int.Parse(sColorG);
                         var colorB = int.Parse(sColorB);
 
-                        atomType = builder.CreateAtomType(name, rootType);
+                        atomType = builder.NewAtomType(name, rootType);
                         atomType.AtomicNumber = atomicNumber;
                         atomType.ExactMass = mass;
                         atomType.CovalentRadius = covalent;

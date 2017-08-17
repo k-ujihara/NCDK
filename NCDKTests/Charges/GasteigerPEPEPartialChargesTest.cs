@@ -52,7 +52,7 @@ namespace NCDK.Charges
 
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -146,7 +146,7 @@ namespace NCDK.Charges
 
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -252,7 +252,7 @@ namespace NCDK.Charges
         {
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -263,7 +263,7 @@ namespace NCDK.Charges
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0;
 
-            var set = builder.CreateAtomContainerSet();
+            var set = builder.NewAtomContainerSet();
             set.Add(molecule);
             set.Add(molecule);
 

@@ -78,9 +78,9 @@ namespace NCDK.Smiles
         public BeamToCDK(IChemObjectBuilder builder)
         {
             this.builder = builder;
-            this.templateAtom = builder.CreateAtom();
-            this.templateBond = builder.CreateBond();
-            this.emptyContainer = builder.CreateAtomContainer();
+            this.templateAtom = builder.NewAtom();
+            this.templateBond = builder.NewBond();
+            this.emptyContainer = builder.NewAtomContainer();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace NCDK.Smiles
             {
                 int u = edge.Either();
                 int v = edge.Other(u);
-                IBond bond = builder.CreateBond();
+                IBond bond = builder.NewBond();
                 bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
                 bonds[j++] = bond;
 
@@ -472,7 +472,7 @@ namespace NCDK.Smiles
             bool unknown = element == Element.Unknown;
             if (unknown)
             {
-                IPseudoAtom pseudoAtom = builder.CreatePseudoAtom(element.Symbol);
+                IPseudoAtom pseudoAtom = builder.NewPseudoAtom(element.Symbol);
                 pseudoAtom.Symbol = element.Symbol;
                 pseudoAtom.Label = atom.Label;
                 return pseudoAtom;
@@ -486,7 +486,7 @@ namespace NCDK.Smiles
         /// <returns>a new atom container instance</returns>
         private IAtomContainer CreateEmptyContainer()
         {
-            return builder.CreateAtomContainer();
+            return builder.NewAtomContainer();
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace NCDK.Smiles
         /// <returns>new atom with configured symbol and atomic number</returns>
         private IAtom CreateAtom(Element element)
         {
-            IAtom atom = builder.CreateAtom();
+            IAtom atom = builder.NewAtom();
             atom.Symbol = element.Symbol;
             atom.AtomicNumber = element.AtomicNumber;
             return atom;

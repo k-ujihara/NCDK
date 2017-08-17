@@ -116,7 +116,7 @@ namespace NCDK.IO.Iterator
                     }
                     using (PCCompoundASNReader asnReader = new PCCompoundASNReader(new StringReader(buffer.ToString())))
                     {
-                        IChemFile cFile = (IChemFile)asnReader.Read(builder.CreateChemFile());
+                        IChemFile cFile = (IChemFile)asnReader.Read(builder.NewChemFile());
                         ac = ChemFileManipulator.GetAllAtomContainers(cFile).First();
                     }
                 }

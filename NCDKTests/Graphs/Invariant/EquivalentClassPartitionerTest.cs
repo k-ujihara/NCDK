@@ -244,7 +244,7 @@ namespace NCDK.Graphs.Invariant
 
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             mol = reader.Read(mol);
             Assert.IsNotNull(mol);
 

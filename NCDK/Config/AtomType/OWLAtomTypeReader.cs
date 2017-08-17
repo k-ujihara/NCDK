@@ -29,7 +29,7 @@ namespace NCDK.Config.AtomType
 
             foreach (var atomTypeElm in doc.Elements(XName_AtomType))
             {
-                var anAtomType = builder.CreateAtomType("H");
+                var anAtomType = builder.NewAtomType("H");
                 anAtomType.AtomicNumber = null;
                 anAtomType.AtomTypeName = atomTypeElm.Attribute(XName_ID)?.Value;
 

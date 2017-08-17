@@ -46,7 +46,7 @@ namespace NCDK.IO.CML
         {
             base.StartDocument();
             //        cdo.StartObject("Frame");
-            CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
+            CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
         }
 
         public override void StartElement(CMLStack xpath, XElement element)

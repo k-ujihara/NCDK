@@ -65,7 +65,7 @@ namespace NCDK.Stereo
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            new DoubleBondStereochemistry(builder.CreateBond(), new IBond[3], DoubleBondConformation.Opposite);
+            new DoubleBondStereochemistry(builder.NewBond(), new IBond[3], DoubleBondConformation.Opposite);
         }
 
         [TestMethod()]
@@ -121,14 +121,14 @@ namespace NCDK.Stereo
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom c2 = builder.CreateAtom("C");
-            IAtom o3 = builder.CreateAtom("O");
-            IAtom o4 = builder.CreateAtom("O");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom o3 = builder.NewAtom("O");
+            IAtom o4 = builder.NewAtom("O");
 
-            IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
-            IBond c1o3 = builder.CreateBond(c1, o3, BondOrder.Single);
-            IBond c2o4 = builder.CreateBond(c2, o4, BondOrder.Single);
+            IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
+            IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
+            IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
 
             // new stereo element
             DoubleBondStereochemistry element = new DoubleBondStereochemistry(c1c2, new IBond[] { c1o3, c2o4 },
@@ -139,7 +139,7 @@ namespace NCDK.Stereo
             Assert.IsTrue(element.Contains(o3));
             Assert.IsTrue(element.Contains(o4));
 
-            Assert.IsFalse(element.Contains(builder.CreateAtom()));
+            Assert.IsFalse(element.Contains(builder.NewAtom()));
             Assert.IsFalse(element.Contains(null));
         }
 
@@ -149,14 +149,14 @@ namespace NCDK.Stereo
 
         IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-        IAtom c1 = builder.CreateAtom("C");
-        IAtom c2 = builder.CreateAtom("C");
-        IAtom o3 = builder.CreateAtom("O");
-        IAtom o4 = builder.CreateAtom("O");
+        IAtom c1 = builder.NewAtom("C");
+        IAtom c2 = builder.NewAtom("C");
+        IAtom o3 = builder.NewAtom("O");
+        IAtom o4 = builder.NewAtom("O");
 
-        IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.CreateBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.CreateBond(c2, o4, BondOrder.Single);
+        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
+        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
+        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
 
         // new stereo element
         DoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
@@ -197,14 +197,14 @@ namespace NCDK.Stereo
 
         IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-        IAtom c1 = builder.CreateAtom("C");
-        IAtom c2 = builder.CreateAtom("C");
-        IAtom o3 = builder.CreateAtom("O");
-        IAtom o4 = builder.CreateAtom("O");
+        IAtom c1 = builder.NewAtom("C");
+        IAtom c2 = builder.NewAtom("C");
+        IAtom o3 = builder.NewAtom("O");
+        IAtom o4 = builder.NewAtom("O");
 
-        IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.CreateBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.CreateBond(c2, o4, BondOrder.Single);
+        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
+        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
+        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
 
         // new stereo element
         IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
@@ -237,14 +237,14 @@ namespace NCDK.Stereo
     {
         IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-        IAtom c1 = builder.CreateAtom("C");
-        IAtom c2 = builder.CreateAtom("C");
-        IAtom o3 = builder.CreateAtom("O");
-        IAtom o4 = builder.CreateAtom("O");
+        IAtom c1 = builder.NewAtom("C");
+        IAtom c2 = builder.NewAtom("C");
+        IAtom o3 = builder.NewAtom("O");
+        IAtom o4 = builder.NewAtom("O");
 
-        IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.CreateBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.CreateBond(c2, o4, BondOrder.Single);
+        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
+        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
+        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
 
         // new stereo element
         IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},

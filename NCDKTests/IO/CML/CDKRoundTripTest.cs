@@ -38,8 +38,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIElement_Symbol()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             mol.Atoms.Add(atom);
             IAtomContainer copy = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -50,8 +50,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIElement_AtomicNumber()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.AtomicNumber = 6;
             mol.Atoms.Add(atom);
@@ -64,8 +64,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIIsotope_NaturalAbundance()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.NaturalAbundance = 99;
             mol.Atoms.Add(atom);
@@ -78,8 +78,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIIsotope_ExactMass()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.ExactMass = 12;
             mol.Atoms.Add(atom);
@@ -91,8 +91,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIIsotope_MassNumber()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.MassNumber = 13;
             mol.Atoms.Add(atom);
@@ -105,8 +105,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_Name()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.AtomTypeName = "C.sp3";
             mol.Atoms.Add(atom);
@@ -119,8 +119,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_MaxBondOrder()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.MaxBondOrder = BondOrder.Triple;
             mol.Atoms.Add(atom);
@@ -133,8 +133,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_BondOrderSum()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.BondOrderSum = 4;
             mol.Atoms.Add(atom);
@@ -146,8 +146,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtomType_FormalCharge()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.FormalCharge = +1;
             mol.Atoms.Add(atom);
@@ -160,8 +160,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_FormalNeighborCount()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.FormalNeighbourCount = 4;
             mol.Atoms.Add(atom);
@@ -174,8 +174,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_Hybridization()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Hybridization = Hybridization.SP3;
             mol.Atoms.Add(atom);
@@ -188,8 +188,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_CovalentRadius()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.CovalentRadius = 1.5;
             mol.Atoms.Add(atom);
@@ -202,8 +202,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtomType_Valency()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Valency = 4;
             mol.Atoms.Add(atom);
@@ -215,8 +215,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_Charge()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Charge = 0.3;
             mol.Atoms.Add(atom);
@@ -228,8 +228,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_HydrogenCount()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.ImplicitHydrogenCount = 4;
             mol.Atoms.Add(atom);
@@ -241,8 +241,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_Point2d()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Point2D = new Vector2(1.0, 2.0);
             mol.Atoms.Add(atom);
@@ -254,8 +254,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_Point3d()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Point3D = new Vector3(1, 2, 3);
             mol.Atoms.Add(atom);
@@ -267,8 +267,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_FractionalPoint3d()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.FractionalPoint3D = new Vector3(1, 2, 3);
             mol.Atoms.Add(atom);
@@ -280,8 +280,8 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestIAtom_Point8d()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.Point2D = new Vector2(0.0, 0.0);
             atom.Point3D = new Vector3(-1, -2, -3);
@@ -296,8 +296,8 @@ namespace NCDK.IO.CML
         //[TestMethod()]
         public void TestIAtom_StereoParity()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
             atom.StereoParity = -1;
             mol.Atoms.Add(atom);

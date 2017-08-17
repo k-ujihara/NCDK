@@ -35,7 +35,7 @@ namespace NCDK.LibIO.CML
         public void TestCdkBondToCMLBond_Wedge()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IBond bond = builder.CreateBond();
+            IBond bond = builder.NewBond();
             bond.Order = BondOrder.Single;
             bond.Stereo = BondStereo.Up;
 
@@ -56,7 +56,7 @@ namespace NCDK.LibIO.CML
         public void TestCdkBondToCMLBond_Hatch()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IBond bond = builder.CreateBond();
+            IBond bond = builder.NewBond();
             bond.Order = BondOrder.Single;
             bond.Stereo = BondStereo.Down;
 

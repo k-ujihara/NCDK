@@ -39,7 +39,7 @@ namespace NCDK
         {
             IReaction reaction = (IReaction)NewChemObject();
             Assert.AreEqual(0, reaction.Reactants.Count);
-            reaction.Reactants.Add(reaction.Builder.CreateAtomContainer());
+            reaction.Reactants.Add(reaction.Builder.NewAtomContainer());
             Assert.AreEqual(1, reaction.Reactants.Count);
         }
 
@@ -48,7 +48,7 @@ namespace NCDK
         {
             IReaction reaction = (IReaction)NewChemObject();
             Assert.AreEqual(0, reaction.Products.Count);
-            reaction.Products.Add(reaction.Builder.CreateAtomContainer());
+            reaction.Products.Add(reaction.Builder.NewAtomContainer());
             Assert.AreEqual(1, reaction.Products.Count);
         }
 
@@ -56,10 +56,10 @@ namespace NCDK
         public virtual void TestAddReactant_IAtomContainer()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
-            IAtomContainer acetate = reaction.Builder.CreateAtomContainer();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
+            IAtomContainer acetate = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(sodiumhydroxide);
             reaction.Reactants.Add(aceticAcid);
             reaction.Reactants.Add(water);
@@ -76,10 +76,10 @@ namespace NCDK
         public virtual void TestSetReactants_IAtomContainerSet()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Builder.CreateAtomContainerSet();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
+            IAtomContainerSet<IAtomContainer> reactants = reaction.Builder.NewAtomContainerSet();
             reactants.Add(sodiumhydroxide);
             reactants.Add(aceticAcid);
             reactants.Add(water);
@@ -93,8 +93,8 @@ namespace NCDK
         public virtual void TestAddReactant_IAtomContainer_Double()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
-            IAtomContainer sulfate = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
+            IAtomContainer sulfate = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(proton, 2d);
             reaction.Reactants.Add(sulfate, 1d);
             Assert.AreEqual(2.0, reaction.Reactants.GetMultiplier(proton).Value, 0.00001);
@@ -105,10 +105,10 @@ namespace NCDK
         public virtual void TestAddProduct_IAtomContainer()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
-            IAtomContainer acetate = reaction.Builder.CreateAtomContainer();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
+            IAtomContainer acetate = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(sodiumhydroxide);
             reaction.Products.Add(aceticAcid);
             reaction.Products.Add(water);
@@ -125,10 +125,10 @@ namespace NCDK
         public virtual void TestSetProducts_IAtomContainerSet()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
-            IAtomContainerSet<IAtomContainer> products = reaction.Builder.CreateAtomContainerSet();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
+            IAtomContainerSet<IAtomContainer> products = reaction.Builder.NewAtomContainerSet();
             products.Add(sodiumhydroxide);
             products.Add(aceticAcid);
             products.Add(water);
@@ -142,8 +142,8 @@ namespace NCDK
         public virtual void TestAddProduct_IAtomContainer_Double()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
-            IAtomContainer sulfate = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
+            IAtomContainer sulfate = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(proton, 2.0);
             reaction.Products.Add(sulfate, 1.0);
             Assert.AreEqual(2.0, reaction.Products.GetMultiplier(proton).Value, 0.00001);
@@ -154,7 +154,7 @@ namespace NCDK
         public virtual void TestAddAgent_IAtomContainer()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
             reaction.Agents.Add(proton);
             Assert.AreEqual(1, reaction.Agents.Count);
         }
@@ -163,31 +163,31 @@ namespace NCDK
         public virtual void TestGetReactantCoefficient_IAtomContainer()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(proton, 2.0);
             Assert.AreEqual(2.0, reaction.Reactants.GetMultiplier(proton).Value, 0.00001);
 
             Assert.AreEqual(-1.0,
-                    reaction.Reactants.GetMultiplier(reaction.Builder.CreateAtomContainer()).Value, 0.00001);
+                    reaction.Reactants.GetMultiplier(reaction.Builder.NewAtomContainer()).Value, 0.00001);
         }
 
         [TestMethod()]
         public virtual void TestGetProductCoefficient_IAtomContainer()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(proton, 2.0);
             Assert.AreEqual(2.0, reaction.Products.GetMultiplier(proton).Value, 0.00001);
 
             Assert.AreEqual(-1.0,
-                    reaction.Products.GetMultiplier(reaction.Builder.CreateAtomContainer()).Value, 0.00001);
+                    reaction.Products.GetMultiplier(reaction.Builder.NewAtomContainer()).Value, 0.00001);
         }
 
         [TestMethod()]
         public virtual void TestSetReactantCoefficient_IAtomContainer_Double()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(proton, 2.0);
             reaction.Reactants.SetMultiplier(proton, 3.0);
             Assert.AreEqual(3.0, reaction.Reactants.GetMultiplier(proton).Value, 0.00001);
@@ -197,7 +197,7 @@ namespace NCDK
         public virtual void TestSetProductCoefficient_IAtomContainer_Double()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer proton = reaction.Builder.CreateAtomContainer();
+            IAtomContainer proton = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(proton, 2.0);
             reaction.Products.SetMultiplier(proton, 1.0);
             Assert.AreEqual(1.0, reaction.Products.GetMultiplier(proton).Value, 0.00001);
@@ -207,8 +207,8 @@ namespace NCDK
         public virtual void TestGetReactantCoefficients()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer ed1 = reaction.Builder.CreateAtomContainer();
-            IAtomContainer ed2 = reaction.Builder.CreateAtomContainer();
+            IAtomContainer ed1 = reaction.Builder.NewAtomContainer();
+            IAtomContainer ed2 = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(ed1, 2d);
             reaction.Reactants.Add(ed2, 3d);
             var ec = reaction.Reactants.GetMultipliers();
@@ -221,8 +221,8 @@ namespace NCDK
         public virtual void TestGetProductCoefficients()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer pr1 = reaction.Builder.CreateAtomContainer();
-            IAtomContainer pr2 = reaction.Builder.CreateAtomContainer();
+            IAtomContainer pr1 = reaction.Builder.NewAtomContainer();
+            IAtomContainer pr2 = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(pr1, 1d);
             reaction.Products.Add(pr2, 2d);
             var pc = reaction.Products.GetMultipliers();
@@ -235,8 +235,8 @@ namespace NCDK
         public virtual void TestSetReactantCoefficients_arrayDouble()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer ed1 = reaction.Builder.CreateAtomContainer();
-            IAtomContainer ed2 = reaction.Builder.CreateAtomContainer();
+            IAtomContainer ed1 = reaction.Builder.NewAtomContainer();
+            IAtomContainer ed2 = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(ed1, 2d);
             reaction.Reactants.Add(ed2, 3d);
             double?[] ec = { 1.0, 2.0 };
@@ -252,7 +252,7 @@ namespace NCDK
         public virtual void TestSetProductCoefficients_arrayDouble()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer pr1 = reaction.Builder.CreateAtomContainer();
+            IAtomContainer pr1 = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(pr1, 1d);
             double?[] pc = { 2.0 };
             bool coeffSet = reaction.Products.SetMultipliers(pc);
@@ -266,9 +266,9 @@ namespace NCDK
         public virtual void TestGetReactants()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
             reaction.Reactants.Add(sodiumhydroxide);
             reaction.Reactants.Add(aceticAcid);
             reaction.Reactants.Add(water);
@@ -279,9 +279,9 @@ namespace NCDK
         public virtual void TestGetProducts()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer sodiumhydroxide = reaction.Builder.CreateAtomContainer();
-            IAtomContainer aceticAcid = reaction.Builder.CreateAtomContainer();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
+            IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
+            IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
             reaction.Products.Add(sodiumhydroxide);
             reaction.Products.Add(aceticAcid);
             reaction.Products.Add(water);
@@ -292,7 +292,7 @@ namespace NCDK
         public virtual void TestGetAgents()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IAtomContainer water = reaction.Builder.CreateAtomContainer();
+            IAtomContainer water = reaction.Builder.NewAtomContainer();
             reaction.Agents.Add(water);
             Assert.AreEqual(1, reaction.Agents.Count);
         }
@@ -342,9 +342,9 @@ namespace NCDK
         public virtual void TestClone_Mapping()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(
-                    reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(
+                    reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             IReaction clonedReaction = (IReaction)reaction.Clone();
             IEnumerator<IMapping> mappings = reaction.Mappings.GetEnumerator();
@@ -359,8 +359,8 @@ namespace NCDK
         public virtual void TestAddMapping_IMapping()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             IEnumerator<IMapping> mappings = reaction.Mappings.GetEnumerator();
             Assert.IsNotNull(mappings);
@@ -372,8 +372,8 @@ namespace NCDK
         public virtual void TestRemoveMapping_int()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             Assert.AreEqual(1, reaction.Mappings.Count);
             reaction.Mappings.RemoveAt(0);
@@ -384,8 +384,8 @@ namespace NCDK
         public virtual void TestGetMapping_int()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             IMapping gotIt = reaction.Mappings[0];
             Assert.AreEqual(mapping, gotIt);
@@ -395,8 +395,8 @@ namespace NCDK
         public virtual void TestGetMappingCount()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             Assert.AreEqual(1, reaction.Mappings.Count);
         }
@@ -405,8 +405,8 @@ namespace NCDK
         public virtual void TestMappings()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            IMapping mapping = reaction.Builder.CreateMapping(reaction.Builder.CreateAtom("C"),
-                    reaction.Builder.CreateAtom("C"));
+            IMapping mapping = reaction.Builder.NewMapping(reaction.Builder.NewAtom("C"),
+                    reaction.Builder.NewAtom("C"));
             reaction.Mappings.Add(mapping);
             Assert.AreEqual(1, reaction.Mappings.Count);
         }

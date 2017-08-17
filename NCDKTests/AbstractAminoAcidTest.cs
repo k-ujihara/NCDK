@@ -39,7 +39,7 @@ namespace NCDK
         public virtual void TestAddCTerminus_IAtom()
         {
             IAminoAcid m = (IAminoAcid)NewChemObject();
-            IAtom cTerminus = m.Builder.CreateAtom("C");
+            IAtom cTerminus = m.Builder.NewAtom("C");
             m.AddCTerminus(cTerminus);
             Assert.AreEqual(cTerminus, m.CTerminus);
         }
@@ -55,7 +55,7 @@ namespace NCDK
         public virtual void TestAddNTerminus_IAtom()
         {
             IAminoAcid m = (IAminoAcid)NewChemObject();
-            IAtom nTerminus = m.Builder.CreateAtom("N");
+            IAtom nTerminus = m.Builder.NewAtom("N");
             m.AddNTerminus(nTerminus);
             Assert.AreEqual(nTerminus, m.NTerminus);
         }
@@ -74,7 +74,7 @@ namespace NCDK
         public override void TestToString()
         {
             IAminoAcid m = (IAminoAcid)NewChemObject();
-            IAtom nTerminus = m.Builder.CreateAtom("N");
+            IAtom nTerminus = m.Builder.NewAtom("N");
             m.AddNTerminus(nTerminus);
             string description = m.ToString();
             for (int i = 0; i < description.Length; i++)
@@ -84,7 +84,7 @@ namespace NCDK
             }
 
             m = (IAminoAcid)NewChemObject();
-            IAtom cTerminus = m.Builder.CreateAtom("C");
+            IAtom cTerminus = m.Builder.NewAtom("C");
             m.AddCTerminus(cTerminus);
             description = m.ToString();
             for (int i = 0; i < description.Length; i++)
@@ -104,14 +104,14 @@ namespace NCDK
             Assert.AreNotSame(aa, clone);
 
             aa = (IAminoAcid)NewChemObject();
-            IAtom nTerminus = aa.Builder.CreateAtom("N");
+            IAtom nTerminus = aa.Builder.NewAtom("N");
             aa.AddNTerminus(nTerminus);
             clone = aa.Clone();
             Assert.IsTrue(clone is IAminoAcid);
             Assert.AreNotSame(aa, clone);
 
             aa = (IAminoAcid)NewChemObject();
-            IAtom cTerminus = aa.Builder.CreateAtom("C");
+            IAtom cTerminus = aa.Builder.NewAtom("C");
             aa.AddCTerminus(cTerminus);
             clone = aa.Clone();
             Assert.IsTrue(clone is IAminoAcid);

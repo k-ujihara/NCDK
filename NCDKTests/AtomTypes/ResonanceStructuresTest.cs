@@ -58,18 +58,18 @@ namespace NCDK.AtomTypes
 
             //COMPOUND
             //O=C([H])C(=[O+])C([H])([H])[H]
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("O"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms[3].FormalCharge = 1;
             molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[3]));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
-            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
+            molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Double);
@@ -91,7 +91,7 @@ namespace NCDK.AtomTypes
             //
             //        //FRAGMENT_1
             //        //
-            //        IAtomContainer expectedStructure = builder.CreateAtomContainer();
+            //        IAtomContainer expectedStructure = builder.NewAtomContainer();
             //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
             //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
             //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
@@ -143,15 +143,15 @@ namespace NCDK.AtomTypes
 
             //COMPOUND
             //[H]C1=C([H])C([H])=C(C(=C1([H]))C([H])([H])[H])C([H])([H])[H]
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -175,15 +175,15 @@ namespace NCDK.AtomTypes
 
             //FRAGMENT_1
             //[H]C=1C([H])=C([H])C(=C(C=1([H]))C([H])([H])[H])C([H])([H])[H]
-            IAtomContainer expectedStructure = builder.CreateAtomContainer();
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
-            expectedStructure.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer expectedStructure = builder.NewAtomContainer();
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
+            expectedStructure.Atoms.Add(builder.NewAtom("C"));
             expectedStructure.AddBond(expectedStructure.Atoms[0], expectedStructure.Atoms[1], BondOrder.Double);
             expectedStructure.AddBond(expectedStructure.Atoms[1], expectedStructure.Atoms[2], BondOrder.Single);
             expectedStructure.AddBond(expectedStructure.Atoms[2], expectedStructure.Atoms[3], BondOrder.Double);

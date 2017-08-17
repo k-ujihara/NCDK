@@ -72,7 +72,7 @@ namespace NCDK.Reactions.Types
                 throw new CDKException("SharingChargeSBReaction don't expects agents");
             }
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
@@ -97,7 +97,7 @@ namespace NCDK.Reactions.Types
                                     var bondList = new List<IBond>();
                                     bondList.Add(bondi);
 
-                                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet<IAtomContainer>();
+                                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
 
                                     moleculeSet.Add(reactant);
                                     IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);

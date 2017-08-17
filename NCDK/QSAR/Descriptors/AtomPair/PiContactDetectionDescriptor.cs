@@ -125,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             IAtom clonedFirst = ac.Atoms[atomContainer.Atoms.IndexOf(first)];
             IAtom clonedSecond = ac.Atoms[atomContainer.Atoms.IndexOf(first)];
 
-            IAtomContainer mol = ac.Builder.CreateAtomContainer(ac);
+            IAtomContainer mol = ac.Builder.NewAtomContainer(ac);
             if (checkAromaticity)
             {
                 try

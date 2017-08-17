@@ -76,7 +76,7 @@ namespace NCDK.Config.AtomType
             var nScalar = doc.Name.Namespace + "scalar";
             foreach (var elementAtomType in doc.Elements(nAtomType))
             {
-                var atomType = builder.CreateAtomType("R");
+                var atomType = builder.NewAtomType("R");
                 atomType.AtomTypeName = elementAtomType.Attribute("id")?.Value;
                 foreach (var elm in elementAtomType.Descendants())
                 {

@@ -44,7 +44,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestLonePair_IAtom()
         {
-            IAtom atom = NewChemObject().Builder.CreateAtom("N");
+            IAtom atom = NewChemObject().Builder.NewAtom("N");
             ILonePair lp = new LonePair(atom);
             Assert.AreEqual(2, lp.ElectronCount.Value);
             Assert.AreEqual(atom, lp.Atom);

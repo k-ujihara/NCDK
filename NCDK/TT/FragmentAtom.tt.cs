@@ -42,7 +42,7 @@ namespace NCDK.Default
     {
         public FragmentAtom()
         {
-            Fragment = Builder.CreateAtomContainer();
+            Fragment = Builder.NewAtomContainer();
         }
 
         public virtual bool IsExpanded { get; set; }
@@ -92,7 +92,7 @@ namespace NCDK.Silent
     {
         public FragmentAtom()
         {
-            Fragment = Builder.CreateAtomContainer();
+            Fragment = Builder.NewAtomContainer();
         }
 
         public virtual bool IsExpanded { get; set; }

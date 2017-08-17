@@ -139,9 +139,9 @@ namespace NCDK.IO
         /// <returns>The IChemFile that was read from the RDF file.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
+            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
 
-            IChemModel chemModel = chemFile.Builder.CreateChemModel();
+            IChemModel chemModel = chemFile.Builder.NewChemModel();
             chemSequence.Add(ReadChemModel(chemModel));
             chemFile.Add(chemSequence);
             return chemFile;
@@ -157,7 +157,7 @@ namespace NCDK.IO
             IReactionSet setOfReactions = chemModel.ReactionSet;
             if (setOfReactions == null)
             {
-                setOfReactions = chemModel.Builder.CreateReactionSet();
+                setOfReactions = chemModel.Builder.NewReactionSet();
             }
             chemModel.ReactionSet = ReadReactionSet(setOfReactions);
             return chemModel;
@@ -271,7 +271,7 @@ namespace NCDK.IO
         {
             Debug.WriteLine("Reading new reaction");
             int linecount = 0;
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             try
             {
                 input.ReadLine(); // first line should be $RXN
@@ -336,7 +336,7 @@ namespace NCDK.IO
 
                     // read MDL molfile content
                     MDLReader reader = new MDLReader(new StringReader(molFile.ToString()));
-                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add reactant
@@ -375,7 +375,7 @@ namespace NCDK.IO
 
                     // read MDL molfile content
                     MDLReader reader = new MDLReader(new StringReader(molFile.ToString()), base.ReaderMode);
-                    IAtomContainer product = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer product = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add reactant
@@ -400,12 +400,12 @@ namespace NCDK.IO
             // now try to map things, if wanted
             Trace.TraceInformation("Reading atom-atom mapping from file");
             // distribute all atoms over two AtomContainer's
-            IAtomContainer reactingSide = builder.CreateAtomContainer();
+            IAtomContainer reactingSide = builder.NewAtomContainer();
             foreach (var reactant in reaction.Reactants)
             {
                 reactingSide.Add(reactant);
             }
-            IAtomContainer producedSide = builder.CreateAtomContainer();
+            IAtomContainer producedSide = builder.NewAtomContainer();
             foreach (var reactant in reaction.Products)
             {
                 producedSide.Add(reactant);
@@ -425,7 +425,7 @@ namespace NCDK.IO
                             && eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping).Equals(
                                     productAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping)))
                     {
-                        reaction.Mappings.Add(builder.CreateMapping(eductAtom, productAtom));
+                        reaction.Mappings.Add(builder.NewMapping(eductAtom, productAtom));
                         mappingCount++;
                         break;
                     }

@@ -86,7 +86,7 @@ namespace NCDK.Charges
             {
                 if (!ac.Equals(acOldS))
                 {
-                    molSigma = ac.Builder.CreateAtomContainer(ac);
+                    molSigma = ac.Builder.NewAtomContainer(ac);
                     peoe.MaxGasteigerIterations = MaxIterations;
                     peoe.AssignGasteigerMarsiliSigmaPartialCharges(molSigma, true);
                     marsiliFactors = peoe.AssignGasteigerSigmaMarsiliFactors(molSigma);

@@ -33,9 +33,9 @@ namespace NCDK
         public virtual void TestAddChemSequence_IChemSequence()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
             Assert.AreEqual(3, cs.Count);
         }
 
@@ -43,9 +43,9 @@ namespace NCDK
         public virtual void TestRemoveChemSequence_int()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
             Assert.AreEqual(3, cs.Count);
             cs.RemoveAt(1);
             Assert.AreEqual(2, cs.Count);
@@ -55,10 +55,10 @@ namespace NCDK
         public virtual void TestGetChemSequence_int()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            IChemSequence second = cs.Builder.CreateChemSequence();
+            cs.Add(cs.Builder.NewChemSequence());
+            IChemSequence second = cs.Builder.NewChemSequence();
             cs.Add(second);
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
             Assert.AreEqual(second, cs[1]);
         }
 
@@ -66,13 +66,13 @@ namespace NCDK
         public virtual void TestGrowChemSequenceArray()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
             Assert.AreEqual(3, cs.Count);
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence()); // this one should enfore array grow
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence()); // this one should enfore array grow
             Assert.AreEqual(6, cs.Count);
         }
 
@@ -80,9 +80,9 @@ namespace NCDK
         public virtual void TestChemSequences()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
 
             Assert.IsNotNull(cs);
             Assert.AreEqual(3, cs.Count);
@@ -92,9 +92,9 @@ namespace NCDK
         public virtual void TestGetChemSequenceCount()
         {
             IChemFile cs = (IChemFile)NewChemObject();
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
-            cs.Add(cs.Builder.CreateChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
+            cs.Add(cs.Builder.NewChemSequence());
 
             Assert.AreEqual(3, cs.Count);
         }
@@ -119,7 +119,7 @@ namespace NCDK
             IChemFile chemObject = (IChemFile)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            chemObject.Add(chemObject.Builder.CreateChemSequence());
+            chemObject.Add(chemObject.Builder.NewChemSequence());
             Assert.IsTrue(listener.Changed);
         }
 
@@ -158,10 +158,10 @@ namespace NCDK
         public virtual void TestClone_ChemSequence()
         {
             IChemFile file = (IChemFile)NewChemObject();
-            file.Add(file.Builder.CreateChemSequence()); // 1
-            file.Add(file.Builder.CreateChemSequence()); // 2
-            file.Add(file.Builder.CreateChemSequence()); // 3
-            file.Add(file.Builder.CreateChemSequence()); // 4
+            file.Add(file.Builder.NewChemSequence()); // 1
+            file.Add(file.Builder.NewChemSequence()); // 2
+            file.Add(file.Builder.NewChemSequence()); // 3
+            file.Add(file.Builder.NewChemSequence()); // 4
 
             IChemFile clone = (IChemFile)file.Clone();
             Assert.AreEqual(file.Count, clone.Count);

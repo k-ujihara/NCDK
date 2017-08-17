@@ -119,9 +119,9 @@ namespace NCDK.IO
         /// <returns>a ChemFile with the coordinates, charges, vectors, etc.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence seq = file.Builder.CreateChemSequence();
-            IChemModel model = file.Builder.CreateChemModel();
-            ICrystal crystal = ReadCrystal(file.Builder.CreateCrystal());
+            IChemSequence seq = file.Builder.NewChemSequence();
+            IChemModel model = file.Builder.NewChemModel();
+            ICrystal crystal = ReadCrystal(file.Builder.NewCrystal());
             model.Crystal = crystal;
             seq.Add(model);
             file.Add(seq);
@@ -338,7 +338,7 @@ namespace NCDK.IO
                                 else
                                 {
                                     Trace.TraceInformation("Adding atom: " + atype + ", " + frac[0] + ", " + frac[1] + ", " + frac[2]);
-                                    IAtom atom = crystal.Builder.CreateAtom(atype);
+                                    IAtom atom = crystal.Builder.NewAtom(atype);
                                     atom.FractionalPoint3D = new Vector3(frac[0], frac[1], frac[2]);
                                     crystal.Atoms.Add(atom);
                                     Debug.WriteLine("Atom added: ", atom);

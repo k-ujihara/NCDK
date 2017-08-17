@@ -139,7 +139,7 @@ namespace NCDK.IO
         /// <returns>a ChemFile with the coordinates, energies, and vibrations.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence sequence = chemFile.Builder.CreateChemSequence();
+            IChemSequence sequence = chemFile.Builder.NewChemSequence();
             IChemModel model = null;
             string line = input.ReadLine();
             string levelOfTheory;
@@ -153,7 +153,7 @@ namespace NCDK.IO
                 {
 
                     // Found a set of coordinates
-                    model = chemFile.Builder.CreateChemModel();
+                    model = chemFile.Builder.NewChemModel();
                     ReadCoordinates(model);
                     break;
                 }
@@ -187,7 +187,7 @@ namespace NCDK.IO
                             Trace.TraceInformation("Skipping frame, because I was told to do");
                         }
                         FireFrameRead();
-                        model = chemFile.Builder.CreateChemModel();
+                        model = chemFile.Builder.NewChemModel();
                         modelCounter++;
                         ReadCoordinates(model);
                     }
@@ -241,8 +241,8 @@ namespace NCDK.IO
         /// <param name="model"></param>
         private void ReadCoordinates(IChemModel model)
         {
-            var moleculeSet = model.Builder.CreateAtomContainerSet();
-            IAtomContainer molecule = model.Builder.CreateAtomContainer();
+            var moleculeSet = model.Builder.NewAtomContainerSet();
+            IAtomContainer molecule = model.Builder.NewAtomContainer();
             string line = input.ReadLine();
             line = input.ReadLine();
             line = input.ReadLine();
@@ -308,7 +308,7 @@ namespace NCDK.IO
                 }
                 string symbol = "Du";
                 symbol = PeriodicTable.GetSymbol(atomicNumber);
-                IAtom atom = model.Builder.CreateAtom(symbol);
+                IAtom atom = model.Builder.NewAtom(symbol);
                 atom.Point3D = new Vector3(x, y, z);
                 molecule.Atoms.Add(atom);
             }

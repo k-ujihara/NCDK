@@ -35,16 +35,16 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMolecularFormula() {
 
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             Assert.IsNotNull(mf);
         }
 
         [TestMethod()]
         public void TestIsTheSame_IIsotope_IIsotope()  {
             MolecularFormula mf = new MolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope anotherCarb = Builder.CreateIsotope("C");
-            IIsotope h = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope anotherCarb = Builder.NewIsotope("C");
+            IIsotope h = Builder.NewIsotope("H");
 
             carb.ExactMass = 12.0;
             anotherCarb.ExactMass = 12.0;

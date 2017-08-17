@@ -184,7 +184,7 @@ namespace NCDK.IO.Iterator
                     try
                     {
                         ISimpleChemObjectReader reader = GetReader(currentFormat, new StringReader(buffer.ToString()));
-                        molecule = reader.Read(builder.CreateAtomContainer());
+                        molecule = reader.Read(builder.NewAtomContainer());
                     }
                     catch (Exception exception)
                     {

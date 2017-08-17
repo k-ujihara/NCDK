@@ -91,7 +91,7 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence chemSequence = file.Builder.CreateChemSequence();
+            IChemSequence chemSequence = file.Builder.NewChemSequence();
 
             int number_of_atoms = 0;
 
@@ -105,10 +105,10 @@ namespace NCDK.IO
                     number_of_atoms = int.Parse(token);
                     string info = input.ReadLine();
 
-                    IChemModel chemModel = file.Builder.CreateChemModel();
-                    var setOfMolecules = file.Builder.CreateAtomContainerSet();
+                    IChemModel chemModel = file.Builder.NewChemModel();
+                    var setOfMolecules = file.Builder.NewAtomContainerSet();
 
-                    IAtomContainer m = file.Builder.CreateAtomContainer();
+                    IAtomContainer m = file.Builder.NewAtomContainer();
                     m.SetProperty(CDKPropertyName.Title, info);
 
                     for (int i = 0; i < number_of_atoms; i++)
@@ -142,7 +142,7 @@ namespace NCDK.IO
                                 z = double.Parse(tokenizer[3]);
                                 if (fields == 8) charge = double.Parse(tokenizer[4]);
 
-                                IAtom atom = file.Builder.CreateAtom(atomtype, new Vector3(x, y, z));
+                                IAtom atom = file.Builder.NewAtom(atomtype, new Vector3(x, y, z));
                                 atom.Charge = charge;
                                 m.Atoms.Add(atom);
                             }

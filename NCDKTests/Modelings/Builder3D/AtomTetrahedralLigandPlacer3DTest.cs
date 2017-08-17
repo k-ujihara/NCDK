@@ -44,7 +44,7 @@ namespace NCDK.Modelings.Builder3D
             IBond bond2 = new Bond(atom1, atom3);
             IBond bond3 = new Bond(atom1, atom4);
             IBond bond4 = new Bond(atom1, atom5);
-            IAtomContainer ac = atom1.Builder.CreateAtomContainer();
+            IAtomContainer ac = atom1.Builder.NewAtomContainer();
             atom1.FormalNeighbourCount = 4;
             atom2.FormalNeighbourCount = 1;
             atom3.FormalNeighbourCount = 1;
@@ -89,7 +89,7 @@ namespace NCDK.Modelings.Builder3D
             IBond bond2 = new Bond(atom1, atom3);
             IBond bond3 = new Bond(atom1, atom4);
             IBond bond4 = new Bond(atom1, atom5);
-            IAtomContainer ac = atom1.Builder.CreateAtomContainer();
+            IAtomContainer ac = atom1.Builder.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             ac.Atoms.Add(atom3);

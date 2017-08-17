@@ -39,14 +39,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetEndChainID()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.EndChainID);
         }
 
         [TestMethod()]
         public virtual void TestSetEndChainID_Character()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             char endChainID = 'x';
             structure.EndChainID = endChainID;
             Assert.AreEqual(endChainID, structure.EndChainID.Value);
@@ -55,14 +55,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetEndInsertionCode()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.EndInsertionCode);
         }
 
         [TestMethod()]
         public virtual void TestSetEndInsertionCode_Character()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             char endInsertionCode = 'x';
             structure.EndInsertionCode = endInsertionCode;
             Assert.AreEqual(endInsertionCode, structure.EndInsertionCode.Value);
@@ -71,14 +71,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetEndSequenceNumber()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.EndSequenceNumber);
         }
 
         [TestMethod()]
         public virtual void TestSetEndSequenceNumber_Integer()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             int endSequenceNumber = 5;
             structure.EndSequenceNumber = endSequenceNumber;
             Assert.AreEqual(endSequenceNumber, structure.EndSequenceNumber.Value);
@@ -87,14 +87,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStartChainID()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.StartChainID);
         }
 
         [TestMethod()]
         public virtual void TestSetStartChainID_Character()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             char startChainID = 'x';
             structure.StartChainID = startChainID;
             Assert.AreEqual(startChainID, structure.StartChainID.Value);
@@ -103,14 +103,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStartInsertionCode()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.StartInsertionCode);
         }
 
         [TestMethod()]
         public virtual void TestSetStartInsertionCode_Character()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             char startInsertionCode = 'x';
             structure.StartInsertionCode = startInsertionCode;
             Assert.AreEqual(startInsertionCode, structure.StartInsertionCode.Value);
@@ -119,14 +119,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStartSequenceNumber()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             Assert.IsNull(structure.StartSequenceNumber);
         }
 
         [TestMethod()]
         public virtual void TestSetStartSequenceNumber_Integer()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             int startSequenceNumber = 5;
             structure.StartSequenceNumber = startSequenceNumber;
             Assert.AreEqual(startSequenceNumber, structure.StartSequenceNumber.Value);
@@ -135,7 +135,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStructureType()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             string type = structure.StructureType;
             Assert.IsNull(type);
         }
@@ -143,7 +143,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetStructureType_String()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             string type = "alpha-barrel";
             structure.StructureType = type;
             Assert.AreEqual(type, structure.StructureType);
@@ -155,7 +155,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestToString()
         {
-            IPDBStructure structure = Builder.CreatePDBStructure();
+            IPDBStructure structure = Builder.NewPDBStructure();
             string description = structure.ToString();
             for (int i = 0; i < description.Length; i++)
             {

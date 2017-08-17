@@ -35,7 +35,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount0()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
             Assert.AreEqual(0, mf.Count);
         }
@@ -43,12 +43,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            mf.Add(Builder.CreateIsotope("C"));
-            mf.Add(Builder.CreateIsotope("H"));
-            mf.Add(Builder.CreateIsotope("H"));
-            mf.Add(Builder.CreateIsotope("H"));
-            mf.Add(Builder.CreateIsotope("H"));
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            mf.Add(Builder.NewIsotope("C"));
+            mf.Add(Builder.NewIsotope("H"));
+            mf.Add(Builder.NewIsotope("H"));
+            mf.Add(Builder.NewIsotope("H"));
+            mf.Add(Builder.NewIsotope("H"));
 
             Assert.AreEqual(2, mf.Count);
         }
@@ -56,11 +56,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            mf.Add(Builder.CreateIsotope("C"));
-            mf.Add(Builder.CreateIsotope("H"));
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            mf.Add(Builder.NewIsotope("C"));
+            mf.Add(Builder.NewIsotope("H"));
 
-            IIsotope hy = Builder.CreateIsotope("C");
+            IIsotope hy = Builder.NewIsotope("C");
             hy.NaturalAbundance = 2.00342342;
             mf.Add(hy);
 
@@ -70,13 +70,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
-            IIsotope h2 = Builder.CreateIsotope("H");
-            IIsotope h3 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
+            IIsotope h2 = Builder.NewIsotope("H");
+            IIsotope h3 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1);
@@ -92,11 +92,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope2()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1);
@@ -112,11 +112,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope_int()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -134,11 +134,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotope_Number_Clone()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -160,11 +160,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope_Occurr()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -178,15 +178,15 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAdd_IMolecularFormula()
         {
-            IMolecularFormula acetone = Builder.CreateMolecularFormula();
-            acetone.Add(Builder.CreateIsotope("C"), 3);
-            IIsotope oxig = Builder.CreateIsotope("O");
+            IMolecularFormula acetone = Builder.NewMolecularFormula();
+            acetone.Add(Builder.NewIsotope("C"), 3);
+            IIsotope oxig = Builder.NewIsotope("O");
             acetone.Add(oxig);
 
             Assert.AreEqual(2, acetone.Count);
 
-            IMolecularFormula water = Builder.CreateMolecularFormula();
-            water.Add(Builder.CreateIsotope("H"), 2);
+            IMolecularFormula water = Builder.NewMolecularFormula();
+            water.Add(Builder.NewIsotope("H"), 2);
             water.Add(oxig);
             acetone.Add(water);
 
@@ -196,8 +196,8 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMolecularFormula_NullCharge()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mf2.Charge = 0;
             mf.Add(mf2);
         }
@@ -205,10 +205,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestIsotopes()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            mf.Add(Builder.CreateIsotope("C"));
-            mf.Add(Builder.CreateIsotope("F"));
-            mf.Add(Builder.CreateIsotope("H"), 3);
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            mf.Add(Builder.NewIsotope("C"));
+            mf.Add(Builder.NewIsotope("F"));
+            mf.Add(Builder.NewIsotope("H"), 3);
 
             IEnumerator<IIsotope> istoIter = mf.Isotopes.GetEnumerator();
             int counter = 0;
@@ -222,11 +222,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestContains_IIsotope()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope h1 = Builder.CreateIsotope("H");
-            IIsotope h2 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope h1 = Builder.NewIsotope("H");
+            IIsotope h2 = Builder.NewIsotope("H");
             h2.ExactMass = 2.0004;
 
             mf.Add(carb);
@@ -240,11 +240,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestInstance_IIsotope()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
 
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -272,11 +272,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetCharge()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             mf.Charge = 1;
-            mf.Add(Builder.CreateAtom("C"));
-            mf.Add(Builder.CreateAtom("F"));
-            mf.Add(Builder.CreateAtom("H"), 3);
+            mf.Add(Builder.NewAtom("C"));
+            mf.Add(Builder.NewAtom("F"));
+            mf.Add(Builder.NewAtom("H"), 3);
 
             Assert.AreEqual(3, mf.Count);
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
@@ -285,7 +285,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetCharge_Double()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             Assert.AreEqual(null, mf.Charge);
 
             mf.Charge = 1;
@@ -298,11 +298,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetCharge_Integer()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             mf.Charge = 1;
-            mf.Add(Builder.CreateAtom("C"));
-            mf.Add(Builder.CreateAtom("F"));
-            mf.Add(Builder.CreateAtom("H"), 3);
+            mf.Add(Builder.NewAtom("C"));
+            mf.Add(Builder.NewAtom("F"));
+            mf.Add(Builder.NewAtom("H"), 3);
 
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
         }
@@ -310,13 +310,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestCharge_rest()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             Assert.AreEqual(null, mf.Charge);
 
             mf.Charge = 1;
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
 
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mf2.Charge = -1;
             mf.Add(mf2);
             Assert.AreEqual(0.0, mf.Charge.Value, 0.001);
@@ -325,10 +325,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveIsotope_IIsotope()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -342,10 +342,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAllIsotopes()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -362,7 +362,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             mf.Charge = 1;
             object clone = mf.Clone();
             Assert.IsTrue(clone is IMolecularFormula);
@@ -376,10 +376,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_Isotopes()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf.Add(carb);
             mf.Add(flu);
             mf.Add(h1, 3);
@@ -399,7 +399,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetProperty_Object_Object()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             mf.SetProperty("blabla", 2);
             Assert.IsNotNull(mf.GetProperty<object>("blabla"));
         }
@@ -407,7 +407,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveProperty_Object()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             string blabla = "blabla";
             double number = 2;
             mf.SetProperty(blabla, number);
@@ -426,7 +426,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetProperties()
         {
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
+            IMolecularFormula mf = Builder.NewMolecularFormula();
             mf.SetProperty("blabla", 2);
             mf.SetProperty("blabla3", 3);
             Assert.AreEqual(2, mf.GetProperties().Count());
@@ -441,7 +441,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetBuilder()
         {
-            IMolecularFormula add = Builder.CreateMolecularFormula();
+            IMolecularFormula add = Builder.NewMolecularFormula();
             IChemObjectBuilder builder = add.Builder;
             Assert.IsNotNull(Builder);
             Assert.AreEqual(Builder.GetType().Name, builder.GetType().Name);

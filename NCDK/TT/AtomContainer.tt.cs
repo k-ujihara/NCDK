@@ -468,7 +468,7 @@ namespace NCDK.Default
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
-            var bond = Builder.CreateBond(atom1, atom2, order, stereo);
+            var bond = Builder.NewBond(atom1, atom2, order, stereo);
             Bonds.Add(bond);
             // no OnStateChanged
         }
@@ -478,7 +478,7 @@ namespace NCDK.Default
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
-            IBond bond = Builder.CreateBond(atom1, atom2, order);
+            IBond bond = Builder.NewBond(atom1, atom2, order);
             Bonds.Add(bond);
             // no OnStateChanged
         }
@@ -488,7 +488,7 @@ namespace NCDK.Default
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
-            var e = Builder.CreateLonePair(atom);
+            var e = Builder.NewLonePair(atom);
             e.Listeners?.Add(this);
             LonePairs.Add(e);
             // no OnStateChanged
@@ -499,7 +499,7 @@ namespace NCDK.Default
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
-            var e = Builder.CreateSingleElectron(atom);
+            var e = Builder.NewSingleElectron(atom);
             e.Listeners?.Add(this);
             SingleElectrons.Add(e);
             // no OnStateChanged
@@ -1135,7 +1135,7 @@ namespace NCDK.Silent
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
-            var bond = Builder.CreateBond(atom1, atom2, order, stereo);
+            var bond = Builder.NewBond(atom1, atom2, order, stereo);
             Bonds.Add(bond);
             // no OnStateChanged
         }
@@ -1145,7 +1145,7 @@ namespace NCDK.Silent
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
-            IBond bond = Builder.CreateBond(atom1, atom2, order);
+            IBond bond = Builder.NewBond(atom1, atom2, order);
             Bonds.Add(bond);
             // no OnStateChanged
         }
@@ -1155,7 +1155,7 @@ namespace NCDK.Silent
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
-            var e = Builder.CreateLonePair(atom);
+            var e = Builder.NewLonePair(atom);
             e.Listeners?.Add(this);
             LonePairs.Add(e);
             // no OnStateChanged
@@ -1166,7 +1166,7 @@ namespace NCDK.Silent
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
-            var e = Builder.CreateSingleElectron(atom);
+            var e = Builder.NewSingleElectron(atom);
             e.Listeners?.Add(this);
             SingleElectrons.Add(e);
             // no OnStateChanged

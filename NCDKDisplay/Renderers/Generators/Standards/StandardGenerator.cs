@@ -158,7 +158,7 @@ namespace NCDK.Renderers.Generators.Standards
             SymbolVisibility visibility = parameters.Get<SymbolVisibility>(typeof(Visibility));
             IAtomColorer coloring = parameters.Get<IAtomColorer>(typeof(AtomColor));
             Color annotationColor = parameters.GetV<Color>(typeof(AnnotationColor));
-            var foreground = coloring.GetAtomColor(container.Builder.CreateAtom("C"));
+            var foreground = coloring.GetAtomColor(container.Builder.NewAtom("C"));
 
             // the stroke width is based on the font. a better method is needed to get
             // the exact font stroke but for now we use the width of the pipe character.

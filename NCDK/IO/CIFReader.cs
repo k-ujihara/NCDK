@@ -117,9 +117,9 @@ namespace NCDK.IO
         /// <returns>a ChemFile with the coordinates, charges, vectors, etc.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence seq = file.Builder.CreateChemSequence();
-            IChemModel model = file.Builder.CreateChemModel();
-            crystal = file.Builder.CreateCrystal();
+            IChemSequence seq = file.Builder.NewChemSequence();
+            IChemModel model = file.Builder.NewChemModel();
+            crystal = file.Builder.NewCrystal();
 
             string line = input.ReadLine();
             bool end_found = false;
@@ -376,7 +376,7 @@ namespace NCDK.IO
                     }
                     int colIndex = 0;
                     // process one row
-                    IAtom atom = crystal.Builder.CreateAtom("C");
+                    IAtom atom = crystal.Builder.NewAtom("C");
                     Vector3 frac = new Vector3();
                     Vector3 real = new Vector3();
                     bool hasFractional = false;

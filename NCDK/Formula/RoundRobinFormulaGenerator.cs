@@ -101,7 +101,7 @@ namespace NCDK.Formula
         [MethodImpl(MethodImplOptions.Synchronized)]
         public virtual IMolecularFormulaSet GetAllFormulas()
         {
-            IMolecularFormulaSet set = builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet set = builder.NewMolecularFormulaSet();
             if (done) return set;
             for (IMolecularFormula formula = GetNextFormula(); formula != null; formula = GetNextFormula())
             {
@@ -743,7 +743,7 @@ namespace NCDK.Formula
 
                 internal IMolecularFormula GenerateCurrentMolecularFormula(IChemObjectBuilder builder)
                 {
-                    IMolecularFormula formula = builder.CreateMolecularFormula();
+                    IMolecularFormula formula = builder.NewMolecularFormula();
                     for (int k = 0; k < buffer.Length; ++k)
                     {
                         if (buffer[k] > 0) formula.Add(GetCharacterAt(k), buffer[k]);

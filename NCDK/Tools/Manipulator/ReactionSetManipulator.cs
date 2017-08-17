@@ -75,7 +75,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IAtomContanerSet</returns>
         public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReactionSet set)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = set.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> moleculeSet = set.Builder.NewAtomContainerSet();
             foreach (var reaction in set)
             {
                 IAtomContainerSet<IAtomContainer> molecules = ReactionManipulator.GetAllMolecules(reaction);
@@ -153,7 +153,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactions(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
+            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
             IReactionSet reactSetProd = GetRelevantReactionsAsProduct(reactSet, molecule);
             foreach (var reaction in reactSetProd)
                 newReactSet.Add(reaction);
@@ -172,7 +172,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactionsAsReactant(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
+            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
             foreach (var reaction in reactSet)
             {
                 foreach (var atomContainer in reaction.Reactants)
@@ -190,7 +190,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactionsAsProduct(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
+            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
             foreach (var reaction in reactSet)
             {
                 foreach (var atomContainer in reaction.Products)

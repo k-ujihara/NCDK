@@ -28,11 +28,11 @@ namespace NCDK.Templates
 
         public static IAtomContainer GetIsobutane(IChemObjectBuilder builder)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
@@ -42,12 +42,12 @@ namespace NCDK.Templates
 
         public static IAtomContainer GetIsopentane(IChemObjectBuilder builder)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
@@ -58,13 +58,13 @@ namespace NCDK.Templates
 
         public static IAtomContainer GetIsohexane(IChemObjectBuilder builder)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);

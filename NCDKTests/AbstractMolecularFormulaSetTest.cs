@@ -34,18 +34,18 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSize()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
             Assert.AreEqual(1, mfS.Count());
         }
 
         [TestMethod()]
         public virtual void TestAdd_IMolecularFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count());
         }
@@ -53,10 +53,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestIterator()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count());
 #if false // C# does not support remove item by enumertor
@@ -76,10 +76,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMolecularFormulas()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count());
             int count = 0;
@@ -94,12 +94,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAdd_IMolecularFormulaSet()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
-            IMolecularFormulaSet tested = Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet tested = Builder.NewMolecularFormulaSet();
             Assert.AreEqual(0, tested.Count());
             tested.AddRange(mfS);
             Assert.AreEqual(3, tested.Count());
@@ -108,10 +108,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMolecularFormula_int()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.IsNotNull(mfS[2]); // third molecule should exist
             //        Assert.IsNull(mfS[3]); // fourth molecule must not exist
@@ -120,18 +120,18 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAddMolecularFormula_IMolecularFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(5, mfS.Count());
 
             // now test it to make sure it properly grows the array
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(7, mfS.Count());
         }
@@ -139,13 +139,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMolecularFormulas()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
 
             Assert.AreEqual(0, mfS.Count());
 
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count());
             Assert.IsNotNull(mfS[0]);
@@ -156,12 +156,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestContains_IMolecularFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
 
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope h1 = Builder.CreateIsotope("H");
-            IIsotope h2 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope h1 = Builder.NewIsotope("H");
+            IIsotope h2 = Builder.NewIsotope("H");
             h2.ExactMass = 2.00055;
 
             mf.Add(carb);
@@ -175,7 +175,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
             object clone = mfS.Clone();
             Assert.IsTrue(clone is IMolecularFormulaSet);
             Assert.AreNotSame(mfS, clone);
@@ -184,20 +184,20 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_IMolecualrFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope flu = Builder.CreateIsotope("F");
-            IIsotope h1 = Builder.CreateIsotope("H");
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope flu = Builder.NewIsotope("F");
+            IIsotope h1 = Builder.NewIsotope("H");
             mf1.Add(carb);
             mf1.Add(flu);
             mf1.Add(h1, 3);
             mfS.Add(mf1);
 
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
-            IIsotope carb2 = Builder.CreateIsotope("C");
-            IIsotope iode = Builder.CreateIsotope("I");
-            IIsotope h2 = Builder.CreateIsotope("H");
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
+            IIsotope carb2 = Builder.NewIsotope("C");
+            IIsotope iode = Builder.NewIsotope("I");
+            IIsotope h2 = Builder.NewIsotope("H");
             mf2.Add(carb2);
             mf2.Add(iode, 2);
             mf2.Add(h2, 2);
@@ -216,9 +216,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveMolecularFormula_IMolecularFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             mfS.Remove(mf1);
@@ -229,9 +229,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAllMolecularFormulas()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
 
@@ -243,9 +243,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveMolecularFormula_int()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             mfS.RemoveAt(0);
@@ -256,10 +256,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestReplaceMolecularFormula_int_IMolecularFormula()
         {
-            IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf3 = Builder.CreateMolecularFormula();
+            IMolecularFormulaSet mfS = Builder.NewMolecularFormulaSet();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
+            IMolecularFormula mf3 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             Assert.AreEqual(mf2, mfS[1]);
@@ -271,7 +271,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetBuilder()
         {
-            IMolecularFormulaSet add = Builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet add = Builder.NewMolecularFormulaSet();
             IChemObjectBuilder builder = add.Builder;
             Assert.IsNotNull(builder);
             Assert.AreEqual(Builder.GetType().Name, builder.GetType().Name);

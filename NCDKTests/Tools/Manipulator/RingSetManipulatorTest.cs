@@ -47,33 +47,33 @@ namespace NCDK.Tools.Manipulator
         public void SetUp()
         {
             builder = Default.ChemObjectBuilder.Instance;
-            ringset = builder.CreateRingSet();
-            ring1Atom1 = builder.CreateAtom("C"); // rather artificial molecule
-            IAtom ring1Atom2 = builder.CreateAtom("C");
-            ring1Atom3 = builder.CreateAtom("C");
-            IAtom ring2Atom1 = builder.CreateAtom("C");
-            IAtom ring2Atom2 = builder.CreateAtom("C");
-            ring2Atom3 = builder.CreateAtom("C");
-            IAtom ring3Atom3 = builder.CreateAtom("C");
-            IAtom ring3Atom4 = builder.CreateAtom("C");
+            ringset = builder.NewRingSet();
+            ring1Atom1 = builder.NewAtom("C"); // rather artificial molecule
+            IAtom ring1Atom2 = builder.NewAtom("C");
+            ring1Atom3 = builder.NewAtom("C");
+            IAtom ring2Atom1 = builder.NewAtom("C");
+            IAtom ring2Atom2 = builder.NewAtom("C");
+            ring2Atom3 = builder.NewAtom("C");
+            IAtom ring3Atom3 = builder.NewAtom("C");
+            IAtom ring3Atom4 = builder.NewAtom("C");
 
-            IAtom ring4Atom1 = builder.CreateAtom("C");
-            IAtom ring4Atom2 = builder.CreateAtom("C");
+            IAtom ring4Atom1 = builder.NewAtom("C");
+            IAtom ring4Atom2 = builder.NewAtom("C");
 
-            IBond ring1Bond1 = builder.CreateBond(ring1Atom1, ring1Atom2);
-            IBond ring1Bond2 = builder.CreateBond(ring1Atom2, ring1Atom3);
-            IBond ring1Bond3 = builder.CreateBond(ring1Atom3, ring1Atom1);
-            bondRing2Ring3 = builder.CreateBond(ring2Atom1, ring2Atom2);
-            IBond ring2Bond2 = builder.CreateBond(ring2Atom2, ring2Atom3);
-            IBond ring2Bond3 = builder.CreateBond(ring2Atom3, ring2Atom1, BondOrder.Double);
-            IBond ring3Bond2 = builder.CreateBond(ring2Atom2, ring3Atom3);
-            IBond bondRing3Ring4 = builder.CreateBond(ring3Atom3, ring3Atom4);
-            IBond ring3Bond4 = builder.CreateBond(ring3Atom4, ring2Atom1);
-            IBond ring4Bond1 = builder.CreateBond(ring4Atom1, ring4Atom2);
-            IBond ring4Bond2 = builder.CreateBond(ring4Atom2, ring3Atom3);
-            IBond ring4Bond3 = builder.CreateBond(ring3Atom4, ring4Atom1);
+            IBond ring1Bond1 = builder.NewBond(ring1Atom1, ring1Atom2);
+            IBond ring1Bond2 = builder.NewBond(ring1Atom2, ring1Atom3);
+            IBond ring1Bond3 = builder.NewBond(ring1Atom3, ring1Atom1);
+            bondRing2Ring3 = builder.NewBond(ring2Atom1, ring2Atom2);
+            IBond ring2Bond2 = builder.NewBond(ring2Atom2, ring2Atom3);
+            IBond ring2Bond3 = builder.NewBond(ring2Atom3, ring2Atom1, BondOrder.Double);
+            IBond ring3Bond2 = builder.NewBond(ring2Atom2, ring3Atom3);
+            IBond bondRing3Ring4 = builder.NewBond(ring3Atom3, ring3Atom4);
+            IBond ring3Bond4 = builder.NewBond(ring3Atom4, ring2Atom1);
+            IBond ring4Bond1 = builder.NewBond(ring4Atom1, ring4Atom2);
+            IBond ring4Bond2 = builder.NewBond(ring4Atom2, ring3Atom3);
+            IBond ring4Bond3 = builder.NewBond(ring3Atom4, ring4Atom1);
 
-            IRing ring1 = builder.CreateRing();
+            IRing ring1 = builder.NewRing();
             ring1.Atoms.Add(ring1Atom1);
             ring1.Atoms.Add(ring1Atom2);
             ring1.Atoms.Add(ring1Atom3);
@@ -81,7 +81,7 @@ namespace NCDK.Tools.Manipulator
             ring1.Bonds.Add(ring1Bond2);
             ring1.Bonds.Add(ring1Bond3);
 
-            ring2 = builder.CreateRing();
+            ring2 = builder.NewRing();
             ring2.Atoms.Add(ring2Atom1);
             ring2.Atoms.Add(ring2Atom2);
             ring2.Atoms.Add(ring2Atom3);
@@ -89,7 +89,7 @@ namespace NCDK.Tools.Manipulator
             ring2.Bonds.Add(ring2Bond2);
             ring2.Bonds.Add(ring2Bond3);
 
-            ring3 = builder.CreateRing();
+            ring3 = builder.NewRing();
             ring3.Atoms.Add(ring2Atom1);
             ring3.Atoms.Add(ring2Atom2);
             ring3.Atoms.Add(ring3Atom3);
@@ -99,7 +99,7 @@ namespace NCDK.Tools.Manipulator
             ring3.Bonds.Add(bondRing3Ring4);
             ring3.Bonds.Add(ring3Bond4);
 
-            IRing ring4 = builder.CreateRing();
+            IRing ring4 = builder.NewRing();
             ring4.Atoms.Add(ring4Atom1);
             ring4.Atoms.Add(ring4Atom2);
             ring4.Atoms.Add(ring3Atom3);
@@ -125,10 +125,10 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRingAlreadyInSet_IRing_IRingSet()
         {
-            IRing r1 = builder.CreateRing(5, "C");
-            IRing r2 = builder.CreateRing(3, "C");
+            IRing r1 = builder.NewRing(5, "C");
+            IRing r2 = builder.NewRing(3, "C");
 
-            IRingSet rs = builder.CreateRingSet();
+            IRingSet rs = builder.NewRingSet();
             Assert.IsFalse(RingSetManipulator.RingAlreadyInSet(r1, rs));
             Assert.IsFalse(RingSetManipulator.RingAlreadyInSet(r2, rs));
 
@@ -144,9 +144,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllAtomContainers_IRingSet()
         {
-            IRingSet rs = builder.CreateRingSet();
-            rs.Add(builder.CreateRing());
-            rs.Add(builder.CreateRing());
+            IRingSet rs = builder.NewRingSet();
+            rs.Add(builder.NewRing());
+            rs.Add(builder.NewRing());
             var list = RingSetManipulator.GetAllAtomContainers(rs);
             Assert.AreEqual(2, list.Count());
         }
@@ -154,13 +154,13 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAtomCount_IRingSet()
         {
-            IRingSet rs = builder.CreateRingSet();
-            IRing ac1 = builder.CreateRing();
-            ac1.Atoms.Add(builder.CreateAtom("O"));
+            IRingSet rs = builder.NewRingSet();
+            IRing ac1 = builder.NewRing();
+            ac1.Atoms.Add(builder.NewAtom("O"));
             rs.Add(ac1);
-            IRing ac2 = builder.CreateRing();
-            ac2.Atoms.Add(builder.CreateAtom("C"));
-            ac2.Atoms.Add(builder.CreateAtom("C"));
+            IRing ac2 = builder.NewRing();
+            ac2.Atoms.Add(builder.NewAtom("C"));
+            ac2.Atoms.Add(builder.NewAtom("C"));
             ac2.AddBond(ac2.Atoms[0], ac2.Atoms[1], BondOrder.Double);
             rs.Add(ac2);
             Assert.AreEqual(3, RingSetManipulator.GetAtomCount(rs));

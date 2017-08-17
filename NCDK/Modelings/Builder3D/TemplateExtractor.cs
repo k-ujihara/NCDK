@@ -50,7 +50,7 @@ namespace NCDK.Modelings.Builder3D
 
         public void CleanDataSet(string dataFile)
         {
-            var som = builder.CreateAtomContainerSet();
+            var som = builder.NewAtomContainerSet();
             try
             {
                 Console.Out.WriteLine("Start clean dataset...");
@@ -87,7 +87,7 @@ namespace NCDK.Modelings.Builder3D
 
         public void ReadNCISdfFileAsTemplate(string dataFile)
         {
-            var som = builder.CreateAtomContainerSet();
+            var som = builder.NewAtomContainerSet();
             try
             {
                 Console.Out.WriteLine("Start...");
@@ -111,7 +111,7 @@ namespace NCDK.Modelings.Builder3D
 
         public void PartitionRingsFromComplexRing(string dataFile)
         {
-            var som = builder.CreateAtomContainerSet();
+            var som = builder.NewAtomContainerSet();
             try
             {
                 Console.Out.WriteLine("Start...");
@@ -127,7 +127,7 @@ namespace NCDK.Modelings.Builder3D
                         // som.Add(m);
                         for (int i = 0; i < ringSetM.Count; i++)
                         {
-                            som.Add(builder.CreateAtomContainer(ringSetM[i]));
+                            som.Add(builder.NewAtomContainer(ringSetM[i]));
                         }
                     }
                 }
@@ -193,7 +193,7 @@ namespace NCDK.Modelings.Builder3D
                                     for (int i = 0; i < ringSystems.Count; i++)
                                     {
                                         ringSet = (IRingSet)ringSystems[i];
-                                        ac = builder.CreateAtomContainer();
+                                        ac = builder.NewAtomContainer();
                                         var containers = RingSetManipulator.GetAllAtomContainers(ringSet);
                                         foreach (var container in containers)
                                         {
@@ -208,7 +208,7 @@ namespace NCDK.Modelings.Builder3D
 
                                         try
                                         {
-                                            key = smilesGenerator.Create(builder.CreateAtomContainer(ac));
+                                            key = smilesGenerator.Create(builder.NewAtomContainer(ac));
                                         }
                                         catch (CDKException e)
                                         {
@@ -239,7 +239,7 @@ namespace NCDK.Modelings.Builder3D
                                             {
                                                 // mdlw.Write(new Molecule
                                                 // ((AtomContainer)RingSetManipulator.GetAllInOneContainer(ringSet)));
-                                                mdlw.Write(builder.CreateAtomContainer(ac));
+                                                mdlw.Write(builder.NewAtomContainer(ac));
                                             }
                                             catch (Exception emdl)
                                             {
@@ -324,7 +324,7 @@ namespace NCDK.Modelings.Builder3D
                         // Molecule(m)));
                         try
                         {
-                            data.Add((string)smiles.Create(builder.CreateAtomContainer(m)));
+                            data.Add((string)smiles.Create(builder.NewAtomContainer(m)));
                         }
                         catch (Exception exc1)
                         {

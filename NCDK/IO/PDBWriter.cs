@@ -114,7 +114,7 @@ namespace NCDK.IO
                             var containers = ChemModelManipulator.GetAllAtomContainers(model);
                             foreach (var container in containers)
                             {
-                                WriteMolecule(model.Builder.CreateAtomContainer(container));
+                                WriteMolecule(model.Builder.NewAtomContainer(container));
                             }
                         }
                     }
@@ -287,7 +287,7 @@ namespace NCDK.IO
                         atom.Point3D = cart;
                     }
                 }
-                WriteMolecule(crystal.Builder.CreateAtomContainer(crystal));
+                WriteMolecule(crystal.Builder.NewAtomContainer(crystal));
             }
             catch (IOException exception)
             {

@@ -42,11 +42,11 @@ namespace NCDK.Reactions
         public void TestAddReaction_IReaction_int()
         {
             ReactionChain chain = new ReactionChain();
-            IReaction reaction1 = builder.CreateReaction();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "reaction1";
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction1.Id = "reaction2";
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction1.Id = "reaction3";
             chain.Add(reaction1, 0);
             chain.Add(reaction2, 1);
@@ -59,12 +59,12 @@ namespace NCDK.Reactions
         public void TestGetReactionStep_IReaction()
         {
             ReactionChain chain = new ReactionChain();
-            IReaction reaction1 = builder.CreateReaction();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "reaction1";
             chain.Add(reaction1, 0);
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction1.Id = "reaction2";
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction1.Id = "reaction3";
             chain.Add(reaction1, 0);
             chain.Add(reaction2, 1);
@@ -77,12 +77,12 @@ namespace NCDK.Reactions
         public void TestGetReaction_int()
         {
             ReactionChain chain = new ReactionChain();
-            IReaction reaction1 = builder.CreateReaction();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "reaction1";
             chain.Add(reaction1, 0);
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction1.Id = "reaction2";
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction1.Id = "reaction3";
             chain.Add(reaction1, 0);
             chain.Add(reaction2, 1);

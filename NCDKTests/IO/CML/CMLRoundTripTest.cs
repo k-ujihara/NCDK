@@ -495,21 +495,21 @@ namespace NCDK.IO.CML {
             Debug.WriteLine("********** TEST REACTION **********");
             IReaction reaction = new Reaction();
             reaction.Id = "reaction.1";
-            IAtomContainer reactant = reaction.Builder.CreateAtomContainer();
+            IAtomContainer reactant = reaction.Builder.NewAtomContainer();
             reactant.Id = "react";
-            IAtom atom = reaction.Builder.CreateAtom("C");
+            IAtom atom = reaction.Builder.NewAtom("C");
             reactant.Atoms.Add(atom);
             reaction.Reactants.Add(reactant);
 
-            IAtomContainer product = reaction.Builder.CreateAtomContainer();
+            IAtomContainer product = reaction.Builder.NewAtomContainer();
             product.Id = "product";
-            atom = reaction.Builder.CreateAtom("R");
+            atom = reaction.Builder.NewAtom("R");
             product.Atoms.Add(atom);
             reaction.Products.Add(product);
 
-            IAtomContainer agent = reaction.Builder.CreateAtomContainer();
+            IAtomContainer agent = reaction.Builder.NewAtomContainer();
             agent.Id = "water";
-            atom = reaction.Builder.CreateAtom("H");
+            atom = reaction.Builder.NewAtom("H");
             agent.Atoms.Add(atom);
             reaction.Agents.Add(agent);
 

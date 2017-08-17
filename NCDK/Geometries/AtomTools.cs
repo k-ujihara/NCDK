@@ -49,9 +49,9 @@ namespace NCDK.Geometries
         public static void add3DCoordinates1(IAtomContainer atomContainer)
         {
             // atoms without coordinates
-            IAtomContainer noCoords = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer noCoords = atomContainer.Builder.NewAtomContainer();
             // get vector of possible referenceAtoms?
-            IAtomContainer refAtoms = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer refAtoms = atomContainer.Builder.NewAtomContainer();
             foreach (var atom in atomContainer.Atoms)
             {
                 // is this atom without 3D coords, and has only one ligand?
@@ -69,7 +69,7 @@ namespace NCDK.Geometries
                             noCoords.Atoms.Add(atom);
                             noCoords.Atoms.Add(refAtom);
                             // bond is required to extract ligands
-                            noCoords.Bonds.Add(atomContainer.Builder.CreateBond(atom, refAtom, BondOrder.Single));
+                            noCoords.Bonds.Add(atomContainer.Builder.NewBond(atom, refAtom, BondOrder.Single));
                         }
                     }
                 }
@@ -171,7 +171,7 @@ namespace NCDK.Geometries
             {
                 return newPoints;
             }
-            IAtomContainer ligandsWithCoords = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer ligandsWithCoords = atomContainer.Builder.NewAtomContainer();
             foreach (var ligand in connectedAtoms)
             {
                 if (ligand.Point3D != null)

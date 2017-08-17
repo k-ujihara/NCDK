@@ -421,8 +421,8 @@ namespace NCDK.SMSD.Filters
             //      Console.Out.WriteLine("Mol Size Eorg: " + sourceMol.Molecule.Atoms.Count + " , Mol Size Porg: " +
             //        targetMol.Molecule.Atoms.Count);
 
-            IAtomContainer educt = Default.ChemObjectBuilder.Instance.CreateAtomContainer(rMol);
-            IAtomContainer product = Default.ChemObjectBuilder.Instance.CreateAtomContainer(pMol);
+            IAtomContainer educt = Default.ChemObjectBuilder.Instance.NewAtomContainer(rMol);
+            IAtomContainer product = Default.ChemObjectBuilder.Instance.NewAtomContainer(pMol);
 
             if (mcsAtomSolution != null)
             {
@@ -444,8 +444,8 @@ namespace NCDK.SMSD.Filters
             //        Console.Out.WriteLine("\nSort By Energies");
             double totalBondEnergy = -9999.0;
 
-            IAtomContainer educt = Default.ChemObjectBuilder.Instance.CreateAtomContainer(rMol);
-            IAtomContainer product = Default.ChemObjectBuilder.Instance.CreateAtomContainer(pMol);
+            IAtomContainer educt = Default.ChemObjectBuilder.Instance.NewAtomContainer(rMol);
+            IAtomContainer product = Default.ChemObjectBuilder.Instance.NewAtomContainer(pMol);
 
             foreach (var eAtom in educt.Atoms)
             {
@@ -519,7 +519,7 @@ namespace NCDK.SMSD.Filters
 
         private List<object> GetMappedFragment(IAtomContainer molecule, ICollection<IAtom> atomsMCS)
         {
-            IAtomContainer subgraphContainer = molecule.Builder.CreateAtomContainer(molecule);
+            IAtomContainer subgraphContainer = molecule.Builder.NewAtomContainer(molecule);
             List<IAtom> list = new List<IAtom>(atomsMCS.Count);
             foreach (var atom in atomsMCS)
             {
@@ -862,7 +862,7 @@ namespace NCDK.SMSD.Filters
         private int GetFragmentCount(IAtomContainer molecule)
         {
             bool fragmentFlag = true;
-            var fragmentMolSet = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var fragmentMolSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             int countFrag = 0;
             if (molecule.Atoms.Count > 0)
             {

@@ -44,7 +44,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestIsotope_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement("C");
+            IElement element = NewChemObject().Builder.NewElement("C");
             IIsotope i = new Isotope(element);
             Assert.AreEqual("C", i.Symbol);
         }

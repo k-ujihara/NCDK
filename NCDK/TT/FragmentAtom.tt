@@ -43,7 +43,7 @@ namespace <#= ns.NS #>
     {
         public FragmentAtom()
         {
-            Fragment = Builder.CreateAtomContainer();
+            Fragment = Builder.NewAtomContainer();
         }
 
         public virtual bool IsExpanded { get; set; }

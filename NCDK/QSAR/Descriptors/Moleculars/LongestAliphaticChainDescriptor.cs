@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IAtomContainer CreateAtomContainerFromPath(IAtomContainer container, List<IAtom> path)
         {
-            IAtomContainer aliphaticChain = container.Builder.CreateAtomContainer();
+            IAtomContainer aliphaticChain = container.Builder.NewAtomContainer();
             for (int i = 0; i < path.Count - 1; i++)
             {
                 if (!aliphaticChain.Contains(path[i]))

@@ -36,7 +36,7 @@ namespace NCDK
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
             Assert.AreEqual(0, pdbPolymer.GetStructures().Count());
-            IPDBStructure structure = pdbPolymer.Builder.CreatePDBStructure();
+            IPDBStructure structure = pdbPolymer.Builder.NewPDBStructure();
             pdbPolymer.Add(structure);
             Assert.AreEqual(structure, pdbPolymer.GetStructures().First());
         }
@@ -45,7 +45,7 @@ namespace NCDK
         public virtual void TestAddStructure_IPDBStructure()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IPDBStructure structure = pdbPolymer.Builder.CreatePDBStructure();
+            IPDBStructure structure = pdbPolymer.Builder.NewPDBStructure();
             pdbPolymer.Add(structure);
             Assert.AreEqual(1, pdbPolymer.GetStructures().Count());
         }
@@ -56,17 +56,17 @@ namespace NCDK
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
             Assert.AreEqual(0, pdbPolymer.GetMonomerMap().Count());
 
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IStrand oStrand2 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand2 = pdbPolymer.Builder.NewStrand();
             oStrand2.StrandName = "B";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono2 = pdbPolymer.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.Add(oPDBAtom1);
             pdbPolymer.AddAtom(oPDBAtom2, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono2, oStrand2);
@@ -86,17 +86,17 @@ namespace NCDK
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
             Assert.AreEqual(0, pdbPolymer.GetMonomerNames().Count());
 
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IStrand oStrand2 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand2 = pdbPolymer.Builder.NewStrand();
             oStrand2.StrandName = "B";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono2 = pdbPolymer.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.Add(oPDBAtom1);
             pdbPolymer.AddAtom(oPDBAtom2, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono2, oStrand2);
@@ -117,17 +117,17 @@ namespace NCDK
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
 
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IStrand oStrand2 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand2 = pdbPolymer.Builder.NewStrand();
             oStrand2.StrandName = "B";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono2 = pdbPolymer.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom2, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono2, oStrand2);
@@ -141,8 +141,8 @@ namespace NCDK
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
 
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.Add(oPDBAtom1);
             pdbPolymer.Add(oPDBAtom2);
 
@@ -153,13 +153,13 @@ namespace NCDK
         public virtual void TestAddAtom_IPDBAtom_IStrand()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IPDBMonomer oMono1 = pdbPolymer.Builder.CreatePDBMonomer();
+            IPDBMonomer oMono1 = pdbPolymer.Builder.NewPDBMonomer();
             oMono1.MonomerName = "TRP279";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom2, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono1, oStrand1);
@@ -173,13 +173,13 @@ namespace NCDK
         public virtual void TestAddAtom_IPDBAtom_IMonomer_IStrand()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IPDBMonomer oMono1 = pdbPolymer.Builder.CreatePDBMonomer();
+            IPDBMonomer oMono1 = pdbPolymer.Builder.NewPDBMonomer();
             oMono1.MonomerName = "TRP279";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom3 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom2, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom3, oMono1, oStrand1);
@@ -193,11 +193,11 @@ namespace NCDK
         public virtual void TestAddAtom_IPDBAtom_IMonomer()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IPDBMonomer oMono1 = pdbPolymer.Builder.CreatePDBMonomer();
+            IPDBMonomer oMono1 = pdbPolymer.Builder.NewPDBMonomer();
             oMono1.MonomerName = "TRP279";
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
 
             Assert.AreEqual(1, pdbPolymer.GetMonomer("TRP279", "A").Atoms.Count);
@@ -207,11 +207,11 @@ namespace NCDK
         public override void TestGetStrandCount()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
 
             Assert.AreEqual(1, pdbPolymer.GetStrandMap().Count());
@@ -221,11 +221,11 @@ namespace NCDK
         public override void TestGetStrand_String()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
 
             Assert.AreEqual(oStrand1, pdbPolymer.GetStrand("A"));
@@ -235,16 +235,16 @@ namespace NCDK
         public override void TestGetStrandNames()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
-            IStrand oStrand2 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
+            IStrand oStrand2 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
             oStrand2.StrandName = "B";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono2 = pdbPolymer.Builder.NewMonomer();
             oMono2.MonomerName = "GLY123";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom2, oMono2, oStrand2);
             IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();
@@ -258,11 +258,11 @@ namespace NCDK
         public override void TestRemoveStrand_String()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
 
             Assert.IsTrue(pdbPolymer.GetStrandNames().Contains(oStrand1.StrandName));
@@ -276,16 +276,16 @@ namespace NCDK
         public override void TestGetStrands()
         {
             IPDBPolymer pdbPolymer = (IPDBPolymer)NewChemObject();
-            IStrand oStrand1 = pdbPolymer.Builder.CreateStrand();
-            IStrand oStrand2 = pdbPolymer.Builder.CreateStrand();
+            IStrand oStrand1 = pdbPolymer.Builder.NewStrand();
+            IStrand oStrand2 = pdbPolymer.Builder.NewStrand();
             oStrand1.StrandName = "A";
             oStrand2.StrandName = "B";
-            IMonomer oMono1 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono1 = pdbPolymer.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = pdbPolymer.Builder.CreateMonomer();
+            IMonomer oMono2 = pdbPolymer.Builder.NewMonomer();
             oMono2.MonomerName = "GLY123";
-            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.CreatePDBAtom("C");
-            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.CreatePDBAtom("C");
+            IPDBAtom oPDBAtom1 = pdbPolymer.Builder.NewPDBAtom("C");
+            IPDBAtom oPDBAtom2 = pdbPolymer.Builder.NewPDBAtom("C");
             pdbPolymer.AddAtom(oPDBAtom1, oMono1, oStrand1);
             pdbPolymer.AddAtom(oPDBAtom2, oMono2, oStrand2);
             IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();

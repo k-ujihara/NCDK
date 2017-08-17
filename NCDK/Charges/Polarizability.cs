@@ -74,7 +74,7 @@ namespace NCDK.Charges
         /// <returns>The polarizabilitiyFactorForAtom value</returns>
         public double GetPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom)
         {
-            IAtomContainer acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
+            IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
             return GetKJPolarizabilityFactor(acH, atom);
         }
@@ -87,7 +87,7 @@ namespace NCDK.Charges
         public double CalculateKJMeanMolecularPolarizability(IAtomContainer atomContainer)
         {
             double polarizabilitiy = 0;
-            IAtomContainer acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
+            IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
             for (int i = 0; i < acH.Atoms.Count; i++)
             {
@@ -113,7 +113,7 @@ namespace NCDK.Charges
             IAtomContainer acH;
             if (addExplicitH)
             {
-                acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
+                acH = atomContainer.Builder.NewAtomContainer(atomContainer);
                 AddExplicitHydrogens(acH);
             }
             else
@@ -163,7 +163,7 @@ namespace NCDK.Charges
             IAtomContainer acH;
             if (addExplicitH)
             {
-                acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
+                acH = atomContainer.Builder.NewAtomContainer(atomContainer);
                 AddExplicitHydrogens(acH);
             }
             else
@@ -204,7 +204,7 @@ namespace NCDK.Charges
         public double CalculateBondPolarizability(IAtomContainer atomContainer, IBond bond)
         {
             double polarizabilitiy = 0;
-            IAtomContainer acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
+            IAtomContainer acH = atomContainer.Builder.NewAtomContainer(atomContainer);
             AddExplicitHydrogens(acH);
             if (bond.Atoms.Count == 2)
             {

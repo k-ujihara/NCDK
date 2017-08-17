@@ -83,8 +83,8 @@ namespace NCDK.IO
             }
             else if (obj is IChemFile)
             {
-                IChemSequence sequence = obj.Builder.CreateChemSequence();
-                sequence.Add((IChemModel)this.ReadChemModel(obj.Builder.CreateChemModel()));
+                IChemSequence sequence = obj.Builder.NewChemSequence();
+                sequence.Add((IChemModel)this.ReadChemModel(obj.Builder.NewChemModel()));
                 ((IChemFile)obj).Add(sequence);
                 return obj;
             }
@@ -253,12 +253,12 @@ namespace NCDK.IO
                     {
                         Trace.TraceInformation("Found end of file");
                         // Store atoms
-                        IAtomContainer container = model.Builder.CreateAtomContainer();
+                        IAtomContainer container = model.Builder.NewAtomContainer();
                         for (int i = 0; i < numberOfAtoms; i++)
                         {
                             try
                             {
-                                IAtom atom = model.Builder.CreateAtom(Isotopes.Instance.GetElementSymbol(atoms[i]));
+                                IAtom atom = model.Builder.NewAtom(Isotopes.Instance.GetElementSymbol(atoms[i]));
                                 atom.AtomicNumber = atoms[i];
                                 atom.Point3D = new Vector3(atomxs[i], atomys[i], atomzs[i]);
                                 atom.Charge = atomcharges[i];
@@ -280,8 +280,8 @@ namespace NCDK.IO
                             container.AddBond(container.Atoms[bondatomid1[i]], container.Atoms[bondatomid2[i]], bondorder[i]);
                         }
 
-                        var moleculeSet = model.Builder.CreateAtomContainerSet();
-                        moleculeSet.Add(model.Builder.CreateAtomContainer(container));
+                        var moleculeSet = model.Builder.NewAtomContainerSet();
+                        moleculeSet.Add(model.Builder.NewAtomContainer(container));
                         model.MoleculeSet = moleculeSet;
 
                         return model;

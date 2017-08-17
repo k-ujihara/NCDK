@@ -162,7 +162,7 @@ namespace NCDK.Smiles
                 }
             }
 
-            IAtomContainerSet<IAtomContainer> som = atomContainer.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> som = atomContainer.Builder.NewAtomContainerSet();
 
             //        int number=1; // total number of possibilities
             //
@@ -807,7 +807,7 @@ namespace NCDK.Smiles
             }
             catch (Exception)
             {
-                return m.Builder.CreateRingSet();
+                return m.Builder.NewRingSet();
             }
         }
 
@@ -885,10 +885,10 @@ namespace NCDK.Smiles
         /// <param name="mol">The IAtomContainer for which to recover the IRingSet.</param>
         private IRingSet RecoverRingSystem(IAtomContainer mol)
         {
-            IRingSet ringSet = mol.Builder.CreateRingSet();
+            IRingSet ringSet = mol.Builder.NewRingSet();
             foreach (var bondNumbers in listOfRings)
             {
-                IRing ring = mol.Builder.CreateRing();
+                IRing ring = mol.Builder.NewRing();
                 foreach (var bondNumber in bondNumbers)
                 {
                     IBond bond = mol.Bonds[bondNumber];

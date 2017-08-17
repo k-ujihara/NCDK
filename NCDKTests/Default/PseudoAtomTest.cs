@@ -48,7 +48,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestPseudoAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement();
+            IElement element = NewChemObject().Builder.NewElement();
             IPseudoAtom a = new PseudoAtom(element);
             Assert.AreEqual("R", a.Symbol);
             Assert.IsNull(a.Point3D);

@@ -63,7 +63,7 @@ namespace NCDK.Signatures
         {
             for (int i = 0; i < count; i++)
             {
-                mol.Atoms.Add(builder.CreateAtom("H"));
+                mol.Atoms.Add(builder.NewAtom("H"));
                 int hydrogenIndex = mol.Atoms.Count - 1;
                 mol.AddBond(mol.Atoms[carbonIndex], mol.Atoms[hydrogenIndex], BondOrder.Single);
             }
@@ -73,7 +73,7 @@ namespace NCDK.Signatures
         {
             for (int i = 0; i < count; i++)
             {
-                mol.Atoms.Add(builder.CreateAtom("C"));
+                mol.Atoms.Add(builder.NewAtom("C"));
             }
         }
 
@@ -83,7 +83,7 @@ namespace NCDK.Signatures
             int previous = atomToAttachTo;
             for (int i = 0; i < ringSize; i++)
             {
-                mol.Atoms.Add(builder.CreateAtom("C"));
+                mol.Atoms.Add(builder.NewAtom("C"));
                 int current = numberOfAtoms + i;
                 mol.AddBond(mol.Atoms[previous], mol.Atoms[current], BondOrder.Single);
                 previous = current;
@@ -93,11 +93,11 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeRhLikeStructure(int pCount, int ringCount)
         {
-            IAtomContainer ttpr = builder.CreateAtomContainer();
-            ttpr.Atoms.Add(builder.CreateAtom("Rh"));
+            IAtomContainer ttpr = builder.NewAtomContainer();
+            ttpr.Atoms.Add(builder.NewAtom("Rh"));
             for (int i = 1; i <= pCount; i++)
             {
-                ttpr.Atoms.Add(builder.CreateAtom("P"));
+                ttpr.Atoms.Add(builder.NewAtom("P"));
                 ttpr.AddBond(ttpr.Atoms[0], ttpr.Atoms[i], BondOrder.Single);
             }
 
@@ -114,8 +114,8 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeCycleWheel(int ringSize, int ringCount)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
             for (int r = 0; r < ringCount; r++)
             {
                 AbstractSignatureTest.AddRing(0, ringSize, mol);
@@ -125,9 +125,9 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeSandwich(int ringSize, bool hasMethyl)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(mol, (ringSize * 2));
-            mol.Atoms.Add(builder.CreateAtom("Fe"));
+            mol.Atoms.Add(builder.NewAtom("Fe"));
             int center = ringSize * 2;
             // face A
             for (int i = 0; i < ringSize - 1; i++)
@@ -149,7 +149,7 @@ namespace NCDK.Signatures
 
             if (hasMethyl)
             {
-                mol.Atoms.Add(builder.CreateAtom("C"));
+                mol.Atoms.Add(builder.NewAtom("C"));
                 mol.AddBond(mol.Atoms[0], mol.Atoms.Last(), BondOrder.Single);
             }
 
@@ -158,7 +158,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeC7H16A()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(mol, 7);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
@@ -178,7 +178,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeC7H16B()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(mol, 7);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
@@ -198,7 +198,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeC7H16C()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(mol, 7);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
@@ -218,10 +218,10 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeDodecahedrane()
         {
-            IAtomContainer dodec = builder.CreateAtomContainer();
+            IAtomContainer dodec = builder.NewAtomContainer();
             for (int i = 0; i < 20; i++)
             {
-                dodec.Atoms.Add(builder.CreateAtom("C"));
+                dodec.Atoms.Add(builder.NewAtom("C"));
             }
             dodec.AddBond(dodec.Atoms[0], dodec.Atoms[1], BondOrder.Single);
             dodec.AddBond(dodec.Atoms[0], dodec.Atoms[4], BondOrder.Single);
@@ -261,10 +261,10 @@ namespace NCDK.Signatures
         {
             // This 'molecule' is the example used to illustrate the algorithm
             // outlined in the 2004 Faulon &ct. paper
-            IAtomContainer cage = builder.CreateAtomContainer();
+            IAtomContainer cage = builder.NewAtomContainer();
             for (int i = 0; i < 16; i++)
             {
-                cage.Atoms.Add(builder.CreateAtom("C"));
+                cage.Atoms.Add(builder.NewAtom("C"));
             }
             cage.AddBond(cage.Atoms[0], cage.Atoms[1], BondOrder.Single);
             cage.AddBond(cage.Atoms[0], cage.Atoms[3], BondOrder.Single);
@@ -300,7 +300,7 @@ namespace NCDK.Signatures
         /// <returns>/// </summary></returns>
         public static IAtomContainer MakeCubane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 8);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -319,7 +319,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeCuneane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 8);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -338,7 +338,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeCyclobutane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 4);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
@@ -356,7 +356,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeNapthalene()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 10);
             foreach (var atom in mol.Atoms)
             {
@@ -382,7 +382,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeHexane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 6);
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -396,7 +396,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeTwistane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 10);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
@@ -415,7 +415,7 @@ namespace NCDK.Signatures
 
         public static IAtomContainer MakeBenzene()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 6);
             foreach (var atom in mol.Atoms)
             {
@@ -443,7 +443,7 @@ namespace NCDK.Signatures
         /// <returns>/// </summary></returns>
         public static IAtomContainer MakePseudoPropellane()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AddCarbons(mol, 5);
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);

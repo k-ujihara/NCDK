@@ -32,9 +32,9 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void IsConnectedTest()
         {
-            IAtomContainer singleBond = builder.CreateAtomContainer();
-            singleBond.Atoms.Add(builder.CreateAtom("C"));
-            singleBond.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer singleBond = builder.NewAtomContainer();
+            singleBond.Atoms.Add(builder.NewAtom("C"));
+            singleBond.Atoms.Add(builder.NewAtom("C"));
             singleBond.AddBond(singleBond.Atoms[0], singleBond.Atoms[1], BondOrder.Single);
             SignatureQuotientGraph quotientGraph = new SignatureQuotientGraph(singleBond);
             Assert.IsTrue(quotientGraph.IsConnected(0, 1));

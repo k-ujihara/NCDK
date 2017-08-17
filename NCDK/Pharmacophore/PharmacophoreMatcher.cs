@@ -326,7 +326,7 @@ namespace NCDK.Pharmacophore
             // XXX: prepare query, to be moved
             PrepareInput(input);
 
-            IAtomContainer pharmacophoreMolecule = input.Builder.CreateAtomContainer();
+            IAtomContainer pharmacophoreMolecule = input.Builder.NewAtomContainer();
 
             var matched = new HashSet<string>();
             var uniqueAtoms = new LinkedHashSet<PharmacophoreAtom>();

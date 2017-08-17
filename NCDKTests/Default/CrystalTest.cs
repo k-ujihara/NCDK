@@ -46,18 +46,18 @@ namespace NCDK.Default
         public virtual void TestCrystal_IAtomContainer()
         {
             IChemObject obj = NewChemObject();
-            IAtomContainer acetone = obj.Builder.CreateAtomContainer();
-            IAtom c1 = acetone.Builder.CreateAtom("C");
-            IAtom c2 = acetone.Builder.CreateAtom("C");
-            IAtom o = acetone.Builder.CreateAtom("O");
-            IAtom c3 = acetone.Builder.CreateAtom("C");
+            IAtomContainer acetone = obj.Builder.NewAtomContainer();
+            IAtom c1 = acetone.Builder.NewAtom("C");
+            IAtom c2 = acetone.Builder.NewAtom("C");
+            IAtom o = acetone.Builder.NewAtom("O");
+            IAtom c3 = acetone.Builder.NewAtom("C");
             acetone.Atoms.Add(c1);
             acetone.Atoms.Add(c2);
             acetone.Atoms.Add(c3);
             acetone.Atoms.Add(o);
-            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
-            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
-            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            IBond b1 = acetone.Builder.NewBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.NewBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.NewBond(c1, c3, BondOrder.Single);
             acetone.Bonds.Add(b1);
             acetone.Bonds.Add(b2);
             acetone.Bonds.Add(b3);

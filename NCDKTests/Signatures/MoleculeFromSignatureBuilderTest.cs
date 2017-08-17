@@ -52,9 +52,9 @@ namespace NCDK.Signatures
 
         public void ccBondTest(BondOrder order)
         {
-            IAtomContainer cc = builder.CreateAtomContainer();
-            cc.Atoms.Add(builder.CreateAtom("C"));
-            cc.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer cc = builder.NewAtomContainer();
+            cc.Atoms.Add(builder.NewAtom("C"));
+            cc.Atoms.Add(builder.NewAtom("C"));
             cc.AddBond(cc.Atoms[0], cc.Atoms[1], order);
             string signature = SignatureForAtom(cc, 0);
             IAtomContainer reconstructed = Reconstruct(signature);
@@ -65,10 +65,10 @@ namespace NCDK.Signatures
 
         public IAtomContainer MakeRing(int ringSize)
         {
-            IAtomContainer ring = builder.CreateAtomContainer();
+            IAtomContainer ring = builder.NewAtomContainer();
             for (int i = 0; i < ringSize; i++)
             {
-                ring.Atoms.Add(builder.CreateAtom("C"));
+                ring.Atoms.Add(builder.NewAtom("C"));
                 if (i > 0)
                 {
                     ring.AddBond(ring.Atoms[i - 1], ring.Atoms[i], BondOrder.Single);

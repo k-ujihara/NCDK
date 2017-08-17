@@ -183,8 +183,8 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single atom</returns>
         public IAtomContainer MakeSingleAtom()
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(0, 0)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
             return container;
         }
 
@@ -195,19 +195,19 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single atom</returns>
         public IAtomContainer MakeSingleAtom(string elementSymbol)
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom(elementSymbol, new Vector2(0, 0)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom(elementSymbol, new Vector2(0, 0)));
             return container;
         }
 
         public IAtomContainer MakeMethane()
         {
-            IAtomContainer methane = builder.CreateAtomContainer();
-            methane.Atoms.Add(builder.CreateAtom("C", new Vector2(0, 0)));
-            methane.Atoms.Add(builder.CreateAtom("H", new Vector2(1, 1)));
-            methane.Atoms.Add(builder.CreateAtom("H", new Vector2(1, -1)));
-            methane.Atoms.Add(builder.CreateAtom("H", new Vector2(-1, 1)));
-            methane.Atoms.Add(builder.CreateAtom("H", new Vector2(-1, -1)));
+            IAtomContainer methane = builder.NewAtomContainer();
+            methane.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector2(1, 1)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector2(1, -1)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector2(-1, 1)));
+            methane.Atoms.Add(builder.NewAtom("H", new Vector2(-1, -1)));
             return methane;
         }
 
@@ -217,19 +217,19 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single C-C bond</returns>
         public IAtomContainer MakeSingleBond()
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(0, -1)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(0, 1)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(0, -1)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 1)));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
             return container;
         }
 
         public IAtomContainer MakeCCC()
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(-1, -1)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(0, 0)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(1, -1)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(-1, -1)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(1, -1)));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
             container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Single);
             return container;
@@ -241,11 +241,11 @@ namespace NCDK.Renderers.Generators
         /// <returns>four carbon atoms connected by bonds into a square</returns>
         public IAtomContainer MakeSquare()
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(-1, -1)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(1, -1)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(1, 1)));
-            container.Atoms.Add(builder.CreateAtom("C", new Vector2(-1, 1)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(-1, -1)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(1, -1)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(1, 1)));
+            container.Atoms.Add(builder.NewAtom("C", new Vector2(-1, 1)));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
             container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Single);
@@ -259,11 +259,11 @@ namespace NCDK.Renderers.Generators
         /// <returns>an unlikely S-N-O-P square</returns>
         public IAtomContainer MakeSNOPSquare()
         {
-            IAtomContainer container = builder.CreateAtomContainer();
-            container.Atoms.Add(builder.CreateAtom("S", new Vector2(-1, -1)));
-            container.Atoms.Add(builder.CreateAtom("N", new Vector2(1, -1)));
-            container.Atoms.Add(builder.CreateAtom("O", new Vector2(1, 1)));
-            container.Atoms.Add(builder.CreateAtom("P", new Vector2(-1, 1)));
+            IAtomContainer container = builder.NewAtomContainer();
+            container.Atoms.Add(builder.NewAtom("S", new Vector2(-1, -1)));
+            container.Atoms.Add(builder.NewAtom("N", new Vector2(1, -1)));
+            container.Atoms.Add(builder.NewAtom("O", new Vector2(1, 1)));
+            container.Atoms.Add(builder.NewAtom("P", new Vector2(-1, 1)));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
             container.AddBond(container.Atoms[1], container.Atoms[2], BondOrder.Single);

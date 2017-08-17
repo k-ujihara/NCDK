@@ -48,7 +48,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestAtom_IElement()
         {
-            IElement element = NewChemObject().Builder.CreateElement();
+            IElement element = NewChemObject().Builder.NewElement();
             IAtom a = new Atom(element);
             Assert.IsNotNull(a);
         }
@@ -199,7 +199,7 @@ namespace NCDK.Default
             {
                 Atom atom = (Atom)someAtom;
                 Assert.IsTrue(atom.Compare(atom));
-                IAtom hydrogen = someAtom.Builder.CreateAtom("H");
+                IAtom hydrogen = someAtom.Builder.NewAtom("H");
                 Assert.IsFalse(atom.Compare(hydrogen));
                 Assert.IsFalse(atom.Compare("C"));
             }

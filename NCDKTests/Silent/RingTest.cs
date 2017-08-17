@@ -61,9 +61,9 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestRing_IAtomContainer()
         {
-            IAtomContainer container = NewChemObject().Builder.CreateAtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
+            IAtomContainer container = NewChemObject().Builder.NewAtomContainer();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
 
             IRing ring = new Ring(container);
             Assert.IsNotNull(ring);

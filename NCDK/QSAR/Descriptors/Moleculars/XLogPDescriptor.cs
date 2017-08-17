@@ -224,7 +224,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (atomRingSet.Count > 1)
                     {
                         var containers = RingSetManipulator.GetAllAtomContainers(atomRingSet);
-                        atomRingSet = rs.Builder.CreateRingSet();
+                        atomRingSet = rs.Builder.NewRingSet();
                         foreach (var container in containers)
                         {
                             // XXX: we're already in the SSSR, but then get the esential cycles
@@ -1094,7 +1094,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if (checkAminoAcid > 1)
             {
                 //            alpha amino acid
-                QueryAtomContainer aminoAcid = QueryAtomContainerCreator.CreateBasicQueryContainer(CreateAminoAcid(ac.Builder));
+                QueryAtomContainer aminoAcid = QueryAtomContainerCreator.CreateBasicQueryContainer(NewAminoAcid(ac.Builder));
 
                 IAtom bondAtom0 = null;
                 IAtom bondAtom1 = null;
@@ -1791,143 +1791,143 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private IAtomContainer CreatePaba(IChemObjectBuilder builder)
         {
             // SMILES CS(=O)(=O)c1ccc(N)cc1
-            IAtomContainer container = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             container.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("S");
+            IAtom atom2 = builder.NewAtom("S");
             container.Atoms.Add(atom2);
-            IAtom atom3 = builder.CreateAtom("O");
+            IAtom atom3 = builder.NewAtom("O");
             container.Atoms.Add(atom3);
-            IAtom atom4 = builder.CreateAtom("O");
+            IAtom atom4 = builder.NewAtom("O");
             container.Atoms.Add(atom4);
-            IAtom atom5 = builder.CreateAtom("C");
+            IAtom atom5 = builder.NewAtom("C");
             atom5.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom5);
-            IAtom atom6 = builder.CreateAtom("C");
+            IAtom atom6 = builder.NewAtom("C");
             atom6.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom6);
-            IAtom atom7 = builder.CreateAtom("C");
+            IAtom atom7 = builder.NewAtom("C");
             atom7.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom7);
-            IAtom atom8 = builder.CreateAtom("C");
+            IAtom atom8 = builder.NewAtom("C");
             atom8.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom8);
-            IAtom atom9 = builder.CreateAtom("N");
+            IAtom atom9 = builder.NewAtom("N");
             container.Atoms.Add(atom9);
-            IAtom atom10 = builder.CreateAtom("C");
+            IAtom atom10 = builder.NewAtom("C");
             atom10.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom10);
-            IAtom atom11 = builder.CreateAtom("C");
+            IAtom atom11 = builder.NewAtom("C");
             atom11.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom11);
-            IBond bond1 = builder.CreateBond(atom1, atom2, BondOrder.Single);
+            IBond bond1 = builder.NewBond(atom1, atom2, BondOrder.Single);
             container.Bonds.Add(bond1);
-            IBond bond2 = builder.CreateBond(atom2, atom3, BondOrder.Double);
+            IBond bond2 = builder.NewBond(atom2, atom3, BondOrder.Double);
             container.Bonds.Add(bond2);
-            IBond bond3 = builder.CreateBond(atom2, atom4, BondOrder.Double);
+            IBond bond3 = builder.NewBond(atom2, atom4, BondOrder.Double);
             container.Bonds.Add(bond3);
-            IBond bond4 = builder.CreateBond(atom2, atom5, BondOrder.Single);
+            IBond bond4 = builder.NewBond(atom2, atom5, BondOrder.Single);
             container.Bonds.Add(bond4);
-            IBond bond5 = builder.CreateBond(atom5, atom6, BondOrder.Double);
+            IBond bond5 = builder.NewBond(atom5, atom6, BondOrder.Double);
             bond5.IsAromatic = true;
             container.Bonds.Add(bond5);
-            IBond bond6 = builder.CreateBond(atom6, atom7, BondOrder.Single);
+            IBond bond6 = builder.NewBond(atom6, atom7, BondOrder.Single);
             bond6.IsAromatic = true;
             container.Bonds.Add(bond6);
-            IBond bond7 = builder.CreateBond(atom7, atom8, BondOrder.Double);
+            IBond bond7 = builder.NewBond(atom7, atom8, BondOrder.Double);
             bond7.IsAromatic = true;
             container.Bonds.Add(bond7);
-            IBond bond8 = builder.CreateBond(atom8, atom9, BondOrder.Single);
+            IBond bond8 = builder.NewBond(atom8, atom9, BondOrder.Single);
             container.Bonds.Add(bond8);
-            IBond bond9 = builder.CreateBond(atom8, atom10, BondOrder.Single);
+            IBond bond9 = builder.NewBond(atom8, atom10, BondOrder.Single);
             bond9.IsAromatic = true;
             container.Bonds.Add(bond9);
-            IBond bond10 = builder.CreateBond(atom10, atom11, BondOrder.Double);
+            IBond bond10 = builder.NewBond(atom10, atom11, BondOrder.Double);
             bond10.IsAromatic = true;
             container.Bonds.Add(bond10);
-            IBond bond11 = builder.CreateBond(atom5, atom11, BondOrder.Single);
+            IBond bond11 = builder.NewBond(atom5, atom11, BondOrder.Single);
             bond11.IsAromatic = true;
             container.Bonds.Add(bond11);
 
             return container;
         }
 
-        private IAtomContainer CreateAminoAcid(IChemObjectBuilder builder)
+        private IAtomContainer NewAminoAcid(IChemObjectBuilder builder)
         {
             // SMILES NCC(=O)O
-            IAtomContainer container = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("N");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("N");
             container.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
             container.Atoms.Add(atom2);
-            IAtom atom3 = builder.CreateAtom("C"); // carbonyl
+            IAtom atom3 = builder.NewAtom("C"); // carbonyl
             container.Atoms.Add(atom3);
-            IAtom atom4 = builder.CreateAtom("O"); // carbonyl
+            IAtom atom4 = builder.NewAtom("O"); // carbonyl
             container.Atoms.Add(atom4);
-            IAtom atom5 = builder.CreateAtom("O");
+            IAtom atom5 = builder.NewAtom("O");
             container.Atoms.Add(atom5);
-            container.Bonds.Add(builder.CreateBond(atom1, atom2, BondOrder.Single));
-            container.Bonds.Add(builder.CreateBond(atom2, atom3, BondOrder.Single));
-            container.Bonds.Add(builder.CreateBond(atom3, atom4, BondOrder.Double));
-            container.Bonds.Add(builder.CreateBond(atom3, atom5, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom1, atom2, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom2, atom3, BondOrder.Single));
+            container.Bonds.Add(builder.NewBond(atom3, atom4, BondOrder.Double));
+            container.Bonds.Add(builder.NewBond(atom3, atom5, BondOrder.Single));
             return container;
         }
 
         private IAtomContainer CreateSalicylicAcid(IChemObjectBuilder builder)
         {
             // SMILES O=C(O)c1ccccc1O
-            IAtomContainer container = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
+            IAtomContainer container = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             container.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("O");
+            IAtom atom2 = builder.NewAtom("O");
             container.Atoms.Add(atom2);
-            IAtom atom3 = builder.CreateAtom("O");
+            IAtom atom3 = builder.NewAtom("O");
             container.Atoms.Add(atom3);
-            IAtom atom4 = builder.CreateAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             atom4.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom4);
-            IAtom atom5 = builder.CreateAtom("C");
+            IAtom atom5 = builder.NewAtom("C");
             atom5.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom5);
-            IAtom atom6 = builder.CreateAtom("C");
+            IAtom atom6 = builder.NewAtom("C");
             atom6.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom6);
-            IAtom atom7 = builder.CreateAtom("C");
+            IAtom atom7 = builder.NewAtom("C");
             atom7.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom7);
-            IAtom atom8 = builder.CreateAtom("C");
+            IAtom atom8 = builder.NewAtom("C");
             atom8.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom8);
-            IAtom atom9 = builder.CreateAtom("C");
+            IAtom atom9 = builder.NewAtom("C");
             atom9.Hybridization = Hybridization.SP2;
             container.Atoms.Add(atom9);
-            IAtom atom10 = builder.CreateAtom("O");
+            IAtom atom10 = builder.NewAtom("O");
             container.Atoms.Add(atom10);
-            IBond bond1 = builder.CreateBond(atom1, atom2, BondOrder.Double);
+            IBond bond1 = builder.NewBond(atom1, atom2, BondOrder.Double);
             container.Bonds.Add(bond1);
-            IBond bond2 = builder.CreateBond(atom1, atom3, BondOrder.Single);
+            IBond bond2 = builder.NewBond(atom1, atom3, BondOrder.Single);
             container.Bonds.Add(bond2);
-            IBond bond3 = builder.CreateBond(atom1, atom4, BondOrder.Single);
+            IBond bond3 = builder.NewBond(atom1, atom4, BondOrder.Single);
             container.Bonds.Add(bond3);
-            IBond bond4 = builder.CreateBond(atom4, atom5, BondOrder.Double);
+            IBond bond4 = builder.NewBond(atom4, atom5, BondOrder.Double);
             bond4.IsAromatic = true;
             container.Bonds.Add(bond4);
-            IBond bond5 = builder.CreateBond(atom5, atom6, BondOrder.Single);
+            IBond bond5 = builder.NewBond(atom5, atom6, BondOrder.Single);
             bond5.IsAromatic = true;
             container.Bonds.Add(bond5);
-            IBond bond6 = builder.CreateBond(atom6, atom7, BondOrder.Double);
+            IBond bond6 = builder.NewBond(atom6, atom7, BondOrder.Double);
             bond6.IsAromatic = true;
             container.Bonds.Add(bond6);
-            IBond bond7 = builder.CreateBond(atom7, atom8, BondOrder.Single);
+            IBond bond7 = builder.NewBond(atom7, atom8, BondOrder.Single);
             bond7.IsAromatic = true;
             container.Bonds.Add(bond7);
-            IBond bond8 = builder.CreateBond(atom8, atom9, BondOrder.Double);
+            IBond bond8 = builder.NewBond(atom8, atom9, BondOrder.Double);
             bond8.IsAromatic = true;
             container.Bonds.Add(bond8);
-            IBond bond9 = builder.CreateBond(atom9, atom4, BondOrder.Single);
+            IBond bond9 = builder.NewBond(atom9, atom4, BondOrder.Single);
             bond9.IsAromatic = true;
             container.Bonds.Add(bond9);
-            IBond bond10 = builder.CreateBond(atom9, atom10, BondOrder.Single);
+            IBond bond10 = builder.NewBond(atom9, atom10, BondOrder.Single);
             container.Bonds.Add(bond10);
 
             return container;

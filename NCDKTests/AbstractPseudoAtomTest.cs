@@ -102,7 +102,7 @@ namespace NCDK
         public virtual void TestPseudoAtom_IAtom()
         {
             IChemObject obj = NewChemObject();
-            IAtom atom = obj.Builder.CreateAtom("C");
+            IAtom atom = obj.Builder.NewAtom("C");
             Vector3 fract = new Vector3(0.5, 0.5, 0.5);
             Vector3 threeD = new Vector3(0.5, 0.5, 0.5);
             Vector2 twoD = new Vector2(0.5, 0.5);
@@ -110,7 +110,7 @@ namespace NCDK
             atom.Point3D = threeD;
             atom.Point2D = twoD;
 
-            IPseudoAtom a = obj.Builder.CreatePseudoAtom(atom);
+            IPseudoAtom a = obj.Builder.NewPseudoAtom(atom);
             AssertAreEqual(fract, a.FractionalPoint3D.Value, 0.0001);
             AssertAreEqual(threeD, a.Point3D.Value, 0.0001);
             AssertAreEqual(twoD, a.Point2D.Value, 0.0001);

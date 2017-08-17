@@ -114,7 +114,7 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence sequence = ReadChemSequence(chemFile.Builder.CreateChemSequence());
+            IChemSequence sequence = ReadChemSequence(chemFile.Builder.NewChemSequence());
             chemFile.Add(sequence);
             return chemFile;
         }
@@ -135,7 +135,7 @@ namespace NCDK.IO
                     {
 
                         // Found a set of coordinates
-                        model = sequence.Builder.CreateChemModel();
+                        model = sequence.Builder.NewChemModel();
                         try
                         {
                             ReadCoordinates(model);
@@ -160,7 +160,7 @@ namespace NCDK.IO
                             // Add current frame to file and create a new one.
                             sequence.Add(model);
                             FireFrameRead();
-                            model = sequence.Builder.CreateChemModel();
+                            model = sequence.Builder.NewChemModel();
                             ReadCoordinates(model);
                         }
                         else if (line.IndexOf("SCF Done:") >= 0)
@@ -218,7 +218,7 @@ namespace NCDK.IO
         /// <exception cref="IOException">if an I/O error occurs</exception>
         private void ReadCoordinates(IChemModel model)
         {
-            IAtomContainer container = model.Builder.CreateAtomContainer();
+            IAtomContainer container = model.Builder.NewAtomContainer();
             string line = input.ReadLine();
             line = input.ReadLine();
             line = input.ReadLine();
@@ -285,12 +285,12 @@ namespace NCDK.IO
                 }
                 string symbol = "Du";
                 symbol = PeriodicTable.GetSymbol(atomicNumber);
-                IAtom atom = model.Builder.CreateAtom(symbol);
+                IAtom atom = model.Builder.NewAtom(symbol);
                 atom.Point3D = new Vector3(x, y, z);
                 container.Atoms.Add(atom);
             }
-            var moleculeSet = model.Builder.CreateAtomContainerSet();
-            moleculeSet.Add(model.Builder.CreateAtomContainer(container));
+            var moleculeSet = model.Builder.NewAtomContainerSet();
+            moleculeSet.Add(model.Builder.NewAtomContainer(container));
             model.MoleculeSet = moleculeSet;
         }
 

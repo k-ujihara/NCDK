@@ -64,9 +64,9 @@ namespace NCDK
         {
             IFragmentAtom a = (IFragmentAtom)NewChemObject();
             Assert.IsNotNull(a);
-            IAtomContainer container = a.Builder.CreateAtomContainer();
-            container.Atoms.Add(a.Builder.CreateAtom("N"));
-            container.Atoms.Add(a.Builder.CreateAtom("C"));
+            IAtomContainer container = a.Builder.NewAtomContainer();
+            container.Atoms.Add(a.Builder.NewAtom("N"));
+            container.Atoms.Add(a.Builder.NewAtom("C"));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Triple);
             a.Fragment = container;
             Assert.AreEqual(container, a.Fragment);
@@ -78,10 +78,10 @@ namespace NCDK
         {
             IFragmentAtom a = (IFragmentAtom)NewChemObject();
             Assert.IsNotNull(a);
-            IAtomContainer container = a.Builder.CreateAtomContainer();
-            container.Atoms.Add(a.Builder.CreateAtom("N"));
+            IAtomContainer container = a.Builder.NewAtomContainer();
+            container.Atoms.Add(a.Builder.NewAtom("N"));
             container.Atoms[0].ExactMass = 5.5;
-            container.Atoms.Add(a.Builder.CreateAtom("C"));
+            container.Atoms.Add(a.Builder.NewAtom("C"));
             container.Atoms[1].ExactMass = 3.5;
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Triple);
             a.Fragment = container;

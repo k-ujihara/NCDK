@@ -42,11 +42,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllMolecules_IReactionScheme()
         {
-            IReactionScheme reactionScheme = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            reaction1.Products.Add(builder.CreateAtomContainer());
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
+            IReactionScheme reactionScheme = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Products.Add(builder.NewAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
             reactionScheme.Add(reaction1); // 1
             reactionScheme.Add(reaction2); // 2
 
@@ -56,31 +56,31 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllMolecules_IReactionScheme_IAtomContainerSet()
         {
-            IReactionScheme reactionScheme = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            reaction1.Products.Add(builder.CreateAtomContainer());
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
+            IReactionScheme reactionScheme = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Products.Add(builder.NewAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
             reactionScheme.Add(reaction1); // 1
             reactionScheme.Add(reaction2); // 2
 
             Assert.AreEqual(
                     2,
                     ReactionSchemeManipulator.GetAllAtomContainers(reactionScheme,
-                            builder.CreateAtomContainerSet()).Count);
+                            builder.NewAtomContainerSet()).Count);
         }
 
         [TestMethod()]
         public void TestGetAllMolecules_IReactionScheme2()
         {
-            IReactionScheme reactionScheme = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IReactionScheme reactionScheme = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            IAtomContainer molecule = builder.NewAtomContainer();
             reaction1.Products.Add(molecule);
-            reaction1.Reactants.Add(builder.CreateAtomContainer());
+            reaction1.Reactants.Add(builder.NewAtomContainer());
             reactionScheme.Add(reaction1);
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
             reaction2.Reactants.Add(molecule);
             reactionScheme.Add(reaction2);
 
@@ -90,29 +90,29 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllMolecules_IReactionScheme3()
         {
-            IReactionScheme scheme1 = builder.CreateReactionScheme();
+            IReactionScheme scheme1 = builder.NewReactionScheme();
 
-            IReactionScheme scheme11 = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IReactionScheme scheme11 = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            IAtomContainer molecule = builder.NewAtomContainer();
             reaction1.Products.Add(molecule);
-            reaction1.Reactants.Add(builder.CreateAtomContainer());
+            reaction1.Reactants.Add(builder.NewAtomContainer());
             scheme11.Add(reaction1);
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
             reaction2.Reactants.Add(molecule);
             scheme11.Add(reaction2);
             scheme1.Add(scheme11);
 
-            IReactionScheme scheme12 = builder.CreateReactionScheme();
-            IReaction reaction3 = builder.CreateReaction();
-            reaction3.Products.Add(builder.CreateAtomContainer());
+            IReactionScheme scheme12 = builder.NewReactionScheme();
+            IReaction reaction3 = builder.NewReaction();
+            reaction3.Products.Add(builder.NewAtomContainer());
             reaction3.Reactants.Add(molecule);
             scheme12.Add(reaction3);
             scheme1.Add(scheme12);
 
-            IReaction reaction11 = builder.CreateReaction();
-            reaction11.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction11 = builder.NewReaction();
+            reaction11.Products.Add(builder.NewAtomContainer());
             scheme1.Add(reaction11);
 
             Assert.AreEqual(5, ReactionSchemeManipulator.GetAllAtomContainers(scheme1).Count);
@@ -121,37 +121,37 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IReactionScheme()
         {
-            IReactionScheme scheme1 = builder.CreateReactionScheme();
+            IReactionScheme scheme1 = builder.NewReactionScheme();
             scheme1.Id = "scheme1";
 
-            IReactionScheme scheme11 = builder.CreateReactionScheme();
+            IReactionScheme scheme11 = builder.NewReactionScheme();
             scheme11.Id = "scheme11";
-            IReaction reaction1 = builder.CreateReaction();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "reaction1";
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             reaction1.Id = "molecule";
             reaction1.Products.Add(molecule);
-            reaction1.Reactants.Add(builder.CreateAtomContainer());
+            reaction1.Reactants.Add(builder.NewAtomContainer());
             scheme11.Add(reaction1);
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction1.Id = "reaction2";
-            reaction2.Products.Add(builder.CreateAtomContainer());
+            reaction2.Products.Add(builder.NewAtomContainer());
             reaction2.Reactants.Add(molecule);
             scheme11.Add(reaction2);
             scheme1.Add(scheme11);
 
-            IReactionScheme scheme12 = builder.CreateReactionScheme();
+            IReactionScheme scheme12 = builder.NewReactionScheme();
             scheme12.Id = "scheme12";
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction3.Id = "reaction3";
-            reaction3.Products.Add(builder.CreateAtomContainer());
+            reaction3.Products.Add(builder.NewAtomContainer());
             reaction3.Reactants.Add(molecule);
             scheme12.Add(reaction3);
             scheme1.Add(scheme12);
 
-            IReaction reaction11 = builder.CreateReaction();
+            IReaction reaction11 = builder.NewReaction();
             reaction11.Id = "reaction11";
-            reaction11.Products.Add(builder.CreateAtomContainer());
+            reaction11.Products.Add(builder.NewAtomContainer());
             scheme1.Add(reaction11);
 
             Assert.AreEqual(6, ReactionSchemeManipulator.GetAllIDs(scheme1).Count());
@@ -160,43 +160,43 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestCreateReactionScheme_IReactionSet()
         {
-            IAtomContainer molA = builder.CreateAtomContainer();
+            IAtomContainer molA = builder.NewAtomContainer();
             molA.Id = "A";
-            IAtomContainer molB = builder.CreateAtomContainer();
+            IAtomContainer molB = builder.NewAtomContainer();
             molB.Id = "B";
-            IAtomContainer molC = builder.CreateAtomContainer();
+            IAtomContainer molC = builder.NewAtomContainer();
             molC.Id = "C";
-            IAtomContainer molD = builder.CreateAtomContainer();
+            IAtomContainer molD = builder.NewAtomContainer();
             molD.Id = "D";
-            IAtomContainer molE = builder.CreateAtomContainer();
+            IAtomContainer molE = builder.NewAtomContainer();
             molE.Id = "E";
 
-            IReactionSet reactionSet = builder.CreateReactionSet();
-            IReaction reaction1 = builder.CreateReaction();
+            IReactionSet reactionSet = builder.NewReactionSet();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "r1";
             reaction1.Reactants.Add(molA);
             reaction1.Products.Add(molB);
             reactionSet.Add(reaction1);
 
-            IReaction reaction2 = builder.CreateReaction();
+            IReaction reaction2 = builder.NewReaction();
             reaction2.Id = "r2";
             reaction2.Reactants.Add(molB);
             reaction2.Products.Add(molC);
             reactionSet.Add(reaction2);
 
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction3.Id = "r3";
             reaction3.Reactants.Add(molB);
             reaction3.Products.Add(molD);
             reactionSet.Add(reaction3);
 
-            IReaction reaction4 = builder.CreateReaction();
+            IReaction reaction4 = builder.NewReaction();
             reaction4.Id = "r4";
             reaction4.Reactants.Add(molC);
             reaction4.Products.Add(molE);
             reactionSet.Add(reaction4);
 
-            IReactionScheme scheme1 = ReactionSchemeManipulator.CreateReactionScheme(reactionSet);
+            IReactionScheme scheme1 = ReactionSchemeManipulator.NewReactionScheme(reactionSet);
             Assert.AreEqual(1, scheme1.Reactions.Count());
             Assert.AreEqual("r1", scheme1.Reactions.ElementAt(0).Id);
             Assert.AreEqual(1, scheme1.Schemes.Count);
@@ -216,28 +216,28 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMoleculeSet_IAtomContainer_IAtomContainer_IReactionScheme()
         {
-            IReactionScheme scheme1 = builder.CreateReactionScheme();
+            IReactionScheme scheme1 = builder.NewReactionScheme();
 
-            IReactionScheme scheme11 = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
+            IReactionScheme scheme11 = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
             reaction1.Id = "reaction1";
-            IAtomContainer startMol = builder.CreateAtomContainer();
+            IAtomContainer startMol = builder.NewAtomContainer();
             startMol.Id = "startMol";
             reaction1.Reactants.Add(startMol);
-            IAtomContainer mitMol = builder.CreateAtomContainer();
+            IAtomContainer mitMol = builder.NewAtomContainer();
             mitMol.Id = "mitMol";
             reaction1.Products.Add(mitMol);
             scheme11.Add(reaction1);
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
-            reaction2.Reactants.Add(builder.CreateAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
+            reaction2.Reactants.Add(builder.NewAtomContainer());
             reaction2.Id = "reaction2";
             scheme11.Add(reaction2);
             scheme1.Add(scheme11);
 
-            IReactionScheme scheme12 = builder.CreateReactionScheme();
-            IReaction reaction3 = builder.CreateReaction();
-            IAtomContainer finalMol = builder.CreateAtomContainer();
+            IReactionScheme scheme12 = builder.NewReactionScheme();
+            IReaction reaction3 = builder.NewReaction();
+            IAtomContainer finalMol = builder.NewAtomContainer();
             finalMol.Id = "finalMol";
             reaction3.Products.Add(finalMol);
             reaction3.Reactants.Add(mitMol);
@@ -245,8 +245,8 @@ namespace NCDK.Tools.Manipulator
             scheme12.Add(reaction3);
             scheme1.Add(scheme12);
 
-            IReaction reaction11 = builder.CreateReaction();
-            reaction11.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction11 = builder.NewReaction();
+            reaction11.Products.Add(builder.NewAtomContainer());
             reaction11.Id = "reaction11";
             scheme1.Add(reaction11);
 
@@ -262,34 +262,34 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllReactions_IReactionScheme()
         {
-            IReactionScheme scheme1 = builder.CreateReactionScheme();
+            IReactionScheme scheme1 = builder.NewReactionScheme();
 
-            IReactionScheme scheme11 = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            IAtomContainer startMol = builder.CreateAtomContainer();
+            IReactionScheme scheme11 = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            IAtomContainer startMol = builder.NewAtomContainer();
             startMol.Id = "startMol";
             reaction1.Reactants.Add(startMol);
-            IAtomContainer mitMol = builder.CreateAtomContainer();
+            IAtomContainer mitMol = builder.NewAtomContainer();
             mitMol.Id = "mitMol";
             reaction1.Products.Add(mitMol);
             scheme11.Add(reaction1);
-            IReaction reaction2 = builder.CreateReaction();
-            reaction2.Products.Add(builder.CreateAtomContainer());
-            reaction2.Reactants.Add(builder.CreateAtomContainer());
+            IReaction reaction2 = builder.NewReaction();
+            reaction2.Products.Add(builder.NewAtomContainer());
+            reaction2.Reactants.Add(builder.NewAtomContainer());
             scheme11.Add(reaction2);
             scheme1.Add(scheme11);
 
-            IReactionScheme scheme12 = builder.CreateReactionScheme();
-            IReaction reaction3 = builder.CreateReaction();
-            IAtomContainer finalMol = builder.CreateAtomContainer();
+            IReactionScheme scheme12 = builder.NewReactionScheme();
+            IReaction reaction3 = builder.NewReaction();
+            IAtomContainer finalMol = builder.NewAtomContainer();
             finalMol.Id = "finalMol";
             reaction3.Products.Add(finalMol);
             reaction3.Reactants.Add(startMol);
             scheme12.Add(reaction3);
             scheme1.Add(scheme12);
 
-            IReaction reaction11 = builder.CreateReaction();
-            reaction11.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction11 = builder.NewReaction();
+            reaction11.Products.Add(builder.NewAtomContainer());
             scheme1.Add(reaction11);
 
             IReactionSet reactionSet = ReactionSchemeManipulator.GetAllReactions(scheme1);
@@ -303,31 +303,31 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestExtractTopReactions_IReactionScheme()
         {
-            IReactionScheme scheme1 = builder.CreateReactionScheme();
-            IReaction reaction1 = builder.CreateReaction();
-            IAtomContainer molA = builder.CreateAtomContainer();
+            IReactionScheme scheme1 = builder.NewReactionScheme();
+            IReaction reaction1 = builder.NewReaction();
+            IAtomContainer molA = builder.NewAtomContainer();
             reaction1.Reactants.Add(molA);
-            IAtomContainer molB = builder.CreateAtomContainer();
+            IAtomContainer molB = builder.NewAtomContainer();
             reaction1.Products.Add(molB);
             scheme1.Add(reaction1);
 
-            IReactionScheme scheme2 = builder.CreateReactionScheme();
-            IReaction reaction2 = builder.CreateReaction();
+            IReactionScheme scheme2 = builder.NewReactionScheme();
+            IReaction reaction2 = builder.NewReaction();
             reaction2.Reactants.Add(molB);
-            IAtomContainer molC = builder.CreateAtomContainer();
+            IAtomContainer molC = builder.NewAtomContainer();
             reaction2.Products.Add(molC);
             scheme2.Add(reaction2);
 
-            IReaction reaction3 = builder.CreateReaction();
+            IReaction reaction3 = builder.NewReaction();
             reaction3.Reactants.Add(molB);
-            IAtomContainer molD = builder.CreateAtomContainer();
+            IAtomContainer molD = builder.NewAtomContainer();
             reaction3.Products.Add(molD);
             scheme2.Add(reaction3);
 
-            IReaction reaction4 = builder.CreateReaction();
-            IAtomContainer molE = builder.CreateAtomContainer();
+            IReaction reaction4 = builder.NewReaction();
+            IAtomContainer molE = builder.NewAtomContainer();
             reaction4.Reactants.Add(molE);
-            IAtomContainer molF = builder.CreateAtomContainer();
+            IAtomContainer molF = builder.NewAtomContainer();
             reaction4.Products.Add(molF);
             scheme1.Add(reaction4);
 

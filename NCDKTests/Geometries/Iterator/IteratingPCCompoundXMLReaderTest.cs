@@ -40,7 +40,7 @@ namespace NCDK.IO.Iterator
             var reader = new IteratingPCCompoundXMLReader(new StreamReader(ins), Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
-            var set = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var set = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             foreach (var obj in reader)
             {
                 // Console.Out.WriteLine("next molecule found");

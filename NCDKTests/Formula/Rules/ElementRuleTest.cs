@@ -71,8 +71,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new ElementRule();
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.AddIsotope(builder.CreateIsotope("C"), 1, 10);
-            mfRange.AddIsotope(builder.CreateIsotope("H"), 1, 10);
+            mfRange.AddIsotope(builder.NewIsotope("C"), 1, 10);
+            mfRange.AddIsotope(builder.NewIsotope("H"), 1, 10);
 
             rule.Parameters = new object[] { mfRange };
 
@@ -91,8 +91,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new ElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(builder.CreateIsotope("C"), 2);
-            formula.Add(builder.CreateIsotope("H"), 200);
+            formula.Add(builder.NewIsotope("C"), 2);
+            formula.Add(builder.NewIsotope("H"), 200);
 
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
@@ -103,12 +103,12 @@ namespace NCDK.Formula.Rules
             IRule rule = new ElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(builder.CreateIsotope("C"), 2);
-            formula.Add(builder.CreateIsotope("H"), 6);
+            formula.Add(builder.NewIsotope("C"), 2);
+            formula.Add(builder.NewIsotope("H"), 6);
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.AddIsotope(builder.CreateIsotope("C"), 1, 2);
-            mfRange.AddIsotope(builder.CreateIsotope("H"), 1, 2);
+            mfRange.AddIsotope(builder.NewIsotope("C"), 1, 2);
+            mfRange.AddIsotope(builder.NewIsotope("H"), 1, 2);
 
             rule.Parameters = new object[] { mfRange };
 
@@ -121,8 +121,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new ElementRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            formula.Add(builder.CreateIsotope("C"), 2);
-            formula.Add(builder.CreateIsotope("H"), 6);
+            formula.Add(builder.NewIsotope("C"), 2);
+            formula.Add(builder.NewIsotope("H"), 6);
 
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }

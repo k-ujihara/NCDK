@@ -73,15 +73,15 @@ namespace NCDK.Fragments
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-            IAtom atom = builder.CreateAtom("C");
-            IAtom exclude = builder.CreateAtom("C");
+            IAtom atom = builder.NewAtom("C");
+            IAtom exclude = builder.NewAtom("C");
 
-            IAtom a1 = builder.CreateAtom("C");
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a1 = builder.NewAtom("C");
+            IAtom a2 = builder.NewAtom("C");
 
-            IBond[] bonds = new IBond[]{builder.CreateBond(atom, exclude),
-                builder.CreateBond(a1, a2), builder.CreateBond(a1, atom),
-                builder.CreateBond(a2, exclude)};
+            IBond[] bonds = new IBond[]{builder.NewBond(atom, exclude),
+                builder.NewBond(a1, a2), builder.NewBond(a1, atom),
+                builder.NewBond(a2, exclude)};
 
             IAtomContainer part = FragmentUtils.MakeAtomContainer(atom, bonds, exclude);
 
@@ -102,16 +102,16 @@ namespace NCDK.Fragments
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-            IAtom[] atoms = new IAtom[]{builder.CreateAtom("C"), builder.CreateAtom("C"),
-                builder.CreateAtom("C"), builder.CreateAtom("C"),
-                builder.CreateAtom("C"), builder.CreateAtom("C")};
-            IBond[] bonds = new IBond[]{builder.CreateBond(atoms[0], atoms[1]),
-                builder.CreateBond(atoms[1], atoms[2]),
-                builder.CreateBond(atoms[2], atoms[3]),
-                builder.CreateBond(atoms[3], atoms[4]),
-                builder.CreateBond(atoms[4], atoms[5])};
+            IAtom[] atoms = new IAtom[]{builder.NewAtom("C"), builder.NewAtom("C"),
+                builder.NewAtom("C"), builder.NewAtom("C"),
+                builder.NewAtom("C"), builder.NewAtom("C")};
+            IBond[] bonds = new IBond[]{builder.NewBond(atoms[0], atoms[1]),
+                builder.NewBond(atoms[1], atoms[2]),
+                builder.NewBond(atoms[2], atoms[3]),
+                builder.NewBond(atoms[3], atoms[4]),
+                builder.NewBond(atoms[4], atoms[5])};
 
-            IAtomContainer m = builder.CreateAtomContainer();
+            IAtomContainer m = builder.NewAtomContainer();
             m.SetAtoms(atoms);
             m.SetBonds(bonds);
 

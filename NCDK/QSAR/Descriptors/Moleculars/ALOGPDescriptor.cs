@@ -956,7 +956,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
 
             IAtom[] sameringatoms = new IAtom[2];
-            IAtom nonringatom = atomContainer.Builder.CreateAtom();
+            IAtom nonringatom = atomContainer.Builder.NewAtom();
 
             int sameringatomscount = 0;
             foreach (var a in ca)

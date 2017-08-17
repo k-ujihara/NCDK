@@ -44,7 +44,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestSingleElectron_IAtom()
         {
-            IAtom atom = NewChemObject().Builder.CreateAtom("N");
+            IAtom atom = NewChemObject().Builder.NewAtom("N");
             ISingleElectron radical = new SingleElectron(atom);
             Assert.AreEqual(1, radical.ElectronCount.Value);
             Assert.AreEqual(atom, radical.Atom);

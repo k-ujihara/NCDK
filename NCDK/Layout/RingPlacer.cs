@@ -169,10 +169,10 @@ namespace NCDK.Layout
             Debug.WriteLine("RingPlacer.PlaceRingSubstituents() start");
             IRing ring = null;
             IAtom atom = null;
-            IAtomContainer unplacedPartners = rs.Builder.CreateAtomContainer();
-            IAtomContainer sharedAtoms = rs.Builder.CreateAtomContainer();
-            IAtomContainer primaryAtoms = rs.Builder.CreateAtomContainer();
-            IAtomContainer treatedAtoms = rs.Builder.CreateAtomContainer();
+            IAtomContainer unplacedPartners = rs.Builder.NewAtomContainer();
+            IAtomContainer sharedAtoms = rs.Builder.NewAtomContainer();
+            IAtomContainer primaryAtoms = rs.Builder.NewAtomContainer();
+            IAtomContainer treatedAtoms = rs.Builder.NewAtomContainer();
             for (int j = 0; j < rs.Count; j++)
             {
                 ring = (IRing)rs[j]; // Get the j-th Ring in RingSet rs 
@@ -511,7 +511,7 @@ namespace NCDK.Layout
         {
             if (ring.IsPlaced)
                 return true;
-            IRing partiallyPlacedRing = Molecule.Builder.CreateRing();
+            IRing partiallyPlacedRing = Molecule.Builder.NewRing();
             foreach (IAtom atom in ring.Atoms)
                 if (atom.Point2D != null)
                     atom.IsPlaced = true;
@@ -728,7 +728,7 @@ namespace NCDK.Layout
                         if (Math.Abs(newRingCenterVector.X) < 0.001 && Math.Abs(newRingCenterVector.Y) < 0.001)
                         {
                             // first see if we can use terminal bonds
-                            IAtomContainer terminalOnly = Molecule.Builder.CreateAtomContainer();
+                            IAtomContainer terminalOnly = Molecule.Builder.NewAtomContainer();
 
                             foreach (IAtom atom in ring.Atoms)
                             {

@@ -192,10 +192,10 @@ namespace NCDK.IO
         public void TestBug1778479()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreatePseudoAtom();
-            IAtom atom2 = builder.CreateAtom("C");
-            IBond bond = builder.CreateBond(atom1, atom2);
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewPseudoAtom();
+            IAtom atom2 = builder.NewAtom("C");
+            IBond bond = builder.NewBond(atom1, atom2);
             molecule.Atoms.Add(atom1);
             molecule.Atoms.Add(atom2);
             molecule.Bonds.Add(bond);
@@ -213,8 +213,8 @@ namespace NCDK.IO
         public void TestNullFormalCharge()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.FormalCharge = null;
             molecule.Atoms.Add(atom);
 
@@ -233,8 +233,8 @@ namespace NCDK.IO
         public void TestPrefer3DCoordinateOutput()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Point2D = new Vector2(1.0, 2.0);
             atom.Point3D = new Vector3(3.0, 4.0, 5.0);
             molecule.Atoms.Add(atom);
@@ -254,8 +254,8 @@ namespace NCDK.IO
         public void TestForce2DCoordinates()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom("C");
             atom.Point2D = new Vector2(1.0, 2.0);
             atom.Point3D = new Vector3(3.0, 4.0, 5.0);
             molecule.Atoms.Add(atom);
@@ -310,8 +310,8 @@ namespace NCDK.IO
             mol1.SetProperty(CDKPropertyName.Title, "title1");
             IAtomContainer mol2 = TestMoleculeFactory.MakeAlphaPinene();
             mol2.SetProperty(CDKPropertyName.Title, "title2");
-            IChemModel model = mol1.Builder.CreateChemModel();
-            model.MoleculeSet = mol1.Builder.CreateAtomContainerSet();
+            IChemModel model = mol1.Builder.NewChemModel();
+            model.MoleculeSet = mol1.Builder.NewAtomContainerSet();
             model.MoleculeSet.Add(mol1);
             model.MoleculeSet.Add(mol2);
             StringWriter writer = new StringWriter();
@@ -329,18 +329,18 @@ namespace NCDK.IO
         public void TestRGPLine()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IPseudoAtom atom1 = builder.CreatePseudoAtom();
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IPseudoAtom atom1 = builder.NewPseudoAtom();
             atom1.Symbol = "R";
             atom1.Label = "R12";
 
-            IAtom atom2 = builder.CreateAtom("C");
-            IBond bond = builder.CreateBond(atom1, atom2);
+            IAtom atom2 = builder.NewAtom("C");
+            IBond bond = builder.NewBond(atom1, atom2);
 
-            IPseudoAtom atom3 = builder.CreatePseudoAtom();
+            IPseudoAtom atom3 = builder.NewPseudoAtom();
             atom3.Symbol = "A";
             atom3.Label = "A";
-            IBond bond2 = builder.CreateBond(atom3, atom2);
+            IBond bond2 = builder.NewBond(atom3, atom2);
 
             molecule.Atoms.Add(atom1);
             molecule.Atoms.Add(atom2);
@@ -363,11 +363,11 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAtomValueLine()
         {
-            IAtom carbon = builder.CreateAtom("C");
+            IAtom carbon = builder.NewAtom("C");
             carbon.SetProperty(CDKPropertyName.Comment, "Carbon comment");
-            IAtom oxygen = builder.CreateAtom("O");
+            IAtom oxygen = builder.NewAtom("O");
             oxygen.SetProperty(CDKPropertyName.Comment, "Oxygen comment");
-            IBond bond = builder.CreateBond(carbon, oxygen, BondOrder.Double);
+            IBond bond = builder.NewBond(carbon, oxygen, BondOrder.Double);
 
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(oxygen);
@@ -423,7 +423,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -441,7 +441,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -460,10 +460,10 @@ namespace NCDK.IO
         public void TestWritePseudoAtoms_LongLabel()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
 
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom tRNA = builder.CreatePseudoAtom("tRNA");
+            IAtom c1 = builder.NewAtom("C");
+            IAtom tRNA = builder.NewPseudoAtom("tRNA");
 
             container.Atoms.Add(c1);
             container.Atoms.Add(tRNA);
@@ -486,10 +486,10 @@ namespace NCDK.IO
         public void TestWritePseudoAtoms_nullLabel()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
 
-            IAtom c1 = builder.CreateAtom("C");
-            IPseudoAtom nullAtom = builder.CreatePseudoAtom("");
+            IAtom c1 = builder.NewAtom("C");
+            IPseudoAtom nullAtom = builder.NewPseudoAtom("");
             nullAtom.Label = null;
 
             container.Atoms.Add(c1);
@@ -511,10 +511,10 @@ namespace NCDK.IO
         public void TestRGPLine_Multiline()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
 
             for (int i = 1; i < 20; i++)
-                container.Atoms.Add(builder.CreatePseudoAtom("R" + i));
+                container.Atoms.Add(builder.NewPseudoAtom("R" + i));
 
             StringWriter sw = new StringWriter();
             MDLV2000Writer writer = new MDLV2000Writer(sw);
@@ -531,11 +531,11 @@ namespace NCDK.IO
         public void TestAlias_TruncatedLabel()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer container = builder.CreateAtomContainer();
+            IAtomContainer container = builder.NewAtomContainer();
 
             string label = "This is a very long label - almost too long. it should be cut here -> and the rest is truncated";
 
-            container.Atoms.Add(builder.CreatePseudoAtom(label));
+            container.Atoms.Add(builder.NewPseudoAtom(label));
 
             StringWriter sw = new StringWriter();
             MDLV2000Writer writer = new MDLV2000Writer(sw);
@@ -566,7 +566,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -586,7 +586,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -608,7 +608,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -628,7 +628,7 @@ namespace NCDK.IO
         {
             Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -812,10 +812,10 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void AromaticBondTypes()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            IBond bond = builder.CreateBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            IBond bond = builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
             bond.IsAromatic = true;
             mol.Bonds.Add(bond);
             StringWriter sw = new StringWriter();
@@ -828,10 +828,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void AromaticBondTypesEnabled()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            IBond bond = builder.CreateBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
+            IBond bond = builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
             bond.IsAromatic = true;
             mol.Bonds.Add(bond);
             StringWriter sw = new StringWriter();

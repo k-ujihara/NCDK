@@ -216,7 +216,7 @@ namespace NCDK.IO
 
                 //Let MDL reader process $CTAB block of the root structure.
                 MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ChemObjectReaderModes.Strict);
-                IAtomContainer root = reader.Read(defaultChemObjectBuilder.CreateAtomContainer());
+                IAtomContainer root = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
                 rGroupQuery.RootStructure = root;
 
                 //Atom attachment order: parse AAL lines first
@@ -353,7 +353,7 @@ namespace NCDK.IO
                         }
                         string groupStr = sb.ToString();
                         reader = new MDLV2000Reader(new StringReader(groupStr), ChemObjectReaderModes.Strict);
-                        IAtomContainer group = reader.Read(defaultChemObjectBuilder.CreateAtomContainer());
+                        IAtomContainer group = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
                         RGroup rGroup = new RGroup();
                         rGroup.Group = group;
 

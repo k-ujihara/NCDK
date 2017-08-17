@@ -125,7 +125,7 @@ namespace NCDK.StructGen
                                 max = Math.Min(cmax1, cmax2);
                                 order = Math.Min(Math.Max(1.0, random.NextInt((int)Math.Round(max))), 3.0);
                                 Debug.WriteLine("Forming bond of order ", order);
-                                atomContainer.Bonds.Add(atomContainer.Builder.CreateBond(atom, partner,
+                                atomContainer.Bonds.Add(atomContainer.Builder.NewBond(atom, partner,
                                         BondManipulator.CreateBondOrder(order)));
                                 bondFormed = true;
                             }
@@ -138,7 +138,7 @@ namespace NCDK.StructGen
                 }
             } while (!structureFound && iteration < 20);
             Debug.WriteLine("Structure found after #iterations: ", iteration);
-            return atomContainer.Builder.CreateAtomContainer(atomContainer);
+            return atomContainer.Builder.NewAtomContainer(atomContainer);
         }
 
         /// <summary>

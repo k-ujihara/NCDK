@@ -35,9 +35,9 @@ namespace NCDK.Signatures
 
         public AtomSignatureTest()
         {
-            atomContainer = builder.CreateAtomContainer();
-            atomContainer.Atoms.Add(builder.CreateAtom("C"));
-            atomContainer.Atoms.Add(builder.CreateAtom("C"));
+            atomContainer = builder.NewAtomContainer();
+            atomContainer.Atoms.Add(builder.NewAtom("C"));
+            atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Double);
             atomSignature = new AtomSignature(0, atomContainer);
         }
@@ -64,16 +64,16 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void GetAromaticEdgeLabelTest()
         {
-            IAtomContainer benzeneRing = builder.CreateAtomContainer();
+            IAtomContainer benzeneRing = builder.NewAtomContainer();
             for (int i = 0; i < 6; i++)
             {
-                benzeneRing.Atoms.Add(builder.CreateAtom("C"));
+                benzeneRing.Atoms.Add(builder.NewAtom("C"));
             }
             for (int i = 0; i < 6; i++)
             {
                 IAtom a = benzeneRing.Atoms[i];
                 IAtom b = benzeneRing.Atoms[(i + 1) % 6];
-                IBond bond = builder.CreateBond(a, b);
+                IBond bond = builder.NewBond(a, b);
                 benzeneRing.Bonds.Add(bond);
                 bond.IsAromatic = true;
             }
@@ -93,19 +93,19 @@ namespace NCDK.Signatures
 
         //    [TestMethod()]
         //    public void IntegerInvariantsTest() {
-        //        IAtomContainer isotopeChiralMol = builder.CreateAtomContainer();
-        //        isotopeChiralMol.Atoms.Add(builder.CreateAtom("C"));
+        //        IAtomContainer isotopeChiralMol = builder.NewAtomContainer();
+        //        isotopeChiralMol.Atoms.Add(builder.NewAtom("C"));
         //
-        //        IAtom s32 = builder.CreateAtom("S");
+        //        IAtom s32 = builder.NewAtom("S");
         //        s32.MassNumber = 32;
         //
-        //        IAtom s33 = builder.CreateAtom("S");
+        //        IAtom s33 = builder.NewAtom("S");
         //        s33.MassNumber = 33;
         //
-        //        IAtom s34 = builder.CreateAtom("S");
+        //        IAtom s34 = builder.NewAtom("S");
         //        s34.MassNumber = 34;
         //
-        //        IAtom s36 = builder.CreateAtom("S");
+        //        IAtom s36 = builder.NewAtom("S");
         //        s36.MassNumber = 36;
         //
         //        isotopeChiralMol.Atoms.Add(s36);

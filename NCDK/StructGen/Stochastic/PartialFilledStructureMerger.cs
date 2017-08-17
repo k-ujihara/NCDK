@@ -108,7 +108,7 @@ namespace NCDK.StructGen.Stochastic
                                         atomContainers.Remove(toadd);
                                         ac.Add(toadd);
                                     }
-                                    ac.Bonds.Add(ac.Builder.CreateBond(atom, partner,
+                                    ac.Bonds.Add(ac.Builder.NewBond(atom, partner,
                                             BondManipulator.CreateBondOrder(order)));
                                     bondFormed = true;
                                 }

@@ -511,13 +511,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, o1, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(s, o2, BondOrder.Double);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, o1, BondOrder.Double);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, o2, BondOrder.Double);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(o1);
@@ -533,13 +533,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(s, h2, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -556,13 +556,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.CreateAtom("Se");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(se, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(se, h2, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(se, h2, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);
@@ -579,12 +579,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se_oneImplH()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.CreateAtom("Se");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 1;
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(se, h1, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, h1, BondOrder.Single);
 
             mol.Atoms.Add(se);
             mol.Atoms.Add(h1);
@@ -598,8 +598,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2Se_twoImplH()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.CreateAtom("Se");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 2;
             mol.Atoms.Add(se);
 
@@ -610,8 +610,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSelenide()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.CreateAtom("Se");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
             se.ImplicitHydrogenCount = 0;
             se.FormalCharge = -2;
             mol.Atoms.Add(se);
@@ -623,8 +623,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestH2S_Hybridization()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
             s.Hybridization = Hybridization.SP3;
             mol.Atoms.Add(s);
             string[] expectedTypes = { "S.3" };
@@ -634,12 +634,12 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestHS()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
             s.FormalCharge = -1;
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, h1, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -918,24 +918,24 @@ namespace NCDK.AtomTypes
         public void TestThioSulphonate()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("S");
+            IAtom a2 = builder.NewAtom("S");
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("O");
+            IAtom a3 = builder.NewAtom("O");
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("O");
+            IAtom a4 = builder.NewAtom("O");
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Double);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "S.thionyl", "S.2", "O.sp3", "O.sp2", "C.sp3" };
@@ -1298,28 +1298,28 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IChemObjectBuilder builder = mol.Builder;
-            IAtom a1 = builder.CreateAtom("P");
+            IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("O");
+            IAtom a2 = builder.NewAtom("O");
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("O");
+            IAtom a3 = builder.NewAtom("O");
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("O");
+            IAtom a4 = builder.NewAtom("O");
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("H");
+            IAtom a5 = builder.NewAtom("H");
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("H");
+            IAtom a6 = builder.NewAtom("H");
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Double);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a2, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a2, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a3, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a3, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
 
             string[] expectedTypes = { "P.anium", "O.sp3", "O.sp3", "O.sp2", "H", "H" };
@@ -1741,8 +1741,8 @@ namespace NCDK.AtomTypes
         public void Test_Hg_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Hg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -1754,14 +1754,14 @@ namespace NCDK.AtomTypes
         public void Test_Hg_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Hg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Hg.plus", "C.sp3" };
@@ -1772,8 +1772,8 @@ namespace NCDK.AtomTypes
         public void Test_Hg_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Hg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -1785,14 +1785,14 @@ namespace NCDK.AtomTypes
         public void Test_Hg_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Hg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Hg.1", "C.sp2" };
@@ -1803,19 +1803,19 @@ namespace NCDK.AtomTypes
         public void Test_Hg_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Hg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Hg");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Hg.2", "C.sp3", "C.sp3" };
@@ -1961,19 +1961,19 @@ namespace NCDK.AtomTypes
         {
             //string molName = "Ca_2";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ca");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ca");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Ca.2", "C.sp3", "C.sp3" };
@@ -1985,14 +1985,14 @@ namespace NCDK.AtomTypes
         {
             //string molName1 = "Ca_1";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ca");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ca");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes1 = { "Ca.1", "C.sp2" };
@@ -2240,7 +2240,7 @@ namespace NCDK.AtomTypes
             string[] expectedTypes = { "C.sp2", "N.planar3", "C.sp2", "N.sp2", "C.sp2", "C.sp3" };
             IAtomContainer molecule = TestMoleculeFactory.MakePyrrole();
             molecule.Atoms[3].Symbol = "N";
-            molecule.Atoms.Add(molecule.Builder.CreateAtom("C"));
+            molecule.Atoms.Add(molecule.Builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[5], BondOrder.Single);
             AssertAtomTypes(testedAtomTypes, expectedTypes, molecule);
         }
@@ -2442,12 +2442,12 @@ namespace NCDK.AtomTypes
         {
             string[] expectedTypes = { "N.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2" };
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("N");
-            IAtom a2 = mol.Builder.CreateAtom("C");
-            IAtom a3 = mol.Builder.CreateAtom("C");
-            IAtom a4 = mol.Builder.CreateAtom("C");
-            IAtom a5 = mol.Builder.CreateAtom("C");
-            IAtom a6 = mol.Builder.CreateAtom("C");
+            IAtom a1 = mol.Builder.NewAtom("N");
+            IAtom a2 = mol.Builder.NewAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
+            IAtom a4 = mol.Builder.NewAtom("C");
+            IAtom a5 = mol.Builder.NewAtom("C");
+            IAtom a6 = mol.Builder.NewAtom("C");
 
             a1.Hybridization = Hybridization.SP2;
             a2.Hybridization = Hybridization.SP2;
@@ -2843,71 +2843,71 @@ namespace NCDK.AtomTypes
         public void TestSilicon()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("Si");
+            IAtom a1 = mol.Builder.NewAtom("Si");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("O");
+            IAtom a2 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("O");
+            IAtom a3 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("O");
+            IAtom a4 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.CreateAtom("C");
+            IAtom a5 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.CreateAtom("C");
+            IAtom a6 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.CreateAtom("C");
+            IAtom a7 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.CreateAtom("H");
+            IAtom a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.CreateAtom("H");
+            IAtom a9 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.CreateAtom("H");
+            IAtom a10 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a10);
-            IAtom a11 = mol.Builder.CreateAtom("H");
+            IAtom a11 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a11);
-            IAtom a12 = mol.Builder.CreateAtom("H");
+            IAtom a12 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a12);
-            IAtom a13 = mol.Builder.CreateAtom("H");
+            IAtom a13 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a13);
-            IAtom a14 = mol.Builder.CreateAtom("H");
+            IAtom a14 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a14);
-            IAtom a15 = mol.Builder.CreateAtom("H");
+            IAtom a15 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a15);
-            IAtom a16 = mol.Builder.CreateAtom("H");
+            IAtom a16 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a16);
-            IAtom a17 = mol.Builder.CreateAtom("H");
+            IAtom a17 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a17);
-            IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = mol.Builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.CreateBond(a2, a5, BondOrder.Single);
+            IBond b4 = mol.Builder.NewBond(a2, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.CreateBond(a3, a6, BondOrder.Single);
+            IBond b5 = mol.Builder.NewBond(a3, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.CreateBond(a4, a7, BondOrder.Single);
+            IBond b6 = mol.Builder.NewBond(a4, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.CreateBond(a5, a8, BondOrder.Single);
+            IBond b7 = mol.Builder.NewBond(a5, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.CreateBond(a5, a9, BondOrder.Single);
+            IBond b8 = mol.Builder.NewBond(a5, a9, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.CreateBond(a5, a10, BondOrder.Single);
+            IBond b9 = mol.Builder.NewBond(a5, a10, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.CreateBond(a6, a11, BondOrder.Single);
+            IBond b10 = mol.Builder.NewBond(a6, a11, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.CreateBond(a6, a12, BondOrder.Single);
+            IBond b11 = mol.Builder.NewBond(a6, a12, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = mol.Builder.CreateBond(a6, a13, BondOrder.Single);
+            IBond b12 = mol.Builder.NewBond(a6, a13, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = mol.Builder.CreateBond(a7, a14, BondOrder.Single);
+            IBond b13 = mol.Builder.NewBond(a7, a14, BondOrder.Single);
             mol.Bonds.Add(b13);
-            IBond b14 = mol.Builder.CreateBond(a7, a15, BondOrder.Single);
+            IBond b14 = mol.Builder.NewBond(a7, a15, BondOrder.Single);
             mol.Bonds.Add(b14);
-            IBond b15 = mol.Builder.CreateBond(a7, a16, BondOrder.Single);
+            IBond b15 = mol.Builder.NewBond(a7, a16, BondOrder.Single);
             mol.Bonds.Add(b15);
-            IBond b16 = mol.Builder.CreateBond(a1, a17, BondOrder.Single);
+            IBond b16 = mol.Builder.NewBond(a1, a17, BondOrder.Single);
             mol.Bonds.Add(b16);
 
             string[] expectedTypes = {"Si.sp3", "O.sp3", "O.sp3", "O.sp3", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H",
@@ -3437,19 +3437,19 @@ namespace NCDK.AtomTypes
         public void TestSulphurCompound()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("S");
+            IAtom a1 = mol.Builder.NewAtom("S");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("N");
+            IAtom a2 = mol.Builder.NewAtom("N");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("C");
+            IAtom a4 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = mol.Builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "S.inyl", "N.sp2", "C.sp3", "C.sp3" };
@@ -3460,19 +3460,19 @@ namespace NCDK.AtomTypes
         public void TestAluminumChloride()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("Cl");
+            IAtom a1 = mol.Builder.NewAtom("Cl");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("Cl");
+            IAtom a2 = mol.Builder.NewAtom("Cl");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("Cl");
+            IAtom a3 = mol.Builder.NewAtom("Cl");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("Al");
+            IAtom a4 = mol.Builder.NewAtom("Al");
             mol.Atoms.Add(a4);
-            IBond b1 = mol.Builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b1 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "Cl", "Cl", "Cl", "Al" };
@@ -3484,61 +3484,61 @@ namespace NCDK.AtomTypes
         public void Cid1145()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("O");
+            IAtom a1 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a1);
             a1.FormalCharge = -1;
-            IAtom a2 = mol.Builder.CreateAtom("N");
+            IAtom a2 = mol.Builder.NewAtom("N");
             mol.Atoms.Add(a2);
             a2.FormalCharge = +1;
-            IAtom a3 = mol.Builder.CreateAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("C");
+            IAtom a4 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.CreateAtom("C");
+            IAtom a5 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.CreateAtom("H");
+            IAtom a6 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.CreateAtom("H");
+            IAtom a7 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.CreateAtom("H");
+            IAtom a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.CreateAtom("H");
+            IAtom a9 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.CreateAtom("H");
+            IAtom a10 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a10);
-            IAtom a11 = mol.Builder.CreateAtom("H");
+            IAtom a11 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a11);
-            IAtom a12 = mol.Builder.CreateAtom("H");
+            IAtom a12 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a12);
-            IAtom a13 = mol.Builder.CreateAtom("H");
+            IAtom a13 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a13);
-            IAtom a14 = mol.Builder.CreateAtom("H");
+            IAtom a14 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a14);
-            IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = mol.Builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.CreateBond(a2, a5, BondOrder.Single);
+            IBond b4 = mol.Builder.NewBond(a2, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.CreateBond(a3, a6, BondOrder.Single);
+            IBond b5 = mol.Builder.NewBond(a3, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.CreateBond(a3, a7, BondOrder.Single);
+            IBond b6 = mol.Builder.NewBond(a3, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.CreateBond(a3, a8, BondOrder.Single);
+            IBond b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.CreateBond(a4, a9, BondOrder.Single);
+            IBond b8 = mol.Builder.NewBond(a4, a9, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.CreateBond(a4, a10, BondOrder.Single);
+            IBond b9 = mol.Builder.NewBond(a4, a10, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.CreateBond(a4, a11, BondOrder.Single);
+            IBond b10 = mol.Builder.NewBond(a4, a11, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.CreateBond(a5, a12, BondOrder.Single);
+            IBond b11 = mol.Builder.NewBond(a5, a12, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = mol.Builder.CreateBond(a5, a13, BondOrder.Single);
+            IBond b12 = mol.Builder.NewBond(a5, a13, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = mol.Builder.CreateBond(a5, a14, BondOrder.Single);
+            IBond b13 = mol.Builder.NewBond(a5, a14, BondOrder.Single);
             mol.Bonds.Add(b13);
 
             string[] expectedTypes = {"O.minus", "N.plus", "C.sp3", "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H",
@@ -3550,21 +3550,21 @@ namespace NCDK.AtomTypes
         public void TestChiPathFail()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("C");
+            IAtom a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("C");
+            IAtom a2 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("O");
+            IAtom a4 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(a4);
-            IBond b1 = mol.Builder.CreateBond(a2, a1, BondOrder.Single);
+            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a3, a2, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a4, a3, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a4, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.CreateBond(a4, a2, BondOrder.Single);
+            IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "C.sp3", "C.sp3", "C.sp3", "O.sp3" };
@@ -3576,8 +3576,8 @@ namespace NCDK.AtomTypes
         public void TestIodosobenzene()
         {
             IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
-            IAtom iodine = mol.Builder.CreateAtom("I");
-            IAtom oxygen = mol.Builder.CreateAtom("O");
+            IAtom iodine = mol.Builder.NewAtom("I");
+            IAtom oxygen = mol.Builder.NewAtom("O");
             mol.Atoms.Add(iodine);
             mol.Atoms.Add(oxygen);
             mol.AddBond(mol.Atoms[0], mol.Atoms[6], BondOrder.Single);
@@ -3592,9 +3592,9 @@ namespace NCDK.AtomTypes
         public void TestIodoxybenzene()
         {
             IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
-            IAtom iodine = mol.Builder.CreateAtom("I");
-            IAtom oxygen1 = mol.Builder.CreateAtom("O");
-            IAtom oxygen2 = mol.Builder.CreateAtom("O");
+            IAtom iodine = mol.Builder.NewAtom("I");
+            IAtom oxygen1 = mol.Builder.NewAtom("O");
+            IAtom oxygen2 = mol.Builder.NewAtom("O");
             mol.Atoms.Add(iodine);
             mol.Atoms.Add(oxygen1);
             mol.Atoms.Add(oxygen2);
@@ -3611,10 +3611,10 @@ namespace NCDK.AtomTypes
         public void TestThiobenzamideSOxide()
         {
             IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
-            IAtom carbon = mol.Builder.CreateAtom("C");
-            IAtom sulphur = mol.Builder.CreateAtom("S");
-            IAtom oxygen = mol.Builder.CreateAtom("O");
-            IAtom nitrogen = mol.Builder.CreateAtom("N");
+            IAtom carbon = mol.Builder.NewAtom("C");
+            IAtom sulphur = mol.Builder.NewAtom("S");
+            IAtom oxygen = mol.Builder.NewAtom("O");
+            IAtom nitrogen = mol.Builder.NewAtom("N");
             mol.Atoms.Add(carbon);
             mol.Atoms.Add(sulphur);
             mol.Atoms.Add(oxygen);
@@ -3634,11 +3634,11 @@ namespace NCDK.AtomTypes
         public void TestDimethylThiirane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("S"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("S"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[4], BondOrder.Single);
@@ -3654,10 +3654,10 @@ namespace NCDK.AtomTypes
         public void TestSulphonylLookalike()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("S"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("S"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
             mol.AddBond(mol.Atoms[1], mol.Atoms[3], BondOrder.Single);
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
@@ -3670,11 +3670,11 @@ namespace NCDK.AtomTypes
         public void TestNOxide()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("C");
-            IAtom a2 = mol.Builder.CreateAtom("C");
-            IAtom a3 = mol.Builder.CreateAtom("N");
-            IAtom a4 = mol.Builder.CreateAtom("O");
-            IAtom a5 = mol.Builder.CreateAtom("O");
+            IAtom a1 = mol.Builder.NewAtom("C");
+            IAtom a2 = mol.Builder.NewAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("N");
+            IAtom a4 = mol.Builder.NewAtom("O");
+            IAtom a5 = mol.Builder.NewAtom("O");
 
             mol.Atoms.Add(a1);
             mol.Atoms.Add(a2);
@@ -3682,10 +3682,10 @@ namespace NCDK.AtomTypes
             mol.Atoms.Add(a4);
             mol.Atoms.Add(a5);
 
-            mol.Bonds.Add(mol.Builder.CreateBond(a1, a2, BondOrder.Single));
-            mol.Bonds.Add(mol.Builder.CreateBond(a2, a3, BondOrder.Single));
-            mol.Bonds.Add(mol.Builder.CreateBond(a3, a4, BondOrder.Double));
-            mol.Bonds.Add(mol.Builder.CreateBond(a3, a5, BondOrder.Double));
+            mol.Bonds.Add(mol.Builder.NewBond(a1, a2, BondOrder.Single));
+            mol.Bonds.Add(mol.Builder.NewBond(a2, a3, BondOrder.Single));
+            mol.Bonds.Add(mol.Builder.NewBond(a3, a4, BondOrder.Double));
+            mol.Bonds.Add(mol.Builder.NewBond(a3, a5, BondOrder.Double));
 
             string[] expectedTypes = { "C.sp3", "C.sp3", "N.nitro", "O.sp2", "O.sp2" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -3853,7 +3853,7 @@ namespace NCDK.AtomTypes
             IAtomType atomTypeP = new AtomType(Elements.Phosphorus.ToIElement());
             AtomTypeManipulator.Configure(atomP, atomTypeP);
 
-            IAtomContainer ac = atomP.Builder.CreateAtomContainer();
+            IAtomContainer ac = atomP.Builder.NewAtomContainer();
             ac.Atoms.Add(atomP);
             IAtomType type = null;
             foreach (var atom in ac.Atoms)
@@ -3867,34 +3867,34 @@ namespace NCDK.AtomTypes
         public void Test_S_sp3d1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Double);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
 
             string[] expectedTypes = { "S.sp3d1", "C.sp3", "C.sp3", "C.sp2", "C.sp3", "C.sp3" };
@@ -3905,19 +3905,19 @@ namespace NCDK.AtomTypes
         public void Test_S_inyl_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "S.inyl.2", "C.sp2", "C.sp2" };
@@ -3928,8 +3928,8 @@ namespace NCDK.AtomTypes
         public void Test_S_2minus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = -2;
             mol.Atoms.Add(a1);
 
@@ -3941,19 +3941,19 @@ namespace NCDK.AtomTypes
         public void Test_S_sp3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "S.3", "C.sp3", "C.sp3" };
@@ -3964,29 +3964,29 @@ namespace NCDK.AtomTypes
         public void Test_S_sp3_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "S.sp3.4", "C.sp2", "C.sp2", "C.sp3", "C.sp3" };
@@ -3997,8 +3997,8 @@ namespace NCDK.AtomTypes
         public void Test_Co_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -4010,8 +4010,8 @@ namespace NCDK.AtomTypes
         public void Test_Co_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -4023,39 +4023,39 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Co.plus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4066,8 +4066,8 @@ namespace NCDK.AtomTypes
         public void Test_Co_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -4079,19 +4079,19 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Co.plus.2", "C.sp3", "C.sp3" };
@@ -4102,19 +4102,19 @@ namespace NCDK.AtomTypes
         public void Test_Co_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("Co");
+            IAtom a3 = builder.NewAtom("Co");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "C.sp3", "C.sp3", "Co.2" };
@@ -4125,39 +4125,39 @@ namespace NCDK.AtomTypes
         public void Test_Co_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Co.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4168,29 +4168,29 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Co.plus.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4201,29 +4201,29 @@ namespace NCDK.AtomTypes
         public void Test_Co_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Co.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4234,34 +4234,34 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus_5()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
 
             string[] expectedTypes = { "Co.plus.5", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4273,8 +4273,8 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a2 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a2 = builder.NewAtom("Co");
             a2.FormalCharge = 1;
             mol.Atoms.Add(a2);
 
@@ -4286,14 +4286,14 @@ namespace NCDK.AtomTypes
         public void Test_Co_plus_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Co");
+            IAtom a2 = builder.NewAtom("Co");
             a2.FormalCharge = 1;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "C.sp3", "Co.plus.1" };
@@ -4304,14 +4304,14 @@ namespace NCDK.AtomTypes
         public void Test_Co_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Co");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Co");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Co.1", "C.sp3" };
@@ -4326,24 +4326,24 @@ namespace NCDK.AtomTypes
         public void Test_Br_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Br");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Br");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("O");
+            IAtom a2 = builder.NewAtom("O");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("O");
+            IAtom a3 = builder.NewAtom("O");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("O");
+            IAtom a4 = builder.NewAtom("O");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "Br.3", "O.sp2", "O.sp2", "O.sp3" };
@@ -4354,8 +4354,8 @@ namespace NCDK.AtomTypes
         public void Test_Zn_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Zn");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Zn");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -4367,14 +4367,14 @@ namespace NCDK.AtomTypes
         public void Test_Zn_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Zn");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Zn");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Zn.1", "C.sp2" };
@@ -4389,29 +4389,29 @@ namespace NCDK.AtomTypes
         public void Test_V_3minus_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("V");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("V");
             a1.FormalCharge = -3;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("O");
+            IAtom a2 = builder.NewAtom("O");
             a2.FormalCharge = -1;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("O");
+            IAtom a3 = builder.NewAtom("O");
             a3.FormalCharge = -1;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("O");
+            IAtom a4 = builder.NewAtom("O");
             a4.FormalCharge = -1;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("O");
+            IAtom a5 = builder.NewAtom("O");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Double);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Double);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "V.3minus.4", "O.minus", "O.minus", "O.minus", "O.sp2" };
@@ -4426,39 +4426,39 @@ namespace NCDK.AtomTypes
         public void Test_Al_3minus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Al");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Al");
             a1.FormalCharge = -3;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Al.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4469,29 +4469,29 @@ namespace NCDK.AtomTypes
         public void TestSe_sp3d1_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes1 = { "Se.sp3d1.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4502,29 +4502,29 @@ namespace NCDK.AtomTypes
         public void TestSe_sp3_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Double);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Double);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Double);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Se.sp3.4", "C.sp3", "C.sp3", "C.sp2", "C.sp2" };
@@ -4535,19 +4535,19 @@ namespace NCDK.AtomTypes
         public void TestSe_sp2_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes2 = { "Se.sp2.2", "C.sp2", "C.sp2" };
@@ -4558,14 +4558,14 @@ namespace NCDK.AtomTypes
         public void TestSe_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Se");
+            IAtom a2 = builder.NewAtom("Se");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes3 = { "C.sp2", "Se.1" };
@@ -4576,19 +4576,19 @@ namespace NCDK.AtomTypes
         public void TestSe_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes4 = { "Se.3", "C.sp3", "C.sp3" };
@@ -4599,24 +4599,24 @@ namespace NCDK.AtomTypes
         public void TestSe_sp3_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Se");
+            IAtom a2 = builder.NewAtom("Se");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a2, a4, BondOrder.Double);
+            IBond b3 = builder.NewBond(a2, a4, BondOrder.Double);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes5 = { "C.sp3", "Se.sp3.3", "C.sp3", "C.sp2" };
@@ -4627,8 +4627,8 @@ namespace NCDK.AtomTypes
         public void TestSe_4plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 4;
             mol.Atoms.Add(a1);
 
@@ -4640,24 +4640,24 @@ namespace NCDK.AtomTypes
         public void TestSe_plus_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Se");
+            IAtom a2 = builder.NewAtom("Se");
             a2.FormalCharge = 1;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes7 = { "C.sp3", "Se.plus.3", "C.sp3", "C.sp3" };
@@ -4668,34 +4668,34 @@ namespace NCDK.AtomTypes
         public void TestSe_5()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
 
             string[] expectedTypes8 = { "Se.5", "C.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4706,8 +4706,8 @@ namespace NCDK.AtomTypes
         public void Test_Se_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Se");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Se");
             a1.ImplicitHydrogenCount = 0;
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
@@ -4721,19 +4721,19 @@ namespace NCDK.AtomTypes
         public void TestTellane()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Te");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Te");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("H");
+            IAtom a2 = builder.NewAtom("H");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("H");
+            IAtom a3 = builder.NewAtom("H");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Te.3", "H", "H" };
@@ -4745,24 +4745,24 @@ namespace NCDK.AtomTypes
         public void TestPhosphanium()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("P");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a4, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a4, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b3 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "P.sp1.plus", "C.sp3", "C.sp2", "C.sp2" };
@@ -4774,19 +4774,19 @@ namespace NCDK.AtomTypes
         public void TestPhosphide()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("P");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("H");
+            IAtom a3 = builder.NewAtom("H");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Triple);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Triple);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "P.ide", "C.sp", "H" };
@@ -4797,34 +4797,34 @@ namespace NCDK.AtomTypes
         public void TestPentaMethylPhosphane()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("P");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
 
             string[] expectedTypes = { "P.ane", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4835,29 +4835,29 @@ namespace NCDK.AtomTypes
         public void Test_Sb_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Sb");
+            IAtom a2 = builder.NewAtom("Sb");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a2, a5, BondOrder.Double);
+            IBond b4 = builder.NewBond(a2, a5, BondOrder.Double);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "C.sp3", "Sb.4", "C.sp3", "C.sp3", "C.sp2" };
@@ -4868,24 +4868,24 @@ namespace NCDK.AtomTypes
         public void Test_Sb_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Sb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Sb");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "Sb.3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4896,29 +4896,29 @@ namespace NCDK.AtomTypes
         public void Test_B_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("B");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("B");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "B.3plus", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -4929,8 +4929,8 @@ namespace NCDK.AtomTypes
         public void Test_Sr_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Sr");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Sr");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -4942,8 +4942,8 @@ namespace NCDK.AtomTypes
         public void Test_Te_4plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Te");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Te");
             a1.FormalCharge = 4;
             mol.Atoms.Add(a1);
 
@@ -4955,8 +4955,8 @@ namespace NCDK.AtomTypes
         public void Test_Be_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Be");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Be");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -4968,19 +4968,19 @@ namespace NCDK.AtomTypes
         public void Test_Cl_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cl");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cl");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Cl.2", "C.sp3", "C.sp2" };
@@ -4991,14 +4991,14 @@ namespace NCDK.AtomTypes
         public void Test_K_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("K");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("K");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "K.neutral", "C.sp3" };
@@ -5009,8 +5009,8 @@ namespace NCDK.AtomTypes
         public void Test_Li_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Li");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Li");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5022,8 +5022,8 @@ namespace NCDK.AtomTypes
         public void Test_Li_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Li");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Li");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
 
@@ -5035,24 +5035,24 @@ namespace NCDK.AtomTypes
         public void Test_I_sp3d2_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("I");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("I");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "I.sp3d2.3", "C.sp3", "C.sp3", "C.sp3" };
@@ -5070,28 +5070,28 @@ namespace NCDK.AtomTypes
         public void TestAzoCompound()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom a1 = mol.Builder.CreateAtom("N");
+            IAtom a1 = mol.Builder.NewAtom("N");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("N");
+            IAtom a2 = mol.Builder.NewAtom("N");
             a2.FormalCharge = -1;
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("H");
+            IAtom a4 = mol.Builder.NewAtom("H");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.CreateAtom("H");
+            IAtom a5 = mol.Builder.NewAtom("H");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = mol.Builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = mol.Builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b4 = mol.Builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "N.plus.sp1", "N.minus.sp2", "C.sp2", "H", "H" };
@@ -5104,49 +5104,49 @@ namespace NCDK.AtomTypes
         public void TestMethylphosphinicAcid()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("P");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("P");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("O");
+            IAtom a2 = builder.NewAtom("O");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("O");
+            IAtom a3 = builder.NewAtom("O");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("H");
+            IAtom a5 = builder.NewAtom("H");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("H");
+            IAtom a6 = builder.NewAtom("H");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("H");
+            IAtom a7 = builder.NewAtom("H");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IAtom a8 = builder.CreateAtom("H");
+            IAtom a8 = builder.NewAtom("H");
             a8.FormalCharge = 0;
             mol.Atoms.Add(a8);
-            IAtom a9 = builder.CreateAtom("H");
+            IAtom a9 = builder.NewAtom("H");
             a9.FormalCharge = 0;
             mol.Atoms.Add(a9);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a2, a9, BondOrder.Single);
+            IBond b5 = builder.NewBond(a2, a9, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a4, a6, BondOrder.Single);
+            IBond b6 = builder.NewBond(a4, a6, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = builder.CreateBond(a4, a7, BondOrder.Single);
+            IBond b7 = builder.NewBond(a4, a7, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = builder.CreateBond(a4, a8, BondOrder.Single);
+            IBond b8 = builder.NewBond(a4, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
 
             string[] expectedTypes = { "P.ate", "O.sp3", "O.sp2", "C.sp3", "H", "H", "H", "H", "H" };
@@ -5157,19 +5157,19 @@ namespace NCDK.AtomTypes
         public void Test_Ti_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ti");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ti");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Ti.2", "C.sp2", "C.sp2" };
@@ -5180,8 +5180,8 @@ namespace NCDK.AtomTypes
         public void Test_Ni_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ni");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ni");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5193,14 +5193,14 @@ namespace NCDK.AtomTypes
         public void Test_Ni_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Ni");
+            IAtom a2 = builder.NewAtom("Ni");
             a2.FormalCharge = 1;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "C.sp3", "Ni.plus" };
@@ -5211,14 +5211,14 @@ namespace NCDK.AtomTypes
         public void Test_Pb_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Pb.1", "C.sp2" };
@@ -5229,8 +5229,8 @@ namespace NCDK.AtomTypes
         public void Test_Pb_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -5242,8 +5242,8 @@ namespace NCDK.AtomTypes
         public void Test_Pb_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pb");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5255,8 +5255,8 @@ namespace NCDK.AtomTypes
         public void Test_Tl_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Tl");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Tl");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5268,14 +5268,14 @@ namespace NCDK.AtomTypes
         public void Test_Tl_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Tl");
+            IAtom a2 = builder.NewAtom("Tl");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "C.sp3", "Tl.1" };
@@ -5286,8 +5286,8 @@ namespace NCDK.AtomTypes
         public void Test_Tl_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Tl");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Tl");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
 
@@ -5299,19 +5299,19 @@ namespace NCDK.AtomTypes
         public void Test_Mg_neutral_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Mg");
+            IAtom a2 = builder.NewAtom("Mg");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "C.sp3", "Mg.neutral.2", "C.sp3" };
@@ -5322,29 +5322,29 @@ namespace NCDK.AtomTypes
         public void Test_Mg_neutral_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("Mg");
+            IAtom a3 = builder.NewAtom("Mg");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "C.sp3", "C.sp3", "Mg.neutral", "C.sp3", "C.sp3" };
@@ -5355,14 +5355,14 @@ namespace NCDK.AtomTypes
         public void Test_Mg_neutral_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mg");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mg");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Mg.neutral.1", "C.sp2" };
@@ -5373,8 +5373,8 @@ namespace NCDK.AtomTypes
         public void Test_Gd_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Gd");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Gd");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -5386,29 +5386,29 @@ namespace NCDK.AtomTypes
         public void Test_Mo_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mo");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mo");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Mo.4", "C.sp2", "C.sp2", "C.sp3", "C.sp3" };
@@ -5419,8 +5419,8 @@ namespace NCDK.AtomTypes
         public void Test_Mo_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mo");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mo");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5432,19 +5432,19 @@ namespace NCDK.AtomTypes
         public void Test_Pt_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pt");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pt");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Pt.2", "C.sp3", "C.sp3" };
@@ -5455,29 +5455,29 @@ namespace NCDK.AtomTypes
         public void Test_Pt_2plus_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pt");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pt");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Pt.2plus.4", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -5488,8 +5488,8 @@ namespace NCDK.AtomTypes
         public void Test_Cu_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cu");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5501,8 +5501,8 @@ namespace NCDK.AtomTypes
         public void Test_Cu_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cu");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
 
@@ -5514,14 +5514,14 @@ namespace NCDK.AtomTypes
         public void Test_Cu_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cu");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cu");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "Cu.1", "C.sp3", };
@@ -5532,8 +5532,8 @@ namespace NCDK.AtomTypes
         public void Test_Ra()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ra");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ra");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5545,8 +5545,8 @@ namespace NCDK.AtomTypes
         public void Test_Cr_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cr");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5558,8 +5558,8 @@ namespace NCDK.AtomTypes
         public void Test_Rb_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Rb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Rb");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5571,8 +5571,8 @@ namespace NCDK.AtomTypes
         public void Test_Rb_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Rb");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Rb");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
 
@@ -5584,29 +5584,29 @@ namespace NCDK.AtomTypes
         public void Test_Cr_4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cr");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "Cr.4", "C.sp2", "C.sp2", "C.sp3", "C.sp3" };
@@ -5617,8 +5617,8 @@ namespace NCDK.AtomTypes
         public void Test_Cr_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cr");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -5630,8 +5630,8 @@ namespace NCDK.AtomTypes
         public void Test_Cr_6plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cr");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cr");
             a1.FormalCharge = 6;
             mol.Atoms.Add(a1);
 
@@ -5643,8 +5643,8 @@ namespace NCDK.AtomTypes
         public void Test_Ba_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ba");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ba");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -5656,14 +5656,14 @@ namespace NCDK.AtomTypes
         public void Test_Au_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Au");
+            IAtom a2 = builder.NewAtom("Au");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "C.sp3", "Au.1" };
@@ -5674,8 +5674,8 @@ namespace NCDK.AtomTypes
         public void Test_Ag_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ag");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ag");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5690,8 +5690,8 @@ namespace NCDK.AtomTypes
         public void Test_Ag_plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ag");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ag");
             a1.FormalCharge = 1;
             mol.Atoms.Add(a1);
 
@@ -5706,10 +5706,10 @@ namespace NCDK.AtomTypes
         public void Test_Ag_covalent()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ag");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ag");
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Cl");
+            IAtom a2 = builder.NewAtom("Cl");
             mol.Atoms.Add(a2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
 
@@ -5721,8 +5721,8 @@ namespace NCDK.AtomTypes
         public void Test_In_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("In");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -5734,24 +5734,24 @@ namespace NCDK.AtomTypes
         public void Test_In_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("In");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "In.3", "C.sp3", "C.sp3", "C.sp3" };
@@ -5762,14 +5762,14 @@ namespace NCDK.AtomTypes
         public void Test_In_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("In");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Triple);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Triple);
             mol.Bonds.Add(b1);
 
             string[] expectedTypes = { "In.1", "C.sp" };
@@ -5780,8 +5780,8 @@ namespace NCDK.AtomTypes
         public void Test_In()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("In");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("In");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5793,8 +5793,8 @@ namespace NCDK.AtomTypes
         public void Test_Cd_2plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cd");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
 
@@ -5806,19 +5806,19 @@ namespace NCDK.AtomTypes
         public void Test_Cd_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cd");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Cd.2", "C.sp3", "C.sp3" };
@@ -5829,8 +5829,8 @@ namespace NCDK.AtomTypes
         public void Test_Cd_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Cd");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Cd");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5842,8 +5842,8 @@ namespace NCDK.AtomTypes
         public void Test_Pu()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Pu");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Pu");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5855,8 +5855,8 @@ namespace NCDK.AtomTypes
         public void Test_Th()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Th");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Th");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5868,24 +5868,24 @@ namespace NCDK.AtomTypes
         public void Test_Ge_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Ge");
+            IAtom a2 = builder.NewAtom("Ge");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "C.sp3", "Ge.3", "C.sp2", "C.sp3" };
@@ -5896,8 +5896,8 @@ namespace NCDK.AtomTypes
         public void Test_Na_neutral()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Na");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Na");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5909,8 +5909,8 @@ namespace NCDK.AtomTypes
         public void Test_Mn_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mn");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -5922,19 +5922,19 @@ namespace NCDK.AtomTypes
         public void Test_Mn_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mn");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Mn.2", "C.sp3", "C.sp3" };
@@ -5945,8 +5945,8 @@ namespace NCDK.AtomTypes
         public void Test_Mn_metallic()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Mn");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Mn");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
 
@@ -5958,39 +5958,39 @@ namespace NCDK.AtomTypes
         public void Test_Si_2minus_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Si");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = -2;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Si.2minus.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6001,24 +6001,24 @@ namespace NCDK.AtomTypes
         public void Test_Si_3()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Si");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
 
             string[] expectedTypes = { "Si.3", "C.sp2", "C.sp3", "C.sp3" };
@@ -6029,19 +6029,19 @@ namespace NCDK.AtomTypes
         public void Test_Si_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Si");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Si");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "Si.2", "C.sp2", "C.sp2" };
@@ -6052,39 +6052,39 @@ namespace NCDK.AtomTypes
         public void Test_As_minus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("As");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = -1;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "As.minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6095,8 +6095,8 @@ namespace NCDK.AtomTypes
         public void Test_As_3plus()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("As");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
 
@@ -6108,19 +6108,19 @@ namespace NCDK.AtomTypes
         public void Test_As_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("As");
+            IAtom a2 = builder.NewAtom("As");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Double);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Double);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes = { "C.sp3", "As.2", "C.sp2" };
@@ -6131,29 +6131,29 @@ namespace NCDK.AtomTypes
         public void Test_As_5()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("As");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("As");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Double);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Double);
             mol.Bonds.Add(b4);
 
             string[] expectedTypes = { "As.5", "C.sp3", "C.sp3", "C.sp3", "C.sp2" };
@@ -6165,8 +6165,8 @@ namespace NCDK.AtomTypes
         {
             //string molName = "Fe_metallic";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
             string[] expectedTypes = { "Fe.metallic" };
@@ -6178,19 +6178,19 @@ namespace NCDK.AtomTypes
         {
             //string molName1 = "Fe_plus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("Fe");
+            IAtom a3 = builder.NewAtom("Fe");
             a3.FormalCharge = 1;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
 
             string[] expectedTypes1 = { "C.sp3", "C.sp3", "Fe.plus" };
@@ -6202,29 +6202,29 @@ namespace NCDK.AtomTypes
         {
             //string molName2 = "Fe_4";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("Fe");
+            IAtom a3 = builder.NewAtom("Fe");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IBond b1 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
             string[] expectedTypes2 = { "C.sp3", "C.sp3", "Fe.4", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes2, mol);
@@ -6235,39 +6235,39 @@ namespace NCDK.AtomTypes
         {
             //string molName3 = "Fe_3minus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -3;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b6);
             string[] expectedTypes3 = { "Fe.3minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes3, mol);
@@ -6278,8 +6278,8 @@ namespace NCDK.AtomTypes
         {
             //string molName4 = "Fe_2plus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 2;
             mol.Atoms.Add(a1);
             string[] expectedTypes4 = { "Fe.2plus" };
@@ -6291,39 +6291,39 @@ namespace NCDK.AtomTypes
         {
             //string molName5 = "Fe_4minus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -4;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes5 = { "Fe.4minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6335,34 +6335,34 @@ namespace NCDK.AtomTypes
         {
             //string molNameFe5 = "Fe_5";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
             string[] expectedTypesFe5 = { "Fe.5", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypesFe5, mol);
@@ -6373,39 +6373,39 @@ namespace NCDK.AtomTypes
         {
             //string molName7 = "Fe_6";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
             string[] expectedTypes7 = { "Fe.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes7, mol);
@@ -6416,39 +6416,39 @@ namespace NCDK.AtomTypes
         {
             //string molName8 = "Fe_2minus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = -2;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
             string[] expectedTypes8 = { "Fe.2minus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes8, mol);
@@ -6459,8 +6459,8 @@ namespace NCDK.AtomTypes
         {
             //string molName9 = "Fe_3plus";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 3;
             mol.Atoms.Add(a1);
             string[] expectedTypes9 = { "Fe.3plus" };
@@ -6472,19 +6472,19 @@ namespace NCDK.AtomTypes
         {
             //string molNameA = "Fe_2";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("C");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("C");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("Fe");
+            IAtom a2 = builder.NewAtom("Fe");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a2, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
             string[] expectedTypesA = { "C.sp3", "Fe.2", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypesA, mol);
@@ -6495,24 +6495,24 @@ namespace NCDK.AtomTypes
         {
             //string molNameB = "Fe_3";
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Fe");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Fe");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
             string[] expectedTypesB = { "Fe.3", "C.sp3", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypesB, mol);
@@ -6525,44 +6525,44 @@ namespace NCDK.AtomTypes
         public void TestSulphur4()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("S");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("S");
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             mol.Atoms.Add(a7);
-            IAtom a8 = builder.CreateAtom("C");
+            IAtom a8 = builder.NewAtom("C");
             mol.Atoms.Add(a8);
-            IAtom a9 = builder.CreateAtom("C");
+            IAtom a9 = builder.NewAtom("C");
             mol.Atoms.Add(a9);
-            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a8, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a8, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b5 = builder.CreateBond(a2, a4, BondOrder.Single);
+            IBond b5 = builder.NewBond(a2, a4, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a2, a7, BondOrder.Single);
+            IBond b6 = builder.NewBond(a2, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b8 = builder.CreateBond(a3, a4, BondOrder.Single);
+            IBond b8 = builder.NewBond(a3, a4, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = builder.CreateBond(a3, a5, BondOrder.Single);
+            IBond b9 = builder.NewBond(a3, a5, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = builder.CreateBond(a3, a6, BondOrder.Single);
+            IBond b10 = builder.NewBond(a3, a6, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b14 = builder.CreateBond(a5, a7, BondOrder.Single);
+            IBond b14 = builder.NewBond(a5, a7, BondOrder.Single);
             mol.Bonds.Add(b14);
-            IBond b15 = builder.CreateBond(a5, a9, BondOrder.Single);
+            IBond b15 = builder.NewBond(a5, a9, BondOrder.Single);
             mol.Bonds.Add(b15);
 
             string[] expectedTypes = { "S.anyl", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6576,39 +6576,39 @@ namespace NCDK.AtomTypes
         public void Test_Ru_3minus_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ru");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = -3;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("N");
+            IAtom a2 = builder.NewAtom("N");
             a2.FormalCharge = +1;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("N");
+            IAtom a3 = builder.NewAtom("N");
             a3.FormalCharge = +1;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("N");
+            IAtom a4 = builder.NewAtom("N");
             a4.FormalCharge = +1;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("N");
+            IAtom a5 = builder.NewAtom("N");
             a5.FormalCharge = +1;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("N");
+            IAtom a6 = builder.NewAtom("N");
             a6.FormalCharge = +1;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("O");
+            IAtom a7 = builder.NewAtom("O");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a6, a1, BondOrder.Single);
+            IBond b2 = builder.NewBond(a6, a1, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Ru.3minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3" };
@@ -6622,39 +6622,39 @@ namespace NCDK.AtomTypes
         public void Test_Ru_2minus_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ru");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = -2;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("N");
+            IAtom a2 = builder.NewAtom("N");
             a2.FormalCharge = +1;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("N");
+            IAtom a3 = builder.NewAtom("N");
             a3.FormalCharge = +1;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("N");
+            IAtom a4 = builder.NewAtom("N");
             a4.FormalCharge = +1;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("N");
+            IAtom a5 = builder.NewAtom("N");
             a5.FormalCharge = +1;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("O");
+            IAtom a6 = builder.NewAtom("O");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("O");
+            IAtom a7 = builder.NewAtom("O");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a6, a1, BondOrder.Single);
+            IBond b2 = builder.NewBond(a6, a1, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Ru.2minus.6", "N.plus", "N.plus", "N.plus", "N.plus", "O.sp3", "O.sp3" };
@@ -6665,39 +6665,39 @@ namespace NCDK.AtomTypes
         public void Test_Ru_10plus_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ru");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a6, a1, BondOrder.Single);
+            IBond b2 = builder.NewBond(a6, a1, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b3 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a7, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Ru.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6708,39 +6708,39 @@ namespace NCDK.AtomTypes
         public void Test_Ru_6()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom a1 = builder.CreateAtom("Ru");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom a1 = builder.NewAtom("Ru");
             a1.FormalCharge = 0;
             mol.Atoms.Add(a1);
-            IAtom a2 = builder.CreateAtom("C");
+            IAtom a2 = builder.NewAtom("C");
             a2.FormalCharge = 0;
             mol.Atoms.Add(a2);
-            IAtom a3 = builder.CreateAtom("C");
+            IAtom a3 = builder.NewAtom("C");
             a3.FormalCharge = 0;
             mol.Atoms.Add(a3);
-            IAtom a4 = builder.CreateAtom("C");
+            IAtom a4 = builder.NewAtom("C");
             a4.FormalCharge = 0;
             mol.Atoms.Add(a4);
-            IAtom a5 = builder.CreateAtom("C");
+            IAtom a5 = builder.NewAtom("C");
             a5.FormalCharge = 0;
             mol.Atoms.Add(a5);
-            IAtom a6 = builder.CreateAtom("C");
+            IAtom a6 = builder.NewAtom("C");
             a6.FormalCharge = 0;
             mol.Atoms.Add(a6);
-            IAtom a7 = builder.CreateAtom("C");
+            IAtom a7 = builder.NewAtom("C");
             a7.FormalCharge = 0;
             mol.Atoms.Add(a7);
-            IBond b1 = builder.CreateBond(a1, a5, BondOrder.Single);
+            IBond b1 = builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = builder.CreateBond(a1, a6, BondOrder.Single);
+            IBond b2 = builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = builder.CreateBond(a7, a1, BondOrder.Single);
+            IBond b3 = builder.NewBond(a7, a1, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = builder.CreateBond(a1, a2, BondOrder.Single);
+            IBond b4 = builder.NewBond(a1, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b5 = builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b6 = builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b6);
 
             string[] expectedTypes = { "Ru.6", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3" };
@@ -6755,23 +6755,23 @@ namespace NCDK.AtomTypes
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
-            IAtomContainer pyrrole = builder.CreateAtomContainer();
+            IAtomContainer pyrrole = builder.NewAtomContainer();
 
-            IAtom n1 = builder.CreateAtom("N");
-            IAtom c2 = builder.CreateAtom("C");
-            IAtom c3 = builder.CreateAtom("C");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom c5 = builder.CreateAtom("C");
+            IAtom n1 = builder.NewAtom("N");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
 
-            IBond b1 = builder.CreateBond(n1, c2, BondOrder.Single);
+            IBond b1 = builder.NewBond(n1, c2, BondOrder.Single);
             b1.IsAromatic = true;
-            IBond b2 = builder.CreateBond(c2, c3, BondOrder.Single);
+            IBond b2 = builder.NewBond(c2, c3, BondOrder.Single);
             b2.IsAromatic = true;
-            IBond b3 = builder.CreateBond(c3, c4, BondOrder.Single);
+            IBond b3 = builder.NewBond(c3, c4, BondOrder.Single);
             b3.IsAromatic = true;
-            IBond b4 = builder.CreateBond(c4, c5, BondOrder.Single);
+            IBond b4 = builder.NewBond(c4, c5, BondOrder.Single);
             b4.IsAromatic = true;
-            IBond b5 = builder.CreateBond(c5, n1, BondOrder.Single);
+            IBond b5 = builder.NewBond(c5, n1, BondOrder.Single);
             b5.IsAromatic = true;
 
             pyrrole.Atoms.Add(n1);
@@ -6797,23 +6797,23 @@ namespace NCDK.AtomTypes
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
             // simulate an IAtomContainer returned from a SDFile with bond order 4 to indicate aromaticity
-            IAtomContainer pyrrole = builder.CreateAtomContainer();
+            IAtomContainer pyrrole = builder.NewAtomContainer();
 
-            IAtom n1 = builder.CreateAtom("N");
-            IAtom c2 = builder.CreateAtom("C");
-            IAtom c3 = builder.CreateAtom("C");
-            IAtom c4 = builder.CreateAtom("C");
-            IAtom c5 = builder.CreateAtom("C");
+            IAtom n1 = builder.NewAtom("N");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom c3 = builder.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
+            IAtom c5 = builder.NewAtom("C");
 
-            IBond b1 = builder.CreateBond(n1, c2, BondOrder.Single);
+            IBond b1 = builder.NewBond(n1, c2, BondOrder.Single);
             b1.IsAromatic = true;
-            IBond b2 = builder.CreateBond(c2, c3, BondOrder.Single);
+            IBond b2 = builder.NewBond(c2, c3, BondOrder.Single);
             b2.IsAromatic = true;
-            IBond b3 = builder.CreateBond(c3, c4, BondOrder.Single);
+            IBond b3 = builder.NewBond(c3, c4, BondOrder.Single);
             b3.IsAromatic = true;
-            IBond b4 = builder.CreateBond(c4, c5, BondOrder.Single);
+            IBond b4 = builder.NewBond(c4, c5, BondOrder.Single);
             b4.IsAromatic = true;
-            IBond b5 = builder.CreateBond(c5, n1, BondOrder.Single);
+            IBond b5 = builder.NewBond(c5, n1, BondOrder.Single);
             b5.IsAromatic = true;
 
             pyrrole.Atoms.Add(n1);
@@ -6828,21 +6828,21 @@ namespace NCDK.AtomTypes
             pyrrole.Bonds.Add(b5);
 
             // add explicit hydrogens
-            IAtom h1 = builder.CreateAtom("H");
-            IAtom h2 = builder.CreateAtom("H");
-            IAtom h3 = builder.CreateAtom("H");
-            IAtom h4 = builder.CreateAtom("H");
-            IAtom h5 = builder.CreateAtom("H");
+            IAtom h1 = builder.NewAtom("H");
+            IAtom h2 = builder.NewAtom("H");
+            IAtom h3 = builder.NewAtom("H");
+            IAtom h4 = builder.NewAtom("H");
+            IAtom h5 = builder.NewAtom("H");
             pyrrole.Atoms.Add(h1);
             pyrrole.Atoms.Add(h2);
             pyrrole.Atoms.Add(h3);
             pyrrole.Atoms.Add(h4);
             pyrrole.Atoms.Add(h5);
-            pyrrole.Bonds.Add(builder.CreateBond(n1, h1));
-            pyrrole.Bonds.Add(builder.CreateBond(c2, h2));
-            pyrrole.Bonds.Add(builder.CreateBond(c3, h3));
-            pyrrole.Bonds.Add(builder.CreateBond(c4, h4));
-            pyrrole.Bonds.Add(builder.CreateBond(c5, h5));
+            pyrrole.Bonds.Add(builder.NewBond(n1, h1));
+            pyrrole.Bonds.Add(builder.NewBond(c2, h2));
+            pyrrole.Bonds.Add(builder.NewBond(c3, h3));
+            pyrrole.Bonds.Add(builder.NewBond(c4, h4));
+            pyrrole.Bonds.Add(builder.NewBond(c5, h5));
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(pyrrole);
 

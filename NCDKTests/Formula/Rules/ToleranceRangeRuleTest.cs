@@ -79,9 +79,9 @@ namespace NCDK.Formula.Rules
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.CreateIsotope("C");
+            IIsotope carb = builder.NewIsotope("C");
             carb.ExactMass = 12.00;
-            IIsotope cl = builder.CreateIsotope("Cl");
+            IIsotope cl = builder.NewIsotope("Cl");
             cl.ExactMass = 34.96885268;
             formula.Add(carb);
             formula.Add(cl);
@@ -95,9 +95,9 @@ namespace NCDK.Formula.Rules
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.CreateIsotope("C");
+            IIsotope carb = builder.NewIsotope("C");
             carb.ExactMass = 12.00;
-            IIsotope cl = builder.CreateIsotope("Cl");
+            IIsotope cl = builder.NewIsotope("Cl");
             cl.ExactMass = 34.96885268;
             formula.Add(carb);
             formula.Add(cl);
@@ -116,9 +116,9 @@ namespace NCDK.Formula.Rules
             IRule rule = new ToleranceRangeRule();
 
             IMolecularFormula formula = new MolecularFormula();
-            IIsotope carb = builder.CreateIsotope("C");
+            IIsotope carb = builder.NewIsotope("C");
             carb.ExactMass = 12.00;
-            IIsotope cl = builder.CreateIsotope("Cl");
+            IIsotope cl = builder.NewIsotope("Cl");
             cl.ExactMass = 34.96885268;
             formula.Add(carb);
             formula.Add(cl);

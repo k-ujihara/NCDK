@@ -159,7 +159,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>the rings of the molecule</returns>
         protected virtual IRingSet GetRingSet(IAtomContainer atomContainer)
         {
-            IRingSet ringSet = atomContainer.Builder.CreateRingSet();
+            IRingSet ringSet = atomContainer.Builder.NewRingSet();
             try
             {
                 var molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);

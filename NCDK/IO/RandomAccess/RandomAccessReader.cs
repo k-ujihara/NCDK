@@ -132,7 +132,7 @@ namespace NCDK.IO.RandomAccess
         /// <exception cref="System.IO.IOException">an error occurred whilst reading the file</exception>
         protected virtual IChemObject ProcessContent()
         {
-            return chemObjectReader.Read(builder.CreateChemFile());
+            return chemObjectReader.Read(builder.NewChemFile());
         }
 
         protected long[][] Resize(long[][] index, int newLength)

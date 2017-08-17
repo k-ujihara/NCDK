@@ -49,12 +49,12 @@ namespace NCDK.IO
             StringWriter sWriter = new StringWriter();
             PDBWriter writer = new PDBWriter(sWriter);
 
-            ICrystal crystal = builder.CreateCrystal();
+            ICrystal crystal = builder.NewCrystal();
             crystal.A = new Vector3(0, 1, 0);
             crystal.B = new Vector3(1, 0, 0);
             crystal.C = new Vector3(0, 0, 2);
 
-            IAtom atom = builder.CreateAtom("C");
+            IAtom atom = builder.NewAtom("C");
             atom.Point3D = new Vector3(0.1, 0.1, 0.3);
             crystal.Atoms.Add(atom);
 

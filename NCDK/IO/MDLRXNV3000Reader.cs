@@ -77,8 +77,8 @@ namespace NCDK.IO
             }
             else if (obj is IChemModel)
             {
-                IChemModel model = obj.Builder.CreateChemModel();
-                IReactionSet reactionSet = obj.Builder.CreateReactionSet();
+                IChemModel model = obj.Builder.NewChemModel();
+                IReactionSet reactionSet = obj.Builder.NewReactionSet();
                 reactionSet.Add(ReadReaction(obj.Builder));
                 model.ReactionSet = reactionSet;
                 return (T)model;
@@ -133,7 +133,7 @@ namespace NCDK.IO
 
         private IReaction ReadReaction(IChemObjectBuilder builder)
         {
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             ReadLine(); // first line should be $RXN
             ReadLine(); // second line
             ReadLine(); // third line
@@ -191,7 +191,7 @@ namespace NCDK.IO
                 {
                     // read MDL molfile content
                     MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.ToString()), base.ReaderMode);
-                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add reactant
@@ -233,7 +233,7 @@ namespace NCDK.IO
                 {
                     // read MDL molfile content
                     MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.ToString()));
-                    IAtomContainer product = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer product = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add product

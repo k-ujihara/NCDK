@@ -258,7 +258,7 @@ namespace NCDK.Isomorphisms
             var mapper = new AtomBondMaper(query, target);
             return GetMapping(n => mapper.Apply(n)).Select(map =>
             {
-                IAtomContainer submol = target.Builder.CreateAtomContainer();
+                IAtomContainer submol = target.Builder.NewAtomContainer();
                 foreach (var atom in query.Atoms)
                     submol.Atoms.Add((IAtom)map[atom]);
                 foreach (var bond in query.Bonds)

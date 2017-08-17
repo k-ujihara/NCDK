@@ -83,8 +83,8 @@ namespace NCDK
         public override void TestAddAtom_IAtom()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IAtom oAtom1 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom1 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
             oStrand.Atoms.Add(oAtom1);
             oStrand.Atoms.Add(oAtom2);
 
@@ -95,11 +95,11 @@ namespace NCDK
         public virtual void TestAddAtom_IAtom_IMonomer()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom1 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom1);
             oStrand.AddAtom(oAtom2);
             oStrand.AddAtom(oAtom3, oMono1);
@@ -112,12 +112,12 @@ namespace NCDK
         public virtual void TestGetMonomerCount()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom2, oMono1);
             oStrand.AddAtom(oAtom3, oMono2);
 
@@ -128,12 +128,12 @@ namespace NCDK
         public virtual void TestGetMonomer_String()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom2, oMono1);
             oStrand.AddAtom(oAtom3, oMono2);
 
@@ -146,16 +146,16 @@ namespace NCDK
         public virtual void TestGetMonomerNames()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom2, oMono1);
             oStrand.AddAtom(oAtom3, oMono2);
             IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
-            IMonomer oMon = oStrand.Builder.CreateMonomer();
+            IMonomer oMon = oStrand.Builder.NewMonomer();
             oMon.MonomerName = "";
             oMon.MonomerType = "Unknown";
             monomers.Add("", oMon);
@@ -175,9 +175,9 @@ namespace NCDK
         public virtual void TestRemoveMonomer_String()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IAtom oAtom1 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom1 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom1, oMono1);
             Assert.IsTrue(oStrand.GetMonomerNames().Contains(oMono1.MonomerName));
             Assert.AreEqual(1, oStrand.Atoms.Count);
@@ -190,16 +190,16 @@ namespace NCDK
         public virtual void TestGetMonomers()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom2, oMono1);
             oStrand.AddAtom(oAtom3, oMono2);
             IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
-            IMonomer oMon = oStrand.Builder.CreateMonomer();
+            IMonomer oMon = oStrand.Builder.NewMonomer();
             oMon.MonomerName = "";
             oMon.MonomerType = "Unknown";
             monomers.Add("", oMon);
@@ -216,16 +216,16 @@ namespace NCDK
         public override void TestToString()
         {
             IStrand oStrand = (IStrand)NewChemObject();
-            IMonomer oMono1 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono1 = oStrand.Builder.NewMonomer();
             oMono1.MonomerName = "TRP279";
-            IMonomer oMono2 = oStrand.Builder.CreateMonomer();
+            IMonomer oMono2 = oStrand.Builder.NewMonomer();
             oMono2.MonomerName = "HOH";
-            IAtom oAtom2 = oStrand.Builder.CreateAtom("C");
-            IAtom oAtom3 = oStrand.Builder.CreateAtom("C");
+            IAtom oAtom2 = oStrand.Builder.NewAtom("C");
+            IAtom oAtom3 = oStrand.Builder.NewAtom("C");
             oStrand.AddAtom(oAtom2, oMono1);
             oStrand.AddAtom(oAtom3, oMono2);
             IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
-            IMonomer oMon = oStrand.Builder.CreateMonomer();
+            IMonomer oMon = oStrand.Builder.NewMonomer();
             oMon.MonomerName = "";
             oMon.MonomerType = "Unknown";
             monomers.Add("", oMon);

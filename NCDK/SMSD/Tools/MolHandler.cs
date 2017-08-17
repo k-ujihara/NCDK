@@ -133,7 +133,7 @@ namespace NCDK.SMSD.Tools
             }
             else
             {
-                this.atomContainer = container.Builder.CreateAtomContainer(atomContainer);
+                this.atomContainer = container.Builder.NewAtomContainer(atomContainer);
             }
 
             if (cleanMolecule)

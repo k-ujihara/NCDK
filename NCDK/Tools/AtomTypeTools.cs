@@ -105,7 +105,7 @@ namespace NCDK.Tools
                 //Atom in ring?
                 if (ringSetMolecule.Contains(atom2))
                 {
-                    var ringSetA = ringSetMolecule.Builder.CreateRingSet();
+                    var ringSetA = ringSetMolecule.Builder.NewRingSet();
                     ringSetA.AddRange(ringSetMolecule.GetRings(atom2));
                     RingSetManipulator.Sort(ringSetA);
                     IRing sring = (IRing)ringSetA.Last();

@@ -813,7 +813,7 @@ namespace NCDK.Modelings.Builder3D
         public IAtomContainer GetPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac)
         {
             var bonds = ac.GetConnectedBonds(atom);
-            IAtomContainer connectedAtoms = atom.Builder.CreateAtomContainer();
+            IAtomContainer connectedAtoms = atom.Builder.NewAtomContainer();
             IAtom connectedAtom = null;
             foreach (var bond in bonds)
             {
@@ -836,7 +836,7 @@ namespace NCDK.Modelings.Builder3D
         public IAtomContainer GetUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac)
         {
             var atoms = ac.GetConnectedAtoms(atom);
-            IAtomContainer connectedAtoms = atom.Builder.CreateAtomContainer();
+            IAtomContainer connectedAtoms = atom.Builder.NewAtomContainer();
             foreach (var curAtom in atoms)
             {
                 if (!curAtom.IsPlaced)

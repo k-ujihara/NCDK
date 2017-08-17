@@ -27,7 +27,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestIsotopeContainer_IMolecularFormula_Double()
         {
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
             double intensity = 130.00;
             IsotopeContainer isoC = new IsotopeContainer(formula, intensity);
 
@@ -52,7 +52,7 @@ namespace NCDK.Formula
         public void TestSetFormula_IMolecularFormula()
         {
             IsotopeContainer isoC = new IsotopeContainer();
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
             isoC.Formula = formula;
             Assert.IsNotNull(isoC);
         }
@@ -77,7 +77,7 @@ namespace NCDK.Formula
         public void TestGetFormula()
         {
             IsotopeContainer isoC = new IsotopeContainer();
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
             isoC.Formula = formula;
             Assert.AreEqual(formula, isoC.Formula);
         }
@@ -105,7 +105,7 @@ namespace NCDK.Formula
         public void TestClone()
         {
             IsotopeContainer isoC = new IsotopeContainer();
-            IMolecularFormula formula = builder.CreateMolecularFormula();
+            IMolecularFormula formula = builder.NewMolecularFormula();
             isoC.Formula = formula;
             double mass = 130.00;
             isoC.Mass = mass;

@@ -38,22 +38,22 @@ namespace NCDK.Charges
         static InductivePartialChargesTest()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            mol = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
-            IAtom atom2 = builder.CreateAtom("Cl");
-            IAtom atom3 = builder.CreateAtom("Br");
-            IAtom atom4 = builder.CreateAtom("H");
-            IAtom atom5 = builder.CreateAtom("O");
+            mol = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
+            IAtom atom2 = builder.NewAtom("Cl");
+            IAtom atom3 = builder.NewAtom("Br");
+            IAtom atom4 = builder.NewAtom("H");
+            IAtom atom5 = builder.NewAtom("O");
             atom5.Point3D = new Vector3(2.24, 1.33, 0.0);
             atom1.Point3D = new Vector3(1.80, 0.0, 0.0);
             atom2.Point3D = new Vector3(0.0, 0.0, 0.0);
             atom3.Point3D = new Vector3(2.60, -0.79, 1.59);
             atom4.Point3D = new Vector3(2.15, -0.60, -0.87);
 
-            IBond bond1 = builder.CreateBond(atom1, atom2, BondOrder.Single);
-            IBond bond2 = builder.CreateBond(atom1, atom3, BondOrder.Single);
-            IBond bond3 = builder.CreateBond(atom1, atom4, BondOrder.Single);
-            IBond bond4 = builder.CreateBond(atom1, atom5, BondOrder.Single);
+            IBond bond1 = builder.NewBond(atom1, atom2, BondOrder.Single);
+            IBond bond2 = builder.NewBond(atom1, atom3, BondOrder.Single);
+            IBond bond3 = builder.NewBond(atom1, atom4, BondOrder.Single);
+            IBond bond4 = builder.NewBond(atom1, atom5, BondOrder.Single);
 
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);

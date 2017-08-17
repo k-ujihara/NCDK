@@ -346,10 +346,10 @@ namespace NCDK.Layout
             {
                 var bond = anon.Bonds[anon.Bonds.Count - 1];
                 anon.Bonds.RemoveAt(anon.Bonds.Count - 1);
-                IAtom dummy = bldr.CreateAtom("C");
+                IAtom dummy = bldr.NewAtom("C");
                 anon.Atoms.Add(dummy);
-                anon.Bonds.Add(bldr.CreateBond(bond.Begin, dummy, BondOrder.Single));
-                anon.Bonds.Add(bldr.CreateBond(dummy, bond.End, BondOrder.Single));
+                anon.Bonds.Add(bldr.NewBond(bond.Begin, dummy, BondOrder.Single));
+                anon.Bonds.Add(bldr.NewBond(dummy, bond.End, BondOrder.Single));
             }
             return anon;
         }

@@ -89,15 +89,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IAtom()
         {
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             IAtomContainer reactant = (new SmilesParser(builder)).ParseSmiles("[C+]-C=C");
             IAtomContainer product = (new SmilesParser(builder)).ParseSmiles("C=C=C");
 
-            IMapping mapping = builder.CreateMapping(reactant.Atoms[0], product.Atoms[0]);
+            IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);
-            mapping = builder.CreateMapping(reactant.Atoms[1], product.Atoms[1]);
+            mapping = builder.NewMapping(reactant.Atoms[1], product.Atoms[1]);
             reaction.Mappings.Add(mapping);
-            mapping = builder.CreateMapping(reactant.Atoms[2], product.Atoms[2]);
+            mapping = builder.NewMapping(reactant.Atoms[2], product.Atoms[2]);
             reaction.Mappings.Add(mapping);
 
             reaction.Reactants.Add(reactant);
@@ -117,15 +117,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IBond()
         {
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             IAtomContainer reactant = (new SmilesParser(builder)).ParseSmiles("[C+]-C=C");
             IAtomContainer product = (new SmilesParser(builder)).ParseSmiles("C=C=C");
 
-            IMapping mapping = builder.CreateMapping(reactant.Atoms[0], product.Atoms[0]);
+            IMapping mapping = builder.NewMapping(reactant.Atoms[0], product.Atoms[0]);
             reaction.Mappings.Add(mapping);
-            mapping = builder.CreateMapping(reactant.Bonds[0], product.Bonds[0]);
+            mapping = builder.NewMapping(reactant.Bonds[0], product.Bonds[0]);
             reaction.Mappings.Add(mapping);
-            mapping = builder.CreateMapping(reactant.Bonds[1], product.Bonds[1]);
+            mapping = builder.NewMapping(reactant.Bonds[1], product.Bonds[1]);
             reaction.Mappings.Add(mapping);
 
             reaction.Reactants.Add(reactant);
@@ -202,18 +202,18 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveElectronContainer_IReaction_IElectronContainer()
         {
-            IReaction reaction = builder.CreateReaction();
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IReaction reaction = builder.NewReaction();
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(1, mol.Bonds.Count);
             reaction.Reactants.Add(mol);
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
             ReactionManipulator.RemoveElectronContainer(reaction, mol.Bonds[0]);
 
             Assert.AreEqual(2, mol.Atoms.Count);
@@ -223,18 +223,18 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveAtomAndConnectedElectronContainers_IReaction_IAtom()
         {
-            IReaction reaction = builder.CreateReaction();
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IReaction reaction = builder.NewReaction();
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(1, mol.Bonds.Count);
             reaction.Reactants.Add(mol);
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
             ReactionManipulator.RemoveAtomAndConnectedElectronContainers(reaction, mol.Atoms[0]);
 
             Assert.AreEqual(1, mol.Atoms.Count);
@@ -244,36 +244,36 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllMolecules_IReaction()
         {
-            IReaction reaction = builder.CreateReaction();
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction = builder.NewReaction();
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
             Assert.AreEqual(5, ReactionManipulator.GetAllMolecules(reaction).Count);
         }
 
         [TestMethod()]
         public void TestGetAllProducts_IReaction()
         {
-            IReaction reaction = builder.CreateReaction();
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction = builder.NewReaction();
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
             Assert.AreEqual(3, ReactionManipulator.GetAllReactants(reaction).Count);
         }
 
         [TestMethod()]
         public void TestGetAllReactants_IReaction()
         {
-            IReaction reaction = builder.CreateReaction();
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Reactants.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
-            reaction.Products.Add(builder.CreateAtomContainer());
+            IReaction reaction = builder.NewReaction();
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Reactants.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
+            reaction.Products.Add(builder.NewAtomContainer());
             Assert.AreEqual(2, ReactionManipulator.GetAllProducts(reaction).Count);
         }
 

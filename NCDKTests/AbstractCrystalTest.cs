@@ -35,18 +35,18 @@ namespace NCDK
         {
             ICrystal crystal = (ICrystal)NewChemObject();
 
-            IAtomContainer acetone = crystal.Builder.CreateAtomContainer();
-            IAtom c1 = crystal.Builder.CreateAtom("C");
-            IAtom c2 = crystal.Builder.CreateAtom("C");
-            IAtom o = crystal.Builder.CreateAtom("O");
-            IAtom c3 = crystal.Builder.CreateAtom("C");
+            IAtomContainer acetone = crystal.Builder.NewAtomContainer();
+            IAtom c1 = crystal.Builder.NewAtom("C");
+            IAtom c2 = crystal.Builder.NewAtom("C");
+            IAtom o = crystal.Builder.NewAtom("O");
+            IAtom c3 = crystal.Builder.NewAtom("C");
             acetone.Atoms.Add(c1);
             acetone.Atoms.Add(c2);
             acetone.Atoms.Add(c3);
             acetone.Atoms.Add(o);
-            IBond b1 = crystal.Builder.CreateBond(c1, c2, BondOrder.Single);
-            IBond b2 = crystal.Builder.CreateBond(c1, o, BondOrder.Double);
-            IBond b3 = crystal.Builder.CreateBond(c1, c3, BondOrder.Single);
+            IBond b1 = crystal.Builder.NewBond(c1, c2, BondOrder.Single);
+            IBond b2 = crystal.Builder.NewBond(c1, o, BondOrder.Double);
+            IBond b3 = crystal.Builder.NewBond(c1, c3, BondOrder.Single);
             acetone.Bonds.Add(b1);
             acetone.Bonds.Add(b2);
             acetone.Bonds.Add(b3);
@@ -60,7 +60,7 @@ namespace NCDK
         public override void TestAddAtom_IAtom()
         {
             ICrystal crystal = (ICrystal)NewChemObject();
-            IAtom c1 = crystal.Builder.CreateAtom("C");
+            IAtom c1 = crystal.Builder.NewAtom("C");
             crystal.Atoms.Add(c1);
             Assert.AreEqual(1, crystal.Atoms.Count);
         }

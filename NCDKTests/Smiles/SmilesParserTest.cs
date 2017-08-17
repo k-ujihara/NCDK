@@ -529,26 +529,26 @@ namespace NCDK.Smiles
             string smiles = "CC1=CCC2CC1C(C)2C";
             IAtomContainer mol = sp.ParseSmiles(smiles);
 
-            IAtomContainer apinene = mol.Builder.CreateAtomContainer();
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            IAtomContainer apinene = mol.Builder.NewAtomContainer();
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 1
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 2
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 3
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 4
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 5
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 6
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 7
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 8
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 9
-            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            apinene.Atoms.Add(mol.Builder.NewAtom("C"));
             // 10
 
             apinene.AddBond(apinene.Atoms[0], apinene.Atoms[1], BondOrder.Double);
@@ -575,7 +575,7 @@ namespace NCDK.Smiles
             // 11
 
             IsomorphismTester it = new IsomorphismTester(apinene);
-            Assert.IsTrue(it.IsIsomorphic(mol.Builder.CreateAtomContainer(mol)));
+            Assert.IsTrue(it.IsIsomorphic(mol.Builder.NewAtomContainer(mol)));
         }
 
         [TestMethod()]
@@ -1825,7 +1825,7 @@ namespace NCDK.Smiles
         {
             SmilesParser p = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = p.ParseSmiles("Cc1nn(C)cc1[C@H]2[C@H](C(=O)N)C(=O)C[C@@](C)(O)[C@@H]2C(=O)N");
-            IAtomContainer mol2 = Default.ChemObjectBuilder.Instance.CreateAtomContainer(mol);
+            IAtomContainer mol2 = Default.ChemObjectBuilder.Instance.NewAtomContainer(mol);
             Assert.IsNotNull(mol2);
             Assert.AreEqual(22, mol2.Atoms.Count);
         }

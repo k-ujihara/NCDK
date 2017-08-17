@@ -44,9 +44,9 @@ namespace NCDK.Signatures
         {
             this.parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             this.builder = Default.ChemObjectBuilder.Instance;
-            mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
             molSig = new MoleculeSignature(mol);
         }
@@ -139,16 +139,16 @@ namespace NCDK.Signatures
         {
             for (int i = 0; i < n; i++)
             {
-                IAtom h = builder.CreateAtom("H");
+                IAtom h = builder.NewAtom("H");
                 mol.Atoms.Add(h);
-                mol.Bonds.Add(builder.CreateBond(atom, h));
+                mol.Bonds.Add(builder.NewBond(atom, h));
             }
         }
 
         [TestMethod()]
         public void TestEmpty()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             MoleculeSignature signature = new MoleculeSignature(mol);
             string signatureString = signature.ToCanonicalString();
             string expected = "";
@@ -290,7 +290,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void TestBenzeneWithDoubleBonds()
         {
-            IAtomContainer benzene = builder.CreateAtomContainer();
+            IAtomContainer benzene = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(benzene, 6);
             for (int i = 0; i < 6; i++)
             {
@@ -315,16 +315,16 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void GetAromaticEdgeLabelTest()
         {
-            IAtomContainer benzeneRing = builder.CreateAtomContainer();
+            IAtomContainer benzeneRing = builder.NewAtomContainer();
             for (int i = 0; i < 6; i++)
             {
-                benzeneRing.Atoms.Add(builder.CreateAtom("C"));
+                benzeneRing.Atoms.Add(builder.NewAtom("C"));
             }
             for (int i = 0; i < 6; i++)
             {
                 IAtom a = benzeneRing.Atoms[i];
                 IAtom b = benzeneRing.Atoms[(i + 1) % 6];
-                IBond bond = builder.CreateBond(a, b);
+                IBond bond = builder.NewBond(a, b);
                 benzeneRing.Bonds.Add(bond);
                 bond.IsAromatic = true;
             }
@@ -346,7 +346,7 @@ namespace NCDK.Signatures
         {
             string expectedA = "[C]([C]([C,0])=[C]([C,0]))";
             string expectedB = "[C]([C]([C,0])[C](=[C,0]))";
-            IAtomContainer cyclobutene = builder.CreateAtomContainer();
+            IAtomContainer cyclobutene = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(cyclobutene, 4);
             cyclobutene.AddBond(cyclobutene.Atoms[0], cyclobutene.Atoms[1], BondOrder.Single);
             cyclobutene.AddBond(cyclobutene.Atoms[0], cyclobutene.Atoms[2], BondOrder.Single);
@@ -362,7 +362,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void MethyleneCyclopropeneTest()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             AbstractSignatureTest.AddCarbons(mol, 4);
             AbstractSignatureTest.AddHydrogens(mol, 1, 2);
             AbstractSignatureTest.AddHydrogens(mol, 2, 1);
@@ -389,7 +389,7 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void FusedSquareMultipleBondTest()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtomContainer mol = builder.NewAtomContainer();
             string expected = "[C]([C]([C,1])[C]([C,0])[C](=[C,1])[C](=[C,0]))";
             AbstractSignatureTest.AddCarbons(mol, 7);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -467,10 +467,10 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void NapthaleneSkeletonHeightTest()
         {
-            IAtomContainer napthalene = builder.CreateAtomContainer();
+            IAtomContainer napthalene = builder.NewAtomContainer();
             for (int i = 0; i < 10; i++)
             {
-                napthalene.Atoms.Add(builder.CreateAtom("C"));
+                napthalene.Atoms.Add(builder.NewAtom("C"));
             }
             napthalene.AddBond(napthalene.Atoms[0], napthalene.Atoms[1], BondOrder.Single);
             napthalene.AddBond(napthalene.Atoms[0], napthalene.Atoms[5], BondOrder.Single);
@@ -508,10 +508,10 @@ namespace NCDK.Signatures
         [TestMethod()]
         public void NapthaleneWithDoubleBondsAndHydrogenHeightTest()
         {
-            IAtomContainer napthalene = builder.CreateAtomContainer();
+            IAtomContainer napthalene = builder.NewAtomContainer();
             for (int i = 0; i < 10; i++)
             {
-                napthalene.Atoms.Add(builder.CreateAtom("C"));
+                napthalene.Atoms.Add(builder.NewAtom("C"));
             }
             napthalene.AddBond(napthalene.Atoms[0], napthalene.Atoms[1], BondOrder.Single);
             napthalene.AddBond(napthalene.Atoms[0], napthalene.Atoms[5], BondOrder.Double);
@@ -525,21 +525,21 @@ namespace NCDK.Signatures
             napthalene.AddBond(napthalene.Atoms[7], napthalene.Atoms[8], BondOrder.Single);
             napthalene.AddBond(napthalene.Atoms[8], napthalene.Atoms[9], BondOrder.Double);
 
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[0], napthalene.Atoms[10], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[3], napthalene.Atoms[11], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[4], napthalene.Atoms[12], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[5], napthalene.Atoms[13], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[6], napthalene.Atoms[14], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[7], napthalene.Atoms[15], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[8], napthalene.Atoms[16], BondOrder.Single);
-            napthalene.Atoms.Add(builder.CreateAtom("H"));
+            napthalene.Atoms.Add(builder.NewAtom("H"));
             napthalene.AddBond(napthalene.Atoms[9], napthalene.Atoms[17], BondOrder.Single);
 
             int height = 2;

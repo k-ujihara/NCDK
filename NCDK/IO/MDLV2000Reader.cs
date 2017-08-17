@@ -170,9 +170,9 @@ namespace NCDK.IO
             IAtomContainerSet<IAtomContainer> setOfMolecules = chemModel.MoleculeSet;
             if (setOfMolecules == null)
             {
-                setOfMolecules = chemModel.Builder.CreateAtomContainerSet();
+                setOfMolecules = chemModel.Builder.NewAtomContainerSet();
             }
-            IAtomContainer m = ReadAtomContainer(chemModel.Builder.CreateAtomContainer());
+            IAtomContainer m = ReadAtomContainer(chemModel.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -189,12 +189,12 @@ namespace NCDK.IO
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemObjectBuilder builder = chemFile.Builder;
-            IChemSequence sequence = builder.CreateChemSequence();
+            IChemSequence sequence = builder.NewChemSequence();
 
             try
             {
                 IAtomContainer m;
-                while ((m = ReadAtomContainer(builder.CreateAtomContainer())) != null)
+                while ((m = ReadAtomContainer(builder.NewAtomContainer())) != null)
                 {
                     sequence.Add(NewModel(m));
                 }
@@ -235,8 +235,8 @@ namespace NCDK.IO
             if (container == null) throw new NullReferenceException("cannot create chem model for a null container");
 
             IChemObjectBuilder builder = container.Builder;
-            IChemModel model = builder.CreateChemModel();
-            IAtomContainerSet<IAtomContainer> containers = builder.CreateAtomContainerSet();
+            IChemModel model = builder.NewChemModel();
+            IAtomContainerSet<IAtomContainer> containers = builder.NewAtomContainerSet();
 
             containers.Add(container);
             model.MoleculeSet = containers;
@@ -564,7 +564,7 @@ namespace NCDK.IO
                     IPseudoAtom pseudo = (IPseudoAtom)atom;
                     if ("D".Equals(pseudo.Label))
                     {
-                        IAtom newAtom = molecule.Builder.CreateAtom(atom);
+                        IAtom newAtom = molecule.Builder.NewAtom(atom);
                         newAtom.Symbol = "H";
                         newAtom.AtomicNumber = 1;
                         isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 2));
@@ -572,7 +572,7 @@ namespace NCDK.IO
                     }
                     else if ("T".Equals(pseudo.Label))
                     {
-                        IAtom newAtom = molecule.Builder.CreateAtom(atom);
+                        IAtom newAtom = molecule.Builder.NewAtom(atom);
                         newAtom.Symbol = "H";
                         newAtom.AtomicNumber = 1;
                         isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 3));
@@ -783,7 +783,7 @@ namespace NCDK.IO
                     throw new CDKException("invalid line length: " + length + " " + line);
             }
 
-            IBond bond = builder.CreateBond();
+            IBond bond = builder.NewBond();
             bond.SetAtoms(new IAtom[] { atoms[u], atoms[v] });
 
             switch (type)
@@ -1330,7 +1330,7 @@ namespace NCDK.IO
             Elements elem = Elements.OfString(symbol);
             if (elem != Elements.Unknown)
             {
-                IAtom atom = builder.CreateAtom();
+                IAtom atom = builder.NewAtom();
                 atom.Symbol = elem.Symbol;
                 atom.AtomicNumber = elem.AtomicNumber;
                 return atom;
@@ -1338,14 +1338,14 @@ namespace NCDK.IO
             if (symbol.Equals("D") && interpretHydrogenIsotopes.IsSet)
             {
                 if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
-                IAtom atom = builder.CreateAtom("H");
+                IAtom atom = builder.NewAtom("H");
                 atom.MassNumber = 2;
                 return atom;
             }
             if (symbol.Equals("T") && interpretHydrogenIsotopes.IsSet)
             {
                 if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
-                IAtom atom = builder.CreateAtom("H");
+                IAtom atom = builder.NewAtom("H");
                 atom.MassNumber = 3;
                 return atom;
             }
@@ -1361,7 +1361,7 @@ namespace NCDK.IO
                 // 'R' is a better label than 'R#' if now RGP is specified
                 if (symbol.Equals("R#")) symbol = "R";
 
-                IAtom atom = builder.CreatePseudoAtom(symbol);
+                IAtom atom = builder.NewPseudoAtom(symbol);
                 atom.Symbol = symbol;
                 atom.AtomicNumber = 0; // avoid NPE downstream
 
@@ -1576,7 +1576,7 @@ namespace NCDK.IO
         {
             IAtom atom = container.Atoms[index];
             IPseudoAtom pseudoAtom = atom is IPseudoAtom ? (IPseudoAtom)atom : container.Builder
-                   .CreatePseudoAtom();
+                   .NewPseudoAtom();
             if (atom == pseudoAtom)
             {
                 pseudoAtom.Label = label;
@@ -1629,27 +1629,27 @@ namespace NCDK.IO
             IsotopeFactory isotopeFactory = Isotopes.Instance;
             if (isotopeFactory.IsElement(element))
             {
-                atom = isotopeFactory.Configure(builder.CreateAtom(element));
+                atom = isotopeFactory.Configure(builder.NewAtom(element));
             }
             else if ("A".Equals(element))
             {
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
             }
             else if ("Q".Equals(element))
             {
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
             }
             else if ("*".Equals(element))
             {
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
             }
             else if ("LP".Equals(element))
             {
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
             }
             else if ("L".Equals(element))
             {
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
             }
             else if (element.Equals("R") || (element.Length > 0 && element[0] == 'R'))
             {
@@ -1660,25 +1660,25 @@ namespace NCDK.IO
                     try
                     {
                         element = "R" + int.Parse(element.Substring(1));
-                        atom = builder.CreatePseudoAtom(element);
+                        atom = builder.NewPseudoAtom(element);
                     }
                     catch (Exception)
                     {
                         // This happens for atoms labeled "R#".
                         // The Rnumber may be set later on, using RGP line
-                        atom = builder.CreatePseudoAtom("R");
+                        atom = builder.NewPseudoAtom("R");
                     }
                 }
                 else
                 {
-                    atom = builder.CreatePseudoAtom(element);
+                    atom = builder.NewPseudoAtom(element);
                 }
             }
             else
             {
                 HandleError("Invalid element type. Must be an existing " + "element, or one in: A, Q, L, LP, *.",
                         linecount, 32, 35);
-                atom = builder.CreatePseudoAtom(element);
+                atom = builder.NewPseudoAtom(element);
                 atom.Symbol = element;
             }
 
@@ -1908,11 +1908,11 @@ namespace NCDK.IO
                 if (order == 3) cdkOrder = BondOrder.Triple;
                 if (stereo != BondStereo.None)
                 {
-                    newBond = builder.CreateBond(a1, a2, cdkOrder, stereo);
+                    newBond = builder.NewBond(a1, a2, cdkOrder, stereo);
                 }
                 else
                 {
-                    newBond = builder.CreateBond(a1, a2, cdkOrder);
+                    newBond = builder.NewBond(a1, a2, cdkOrder);
                 }
                 explicitValence[atom1 - 1] += cdkOrder.Numeric;
                 explicitValence[atom2 - 1] += cdkOrder.Numeric;
@@ -1922,11 +1922,11 @@ namespace NCDK.IO
                 // aromatic bond
                 if (stereo != BondStereo.None)
                 {
-                    newBond = builder.CreateBond(a1, a2, BondOrder.Unset, stereo);
+                    newBond = builder.NewBond(a1, a2, BondOrder.Unset, stereo);
                 }
                 else
                 {
-                    newBond = builder.CreateBond(a1, a2, BondOrder.Unset);
+                    newBond = builder.NewBond(a1, a2, BondOrder.Unset);
                 }
                 // mark both atoms and the bond as aromatic and raise the SingleOrDouble-flag
                 newBond.IsSingleOrDouble = true;
@@ -2025,7 +2025,7 @@ namespace NCDK.IO
                         continue;
                     }
 
-                    IAtom newPseudoAtom = container.Builder.CreatePseudoAtom(alias);
+                    IAtom newPseudoAtom = container.Builder.NewPseudoAtom(alias);
                     if (aliasAtom.Point2D != null) newPseudoAtom.Point2D = aliasAtom.Point2D;
                     if (aliasAtom.Point3D != null) newPseudoAtom.Point3D = aliasAtom.Point3D;
                     AtomContainerManipulator.ReplaceAtomByAtom(container, aliasAtom, newPseudoAtom);
@@ -2078,7 +2078,7 @@ namespace NCDK.IO
                                 spin = MDLV2000Writer.SpinMultiplicity.OfValue(rad);
                                 for (int j = 0; j < spin.SingleElectrons; j++)
                                 {
-                                    container.SingleElectrons.Add(container.Builder.CreateSingleElectron(radical));
+                                    container.SingleElectrons.Add(container.Builder.NewSingleElectron(radical));
                                 }
                             }
                         }
@@ -2103,7 +2103,7 @@ namespace NCDK.IO
 
                         // convert Atom into a PseudoAtom
                         IAtom prevAtom = container.Atoms[atomNumber - 1];
-                        IPseudoAtom pseudoAtom = container.Builder.CreatePseudoAtom(atomName);
+                        IPseudoAtom pseudoAtom = container.Builder.NewPseudoAtom(atomName);
                         if (prevAtom.Point2D != null)
                         {
                             pseudoAtom.Point2D = prevAtom.Point2D;

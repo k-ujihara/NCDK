@@ -31,7 +31,7 @@ namespace NCDK.StructGen.Stochastic
         public void TestGenerate_IAtomContainerSet()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]1=C(C1)C[CH2]"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
@@ -44,7 +44,7 @@ namespace NCDK.StructGen.Stochastic
         public void TestPartialFilledStructureMerger2()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]=[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]([CH2])=C1CC1"));
             PartialFilledStructureMerger pfsm = new PartialFilledStructureMerger();
@@ -57,7 +57,7 @@ namespace NCDK.StructGen.Stochastic
         public void TestPartialFilledStructureMerger3()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[CH2]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]C[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2][CH2]"));
@@ -71,7 +71,7 @@ namespace NCDK.StructGen.Stochastic
         public void TestPartialFilledStructureMerger4()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]CCC[CH2]"));
             acs.Add(sp.ParseSmiles("[C]CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));
@@ -85,7 +85,7 @@ namespace NCDK.StructGen.Stochastic
         public void TestPartialFilledStructureMerger5()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            var acs = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var acs = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             acs.Add(sp.ParseSmiles("[C]1CCC1"));
             acs.Add(sp.ParseSmiles("[C]([CH2])CC[CH2]"));
             acs.Add(sp.ParseSmiles("[CH2]"));

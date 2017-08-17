@@ -146,7 +146,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IAtomContainerSet</returns>
         public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
 
             moleculeSet.AddRange(GetAllReactants(reaction));
             moleculeSet.AddRange(GetAllAgents(reaction));
@@ -162,7 +162,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IAtomContainerSet</returns>
         public static IAtomContainerSet<IAtomContainer> GetAllProducts(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
             IAtomContainerSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
@@ -178,7 +178,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IAtomContainerSet</returns>
         public static IAtomContainerSet<IAtomContainer> GetAllReactants(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
             IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
@@ -189,7 +189,7 @@ namespace NCDK.Tools.Manipulator
 
         public static IAtomContainerSet<IAtomContainer> GetAllAgents(IReaction reaction)
         {
-            var moleculeSet = reaction.Builder.CreateAtomContainerSet();
+            var moleculeSet = reaction.Builder.NewAtomContainerSet();
             var agents = reaction.Agents;
             for (int i = 0; i < agents.Count; i++)
             {
@@ -206,7 +206,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>the reverse reaction</returns>
         public static IReaction Reverse(IReaction reaction)
         {
-            IReaction reversedReaction = reaction.Builder.CreateReaction();
+            IReaction reversedReaction = reaction.Builder.NewReaction();
             if (reaction.Direction == ReactionDirections.Bidirectional)
             {
                 reversedReaction.Direction = ReactionDirections.Bidirectional;
@@ -367,7 +367,7 @@ namespace NCDK.Tools.Manipulator
             if (rxn == null)
                 throw new ArgumentNullException(nameof(rxn), "Null reaction provided");
             IChemObjectBuilder bldr = rxn.Builder;
-            IAtomContainer mol = bldr.CreateAtomContainer();
+            IAtomContainer mol = bldr.NewAtomContainer();
             mol.SetProperties(rxn.GetProperties());
             mol.Id = rxn.Id;
             int grpId = 0;
@@ -400,7 +400,7 @@ namespace NCDK.Tools.Manipulator
             if (mol == null)
                 throw new ArgumentException("Null molecule provided");
             IChemObjectBuilder bldr = mol.Builder;
-            IReaction rxn = bldr.CreateReaction();
+            IReaction rxn = bldr.NewReaction();
             rxn.SetProperties(mol.GetProperties());
             rxn.Id = mol.Id;
 
@@ -421,7 +421,7 @@ namespace NCDK.Tools.Manipulator
                 // new component, and add to appropriate role
                 if (!components.TryGetValue(grpIdx.Value, out comp))
                 {
-                    components[grpIdx.Value] = comp = bldr.CreateAtomContainer();
+                    components[grpIdx.Value] = comp = bldr.NewAtomContainer();
                     switch (role)
                     {
                         case ReactionRoles.Reactant:

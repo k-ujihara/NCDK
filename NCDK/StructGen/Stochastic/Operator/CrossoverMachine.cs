@@ -118,10 +118,10 @@ namespace NCDK.StructGen.Stochastic.Operator
                     }
                 }
                 /* * dividing over ** */
-                redChild[0] = dad.Builder.CreateAtomContainer(dad);
-                blueChild[0] = dad.Builder.CreateAtomContainer(dad);
-                redChild[1] = dad.Builder.CreateAtomContainer(mom);
-                blueChild[1] = dad.Builder.CreateAtomContainer(mom);
+                redChild[0] = dad.Builder.NewAtomContainer(dad);
+                blueChild[0] = dad.Builder.NewAtomContainer(dad);
+                redChild[1] = dad.Builder.NewAtomContainer(mom);
+                blueChild[1] = dad.Builder.NewAtomContainer(mom);
 
                 List<IAtom> blueAtomsInRedChild0 = new List<IAtom>();
                 for (int j = 0; j < blueAtoms.Count; j++)
@@ -204,10 +204,10 @@ namespace NCDK.StructGen.Stochastic.Operator
                 {
                     //combine the fragments crosswise
                     IAtomContainerSet<IAtomContainer>[] newstrucs = new IAtomContainerSet<IAtomContainer>[2];
-                    newstrucs[0] = dad.Builder.CreateAtomContainerSet();
+                    newstrucs[0] = dad.Builder.NewAtomContainerSet();
                     newstrucs[0].AddRange(ConnectivityChecker.PartitionIntoMolecules(redChild[0]));
                     newstrucs[0].AddRange(ConnectivityChecker.PartitionIntoMolecules(blueChild[1]));
-                    newstrucs[1] = dad.Builder.CreateAtomContainerSet();
+                    newstrucs[1] = dad.Builder.NewAtomContainerSet();
                     newstrucs[1].AddRange(ConnectivityChecker.PartitionIntoMolecules(redChild[1]));
                     newstrucs[1].AddRange(ConnectivityChecker.PartitionIntoMolecules(blueChild[0]));
 

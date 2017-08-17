@@ -97,8 +97,8 @@ namespace NCDK.Layout
             atomPlacer.Molecule = container;
 
             var connected = container.GetConnectedAtoms(atom);
-            IAtomContainer placed = container.Builder.CreateAtomContainer();
-            IAtomContainer unplaced = container.Builder.CreateAtomContainer();
+            IAtomContainer placed = container.Builder.NewAtomContainer();
+            IAtomContainer unplaced = container.Builder.NewAtomContainer();
 
             // divide connected atoms into those which are have and haven't been placed
             foreach (var conAtom in connected)

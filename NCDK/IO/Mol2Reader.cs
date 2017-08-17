@@ -115,9 +115,9 @@ namespace NCDK.IO
             var setOfMolecules = chemModel.MoleculeSet;
             if (setOfMolecules == null)
             {
-                setOfMolecules = chemModel.Builder.CreateAtomContainerSet();
+                setOfMolecules = chemModel.Builder.NewAtomContainerSet();
             }
-            IAtomContainer m = ReadMolecule(chemModel.Builder.CreateAtomContainer());
+            IAtomContainer m = ReadMolecule(chemModel.Builder.NewAtomContainer());
             if (m != null)
             {
                 setOfMolecules.Add(m);
@@ -128,29 +128,29 @@ namespace NCDK.IO
 
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
+            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
 
-            IChemModel chemModel = chemFile.Builder.CreateChemModel();
-            var setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-            IAtomContainer m = ReadMolecule(chemFile.Builder.CreateAtomContainer());
+            IChemModel chemModel = chemFile.Builder.NewChemModel();
+            var setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+            IAtomContainer m = ReadMolecule(chemFile.Builder.NewAtomContainer());
             if (m != null) setOfMolecules.Add(m);
             chemModel.MoleculeSet = setOfMolecules;
             chemSequence.Add(chemModel);
-            setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-            chemModel = chemFile.Builder.CreateChemModel();
+            setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+            chemModel = chemFile.Builder.NewChemModel();
             try
             {
                 firstLineisMolecule = true;
                 while (m != null)
                 {
-                    m = ReadMolecule(chemFile.Builder.CreateAtomContainer());
+                    m = ReadMolecule(chemFile.Builder.NewAtomContainer());
                     if (m != null)
                     {
                         setOfMolecules.Add(m);
                         chemModel.MoleculeSet = setOfMolecules;
                         chemSequence.Add(chemModel);
-                        setOfMolecules = chemFile.Builder.CreateAtomContainerSet();
-                        chemModel = chemFile.Builder.CreateChemModel();
+                        setOfMolecules = chemFile.Builder.NewAtomContainerSet();
+                        chemModel = chemFile.Builder.NewChemModel();
                     }
                 }
             }
@@ -304,7 +304,7 @@ namespace NCDK.IO
                             if (ATOM_TYPE_ALIASES.ContainsKey(atomTypeStr))
                                 atomTypeStr = ATOM_TYPE_ALIASES[atomTypeStr];
 
-                            IAtom atom = molecule.Builder.CreateAtom();
+                            IAtom atom = molecule.Builder.NewAtom();
                             IAtomType atomType;
                             try
                             {
@@ -376,7 +376,7 @@ namespace NCDK.IO
                                 }
                                 else
                                 {
-                                    IBond bond = molecule.Builder.CreateBond(
+                                    IBond bond = molecule.Builder.NewBond(
                                         molecule.Atoms[atom1 - 1], molecule.Atoms[atom2 - 1]);
                                     if ("1".Equals(orderStr))
                                     {

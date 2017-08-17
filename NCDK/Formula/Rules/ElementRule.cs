@@ -91,7 +91,7 @@ namespace NCDK.Formula.Rules
             foreach (var element in MolecularFormulaManipulator.Elements(formula))
             {
                 int occur = MolecularFormulaManipulator.GetElementCount(formula, element);
-                IIsotope elemIsotope = formula.Builder.CreateIsotope(element.Symbol);
+                IIsotope elemIsotope = formula.Builder.NewIsotope(element.Symbol);
                 if ((occur < mfRange.GetIsotopeCountMin(elemIsotope)) || (occur > mfRange.GetIsotopeCountMax(elemIsotope)))
                 {
                     isValid = 0.0;
@@ -120,7 +120,7 @@ namespace NCDK.Formula.Rules
 
                 mfRange = new MolecularFormulaRange();
                 foreach (var element in elements)
-                    mfRange.AddIsotope(builder.CreateIsotope(element), 0, 50);
+                    mfRange.AddIsotope(builder.NewIsotope(element), 0, 50);
             }
         }
     }

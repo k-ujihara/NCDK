@@ -194,7 +194,7 @@ namespace NCDK.ForceField.MMFF
         private void AssignPreliminaryTypes(IAtomContainer container, string[] symbs)
         {
             // shallow copy
-            IAtomContainer cpy = container.Builder.CreateAtomContainer(container);
+            IAtomContainer cpy = container.Builder.NewAtomContainer(container);
             SmartsMatchers.Prepare(cpy, true);
             foreach (AtomTypePattern matcher in patterns)
             {

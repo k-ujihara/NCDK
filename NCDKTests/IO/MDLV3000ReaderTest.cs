@@ -97,7 +97,7 @@ namespace NCDK.IO
             using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
             using (MDLV3000Reader reader = new MDLV3000Reader(ins))
             {
-                IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+                IAtomContainer molecule = Default.ChemObjectBuilder.Instance.NewAtomContainer();
                 molecule = reader.Read(molecule);
                 reader.Close();
                 Assert.IsTrue(molecule.Atoms[9] is IPseudoAtom);

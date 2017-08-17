@@ -91,7 +91,7 @@ namespace NCDK.Smiles
             using (var ins = GetType().Assembly.GetManifestResourceStream(GetType(), "CHEBI_53695.mol"))
             using (var mdlr = new MDLV2000Reader(ins))
             {
-                IAtomContainer mol = mdlr.Read(Silent.ChemObjectBuilder.Instance.CreateAtomContainer());
+                IAtomContainer mol = mdlr.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainer());
                 SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxSmiles | SmiFlavor.AtomicMassStrict);
                 Assert.AreEqual("C(C(=O)OC)(C*)*C(C(C1=C(C(=C(C(=C1[2H])[2H])[2H])[2H])[2H])(*)[2H])([2H])[2H] |Sg:n:0,1,2,3,4,5:n:ht,Sg:n:8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24:m:ht|", smigen.Create(mol));
             }
@@ -113,14 +113,14 @@ namespace NCDK.Smiles
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-            IAtomContainer mola = builder.CreateAtomContainer();
-            mola.Atoms.Add(builder.CreateAtom("CH3"));
-            mola.Atoms.Add(builder.CreateAtom("CH2"));
-            mola.Atoms.Add(builder.CreateAtom("CH2"));
-            mola.Atoms.Add(builder.CreateAtom("CH2"));
-            mola.Atoms.Add(builder.CreateAtom("CH2"));
-            mola.Atoms.Add(builder.CreateAtom("CH1"));
-            mola.Atoms.Add(builder.CreateAtom("CH3"));
+            IAtomContainer mola = builder.NewAtomContainer();
+            mola.Atoms.Add(builder.NewAtom("CH3"));
+            mola.Atoms.Add(builder.NewAtom("CH2"));
+            mola.Atoms.Add(builder.NewAtom("CH2"));
+            mola.Atoms.Add(builder.NewAtom("CH2"));
+            mola.Atoms.Add(builder.NewAtom("CH2"));
+            mola.Atoms.Add(builder.NewAtom("CH1"));
+            mola.Atoms.Add(builder.NewAtom("CH3"));
             mola.AddBond(mola.Atoms[1], mola.Atoms[2], BondOrder.Single);
             mola.AddBond(mola.Atoms[2], mola.Atoms[3], BondOrder.Single);
             mola.AddBond(mola.Atoms[3], mola.Atoms[4], BondOrder.Single);

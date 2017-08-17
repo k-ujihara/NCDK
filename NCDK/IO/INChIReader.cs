@@ -174,10 +174,10 @@ namespace NCDK.IO
 
             public override void StartDocument()
             {
-                chemFile = builder.CreateChemFile();
-                chemSequence = builder.CreateChemSequence();
-                chemModel = builder.CreateChemModel();
-                setOfMolecules = builder.CreateAtomContainerSet<IAtomContainer>();
+                chemFile = builder.NewChemFile();
+                chemSequence = builder.NewChemSequence();
+                chemModel = builder.NewChemModel();
+                setOfMolecules = builder.NewAtomContainerSet<IAtomContainer>();
             }
 
             public override void EndDocument()
@@ -203,8 +203,8 @@ namespace NCDK.IO
                     if (tautomer != null)
                     {
                         Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
-                        tautomer = builder.CreateAtomContainer(inchiTool.ProcessFormula(
-                                setOfMolecules.Builder.CreateAtomContainer(), element.Value));
+                        tautomer = builder.NewAtomContainer(inchiTool.ProcessFormula(
+                                setOfMolecules.Builder.NewAtomContainer(), element.Value));
                     }
                     else
                     {
@@ -249,7 +249,7 @@ namespace NCDK.IO
                 }
                 else if ("structure".Equals(element.Name.LocalName))
                 {
-                    tautomer = builder.CreateAtomContainer();
+                    tautomer = builder.NewAtomContainer();
                 }
                 else
                 {

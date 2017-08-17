@@ -50,9 +50,9 @@ namespace NCDK.Graphs
             {
                 // create ethane
                 IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-                IAtomContainer ethaneMolecule = builder.CreateAtomContainer();
-                ethaneMolecule.Atoms.Add(builder.CreateAtom("C"));
-                ethaneMolecule.Atoms.Add(builder.CreateAtom("C"));
+                IAtomContainer ethaneMolecule = builder.NewAtomContainer();
+                ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
+                ethaneMolecule.Atoms.Add(builder.NewAtom("C"));
                 ethaneMolecule.AddBond(ethaneMolecule.Atoms[0], ethaneMolecule.Atoms[1], BondOrder.Single);
                 ethane = new SpanningTree(ethaneMolecule);
             }
@@ -96,10 +96,10 @@ namespace NCDK.Graphs
             Assert.AreEqual(1, path.Bonds.Count);
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer disconnectedStructure = builder.CreateAtomContainer();
-            disconnectedStructure.Atoms.Add(builder.CreateAtom("Na"));
+            IAtomContainer disconnectedStructure = builder.NewAtomContainer();
+            disconnectedStructure.Atoms.Add(builder.NewAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;
-            disconnectedStructure.Atoms.Add(builder.CreateAtom("Cl"));
+            disconnectedStructure.Atoms.Add(builder.NewAtom("Cl"));
             disconnectedStructure.Atoms[1].FormalCharge = -1;
             path = ethane
                     .GetPath(disconnectedStructure, disconnectedStructure.Atoms[0], disconnectedStructure.Atoms[1]);
@@ -114,10 +114,10 @@ namespace NCDK.Graphs
             Assert.IsFalse(azulene.IsDisconnected);
 
             IChemObjectBuilder builder = azulene.GetSpanningTree().Builder;
-            IAtomContainer disconnectedStructure = builder.CreateAtomContainer();
-            disconnectedStructure.Atoms.Add(builder.CreateAtom("Na"));
+            IAtomContainer disconnectedStructure = builder.NewAtomContainer();
+            disconnectedStructure.Atoms.Add(builder.NewAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;
-            disconnectedStructure.Atoms.Add(builder.CreateAtom("Cl"));
+            disconnectedStructure.Atoms.Add(builder.NewAtom("Cl"));
             disconnectedStructure.Atoms[1].FormalCharge = -1;
             SpanningTree stree = new SpanningTree(disconnectedStructure);
             Assert.IsTrue(stree.IsDisconnected);

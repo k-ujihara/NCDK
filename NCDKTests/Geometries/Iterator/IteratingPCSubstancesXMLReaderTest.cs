@@ -43,7 +43,7 @@ namespace NCDK.IO.Iterator
             using (var sr = new StreamReader(ins))
             using (var reader = new IteratingPCSubstancesXMLReader(sr, Default.ChemObjectBuilder.Instance))
             {
-                set = Default.ChemObjectBuilder.Instance.CreateChemSequence();
+                set = Default.ChemObjectBuilder.Instance.NewChemSequence();
                 foreach (var obj in reader)
                 {
                     Assert.IsNotNull(obj);

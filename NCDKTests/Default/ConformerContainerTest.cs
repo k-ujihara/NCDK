@@ -20,7 +20,7 @@ namespace NCDK.Default
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
+            IAtomContainer container = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             container.SetProperty(CDKPropertyName.Title, title);
             for (int i = 0; i < natom; i++)
             {
@@ -29,7 +29,7 @@ namespace NCDK.Default
                 coord.Y = rnd.NextDouble();
                 coord.Z = rnd.NextDouble();
 
-                IAtom atom = Default.ChemObjectBuilder.Instance.CreateAtom("C", coord);
+                IAtom atom = Default.ChemObjectBuilder.Instance.NewAtom("C", coord);
                 container.Atoms.Add(atom);
             }
 
@@ -37,7 +37,7 @@ namespace NCDK.Default
             {
                 IAtom atom1 = container.Atoms[i];
                 IAtom atom2 = container.Atoms[i + 1];
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(atom1, atom2,
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(atom1, atom2,
                         BondOrder.Single);
                 container.Bonds.Add(bond);
             }

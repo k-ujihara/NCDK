@@ -143,7 +143,7 @@ namespace NCDK.AtomTypes
                     fragment += "H";
                 else if (NumHAtoms > 1) fragment += ("H" + NumHAtoms);
 
-                atomType = atom.Builder.CreateAtomType(fragment, atom.Symbol);
+                atomType = atom.Builder.NewAtomType(fragment, atom.Symbol);
                 atomType.FormalCharge = atom.FormalCharge;
                 if (atom.IsAromatic) atomType.IsAromatic = true;
 

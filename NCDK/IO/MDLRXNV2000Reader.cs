@@ -93,23 +93,23 @@ namespace NCDK.IO
             }
             else if (obj is IReactionSet)
             {
-                IReactionSet reactionSet = obj.Builder.CreateReactionSet();
+                IReactionSet reactionSet = obj.Builder.NewReactionSet();
                 reactionSet.Add(ReadReaction(obj.Builder));
                 return (T)reactionSet;
             }
             else if (obj is IChemModel)
             {
-                IChemModel model = obj.Builder.CreateChemModel();
-                IReactionSet reactionSet = obj.Builder.CreateReactionSet();
+                IChemModel model = obj.Builder.NewChemModel();
+                IReactionSet reactionSet = obj.Builder.NewReactionSet();
                 reactionSet.Add(ReadReaction(obj.Builder));
                 model.ReactionSet = reactionSet;
                 return (T)model;
             }
             else if (obj is IChemFile)
             {
-                IChemFile chemFile = obj.Builder.CreateChemFile();
-                IChemSequence sequence = obj.Builder.CreateChemSequence();
-                sequence.Add((IChemModel)Read(obj.Builder.CreateChemModel()));
+                IChemFile chemFile = obj.Builder.NewChemFile();
+                IChemSequence sequence = obj.Builder.NewChemSequence();
+                sequence.Add((IChemModel)Read(obj.Builder.NewChemModel()));
                 chemFile.Add(sequence);
                 return (T)chemFile;
             }
@@ -147,7 +147,7 @@ namespace NCDK.IO
         /// <returns>The Reaction that was read from the MDL file.</returns>
         private IReaction ReadReaction(IChemObjectBuilder builder)
         {
-            IReaction reaction = builder.CreateReaction();
+            IReaction reaction = builder.NewReaction();
             try
             {
                 input.ReadLine(); // first line should be $RXN
@@ -202,7 +202,7 @@ namespace NCDK.IO
                     // read MDL molfile content
                     // Changed this to mdlv2000 reader
                     MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()), base.ReaderMode);
-                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer reactant = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add reactant
@@ -241,7 +241,7 @@ namespace NCDK.IO
 
                     // read MDL molfile content
                     MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()));
-                    IAtomContainer product = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
+                    IAtomContainer product = (IAtomContainer)reader.Read(builder.NewAtomContainer());
                     reader.Close();
 
                     // add reactant
@@ -266,12 +266,12 @@ namespace NCDK.IO
             // now try to map things, if wanted
             Trace.TraceInformation("Reading atom-atom mapping from file");
             // distribute all atoms over two AtomContainer's
-            IAtomContainer reactingSide = builder.CreateAtomContainer();
+            IAtomContainer reactingSide = builder.NewAtomContainer();
             foreach (var molecule in reaction.Reactants)
             {
                 reactingSide.Add(molecule);
             }
-            IAtomContainer producedSide = builder.CreateAtomContainer();
+            IAtomContainer producedSide = builder.NewAtomContainer();
             foreach (var molecule in reaction.Products)
             {
                 producedSide.Add(molecule);
@@ -291,7 +291,7 @@ namespace NCDK.IO
                             && eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping).Equals(
                                     productAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping)))
                     {
-                        reaction.Mappings.Add(builder.CreateMapping(eductAtom, productAtom));
+                        reaction.Mappings.Add(builder.NewMapping(eductAtom, productAtom));
                         mappingCount++;
                         break;
                     }

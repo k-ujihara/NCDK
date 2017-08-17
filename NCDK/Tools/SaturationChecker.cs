@@ -586,7 +586,7 @@ namespace NCDK.Tools
 
         public void SaturateRingSystems(IAtomContainer atomContainer)
         {
-            IRingSet rs0 = Cycles.FindSSSR(atomContainer.Builder.CreateAtomContainer(atomContainer))
+            IRingSet rs0 = Cycles.FindSSSR(atomContainer.Builder.NewAtomContainer(atomContainer))
                     .ToRingSet();
             var ringSets = RingPartitioner.PartitionRings(rs0);
             IAtom atom = null;

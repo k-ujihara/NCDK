@@ -59,8 +59,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer_IAtom()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom = Default.ChemObjectBuilder.Instance.NewAtom("C");
             atom.ImplicitHydrogenCount = 4;
             mol.Atoms.Add(atom);
 
@@ -89,15 +89,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFlourine()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             atom1.ImplicitHydrogenCount = 0;
             mol.Atoms.Add(atom1);
             for (int i = 0; i < 4; i++)
             {
-                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.CreateAtom("F");
+                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.NewAtom("F");
                 mol.Atoms.Add(floruineAtom);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(floruineAtom, atom1);
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(floruineAtom, atom1);
                 mol.Bonds.Add(bond);
             }
 
@@ -116,15 +116,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestChlorine()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             atom1.ImplicitHydrogenCount = 0;
             mol.Atoms.Add(atom1);
             for (int i = 0; i < 4; i++)
             {
-                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
+                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
                 mol.Atoms.Add(floruineAtom);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(floruineAtom, atom1);
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(floruineAtom, atom1);
                 mol.Bonds.Add(bond);
             }
 
@@ -143,15 +143,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestBromine()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             atom1.ImplicitHydrogenCount = 0;
             mol.Atoms.Add(atom1);
             for (int i = 0; i < 4; i++)
             {
-                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.CreateAtom("Br");
+                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.NewAtom("Br");
                 mol.Atoms.Add(floruineAtom);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(floruineAtom, atom1);
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(floruineAtom, atom1);
                 mol.Bonds.Add(bond);
             }
 
@@ -170,15 +170,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestIodine()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
             atom1.ImplicitHydrogenCount = 0;
             mol.Atoms.Add(atom1);
             for (int i = 0; i < 4; i++)
             {
-                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.CreateAtom("I");
+                IAtom floruineAtom = Default.ChemObjectBuilder.Instance.NewAtom("I");
                 mol.Atoms.Add(floruineAtom);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(floruineAtom, atom1);
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(floruineAtom, atom1);
                 mol.Bonds.Add(bond);
             }
 
@@ -197,10 +197,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestLithium()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("Li");
-            IAtom atom2 = Default.ChemObjectBuilder.Instance.CreateAtom("F");
-            IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(atom1, atom2);
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("Li");
+            IAtom atom2 = Default.ChemObjectBuilder.Instance.NewAtom("F");
+            IBond bond = Default.ChemObjectBuilder.Instance.NewBond(atom1, atom2);
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
             mol.Bonds.Add(bond);
@@ -217,15 +217,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestArsenic()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("As");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom atom1 = Default.ChemObjectBuilder.Instance.NewAtom("As");
             atom1.ImplicitHydrogenCount = 0;
             mol.Atoms.Add(atom1);
             for (int i = 0; i < 3; i++)
             {
-                IAtom atom = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
+                IAtom atom = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
                 mol.Atoms.Add(atom);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(atom, atom1,
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(atom, atom1,
                         BondOrder.Single);
                 mol.Bonds.Add(bond);
             }
@@ -246,17 +246,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestOxygen1()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom carbon = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom carbon = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
 
             carbon.ImplicitHydrogenCount = 1;
             o1.ImplicitHydrogenCount = 1;
             o2.ImplicitHydrogenCount = 0;
 
-            IBond bond1 = Default.ChemObjectBuilder.Instance.CreateBond(carbon, o1, BondOrder.Single);
-            IBond bond2 = Default.ChemObjectBuilder.Instance.CreateBond(carbon, o2, BondOrder.Double);
+            IBond bond1 = Default.ChemObjectBuilder.Instance.NewBond(carbon, o1, BondOrder.Single);
+            IBond bond2 = Default.ChemObjectBuilder.Instance.NewBond(carbon, o2, BondOrder.Double);
 
             mol.Atoms.Add(carbon);
             mol.Atoms.Add(o1);
@@ -281,15 +281,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestOxygen2()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond bond1 = Default.ChemObjectBuilder.Instance.CreateBond(h1, o1, BondOrder.Single);
-            IBond bond2 = Default.ChemObjectBuilder.Instance.CreateBond(o1, o2, BondOrder.Single);
-            IBond bond3 = Default.ChemObjectBuilder.Instance.CreateBond(o2, h2, BondOrder.Single);
+            IBond bond1 = Default.ChemObjectBuilder.Instance.NewBond(h1, o1, BondOrder.Single);
+            IBond bond2 = Default.ChemObjectBuilder.Instance.NewBond(o1, o2, BondOrder.Single);
+            IBond bond3 = Default.ChemObjectBuilder.Instance.NewBond(o2, h2, BondOrder.Single);
 
             mol.Atoms.Add(o1);
             mol.Atoms.Add(o2);
@@ -320,17 +320,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestP4()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom p = Default.ChemObjectBuilder.Instance.CreateAtom("P");
-            IAtom cl1 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IAtom cl2 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IAtom cl3 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom p = Default.ChemObjectBuilder.Instance.NewAtom("P");
+            IAtom cl1 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtom cl2 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtom cl3 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
 
-            IBond bond1 = Default.ChemObjectBuilder.Instance.CreateBond(p, cl1, BondOrder.Single);
-            IBond bond2 = Default.ChemObjectBuilder.Instance.CreateBond(p, cl2, BondOrder.Single);
-            IBond bond3 = Default.ChemObjectBuilder.Instance.CreateBond(p, cl3, BondOrder.Single);
-            IBond bond4 = Default.ChemObjectBuilder.Instance.CreateBond(p, s, BondOrder.Double);
+            IBond bond1 = Default.ChemObjectBuilder.Instance.NewBond(p, cl1, BondOrder.Single);
+            IBond bond2 = Default.ChemObjectBuilder.Instance.NewBond(p, cl2, BondOrder.Single);
+            IBond bond3 = Default.ChemObjectBuilder.Instance.NewBond(p, cl3, BondOrder.Single);
+            IBond bond4 = Default.ChemObjectBuilder.Instance.NewBond(p, s, BondOrder.Double);
 
             mol.Atoms.Add(p);
             mol.Atoms.Add(cl1);
@@ -363,25 +363,25 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestP3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom p = Default.ChemObjectBuilder.Instance.CreateAtom("P");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o3 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom c2 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom c3 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom p = Default.ChemObjectBuilder.Instance.NewAtom("P");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o3 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
 
             c1.ImplicitHydrogenCount = 3;
             c2.ImplicitHydrogenCount = 3;
             c3.ImplicitHydrogenCount = 3;
 
-            IBond bond1 = Default.ChemObjectBuilder.Instance.CreateBond(p, o1, BondOrder.Single);
-            IBond bond2 = Default.ChemObjectBuilder.Instance.CreateBond(p, o2, BondOrder.Single);
-            IBond bond3 = Default.ChemObjectBuilder.Instance.CreateBond(p, o3, BondOrder.Single);
-            IBond bond4 = Default.ChemObjectBuilder.Instance.CreateBond(c1, o1, BondOrder.Single);
-            IBond bond5 = Default.ChemObjectBuilder.Instance.CreateBond(c2, o2, BondOrder.Single);
-            IBond bond6 = Default.ChemObjectBuilder.Instance.CreateBond(c3, o3, BondOrder.Single);
+            IBond bond1 = Default.ChemObjectBuilder.Instance.NewBond(p, o1, BondOrder.Single);
+            IBond bond2 = Default.ChemObjectBuilder.Instance.NewBond(p, o2, BondOrder.Single);
+            IBond bond3 = Default.ChemObjectBuilder.Instance.NewBond(p, o3, BondOrder.Single);
+            IBond bond4 = Default.ChemObjectBuilder.Instance.NewBond(c1, o1, BondOrder.Single);
+            IBond bond5 = Default.ChemObjectBuilder.Instance.NewBond(c2, o2, BondOrder.Single);
+            IBond bond6 = Default.ChemObjectBuilder.Instance.NewBond(c3, o3, BondOrder.Single);
 
             mol.Atoms.Add(p);
             mol.Atoms.Add(o1);
@@ -413,10 +413,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestNa1()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom na = Default.ChemObjectBuilder.Instance.CreateAtom("Na");
-            IAtom cl = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(na, cl, BondOrder.Single);
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom na = Default.ChemObjectBuilder.Instance.NewAtom("Na");
+            IAtom cl = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IBond bond = Default.ChemObjectBuilder.Instance.NewBond(na, cl, BondOrder.Single);
             mol.Atoms.Add(na);
             mol.Atoms.Add(cl);
             mol.Bonds.Add(bond);
@@ -435,19 +435,19 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSi4()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom si = Default.ChemObjectBuilder.Instance.CreateAtom("Si");
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom cl1 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IAtom cl2 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
-            IAtom cl3 = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom si = Default.ChemObjectBuilder.Instance.NewAtom("Si");
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom cl1 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtom cl2 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
+            IAtom cl3 = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
 
             c1.ImplicitHydrogenCount = 3;
 
-            IBond bond1 = Default.ChemObjectBuilder.Instance.CreateBond(si, c1, BondOrder.Single);
-            IBond bond2 = Default.ChemObjectBuilder.Instance.CreateBond(si, cl1, BondOrder.Single);
-            IBond bond3 = Default.ChemObjectBuilder.Instance.CreateBond(si, cl2, BondOrder.Single);
-            IBond bond4 = Default.ChemObjectBuilder.Instance.CreateBond(si, cl3, BondOrder.Single);
+            IBond bond1 = Default.ChemObjectBuilder.Instance.NewBond(si, c1, BondOrder.Single);
+            IBond bond2 = Default.ChemObjectBuilder.Instance.NewBond(si, cl1, BondOrder.Single);
+            IBond bond3 = Default.ChemObjectBuilder.Instance.NewBond(si, cl2, BondOrder.Single);
+            IBond bond4 = Default.ChemObjectBuilder.Instance.NewBond(si, cl3, BondOrder.Single);
 
             mol.Atoms.Add(si);
             mol.Atoms.Add(c1);
@@ -480,8 +480,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS2()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
             s.ImplicitHydrogenCount = 2;
 
             mol.Atoms.Add(s);
@@ -492,12 +492,12 @@ namespace NCDK.AtomTypes
             matched = matcher.FindMatchingAtomType(mol, mol.Atoms[0]);
             AssertAtomType(testedAtomTypes, "S2", matched);
 
-            mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
-            IAtom h1 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
-            IAtom h2 = Default.ChemObjectBuilder.Instance.CreateAtom("H");
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, h1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(s, h2, BondOrder.Single);
+            mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom h1 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IAtom h2 = Default.ChemObjectBuilder.Instance.NewAtom("H");
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, h1, BondOrder.Single);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, h2, BondOrder.Single);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(h1);
@@ -520,13 +520,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, o1, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(s, o2, BondOrder.Double);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, o1, BondOrder.Double);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, o2, BondOrder.Double);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(o1);
@@ -552,14 +552,14 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS4()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
             mol.Atoms.Add(s);
             for (int i = 0; i < 6; i++)
             {
-                IAtom f = Default.ChemObjectBuilder.Instance.CreateAtom("F");
+                IAtom f = Default.ChemObjectBuilder.Instance.NewAtom("F");
                 mol.Atoms.Add(f);
-                IBond bond = Default.ChemObjectBuilder.Instance.CreateBond(s, f, BondOrder.Single);
+                IBond bond = Default.ChemObjectBuilder.Instance.NewBond(s, f, BondOrder.Single);
                 mol.Bonds.Add(bond);
             }
 
@@ -580,15 +580,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestS4oxide()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom s = Default.ChemObjectBuilder.Instance.CreateAtom("S");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o3 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom s = Default.ChemObjectBuilder.Instance.NewAtom("S");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o3 = Default.ChemObjectBuilder.Instance.NewAtom("O");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(s, o1, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(s, o2, BondOrder.Double);
-            IBond b3 = Default.ChemObjectBuilder.Instance.CreateBond(s, o3, BondOrder.Double);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(s, o1, BondOrder.Double);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(s, o2, BondOrder.Double);
+            IBond b3 = Default.ChemObjectBuilder.Instance.NewBond(s, o3, BondOrder.Double);
 
             mol.Atoms.Add(s);
             mol.Atoms.Add(o1);
@@ -619,13 +619,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestN3acid()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom n = Default.ChemObjectBuilder.Instance.CreateAtom("N");
-            IAtom o = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom h = Default.ChemObjectBuilder.Instance.CreateAtom("H");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom n = Default.ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom o = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom h = Default.ChemObjectBuilder.Instance.NewAtom("H");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(n, o, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(n, h, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(n, o, BondOrder.Double);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(n, h, BondOrder.Single);
 
             mol.Atoms.Add(n);
             mol.Atoms.Add(o);
@@ -650,16 +650,16 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestN3cyanide()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom n = Default.ChemObjectBuilder.Instance.CreateAtom("N");
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom c2 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom n = Default.ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
 
             c1.ImplicitHydrogenCount = 0;
             c2.ImplicitHydrogenCount = 3;
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(n, c1, BondOrder.Triple);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(c1, c2, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(n, c1, BondOrder.Triple);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(c1, c2, BondOrder.Single);
 
             mol.Atoms.Add(n);
             mol.Atoms.Add(c1);
@@ -685,17 +685,17 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestN5()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom n = Default.ChemObjectBuilder.Instance.CreateAtom("N");
-            IAtom o1 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom o2 = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IAtom c = Default.ChemObjectBuilder.Instance.CreateAtom("C");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom n = Default.ChemObjectBuilder.Instance.NewAtom("N");
+            IAtom o1 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom o2 = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IAtom c = Default.ChemObjectBuilder.Instance.NewAtom("C");
 
             c.ImplicitHydrogenCount = 3;
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(n, o1, BondOrder.Double);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(n, o2, BondOrder.Double);
-            IBond b3 = Default.ChemObjectBuilder.Instance.CreateBond(n, c, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(n, o1, BondOrder.Double);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(n, o2, BondOrder.Double);
+            IBond b3 = Default.ChemObjectBuilder.Instance.NewBond(n, c, BondOrder.Single);
 
             mol.Atoms.Add(n);
             mol.Atoms.Add(o1);
@@ -726,15 +726,15 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestB3()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom b = Default.ChemObjectBuilder.Instance.CreateAtom("B");
-            IAtom f1 = Default.ChemObjectBuilder.Instance.CreateAtom("F");
-            IAtom f2 = Default.ChemObjectBuilder.Instance.CreateAtom("F");
-            IAtom f3 = Default.ChemObjectBuilder.Instance.CreateAtom("F");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom b = Default.ChemObjectBuilder.Instance.NewAtom("B");
+            IAtom f1 = Default.ChemObjectBuilder.Instance.NewAtom("F");
+            IAtom f2 = Default.ChemObjectBuilder.Instance.NewAtom("F");
+            IAtom f3 = Default.ChemObjectBuilder.Instance.NewAtom("F");
 
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(b, f1, BondOrder.Single);
-            IBond b2 = Default.ChemObjectBuilder.Instance.CreateBond(b, f2, BondOrder.Single);
-            IBond b3 = Default.ChemObjectBuilder.Instance.CreateBond(b, f3, BondOrder.Single);
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(b, f1, BondOrder.Single);
+            IBond b2 = Default.ChemObjectBuilder.Instance.NewBond(b, f2, BondOrder.Single);
+            IBond b3 = Default.ChemObjectBuilder.Instance.NewBond(b, f3, BondOrder.Single);
 
             mol.Atoms.Add(b);
             mol.Atoms.Add(f1);
@@ -763,10 +763,10 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSe2()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom se = Default.ChemObjectBuilder.Instance.CreateAtom("Se");
-            IAtom o = Default.ChemObjectBuilder.Instance.CreateAtom("O");
-            IBond b1 = Default.ChemObjectBuilder.Instance.CreateBond(se, o, BondOrder.Double);
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom se = Default.ChemObjectBuilder.Instance.NewAtom("Se");
+            IAtom o = Default.ChemObjectBuilder.Instance.NewAtom("O");
+            IBond b1 = Default.ChemObjectBuilder.Instance.NewBond(se, o, BondOrder.Double);
             mol.Atoms.Add(se);
             mol.Atoms.Add(o);
             mol.Bonds.Add(b1);

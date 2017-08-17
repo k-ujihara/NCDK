@@ -128,14 +128,14 @@ namespace NCDK.Graphs.InChI
             }
 
             //molecule = new AtomContainer();
-            molecule = builder.CreateAtomContainer();
+            molecule = builder.NewAtomContainer();
 
             IDictionary<NInchiAtom, IAtom> inchiCdkAtomMap = new Dictionary<NInchiAtom, IAtom>();
 
             for (int i = 0; i < output.Atoms.Count; i++)
             {
                 NInchiAtom iAt = output.Atoms[i];
-                IAtom cAt = builder.CreateAtom();
+                IAtom cAt = builder.NewAtom();
 
                 inchiCdkAtomMap[iAt] = cAt;
 
@@ -182,7 +182,7 @@ namespace NCDK.Graphs.InChI
 
                 IAtom atO = inchiCdkAtomMap[iBo.OriginAtom];
                 IAtom atT = inchiCdkAtomMap[iBo.TargetAtom];
-                IBond cBo = builder.CreateBond(atO, atT);
+                IBond cBo = builder.NewBond(atO, atT);
 
                 INCHI_BOND_TYPE type = iBo.BondType;
                 if (type == INCHI_BOND_TYPE.Single)
@@ -276,7 +276,7 @@ namespace NCDK.Graphs.InChI
 
                     if (stereo0d.StereoType == INCHI_STEREOTYPE.Tetrahedral)
                     {
-                        stereoElement = builder.CreateTetrahedralChirality(focus, neighbors, stereo);
+                        stereoElement = builder.NewTetrahedralChirality(focus, neighbors, stereo);
                     }
                     else if (stereo0d.StereoType == INCHI_STEREOTYPE.Allene)
                     {

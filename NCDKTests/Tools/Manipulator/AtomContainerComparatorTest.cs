@@ -35,7 +35,7 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare_Null_IAtomContainer()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloPentane = builder.CreateRing(5, "C");
+            IRing cycloPentane = builder.NewRing(5, "C");
 
             // Instantiate the comparator
             IComparer<IAtomContainer> comparator = new AtomContainerComparator<IAtomContainer>();
@@ -77,7 +77,7 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare_IAtomContainer_Null()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloPentane = builder.CreateRing(5, "C");
+            IRing cycloPentane = builder.NewRing(5, "C");
 
             // Instantiate the comparator
             IComparer<IAtomContainer> comparator = new AtomContainerComparator<IAtomContainer>();
@@ -91,8 +91,8 @@ namespace NCDK.Tools.Manipulator
         {
             // Create some IAtomContainers
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloPentane = builder.CreateRing(5, "C");
-            IRing cycloHexane = builder.CreateRing(6, "C");
+            IRing cycloPentane = builder.NewRing(5, "C");
+            IRing cycloHexane = builder.NewRing(6, "C");
 
             // Instantiate the comparator
             IComparer<IAtomContainer> comparator = new AtomContainerComparator<IAtomContainer>();
@@ -107,8 +107,8 @@ namespace NCDK.Tools.Manipulator
         {
             // Create some IAtomContainers
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloHexane = builder.CreateRing(6, "C");
-            IAtomContainer hexaneNitrogen = builder.CreateRing(6, "N");
+            IRing cycloHexane = builder.NewRing(6, "C");
+            IAtomContainer hexaneNitrogen = builder.NewRing(6, "N");
             hexaneNitrogen.Bonds.RemoveAt(0);
 
             // Instantiate the comparator
@@ -124,9 +124,9 @@ namespace NCDK.Tools.Manipulator
         {
             // Create some IAtomContainers
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer hexaneNitrogen = builder.CreateRing(6, "N");
+            IAtomContainer hexaneNitrogen = builder.NewRing(6, "N");
             hexaneNitrogen.Bonds.RemoveAt(0);
-            IRing cycloHexaneNitrogen = builder.CreateRing(6, "N");
+            IRing cycloHexaneNitrogen = builder.NewRing(6, "N");
 
             // Instantiate the comparator
             IComparer<IAtomContainer> comparator = new AtomContainerComparator<IAtomContainer>();
@@ -141,8 +141,8 @@ namespace NCDK.Tools.Manipulator
         {
             // Create some IAtomContainers
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IRing cycloHexaneNitrogen = builder.CreateRing(6, "N");
-            IRing cycloHexeneNitrogen = builder.CreateRing(6, "N");
+            IRing cycloHexaneNitrogen = builder.NewRing(6, "N");
+            IRing cycloHexeneNitrogen = builder.NewRing(6, "N");
             cycloHexeneNitrogen.Bonds[0].Order = BondOrder.Double;
 
             // Instantiate the comparator

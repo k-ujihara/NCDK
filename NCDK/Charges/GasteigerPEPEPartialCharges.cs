@@ -140,7 +140,7 @@ namespace NCDK.Charges
             var acSet = gRN.GetContainers(RemovingFlagsAromaticity(ac));
             //        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.Detect(RemovingFlagsAromaticity(ac));
 
-            var iSet = ac.Builder.CreateAtomContainerSet();
+            var iSet = ac.Builder.NewAtomContainerSet();
             iSet.Add(ac);
 
             if (acSet != null)
@@ -456,11 +456,11 @@ namespace NCDK.Charges
         /// <returns></returns>
         private IAtomContainerSet<IAtomContainer> GetHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet<IAtomContainer> iSet)
         {
-            var set = ac.Builder.CreateAtomContainerSet();
+            var set = ac.Builder.NewAtomContainerSet();
             IReactionProcess type = new HeterolyticCleavageSBReaction();
             CleanFlagReactiveCenter(ac);
             bool found = false; /* control obtained containers */
-            var setOfReactants = ac.Builder.CreateAtomContainerSet();
+            var setOfReactants = ac.Builder.NewAtomContainerSet();
             /* search of reactive center. */
             output: for (int i = 0; i < ac.Bonds.Count; i++)
             {
@@ -504,7 +504,7 @@ namespace NCDK.Charges
             for (int i = 0; i < setOfReactions.Count; i++)
             {
                 type = new HyperconjugationReaction();
-                var setOfM2 = ac.Builder.CreateAtomContainerSet();
+                var setOfM2 = ac.Builder.NewAtomContainerSet();
                 IAtomContainer mol = setOfReactions[i].Products[0];
                 for (int k = 0; k < mol.Bonds.Count; k++)
                 {

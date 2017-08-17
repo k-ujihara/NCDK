@@ -46,11 +46,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestChloroButane()
         {
-            IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            IAtom c1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom c2 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom c3 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
-            IAtom cl = Default.ChemObjectBuilder.Instance.CreateAtom("Cl");
+            IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom c1 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c2 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom c3 = Default.ChemObjectBuilder.Instance.NewAtom("C");
+            IAtom cl = Default.ChemObjectBuilder.Instance.NewAtom("Cl");
             mol.Atoms.Add(c1);
             mol.Atoms.Add(c2);
             mol.Atoms.Add(c3);

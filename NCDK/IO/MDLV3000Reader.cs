@@ -102,7 +102,7 @@ namespace NCDK.IO
         public IAtomContainer ReadConnectionTable(IChemObjectBuilder builder)
         {
             Trace.TraceInformation("Reading CTAB block");
-            IAtomContainer readData = builder.CreateAtomContainer();
+            IAtomContainer readData = builder.NewAtomContainer();
             bool foundEND = false;
             string lastLine = ReadHeader(readData);
             while (!foundEND)
@@ -235,7 +235,7 @@ namespace NCDK.IO
                 else
                 {
                     Debug.WriteLine("Parsing atom from: " + command);
-                    IAtom atom = readData.Builder.CreateAtom();
+                    IAtom atom = readData.Builder.NewAtom();
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
                     // parse the index
                     try
@@ -260,23 +260,23 @@ namespace NCDK.IO
                     }
                     else if ("A".Equals(element))
                     {
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else if ("Q".Equals(element))
                     {
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else if ("*".Equals(element))
                     {
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else if ("LP".Equals(element))
                     {
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else if ("L".Equals(element))
                     {
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else if (element.Length > 0 && element[0] == 'R')
                     {
@@ -296,7 +296,7 @@ namespace NCDK.IO
                             }
                             element = "R" + Rnumber;
                         }
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else
                     {
@@ -305,7 +305,7 @@ namespace NCDK.IO
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
                         }
-                        atom = readData.Builder.CreatePseudoAtom(element);
+                        atom = readData.Builder.NewPseudoAtom(element);
                         atom.Symbol = element;
                     }
 
@@ -362,7 +362,7 @@ namespace NCDK.IO
                                         int numElectons = MDLV2000Writer.SpinMultiplicity.OfValue(int.Parse(value)).SingleElectrons;
                                         while (numElectons-- > 0)
                                         {
-                                            readData.SingleElectrons.Add(readData.Builder.CreateSingleElectron(atom));
+                                            readData.SingleElectrons.Add(readData.Builder.NewSingleElectron(atom));
                                         }
                                         break;
                                     case "VAL":
@@ -431,7 +431,7 @@ namespace NCDK.IO
                 {
                     Debug.WriteLine("Parsing bond from: " + command);
                     var tokenizer = Strings.Tokenize(command).GetEnumerator();
-                    IBond bond = readData.Builder.CreateBond();
+                    IBond bond = readData.Builder.NewBond();
                     // parse the index
                     try
                     {
@@ -663,7 +663,7 @@ namespace NCDK.IO
                                 IAtom replacement = original;
                                 if (!(original is IPseudoAtom))
                                 {
-                                    replacement = readData.Builder.CreatePseudoAtom(original);
+                                    replacement = readData.Builder.NewPseudoAtom(original);
                                 }
                                 ((IPseudoAtom)replacement).Label = label;
                                 if (replacement != original)

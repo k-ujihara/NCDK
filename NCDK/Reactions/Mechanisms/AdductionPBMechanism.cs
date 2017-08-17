@@ -73,7 +73,7 @@ namespace NCDK.Reactions.Mechanisms
             int posBond1 = atomContainerSet[0].Bonds.IndexOf(bond1);
 
             BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
-            IBond newBond = molecule1.Builder.CreateBond(atom2C, atom3C, BondOrder.Single);
+            IBond newBond = molecule1.Builder.NewBond(atom2C, atom3C, BondOrder.Single);
             reactantCloned.Bonds.Add(newBond);
 
             int charge = atom1C.FormalCharge.Value;
@@ -95,19 +95,19 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom1C.Builder.CreateReaction();
+            IReaction reaction = atom1C.Builder.NewReaction();
             reaction.Reactants.Add(molecule1);
 
             /* mapping */
             foreach (var atom in molecule1.Atoms)
             {
-                IMapping mapping = atom1C.Builder.CreateMapping(atom,
+                IMapping mapping = atom1C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule1.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }
             foreach (var atom in molecule2.Atoms)
             {
-                IMapping mapping = atom1C.Builder.CreateMapping(atom,
+                IMapping mapping = atom1C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule2.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

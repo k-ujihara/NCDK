@@ -544,7 +544,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// <returns>an AtomContainer</returns>
         public static IAtomContainer Project(IList<CDKRMap> rMapList, IAtomContainer graph, int key)
         {
-            IAtomContainer atomContainer = graph.Builder.CreateAtomContainer();
+            IAtomContainer atomContainer = graph.Builder.NewAtomContainer();
 
             IDictionary<IAtom, IAtom> table = new Dictionary<IAtom, IAtom>();
             IAtom atom1;
@@ -578,7 +578,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
                     atomContainer.Atoms.Add(atom2);
                     table[atom] = atom2;
                 }
-                IBond newBond = graph.Builder.CreateBond(atom1, atom2, bond.Order);
+                IBond newBond = graph.Builder.NewBond(atom1, atom2, bond.Order);
                 newBond.IsAromatic = bond.IsAromatic;
                 atomContainer.Bonds.Add(newBond);
             }

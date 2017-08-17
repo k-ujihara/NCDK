@@ -157,9 +157,9 @@ namespace NCDK.IO
         //TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)?
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence sequence = file.Builder.CreateChemSequence(); // TODO Answer the question : Is this line needed ?
-            IChemModel model = file.Builder.CreateChemModel(); // TODO Answer the question : Is this line needed ?
-            var moleculeSet = file.Builder.CreateAtomContainerSet();
+            IChemSequence sequence = file.Builder.NewChemSequence(); // TODO Answer the question : Is this line needed ?
+            IChemModel model = file.Builder.NewChemModel(); // TODO Answer the question : Is this line needed ?
+            var moleculeSet = file.Builder.NewAtomContainerSet();
 
             model.MoleculeSet = moleculeSet; //TODO Answer the question : Should I do this?
             sequence.Add(model); //TODO Answer the question : Should I do this?
@@ -173,7 +173,7 @@ namespace NCDK.IO
                 {
                     // The following line do no contain data, so it is ignored.
                     this.input.ReadLine();
-                    moleculeSet.Add(this.ReadCoordinates(file.Builder.CreateAtomContainer(),
+                    moleculeSet.Add(this.ReadCoordinates(file.Builder.NewAtomContainer(),
                             GamessReader.BohrUnit));
                     //break; //<- stops when the first set of coordinates is found.
                 }
@@ -183,7 +183,7 @@ namespace NCDK.IO
                     this.input.ReadLine();
                     this.input.ReadLine();
 
-                    moleculeSet.Add(this.ReadCoordinates(file.Builder.CreateAtomContainer(),
+                    moleculeSet.Add(this.ReadCoordinates(file.Builder.NewAtomContainer(),
                             GamessReader.AngstromUnit));
                     //break; //<- stops when the first set of coordinates is found.
                 }
@@ -266,7 +266,7 @@ namespace NCDK.IO
                         throw new IOException("Error reading coordinates");
                     }
                 }
-                IAtom atom = molecule.Builder.CreateAtom(atomicSymbol,
+                IAtom atom = molecule.Builder.NewAtom(atomicSymbol,
                         new Vector3(coordinates[0], coordinates[1], coordinates[2]));
                 molecule.Atoms.Add(atom);
             }

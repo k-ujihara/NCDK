@@ -46,10 +46,10 @@ namespace NCDK
             IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
             IChemObjectBuilder builder = som.Builder;
             T con1 = NewContainerObject();
-            con1.Atoms.Add(builder.CreateAtom("C"));
-            con1.Atoms.Add(builder.CreateAtom("C"));
+            con1.Atoms.Add(builder.NewAtom("C"));
+            con1.Atoms.Add(builder.NewAtom("C"));
             T con2 = NewContainerObject();
-            con2.Atoms.Add(builder.CreateAtom("C"));
+            con2.Atoms.Add(builder.NewAtom("C"));
             som.Add(con1);
             som.Add(con2);
             Assert.IsNotNull(som[0]);
@@ -76,10 +76,10 @@ namespace NCDK
             T a = NewContainerObject();
             T b = NewContainerObject();
 
-            a.Atoms.Add(builder.CreateAtom("C"));
-            a.Atoms.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.NewAtom("C"));
+            a.Atoms.Add(builder.NewAtom("C"));
 
-            b.Atoms.Add(builder.CreateAtom("C"));
+            b.Atoms.Add(builder.NewAtom("C"));
 
             set.Add(a, 1);
             set.Add(b, 2);
@@ -132,9 +132,9 @@ namespace NCDK
             T a = NewContainerObject();
             T b = NewContainerObject();
 
-            a.Atoms.Add(builder.CreateAtom("C"));
-            a.Atoms.Add(builder.CreateAtom("C"));
-            b.Atoms.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.NewAtom("C"));
+            a.Atoms.Add(builder.NewAtom("C"));
+            b.Atoms.Add(builder.NewAtom("C"));
 
             set.Add(a);
             set.Add(b);
@@ -220,7 +220,7 @@ namespace NCDK
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
 
-            IAtomContainerSet<IAtomContainer> tested = som.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> tested = som.Builder.NewAtomContainerSet();
             Assert.AreEqual(0, tested.Count);
             foreach (var m in som)
                 tested.Add(m);
@@ -574,7 +574,7 @@ namespace NCDK
 
     //    Assert.IsTrue(set.IsEmpty, "new container set should be empty");
 
-    //    set.Add(set.Builder.CreateAtomContainer());
+    //    set.Add(set.Builder.NewAtomContainer());
 
     //    Assert.IsFalse(set.IsEmpty, "container set with a single container should not be empty");
 

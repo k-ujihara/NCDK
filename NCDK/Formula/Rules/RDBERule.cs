@@ -148,7 +148,7 @@ namespace NCDK.Formula.Rules
             var nV = new List<int>(); // number of valence changing
             foreach (var isotope in formula.Isotopes)
             {
-                int[] valence = GetOxidationState(formula.Builder.CreateAtom(isotope.Symbol));
+                int[] valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
                 if (valence.Length != 1)
                 {
                     for (int i = 0; i < valence.Length; i++)
@@ -156,7 +156,7 @@ namespace NCDK.Formula.Rules
                         nV.Add(valence[i]);
                     }
                     nE += MolecularFormulaManipulator.GetElementCount(formula,
-                            formula.Builder.CreateElement(isotope.Symbol));
+                            formula.Builder.NewElement(isotope.Symbol));
                 }
             }
 
@@ -165,7 +165,7 @@ namespace NCDK.Formula.Rules
             {
                 foreach (var isotope in formula.Isotopes)
                 {
-                    int[] valence = GetOxidationState(formula.Builder.CreateAtom(isotope.Symbol));
+                    int[] valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
                     double value = (valence[0] - 2) * formula.GetCount(isotope) / 2.0;
                     RDBE += value;
                 }
@@ -177,7 +177,7 @@ namespace NCDK.Formula.Rules
                 double RDBE_1 = 0;
                 foreach (var isotope in formula.Isotopes)
                 {
-                    int[] valence = GetOxidationState(formula.Builder.CreateAtom(isotope.Symbol));
+                    int[] valence = GetOxidationState(formula.Builder.NewAtom(isotope.Symbol));
                     double value = (valence[0] - 2) * formula.GetCount(isotope) * 0.5;
                     RDBE_1 += value;
                 }

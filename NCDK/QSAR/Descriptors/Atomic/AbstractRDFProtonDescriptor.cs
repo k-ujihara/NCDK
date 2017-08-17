@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // ///////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
             // ///////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
 
-            IAtomContainer mol = varAtomContainer.Builder.CreateAtomContainer(varAtomContainer);
+            IAtomContainer mol = varAtomContainer.Builder.NewAtomContainer(varAtomContainer);
             if (varAtomContainer != acold)
             {
                 acold = varAtomContainer;

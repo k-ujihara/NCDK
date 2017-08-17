@@ -51,20 +51,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAffinityDescriptor1()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Double);
             mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("Cl"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[6], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -82,11 +82,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAffinityDescriptor2()
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Atoms.Add(builder.CreateAtom("C"));
-            mol.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer mol = builder.NewAtomContainer();
+            mol.Atoms.Add(builder.NewAtom("C"));
+            mol.Atoms.Add(builder.NewAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Atoms.Add(builder.CreateAtom("Cl"));
+            mol.Atoms.Add(builder.NewAtom("Cl"));
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
 
             AddExplicitHydrogens(mol);

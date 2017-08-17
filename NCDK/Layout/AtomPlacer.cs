@@ -312,7 +312,7 @@ namespace NCDK.Layout
         /// <param name="bondLength">The factor used to scale the initialBondVector</param>
         public void PlaceLinearChain(IAtomContainer atomContainer, Vector2 initialBondVector, double bondLength)
         {
-            IAtomContainer withh = atomContainer.Builder.CreateAtomContainer(atomContainer);
+            IAtomContainer withh = atomContainer.Builder.NewAtomContainer(atomContainer);
 
             // BUGFIX - withh does not have cloned cloned atoms, so changes are
             // reflected in our atom container. If we're using implicit hydrogens
@@ -550,7 +550,7 @@ namespace NCDK.Layout
 
             startAtom = molecule.Atoms[bestStartAtom];
             //endAtom = Molecule.GetAtomAt(bestEndAtom);
-            IAtomContainer path = molecule.Builder.CreateAtomContainer();
+            IAtomContainer path = molecule.Builder.NewAtomContainer();
             path.Atoms.Add(startAtom);
             path = GetLongestUnplacedChain(molecule, startAtom);
             //PathTools.DepthFirstTargetSearch(molecule, startAtom, endAtom, path);
@@ -580,7 +580,7 @@ namespace NCDK.Layout
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
                 molecule.Atoms[f].IsVisited = false;
-                pathes[f] = molecule.Builder.CreateAtomContainer();
+                pathes[f] = molecule.Builder.NewAtomContainer();
                 pathes[f].Atoms.Add(startAtom);
             }
             var startSphere = new List<IAtom>();
@@ -640,7 +640,7 @@ namespace NCDK.Layout
                         {
                             nextAtomNr = ac.Atoms.IndexOf(nextAtom);
                             Debug.WriteLine("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                            pathes[nextAtomNr] = ac.Builder.CreateAtomContainer(pathes[atomNr]);
+                            pathes[nextAtomNr] = ac.Builder.NewAtomContainer(pathes[atomNr]);
                             Debug.WriteLine("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
                             pathes[nextAtomNr].Atoms.Add(nextAtom);
                             Debug.WriteLine("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
@@ -771,7 +771,7 @@ namespace NCDK.Layout
         /// <returns>An AtomContainer containing all the placed atoms</returns>
         static public IAtomContainer GetPlacedAtoms(IAtomContainer ac)
         {
-            IAtomContainer ret = ac.Builder.CreateAtomContainer();
+            IAtomContainer ret = ac.Builder.NewAtomContainer();
             for (int f = 0; f < ac.Atoms.Count; f++)
             {
                 if (ac.Atoms[f].IsPlaced)

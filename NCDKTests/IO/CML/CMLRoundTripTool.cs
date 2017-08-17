@@ -81,7 +81,7 @@ namespace NCDK.IO.CML
             IChemFile file;
             using (var reader = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlString))))
             {
-                file = (IChemFile)reader.Read(model.Builder.CreateChemFile());
+                file = (IChemFile)reader.Read(model.Builder.NewChemFile());
             }
             Assert.IsNotNull(file);
             Assert.AreEqual(1, file.Count);

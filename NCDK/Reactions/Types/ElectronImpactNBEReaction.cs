@@ -72,7 +72,7 @@ namespace NCDK.Reactions.Types
                 throw new CDKException("ElectronImpactNBEReaction don't expects agents");
             }
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
@@ -85,7 +85,7 @@ namespace NCDK.Reactions.Types
                 {
                     var atomList = new List<IAtom>();
                     atomList.Add(atom);
-                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet();
+                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                     moleculeSet.Add(reactant);
                     IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, null);
                     if (reaction == null)

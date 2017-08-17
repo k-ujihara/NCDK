@@ -436,9 +436,9 @@ namespace NCDK.Smiles
             var agents = reaction.Agents;
             var products = reaction.Products;
 
-            IAtomContainer reactantPart = reaction.Builder.CreateAtomContainer();
-            IAtomContainer agentPart = reaction.Builder.CreateAtomContainer();
-            IAtomContainer productPart = reaction.Builder.CreateAtomContainer();
+            IAtomContainer reactantPart = reaction.Builder.NewAtomContainer();
+            IAtomContainer agentPart = reaction.Builder.NewAtomContainer();
+            IAtomContainer productPart = reaction.Builder.NewAtomContainer();
 
             List<Sgroup> sgroups = new List<Sgroup>();
 
@@ -488,7 +488,7 @@ namespace NCDK.Smiles
 
             if (SmiFlavor.IsSet(flavour, SmiFlavor.CxSmilesWithCoords))
             {
-                IAtomContainer unified = reaction.Builder.CreateAtomContainer();
+                IAtomContainer unified = reaction.Builder.NewAtomContainer();
                 unified.Add(reactantPart);
                 unified.Add(agentPart);
                 unified.Add(productPart);

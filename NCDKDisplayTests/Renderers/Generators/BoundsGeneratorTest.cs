@@ -49,7 +49,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestEmptyReaction()
         {
-            IReaction emptyReaction = base.builder.CreateReaction();
+            IReaction emptyReaction = base.builder.NewReaction();
 
             // nothing should be made
             var root = generator.Generate(emptyReaction, model);

@@ -90,7 +90,7 @@ namespace NCDK.Default
 
             Monomer monomer = new Monomer();
             monomer.MonomerName = "TYR55";
-            IAtom atom = monomer.Builder.CreateAtom("C");
+            IAtom atom = monomer.Builder.NewAtom("C");
             oPolymer.AddAtom(atom, monomer);
 
             Polymer clone = (Polymer)oPolymer.Clone();

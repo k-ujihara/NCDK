@@ -52,8 +52,8 @@ namespace NCDK.IO.CML
             {
                 //            cdo.StartObject("Reaction");
                 if (CurrentReactionSet == null)
-                    CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
-                CurrentReaction = CurrentChemFile.Builder.CreateReaction();
+                    CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
+                CurrentReaction = CurrentChemFile.Builder.NewReaction();
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null) CurrentReaction.Id = id;
                 //                cdo.SetObjectProperty("Reaction", "id", id);
@@ -61,7 +61,7 @@ namespace NCDK.IO.CML
             else if ("reactionList".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("ReactionSet");
-                CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
+                CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null) CurrentReactionSet.Id = id;
                 //                cdo.SetObjectProperty("reactionList", "id", id);
@@ -72,10 +72,10 @@ namespace NCDK.IO.CML
                 if (CurrentReaction == null)
                 {
                     if (CurrentReactionSet == null)
-                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
-                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
+                        CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.NewReaction();
                 }
-                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
 #if DEBUG
                 objectType = "Reactant";
 #endif
@@ -95,10 +95,10 @@ namespace NCDK.IO.CML
                 if (CurrentReaction == null)
                 {
                     if (CurrentReactionSet == null)
-                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
-                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
+                        CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.NewReaction();
                 }
-                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
 #if DEBUG
                 objectType = "Product";
 #endif
@@ -118,10 +118,10 @@ namespace NCDK.IO.CML
                 if (CurrentReaction == null)
                 {
                     if (CurrentReactionSet == null)
-                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
-                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
+                        CurrentReactionSet = CurrentChemFile.Builder.NewReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.NewReaction();
                 }
-                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.NewAtomContainer();
 #if DEBUG
                 objectType = "Agent";
 #endif
@@ -164,7 +164,7 @@ namespace NCDK.IO.CML
                         // happens when the reaction is defined before the molecule set
                         if (atomC == null)
                         {
-                            atomC = CurrentChemFile.Builder.CreateAtomContainer();
+                            atomC = CurrentChemFile.Builder.NewAtomContainer();
                             atomC.Id = ref_;
                             CurrentMoleculeSet.Add(atomC);
                         }

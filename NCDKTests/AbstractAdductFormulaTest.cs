@@ -33,17 +33,17 @@ namespace NCDK
         [TestMethod()]
         public override void TestSize()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
             Assert.AreEqual(0, mfS.Count);
         }
 
         [TestMethod()]
         public virtual void TestAddIMolecularFormula()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count);
         }
@@ -52,11 +52,11 @@ namespace NCDK
 
         public override void TestAdd_IMolecularFormulaSet()
         {
-            IAdductFormula adduct = Builder.CreateAdductFormula();
-            IMolecularFormulaSet mfSet = Builder.CreateMolecularFormulaSet();
-            mfSet.Add(Builder.CreateMolecularFormula());
-            mfSet.Add(Builder.CreateMolecularFormula());
-            mfSet.Add(Builder.CreateMolecularFormula());
+            IAdductFormula adduct = Builder.NewAdductFormula();
+            IMolecularFormulaSet mfSet = Builder.NewMolecularFormulaSet();
+            mfSet.Add(Builder.NewMolecularFormula());
+            mfSet.Add(Builder.NewMolecularFormula());
+            mfSet.Add(Builder.NewMolecularFormula());
             adduct.AddRange(mfSet);
 
             Assert.AreEqual(3, adduct.Count);
@@ -66,19 +66,19 @@ namespace NCDK
 
         public override void TestIterator()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
         }
 
         [TestMethod()]
         public override void TestMolecularFormulas()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count);
             int count = 0;
@@ -93,12 +93,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAdd_IAdductFormula()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
-            IAdductFormula tested = Builder.CreateAdductFormula();
+            IAdductFormula tested = Builder.NewAdductFormula();
             Assert.AreEqual(0, tested.Count);
             tested.AddRange(mfS);
             Assert.AreEqual(3, tested.Count);
@@ -107,10 +107,10 @@ namespace NCDK
         [TestMethod()]
         public override void TestGetMolecularFormula_int()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.IsNotNull(mfS[2]); // third molecule should exist
         }
@@ -118,18 +118,18 @@ namespace NCDK
         [TestMethod()]
         public override void TestAddMolecularFormula_IMolecularFormula()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(5, mfS.Count);
 
             // now test it to make sure it properly grows the array
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(7, mfS.Count);
         }
@@ -137,13 +137,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMolecularFormulas_int()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
 
             Assert.AreEqual(0, mfS.Count);
 
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
-            mfS.Add(Builder.CreateMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
+            mfS.Add(Builder.NewMolecularFormula());
 
             Assert.AreEqual(3, mfS.Count);
             Assert.IsNotNull(mfS[0]);
@@ -154,12 +154,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestContains_IIsotope()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
 
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope h1 = Builder.CreateIsotope("H");
-            IIsotope h2 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope h1 = Builder.NewIsotope("H");
+            IIsotope h2 = Builder.NewIsotope("H");
             h2.ExactMass = 2.00055;
 
             mf.Add(carb);
@@ -175,12 +175,12 @@ namespace NCDK
         [TestMethod()]
         public override void TestContains_IMolecularFormula()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
 
-            IMolecularFormula mf = Builder.CreateMolecularFormula();
-            IIsotope carb = Builder.CreateIsotope("C");
-            IIsotope h1 = Builder.CreateIsotope("H");
-            IIsotope h2 = Builder.CreateIsotope("H");
+            IMolecularFormula mf = Builder.NewMolecularFormula();
+            IIsotope carb = Builder.NewIsotope("C");
+            IIsotope h1 = Builder.NewIsotope("H");
+            IIsotope h2 = Builder.NewIsotope("H");
             h2.ExactMass = 2.00055;
 
             mf.Add(carb);
@@ -194,8 +194,8 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetCharge()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
             mf1.Charge = 1;
             add.Add(mf1);
 
@@ -211,7 +211,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestClone()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
             object clone = mfS.Clone();
             Assert.IsTrue(clone is IAdductFormula);
             Assert.AreNotSame(mfS, clone);
@@ -220,9 +220,9 @@ namespace NCDK
         [TestMethod()]
         public override void TestRemoveMolecularFormula_IMolecularFormula()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             mfS.Remove(mf1);
@@ -233,9 +233,9 @@ namespace NCDK
         [TestMethod()]
         public override void TestRemoveAllMolecularFormulas()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
 
@@ -247,9 +247,9 @@ namespace NCDK
         [TestMethod()]
         public override void TestRemoveMolecularFormula_int()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             mfS.RemoveAt(0);
@@ -260,10 +260,10 @@ namespace NCDK
         [TestMethod()]
         public override void TestReplaceMolecularFormula_int_IMolecularFormula()
         {
-            IAdductFormula mfS = Builder.CreateAdductFormula();
-            IMolecularFormula mf1 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf2 = Builder.CreateMolecularFormula();
-            IMolecularFormula mf3 = Builder.CreateMolecularFormula();
+            IAdductFormula mfS = Builder.NewAdductFormula();
+            IMolecularFormula mf1 = Builder.NewMolecularFormula();
+            IMolecularFormula mf2 = Builder.NewMolecularFormula();
+            IMolecularFormula mf3 = Builder.NewMolecularFormula();
             mfS.Add(mf1);
             mfS.Add(mf2);
             Assert.AreEqual(mf2, mfS[1]);
@@ -275,12 +275,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
             Assert.AreEqual(0, add.GetIsotopes().Count());
 
-            IMolecularFormula formula = Builder.CreateMolecularFormula();
-            formula.Add(Builder.CreateIsotope("C"));
-            formula.Add(Builder.CreateIsotope("H"), 4);
+            IMolecularFormula formula = Builder.NewMolecularFormula();
+            formula.Add(Builder.NewIsotope("C"));
+            formula.Add(Builder.NewIsotope("H"), 4);
 
             add.Add(formula);
 
@@ -290,14 +290,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestIsotopes()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
 
-            IMolecularFormula formula1 = Builder.CreateMolecularFormula();
-            formula1.Add(Builder.CreateIsotope("C"));
-            formula1.Add(Builder.CreateIsotope("H"), 4);
+            IMolecularFormula formula1 = Builder.NewMolecularFormula();
+            formula1.Add(Builder.NewIsotope("C"));
+            formula1.Add(Builder.NewIsotope("H"), 4);
 
-            IMolecularFormula formula2 = Builder.CreateMolecularFormula();
-            formula2.Add(Builder.CreateIsotope("F"));
+            IMolecularFormula formula2 = Builder.NewMolecularFormula();
+            formula2.Add(Builder.NewIsotope("F"));
 
             add.Add(formula1);
             add.Add(formula2);
@@ -314,16 +314,16 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount_Sum()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
             Assert.AreEqual(0, add.GetIsotopes().Count());
 
-            IMolecularFormula adduct1 = Builder.CreateMolecularFormula();
-            adduct1.Add(Builder.CreateIsotope("C"));
-            IIsotope h = Builder.CreateIsotope("H");
+            IMolecularFormula adduct1 = Builder.NewMolecularFormula();
+            adduct1.Add(Builder.NewIsotope("C"));
+            IIsotope h = Builder.NewIsotope("H");
             adduct1.Add(h, 4);
             add.Add(adduct1);
 
-            IMolecularFormula formula = Builder.CreateMolecularFormula();
+            IMolecularFormula formula = Builder.NewMolecularFormula();
             formula.Add(h);
             add.Add(adduct1);
 
@@ -333,13 +333,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
             Assert.AreEqual(0, add.GetIsotopes().Count());
 
-            IMolecularFormula formula = Builder.CreateMolecularFormula();
-            IIsotope C = Builder.CreateIsotope("C");
+            IMolecularFormula formula = Builder.NewMolecularFormula();
+            IIsotope C = Builder.NewIsotope("C");
             formula.Add(C);
-            IIsotope h = Builder.CreateIsotope("H");
+            IIsotope h = Builder.NewIsotope("H");
             formula.Add(h, 4);
 
             add.Add(formula);
@@ -354,17 +354,17 @@ namespace NCDK
         public virtual void TestGetIsotopeCount_Sum_Isotope()
         {
 
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
             Assert.AreEqual(0, add.GetIsotopes().Count());
 
-            IMolecularFormula adduct1 = Builder.CreateMolecularFormula();
-            IIsotope C = Builder.CreateIsotope("C");
+            IMolecularFormula adduct1 = Builder.NewMolecularFormula();
+            IIsotope C = Builder.NewIsotope("C");
             adduct1.Add(C);
-            IIsotope h = Builder.CreateIsotope("H");
+            IIsotope h = Builder.NewIsotope("H");
             adduct1.Add(h, 4);
             add.Add(adduct1);
 
-            IMolecularFormula adduct2 = Builder.CreateMolecularFormula();
+            IMolecularFormula adduct2 = Builder.NewMolecularFormula();
             adduct2.Add(h);
             add.Add(adduct2);
 
@@ -375,7 +375,7 @@ namespace NCDK
         [TestMethod()]
         public override void TestGetBuilder()
         {
-            IAdductFormula add = Builder.CreateAdductFormula();
+            IAdductFormula add = Builder.NewAdductFormula();
             IChemObjectBuilder builder = add.Builder;
             Assert.IsNotNull(builder);
             Assert.AreEqual(Builder.GetType().Name, builder.GetType().Name);

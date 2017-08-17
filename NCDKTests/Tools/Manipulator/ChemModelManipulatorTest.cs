@@ -60,7 +60,7 @@ namespace NCDK.Tools.Manipulator
             atomInMol2 = new Atom("O");
             atomInMol2.ImplicitHydrogenCount = 2;
             molecule2.Atoms.Add(atomInMol2);
-            moleculeSet = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            moleculeSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             moleculeSet.Add(molecule1);
             moleculeSet.Add(molecule2);
             reaction = new Reaction();
@@ -140,7 +140,7 @@ namespace NCDK.Tools.Manipulator
             mol2.Atoms.Add(new Atom("I"));
             IBond bond2 = new Bond(mol2.Atoms[0], mol2.Atoms[1]);
             mol2.Bonds.Add(bond2);
-            var molSet = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var molSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             molSet.Add(mol1);
             IReaction r = new Reaction();
             r.Products.Add(mol2);
@@ -174,7 +174,7 @@ namespace NCDK.Tools.Manipulator
             mol2.Atoms.Add(new Atom("I"));
             IBond bond2 = new Bond(mol2.Atoms[0], mol2.Atoms[1]);
             mol2.Bonds.Add(bond2);
-            var molSet = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+            var molSet = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             molSet.Add(mol1);
             IReaction r = new Reaction();
             r.Products.Add(mol2);
@@ -290,8 +290,8 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetRelevantAtomContainer_NonExistentAtom()
         {
-            IChemModel model = Silent.ChemObjectBuilder.Instance.CreateChemModel();
-            ChemModelManipulator.GetRelevantAtomContainer(model, Silent.ChemObjectBuilder.Instance.CreateAtom());
+            IChemModel model = Silent.ChemObjectBuilder.Instance.NewChemModel();
+            ChemModelManipulator.GetRelevantAtomContainer(model, Silent.ChemObjectBuilder.Instance.NewAtom());
         }
     }
 }

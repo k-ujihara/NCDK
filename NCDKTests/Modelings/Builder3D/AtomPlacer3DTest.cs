@@ -131,7 +131,7 @@ namespace NCDK.Modelings.Builder3D
             var containersList = ChemFileManipulator.GetAllAtomContainers(chemFile);
             IAtomContainer ac = new Silent.AtomContainer(containersList.First());
             AddExplicitHydrogens(ac);
-            IAtomContainer chain = ac.Builder.CreateAtomContainer();
+            IAtomContainer chain = ac.Builder.NewAtomContainer();
             for (int i = 16; i < 25; i++)
             {
                 chain.Atoms.Add(ac.Atoms[i]);

@@ -309,7 +309,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetStructures_IAtomContainer()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -343,7 +343,7 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestFlagActiveCenter1()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -384,7 +384,7 @@ namespace NCDK.Tools
 
             Assert.AreEqual(2, setOfMolecules.Count);
 
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
+            IAtomContainer molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(new Atom("C"));
             molecule2.Atoms.Add(new Atom("C"));
             molecule2.Atoms[1].FormalCharge = +1;
@@ -414,13 +414,13 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TesttestGetStructures2()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
             molecule.Atoms[3].FormalCharge = -1;
             molecule.LonePairs.Add(new LonePair(molecule.Atoms[3]));
@@ -431,13 +431,13 @@ namespace NCDK.Tools
 
             Assert.AreEqual(2, setOfMolecules.Count);
 
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule2 = builder.NewAtomContainer();
+            molecule2.Atoms.Add(builder.NewAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[1], molecule2.Atoms[2], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[2], molecule2.Atoms[3], BondOrder.Single);
             molecule2.Atoms[2].FormalCharge = -1;
             molecule2.LonePairs.Add(new LonePair(molecule2.Atoms[2]));
@@ -454,11 +454,11 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestFormicAcid()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -472,12 +472,12 @@ namespace NCDK.Tools
 
             Assert.AreEqual(3, setOfMolecules.Count);
 
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
-            molecule2.Atoms.Add(builder.CreateAtom("O"));
+            IAtomContainer molecule2 = builder.NewAtomContainer();
+            molecule2.Atoms.Add(builder.NewAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("O"));
             molecule2.Atoms[1].FormalCharge = -1;
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("O"));
+            molecule2.Atoms.Add(builder.NewAtom("O"));
             molecule2.Atoms[2].FormalCharge = 1;
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[2], BondOrder.Double);
             AddExplicitHydrogens(molecule2);
@@ -495,11 +495,11 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestFluoroethene()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -510,11 +510,11 @@ namespace NCDK.Tools
 
             Assert.AreEqual(2, setOfMolecules.Count);
 
-            IAtomContainer molecule1 = builder.CreateAtomContainer();
-            molecule1.Atoms.Add(builder.CreateAtom("F"));
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule1 = builder.NewAtomContainer();
+            molecule1.Atoms.Add(builder.NewAtom("F"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[1], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[1], molecule1.Atoms[2], BondOrder.Single);
             molecule1.Atoms[0].FormalCharge = +1; // workaround for bug #1875949
             molecule1.Atoms[2].FormalCharge = -1;
@@ -534,19 +534,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestFluorobenzene()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -559,21 +559,21 @@ namespace NCDK.Tools
 
             Assert.AreEqual(5, setOfMolecules.Count);
 
-            IAtomContainer molecule1 = builder.CreateAtomContainer();
-            molecule1.Atoms.Add(builder.CreateAtom("F"));
+            IAtomContainer molecule1 = builder.NewAtomContainer();
+            molecule1.Atoms.Add(builder.NewAtom("F"));
             molecule1.Atoms[0].FormalCharge = 1;
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[1], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.Atoms[2].FormalCharge = -1;
             molecule1.AddBond(molecule1.Atoms[1], molecule1.Atoms[2], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[2], molecule1.Atoms[3], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[4], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[4], molecule1.Atoms[5], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[5], molecule1.Atoms[6], BondOrder.Double);
             molecule1.AddBond(molecule1.Atoms[6], molecule1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule1);
@@ -583,21 +583,21 @@ namespace NCDK.Tools
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[2], qAC));
 
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Atoms.Add(builder.CreateAtom("F"));
+            IAtomContainer molecule2 = builder.NewAtomContainer();
+            molecule2.Atoms.Add(builder.NewAtom("F"));
             molecule2.Atoms[0].FormalCharge = 1;
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[1], molecule2.Atoms[2], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[2], molecule2.Atoms[3], BondOrder.Double);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[4], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms[4].FormalCharge = -1;
             molecule2.AddBond(molecule2.Atoms[4], molecule2.Atoms[5], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[5], molecule2.Atoms[6], BondOrder.Double);
             molecule2.AddBond(molecule2.Atoms[6], molecule2.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule2);
@@ -617,19 +617,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestFluorobenzeneContainer()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -651,19 +651,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestFluorobenzene_symm()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -676,21 +676,21 @@ namespace NCDK.Tools
 
             Assert.AreEqual(3, setOfMolecules.Count);
 
-            IAtomContainer molecule1 = builder.CreateAtomContainer();
-            molecule1.Atoms.Add(builder.CreateAtom("F"));
+            IAtomContainer molecule1 = builder.NewAtomContainer();
+            molecule1.Atoms.Add(builder.NewAtom("F"));
             molecule1.Atoms[0].FormalCharge = 1;
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[1], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.Atoms[2].FormalCharge = -1;
             molecule1.AddBond(molecule1.Atoms[1], molecule1.Atoms[2], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[2], molecule1.Atoms[3], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[4], BondOrder.Double);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[4], molecule1.Atoms[5], BondOrder.Single);
-            molecule1.Atoms.Add(builder.CreateAtom("C"));
+            molecule1.Atoms.Add(builder.NewAtom("C"));
             molecule1.AddBond(molecule1.Atoms[5], molecule1.Atoms[6], BondOrder.Double);
             molecule1.AddBond(molecule1.Atoms[6], molecule1.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule1);
@@ -700,21 +700,21 @@ namespace NCDK.Tools
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
 
-            IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Atoms.Add(builder.CreateAtom("F"));
+            IAtomContainer molecule2 = builder.NewAtomContainer();
+            molecule2.Atoms.Add(builder.NewAtom("F"));
             molecule2.Atoms[0].FormalCharge = 1;
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[1], molecule2.Atoms[2], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[2], molecule2.Atoms[3], BondOrder.Double);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[4], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms[4].FormalCharge = -1;
             molecule2.AddBond(molecule2.Atoms[4], molecule2.Atoms[5], BondOrder.Single);
-            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[5], molecule2.Atoms[6], BondOrder.Double);
             molecule2.AddBond(molecule2.Atoms[6], molecule2.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule2);
@@ -735,19 +735,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestAniline()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("N"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule);
@@ -767,19 +767,19 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestAniline_Symm()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("N"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
             AddExplicitHydrogens(molecule);
@@ -800,11 +800,11 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestAllyl()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("Cl")); // to remove symmetry :)
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("Cl")); // to remove symmetry :)
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -824,12 +824,12 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestAllylRadical()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C")); // to remove symmetry :)
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C")); // to remove symmetry :)
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -852,10 +852,10 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestEthenolate()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("O"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.Atoms[0].FormalCharge = -1;
@@ -880,15 +880,15 @@ namespace NCDK.Tools
         [TestMethod()]
         public void Test2Methylaniline()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("N"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -913,15 +913,15 @@ namespace NCDK.Tools
         [TestMethod()]
         public void Test12DimethylBenzene()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
@@ -958,19 +958,19 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestPreservingAromaticity()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -1055,10 +1055,10 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetContainers_IAtomContainer()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("O"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
             molecule.Atoms[0].FormalCharge = -1;
@@ -1081,7 +1081,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestGetContainers2Groups()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.Atoms.Add(new Atom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -1129,19 +1129,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetContainer_IAtomContainer_IAtom()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Id = "atom1";
             molecule.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
             atom2.Id = "atom2";
             molecule.Atoms.Add(atom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            IAtom atom3 = builder.CreateAtom("C");
+            IAtom atom3 = builder.NewAtom("C");
             atom3.Id = "atom3";
             molecule.Atoms.Add(atom3);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            IAtom atom4 = builder.CreateAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             atom4.Id = "atom4";
             molecule.Atoms.Add(atom4);
             atom4.FormalCharge = +1;
@@ -1176,19 +1176,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetContainer_IAtomContainer_IBond()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Id = "atom1";
             molecule.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
             atom2.Id = "atom2";
             molecule.Atoms.Add(atom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            IAtom atom3 = builder.CreateAtom("C");
+            IAtom atom3 = builder.NewAtom("C");
             atom3.Id = "atom3";
             molecule.Atoms.Add(atom3);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            IAtom atom4 = builder.CreateAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             atom4.Id = "atom4";
             molecule.Atoms.Add(atom4);
             atom4.FormalCharge = +1;
@@ -1223,36 +1223,36 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetID()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            IAtom atom1 = builder.CreateAtom("C");
+            IAtomContainer molecule = builder.NewAtomContainer();
+            IAtom atom1 = builder.NewAtom("C");
             atom1.Id = "atom1";
             molecule.Atoms.Add(atom1);
-            IAtom atom2 = builder.CreateAtom("C");
+            IAtom atom2 = builder.NewAtom("C");
             atom2.Id = "atom2";
             molecule.Atoms.Add(atom2);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            IAtom atom3 = builder.CreateAtom("C");
+            IAtom atom3 = builder.NewAtom("C");
             atom3.Id = "atom3";
             molecule.Atoms.Add(atom3);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            IAtom atom4 = builder.CreateAtom("C");
+            IAtom atom4 = builder.NewAtom("C");
             atom4.Id = "atom4";
             molecule.Atoms.Add(atom4);
             atom4.FormalCharge = +1;
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            IAtom atom5 = builder.CreateAtom("C");
+            IAtom atom5 = builder.NewAtom("C");
             atom5.Id = "atom5";
             molecule.Atoms.Add(atom5);
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            IAtom atom6 = builder.CreateAtom("C");
+            IAtom atom6 = builder.NewAtom("C");
             atom6.Id = "atom6";
             molecule.Atoms.Add(atom6);
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            IAtom atom7 = builder.CreateAtom("C");
+            IAtom atom7 = builder.NewAtom("C");
             atom7.Id = "atom7";
             molecule.Atoms.Add(atom7);
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
-            IAtom atom8 = builder.CreateAtom("C");
+            IAtom atom8 = builder.NewAtom("C");
             atom8.Id = "atom8";
             molecule.Atoms.Add(atom8);
             atom8.FormalCharge = +1;
@@ -1281,22 +1281,22 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetContainersFluoromethylbenzene()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[7], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -1325,19 +1325,19 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestGetContainersFluorobenzene()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
 
@@ -1367,13 +1367,13 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void Test1Propene2chloro()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("Cl"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("Cl"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             AddExplicitHydrogens(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
@@ -1394,22 +1394,22 @@ namespace NCDK.Tools
         [TestCategory("SlowTest")]
         public void TestBenzene1bromo4methoxy()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("F"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("F"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[7], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -1430,24 +1430,24 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBenzene1bromo4methoxy_with()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("Br"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("Br"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[7], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[7], molecule.Atoms[8], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -1486,22 +1486,22 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBenzylamine()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("N"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[7], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -1523,22 +1523,22 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBenzylamine_Aromatic()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("N"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[7], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);
@@ -1562,22 +1562,22 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestBenzylamine_Aromatic_lookingSymmetry()
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            IAtomContainer molecule = builder.NewAtomContainer();
+            molecule.Atoms.Add(builder.NewAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Double);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[6], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(builder.CreateAtom("N"));
+            molecule.Atoms.Add(builder.NewAtom("N"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[7], BondOrder.Single);
 
             AddExplicitHydrogens(molecule);

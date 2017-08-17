@@ -134,7 +134,7 @@ namespace NCDK.Renderers.Generators.Standards
             this.emSize = emSize;
 
             // foreground is based on the carbon color
-            this.foreground = parameters.Get<IAtomColorer>(typeof(AtomColor)).GetAtomColor(container.Builder.CreateAtom("C"));
+            this.foreground = parameters.Get<IAtomColorer>(typeof(AtomColor)).GetAtomColor(container.Builder.NewAtom("C"));
         }
 
         /// <summary>

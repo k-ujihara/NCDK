@@ -146,15 +146,15 @@ namespace NCDK.Graphs.Invariant
         [TestCategory("SlowTest")]
         public void TestBug2944519()
         {
-            IAtomContainer ac = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            ac.Atoms.Add(ac.Builder.CreateAtom("C"));
-            ac.Atoms.Add(ac.Builder.CreateAtom("O"));
+            IAtomContainer ac = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            ac.Atoms.Add(ac.Builder.NewAtom("C"));
+            ac.Atoms.Add(ac.Builder.NewAtom("O"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             CanonicalLabeler canLabler = new CanonicalLabeler();
             canLabler.CanonLabel(ac);
-            IAtomContainer ac2 = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            ac2.Atoms.Add(ac2.Builder.CreateAtom("O"));
-            ac2.Atoms.Add(ac2.Builder.CreateAtom("C"));
+            IAtomContainer ac2 = Default.ChemObjectBuilder.Instance.NewAtomContainer();
+            ac2.Atoms.Add(ac2.Builder.NewAtom("O"));
+            ac2.Atoms.Add(ac2.Builder.NewAtom("C"));
             ac2.AddBond(ac2.Atoms[0], ac2.Atoms[1], BondOrder.Single);
             canLabler.CanonLabel(ac2);
             Assert.AreEqual(ac.Atoms[0].GetProperty<long>(InvPair.CANONICAL_LABEL),

@@ -51,7 +51,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The produced atomContainer</returns>
         public static IAtomContainer GetAllInOneContainer(IRingSet ringSet)
         {
-            IAtomContainer resultContainer = ringSet.Builder.CreateAtomContainer();
+            IAtomContainer resultContainer = ringSet.Builder.NewAtomContainer();
             IEnumerator<IAtomContainer> containers = RingSetManipulator.GetAllAtomContainers(ringSet).GetEnumerator();
             while (containers.MoveNext())
             {

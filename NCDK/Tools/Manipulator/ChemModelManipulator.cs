@@ -160,7 +160,7 @@ namespace NCDK.Tools.Manipulator
         public static IAtomContainer CreateNewMolecule(IChemModel chemModel)
         {
             // Add a new molecule either the set of molecules
-            IAtomContainer molecule = chemModel.Builder.CreateAtomContainer();
+            IAtomContainer molecule = chemModel.Builder.NewAtomContainer();
             if (chemModel.MoleculeSet != null)
             {
                 IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
@@ -176,7 +176,7 @@ namespace NCDK.Tools.Manipulator
             }
             else
             {
-                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.CreateAtomContainerSet();
+                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
                 moleculeSet.Add(molecule);
                 chemModel.MoleculeSet = moleculeSet;
             }
@@ -192,8 +192,8 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The new IChemModel object.</returns>
         public static IChemModel NewChemModel(IAtomContainer atomContainer)
         {
-            IChemModel model = atomContainer.Builder.CreateChemModel();
-            IAtomContainerSet<IAtomContainer> moleculeSet = model.Builder.CreateAtomContainerSet();
+            IChemModel model = atomContainer.Builder.NewChemModel();
+            IAtomContainerSet<IAtomContainer> moleculeSet = model.Builder.NewAtomContainerSet();
             moleculeSet.Add(atomContainer);
             model.MoleculeSet = moleculeSet;
             return model;
@@ -282,7 +282,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemModel chemModel)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.CreateAtomContainerSet();
+            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
             if (chemModel.MoleculeSet != null)
             {
                 moleculeSet.AddRange(chemModel.MoleculeSet);

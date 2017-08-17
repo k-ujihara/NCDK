@@ -407,8 +407,8 @@ namespace NCDK.Tools
         private void AddHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens)
         {
             for (int i = 0; i < numberOfHydrogens; i++)
-                container.Bonds.Add(atom.Builder.CreateBond(atom,
-                        atom.Builder.CreateAtom("H")));
+                container.Bonds.Add(atom.Builder.NewBond(atom,
+                        atom.Builder.NewAtom("H")));
         }
     }
 }

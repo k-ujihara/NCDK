@@ -203,7 +203,7 @@ namespace NCDK.Modelings.Builder3D
                 throw new IOException("AtomTypeTable.ReadAtypes: " + "Malformed Number");
             }
 
-            IAtomType atomType = builder.CreateAtomType(name, rootType);
+            IAtomType atomType = builder.NewAtomType(name, rootType);
             atomType.AtomicNumber = atomNr;
             atomType.ExactMass = mass;
             atomType.MassNumber = MassNumber(atomNr, mass);

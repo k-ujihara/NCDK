@@ -147,7 +147,7 @@ namespace NCDK.IO
             writer.Write(builder.Setting);
             writer.Write(".Instance;");
             writer.WriteLine();
-            writer.Write("  IAtomContainer mol = builder.CreateAtomContainer();");
+            writer.Write("  IAtomContainer mol = builder.NewAtomContainer();");
             writer.WriteLine();
             IDCreator.CreateIDs(molecule);
             WriteAtoms(molecule);
@@ -160,14 +160,14 @@ namespace NCDK.IO
         {
             if (atom is IPseudoAtom)
             {
-                writer.Write($"  IPseudoAtom {atom.Id} = builder.CreatePseudoAtom();");
+                writer.Write($"  IPseudoAtom {atom.Id} = builder.NewPseudoAtom();");
                 writer.WriteLine();
                 writer.Write($"  atom.Label = \"{((IPseudoAtom)atom).Label}\");");
                 writer.WriteLine();
             }
             else
             {
-                writer.Write($"  IAtom {atom.Id} = builder.CreateAtom(\"{atom.Symbol}\");");
+                writer.Write($"  IAtom {atom.Id} = builder.NewAtom(\"{atom.Symbol}\");");
                 writer.WriteLine();
             }
             if (atom.FormalCharge != null)
@@ -191,7 +191,7 @@ namespace NCDK.IO
 
         private void WriteBond(IBond bond)
         {
-            writer.Write($"  IBond {bond.Id} = builder.CreateBond({bond.Begin.Id}, {bond.End.Id}, BondOrder.{bond.Order});");
+            writer.Write($"  IBond {bond.Id} = builder.NewBond({bond.Begin.Id}, {bond.End.Id}, BondOrder.{bond.Order});");
             writer.WriteLine();
         }
 

@@ -303,7 +303,7 @@ namespace NCDK.Modelings.Builder3D
                     atom = ap3d.GetNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(molecule);
                     if (atom != null)
                     {
-                        ac = atom.Builder.CreateAtomContainer();
+                        ac = atom.Builder.NewAtomContainer();
                         ac.Atoms.Add(atom);
                         SearchAndPlaceBranches(molecule, ac, ap3d, atlp3d, atomPlacer);
                         ac = null;
@@ -405,7 +405,7 @@ namespace NCDK.Modelings.Builder3D
                 AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d)
         {
             //Debug.WriteLine("****** SET Branch Atom ****** >"+molecule.Atoms.IndexOf(unplacedAtom));
-            IAtomContainer noCoords = molecule.Builder.CreateAtomContainer();
+            IAtomContainer noCoords = molecule.Builder.NewAtomContainer();
             noCoords.Atoms.Add(unplacedAtom);
             Vector3 centerPlacedMolecule = ap3d.GeometricCenterAllPlacedAtoms(molecule);
             IAtom atomB = atomNeighbours.Atoms[0];
@@ -469,8 +469,8 @@ namespace NCDK.Modelings.Builder3D
                 AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer)
         {
             //Debug.WriteLine("****** SEARCH AND PLACE ****** Chain length: "+chain.Atoms.Count);
-            IAtomContainer branchAtoms = molecule.Builder.CreateAtomContainer();
-            IAtomContainer connectedAtoms = molecule.Builder.CreateAtomContainer();
+            IAtomContainer branchAtoms = molecule.Builder.NewAtomContainer();
+            IAtomContainer connectedAtoms = molecule.Builder.NewAtomContainer();
             for (int i = 0; i < chain.Atoms.Count; i++)
             {
                 var atoms = molecule.GetConnectedAtoms(chain.Atoms[i]);
@@ -514,7 +514,7 @@ namespace NCDK.Modelings.Builder3D
             //Debug.WriteLine("****** PLACE LINEAR CHAINS ******");
             IAtom dihPlacedAtom = null;
             IAtom thirdPlacedAtom = null;
-            IAtomContainer longestUnplacedChain = molecule.Builder.CreateAtomContainer();
+            IAtomContainer longestUnplacedChain = molecule.Builder.NewAtomContainer();
             if (startAtoms.Atoms.Count == 0)
             {
                 //no branch points ->linear chain

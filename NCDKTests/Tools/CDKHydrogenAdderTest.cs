@@ -218,7 +218,7 @@ namespace NCDK.Tools
             Assert.AreEqual(1, mol.Atoms.Count);
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(mol);
             Assert.AreEqual(1,
-                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.CreateElement("H")));
+                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
             Assert.AreEqual(0, mol.GetConnectedBonds(proton).Count());
             Assert.IsNotNull(proton.ImplicitHydrogenCount);
             Assert.AreEqual(0, proton.ImplicitHydrogenCount.Value);
@@ -239,7 +239,7 @@ namespace NCDK.Tools
             Assert.AreEqual(1, mol.Atoms.Count);
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(mol);
             Assert.AreEqual(2,
-                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.CreateElement("H")));
+                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
             Assert.AreEqual(0, mol.GetConnectedBonds(proton).Count());
             Assert.IsNotNull(proton.ImplicitHydrogenCount);
             Assert.AreEqual(1, proton.ImplicitHydrogenCount.Value);
@@ -582,57 +582,57 @@ namespace NCDK.Tools
         public void TestAdenine()
         {
             IAtomContainer mol = new AtomContainer(); // Adenine
-            IAtom a1 = mol.Builder.CreateAtom("C");
+            IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(21.0223, -17.2946);
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.CreateAtom("C");
+            IAtom a2 = mol.Builder.NewAtom("C");
             a2.Point2D = new Vector2(21.0223, -18.8093);
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.CreateAtom("C");
+            IAtom a3 = mol.Builder.NewAtom("C");
             a3.Point2D = new Vector2(22.1861, -16.6103);
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.CreateAtom("N");
+            IAtom a4 = mol.Builder.NewAtom("N");
             a4.Point2D = new Vector2(19.8294, -16.8677);
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.CreateAtom("N");
+            IAtom a5 = mol.Builder.NewAtom("N");
             a5.Point2D = new Vector2(22.2212, -19.5285);
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.CreateAtom("N");
+            IAtom a6 = mol.Builder.NewAtom("N");
             a6.Point2D = new Vector2(19.8177, -19.2187);
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.CreateAtom("N");
+            IAtom a7 = mol.Builder.NewAtom("N");
             a7.Point2D = new Vector2(23.4669, -17.3531);
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.CreateAtom("N");
+            IAtom a8 = mol.Builder.NewAtom("N");
             a8.Point2D = new Vector2(22.1861, -15.2769);
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.CreateAtom("C");
+            IAtom a9 = mol.Builder.NewAtom("C");
             a9.Point2D = new Vector2(18.9871, -18.0139);
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.CreateAtom("C");
+            IAtom a10 = mol.Builder.NewAtom("C");
             a10.Point2D = new Vector2(23.4609, -18.8267);
             mol.Atoms.Add(a10);
-            IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Double);
+            IBond b1 = mol.Builder.NewBond(a1, a2, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.CreateBond(a1, a3, BondOrder.Single);
+            IBond b2 = mol.Builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.CreateBond(a1, a4, BondOrder.Single);
+            IBond b3 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.CreateBond(a2, a5, BondOrder.Single);
+            IBond b4 = mol.Builder.NewBond(a2, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.CreateBond(a2, a6, BondOrder.Single);
+            IBond b5 = mol.Builder.NewBond(a2, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.CreateBond(a3, a7, BondOrder.Double);
+            IBond b6 = mol.Builder.NewBond(a3, a7, BondOrder.Double);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.CreateBond(a3, a8, BondOrder.Single);
+            IBond b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.CreateBond(a4, a9, BondOrder.Double);
+            IBond b8 = mol.Builder.NewBond(a4, a9, BondOrder.Double);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.CreateBond(a5, a10, BondOrder.Double);
+            IBond b9 = mol.Builder.NewBond(a5, a10, BondOrder.Double);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.CreateBond(a6, a9, BondOrder.Single);
+            IBond b10 = mol.Builder.NewBond(a6, a9, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.CreateBond(a7, a10, BondOrder.Single);
+            IBond b11 = mol.Builder.NewBond(a7, a10, BondOrder.Single);
             mol.Bonds.Add(b11);
 
             FindAndConfigureAtomTypesForAllAtoms(mol);
@@ -756,9 +756,9 @@ namespace NCDK.Tools
         public void TestBug1627763()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("O"));
-            mol.Bonds.Add(mol.Builder.CreateBond(mol.Atoms[0], mol.Atoms[1],
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("O"));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1],
                     BondOrder.Single));
             AddExplicitHydrogens(mol);
             int hCount = 0;
@@ -781,15 +781,15 @@ namespace NCDK.Tools
         public void TestMercaptan()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("C"));
-            mol.Atoms.Add(mol.Builder.CreateAtom("S"));
-            mol.Bonds.Add(mol.Builder.CreateBond(mol.Atoms[0], mol.Atoms[1],
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("C"));
+            mol.Atoms.Add(mol.Builder.NewAtom("S"));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1],
                     BondOrder.Double));
-            mol.Bonds.Add(mol.Builder.CreateBond(mol.Atoms[1], mol.Atoms[2],
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[1], mol.Atoms[2],
                     BondOrder.Single));
-            mol.Bonds.Add(mol.Builder.CreateBond(mol.Atoms[2], mol.Atoms[3],
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[2], mol.Atoms[3],
                     BondOrder.Single));
             AddExplicitHydrogens(mol);
             int hCount = 0;
@@ -827,8 +827,8 @@ namespace NCDK.Tools
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.GetInstance(bldr);
-            IAtomContainer container = bldr.CreateAtomContainer();
-            IAtom atom = bldr.CreateAtom("C");
+            IAtomContainer container = bldr.NewAtomContainer();
+            IAtom atom = bldr.NewAtom("C");
             atom.ImplicitHydrogenCount = 3;
             atom.AtomTypeName = "X";
             container.Atoms.Add(atom);
@@ -841,8 +841,8 @@ namespace NCDK.Tools
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             CDKHydrogenAdder hydrogenAdder = CDKHydrogenAdder.GetInstance(bldr);
-            IAtomContainer container = bldr.CreateAtomContainer();
-            IAtom atom = bldr.CreateAtom("C");
+            IAtomContainer container = bldr.NewAtomContainer();
+            IAtom atom = bldr.NewAtom("C");
             atom.ImplicitHydrogenCount = null;
             atom.AtomTypeName = "X";
             container.Atoms.Add(atom);

@@ -75,8 +75,8 @@ namespace NCDK.Formula
         public void TestGetIsotopes1()
         {
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("Br"));
-            molFor.Add(builder.CreateIsotope("Br"));
+            molFor.Add(builder.NewIsotope("Br"));
+            molFor.Add(builder.NewIsotope("Br"));
 
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
             IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
@@ -96,8 +96,8 @@ namespace NCDK.Formula
             double[] abundResults = { .512, 1.00, .487 };
 
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("Br"));
-            molFor.Add(builder.CreateIsotope("Br"));
+            molFor.Add(builder.NewIsotope("Br"));
+            molFor.Add(builder.NewIsotope("Br"));
 
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
             IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
@@ -125,8 +125,8 @@ namespace NCDK.Formula
             double[] abundResults = { 1.00, .011 };
 
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("C"));
-            molFor.Add(builder.CreateIsotope("I"));
+            molFor.Add(builder.NewIsotope("C"));
+            molFor.Add(builder.NewIsotope("I"));
 
             Assert.AreEqual(2, molFor.Count);
 
@@ -154,7 +154,7 @@ namespace NCDK.Formula
             double[] abundResults = { 1.00, .108, 0.005 };
 
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("C"), 10);
+            molFor.Add(builder.NewIsotope("C"), 10);
 
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
             IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
@@ -179,10 +179,10 @@ namespace NCDK.Formula
             double[] abundResults = { 1.00, .006, .054, 0.002, 0.004, 0.001 };
 
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("C"), 5);
-            molFor.Add(builder.CreateIsotope("H"), 13);
-            molFor.Add(builder.CreateIsotope("N"), 2);
-            molFor.Add(builder.CreateIsotope("O"), 2);
+            molFor.Add(builder.NewIsotope("C"), 5);
+            molFor.Add(builder.NewIsotope("H"), 13);
+            molFor.Add(builder.NewIsotope("N"), 2);
+            molFor.Add(builder.NewIsotope("O"), 2);
 
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
             IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);
@@ -210,7 +210,7 @@ namespace NCDK.Formula
         public void TestCalculateIsotopesMn()
         {
             IMolecularFormula molFor = new MolecularFormula();
-            molFor.Add(builder.CreateIsotope("Mn"), 1);
+            molFor.Add(builder.NewIsotope("Mn"), 1);
 
             IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.001);
             IsotopePattern isoPattern = isotopeGe.GetIsotopes(molFor);

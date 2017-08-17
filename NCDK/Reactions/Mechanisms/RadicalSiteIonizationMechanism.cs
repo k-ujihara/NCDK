@@ -93,19 +93,19 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            reactantCloned.SingleElectrons.Add(atom2C.Builder.CreateSingleElectron(atom3C));
+            reactantCloned.SingleElectrons.Add(atom2C.Builder.NewSingleElectron(atom3C));
             atom3C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom2C.Builder.CreateReaction();
+            IReaction reaction = atom2C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom2C.Builder.CreateMapping(atom,
+                IMapping mapping = atom2C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

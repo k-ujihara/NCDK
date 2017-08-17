@@ -152,21 +152,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTakeIntoAccountImplicitHydrogens()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer methane1 = builder.CreateAtomContainer();
-            IAtom c1 = builder.CreateAtom("C");
+            IAtomContainer methane1 = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
             c1.ImplicitHydrogenCount = 4;
             methane1.Atoms.Add(c1);
 
-            IAtomContainer methane2 = builder.CreateAtomContainer();
-            IAtom c2 = builder.CreateAtom("C");
+            IAtomContainer methane2 = builder.NewAtomContainer();
+            IAtom c2 = builder.NewAtom("C");
             methane2.Atoms.Add(c2);
-            IAtom h1 = builder.CreateAtom("H");
+            IAtom h1 = builder.NewAtom("H");
             methane2.Atoms.Add(h1);
-            IAtom h2 = builder.CreateAtom("H");
+            IAtom h2 = builder.NewAtom("H");
             methane2.Atoms.Add(h2);
-            IAtom h3 = builder.CreateAtom("H");
+            IAtom h3 = builder.NewAtom("H");
             methane2.Atoms.Add(h3);
-            IAtom h4 = builder.CreateAtom("H");
+            IAtom h4 = builder.NewAtom("H");
             methane2.Atoms.Add(h4);
             methane2.AddBond(methane2.Atoms[0], methane2.Atoms[1], BondOrder.Single);
             methane2.AddBond(methane2.Atoms[0], methane2.Atoms[2], BondOrder.Single);
@@ -191,31 +191,31 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTakeIntoAccountImplicitHydrogensInEthane()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer ethane1 = builder.CreateAtomContainer();
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom c2 = builder.CreateAtom("C");
+            IAtomContainer ethane1 = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             c1.ImplicitHydrogenCount = 3;
             c2.ImplicitHydrogenCount = 3;
             ethane1.Atoms.Add(c1);
             ethane1.Atoms.Add(c2);
             ethane1.AddBond(ethane1.Atoms[0], ethane1.Atoms[1], BondOrder.Single);
 
-            IAtomContainer ethane2 = builder.CreateAtomContainer();
-            IAtom c3 = builder.CreateAtom("C");
-            IAtom c4 = builder.CreateAtom("C");
+            IAtomContainer ethane2 = builder.NewAtomContainer();
+            IAtom c3 = builder.NewAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             ethane2.Atoms.Add(c3);
             ethane2.Atoms.Add(c4);
 
-            IAtom h1 = builder.CreateAtom("H");
+            IAtom h1 = builder.NewAtom("H");
             ethane2.Atoms.Add(h1);
-            IAtom h2 = builder.CreateAtom("H");
+            IAtom h2 = builder.NewAtom("H");
             ethane2.Atoms.Add(h2);
-            IAtom h3 = builder.CreateAtom("H");
+            IAtom h3 = builder.NewAtom("H");
             ethane2.Atoms.Add(h3);
 
-            IAtom h4 = builder.CreateAtom("H");
-            IAtom h5 = builder.CreateAtom("H");
-            IAtom h6 = builder.CreateAtom("H");
+            IAtom h4 = builder.NewAtom("H");
+            IAtom h5 = builder.NewAtom("H");
+            IAtom h6 = builder.NewAtom("H");
             ethane2.Atoms.Add(h4);
             ethane2.Atoms.Add(h5);
             ethane2.Atoms.Add(h6);
@@ -348,17 +348,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTakeIntoAccountBondHybridization()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IAtomContainer ethane1 = builder.CreateAtomContainer();
-            IAtom c1 = builder.CreateAtom("C");
-            IAtom c2 = builder.CreateAtom("C");
+            IAtomContainer ethane1 = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
             ethane1.Atoms.Add(c1);
             ethane1.Atoms.Add(c2);
             ethane1.AddBond(ethane1.Atoms[0], ethane1.Atoms[1], BondOrder.Double);
 
-            IAtomContainer ethane2 = builder.CreateAtomContainer();
-            IAtom c3 = builder.CreateAtom("C");
+            IAtomContainer ethane2 = builder.NewAtomContainer();
+            IAtom c3 = builder.NewAtom("C");
             c3.Hybridization = Hybridization.SP2;
-            IAtom c4 = builder.CreateAtom("C");
+            IAtom c4 = builder.NewAtom("C");
             c4.Hybridization = Hybridization.SP2;
             ethane2.Atoms.Add(c3);
             ethane2.Atoms.Add(c4);
@@ -375,12 +375,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IAtomContainer SomeoneBringMeSomeWater(IChemObjectBuilder builder)
         {
-            IAtomContainer mol = builder.CreateAtomContainer();
-            IAtom c1 = builder.CreateAtom("O");
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom c1 = builder.NewAtom("O");
             c1.Point3D = new Vector3(0.0, 0.0, 0.0);
-            IAtom h1 = builder.CreateAtom("H");
+            IAtom h1 = builder.NewAtom("H");
             h1.Point3D = new Vector3(1.0, 0.0, 0.0);
-            IAtom h2 = builder.CreateAtom("H");
+            IAtom h2 = builder.NewAtom("H");
             h2.Point3D = new Vector3(-1.0, 0.0, 0.0);
             mol.Atoms.Add(c1);
             mol.Atoms.Add(h1);

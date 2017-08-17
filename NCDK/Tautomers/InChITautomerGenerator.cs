@@ -140,7 +140,7 @@ namespace NCDK.Tautomers
                 throw new CDKException("Please provide a valid input molecule and its corresponding InChI value.");
 
             // shallow copy since we will suppress hydrogens
-            mol = mol.Builder.CreateAtomContainer(mol);
+            mol = mol.Builder.NewAtomContainer(mol);
 
             List<IAtomContainer> tautomers = new List<IAtomContainer>();
             if (!inchi.Contains("(H"))
@@ -218,7 +218,7 @@ namespace NCDK.Tautomers
                     for (int i = 0; i < elementCnt; i++)
                     {
                         position++;
-                        IAtom atom = inputMolecule.Builder.CreateAtom(elementSymbol);
+                        IAtom atom = inputMolecule.Builder.NewAtom(elementSymbol);
 
                         // This class uses the atom's ID attribute to keep track of
                         // atom positions defined in the InChi. So if for example
@@ -248,7 +248,7 @@ namespace NCDK.Tautomers
             Regex connectionPattern = new Regex("(-|\\(|\\)|,|([0-9])*)", RegexOptions.Compiled);
             var matches = connectionPattern.Matches(connections);
             var atomStack = new Stack<IAtom>();
-            IAtomContainer inchiMolGraph = inputMolecule.Builder.CreateAtomContainer();
+            IAtomContainer inchiMolGraph = inputMolecule.Builder.NewAtomContainer();
             bool pop = false;
             bool push = true;
             foreach (Match match in matches)
@@ -294,7 +294,7 @@ namespace NCDK.Tautomers
                                 {
                                     prevAtom = atomStack.Peek();
                                 }
-                                IBond bond = inputMolecule.Builder.CreateBond(prevAtom, atom,
+                                IBond bond = inputMolecule.Builder.NewBond(prevAtom, atom,
                                         BondOrder.Single);
                                 inchiMolGraph.Bonds.Add(bond);
                             }

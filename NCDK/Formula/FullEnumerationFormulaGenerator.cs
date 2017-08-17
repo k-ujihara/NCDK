@@ -236,7 +236,7 @@ namespace NCDK.Formula
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IMolecularFormulaSet GetAllFormulas()
         {
-            IMolecularFormulaSet result = builder.CreateMolecularFormulaSet();
+            IMolecularFormulaSet result = builder.NewMolecularFormulaSet();
             IMolecularFormula nextFormula;
             while ((nextFormula = GetNextFormula()) != null)
             {
@@ -320,7 +320,7 @@ namespace NCDK.Formula
         /// </summary>
         private IMolecularFormula GenerateFormulaObject()
         {
-            IMolecularFormula formulaObject = builder.CreateMolecularFormula();
+            IMolecularFormula formulaObject = builder.NewMolecularFormula();
             for (int i = 0; i < isotopes.Length; i++)
             {
                 if (currentCounts[i] == 0)

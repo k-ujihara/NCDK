@@ -54,13 +54,13 @@ namespace NCDK.IO.CML
             {
                 Debug.WriteLine("Oke, JMOLANIMATION seems to be kicked in :)");
                 //            cdo.StartObject("Animation");
-                CurrentChemSequence = CurrentChemFile.Builder.CreateChemSequence();
+                CurrentChemSequence = CurrentChemFile.Builder.NewChemSequence();
                 base.StartElement(xpath, element);
             }
             else if (name.Equals("molecule"))
             {
                 //            cdo.StartObject("Frame");
-                CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
+                CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
                 Debug.WriteLine("New frame being parsed.");
                 base.StartElement(xpath, element);
             }

@@ -142,15 +142,15 @@ namespace NCDK.IO
         private IChemFile ReadChemFile(IChemFile oFile)
         {
             // initialize all containers
-            IChemSequence oSeq = oFile.Builder.CreateChemSequence();
-            IChemModel oModel = oFile.Builder.CreateChemModel();
-            var oSet = oFile.Builder.CreateAtomContainerSet();
+            IChemSequence oSeq = oFile.Builder.NewChemSequence();
+            IChemModel oModel = oFile.Builder.NewChemModel();
+            var oSet = oFile.Builder.NewAtomContainerSet();
 
             // some variables needed
             string cCol;
             PDBAtom oAtom;
             PDBPolymer oBP = new PDBPolymer();
-            IAtomContainer molecularStructure = oFile.Builder.CreateAtomContainer();
+            IAtomContainer molecularStructure = oFile.Builder.NewAtomContainer();
             StringBuilder cResidue;
             string oObj;
             IMonomer oMonomer;
@@ -355,8 +355,8 @@ namespace NCDK.IO
                                             oSeq.Add(oModel);
                                             // setup a new one
                                             oBP = new PDBPolymer();
-                                            oModel = oFile.Builder.CreateChemModel();
-                                            oSet = oFile.Builder.CreateAtomContainerSet();
+                                            oModel = oFile.Builder.NewChemModel();
+                                            oSet = oFile.Builder.NewAtomContainerSet();
                                         }
                                     }
                                     else
@@ -368,9 +368,9 @@ namespace NCDK.IO
                                             oModel.MoleculeSet = oSet;
                                             oSeq.Add(oModel);
                                             // setup a new one
-                                            molecularStructure = oFile.Builder.CreateAtomContainer();
-                                            oModel = oFile.Builder.CreateChemModel();
-                                            oSet = oFile.Builder.CreateAtomContainerSet();
+                                            molecularStructure = oFile.Builder.NewAtomContainer();
+                                            oModel = oFile.Builder.NewChemModel();
+                                            oSet = oFile.Builder.NewAtomContainerSet();
                                         }
                                     }
                                     #endregion
@@ -553,7 +553,7 @@ namespace NCDK.IO
                 Trace.TraceError("Could not find bond start atom in map with serial id: ", bondAtomNo);
             if (!atomNumberMap.TryGetValue(bondedAtomNo, out secondAtom))
                 Trace.TraceError("Could not find bond target atom in map with serial id: ", bondAtomNo);
-            IBond bond = firstAtom.Builder.CreateBond(firstAtom, secondAtom, BondOrder.Single);
+            IBond bond = firstAtom.Builder.NewBond(firstAtom, secondAtom, BondOrder.Single);
             for (int i = 0; i < bondsFromConnectRecords.Count; i++)
             {
                 IBond existingBond = (IBond)bondsFromConnectRecords[i];

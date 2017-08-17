@@ -38,7 +38,7 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IAtomContainer_SingleAtom()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
             BoundsCalculator.CalculateBounds(container);
         }
 
@@ -51,8 +51,8 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
             BoundsCalculator.CalculateBounds(container);
         }
 
@@ -65,8 +65,8 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IAtomContainerSet_SingleAtom()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            var set = container.Builder.CreateAtomContainerSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            var set = container.Builder.NewAtomContainerSet();
             set.Add(container);
             BoundsCalculator.CalculateBounds(set);
         }
@@ -80,9 +80,9 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IAtomContainerSet()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            var set = container.Builder.CreateAtomContainerSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            var set = container.Builder.NewAtomContainerSet();
             set.Add(container);
             BoundsCalculator.CalculateBounds(set);
         }
@@ -96,10 +96,10 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IReactionSet_SingleAtom()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            IReaction reaction = container.Builder.CreateReaction();
-            reaction.Reactants.Add(container.Builder.CreateAtomContainer(container));
-            IReactionSet set = container.Builder.CreateReactionSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            IReaction reaction = container.Builder.NewReaction();
+            reaction.Reactants.Add(container.Builder.NewAtomContainer(container));
+            IReactionSet set = container.Builder.NewReactionSet();
             set.Add(reaction);
             BoundsCalculator.CalculateBounds(set);
         }
@@ -113,11 +113,11 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IReactionSet()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            IReaction reaction = container.Builder.CreateReaction();
-            reaction.Reactants.Add(container.Builder.CreateAtomContainer(container));
-            IReactionSet set = container.Builder.CreateReactionSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            IReaction reaction = container.Builder.NewReaction();
+            reaction.Reactants.Add(container.Builder.NewAtomContainer(container));
+            IReactionSet set = container.Builder.NewReactionSet();
             set.Add(reaction);
             BoundsCalculator.CalculateBounds(set);
         }
@@ -131,10 +131,10 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IChemModel_SingleAtom()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            var set = container.Builder.CreateAtomContainerSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            var set = container.Builder.NewAtomContainerSet();
             set.Add(container);
-            IChemModel model = container.Builder.CreateChemModel();
+            IChemModel model = container.Builder.NewChemModel();
             model.MoleculeSet = set;
             BoundsCalculator.CalculateBounds(model);
         }
@@ -148,11 +148,11 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IChemModel()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            var set = container.Builder.CreateAtomContainerSet();
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            var set = container.Builder.NewAtomContainerSet();
             set.Add(container);
-            IChemModel model = container.Builder.CreateChemModel();
+            IChemModel model = container.Builder.NewChemModel();
             model.MoleculeSet = set;
             BoundsCalculator.CalculateBounds(model);
         }
@@ -166,9 +166,9 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IReaction_SingleAtom()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            IReaction reaction = container.Builder.CreateReaction();
-            reaction.Reactants.Add(container.Builder.CreateAtomContainer(container));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            IReaction reaction = container.Builder.NewReaction();
+            reaction.Reactants.Add(container.Builder.NewAtomContainer(container));
             BoundsCalculator.CalculateBounds(reaction);
         }
 
@@ -181,10 +181,10 @@ namespace NCDK.Renderers
         public void TestCalculateBounds_IReaction()
         {
             IAtomContainer container = new AtomContainer();
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            container.Atoms.Add(container.Builder.CreateAtom("C"));
-            IReaction reaction = container.Builder.CreateReaction();
-            reaction.Reactants.Add(container.Builder.CreateAtomContainer(container));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            container.Atoms.Add(container.Builder.NewAtom("C"));
+            IReaction reaction = container.Builder.NewReaction();
+            reaction.Reactants.Add(container.Builder.NewAtomContainer(container));
             BoundsCalculator.CalculateBounds(reaction);
         }
     }

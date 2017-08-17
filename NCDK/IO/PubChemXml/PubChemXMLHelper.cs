@@ -157,7 +157,7 @@ namespace NCDK.IO.PubChemXml
 
         public IAtomContainerSet<IAtomContainer> ParseCompoundsBlock(XElement parser)
         {
-            var set = builder.CreateAtomContainerSet();
+            var set = builder.NewAtomContainerSet();
             // assume the current element is PC-Compounds
             if (!parser.Name.Equals(Name_EL_PCCOMPOUNDS))
                 return null;
@@ -175,7 +175,7 @@ namespace NCDK.IO.PubChemXml
 
         public IChemModel ParseSubstance(XElement parser)
         {
-            IChemModel model = builder.CreateChemModel();
+            IChemModel model = builder.NewChemModel();
             // assume the current element is PC-Compound
             if (!parser.Name.Equals(Name_EL_PCSUBSTANCE))
                 return null;
@@ -231,12 +231,12 @@ namespace NCDK.IO.PubChemXml
                     IElement element = factory.GetElement(atomicNumber);
                     if (element == null)
                     {
-                        IAtom atom = molecule.Builder.CreatePseudoAtom();
+                        IAtom atom = molecule.Builder.NewPseudoAtom();
                         molecule.Atoms.Add(atom);
                     }
                     else
                     {
-                        IAtom atom = molecule.Builder.CreateAtom(element.Symbol);
+                        IAtom atom = molecule.Builder.NewAtom(element.Symbol);
                         atom.AtomicNumber = element.AtomicNumber;
                         molecule.Atoms.Add(atom);
                     }
@@ -305,7 +305,7 @@ namespace NCDK.IO.PubChemXml
 
         public IAtomContainer ParseMolecule(XElement parser, IChemObjectBuilder builder)
         {
-            IAtomContainer molecule = builder.CreateAtomContainer();
+            IAtomContainer molecule = builder.NewAtomContainer();
             // assume the current element is PC-Compound
             if (!parser.Name.Equals(Name_EL_PCCOMPOUND))
                 return null;
@@ -348,7 +348,7 @@ namespace NCDK.IO.PubChemXml
             {
                 IAtom atom1 = molecule.Atoms[int.Parse(id1s[i]) - 1];
                 IAtom atom2 = molecule.Atoms[int.Parse(id2s[i]) - 1];
-                IBond bond = molecule.Builder.CreateBond(atom1, atom2);
+                IBond bond = molecule.Builder.NewBond(atom1, atom2);
                 int order = int.Parse(orders[i]);
                 if (order == 1)
                 {

@@ -155,13 +155,13 @@ namespace NCDK.Groups
                 gapIndex = acpString.Length;
             }
 
-            IAtomContainer atomContainer = builder.CreateAtomContainer();
+            IAtomContainer atomContainer = builder.NewAtomContainer();
             string elementString = acpString.Substring(0, gapIndex);
             // skip the atom number, as this is just a visual convenience
             for (int index = 0; index < elementString.Length; index += 2)
             {
                 string elementSymbol = elementString[index].ToString();
-                atomContainer.Atoms.Add(builder.CreateAtom(elementSymbol));
+                atomContainer.Atoms.Add(builder.NewAtom(elementSymbol));
             }
 
             // no bonds

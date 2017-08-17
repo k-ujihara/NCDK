@@ -225,7 +225,7 @@ namespace NCDK.Graphs
         /// <returns> the average bond length</returns>
         public static IEnumerable<IAtom> FindClosestByBond(IAtomContainer atomContainer, IAtom atom, int max)
         {
-            IAtomContainer mol = atomContainer.Builder.CreateAtomContainer();
+            IAtomContainer mol = atomContainer.Builder.NewAtomContainer();
             BreadthFirstSearch(atomContainer, new[] { atom }, mol, max);
             IAtom[] returnValue = new IAtom[mol.Atoms.Count - 1];
             for (int i = 0; i < mol.Atoms.Count; i++)

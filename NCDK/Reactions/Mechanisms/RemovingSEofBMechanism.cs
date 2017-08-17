@@ -76,7 +76,7 @@ namespace NCDK.Reactions.Mechanisms
 
             int charge = atom1C.FormalCharge.Value;
             atom1C.FormalCharge = charge + 1;
-            reactantCloned.SingleElectrons.Add(atom1C.Builder.CreateSingleElectron(atom2C));
+            reactantCloned.SingleElectrons.Add(atom1C.Builder.NewSingleElectron(atom2C));
 
             // check if resulting atom type is reasonable
             atom1C.Hybridization = Hybridization.Unset;
@@ -88,13 +88,13 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            IReaction reaction = atom1C.Builder.CreateReaction();
+            IReaction reaction = atom1C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom1C.Builder.CreateMapping(atom,
+                IMapping mapping = atom1C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

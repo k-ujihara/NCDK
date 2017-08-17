@@ -72,7 +72,7 @@ namespace NCDK.Reactions.Types
                 throw new CDKException(GetType().Name + " don't expects agents");
             }
 
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
+            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
@@ -109,16 +109,16 @@ namespace NCDK.Reactions.Types
                                 atomList.Add(bondi.End);
                                 atomList.Add(bondi.Begin);
                             }
-                            IAtom atomH = reactant.Builder.CreateAtom("H");
+                            IAtom atomH = reactant.Builder.NewAtom("H");
                             atomH.FormalCharge = 1;
                             atomList.Add(atomH);
 
                             var bondList = new List<IBond>();
                             bondList.Add(bondi);
 
-                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet();
+                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                             moleculeSet.Add(reactant);
-                            IAtomContainer adduct = reactant.Builder.CreateAtomContainer();
+                            IAtomContainer adduct = reactant.Builder.NewAtomContainer();
                             adduct.Atoms.Add(atomH);
                             moleculeSet.Add(adduct);
 

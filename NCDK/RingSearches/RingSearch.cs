@@ -276,7 +276,7 @@ namespace NCDK.RingSearches
             }
 
             IChemObjectBuilder builder = container.Builder;
-            IAtomContainer fragment = builder.CreateAtomContainer(atoms, bonds);
+            IAtomContainer fragment = builder.NewAtomContainer(atoms, bonds);
 
             return fragment;
         }
@@ -369,7 +369,7 @@ namespace NCDK.RingSearches
                 }
             }
 
-            IAtomContainer fragment = container.Builder.CreateAtomContainer(atoms, bonds);
+            IAtomContainer fragment = container.Builder.NewAtomContainer(atoms, bonds);
 
             return fragment;
         }
