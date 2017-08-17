@@ -63,14 +63,15 @@ namespace NCDK.QSAR
         private IList<string> classNames = new List<string>(200);
         private IList<IDescriptor> descriptors = new List<IDescriptor>(200);
         private IList<IImplementationSpecification> speclist = null;
-
-        /// <summary>
-        /// readonly
-        /// </summary>
-        private IChemObjectBuilder builder { get; set; }
+        private readonly IChemObjectBuilder builder;
 
         private DescriptorEngine()
         { }
+
+        private DescriptorEngine(IChemObjectBuilder builder)
+        {
+            this.builder = builder;
+        }
 
         /// <summary>
         /// Instantiates the DescriptorEngine.
@@ -84,9 +85,9 @@ namespace NCDK.QSAR
         /// If you use this method it is preferable to specify the jar files to examine
         /// </example>
         public DescriptorEngine(IEnumerable<string> classNames, IChemObjectBuilder builder)
+            : this(builder)
         {
             this.classNames = classNames.ToList();
-            this.builder = builder;
             descriptors = InstantiateDescriptors(classNames);
             speclist = InitializeSpecifications(descriptors).ToList();
 
@@ -107,7 +108,7 @@ namespace NCDK.QSAR
         /// <seealso href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service Provider Interface (SPI) Introduction</seealso>
         public static DescriptorEngine Create<T>(IChemObjectBuilder builder) where T : IDescriptor
         {
-            var o = new DescriptorEngine();
+            var o = new DescriptorEngine(builder);
             foreach (var descriptor in ServiceLoader<T>.Load())
             {
                 descriptor.Initialise(builder);
@@ -115,7 +116,6 @@ namespace NCDK.QSAR
                 o.classNames.Add(descriptor.GetType().FullName);
             }
 
-            o.builder = builder;
             o.speclist = o.InitializeSpecifications(o.descriptors).Cast<IImplementationSpecification>().ToList();
             Debug.WriteLine($"Found #descriptors: {o.classNames.Count}");
 
@@ -535,7 +535,7 @@ namespace NCDK.QSAR
         /// </summary>
         /// <remarks>
         /// The interface name specified can be null or an empty string. In this case the interface name
-        /// is automatically set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
+        /// is automatically set to <see cref="IDescriptor"/>.  Specifying <see cref="IDescriptor"/> will
         /// return all available descriptor classes. Valid interface names are
         /// <list type="bullet">
         /// <item>IMolecularDescriptor</item>
@@ -545,12 +545,12 @@ namespace NCDK.QSAR
         /// </list>
         /// </remarks>
         /// <param name="interfaceName">The name of the interface that classes should implement</param>
-        /// <param name="assemblies">A string[] containing the fully qualified names of the jar files
-        ///                      to examine for descriptor classes. In general this can be set to NULL, in which case
-        ///                      the system classpath is examined for available jar files. This parameter can be set for
-        ///                      situations where the system classpath is not available or is modified such as in an application
-        ///                      container.</param>
-        /// <returns>A list containing the classes implementing the specified interface, null if an invalid interface is specified</returns>
+        /// <param name="assemblies">A <see cref="IEnumerable{T}"/> of <see cref="Assembly"/>
+        /// to examine for descriptor classes. In general this can be set to <see langword="null"/>, in which case
+        /// the  AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
+        /// situations where the system AppDomain.CurrentDomain is not available or is modified such as in an application
+        /// container.</param>
+        /// <returns>A list containing the classes implementing the specified interface, <see langword="null"/> if an invalid interface is specified</returns>
         public static IEnumerable<string> GetDescriptorClassNameByInterface(string interfaceName, IEnumerable<Assembly> assemblies)
         {
             if (string.IsNullOrEmpty(interfaceName))
@@ -567,7 +567,7 @@ namespace NCDK.QSAR
             }
             var interface_ = typeof(DescriptorEngine).Assembly.GetType(interfaceName);
 
-            foreach (var asm in assemblies)
+            foreach (var asm in assemblies ?? AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (var type in asm.GetTypes())
                 {
@@ -589,23 +589,23 @@ namespace NCDK.QSAR
         /// classes corresponding to both atomic and molecular descriptors.
         /// </para>
         /// </summary>
-        /// <param name="packageName">The name of the package containing the required descriptor</param>
-        /// <param name="assemblies">A string[] containing the fully qualified names of the jar files
-        ///                     to examine for descriptor classes. In general this can be set to NULL, in which case
-        ///                     the system classpath is examined for available jar files. This parameter can be set for
-        ///                     situations where the system classpath is not available or is modified such as in an application
-        ///                     container.</param>
-        /// <returns>A list containing the classes in the specified package</returns>
-        public static IEnumerable<string> GetDescriptorClassNameByPackage(string packageName, IEnumerable<Assembly> assemblies)
+        /// <param name="namespaceId">The name of the package containing the required descriptor</param>
+        /// <param name="assemblies">A <see cref="IEnumerable{T}"/> of <see cref="Assembly"/>
+        /// to examine for descriptor classes. In general this can be set to <see langword="null"/>, in which case
+        /// the  AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
+        /// situations where the system AppDomain.CurrentDomain is not available or is modified such as in an application
+        /// container.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> of <see cref="string"/> containing the classes in the specified package</returns>
+        public static IEnumerable<string> GetDescriptorClassNameByPackage(string namespaceId, IEnumerable<Assembly> assemblies)
         {
-            if (string.IsNullOrEmpty(packageName))
-                packageName = typeof(DescriptorEngine).Namespace + ".Descriptors";
+            if (string.IsNullOrEmpty(namespaceId))
+                namespaceId = typeof(DescriptorEngine).Namespace + ".Descriptors";
 
-            foreach (var asm in assemblies)
+            foreach (var asm in assemblies ?? AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (var type in asm.GetTypes())
                 {
-                    if (type.FullName.StartsWith(packageName))
+                    if (type.FullName.StartsWith(namespaceId))
                     {
                         if (type.IsNested) continue;
                         if (type.FullName.Contains("Test")) continue;
@@ -665,7 +665,7 @@ namespace NCDK.QSAR
         private string GetSpecRef(string identifier)
         {
             string specRef = null;
-            // see if we got a descriptors java class name
+            // see if we got a descriptors .NET class name
             for (int i = 0; i < classNames.Count; i++)
             {
                 string className = classNames[i];
