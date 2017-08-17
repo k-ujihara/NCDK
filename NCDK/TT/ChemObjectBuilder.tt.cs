@@ -50,7 +50,7 @@ namespace NCDK.Default
     {
         public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
 
-        public T Create<T>() where T : IAtomContainer, new() => new T();
+        public T New<T>() where T : IAtomContainer, new() => new T();
 
         // elements
         public IAtom NewAtom() => new Atom();
@@ -181,7 +181,7 @@ namespace NCDK.Silent
     {
         public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
 
-        public T Create<T>() where T : IAtomContainer, new() => new T();
+        public T New<T>() where T : IAtomContainer, new() => new T();
 
         // elements
         public IAtom NewAtom() => new Atom();
