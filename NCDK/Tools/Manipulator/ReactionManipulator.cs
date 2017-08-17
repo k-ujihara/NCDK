@@ -207,17 +207,17 @@ namespace NCDK.Tools.Manipulator
         public static IReaction Reverse(IReaction reaction)
         {
             IReaction reversedReaction = reaction.Builder.CreateReaction();
-            if (reaction.Direction == ReactionDirection.Bidirectional)
+            if (reaction.Direction == ReactionDirections.Bidirectional)
             {
-                reversedReaction.Direction = ReactionDirection.Bidirectional;
+                reversedReaction.Direction = ReactionDirections.Bidirectional;
             }
-            else if (reaction.Direction == ReactionDirection.Forward)
+            else if (reaction.Direction == ReactionDirections.Forward)
             {
-                reversedReaction.Direction = ReactionDirection.Backward;
+                reversedReaction.Direction = ReactionDirections.Backward;
             }
-            else if (reaction.Direction == ReactionDirection.Backward)
+            else if (reaction.Direction == ReactionDirections.Backward)
             {
-                reversedReaction.Direction = ReactionDirection.Forward;
+                reversedReaction.Direction = ReactionDirections.Forward;
             }
             IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
@@ -339,7 +339,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="mol">molecule</param>
         /// <param name="role">role to assign</param>
         /// <param name="grpId">group id</param>
-        private static void AssignRoleAndGrp(IAtomContainer mol, ReactionRole role, int grpId)
+        private static void AssignRoleAndGrp(IAtomContainer mol, ReactionRoles role, int grpId)
         {
             foreach (IAtom atom in mol.Atoms)
             {
@@ -351,7 +351,7 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// <p>Converts a reaction to an 'inlined' reaction stored as a molecule. All
         /// reactants, agents, products are added to the molecule as disconnected
-        /// components with atoms flagged as to their role <see cref="ReactionRole"/> and
+        /// components with atoms flagged as to their role <see cref="ReactionRoles"/> and
         /// component group.</p>
         /// <p>
         /// The inlined reaction, stored in a molecule can be converted back to an explicit
@@ -373,17 +373,17 @@ namespace NCDK.Tools.Manipulator
             int grpId = 0;
             foreach (IAtomContainer comp in rxn.Reactants)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Reactant, ++grpId);
+                AssignRoleAndGrp(comp, ReactionRoles.Reactant, ++grpId);
                 mol.Add(comp);
             }
             foreach (IAtomContainer comp in rxn.Agents)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Agent, ++grpId);
+                AssignRoleAndGrp(comp, ReactionRoles.Agent, ++grpId);
                 mol.Add(comp);
             }
             foreach (IAtomContainer comp in rxn.Products)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Product, ++grpId);
+                AssignRoleAndGrp(comp, ReactionRoles.Product, ++grpId);
                 mol.Add(comp);
             }
             return mol;
@@ -409,10 +409,10 @@ namespace NCDK.Tools.Manipulator
             // split atoms
             foreach (IAtom atom in mol.Atoms)
             {
-                var role = atom.GetProperty<ReactionRole?>(CDKPropertyName.ReactionRole);
+                var role = atom.GetProperty<ReactionRoles?>(CDKPropertyName.ReactionRole);
                 var grpIdx = atom.GetProperty<int?>(CDKPropertyName.ReactionGroup);
 
-                if (role == null || role.Value == ReactionRole.None)
+                if (role == null || role.Value == ReactionRoles.None)
                     throw new ArgumentException("Atom " + mol.Atoms.IndexOf(atom) + " had undefined role");
                 if (grpIdx == null)
                     throw new ArgumentException("Atom " + mol.Atoms.IndexOf(atom) + " had no reaction group id");
@@ -424,13 +424,13 @@ namespace NCDK.Tools.Manipulator
                     components[grpIdx.Value] = comp = bldr.CreateAtomContainer();
                     switch (role)
                     {
-                        case ReactionRole.Reactant:
+                        case ReactionRoles.Reactant:
                             rxn.Reactants.Add(comp);
                             break;
-                        case ReactionRole.Product:
+                        case ReactionRoles.Product:
                             rxn.Products.Add(comp);
                             break;
-                        case ReactionRole.Agent:
+                        case ReactionRoles.Agent:
                             rxn.Agents.Add(comp);
                             break;
                     }

@@ -70,11 +70,11 @@ namespace NCDK.Smiles.SMARTS
                 if (mapidx == 0) continue;
                 switch (Role(atom))
                 {
-                    case ReactionRole.Reactant:
+                    case ReactionRoles.Reactant:
                         if (reactInvMap == null) reactInvMap = new MultiDictionary<int, int>();
                         reactInvMap.Add(mapidx, idx);
                         break;
-                    case ReactionRole.Product:
+                    case ReactionRoles.Product:
                         if (prodInvMap == null) prodInvMap = new MultiDictionary<int, int>();
                         prodInvMap.Add(mapidx, idx);
                         break;
@@ -106,13 +106,13 @@ namespace NCDK.Smiles.SMARTS
         }
 
         /// <summary>
-        /// Safely access the reaction role of an atom, returns <see cref="ReactionRole.None"/> if null.
+        /// Safely access the reaction role of an atom, returns <see cref="ReactionRoles.None"/> if null.
         /// </summary>
         /// <param name="atom">atom</param>
         /// <returns>mapidx, None if undefined</returns>
-        private ReactionRole Role(IAtom atom)
+        private ReactionRoles Role(IAtom atom)
         {
-            ReactionRole role = atom.GetProperty<ReactionRole>(CDKPropertyName.ReactionRole, ReactionRole.None);
+            ReactionRoles role = atom.GetProperty<ReactionRoles>(CDKPropertyName.ReactionRole, ReactionRoles.None);
             return role;
         }
 

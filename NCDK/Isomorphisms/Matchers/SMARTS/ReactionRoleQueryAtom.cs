@@ -48,16 +48,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            ReactionRole? atomRole = atom.GetProperty<ReactionRole?>(CDKPropertyName.ReactionRole);
+            ReactionRoles? atomRole = atom.GetProperty<ReactionRoles?>(CDKPropertyName.ReactionRole);
             if (atomRole == null)
                 return this.role == ROLE_ANY;
             switch (atomRole.Value)
             {
-                case ReactionRole.Reactant:
+                case ReactionRoles.Reactant:
                     return (this.role & ROLE_REACTANT) != 0;
-                case ReactionRole.Agent:
+                case ReactionRoles.Agent:
                     return (this.role & ROLE_AGENT) != 0;
-                case ReactionRole.Product:
+                case ReactionRoles.Product:
                     return (this.role & ROLE_PRODUCT) != 0;
                 default:
                     return false;

@@ -57,9 +57,9 @@ namespace <#= ns.NS #>
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
-        private ReactionDirection direction;
+        private ReactionDirections direction;
         /// <inheritdoc/>
-        public ReactionDirection Direction
+        public ReactionDirections Direction
         {
             get { return direction; }
 
@@ -79,7 +79,7 @@ namespace <#= ns.NS #>
             this.products = Builder.CreateAtomContainerSet();
             this.agents = Builder.CreateAtomContainerSet();
             this.mappings = new List<IMapping>();
-            direction = ReactionDirection.Forward;
+            direction = ReactionDirections.Forward;
         }
 
         public override string ToString()

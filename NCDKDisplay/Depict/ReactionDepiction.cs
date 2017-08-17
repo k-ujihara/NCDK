@@ -56,7 +56,7 @@ namespace NCDK.Depict
 
         // arrow info
         private readonly int arrowIdx;
-        private readonly ReactionDirection direction;
+        private readonly ReactionDirections direction;
         private readonly double arrowHeight;
         private readonly double minArrowWidth;
 
@@ -77,7 +77,7 @@ namespace NCDK.Depict
                                  List<Bounds> products,
                                  List<Bounds> agents,
                                  Bounds plus,
-          ReactionDirection direction,
+          ReactionDirections direction,
                                  Dimensions dimensions,
                                  IList<Bounds> reactantTitles,
                                  IList<Bounds> productTitles,
@@ -611,7 +611,7 @@ namespace NCDK.Depict
             double headLength = minHeight;
             switch (direction)
             {
-                case ReactionDirection.Forward:
+                case ReactionDirections.Forward:
                     {
                         var fp = new PathFigure();
                         arrow.Add(new LineElement(new Point(0, 0), new Point(minWidth - 0.5 * headLength, 0), minHeight / 14, fgcol));
@@ -624,7 +624,7 @@ namespace NCDK.Depict
                         arrow.Add(GeneralPath.ShapeOf(path, fgcol));
                     }
                     break;
-                case ReactionDirection.Backward:
+                case ReactionDirections.Backward:
                     {
                         var fp = new PathFigure();
                         arrow.Add(new LineElement(new Point(0.5 * headLength, 0), new Point(minWidth, 0), minHeight / 14, fgcol));
@@ -637,7 +637,7 @@ namespace NCDK.Depict
                         arrow.Add(GeneralPath.ShapeOf(path, fgcol));
                     }
                     break;
-                case ReactionDirection.Bidirectional: // equilibrium?
+                case ReactionDirections.Bidirectional: // equilibrium?
                     {
                         var fp1 = new PathFigure();
                         fp1.StartPoint = new Point(0, 0.5 * +headThickness);

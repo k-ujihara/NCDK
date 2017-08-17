@@ -53,16 +53,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\dotNetRDF.1.0.12\lib\net40\dotNetRDF.dll</HintPath>
+      <HintPath>..\packages\dotNetRDF.1.0.12\lib\net40\dotNetRDF.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <HintPath>..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
@@ -371,7 +371,7 @@
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
     <Compile Include="QSAR\Descriptors\Atomic\AbstractRDFProtonDescriptor.cs" />
-    <Compile Include="ReactionRole.cs" />
+    <Compile Include="ReactionRoles.cs" />
     <Compile Include="Reactions\ReactionChain.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteReaction.cs" />
@@ -1031,7 +1031,7 @@
     <Compile Include="Config\IAtomTypeConfigurator.cs" />
     <Compile Include="Config\TXTBasedAtomTypeConfigurator.cs" />
     <Compile Include="Config\AtomType\OWLAtomTypeReader.cs" />
-    <Compile Include="ReactionDirection.cs" />
+    <Compile Include="ReactionDirections.cs" />
     <Compile Include="Tools\Manipulator\BondManipulator.cs" />
     <Compile Include="Config\ImmutableAtomType.cs" />
     <Compile Include="IChemObjectListener.cs" />

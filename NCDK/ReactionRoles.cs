@@ -22,7 +22,7 @@
  */
 namespace NCDK
 {
-    public enum ReactionRole
+    public enum ReactionRoles
     {
         Reactant,
         Agent,

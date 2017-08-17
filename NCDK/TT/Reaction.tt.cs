@@ -56,9 +56,9 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
-        private ReactionDirection direction;
+        private ReactionDirections direction;
         /// <inheritdoc/>
-        public ReactionDirection Direction
+        public ReactionDirections Direction
         {
             get { return direction; }
 
@@ -77,7 +77,7 @@ namespace NCDK.Default
             this.products = Builder.CreateAtomContainerSet();
             this.agents = Builder.CreateAtomContainerSet();
             this.mappings = new List<IMapping>();
-            direction = ReactionDirection.Forward;
+            direction = ReactionDirections.Forward;
         }
 
         public override string ToString()
@@ -137,9 +137,9 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
-        private ReactionDirection direction;
+        private ReactionDirections direction;
         /// <inheritdoc/>
-        public ReactionDirection Direction
+        public ReactionDirections Direction
         {
             get { return direction; }
 
@@ -158,7 +158,7 @@ namespace NCDK.Silent
             this.products = Builder.CreateAtomContainerSet();
             this.agents = Builder.CreateAtomContainerSet();
             this.mappings = new List<IMapping>();
-            direction = ReactionDirection.Forward;
+            direction = ReactionDirections.Forward;
         }
 
         public override string ToString()

@@ -57,9 +57,9 @@ namespace NCDK
         IAtomContainerSet<IAtomContainer> Agents { get; }
 
         /// <summary>
-        /// The <see cref="ReactionDirection"/> of the reaction.
+        /// The <see cref="ReactionDirections"/> of the reaction.
         /// </summary>
-        ReactionDirection Direction { get; set; }
+        ReactionDirections Direction { get; set; }
 
         /// <summary>
         /// Returns the mappings between the reactant and the product side.

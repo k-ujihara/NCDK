@@ -52,14 +52,14 @@ namespace NCDK.Tools.Manipulator
         public void TestReverse_IReaction()
         {
             Reaction reaction = new Reaction();
-            reaction.Direction = ReactionDirection.Backward;
+            reaction.Direction = ReactionDirections.Backward;
             IAtomContainer water = new AtomContainer();
             reaction.Reactants.Add(water, 3.0);
             reaction.Reactants.Add(new AtomContainer());
             reaction.Products.Add(new AtomContainer());
 
             Reaction reversedReaction = (Reaction)ReactionManipulator.Reverse(reaction);
-            Assert.AreEqual(ReactionDirection.Forward, reversedReaction.Direction);
+            Assert.AreEqual(ReactionDirections.Forward, reversedReaction.Direction);
             Assert.AreEqual(2, reversedReaction.Products.Count);
             Assert.AreEqual(1, reversedReaction.Reactants.Count);
             Assert.AreEqual(3.0, reversedReaction.Products.GetMultiplier(water).Value, 0.00001);

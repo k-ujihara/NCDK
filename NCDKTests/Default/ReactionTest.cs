@@ -43,7 +43,7 @@ namespace NCDK.Default
             Assert.IsNotNull(reaction);
             Assert.AreEqual(0, reaction.Reactants.Count);
             Assert.AreEqual(0, reaction.Products.Count);
-            Assert.AreEqual(ReactionDirection.Forward, reaction.Direction);
+            Assert.AreEqual(ReactionDirections.Forward, reaction.Direction);
         }
     }
 }

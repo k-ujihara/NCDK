@@ -201,22 +201,22 @@ namespace NCDK.Smiles.SMARTS.Parser
                 if (group.GetRole() != ASTGroup.ROLE_ANY)
                 {
                     IQueryAtom roleQueryAtom = null;
-                    ReactionRole? role = null;
+                    ReactionRoles? role = null;
 
                     // use single instances
                     switch (group.GetRole())
                     {
                         case ASTGroup.ROLE_REACTANT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
-                            role = ReactionRole.Reactant;
+                            role = ReactionRoles.Reactant;
                             break;
                         case ASTGroup.ROLE_AGENT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
-                            role = ReactionRole.Agent;
+                            role = ReactionRoles.Agent;
                             break;
                         case ASTGroup.ROLE_PRODUCT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
-                            role = ReactionRole.Product;
+                            role = ReactionRoles.Product;
                             break;
                     }
 
