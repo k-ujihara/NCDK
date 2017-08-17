@@ -1,5 +1,7 @@
 <#@ include file="..\..\ChemObjectConfig.ttinclude" #>
-<# GenerateCopyrightHeader(); #>
+
+// .NET Framework port by Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
 /* Copyright (C) 2000-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *

@@ -1,7 +1,8 @@
+ 
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+// Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
 
 /* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
