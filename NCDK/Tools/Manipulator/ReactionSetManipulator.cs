@@ -73,12 +73,12 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The set of reaction to inspect</param>
         /// <returns>The IAtomContanerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReactionSet set)
+        public static IChemObjectSet<IAtomContainer> GetAllMolecules(IReactionSet set)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = set.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> moleculeSet = set.Builder.NewAtomContainerSet();
             foreach (var reaction in set)
             {
-                IAtomContainerSet<IAtomContainer> molecules = ReactionManipulator.GetAllMolecules(reaction);
+                IChemObjectSet<IAtomContainer> molecules = ReactionManipulator.GetAllMolecules(reaction);
                 foreach (var ac in molecules)
                 {
                     bool contain = false;

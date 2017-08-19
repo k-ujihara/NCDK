@@ -7,7 +7,7 @@ namespace NCDK.Depict
         public void Main()
         {
             {
-                IAtomContainerSet<IAtomContainer> mols = null;
+                IChemObjectSet<IAtomContainer> mols = null;
                 #region 1
                 DepictionGenerator dg = new DepictionGenerator().WithSize(512, 512).WithAtomColors();
                 foreach (IAtomContainer mol in mols)

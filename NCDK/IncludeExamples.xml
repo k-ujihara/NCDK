@@ -2036,7 +2036,7 @@ namespace NCDK.Smiles
   </Codes>
   <Codes id="NCDK.Tools.StructureResonanceGenerator_Example.cs+1">
     <code>            StructureResonanceGenerator sRG = new StructureResonanceGenerator();
-            IAtomContainerSet&lt;IAtomContainer&gt; setOf = sRG.GetContainers(molecule);
+            IChemObjectSet&lt;IAtomContainer&gt; setOf = sRG.GetContainers(molecule);
 </code>
   </Codes>
   <Codes id="NCDK.Tools.StructureResonanceGenerator_Example.cs+2">

@@ -81,7 +81,7 @@ namespace NCDK.MolViewer.Renderers
             return Rect.Union(reactantsBounds, CalculateBounds(products));
         }
 
-        public static Rect CalculateBounds(IAtomContainerSet<IAtomContainer> moleculeSet)
+        public static Rect CalculateBounds(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             Rect totalBounds = new Rect();
             foreach (var ac in moleculeSet)

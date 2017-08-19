@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         internal bool checkAromaticity { get; set; } = false;
         private IAtomContainer acold = null;
         private IRingSet varRingSet = null;
-        private IAtomContainerSet<IAtomContainer> varAtomContainerSet = null;
+        private IChemObjectSet<IAtomContainer> varAtomContainerSet = null;
 
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object

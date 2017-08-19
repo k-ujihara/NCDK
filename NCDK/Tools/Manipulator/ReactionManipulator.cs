@@ -38,7 +38,7 @@ namespace NCDK.Tools.Manipulator
         public static int GetAtomCount(IReaction reaction)
         {
             int count = 0;
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 count += reactants[i].Atoms.Count;
@@ -48,7 +48,7 @@ namespace NCDK.Tools.Manipulator
             {
                 count += agents[i].Atoms.Count;
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 count += products[i].Atoms.Count;
@@ -59,7 +59,7 @@ namespace NCDK.Tools.Manipulator
         public static int GetBondCount(IReaction reaction)
         {
             int count = 0;
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 count += reactants[i].Bonds.Count;
@@ -69,7 +69,7 @@ namespace NCDK.Tools.Manipulator
             {
                 count += agents[i].Bonds.Count;
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 count += products[i].Bonds.Count;
@@ -79,7 +79,7 @@ namespace NCDK.Tools.Manipulator
 
         public static void RemoveAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom)
         {
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 IAtomContainer mol = reactants[i];
@@ -97,7 +97,7 @@ namespace NCDK.Tools.Manipulator
                     mol.RemoveAtom(atom);
                 }
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 IAtomContainer mol = products[i];
@@ -110,7 +110,7 @@ namespace NCDK.Tools.Manipulator
 
         public static void RemoveElectronContainer(IReaction reaction, IElectronContainer electrons)
         {
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 IAtomContainer mol = reactants[i];
@@ -128,7 +128,7 @@ namespace NCDK.Tools.Manipulator
                     mol.RemoveElectronContainer(electrons);
                 }
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 IAtomContainer mol = products[i];
@@ -144,9 +144,9 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReaction reaction)
+        public static IChemObjectSet<IAtomContainer> GetAllMolecules(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
 
             moleculeSet.AddRange(GetAllReactants(reaction));
             moleculeSet.AddRange(GetAllAgents(reaction));
@@ -160,10 +160,10 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllProducts(IReaction reaction)
+        public static IChemObjectSet<IAtomContainer> GetAllProducts(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 moleculeSet.Add(products[i]);
@@ -176,10 +176,10 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllReactants(IReaction reaction)
+        public static IChemObjectSet<IAtomContainer> GetAllReactants(IReaction reaction)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 moleculeSet.Add(reactants[i]);
@@ -187,7 +187,7 @@ namespace NCDK.Tools.Manipulator
             return moleculeSet;
         }
 
-        public static IAtomContainerSet<IAtomContainer> GetAllAgents(IReaction reaction)
+        public static IChemObjectSet<IAtomContainer> GetAllAgents(IReaction reaction)
         {
             var moleculeSet = reaction.Builder.NewAtomContainerSet();
             var agents = reaction.Agents;
@@ -219,13 +219,13 @@ namespace NCDK.Tools.Manipulator
             {
                 reversedReaction.Direction = ReactionDirections.Forward;
             }
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 double coefficient = reaction.Reactants.GetMultiplier(reactants[i]).Value;
                 reversedReaction.Products.Add(reactants[i], coefficient);
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 double coefficient = reaction.Products.GetMultiplier(products[i]).Value;
@@ -248,13 +248,13 @@ namespace NCDK.Tools.Manipulator
         {
             List<string> idList = new List<string>();
             if (reaction.Id != null) idList.Add(reaction.Id);
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 IAtomContainer mol = reactants[i];
                 idList.AddRange(AtomContainerManipulator.GetAllIDs(mol));
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 IAtomContainer mol = products[i];
@@ -285,12 +285,12 @@ namespace NCDK.Tools.Manipulator
 
         public static void SetAtomProperties(IReaction reaction, string propKey, object propVal)
         {
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int j = 0; j < reactants.Count; j++)
             {
                 AtomContainerManipulator.SetAtomProperties(reactants[j], propKey, propVal);
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int j = 0; j < products.Count; j++)
             {
                 AtomContainerManipulator.SetAtomProperties(products[j], propKey, propVal);
@@ -301,12 +301,12 @@ namespace NCDK.Tools.Manipulator
         {
             List<IChemObject> list = new List<IChemObject>();
             list.Add(reaction);
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
+            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 list.Add(reactants[i]);
             }
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
+            IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 list.Add(products[i]);

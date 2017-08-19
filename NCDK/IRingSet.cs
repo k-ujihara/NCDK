@@ -27,7 +27,7 @@ namespace NCDK
     // @cdk.githash
     // @cdk.keyword ring, set of
     public interface IRingSet
-        : IAtomContainerSet<IRing>
+        : IChemObjectSet<IRing>
     {
         /// <summary>
         /// all rings that this bond is part of.

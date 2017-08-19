@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Generates an RSS feed. It the object is a <see cref="IAtomContainerSet{IAtomContainer}"/>, the molecules
+    /// Generates an RSS feed. It the object is a <see cref="IChemObjectSet{IAtomContainer}"/>, the molecules
     /// are put in separately. All other objects are made CML and put in.
     /// </summary>
     // @cdk.module       libiocml
@@ -169,11 +169,11 @@ namespace NCDK.IO
                 channelElement.SetAttributeValue(NS_RDF + "about", About);
                 rdfElement.Add(channelElement);
                 var list = new List<IChemObject>();
-                if (obj is IAtomContainerSet<IAtomContainer>)
+                if (obj is IChemObjectSet<IAtomContainer>)
                 {
-                    for (int i = 0; i < ((IAtomContainerSet<IAtomContainer>)obj).Count; i++)
+                    for (int i = 0; i < ((IChemObjectSet<IAtomContainer>)obj).Count; i++)
                     {
-                        list.Add(((IAtomContainerSet<IAtomContainer>)obj)[i]);
+                        list.Add(((IChemObjectSet<IAtomContainer>)obj)[i]);
                     }
                 }
                 else
@@ -248,9 +248,9 @@ namespace NCDK.IO
                     {
                         root = convertor.CDKReactionSetToCMLReactionList((IReactionSet)obj);
                     }
-                    else if (obj is IAtomContainerSet<IAtomContainer>)
+                    else if (obj is IChemObjectSet<IAtomContainer>)
                     {
-                        root = convertor.CDKAtomContainerSetToCMLList((IAtomContainerSet<IAtomContainer>)obj);
+                        root = convertor.CDKAtomContainerSetToCMLList((IChemObjectSet<IAtomContainer>)obj);
                     }
                     else if (obj is IChemSequence)
                     {

@@ -117,9 +117,9 @@ namespace NCDK.Tools
             {
                 CreateIDsForAtomContainer((IAtomContainer)chemObject, null);
             }
-            else if (chemObject is IAtomContainerSet<IAtomContainer>)
+            else if (chemObject is IChemObjectSet<IAtomContainer>)
             {
-                CreateIDsForAtomContainerSet((IAtomContainerSet<IAtomContainer>)chemObject, null);
+                CreateIDsForAtomContainerSet((IChemObjectSet<IAtomContainer>)chemObject, null);
             }
             else if (chemObject is IReaction)
             {
@@ -231,7 +231,7 @@ namespace NCDK.Tools
         /// them m1, m2, etc.
         /// It will not the AtomContainerSet itself.
         /// </summary>
-        private static void CreateIDsForAtomContainerSet(IAtomContainerSet<IAtomContainer> containerSet, IList<string> tabuList)
+        private static void CreateIDsForAtomContainerSet(IChemObjectSet<IAtomContainer> containerSet, IList<string> tabuList)
         {
             if (tabuList == null) tabuList = AtomContainerSetManipulator.GetAllIDs(containerSet).ToList();
 
@@ -366,7 +366,7 @@ namespace NCDK.Tools
                 CreateIDsForAtomContainer(crystal, tabuList);
             }
 
-            IAtomContainerSet<IAtomContainer> moleculeSet = model.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = model.MoleculeSet;
             if (moleculeSet != null)
             {
                 if (policy == OBJECT_UNIQUE_POLICY)

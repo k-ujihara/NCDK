@@ -300,7 +300,7 @@ namespace NCDK.Reactions.Types
         /// Create one of the resonance for 2-methylnaphthalene.
         /// C1=CC(=CC2=C1C=CC=C2)C
         /// </summary>
-        private IAtomContainerSet<IAtomContainer> GetExampleReactants()
+        private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             // C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
@@ -349,7 +349,7 @@ namespace NCDK.Reactions.Types
         /// Get the expected set of molecules. 2-methylnaphthalene.
         /// C=1C=CC2=CC(=CC=C2(C=1))C
         /// </summary>
-        private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
+        private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
 

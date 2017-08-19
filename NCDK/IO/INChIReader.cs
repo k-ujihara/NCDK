@@ -150,7 +150,7 @@ namespace NCDK.IO
             private IChemFile chemFile;
             private IChemSequence chemSequence;
             private IChemModel chemModel;
-            private IAtomContainerSet<IAtomContainer> setOfMolecules;
+            private IChemObjectSet<IAtomContainer> setOfMolecules;
             private IAtomContainer tautomer;
             private IChemObjectBuilder builder;
 

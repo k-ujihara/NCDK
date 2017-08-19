@@ -71,22 +71,22 @@ namespace NCDK.IO
         /// <inheritdoc/>
         public override bool Accepts(Type type)
         {
-            if (typeof(IAtomContainerSet<IAtomContainer>).IsAssignableFrom(type)) return true;
+            if (typeof(IChemObjectSet<IAtomContainer>).IsAssignableFrom(type)) return true;
             if (typeof(IChemFile).IsAssignableFrom(type)) return true;
             return false;
         }
 
         /// <summary>
-        /// Read a <see cref="IAtomContainerSet{T}"/> from the input source.
+        /// Read a <see cref="IChemObjectSet{T}"/> from the input source.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="obj">object an <see cref="IAtomContainerSet{T}"/> into which the data is stored.</param>
-        /// <returns>the content in a <see cref="IAtomContainerSet{T}"/> object</returns>
+        /// <param name="obj">object an <see cref="IChemObjectSet{T}"/> into which the data is stored.</param>
+        /// <returns>the content in a <see cref="IChemObjectSet{T}"/> object</returns>
         public override T Read<T>(T obj)
         {
-            if (obj is IAtomContainerSet<IAtomContainer>)
+            if (obj is IChemObjectSet<IAtomContainer>)
             {
-                var cf = (IAtomContainerSet<IAtomContainer>)obj;
+                var cf = (IChemObjectSet<IAtomContainer>)obj;
                 try
                 {
                     cf = ReadAtomContainerSet(cf);
@@ -102,7 +102,7 @@ namespace NCDK.IO
                 IChemFile chemFile = (IChemFile)obj;
                 IChemSequence chemSeq = obj.Builder.NewChemSequence();
                 IChemModel chemModel = obj.Builder.NewChemModel();
-                var molSet = obj.Builder.NewAtomContainerSet();
+                IChemObjectSet<IAtomContainer> molSet = obj.Builder.NewAtomContainerSet();
                 try
                 {
                     molSet = ReadAtomContainerSet(molSet);
@@ -128,7 +128,7 @@ namespace NCDK.IO
         /// <param name="molSet">an <see cref="IAtomContainerSet"/> to store the structures</param>
         /// <returns>the <see cref="IAtomContainerSet"/> containing the molecules read in</returns>
         /// <exception cref="IOException">if there is an error during reading</exception>
-        private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> molSet)
+        private IChemObjectSet<IAtomContainer> ReadAtomContainerSet(IChemObjectSet<IAtomContainer> molSet)
         {
             SmilesParser parser = new SmilesParser(molSet.Builder);
             parser.Kekulise(false);

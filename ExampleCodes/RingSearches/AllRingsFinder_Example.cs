@@ -7,7 +7,7 @@ namespace NCDK.RingSearches
         public void Main()
         {
             {
-                IAtomContainerSet<IAtomContainer> ms = null;
+                IChemObjectSet<IAtomContainer> ms = null;
                 #region
                 AllRingsFinder arf = new AllRingsFinder();
                 foreach (var m in ms)

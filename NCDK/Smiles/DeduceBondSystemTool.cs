@@ -162,7 +162,7 @@ namespace NCDK.Smiles
                 }
             }
 
-            IAtomContainerSet<IAtomContainer> som = atomContainer.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> som = atomContainer.Builder.NewAtomContainerSet();
 
             //        int number=1; // total number of possibilities
             //
@@ -581,7 +581,7 @@ namespace NCDK.Smiles
         /// <param name="som"></param>
         /// <returns></returns>
         private IAtomContainer Loop(long starttime, IAtomContainer atomContainer, int index,
-                IList<IList<IList<string>>> MasterList, int[] choices, IAtomContainerSet<IAtomContainer> som)
+                IList<IList<IList<string>>> MasterList, int[] choices, IChemObjectSet<IAtomContainer> som)
         {
             //Debug.WriteLine(System.CurrentTimeMillis());
 

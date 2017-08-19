@@ -153,7 +153,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="ringSet">The collection of rings</param>
         /// <returns>the ring with the highest numbers of other rings attached to it.</returns>
-        public static IRing GetMostComplexRing(IAtomContainerSet<IRing> ringSet)
+        public static IRing GetMostComplexRing(IChemObjectSet<IRing> ringSet)
         {
             int[] neighbors = new int[ringSet.Count];
             IRing ring1, ring2;

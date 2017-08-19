@@ -31,22 +31,22 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     public class MoleculeSetManipulator
     {
-        public static int GetAtomCount(IAtomContainerSet<IAtomContainer> set)
+        public static int GetAtomCount(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAtomCount(set);
         }
 
-        public static int GetBondCount(IAtomContainerSet<IAtomContainer> set)
+        public static int GetBondCount(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetBondCount(set);
         }
 
-        public static void RemoveAtomAndConnectedElectronContainers(IAtomContainerSet<IAtomContainer> set, IAtom atom)
+        public static void RemoveAtomAndConnectedElectronContainers(IChemObjectSet<IAtomContainer> set, IAtom atom)
         {
             AtomContainerSetManipulator.RemoveAtomAndConnectedElectronContainers(set, atom);
         }
 
-        public static void RemoveElectronContainer(IAtomContainerSet<IAtomContainer> set, IElectronContainer electrons)
+        public static void RemoveElectronContainer(IChemObjectSet<IAtomContainer> set, IElectronContainer electrons)
         {
             AtomContainerSetManipulator.RemoveElectronContainer(set, electrons);
         }
@@ -56,7 +56,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>a list containing individual IAtomContainer's</returns>
-        public static IEnumerable<IAtomContainer> GetAllAtomContainers(IAtomContainerSet<IAtomContainer> set)
+        public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAllAtomContainers(set);
         }
@@ -66,7 +66,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>The total charge on the collection of molecules</returns>
-        public static double GetTotalCharge(IAtomContainerSet<IAtomContainer> set)
+        public static double GetTotalCharge(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalCharge(set);
         }
@@ -76,7 +76,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>The total formal charge on the collection of molecules</returns>
-        public static double GetTotalFormalCharge(IAtomContainerSet<IAtomContainer> set)
+        public static double GetTotalFormalCharge(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalFormalCharge(set);
         }
@@ -86,12 +86,12 @@ namespace NCDK.Tools.Manipulator
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>the total implicit hydrogen count on the collection of molecules</returns>
-        public static int GetTotalHydrogenCount(IAtomContainerSet<IAtomContainer> set)
+        public static int GetTotalHydrogenCount(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalHydrogenCount(set);
         }
 
-        public static IEnumerable<string> GetAllIDs(IAtomContainerSet<IAtomContainer> set)
+        public static IEnumerable<string> GetAllIDs(IChemObjectSet<IAtomContainer> set)
         {
             // the ID is set in AtomContainerSetManipulator.GetAllIDs()
             foreach (var id in AtomContainerSetManipulator.GetAllIDs(set))
@@ -99,22 +99,22 @@ namespace NCDK.Tools.Manipulator
             yield break;
         }
 
-        public static void SetAtomProperties(IAtomContainerSet<IAtomContainer> set, string propKey, object propVal)
+        public static void SetAtomProperties(IChemObjectSet<IAtomContainer> set, string propKey, object propVal)
         {
             AtomContainerSetManipulator.SetAtomProperties(set, propKey, propVal);
         }
 
-        public static IAtomContainer GetRelevantAtomContainer(IAtomContainerSet<IAtomContainer> moleculeSet, IAtom atom)
+        public static IAtomContainer GetRelevantAtomContainer(IChemObjectSet<IAtomContainer> moleculeSet, IAtom atom)
         {
             return AtomContainerSetManipulator.GetRelevantAtomContainer(moleculeSet, atom);
         }
 
-        public static IAtomContainer GetRelevantAtomContainer(IAtomContainerSet<IAtomContainer> moleculeSet, IBond bond)
+        public static IAtomContainer GetRelevantAtomContainer(IChemObjectSet<IAtomContainer> moleculeSet, IBond bond)
         {
             return AtomContainerSetManipulator.GetRelevantAtomContainer(moleculeSet, bond);
         }
 
-        public static IEnumerable<IChemObject> GetAllChemObjects(IAtomContainerSet<IAtomContainer> set)
+        public static IEnumerable<IChemObject> GetAllChemObjects(IChemObjectSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAllChemObjects(set);
         }

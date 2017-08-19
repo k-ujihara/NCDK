@@ -34,11 +34,11 @@ namespace NCDK.Reactions.Types
         public abstract ReactionSpecification Specification { get; }
 
         /// <inheritdoc/>
-        public abstract IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents);
+        public abstract IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents);
 
         internal delegate bool BondCheck(IBond bond);
         
-        internal IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents, int length, BondCheck bondCheck)
+        internal IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents, int length, BondCheck bondCheck)
         {
             CheckInitiateParams(reactants, agents);
 
@@ -77,7 +77,7 @@ namespace NCDK.Reactions.Types
                         var bondList = new List<IBond>();
                         bondList.Add(bondi);
 
-                        IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
+                        IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                         moleculeSet.Add(reactant);
                         IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                         if (reaction == null)

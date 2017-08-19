@@ -35,9 +35,9 @@ namespace NCDK.Reactions.Types
         public abstract ReactionSpecification Specification { get; }
 
         /// <inheritdoc/>
-        public abstract IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents);
+        public abstract IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents);
         
-        internal IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents, string atomSymbol)
+        internal IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents, string atomSymbol)
         {
             CheckInitiateParams(reactants, agents);
 

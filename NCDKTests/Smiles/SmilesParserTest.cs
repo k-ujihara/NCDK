@@ -995,7 +995,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(8, mol.Atoms.Count);
             Assert.AreEqual(7, mol.Bonds.Count);
 
-            IAtomContainerSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
             int fragmentCount = fragments.Count();
             Assert.AreEqual(2, fragmentCount);
             IAtomContainer mol1 = fragments[0];
@@ -1018,7 +1018,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(3, mol.Atoms.Count);
             Assert.AreEqual(2, mol.Bonds.Count);
 
-            IAtomContainerSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
             int fragmentCount = fragments.Count();
             Assert.AreEqual(1, fragmentCount);
             IAtomContainer mol1 = fragments[0];
@@ -1033,7 +1033,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(1, mol.Bonds.Count);
 
-            IAtomContainerSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
             int fragmentCount = fragments.Count();
             Assert.AreEqual(1, fragmentCount);
             IAtomContainer mol1 = fragments[0];

@@ -454,7 +454,7 @@ namespace NCDK.Charges
         /// <param name="ac"></param>
         /// <param name="iSet"></param>
         /// <returns></returns>
-        private IAtomContainerSet<IAtomContainer> GetHyperconjugationInteractions(IAtomContainer ac, IAtomContainerSet<IAtomContainer> iSet)
+        private IChemObjectSet<IAtomContainer> GetHyperconjugationInteractions(IAtomContainer ac, IChemObjectSet<IAtomContainer> iSet)
         {
             var set = ac.Builder.NewAtomContainerSet();
             IReactionProcess type = new HeterolyticCleavageSBReaction();
@@ -632,7 +632,7 @@ namespace NCDK.Charges
         /// </summary>
         /// <param name="setAc"></param>
         /// <returns>Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer</returns>
-        private double[][] AssignPiFactors(IAtomContainerSet<IAtomContainer> setAc)
+        private double[][] AssignPiFactors(IChemObjectSet<IAtomContainer> setAc)
         {
             //a,b,c,denom,chi,q
             double[][] gasteigerFactors = Arrays.CreateJagged<double>(setAc.Count, (setAc[0].Atoms.Count * (StepSize + 1)));
@@ -756,7 +756,7 @@ namespace NCDK.Charges
         /// </summary>
         /// <param name="setAc"></param>
         /// <returns>Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer</returns>
-        public double[][] AssignrPiMarsilliFactors(IAtomContainerSet<IAtomContainer> setAc)
+        public double[][] AssignrPiMarsilliFactors(IChemObjectSet<IAtomContainer> setAc)
         {
             //a,b,c,denom,chi,q
             double[][] gasteigerFactors = Arrays.CreateJagged<double>(setAc.Count, (setAc[0].Atoms.Count * (StepSize + 1)));

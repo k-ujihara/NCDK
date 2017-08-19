@@ -42,7 +42,7 @@ namespace NCDK.Reactions.Mechanisms
         /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed three atoms</param>
         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
         /// <returns>The Reaction mechanism</returns>
-        public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
+        public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
             if (atomContainerSet.Count != 2)

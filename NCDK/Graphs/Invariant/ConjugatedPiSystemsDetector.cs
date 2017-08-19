@@ -38,7 +38,7 @@ namespace NCDK.Graphs.Invariant
         /// </example>
         /// <param name="ac">The AtomContainer for which to detect conjugated pi systems</param>
         /// <returns>The set of AtomContainers with conjugated pi systems</returns>
-        public static IAtomContainerSet<IAtomContainer> Detect(IAtomContainer ac)
+        public static IChemObjectSet<IAtomContainer> Detect(IAtomContainer ac)
         {
             var piSystemSet = ac.Builder.NewAtomContainerSet();
 

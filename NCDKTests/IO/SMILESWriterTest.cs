@@ -47,7 +47,7 @@ namespace NCDK.IO
         {
             SMILESWriter reader = new SMILESWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
+            Assert.IsTrue(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
         }
 
         [TestMethod()]

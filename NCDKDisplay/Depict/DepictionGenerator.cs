@@ -594,7 +594,7 @@ namespace NCDK.Depict
             return new Bounds(StandardGenerator.EmbedText(font, emSize, "+", fgcol, 1 / scale));
         }
 
-        private List<IAtomContainer> ToList(IAtomContainerSet<IAtomContainer> set)
+        private List<IAtomContainer> ToList(IChemObjectSet<IAtomContainer> set)
         {
             return set.ToList();
         }

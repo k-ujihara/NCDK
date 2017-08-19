@@ -115,7 +115,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// <param name="shouldMatchBonds"></param>
         /// <returns>IMolecule Set</returns>
         /// <exception cref="CDKException"></exception>
-        protected IAtomContainerSet<IAtomContainer> GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
+        protected IChemObjectSet<IAtomContainer> GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
         {
             List<int> atomSerialsToDelete = new List<int>();
 

@@ -399,7 +399,7 @@ namespace NCDK.IO.CML
         public void TestMoleculeSetID()
         {
             StringWriter writer = new StringWriter();
-            var moleculeSet = new AtomContainerSet<IAtomContainer>();
+            var moleculeSet = new ChemObjectSet<IAtomContainer>();
             moleculeSet.Id = "ms0";
 
             CMLWriter cmlWriter = new CMLWriter(writer);

@@ -24,7 +24,7 @@ namespace NCDK.Default
     /// <summary>
     /// Checks the functionality of the MoleculeSet class.
     /// </summary>
-    /// <seealso cref="AtomContainerSet{T}"/>
+    /// <seealso cref="ChemObjectSet{T}"/>
     // @cdk.module test-data
     [TestClass()]
     public class AtomContainerSetTest
@@ -32,7 +32,7 @@ namespace NCDK.Default
     {
         public override IChemObject NewChemObject()
         {
-            return new AtomContainerSet<IAtomContainer>();
+            return new ChemObjectSet<IAtomContainer>();
         }
 
         public override IAtomContainer NewContainerObject()
@@ -43,7 +43,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestAtomContainerSet()
         {
-            IAtomContainerSet<IAtomContainer> som = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> som = new ChemObjectSet<IAtomContainer>();
             Assert.IsNotNull(som);
             Assert.AreEqual(0, som.Count);
         }

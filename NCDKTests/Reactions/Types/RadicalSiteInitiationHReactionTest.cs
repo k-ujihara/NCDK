@@ -214,7 +214,7 @@ namespace NCDK.Reactions.Types
 
         }
 
-        private IAtomContainerSet<IAtomContainer> GetExampleReactants()
+        private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
 
@@ -250,7 +250,7 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// </summary>
-        private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
+        private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
 

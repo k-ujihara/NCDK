@@ -51,7 +51,7 @@ namespace NCDK.Graphs
             atomCon.Add(TestMoleculeFactory.Make4x3CondensedRings());
             atomCon.Add(TestMoleculeFactory.MakeAlphaPinene());
             atomCon.Add(TestMoleculeFactory.MakeSpiroRings());
-            IAtomContainerSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(3, moleculeSet.Count);
         }
@@ -69,7 +69,7 @@ namespace NCDK.Graphs
             atom2.Id = "atom2";
             atomCon.Atoms.Add(atom1);
             atomCon.Atoms.Add(atom2);
-            IAtomContainerSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(2, moleculeSet.Count);
             IAtom copy1 = moleculeSet[0].Atoms[0];
@@ -91,7 +91,7 @@ namespace NCDK.Graphs
             atomCon.Add(TestMoleculeFactory.Make4x3CondensedRings());
             atomCon.Add(TestMoleculeFactory.MakeAlphaPinene());
             atomCon.Add(TestMoleculeFactory.MakeSpiroRings());
-            IAtomContainerSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(3, moleculeSet.Count);
 
@@ -125,7 +125,7 @@ namespace NCDK.Graphs
             atomCon.Add(mol2);
 
             // now partition
-            IAtomContainerSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(2, moleculeSet.Count);
 
@@ -203,7 +203,7 @@ namespace NCDK.Graphs
         {
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = smipar.ParseSmiles("CC=[C@]=CC.C");
-            IAtomContainerSet<IAtomContainer> containerSet = ConnectivityChecker.PartitionIntoMolecules(container);
+            IChemObjectSet<IAtomContainer> containerSet = ConnectivityChecker.PartitionIntoMolecules(container);
             Assert.AreEqual(2, containerSet.Count);
             Assert.IsTrue(containerSet[0].StereoElements.GetEnumerator().MoveNext());
         }

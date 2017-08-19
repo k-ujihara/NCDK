@@ -41,11 +41,11 @@ namespace NCDK
         IAtom NewAtom(string elementSymbol);
         IAtom NewAtom(string elementSymbol, Vector2 point2d);
         IAtom NewAtom(string elementSymbol, Vector3 point3d);
-        IAtomContainerSet<T> NewAtomContainerSet<T>() where T : IAtomContainer;
+        IChemObjectSet<T> NewAtomContainerSet<T>() where T : IAtomContainer;
         IAtomContainer NewAtomContainer();
         IAtomContainer NewAtomContainer(IAtomContainer container);
         IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds);
-        IAtomContainerSet<IAtomContainer> NewAtomContainerSet();
+        IAtomContainerSet NewAtomContainerSet();
         IAtomType NewAtomType(IElement element);
         IAtomType NewAtomType(string elementSymbol);
         IAtomType NewAtomType(string identifier, string elementSymbol);

@@ -127,8 +127,8 @@ namespace NCDK.Default
         public IAdductFormula NewAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
 
         // chem object sets
-        public IAtomContainerSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
-        public IAtomContainerSet<IAtomContainer> NewAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
+        public IChemObjectSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new ChemObjectSet<T>();
+        public IAtomContainerSet NewAtomContainerSet() => new AtomContainerSet();
         public IMolecularFormulaSet NewMolecularFormulaSet() => new MolecularFormulaSet();
         public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
         public IReactionSet NewReactionSet() => new ReactionSet();
@@ -258,8 +258,8 @@ namespace NCDK.Silent
         public IAdductFormula NewAdductFormula(IMolecularFormula formula) => new AdductFormula(formula);
 
         // chem object sets
-        public IAtomContainerSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new AtomContainerSet<T>();
-        public IAtomContainerSet<IAtomContainer> NewAtomContainerSet() => new AtomContainerSet<IAtomContainer>();
+        public IChemObjectSet<T> NewAtomContainerSet<T>() where T : IAtomContainer => new ChemObjectSet<T>();
+        public IAtomContainerSet NewAtomContainerSet() => new AtomContainerSet();
         public IMolecularFormulaSet NewMolecularFormulaSet() => new MolecularFormulaSet();
         public IMolecularFormulaSet NewMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
         public IReactionSet NewReactionSet() => new ReactionSet();

@@ -121,7 +121,7 @@ namespace NCDK.IO
         {
             IChemSequence chemSequence = file.Builder.NewChemSequence();
             IChemModel chemModel = file.Builder.NewChemModel();
-            IAtomContainerSet<IAtomContainer> setOfMolecules = file.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> setOfMolecules = file.Builder.NewAtomContainerSet();
             string info;
 
             IList<string> aroringText = new List<string>();

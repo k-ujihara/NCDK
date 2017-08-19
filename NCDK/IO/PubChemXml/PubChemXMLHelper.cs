@@ -155,7 +155,7 @@ namespace NCDK.IO.PubChemXml
         internal static readonly XName Name_EL_PCBonds_aid2_E = PubChem_Namespace + "PC-Bonds_aid2_E";
         internal static readonly XName Name_EL_PCBondType = PubChem_Namespace + "PC-BondType";
 
-        public IAtomContainerSet<IAtomContainer> ParseCompoundsBlock(XElement parser)
+        public IChemObjectSet<IAtomContainer> ParseCompoundsBlock(XElement parser)
         {
             var set = builder.NewAtomContainerSet();
             // assume the current element is PC-Compounds

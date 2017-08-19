@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         private static readonly string[] NAMES = { "protonInConjSystem" };
         private bool checkAromaticity = false;
         private IAtomContainer acold = null;
-        private IAtomContainerSet<IAtomContainer> acSet = null;
+        private IChemObjectSet<IAtomContainer> acSet = null;
 
         /// <summary>
         ///  Constructor for the IsProtonInConjugatedPiSystemDescriptor object

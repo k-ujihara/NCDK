@@ -32,7 +32,7 @@ namespace NCDK.Smiles.SMARTS
             }
             {
                 string someSmartsPattern = null;
-                IAtomContainerSet<IAtomContainer> molecules = null;
+                IChemObjectSet<IAtomContainer> molecules = null;
                 #region SetAromaticity
                 SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, Default.ChemObjectBuilder.Instance);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));

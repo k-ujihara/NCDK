@@ -34,6 +34,14 @@ using System.Collections;
 
 namespace NCDK.Default
 {
+	public class AtomContainerSet
+		: ChemObjectSet<IAtomContainer>, IAtomContainerSet
+	{
+		public AtomContainerSet()
+			: base()
+		{}
+	}
+
     /// <summary>
     /// A set of AtomContainers.
     /// </summary>
@@ -41,15 +49,15 @@ namespace NCDK.Default
     // @cdk.module    data
     // @cdk.githash
     [Serializable]
-    public class AtomContainerSet<T>
-        : ChemObject, IAtomContainerSet<T>, IChemObjectListener, ICloneable
-         where T : IAtomContainer
+    public class ChemObjectSet<T>
+        : ChemObject, IChemObjectSet<T>, IChemObjectListener, ICloneable
+         where T : IChemObject
     {
         internal IList<T> atomContainers;
         internal IList<double?> multipliers;
 
-         /// <summary> Constructs an empty AtomContainerSet.</summary>
-        public AtomContainerSet()
+         /// <summary> Constructs an empty ChemObjectSet.</summary>
+        public ChemObjectSet()
         {
             atomContainers = new ObservableChemObjectCollection<T>(this);
             multipliers = new List<double?>();
@@ -165,10 +173,10 @@ namespace NCDK.Default
         }
 
         /// <summary>
-        ///  Adds all atomContainers in the AtomContainerSet to this container.
+        ///  Adds all atomContainers in the ChemObjectSet to this container.
         /// </summary>
-        /// <param name="atomContainerSet">The AtomContainerSet</param>
-        public virtual void Add(IAtomContainerSet<T> atomContainerSet)
+        /// <param name="atomContainerSet">The ChemObjectSet</param>
+        public virtual void Add(IChemObjectSet<T> atomContainerSet)
         {
             foreach (var iter in atomContainerSet)
             {
@@ -206,7 +214,7 @@ namespace NCDK.Default
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("AtomContainerSet(");
+            sb.Append("ChemObjectSet(");
             sb.Append(GetHashCode());
             if (atomContainers.Count > 0)
             {
@@ -220,7 +228,7 @@ namespace NCDK.Default
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-            var clone = (AtomContainerSet<T>)base.Clone(map);
+            var clone = (ChemObjectSet<T>)base.Clone(map);
             clone.atomContainers = new List<T>(atomContainers.Count);
             clone.multipliers = new List<double?>(atomContainers.Count);
             for (var i = 0; i < atomContainers.Count; i++)
@@ -294,10 +302,10 @@ namespace NCDK.Default
 
         class CompareRefByIndex : IComparer<int>
         {
-            AtomContainerSet<T> parent;
+            ChemObjectSet<T> parent;
             IComparer<T> comparator;
 
-            public CompareRefByIndex(AtomContainerSet<T> parent, IComparer<T> comparator)
+            public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {
                 this.parent = parent;
                 this.comparator = comparator;
@@ -312,6 +320,14 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+	public class AtomContainerSet
+		: ChemObjectSet<IAtomContainer>, IAtomContainerSet
+	{
+		public AtomContainerSet()
+			: base()
+		{}
+	}
+
     /// <summary>
     /// A set of AtomContainers.
     /// </summary>
@@ -319,15 +335,15 @@ namespace NCDK.Silent
     // @cdk.module    data
     // @cdk.githash
     [Serializable]
-    public class AtomContainerSet<T>
-        : ChemObject, IAtomContainerSet<T>, IChemObjectListener, ICloneable
-         where T : IAtomContainer
+    public class ChemObjectSet<T>
+        : ChemObject, IChemObjectSet<T>, IChemObjectListener, ICloneable
+         where T : IChemObject
     {
         internal IList<T> atomContainers;
         internal IList<double?> multipliers;
 
-         /// <summary> Constructs an empty AtomContainerSet.</summary>
-        public AtomContainerSet()
+         /// <summary> Constructs an empty ChemObjectSet.</summary>
+        public ChemObjectSet()
         {
             atomContainers = new ObservableChemObjectCollection<T>(this);
             multipliers = new List<double?>();
@@ -443,10 +459,10 @@ namespace NCDK.Silent
         }
 
         /// <summary>
-        ///  Adds all atomContainers in the AtomContainerSet to this container.
+        ///  Adds all atomContainers in the ChemObjectSet to this container.
         /// </summary>
-        /// <param name="atomContainerSet">The AtomContainerSet</param>
-        public virtual void Add(IAtomContainerSet<T> atomContainerSet)
+        /// <param name="atomContainerSet">The ChemObjectSet</param>
+        public virtual void Add(IChemObjectSet<T> atomContainerSet)
         {
             foreach (var iter in atomContainerSet)
             {
@@ -484,7 +500,7 @@ namespace NCDK.Silent
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("AtomContainerSet(");
+            sb.Append("ChemObjectSet(");
             sb.Append(GetHashCode());
             if (atomContainers.Count > 0)
             {
@@ -498,7 +514,7 @@ namespace NCDK.Silent
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-            var clone = (AtomContainerSet<T>)base.Clone(map);
+            var clone = (ChemObjectSet<T>)base.Clone(map);
             clone.atomContainers = new List<T>(atomContainers.Count);
             clone.multipliers = new List<double?>(atomContainers.Count);
             for (var i = 0; i < atomContainers.Count; i++)
@@ -572,10 +588,10 @@ namespace NCDK.Silent
 
         class CompareRefByIndex : IComparer<int>
         {
-            AtomContainerSet<T> parent;
+            ChemObjectSet<T> parent;
             IComparer<T> comparator;
 
-            public CompareRefByIndex(AtomContainerSet<T> parent, IComparer<T> comparator)
+            public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {
                 this.parent = parent;
                 this.comparator = comparator;

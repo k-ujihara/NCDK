@@ -85,7 +85,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestCallingTwice()
         {
-            var molSet = new AtomContainerSet<IAtomContainer>();
+            var molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer mol = new AtomContainer();
             Atom atom0 = new Atom("C");
             Atom atom2 = new Atom("C");

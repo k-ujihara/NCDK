@@ -20,6 +20,10 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
+    public interface IAtomContainerSet
+        : IChemObjectSet<IAtomContainer>
+    { }
+
     public interface IEnumerableChemObject<out T>
         : IEnumerable<T>, IChemObject
     {
@@ -32,9 +36,9 @@ namespace NCDK
     // @author     egonw
     // @cdk.module interfaces
     // @cdk.githash
-    public interface IAtomContainerSet<T>
+    public interface IChemObjectSet<T>
         : IChemObject, IList<T>, IEnumerableChemObject<T>
-        where T : IAtomContainer
+        where T : IChemObject
     {
         /// <summary>
         /// Sets the coefficient of a <see cref="IAtomContainer"/> to a given value.

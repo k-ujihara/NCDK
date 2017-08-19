@@ -97,7 +97,7 @@ namespace NCDK.Renderers
     // @cdk.githash
     public class ChemModelRenderer : AbstractRenderer<IChemModel>, IRenderer<IChemModel>
     {
-        private IRenderer<IAtomContainerSet<IAtomContainer>> moleculeSetRenderer;
+        private IRenderer<IChemObjectSet<IAtomContainer>> moleculeSetRenderer;
         private IRenderer<IReactionSet> reactionSetRenderer;
 
         /// <summary>

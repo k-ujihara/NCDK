@@ -101,7 +101,7 @@ namespace NCDK.Renderers
         /// </summary>
         /// <param name="moleculeSet">the molecule set to use</param>
         /// <returns>the bounding rectangle of the molecule set</returns>
-        public static Rect CalculateBounds(IAtomContainerSet<IAtomContainer> moleculeSet)
+        public static Rect CalculateBounds(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             var totalBounds = new Rect();
             foreach (var container in moleculeSet)

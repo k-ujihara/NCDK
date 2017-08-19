@@ -49,7 +49,7 @@ namespace NCDK.Reactions.Mechanisms
         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond.
         ///                       It is the bond which is moved</param>
         /// <returns>The Reaction mechanism</returns>
-        public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
+        public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
             if (atomContainerSet.Count != 1)
@@ -110,7 +110,7 @@ namespace NCDK.Reactions.Mechanisms
                 reaction.Mappings.Add(mapping);
             }
 
-            IAtomContainerSet<IAtomContainer> moleculeSetP = ConnectivityChecker.PartitionIntoMolecules(reactantCloned);
+            IChemObjectSet<IAtomContainer> moleculeSetP = ConnectivityChecker.PartitionIntoMolecules(reactantCloned);
             for (int z = 0; z < moleculeSetP.Count(); z++)
                 reaction.Products.Add((IAtomContainer)moleculeSetP[z]);
 

@@ -6,7 +6,7 @@ namespace NCDK.Smiles.SMARTS
     {
         void Main()
         {
-            IAtomContainerSet<IAtomContainer> acs = null;
+            IChemObjectSet<IAtomContainer> acs = null;
             {
                 #region 1
                 Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC", Default.ChemObjectBuilder.Instance);

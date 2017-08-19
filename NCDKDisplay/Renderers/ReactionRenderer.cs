@@ -99,7 +99,7 @@ namespace NCDK.Renderers
     // @cdk.githash
     public class ReactionRenderer : AbstractRenderer<IReaction>, IRenderer<IReaction>
     {
-        private IRenderer<IAtomContainerSet<IAtomContainer>> moleculeSetRenderer;
+        private IRenderer<IChemObjectSet<IAtomContainer>> moleculeSetRenderer;
 
         /// <summary>
         /// A renderer that generates diagrams using the specified

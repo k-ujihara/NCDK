@@ -74,7 +74,7 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IAtomContainerSet<IAtomContainer>).IsAssignableFrom(type)) return true;
+            if (typeof(IChemObjectSet<IAtomContainer>).IsAssignableFrom(type)) return true;
             if (typeof(IChemFile).IsAssignableFrom(type)) return true;
             return false;
         }
@@ -89,9 +89,9 @@ namespace NCDK.IO
         {
             sp = new SmilesParser(obj.Builder);
 
-            if (obj is IAtomContainerSet<IAtomContainer>)
+            if (obj is IChemObjectSet<IAtomContainer>)
             {
-                return (T)ReadAtomContainerSet((IAtomContainerSet<IAtomContainer>)obj);
+                return (T)ReadAtomContainerSet((IChemObjectSet<IAtomContainer>)obj);
             }
             else if (obj is IChemFile)
             {
@@ -117,7 +117,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="som">The set of molecules that came from the file</param>
         /// <returns>A ChemFile containing the data parsed from input.</returns>
-        private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
+        private IChemObjectSet<IAtomContainer> ReadAtomContainerSet(IChemObjectSet<IAtomContainer> som)
         {
             try
             {

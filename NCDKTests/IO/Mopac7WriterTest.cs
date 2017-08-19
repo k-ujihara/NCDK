@@ -37,7 +37,7 @@ namespace NCDK.IO
 
         private static IChemObject[] allChemObjectsTypes = {
             new ChemFile(), new ChemModel(), new Reaction(),
-            new AtomContainerSet<IAtomContainer>(), new AtomContainer(), };
+            new ChemObjectSet<IAtomContainer>(), new AtomContainer(), };
         [TestMethod()]
         public void TestAccepts()
         {

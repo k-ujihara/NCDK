@@ -37,6 +37,6 @@ namespace NCDK.Reactions
         /// <param name="bondList">The list of bonds taking part in the mechanism</param>
         /// <returns>The Reaction mechanism</returns>
         /// <exception cref="CDKException">if an error occurs during the reaction process. See documentation for individual reaction processes</exception>
-        IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList);
+        IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList);
     }
 }

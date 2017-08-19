@@ -8,7 +8,7 @@ namespace NCDK.Graphs
         public void Main()
         {
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region AllFinder
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -26,7 +26,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region MCB
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -44,7 +44,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region Relevant
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -62,7 +62,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region Essential
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -80,7 +80,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region TripletShort
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -98,7 +98,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region VertexShort
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -116,7 +116,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region EdgeShort
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -134,7 +134,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region CDKAromaticSetFinder
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -152,7 +152,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region AllOrVertexShortFinder
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -184,7 +184,7 @@ namespace NCDK.Graphs
             }
 
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region FindAll
                 foreach (var container in containers)
                 {
@@ -201,7 +201,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindMCB
                         Cycles cycles = Cycles.FindMCB(container);
@@ -209,7 +209,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindSSSR
                         Cycles cycles = Cycles.FindSSSR(container);
@@ -217,7 +217,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindRelevant
                         Cycles cycles = Cycles.FindRelevant(container);
@@ -225,7 +225,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindEssential
                         Cycles cycles = Cycles.FindEssential(container);
@@ -233,7 +233,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindTripletShort
                         Cycles cycles = Cycles.FindTripletShort(container);
@@ -241,7 +241,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindVertexShort
                         Cycles cycles = Cycles.FindVertexShort(container);
@@ -249,7 +249,7 @@ namespace NCDK.Graphs
                 #endregion
             }
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 IAtomContainer container = null;
                 #region FindEdgeShort
                         Cycles cycles = Cycles.FindEdgeShort(container);

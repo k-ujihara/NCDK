@@ -11,7 +11,7 @@ namespace NCDK.Isomorphisms
         void Main()
         {
             Pattern createPattern = null;
-            IAtomContainerSet<IAtomContainer> ms = null;
+            IChemObjectSet<IAtomContainer> ms = null;
             {
                 #region Match
                 Pattern pattern = createPattern; // create pattern

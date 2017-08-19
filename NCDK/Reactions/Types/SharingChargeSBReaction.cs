@@ -59,7 +59,7 @@ namespace NCDK.Reactions.Types
         /// <param name="reactants">reactants of the reaction.</param>
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         /// <exception cref="CDKException"></exception>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             Debug.WriteLine("initiate reaction: SharingChargeSBReaction");
 
@@ -97,7 +97,7 @@ namespace NCDK.Reactions.Types
                                     var bondList = new List<IBond>();
                                     bondList.Add(bondi);
 
-                                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
+                                    IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
 
                                     moleculeSet.Add(reactant);
                                     IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);

@@ -67,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         private static readonly string[] NAMES = { "piContact" };
 
         private bool checkAromaticity = false;
-        IAtomContainerSet<IAtomContainer> acSet = null;
+        IChemObjectSet<IAtomContainer> acSet = null;
         private IAtomContainer acold = null;
 
         public PiContactDetectionDescriptor() { }

@@ -39,7 +39,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="scheme">The set of reaction to inspect</param>
         /// <param name="molSet">The set of molecules to be added</param>
         /// <returns>The IAtomContainerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme, IAtomContainerSet<IAtomContainer> molSet)
+        public static IChemObjectSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme, IChemObjectSet<IAtomContainer> molSet)
         {
             // A ReactionScheme can contain other IRreactionSet objects
             foreach (var rm in scheme.Schemes)
@@ -85,7 +85,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="scheme">The scheme of reaction to inspect</param>
         /// <returns>The IAtomContainerSet</returns>
-        public static IAtomContainerSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme)
+        public static IChemObjectSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme)
         {
             return GetAllAtomContainers(scheme, scheme.Builder.NewAtomContainerSet());
         }
@@ -272,10 +272,10 @@ namespace NCDK.Tools.Manipulator
         /// <param name="finalMol">The end IAtomContainer</param>
         /// <param name="reactionScheme">The IReactionScheme containing the AtomContainers</param>
         /// <returns>A List of IAtomContainerSet given the path</returns>
-        public static IList<IAtomContainerSet<IAtomContainer>> GetAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
+        public static IList<IChemObjectSet<IAtomContainer>> GetAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
                 IReactionScheme reactionScheme)
         {
-            List<IAtomContainerSet<IAtomContainer>> listPath = new List<IAtomContainerSet<IAtomContainer>>();
+            List<IChemObjectSet<IAtomContainer>> listPath = new List<IChemObjectSet<IAtomContainer>>();
             IReactionSet reactionSet = GetAllReactions(reactionScheme);
 
             // down search
@@ -327,7 +327,7 @@ namespace NCDK.Tools.Manipulator
             return listPath;
         }
 
-        private static IAtomContainerSet<IAtomContainer> GetReactionPath(IAtomContainer reactant, IAtomContainer finalMol,
+        private static IChemObjectSet<IAtomContainer> GetReactionPath(IAtomContainer reactant, IAtomContainer finalMol,
                 IReactionSet reactionSet)
         {
             var allSet = reactionSet.Builder.NewAtomContainerSet();

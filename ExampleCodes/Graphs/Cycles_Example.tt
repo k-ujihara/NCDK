@@ -18,7 +18,7 @@ namespace NCDK.Graphs
     {
 #>
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
                 #region <#= nc.Name #>
                 CycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
@@ -57,7 +57,7 @@ namespace NCDK.Graphs
     {
 #>
             {
-                IAtomContainerSet<IAtomContainer> containers = null;
+                IChemObjectSet<IAtomContainer> containers = null;
 <#
         if (nc.Comment == null)
         {

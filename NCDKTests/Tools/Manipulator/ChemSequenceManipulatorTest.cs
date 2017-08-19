@@ -31,7 +31,7 @@ namespace NCDK.Tools.Manipulator
         IAtom atomInMol1 = null;
         IBond bondInMol1 = null;
         IAtom atomInMol2 = null;
-        IAtomContainerSet<IAtomContainer> moleculeSet = null;
+        IChemObjectSet<IAtomContainer> moleculeSet = null;
         IReaction reaction = null;
         IReactionSet reactionSet = null;
         IChemModel chemModel1 = null;
@@ -108,7 +108,7 @@ namespace NCDK.Tools.Manipulator
                 //if (o is IBond) ++bondCount;
                 if (o is IAtomContainer)
                     ++molCount;
-                else if (o is IAtomContainerSet<IAtomContainer>)
+                else if (o is IChemObjectSet<IAtomContainer>)
                     ++molSetCount;
                 else if (o is IReaction)
                     ++reactionCount;

@@ -5,7 +5,7 @@
         void Main()
         {
             IAtomContainer queryStructure = null;
-            IAtomContainerSet<IAtomContainer> ms = null;
+            IChemObjectSet<IAtomContainer> ms = null;
             {
                 #region 1
                 IAtomContainer query = queryStructure;

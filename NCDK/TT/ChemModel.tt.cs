@@ -40,7 +40,7 @@ namespace NCDK.Default
         /// <summary>
         ///  A molecule set.
         /// </summary>
-        private IAtomContainerSet<IAtomContainer> setOfMolecules = null;
+        private IChemObjectSet<IAtomContainer> setOfMolecules = null;
 
         /// <summary>
         ///  A reaction set.
@@ -64,7 +64,7 @@ namespace NCDK.Default
         /// <summary>
         /// The molecule set of this <see cref="ChemModel"/>.
         /// </summary>
-        public virtual IAtomContainerSet<IAtomContainer> MoleculeSet
+        public virtual IChemObjectSet<IAtomContainer> MoleculeSet
         {
             get { return setOfMolecules; }
 
@@ -168,7 +168,7 @@ namespace NCDK.Default
         public override ICDKObject Clone(CDKObjectMap map)
         {
             ChemModel clone = (ChemModel)base.Clone(map);
-            clone.setOfMolecules = (IAtomContainerSet<IAtomContainer>)setOfMolecules?.Clone(map);
+            clone.setOfMolecules = (IChemObjectSet<IAtomContainer>)setOfMolecules?.Clone(map);
             clone.setOfReactions = (IReactionSet)setOfReactions?.Clone(map);
             clone.ringSet = (IRingSet)ringSet?.Clone(map);
             clone.crystal = (ICrystal)crystal?.Clone(map);
@@ -207,7 +207,7 @@ namespace NCDK.Silent
         /// <summary>
         ///  A molecule set.
         /// </summary>
-        private IAtomContainerSet<IAtomContainer> setOfMolecules = null;
+        private IChemObjectSet<IAtomContainer> setOfMolecules = null;
 
         /// <summary>
         ///  A reaction set.
@@ -231,7 +231,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The molecule set of this <see cref="ChemModel"/>.
         /// </summary>
-        public virtual IAtomContainerSet<IAtomContainer> MoleculeSet
+        public virtual IChemObjectSet<IAtomContainer> MoleculeSet
         {
             get { return setOfMolecules; }
 
@@ -307,7 +307,7 @@ namespace NCDK.Silent
         public override ICDKObject Clone(CDKObjectMap map)
         {
             ChemModel clone = (ChemModel)base.Clone(map);
-            clone.setOfMolecules = (IAtomContainerSet<IAtomContainer>)setOfMolecules?.Clone(map);
+            clone.setOfMolecules = (IChemObjectSet<IAtomContainer>)setOfMolecules?.Clone(map);
             clone.setOfReactions = (IReactionSet)setOfReactions?.Clone(map);
             clone.ringSet = (IRingSet)ringSet?.Clone(map);
             clone.crystal = (ICrystal)crystal?.Clone(map);

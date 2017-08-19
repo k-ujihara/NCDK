@@ -45,7 +45,7 @@ namespace NCDK.IO
         {
             SMILESReader reader = new SMILESReader(new StringReader(""));
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
+            Assert.IsTrue(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
         }
 
         [TestMethod()]
@@ -55,7 +55,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
-            IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
+            IChemObjectSet<IAtomContainer> som = reader.Read(new ChemObjectSet<IAtomContainer>());
             Assert.AreEqual(8, som.Count);
         }
 
@@ -66,7 +66,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
-            IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
+            IChemObjectSet<IAtomContainer> som = reader.Read(new ChemObjectSet<IAtomContainer>());
             string name = null;
             IAtomContainer thisMol = som[0];
             name = (thisMol.GetProperty<string>("SMIdbNAME")).ToString();
@@ -80,7 +80,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
-            IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
+            IChemObjectSet<IAtomContainer> som = reader.Read(new ChemObjectSet<IAtomContainer>());
             IAtomContainer thisMol = som[1];
             Assert.IsNull(thisMol.GetProperty<object>("SMIdbNAME"));
         }
@@ -92,7 +92,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
-            IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
+            IChemObjectSet<IAtomContainer> som = reader.Read(new ChemObjectSet<IAtomContainer>());
             Assert.AreEqual(5, som.Count);
         }
 
@@ -102,7 +102,7 @@ namespace NCDK.IO
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             string input = "C\nn1cccc1\nc1ccccc1\n";
             DefaultChemObjectReader cor = new SMILESReader(new StringReader(input));
-            IAtomContainerSet<IAtomContainer> mols = cor.Read(bldr.NewAtomContainerSet());
+            IChemObjectSet<IAtomContainer> mols = cor.Read(bldr.NewAtomContainerSet());
             Assert.AreEqual(3, mols.Count);
             Assert.AreEqual(1, mols[0].Atoms.Count);
             Assert.IsNull(mols[0].GetProperty<string>(EnumerableSMILESReader.BadSmilesInput));

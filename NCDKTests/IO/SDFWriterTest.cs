@@ -48,14 +48,14 @@ namespace NCDK.IO
             SDFWriter reader = new SDFWriter(new StringWriter());
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
+            Assert.IsTrue(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
         }
 
         [TestMethod()]
         public void TestWrite_IAtomContainerSet_Properties_Off()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("foo", "bar");
@@ -77,7 +77,7 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> molSet = builder.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molSet.Add(molecule);
@@ -92,7 +92,7 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet_Properties()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty("foo", "bar");
@@ -109,7 +109,7 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet_CDKProperties()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molecule.SetProperty(InvPair.CANONICAL_LABEL, "bar");
@@ -125,7 +125,7 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet_SingleMolecule()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molSet.Add(molecule);
@@ -140,7 +140,7 @@ namespace NCDK.IO
         public void TestWrite_IAtomContainerSet_MultIAtomContainer()
         {
             StringWriter writer = new StringWriter();
-            IAtomContainerSet<IAtomContainer> molSet = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
             molSet.Add(molecule);

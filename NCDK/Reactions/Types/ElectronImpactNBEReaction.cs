@@ -59,7 +59,7 @@ namespace NCDK.Reactions.Types
         /// <param name="reactants">Reactants of the reaction</param>
         /// <param name="agents">Agents of the reaction (Must be in this case null)</param>
         /// <exception cref="CDKException"> Description of the Exception</exception>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             Debug.WriteLine("initiate reaction: ElectronImpactNBEReaction");
 
@@ -85,7 +85,7 @@ namespace NCDK.Reactions.Types
                 {
                     var atomList = new List<IAtom>();
                     atomList.Add(atom);
-                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
+                    IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                     moleculeSet.Add(reactant);
                     IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, null);
                     if (reaction == null)

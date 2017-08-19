@@ -27,7 +27,7 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of <see cref="IAtomContainerSet{T}"/> implementations.
+    /// Checks the functionality of <see cref="IChemObjectSet{T}"/> implementations.
     /// </summary>
     // @cdk.module test-interfaces
     [TestClass()]
@@ -43,7 +43,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSortAtomContainers_Comparator_Null()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             IChemObjectBuilder builder = som.Builder;
             T con1 = NewContainerObject();
             con1.Atoms.Add(builder.NewAtom("C"));
@@ -69,7 +69,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSort_Coefficients()
         {
-            IAtomContainerSet<T> set = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> set = (IChemObjectSet<T>)NewChemObject();
             
             IChemObjectBuilder builder = set.Builder;
 
@@ -125,7 +125,7 @@ namespace NCDK
         public virtual void TestSort_BrokenComparator()
         {
 
-            IAtomContainerSet<T> set = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> set = (IChemObjectSet<T>)NewChemObject();
 
             IChemObjectBuilder builder = set.Builder;
 
@@ -171,7 +171,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSort_empty()
         {
-            IAtomContainerSet<T> set = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> set = (IChemObjectSet<T>)NewChemObject();
             var comparator = new Mock<IComparer<T>>();
             set.Sort(comparator.Object);
             // verify the comparator was called 0 times
@@ -181,7 +181,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtomContainerCount()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
@@ -193,7 +193,7 @@ namespace NCDK
         //[TestMethod()]
         //public virtual void TestAtomContainers()
         //{
-        //    IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+        //    IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
         //    som.Add(NewContainerObject());
         //    som.Add(NewContainerObject());
         //    som.Add(NewContainerObject());
@@ -215,12 +215,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAdd_IAtomContainerSet()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
 
-            IAtomContainerSet<IAtomContainer> tested = som.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> tested = som.Builder.NewAtomContainerSet();
             Assert.AreEqual(0, tested.Count);
             foreach (var m in som)
                 tested.Add(m);
@@ -230,7 +230,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtomContainer_int()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
@@ -242,7 +242,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMultiplier_int()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
 
             Assert.AreEqual(1.0, som.GetMultiplier(0).Value, 0.00001);
@@ -251,7 +251,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetMultiplier_int_Double()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
 
             Assert.AreEqual(1.0, som.GetMultiplier(0).Value, 0.00001);
@@ -262,7 +262,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetMultipliers_arrayDouble()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T container = NewContainerObject();
             som.Add(container);
             T container2 = NewContainerObject();
@@ -281,7 +281,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetMultiplier_IAtomContainer_Double()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T container = NewContainerObject();
             som.Add(container);
 
@@ -293,7 +293,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMultipliers()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject(), 1.0);
 
             var multipliers = som.GetMultipliers();
@@ -304,7 +304,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetMultiplier_IAtomContainer()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
 
             Assert.AreEqual(-1.0, som.GetMultiplier(NewContainerObject()).Value, 0.00001);
@@ -313,7 +313,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAddAtomContainer_IAtomContainer()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
@@ -332,7 +332,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAddAtomContainer_IAtomContainer_Double()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             som.Add(NewContainerObject(), 2.0);
             Assert.AreEqual(1, som.Count);
             Assert.AreEqual(2.0, som.GetMultiplier(0).Value, 0.00001);
@@ -343,7 +343,7 @@ namespace NCDK
         {
             // this test assumes that the growSize = 5 !
             // if not, there is need for the array to grow
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
 
             som.Add(NewContainerObject());
             som.Add(NewContainerObject());
@@ -359,7 +359,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtomContainers()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
 
             Assert.AreEqual(0, som.Count);
 
@@ -376,7 +376,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestToString()
         {
-            IAtomContainerSet<IAtomContainer> containerSet = (IAtomContainerSet<IAtomContainer>)NewChemObject();
+            IChemObjectSet<IAtomContainer> containerSet = (IChemObjectSet<IAtomContainer>)NewChemObject();
             string description = containerSet.ToString();
             for (int i = 0; i < description.Length; i++)
             {
@@ -388,20 +388,20 @@ namespace NCDK
         [TestMethod()]
         public override void TestClone()
         {
-            IAtomContainerSet<IAtomContainer> containerSet = (IAtomContainerSet<IAtomContainer>)NewChemObject();
+            IChemObjectSet<IAtomContainer> containerSet = (IChemObjectSet<IAtomContainer>)NewChemObject();
             object clone = containerSet.Clone();
-            Assert.IsTrue(clone is IAtomContainerSet<IAtomContainer>);
+            Assert.IsTrue(clone is IChemObjectSet<IAtomContainer>);
             Assert.AreNotSame(containerSet, clone);
         }
 
         [TestMethod()]
         public virtual void TestCloneDuplication()
         {
-            IAtomContainerSet<T> containerSet = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> containerSet = (IChemObjectSet<T>)NewChemObject();
             containerSet.Add(NewContainerObject());
             object clone = containerSet.Clone();
-            Assert.IsTrue(clone is IAtomContainerSet<T>);
-            var clonedSet = (IAtomContainerSet<T>)clone;
+            Assert.IsTrue(clone is IChemObjectSet<T>);
+            var clonedSet = (IChemObjectSet<T>)clone;
             Assert.AreNotSame(containerSet, clonedSet);
             Assert.AreEqual(containerSet.Count, clonedSet.Count);
         }
@@ -409,11 +409,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestCloneMultiplier()
         {
-            IAtomContainerSet<T> containerSet = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> containerSet = (IChemObjectSet<T>)NewChemObject();
             containerSet.Add(NewContainerObject(), 2);
             object clone = containerSet.Clone();
-            Assert.IsTrue(clone is IAtomContainerSet<T>);
-            IAtomContainerSet<T> clonedSet = (IAtomContainerSet<T>)clone;
+            Assert.IsTrue(clone is IChemObjectSet<T>);
+            IChemObjectSet<T> clonedSet = (IChemObjectSet<T>)clone;
             Assert.AreNotSame(containerSet, clonedSet);
             Assert.AreEqual(2, containerSet.GetMultiplier(0).Value);
             Assert.AreEqual(2, clonedSet.GetMultiplier(0).Value);
@@ -423,7 +423,7 @@ namespace NCDK
         public override void TestStateChanged_IChemObjectChangeEvent()
         {
             ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-            IAtomContainerSet<T> chemObject = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> chemObject = (IChemObjectSet<T>)NewChemObject();
             chemObject.Listeners.Add(listener);
 
             chemObject.Add(NewContainerObject());
@@ -433,7 +433,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAtomContainer_IAtomContainer()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             som.Add(ac1);
@@ -446,7 +446,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAll()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             som.Add(ac1);
@@ -460,7 +460,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAtomContainer_int()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             som.Add(ac1);
@@ -474,7 +474,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestBug2679343()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             som.Add(ac1);
@@ -488,7 +488,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestReplaceAtomContainer_int_IAtomContainer()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             T ac3 = NewContainerObject();
@@ -502,7 +502,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSortAtomContainers_Comparator()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             T ac2 = NewContainerObject();
             som.Add(ac1);
@@ -519,7 +519,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSortAtomContainers_WithMuliplier()
         {
-            IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
+            IChemObjectSet<T> som = (IChemObjectSet<T>)NewChemObject();
             T ac1 = NewContainerObject();
             som.Add(ac1, 2.0);
             ac1.SetProperty("multiplierSortCode", "2");
@@ -570,7 +570,7 @@ namespace NCDK
     //public virtual void TestIsEmpty()
     //{
 
-    //    IAtomContainerSet<IAtomContainer> set = (IAtomContainerSet<IAtomContainer>)NewChemObject();
+    //    IChemObjectSet<IAtomContainer> set = (IChemObjectSet<IAtomContainer>)NewChemObject();
 
     //    Assert.IsTrue(set.IsEmpty, "new container set should be empty");
 

@@ -33,7 +33,7 @@ namespace NCDK.StructGen.Stochastic.Operator
         [TestCategory("SlowTest")] // structgen is slow... a single method here currently takes ~6 seconds
         public void TestDoCrossover_IAtomContainer()
         {
-            IAtomContainerSet<IAtomContainer> som;
+            IChemObjectSet<IAtomContainer> som;
 
             string filename = "NCDK.Data.Smiles.c10h16isomers.smi";
             using (Stream ins = ResourceLoader.GetAsStream(filename))

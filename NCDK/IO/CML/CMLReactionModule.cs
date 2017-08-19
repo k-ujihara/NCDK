@@ -229,7 +229,7 @@ namespace NCDK.IO.CML
         /// <param name="molSet">The IAtomContainerSet</param>
         /// <param name="id">The ID the look</param>
         /// <returns>The IAtomContainer with the ID</returns>
-        private IAtomContainer GetMoleculeFromID(IAtomContainerSet<IAtomContainer> molSet, string id)
+        private IAtomContainer GetMoleculeFromID(IChemObjectSet<IAtomContainer> molSet, string id)
         {
             foreach (var mol in molSet)
             {

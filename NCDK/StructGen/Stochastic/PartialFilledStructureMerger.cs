@@ -60,7 +60,7 @@ namespace NCDK.StructGen.Stochastic
         /// <param name="atomContainers">The fragments to generate for.</param>
         /// <returns>The newly formed structure.</returns>
         /// <exception cref="CDKException">No valid result could be formed.</exception>"
-        public IAtomContainer Generate(IAtomContainerSet<IAtomContainer> atomContainers)
+        public IAtomContainer Generate(IChemObjectSet<IAtomContainer> atomContainers)
         {
             var container = Generate2(atomContainers);
             if (container == null)
@@ -68,7 +68,7 @@ namespace NCDK.StructGen.Stochastic
             return container;
         }
 
-        internal IAtomContainer Generate2(IAtomContainerSet<IAtomContainer> atomContainers)
+        internal IAtomContainer Generate2(IChemObjectSet<IAtomContainer> atomContainers)
         {
             int iteration = 0;
             bool structureFound = false;
@@ -138,7 +138,7 @@ namespace NCDK.StructGen.Stochastic
         /// <returns>The unsaturated atom.</returns>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom,
                                            IAtomContainer exclusionAtomContainer,
-                                           IAtomContainerSet<IAtomContainer> atomContainers)
+                                           IChemObjectSet<IAtomContainer> atomContainers)
         {
             IAtom atom;
 

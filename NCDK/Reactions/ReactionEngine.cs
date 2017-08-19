@@ -84,7 +84,7 @@ namespace NCDK.Reactions
         }
 
         /*protected*/
-        internal void CheckInitiateParams(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        internal void CheckInitiateParams(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             Debug.WriteLine($"initiate reaction: {GetType().Name}");
 

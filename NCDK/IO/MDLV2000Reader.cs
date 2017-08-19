@@ -167,7 +167,7 @@ namespace NCDK.IO
 
         private IChemModel ReadChemModel(IChemModel chemModel)
         {
-            IAtomContainerSet<IAtomContainer> setOfMolecules = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> setOfMolecules = chemModel.MoleculeSet;
             if (setOfMolecules == null)
             {
                 setOfMolecules = chemModel.Builder.NewAtomContainerSet();
@@ -236,7 +236,7 @@ namespace NCDK.IO
 
             IChemObjectBuilder builder = container.Builder;
             IChemModel model = builder.NewChemModel();
-            IAtomContainerSet<IAtomContainer> containers = builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> containers = builder.NewAtomContainerSet();
 
             containers.Add(container);
             model.MoleculeSet = containers;

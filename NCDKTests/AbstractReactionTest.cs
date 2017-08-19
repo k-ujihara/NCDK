@@ -79,7 +79,7 @@ namespace NCDK
             IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
             IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
             IAtomContainer water = reaction.Builder.NewAtomContainer();
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> reactants = reaction.Builder.NewAtomContainerSet();
             reactants.Add(sodiumhydroxide);
             reactants.Add(aceticAcid);
             reactants.Add(water);
@@ -128,7 +128,7 @@ namespace NCDK
             IAtomContainer sodiumhydroxide = reaction.Builder.NewAtomContainer();
             IAtomContainer aceticAcid = reaction.Builder.NewAtomContainer();
             IAtomContainer water = reaction.Builder.NewAtomContainer();
-            IAtomContainerSet<IAtomContainer> products = reaction.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> products = reaction.Builder.NewAtomContainerSet();
             products.Add(sodiumhydroxide);
             products.Add(aceticAcid);
             products.Add(water);

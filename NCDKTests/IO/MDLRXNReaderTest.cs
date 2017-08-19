@@ -49,7 +49,7 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
             Assert.IsTrue(reader.Accepts(typeof(ReactionSet)));
-            Assert.IsFalse(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
+            Assert.IsFalse(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
             Assert.IsFalse(reader.Accepts(typeof(AtomContainer)));
         }
 

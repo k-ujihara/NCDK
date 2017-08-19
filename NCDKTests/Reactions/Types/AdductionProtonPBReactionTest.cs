@@ -191,7 +191,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         /// <returns>The IAtomContainer</returns>
         /// <exception cref="CDKException"></exception>
-        private IAtomContainerSet<IAtomContainer> GetExampleReactants()
+        private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -224,7 +224,7 @@ namespace NCDK.Reactions.Types
         /// Get the expected set of molecules.
         /// </summary>
         /// <returns>The IAtomContainerSet</returns>
-        private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
+        private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();

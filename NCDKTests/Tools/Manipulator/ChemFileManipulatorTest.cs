@@ -34,7 +34,7 @@ namespace NCDK.Tools.Manipulator
         IAtom atomInMol1 = null;
         IBond bondInMol1 = null;
         IAtom atomInMol2 = null;
-        IAtomContainerSet<IAtomContainer> moleculeSet = null;
+        IChemObjectSet<IAtomContainer> moleculeSet = null;
         IReaction reaction = null;
         IReactionSet reactionSet = null;
         IChemModel chemModel = null;
@@ -59,7 +59,7 @@ namespace NCDK.Tools.Manipulator
             atomInMol2 = new Atom("O");
             atomInMol2.ImplicitHydrogenCount = 2;
             molecule2.Atoms.Add(atomInMol2);
-            moleculeSet = new AtomContainerSet<IAtomContainer>();
+            moleculeSet = new ChemObjectSet<IAtomContainer>();
             moleculeSet.Add(molecule1);
             moleculeSet.Add(molecule2);
             reaction = new Reaction();
@@ -136,7 +136,7 @@ namespace NCDK.Tools.Manipulator
                 if (o is IBond) ++bondCount;
                 if (o is IAtomContainer)
                     ++molCount;
-                else if (o is IAtomContainerSet<IAtomContainer>)
+                else if (o is IChemObjectSet<IAtomContainer>)
                     ++molSetCount;
                 else if (o is IReaction)
                     ++reactionCount;

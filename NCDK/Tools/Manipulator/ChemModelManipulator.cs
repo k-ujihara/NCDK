@@ -54,7 +54,7 @@ namespace NCDK.Tools.Manipulator
             {
                 count += crystal.Atoms.Count;
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 count += MoleculeSetManipulator.GetAtomCount(moleculeSet);
@@ -80,7 +80,7 @@ namespace NCDK.Tools.Manipulator
             {
                 count += crystal.Bonds.Count;
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 count += MoleculeSetManipulator.GetBondCount(moleculeSet);
@@ -110,7 +110,7 @@ namespace NCDK.Tools.Manipulator
                 }
                 return;
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 MoleculeSetManipulator.RemoveAtomAndConnectedElectronContainers(moleculeSet, atom);
@@ -139,7 +139,7 @@ namespace NCDK.Tools.Manipulator
                 }
                 return;
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 MoleculeSetManipulator.RemoveElectronContainer(moleculeSet, electrons);
@@ -163,7 +163,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer molecule = chemModel.Builder.NewAtomContainer();
             if (chemModel.MoleculeSet != null)
             {
-                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
                 for (int i = 0; i < moleculeSet.Count; i++)
                 {
                     if (moleculeSet[i].Atoms.Count == 0)
@@ -176,7 +176,7 @@ namespace NCDK.Tools.Manipulator
             }
             else
             {
-                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
+                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
                 moleculeSet.Add(molecule);
                 chemModel.MoleculeSet = moleculeSet;
             }
@@ -193,7 +193,7 @@ namespace NCDK.Tools.Manipulator
         public static IChemModel NewChemModel(IAtomContainer atomContainer)
         {
             IChemModel model = atomContainer.Builder.NewChemModel();
-            IAtomContainerSet<IAtomContainer> moleculeSet = model.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> moleculeSet = model.Builder.NewAtomContainerSet();
             moleculeSet.Add(atomContainer);
             model.MoleculeSet = moleculeSet;
             return model;
@@ -208,7 +208,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer result = null;
             if (chemModel.MoleculeSet != null)
             {
-                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
                 result = MoleculeSetManipulator.GetRelevantAtomContainer(moleculeSet, atom);
                 if (result != null)
                 {
@@ -243,7 +243,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer result = null;
             if (chemModel.MoleculeSet != null)
             {
-                IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
                 result = MoleculeSetManipulator.GetRelevantAtomContainer(moleculeSet, bond);
                 if (result != null)
                 {
@@ -282,7 +282,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemModel chemModel)
         {
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
             if (chemModel.MoleculeSet != null)
             {
                 moleculeSet.AddRange(chemModel.MoleculeSet);
@@ -330,7 +330,7 @@ namespace NCDK.Tools.Manipulator
             {
                 list.Add(crystal);
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 list.Add(moleculeSet);
@@ -362,7 +362,7 @@ namespace NCDK.Tools.Manipulator
             {
                 list.AddRange(AtomContainerManipulator.GetAllIDs(crystal));
             }
-            IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 list.AddRange(MoleculeSetManipulator.GetAllIDs(moleculeSet));

@@ -33,7 +33,7 @@ namespace NCDK
         public void TestSetMoleculeSet_IAtomContainerSet()
         {
             IChemModel chemModel = (IChemModel)NewChemObject();
-            IAtomContainerSet<IAtomContainer> crystal = chemModel.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> crystal = chemModel.Builder.NewAtomContainerSet();
             chemModel.MoleculeSet = crystal;
             Assert.AreEqual(crystal, chemModel.MoleculeSet);
         }
@@ -214,7 +214,7 @@ namespace NCDK
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IAtomContainerSet<IAtomContainer> molSet = chemObject.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> molSet = chemObject.Builder.NewAtomContainerSet();
             chemObject.MoleculeSet = molSet;
             Assert.IsTrue(listener.Changed);
             // reset the listener
@@ -288,7 +288,7 @@ namespace NCDK
             IChemModel chemObject = (IChemModel)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            IAtomContainerSet<IAtomContainer> molSet = chemObject.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> molSet = chemObject.Builder.NewAtomContainerSet();
             chemObject.MoleculeSet = molSet;
             Assert.IsTrue(listener.Changed);
             // remove the set from the IChemModel
@@ -383,7 +383,7 @@ namespace NCDK
 
             IAtom atom = builder.NewAtom();
             IAtomContainer mol = builder.NewAtomContainer();
-            IAtomContainerSet<IAtomContainer> mset = builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> mset = builder.NewAtomContainerSet();
 
             mol.Atoms.Add(atom);
             mset.Add(mol);

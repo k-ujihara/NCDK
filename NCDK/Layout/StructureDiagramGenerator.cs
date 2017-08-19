@@ -1680,7 +1680,7 @@ namespace NCDK.Layout
         /// <param name="ring">ring to check</param>
         /// <param name="rs">rest of ring system</param>
         /// <returns>ring is a macro cycle</returns>
-        private bool IsMacroCycle(IRing ring, IAtomContainerSet<IRing> rs)
+        private bool IsMacroCycle(IRing ring, IChemObjectSet<IRing> rs)
         {
             if (ring.Atoms.Count < 10)
                 return false;

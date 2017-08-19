@@ -97,7 +97,7 @@ namespace NCDK.Renderers
     // @author maclean
     // @cdk.module renderextra
     // @cdk.githash
-    public class MoleculeSetRenderer : AbstractRenderer<IAtomContainerSet<IAtomContainer>>, IRenderer<IAtomContainerSet<IAtomContainer>>
+    public class MoleculeSetRenderer : AbstractRenderer<IChemObjectSet<IAtomContainer>>, IRenderer<IChemObjectSet<IAtomContainer>>
     {
         private IRenderer<IAtomContainer> atomContainerRenderer;
 
@@ -120,16 +120,16 @@ namespace NCDK.Renderers
             }
             this.fontManager = fontManager;
             atomContainerRenderer = new AtomContainerRenderer(rendererModel, generators, fontManager);
-            this.generators = Array.Empty<IGenerator<IAtomContainerSet<IAtomContainer>>>();
+            this.generators = Array.Empty<IGenerator<IChemObjectSet<IAtomContainer>>>();
             this.Setup();
         }
 
         /// <summary>
-        /// Setup the transformations necessary to draw this <see cref="IAtomContainerSet{T}"/>.
+        /// Setup the transformations necessary to draw this <see cref="IChemObjectSet{T}"/>.
         /// </summary>
-        /// <param name="moleculeSet">the <see cref="IAtomContainerSet{T}"/> for what to set the scale</param>
+        /// <param name="moleculeSet">the <see cref="IChemObjectSet{T}"/> for what to set the scale</param>
         /// <param name="screen">the <see cref="Rect"/> for which to calculate the scale</param>
-        public void Setup(IAtomContainerSet<IAtomContainer> moleculeSet, Rect screen)
+        public void Setup(IChemObjectSet<IAtomContainer> moleculeSet, Rect screen)
         {
             this.SetScale(moleculeSet);
             var bounds = BoundsCalculator.CalculateBounds(moleculeSet);
@@ -193,12 +193,12 @@ namespace NCDK.Renderers
         }
 
         /// <summary>
-        /// Set the scale for an <see cref="IAtomContainerSet{T}"/>. It calculates the average bond length
+        /// Set the scale for an <see cref="IChemObjectSet{T}"/>. It calculates the average bond length
         /// of the model and calculates the multiplication factor to transform this
         /// to the bond length that is set in the RendererModel.
         /// </summary>
-        /// <param name="moleculeSet">the <see cref="IAtomContainerSet{T}"/> for what to set the scale</param>
-        public void SetScale(IAtomContainerSet<IAtomContainer> moleculeSet)
+        /// <param name="moleculeSet">the <see cref="IChemObjectSet{T}"/> for what to set the scale</param>
+        public void SetScale(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             double bondLength = AverageBondLengthCalculator.CalculateAverageBondLength(moleculeSet);
             double scale = this.CalculateScaleForBondLength(bondLength);
@@ -208,7 +208,7 @@ namespace NCDK.Renderers
         }
 
         /// <inheritdoc/>
-        public Rect Paint(IAtomContainerSet<IAtomContainer> moleculeSet, IDrawVisitor drawVisitor)
+        public Rect Paint(IChemObjectSet<IAtomContainer> moleculeSet, IDrawVisitor drawVisitor)
         {
             // total up the bounding boxes
             var totalBounds = BoundsCalculator.CalculateBounds(moleculeSet);
@@ -225,11 +225,11 @@ namespace NCDK.Renderers
         /// <summary>
         /// Paint a set of molecules.
         /// </summary>
-        /// <param name="molecules">the <see cref="IAtomContainerSet{T}"/> to paint</param>
+        /// <param name="molecules">the <see cref="IChemObjectSet{T}"/> to paint</param>
         /// <param name="drawVisitor">the visitor that does the drawing</param>
         /// <param name="bounds">the bounds on the screen</param>
         /// <param name="resetCenter">if true, set the draw center to be the center of bounds</param>
-        public void Paint(IAtomContainerSet<IAtomContainer> molecules, IDrawVisitor drawVisitor, Rect bounds, bool resetCenter)
+        public void Paint(IChemObjectSet<IAtomContainer> molecules, IDrawVisitor drawVisitor, Rect bounds, bool resetCenter)
         {
             // total up the bounding boxes
             var totalBounds = BoundsCalculator.CalculateBounds(molecules);
@@ -242,7 +242,7 @@ namespace NCDK.Renderers
         }
 
         /// <inheritdoc/>
-        public override IRenderingElement GenerateDiagram(IAtomContainerSet<IAtomContainer> molecules)
+        public override IRenderingElement GenerateDiagram(IChemObjectSet<IAtomContainer> molecules)
         {
             ElementGroup diagram = new ElementGroup();
             foreach (var molecule in molecules)
@@ -253,7 +253,7 @@ namespace NCDK.Renderers
         }
 
         /// <inheritdoc/>
-        public Rect CalculateDiagramBounds(IAtomContainerSet<IAtomContainer> moleculeSet)
+        public Rect CalculateDiagramBounds(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             if (moleculeSet == null) return this.CalculateScreenBounds(new Rect());
             return this.CalculateScreenBounds(BoundsCalculator.CalculateBounds(moleculeSet));
@@ -278,9 +278,9 @@ namespace NCDK.Renderers
         }
 
         /// <inheritdoc/>
-        public IList<IGenerator<IAtomContainerSet<IAtomContainer>>> GetGenerators()
+        public IList<IGenerator<IChemObjectSet<IAtomContainer>>> GetGenerators()
         {
-            return new List<IGenerator<IAtomContainerSet<IAtomContainer>>>(generators);
+            return new List<IGenerator<IChemObjectSet<IAtomContainer>>>(generators);
         }
     }
 }

@@ -86,7 +86,7 @@ namespace NCDK.IO
             {
                 try
                 {
-                    IAtomContainerSet<IAtomContainer> som = obj.Builder.NewAtomContainerSet();
+                    IChemObjectSet<IAtomContainer> som = obj.Builder.NewAtomContainerSet();
                     som.Add((IAtomContainer)obj);
                     WriteAtomContainer(som);
                 }

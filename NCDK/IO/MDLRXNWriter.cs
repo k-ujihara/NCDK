@@ -239,7 +239,7 @@ namespace NCDK.IO
         /// Writes a MoleculeSet to an Stream for the reaction.
         /// </summary>
         /// <param name="som">The MoleculeSet that is written to an Stream</param>
-        private void WriteAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
+        private void WriteAtomContainerSet(IChemObjectSet<IAtomContainer> som)
         {
             for (int i = 0; i < som.Count; i++)
             {

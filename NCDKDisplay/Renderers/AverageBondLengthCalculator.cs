@@ -67,7 +67,7 @@ namespace NCDK.Renderers
         /// </summary>
         /// <param name="moleculeSet">the molecule set to use</param>
         /// <returns>the average bond length</returns>
-        public static double CalculateAverageBondLength(IAtomContainerSet<IAtomContainer> moleculeSet)
+        public static double CalculateAverageBondLength(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             double averageBondModelLength = 0.0;
             foreach (var atomContainer in moleculeSet)

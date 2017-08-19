@@ -789,7 +789,7 @@ namespace NCDK.Reactions.Types
         /// Get the example set of molecules.
         /// </summary>
         /// <returns>The IAtomContainerSet</returns>
-        private IAtomContainerSet<IAtomContainer> GetExampleReactants()
+        private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("CO")
@@ -817,7 +817,7 @@ namespace NCDK.Reactions.Types
         /// TODO:reaction. Set the products
         /// </summary>
         /// <returns>The IAtomContainerSet</returns>
-        private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
+        private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
 

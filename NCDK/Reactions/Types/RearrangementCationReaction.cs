@@ -46,7 +46,7 @@ namespace NCDK.Reactions.Types
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <inheritdoc/>
-        public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public override IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             return base.Initiate(reactants, agents,
                 null,

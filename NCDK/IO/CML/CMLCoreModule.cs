@@ -54,7 +54,7 @@ namespace NCDK.IO.CML
         protected IChemFile CurrentChemFile{ get; set; }
 
         protected IAtomContainer CurrentMolecule{ get; set; }
-        protected IAtomContainerSet<IAtomContainer> CurrentMoleculeSet{ get; set; }
+        protected IChemObjectSet<IAtomContainer> CurrentMoleculeSet{ get; set; }
         protected IChemModel CurrentChemModel{ get; set; }
         protected IChemSequence CurrentChemSequence{ get; set; }
         protected IReactionSet CurrentReactionSet{ get; set; }

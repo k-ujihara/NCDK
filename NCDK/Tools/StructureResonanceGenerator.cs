@@ -187,7 +187,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="molecule">The IAtomContainer to analyze</param>
         /// <returns>The different resonance structures</returns>
-        public IAtomContainerSet<IAtomContainer> GetStructures(IAtomContainer molecule)
+        public IChemObjectSet<IAtomContainer> GetStructures(IAtomContainer molecule)
         {
             int countStructure = 0;
             var setOfMol = molecule.Builder.NewAtomContainerSet();
@@ -232,7 +232,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="molecule">The IAtomContainer to analyze</param>
         /// <returns>The different containers</returns>
-        public IAtomContainerSet<IAtomContainer> GetContainers(IAtomContainer molecule)
+        public IChemObjectSet<IAtomContainer> GetContainers(IAtomContainer molecule)
         {
             var setOfCont = molecule.Builder.NewAtomContainerSet();
             var setOfMol = GetStructures(molecule);
@@ -374,7 +374,7 @@ namespace NCDK.Tools
         /// <param name="set">ISetOfAtomContainer object where to search</param>
         /// <param name="atomContainer">IAtomContainer to search</param>
         /// <returns>True, if the atomContainer is contained</returns>
-        private bool ExistAC(IAtomContainerSet<IAtomContainer> set, IAtomContainer atomContainer)
+        private bool ExistAC(IChemObjectSet<IAtomContainer> set, IAtomContainer atomContainer)
         {
             IAtomContainer acClone = null;
             acClone = (IAtomContainer)atomContainer.Clone();

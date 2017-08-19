@@ -34,7 +34,7 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     public class AtomContainerSetManipulator
     {
-        public static int GetAtomCount(IAtomContainerSet<IAtomContainer> set)
+        public static int GetAtomCount(IChemObjectSet<IAtomContainer> set)
         {
             int count = 0;
             foreach (var atomContainer in set)
@@ -44,7 +44,7 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        public static int GetBondCount<T>(IAtomContainerSet<T> set) where T : IAtomContainer
+        public static int GetBondCount<T>(IChemObjectSet<T> set) where T : IAtomContainer
         {
             int count = 0;
             foreach (var atomContainer in set)
@@ -54,14 +54,14 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        public static void RemoveAtomAndConnectedElectronContainers(IAtomContainerSet<IAtomContainer> set, IAtom atom)
+        public static void RemoveAtomAndConnectedElectronContainers(IChemObjectSet<IAtomContainer> set, IAtom atom)
         {
             foreach (var atomContainer in set)
             {
                 if (atomContainer.Contains(atom))
                 {
                     atomContainer.RemoveAtom(atom);
-                    IAtomContainerSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
+                    IChemObjectSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {
                         set.Remove(atomContainer);
@@ -75,14 +75,14 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        public static void RemoveElectronContainer(IAtomContainerSet<IAtomContainer> set, IElectronContainer electrons)
+        public static void RemoveElectronContainer(IChemObjectSet<IAtomContainer> set, IElectronContainer electrons)
         {
             foreach (var atomContainer in set)
             {
                 if (atomContainer.Contains(electrons))
                 {
                     atomContainer.RemoveElectronContainer(electrons);
-                    IAtomContainerSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
+                    IChemObjectSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {
                         set.Remove(atomContainer);
@@ -114,7 +114,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>The summed charges of all atoms in this set.</returns>
-        public static double GetTotalCharge(IAtomContainerSet<IAtomContainer> set)
+        public static double GetTotalCharge(IChemObjectSet<IAtomContainer> set)
         {
             double charge = 0;
             for (int i = 0; i < set.Count; i++)
@@ -130,7 +130,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>The summed formal charges of all atoms in this set.</returns>
-        public static double GetTotalFormalCharge(IAtomContainerSet<IAtomContainer> set)
+        public static double GetTotalFormalCharge(IChemObjectSet<IAtomContainer> set)
         {
             int charge = 0;
             for (int i = 0; i < set.Count; i++)
@@ -156,7 +156,7 @@ namespace NCDK.Tools.Manipulator
             return hCount;
         }
 
-        public static IEnumerable<string> GetAllIDs<T>(IAtomContainerSet<T> set) where T : IAtomContainer
+        public static IEnumerable<string> GetAllIDs<T>(IChemObjectSet<T> set) where T : IAtomContainer
         {
             if (set != null)
             {
@@ -170,7 +170,7 @@ namespace NCDK.Tools.Manipulator
             yield break;
         }
 
-        public static void SetAtomProperties<T>(IAtomContainerSet<T> set, string propKey, object propVal) where T : IAtomContainer
+        public static void SetAtomProperties<T>(IChemObjectSet<T> set, string propKey, object propVal) where T : IAtomContainer
         {
             if (set != null)
             {
@@ -210,7 +210,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>a list of individual ChemObject's</returns>
-        public static IEnumerable<IChemObject> GetAllChemObjects(IAtomContainerSet<IAtomContainer> set)
+        public static IEnumerable<IChemObject> GetAllChemObjects(IChemObjectSet<IAtomContainer> set)
         {
             yield return set;
             foreach (var atomContainer in set)
@@ -233,7 +233,7 @@ namespace NCDK.Tools.Manipulator
         /// considered equal.</para>
         /// </summary>
         /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
-        public static void Sort<T>(IAtomContainerSet<T> atomContainerSet) where T : IAtomContainer
+        public static void Sort<T>(IChemObjectSet<T> atomContainerSet) where T : IAtomContainer
         {
             var atomContainerList = atomContainerSet.ToList();
             atomContainerList.Sort(new AtomContainerComparator<T>());
@@ -248,7 +248,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="id">The IAtomContainer to look for</param>
         /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
-        public static bool ContainsByID(IAtomContainerSet<IAtomContainer> atomContainerSet, string id)
+        public static bool ContainsByID(IChemObjectSet<IAtomContainer> atomContainerSet, string id)
         {
             foreach (var ac in atomContainerSet)
             {

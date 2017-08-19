@@ -61,7 +61,7 @@ namespace NCDK.IO
 
         private static IChemObject[] allChemObjectsTypes = {
             new ChemFile(), new ChemModel(), new Reaction(),
-            new AtomContainerSet<IAtomContainer>(), new AtomContainer(), };
+            new ChemObjectSet<IAtomContainer>(), new AtomContainer(), };
 
         /// <summary>
         /// Unit tests that iterates over all common objects that can be

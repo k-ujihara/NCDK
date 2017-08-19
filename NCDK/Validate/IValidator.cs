@@ -55,7 +55,7 @@ namespace NCDK.Validate
 
         ValidationReport ValidateReaction(IReaction subject);
 
-        ValidationReport ValidateMoleculeSet(IAtomContainerSet<IAtomContainer> subject);
+        ValidationReport ValidateMoleculeSet(IChemObjectSet<IAtomContainer> subject);
 
         ValidationReport ValidateReactionSet(IReactionSet subject);
     }

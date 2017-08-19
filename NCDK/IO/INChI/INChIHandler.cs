@@ -47,7 +47,7 @@ namespace NCDK.IO.InChI
         private ChemFile chemFile;
         private ChemSequence chemSequence;
         private ChemModel chemModel;
-        private IAtomContainerSet<IAtomContainer> setOfMolecules;
+        private IChemObjectSet<IAtomContainer> setOfMolecules;
         private IAtomContainer tautomer;
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace NCDK.IO.InChI
             chemFile = new ChemFile();
             chemSequence = new ChemSequence();
             chemModel = new ChemModel();
-            setOfMolecules = new AtomContainerSet<IAtomContainer>();
+            setOfMolecules = new ChemObjectSet<IAtomContainer>();
         }
 
         public override void EndDocument()

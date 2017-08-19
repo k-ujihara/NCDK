@@ -55,7 +55,7 @@ namespace NCDK.Reactions.Types
         /// <exception cref="CDKException"> Description of the Exception</exception>
         /// <param name="reactants">reactants of the reaction</param>
         /// <param name="agents">agents of the reaction (Must be in this case null)</param>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             CheckInitiateParams(reactants, agents);
 
@@ -94,7 +94,7 @@ namespace NCDK.Reactions.Types
                                             var bondList = new List<IBond>();
                                             bondList.Add(bondj);
 
-                                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
+                                            IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
                                             moleculeSet.Add(reactant);
                                             IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                             if (reaction == null)

@@ -44,7 +44,7 @@ namespace NCDK.Default
 
             IAtom atom = new Atom("N");
             IRing mol = new Ring();   // NCDK does not allow to add AtomContainer to RingSet
-            IAtomContainerSet<IAtomContainer> mset = new AtomContainerSet<IAtomContainer>();
+            IChemObjectSet<IAtomContainer> mset = new ChemObjectSet<IAtomContainer>();
             mol.Atoms.Add(atom);
             mset.Add(mol);    
             chemModel.MoleculeSet = mset;

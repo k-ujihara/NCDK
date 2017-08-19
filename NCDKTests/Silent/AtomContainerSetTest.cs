@@ -22,7 +22,7 @@ using System;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the <see cref="IAtomContainerSet{T}"/>.
+    /// Checks the functionality of the <see cref="IChemObjectSet{T}"/>.
     /// </summary>
     // @cdk.module test-silent
     [TestClass()]
@@ -31,7 +31,7 @@ namespace NCDK.Silent
     {
         public override IChemObject NewChemObject()
         {
-            return new AtomContainerSet<IAtomContainer>();
+            return new ChemObjectSet<IAtomContainer>();
         }
 
         public override IAtomContainer NewContainerObject()
@@ -42,7 +42,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public void TestAtomContainerSet()
         {
-            var som = new AtomContainerSet<IAtomContainer>();
+            var som = new ChemObjectSet<IAtomContainer>();
             Assert.IsNotNull(som);
             Assert.AreEqual(0, som.Count);
         }

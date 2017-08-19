@@ -8,7 +8,7 @@ namespace NCDK.Tools
             IAtomContainer molecule = null;
             #region 1
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
-            IAtomContainerSet<IAtomContainer> setOf = sRG.GetContainers(molecule);
+            IChemObjectSet<IAtomContainer> setOf = sRG.GetContainers(molecule);
             #endregion
 
             #region 2

@@ -80,7 +80,7 @@ namespace NCDK.IO
             IChemModel model = seq[0];
             Assert.IsNotNull(model);
 
-            IAtomContainerSet<IAtomContainer> som = model.MoleculeSet;
+            IChemObjectSet<IAtomContainer> som = model.MoleculeSet;
             Assert.IsNotNull(som);
             Assert.AreEqual(1, som.Count);
             IAtomContainer m = som[0];

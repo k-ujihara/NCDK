@@ -63,13 +63,13 @@ namespace NCDK.Graphs
         /// <param name="container">The <see cref="IAtomContainer"/> to be partitioned into connected components, i.e. molecules</param>
         /// <returns>A MoleculeSet.</returns>
         // @cdk.dictref   blue-obelisk:graphPartitioning
-        public static IAtomContainerSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
+        public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
             ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
             return PartitionIntoMolecules(container, cc.Components());
         }
 
-        public static IAtomContainerSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)
+        public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)
         {
             int maxComponentIndex = 0;
             foreach (int component in components)
@@ -82,7 +82,7 @@ namespace NCDK.Graphs
             for (int i = 1; i < containers.Length; i++)
                 containers[i] = container.Builder.NewAtomContainer();
 
-            IAtomContainerSet<IAtomContainer> containerSet = container.Builder.NewAtomContainerSet();
+            IChemObjectSet<IAtomContainer> containerSet = container.Builder.NewAtomContainerSet();
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {

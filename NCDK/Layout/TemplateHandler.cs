@@ -266,7 +266,7 @@ namespace NCDK.Layout
         /// <param name="molecule">The molecule to be check for potential templates</param>
         /// <returns>an IAtomContainerSet of all matched substructures of the molecule</returns>
         /// <exception cref="CDKException">if an error occurs</exception>
-        public IAtomContainerSet<IAtomContainer> GetMappedSubstructures(IAtomContainer molecule)
+        public IChemObjectSet<IAtomContainer> GetMappedSubstructures(IAtomContainer molecule)
         {
             var matchedSubstructures = molecule.Builder.NewAtomContainerSet();
             var matchedChemObjs = new HashSet<IChemObject>();

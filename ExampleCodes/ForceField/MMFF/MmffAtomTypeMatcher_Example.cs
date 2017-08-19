@@ -4,7 +4,7 @@
     {
         void Main()
         {
-            IAtomContainerSet<IAtomContainer> containers = null;
+            IChemObjectSet<IAtomContainer> containers = null;
             #region
             MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
             foreach (var container in containers)

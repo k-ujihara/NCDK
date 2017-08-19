@@ -66,7 +66,7 @@ namespace NCDK.Renderers.Generators
             return elementGroup;
         }
 
-        private IRenderingElement Generate(IAtomContainerSet<IAtomContainer> moleculeSet)
+        private IRenderingElement Generate(IChemObjectSet<IAtomContainer> moleculeSet)
         {
             var totalBounds = BoundsCalculator.CalculateBounds(moleculeSet);
 

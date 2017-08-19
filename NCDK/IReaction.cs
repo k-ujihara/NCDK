@@ -44,17 +44,17 @@ namespace NCDK
         /// <summary>
         /// The reactants in this reaction.
         /// </summary>
-        IAtomContainerSet<IAtomContainer> Reactants { get; }
+        IChemObjectSet<IAtomContainer> Reactants { get; }
 
         /// <summary>
         /// The products in this reaction.
         /// </summary>
-        IAtomContainerSet<IAtomContainer> Products { get; }
+        IChemObjectSet<IAtomContainer> Products { get; }
 
         /// <summary>
         /// The agents in this reaction.
         /// </summary>
-        IAtomContainerSet<IAtomContainer> Agents { get; }
+        IChemObjectSet<IAtomContainer> Agents { get; }
 
         /// <summary>
         /// The <see cref="ReactionDirections"/> of the reaction.

@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:aminoAcidsCount
     public class AminoAcidCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-        private IAtomContainerSet<IAtomContainer> substructureSet;
+        private IChemObjectSet<IAtomContainer> substructureSet;
 
         private static string[] names;
 

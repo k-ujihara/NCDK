@@ -28,9 +28,9 @@ namespace NCDK
         : IChemObject
     {
         /// <summary>
-        /// The <see cref="IAtomContainerSet{T}"/> of this <see cref="IChemModel"/>.
+        /// The <see cref="IChemObjectSet{T}"/> of this <see cref="IChemModel"/>.
         /// </summary>
-        IAtomContainerSet<IAtomContainer> MoleculeSet { get; set; }
+        IChemObjectSet<IAtomContainer> MoleculeSet { get; set; }
 
         /// <summary>
         /// The <see cref="IRingSet"/> of this <see cref="IChemModel"/>.

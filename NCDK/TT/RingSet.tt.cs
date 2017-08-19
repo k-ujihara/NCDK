@@ -37,7 +37,7 @@ namespace NCDK.Default
     // @cdk.keyword ring, set of
     [Serializable]
     public class RingSet
-        : AtomContainerSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>,  IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.
@@ -129,7 +129,7 @@ namespace NCDK.Silent
     // @cdk.keyword ring, set of
     [Serializable]
     public class RingSet
-        : AtomContainerSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>,  IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.

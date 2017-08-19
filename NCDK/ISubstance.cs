@@ -27,7 +27,7 @@ namespace NCDK
     // @cdk.module interfaces
     // @cdk.githash
     public interface ISubstance
-        : IAtomContainerSet<IAtomContainer>
+        : IChemObjectSet<IAtomContainer>
     {
     }
 }

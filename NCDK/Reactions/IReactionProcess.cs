@@ -50,7 +50,7 @@ namespace NCDK.Reactions
         /// <param name="agents">An <see cref="IAtomContainerSet"/> for which this process should be initiate.</param>
         /// <returns>The set of reactions.</returns>
         /// <exception cref="CDKException">if an error occurs during the reaction process. See documentation for individual reaction processes</exception>
-        IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents);
+        IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents);
 
         /// <summary>
         /// Return the <see cref="IParameterReaction"/> if it exists given the class.

@@ -44,7 +44,7 @@ namespace NCDK.Reactions.Types
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <inheritdoc/>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
             CheckInitiateParams(reactants, agents);
 
@@ -103,7 +103,7 @@ namespace NCDK.Reactions.Types
                                                         bondList.Add(bondj);
                                                         bondList.Add(bondk);
 
-                                                        IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
+                                                        IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
                                                         moleculeSet.Add(reactant);
                                                         IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                                         if (reaction == null)

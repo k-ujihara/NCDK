@@ -113,7 +113,7 @@ namespace NCDK.Validate
             return report;
         }
 
-        public virtual ValidationReport ValidateMoleculeSet(IAtomContainerSet<IAtomContainer> subject)
+        public virtual ValidationReport ValidateMoleculeSet(IChemObjectSet<IAtomContainer> subject)
         {
             ValidationReport report = new ValidationReport();
             return report;

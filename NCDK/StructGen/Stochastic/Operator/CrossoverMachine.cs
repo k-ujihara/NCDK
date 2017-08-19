@@ -203,7 +203,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 if (isok)
                 {
                     //combine the fragments crosswise
-                    IAtomContainerSet<IAtomContainer>[] newstrucs = new IAtomContainerSet<IAtomContainer>[2];
+                    IChemObjectSet<IAtomContainer>[] newstrucs = new IChemObjectSet<IAtomContainer>[2];
                     newstrucs[0] = dad.Builder.NewAtomContainerSet();
                     newstrucs[0].AddRange(ConnectivityChecker.PartitionIntoMolecules(redChild[0]));
                     newstrucs[0].AddRange(ConnectivityChecker.PartitionIntoMolecules(blueChild[1]));

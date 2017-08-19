@@ -144,7 +144,7 @@ namespace NCDK.Smiles
             if (!(reactants.Count() == 0))
             {
                 IAtomContainer reactantContainer = ParseSmiles(reactants, true);
-                IAtomContainerSet<IAtomContainer> reactantSet = ConnectivityChecker.PartitionIntoMolecules(reactantContainer);
+                IChemObjectSet<IAtomContainer> reactantSet = ConnectivityChecker.PartitionIntoMolecules(reactantContainer);
                 for (int i = 0; i < reactantSet.Count; i++)
                 {
                     reaction.Reactants.Add(reactantSet[i]);
@@ -155,7 +155,7 @@ namespace NCDK.Smiles
             if (!(agents.Count() == 0))
             {
                 IAtomContainer agentContainer = ParseSmiles(agents, true);
-                IAtomContainerSet<IAtomContainer> agentSet = ConnectivityChecker.PartitionIntoMolecules(agentContainer);
+                IChemObjectSet<IAtomContainer> agentSet = ConnectivityChecker.PartitionIntoMolecules(agentContainer);
                 for (int i = 0; i < agentSet.Count; i++)
                 {
                     reaction.Agents.Add(agentSet[i]);
@@ -168,7 +168,7 @@ namespace NCDK.Smiles
             if (!(products.Count() == 0))
             {
                 IAtomContainer productContainer = ParseSmiles(products, true);
-                IAtomContainerSet<IAtomContainer> productSet = ConnectivityChecker.PartitionIntoMolecules(productContainer);
+                IChemObjectSet<IAtomContainer> productSet = ConnectivityChecker.PartitionIntoMolecules(productContainer);
                 for (int i = 0; i < productSet.Count; i++)
                 {
                     reaction.Products.Add(productSet[i]);

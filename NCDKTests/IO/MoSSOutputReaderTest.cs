@@ -37,7 +37,7 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             MoSSOutputReader reader = new MoSSOutputReader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainerSet<IAtomContainer>)));
+            Assert.IsTrue(reader.Accepts(typeof(ChemObjectSet<IAtomContainer>)));
         }
 
         [TestMethod()]
@@ -46,7 +46,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MoSS.TKO.mossoutput";
             var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
-            var moleculeSet = new AtomContainerSet<IAtomContainer>();
+            var moleculeSet = new ChemObjectSet<IAtomContainer>();
             moleculeSet = reader.Read(moleculeSet);
             Assert.AreEqual(19, moleculeSet.Count);
             foreach (var mol in moleculeSet)
@@ -62,7 +62,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MoSS.TKO.mossoutput";
             var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
-            var moleculeSet = new AtomContainerSet<IAtomContainer>();
+            var moleculeSet = new ChemObjectSet<IAtomContainer>();
             moleculeSet = reader.Read(moleculeSet);
             Assert.AreEqual(5.06, double.Parse(moleculeSet[0].GetProperty<string>("focusSupport").ToString()), 0.01);
             Assert.AreEqual(1.74, double.Parse(moleculeSet[0].GetProperty<string>("complementSupport").ToString()), 0.01);

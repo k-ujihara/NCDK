@@ -164,7 +164,7 @@ namespace NCDK.IO.CML {
         public void TestChemModel()
         {
             ChemModel model = new ChemModel();
-            var moleculeSet = new AtomContainerSet<IAtomContainer>();
+            var moleculeSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer mol = new AtomContainer();
             PseudoAtom atom = new PseudoAtom("N");
             mol.Atoms.Add(atom);
@@ -697,7 +697,7 @@ namespace NCDK.IO.CML {
         [TestMethod()]
         public void TestMoleculeSet()
         {
-            var list = new AtomContainerSet<IAtomContainer>();
+            var list = new ChemObjectSet<IAtomContainer>();
             list.Add(new AtomContainer());
             list.Add(new AtomContainer());
             IChemModel model = new ChemModel();

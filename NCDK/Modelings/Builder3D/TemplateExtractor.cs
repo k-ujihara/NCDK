@@ -279,7 +279,7 @@ namespace NCDK.Modelings.Builder3D
             // WriteChemModel(som,dataFile,"_TESTTESTTESTTESTTEST");
         }
 
-        public void WriteChemModel(IAtomContainerSet<IAtomContainer> som, string file, string endFix)
+        public void WriteChemModel(IChemObjectSet<IAtomContainer> som, string file, string endFix)
         {
             Console.Out.WriteLine($"WRITE Molecules:{som.Count}");
             string molfile = file + endFix;

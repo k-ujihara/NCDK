@@ -28,7 +28,7 @@ namespace NCDK.Default
 {
     [Serializable]
     public class Substance
-        : AtomContainerSet<IAtomContainer>, ISubstance, ICloneable
+        : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {
         public Substance()
             : base()
@@ -40,7 +40,7 @@ namespace NCDK.Silent
 {
     [Serializable]
     public class Substance
-        : AtomContainerSet<IAtomContainer>, ISubstance, ICloneable
+        : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {
         public Substance()
             : base()
