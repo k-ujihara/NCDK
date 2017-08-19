@@ -269,7 +269,6 @@ namespace NCDK.Tools
             int pos = 0;
             for (int i = 0; i < newBondList.Count; i++)
             {
-
                 if (i == 0)
                     flagBelonging[i] = maxGroup;
                 else

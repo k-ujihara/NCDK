@@ -279,7 +279,7 @@ namespace NCDK.Beam
                 g.AddFlags(Graph.HAS_BND_STRO);
 
                 // unspecified only used for getting not setting configuration
-                if (builder.c == Configuration.DoubleBond.Unspecified)
+                if (builder.c == Configuration.DoubleBonds.Unspecified)
                     continue;
                 CheckGeometricBuilder(builder); // check required vertices are adjacent
 
@@ -295,7 +295,7 @@ namespace NCDK.Beam
                 Fix(g, v, u, pibonded);
 
                 Bond first = FirstDirectionalLabel(u, x, pibonded);
-                Bond second = builder.c == Configuration.DoubleBond.Together ? first
+                Bond second = builder.c == Configuration.DoubleBonds.Together ? first
                                                     : first.Inverse();
 
                 // check if the second label would cause a conflict
@@ -824,7 +824,7 @@ namespace NCDK.Beam
 
             internal int X { get; set; }
             internal int Y { get; set; }
-            internal Configuration.DoubleBond c;
+            internal Configuration.DoubleBonds c;
 
             public GeometricBuilder(GraphBuilder gb, int u, int v)
             {
@@ -835,15 +835,15 @@ namespace NCDK.Beam
 
             public GraphBuilder Together(int x, int y)
             {
-                return Configure(x, y, Configuration.DoubleBond.Together);
+                return Configure(x, y, Configuration.DoubleBonds.Together);
             }
 
             public GraphBuilder Opposite(int x, int y)
             {
-                return Configure(x, y, Configuration.DoubleBond.Opposite);
+                return Configure(x, y, Configuration.DoubleBonds.Opposite);
             }
 
-            public GraphBuilder Configure(int x, int y, Configuration.DoubleBond c)
+            public GraphBuilder Configure(int x, int y, Configuration.DoubleBonds c)
             {
                 this.X = x;
                 this.Y = y;
@@ -854,7 +854,7 @@ namespace NCDK.Beam
 
             public override string ToString()
             {
-                return X + "/" + u + "=" + v + (c == Configuration.DoubleBond.Together ? "\\" : "/") + Y;
+                return X + "/" + u + "=" + v + (c == Configuration.DoubleBonds.Together ? "\\" : "/") + Y;
             }
         }
     }

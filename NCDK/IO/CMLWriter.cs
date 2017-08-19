@@ -175,7 +175,7 @@ namespace NCDK.IO
             if (typeof(IChemModel).IsAssignableFrom(type)) return true;
             if (typeof(IChemFile).IsAssignableFrom(type)) return true;
             if (typeof(IChemSequence).IsAssignableFrom(type)) return true;
-            if (typeof(IAtomContainerSet).IsAssignableFrom(type)) return true;
+            if (typeof(IEnumerableChemObject<IAtomContainer>).IsAssignableFrom(type)) return true;
             if (typeof(IReactionSet).IsAssignableFrom(type)) return true;
             if (typeof(IReaction).IsAssignableFrom(type)) return true;
             return false;
@@ -187,7 +187,7 @@ namespace NCDK.IO
         /// <param name="obj">A Molecule of AtomContaineSet object</param>
         public override void Write(IChemObject obj)
         {
-            if (!(obj is IAtomContainer) && !(obj is IAtomContainerSet)
+            if (!(obj is IAtomContainer) && !(obj is IEnumerableChemObject<IAtomContainer>)
                     && !(obj is IReaction) && !(obj is IReactionSet)
                     && !(obj is IChemSequence) && !(obj is IChemModel)
                     && !(obj is IChemFile) && !(obj is ICrystal) && !(obj is IAtom)
@@ -241,9 +241,9 @@ namespace NCDK.IO
             {
                 root = convertor.CDKReactionSetToCMLReactionList((IReactionSet)obj);
             }
-            else if (obj is IAtomContainerSet<IAtomContainer>)
+            else if (obj is IEnumerableChemObject<IAtomContainer>)
             {
-                root = convertor.CDKAtomContainerSetToCMLList((IAtomContainerSet<IAtomContainer>)obj);
+                root = convertor.CDKAtomContainerSetToCMLList((IEnumerableChemObject<IAtomContainer>)obj);
             }
             else if (obj is IChemSequence)
             {

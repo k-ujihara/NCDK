@@ -10,7 +10,7 @@ namespace NCDK.IO.Iterator
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This class is analogous to the <see cref="IteratingSDFReader"/> except that
+    /// This class is analogous to the <see cref="EnumerableSDFReader"/> except that
     /// rather than return a single <see cref="IAtomContainer"/> at each iteration this
     /// class will return all the conformers for a given molecule at each iteration.
     /// </para>
@@ -27,7 +27,7 @@ namespace NCDK.IO.Iterator
     /// </para>
     /// </remarks>
     /// <example>
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.IteratingMDLConformerReader_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.EnumerableMDLConformerReader_Example.cs"]/*' />
     /// </example>
     // @cdk.module extra
     // @cdk.githash
@@ -35,18 +35,19 @@ namespace NCDK.IO.Iterator
     // @see org.openscience.cdk.ConformerContainer
     // @cdk.keyword file format SDF
     // @cdk.keyword conformer conformation
-    public class IteratingMDLConformerReader : IEnumerable<ConformerContainer>, IDisposable
+    public class IEnumerableMDLConformerReader 
+        : IEnumerable<ConformerContainer>, IDisposable
     {
-        private IteratingSDFReader imdlr;
+        private EnumerableSDFReader imdlr;
 
-        public IteratingMDLConformerReader(TextReader ins, IChemObjectBuilder builder)
+        public IEnumerableMDLConformerReader(TextReader ins, IChemObjectBuilder builder)
         {
-            imdlr = new IteratingSDFReader(ins, builder);
+            imdlr = new EnumerableSDFReader(ins, builder);
         }
 
-        public IteratingMDLConformerReader(Stream ins, IChemObjectBuilder builder)
+        public IEnumerableMDLConformerReader(Stream ins, IChemObjectBuilder builder)
         {
-            imdlr = new IteratingSDFReader(ins, builder);
+            imdlr = new EnumerableSDFReader(ins, builder);
         }
 
         public IEnumerator<ConformerContainer> GetEnumerator()
@@ -95,7 +96,7 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        ~IteratingMDLConformerReader()
+        ~IEnumerableMDLConformerReader()
         {
             Dispose(false);
         }

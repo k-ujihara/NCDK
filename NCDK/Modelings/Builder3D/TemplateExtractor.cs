@@ -55,7 +55,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 Console.Out.WriteLine("Start clean dataset...");
                 using (var fin = new StreamReader(dataFile))
-                using (var imdl = new IteratingSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
                     Console.Out.WriteLine("READY");
                     int c = 0;
@@ -92,7 +92,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 Console.Out.WriteLine("Start...");
                 using (var fin = new StreamReader(dataFile))
-                using (var imdl = new IteratingSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
                     Console.Out.Write("Read File in..");
                     Console.Out.WriteLine("READY");
@@ -116,7 +116,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 Console.Out.WriteLine("Start...");
                 using (var fin = new StreamReader(dataFile))
-                using (var imdl = new IteratingSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
                     Console.Out.Write("Read File in..");
                     Console.Out.WriteLine("READY");
@@ -168,7 +168,7 @@ namespace NCDK.Modelings.Builder3D
                     {
                         Console.Out.WriteLine("Start...");
                         using (var fin = new StreamReader(dataFile))
-                        using (var imdl = new IteratingSDFReader(fin, builder))
+                        using (var imdl = new EnumerableSDFReader(fin, builder))
                         {
                             Console.Out.WriteLine("Read File in..");
 
@@ -309,7 +309,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 Console.Out.WriteLine("Start...");
                 using (var fin = new StreamReader(dataFileIn))
-                using (var imdl = new IteratingSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
                     Console.Out.WriteLine("Read File in..");
 
@@ -377,7 +377,7 @@ namespace NCDK.Modelings.Builder3D
             try
             {
                 Console.Out.Write("Read data file in ...");
-                using (var imdl = new IteratingSDFReader(fin, builder))
+                using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
                     Console.Out.WriteLine("ready");
 

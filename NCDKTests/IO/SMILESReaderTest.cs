@@ -105,11 +105,11 @@ namespace NCDK.IO
             IAtomContainerSet<IAtomContainer> mols = cor.Read(bldr.NewAtomContainerSet());
             Assert.AreEqual(3, mols.Count);
             Assert.AreEqual(1, mols[0].Atoms.Count);
-            Assert.IsNull(mols[0].GetProperty<string>(IteratingSMILESReader.BadSmilesInput));
+            Assert.IsNull(mols[0].GetProperty<string>(EnumerableSMILESReader.BadSmilesInput));
             Assert.AreEqual(0, mols[1].Atoms.Count);
-            Assert.IsNotNull(mols[1].GetProperty<string>(IteratingSMILESReader.BadSmilesInput));
+            Assert.IsNotNull(mols[1].GetProperty<string>(EnumerableSMILESReader.BadSmilesInput));
             Assert.AreEqual(6, mols[2].Atoms.Count);
-            Assert.IsNull(mols[2].GetProperty<string>(IteratingSMILESReader.BadSmilesInput));
+            Assert.IsNull(mols[2].GetProperty<string>(EnumerableSMILESReader.BadSmilesInput));
         }
     }
 }

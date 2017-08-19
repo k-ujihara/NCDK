@@ -106,7 +106,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrDouble, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondTypes.SingleOrDouble, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -119,7 +119,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondTypes.SingleOrAromatic, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -132,7 +132,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.DoubleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondTypes.DoubleOrAromatic, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -145,7 +145,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondType.Any, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondTypes.Any, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]

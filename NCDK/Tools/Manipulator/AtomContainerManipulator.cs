@@ -142,7 +142,7 @@ namespace NCDK.Tools.Manipulator
                             cpy.Bonds.Add(bond);
                         foreach (Sgroup parent in org.Parents)
                             cpy.AddParent(parent);
-                        foreach (SgroupKey key in org.AttributeKeys)
+                        foreach (SgroupKeys key in org.AttributeKeys)
                             cpy.PutValue(key, org.GetValue(key));
                         replaced.Add(cpy);
                     }

@@ -547,40 +547,40 @@ namespace NCDK.IO
                 {
                     switch (key)
                     {
-                        case SgroupKey.CtabSubType:
+                        case SgroupKeys.CtabSubType:
                             writer.Write(" SUBTYPE=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SgroupKey.CtabConnectivity:
+                        case SgroupKeys.CtabConnectivity:
                             writer.Write(" CONNECT=").Write(sgroup.GetValue(key).ToString().ToUpperInvariant());
                             break;
-                        case SgroupKey.CtabSubScript:
+                        case SgroupKeys.CtabSubScript:
                             if (type == SgroupType.CtabMultipleGroup)
                                 writer.Write(" MULT=").Write(sgroup.GetValue(key).ToString());
                             else
                                 writer.Write(" LABEL=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SgroupKey.CtabBracketStyle:
+                        case SgroupKeys.CtabBracketStyle:
                             var btype = (int)sgroup.GetValue(key);
                             if (btype.Equals(1))
                                 writer.Write(" BRKTYP=PAREN");
                             break;
-                        case SgroupKey.CtabParentAtomList:
+                        case SgroupKeys.CtabParentAtomList:
                             var parentAtoms = (IEnumerable<IChemObject>)sgroup.GetValue(key);
                             writer.Write(" PATOMS=(")
                                                           .Write(parentAtoms, idxs)
                                                           .Write(')');
                             break;
-                        case SgroupKey.CtabComponentNumber:
+                        case SgroupKeys.CtabComponentNumber:
                             var number = (int)sgroup.GetValue(key);
                             if (number > 0)
                                 writer.Write(" COMPNO=").Write(number);
                             break;
-                        case SgroupKey.CtabExpansion:
+                        case SgroupKeys.CtabExpansion:
                             var expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                                 writer.Write(" ESTATE=E");
                             break;
-                        case SgroupKey.CtabBracket:
+                        case SgroupKeys.CtabBracket:
                             var brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {

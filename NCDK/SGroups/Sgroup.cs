@@ -50,7 +50,7 @@ namespace NCDK.SGroups
         /// </summary>
         public ISet<Sgroup> Parents { get; private set; }
 
-        private readonly IDictionary<SgroupKey, object> attributes = new SortedDictionary<SgroupKey, object>();
+        private readonly IDictionary<SgroupKeys, object> attributes = new SortedDictionary<SgroupKeys, object>();
 
         /// <summary>
         /// Create a new generic Sgroup.
@@ -72,14 +72,14 @@ namespace NCDK.SGroups
             Atoms = new HashSet<IAtom>(org.Atoms);
             Bonds = new HashSet<IBond>(org.Bonds);
             Parents = new HashSet<Sgroup>(org.Parents);
-            this.attributes = new Dictionary<SgroupKey, object>(org.attributes);
+            this.attributes = new Dictionary<SgroupKeys, object>(org.attributes);
         }
 
         /// <summary>
         /// Access all the attribute keys of this Sgroup.
         /// </summary>
         /// <returns>attribute keys</returns>
-        public ICollection<SgroupKey> AttributeKeys => attributes.Keys;
+        public ICollection<SgroupKeys> AttributeKeys => attributes.Keys;
 
         /// <summary>
         /// The type of the Sgroup.
@@ -88,12 +88,12 @@ namespace NCDK.SGroups
         {
             set
             {
-                PutValue(SgroupKey.CtabType, value);
+                PutValue(SgroupKeys.CtabType, value);
             }
 
             get
             {
-                return (SgroupType)GetValue(SgroupKey.CtabType);
+                return (SgroupType)GetValue(SgroupKeys.CtabType);
             }
         }
 
@@ -139,7 +139,7 @@ namespace NCDK.SGroups
         /// </summary>
         /// <param name="key">attribute key</param>
         /// <param name="val">attribute value</param>
-        public void PutValue(SgroupKey key, object val)
+        public void PutValue(SgroupKeys key, object val)
         {
             attributes[key] = val;
         }
@@ -148,7 +148,7 @@ namespace NCDK.SGroups
         /// Access an attribute for the Sgroup.
         /// </summary>
         /// <param name="key">attribute key</param>
-        public object GetValue(SgroupKey key)
+        public object GetValue(SgroupKeys key)
         {
             object o;
             if (!attributes.TryGetValue(key, out o))
@@ -162,8 +162,8 @@ namespace NCDK.SGroups
         /// <returns>subscript value (or null if not present)</returns>
         public string Subscript
         {
-            get { return (string)GetValue(SgroupKey.CtabSubScript); }
-            set { PutValue(SgroupKey.CtabSubScript, value); }
+            get { return (string)GetValue(SgroupKeys.CtabSubScript); }
+            set { PutValue(SgroupKeys.CtabSubScript, value); }
         }
 
         /// <summary>
@@ -172,11 +172,11 @@ namespace NCDK.SGroups
         /// <param name="bracket">sgroup bracket</param>
         public void AddBracket(SgroupBracket bracket)
         {
-            IList<SgroupBracket> brackets = (IList<SgroupBracket>)GetValue(SgroupKey.CtabBracket);
+            IList<SgroupBracket> brackets = (IList<SgroupBracket>)GetValue(SgroupKeys.CtabBracket);
             if (brackets == null)
             {
                 brackets = new List<SgroupBracket>(2);
-                PutValue(SgroupKey.CtabBracket, brackets);
+                PutValue(SgroupKeys.CtabBracket, brackets);
             }
             brackets.Add(bracket);
         }

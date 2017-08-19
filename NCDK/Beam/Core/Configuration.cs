@@ -334,7 +334,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>Configurations for double-bond bond-based specification. </summary>
-        public enum DoubleBond
+        public enum DoubleBonds
         {
             Unspecified,
             Together,

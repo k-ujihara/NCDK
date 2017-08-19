@@ -780,7 +780,7 @@ namespace NCDK.Smiles
                         case SgroupType.O.CtabGeneric:
                         case SgroupType.O.CtabComponent:
                         case SgroupType.O.CtabGraft:
-                            string supscript = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
+                            string supscript = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
                             state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
                                                                               ToAtomIdxs(sgroup.Atoms, atomidx),
                                                                               sgroup.Subscript,
@@ -836,7 +836,7 @@ namespace NCDK.Smiles
                 case SgroupType.O.CtabMer:
                     return "mer";
                 case SgroupType.O.CtabCopolymer:
-                    string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
+                    string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
                     if (subtype == null)
                         return "co";
                     switch (subtype)

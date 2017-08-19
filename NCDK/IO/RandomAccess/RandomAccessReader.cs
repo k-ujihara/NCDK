@@ -42,7 +42,8 @@ namespace NCDK.IO.RandomAccess
     // @author     Nina Jeliazkova <nina@acad.bg>
     // @cdk.module io
     // @cdk.githash
-    public abstract class RandomAccessReader : DefaultRandomAccessChemObjectReader, IDisposable
+    public abstract class RandomAccessReader
+        : DefaultRandomAccessChemObjectReader, IDisposable
     {
         protected Stream raFile;
         protected IOSetting[] headerOptions = null;
@@ -61,7 +62,7 @@ namespace NCDK.IO.RandomAccess
         /// <summary>
         /// Reads the file and builds an index file, if the index file doesn't already exist.
         /// </summary>
-        /// <param name="file">the file object containg the molecules to be indexed</param>
+        /// <param name="file">the file object containing the molecules to be indexed</param>
         /// <param name="builder">a chem object builder</param>
         /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
         public RandomAccessReader(string file, IChemObjectBuilder builder)
@@ -207,7 +208,7 @@ namespace NCDK.IO.RandomAccess
                 line = ins.ReadLine();
                 int indexLength = int.Parse(line);
                 if (indexLength <= 0)
-                    throw new Exception($"Index of zero lenght! {Path.GetFullPath(file)}");
+                    throw new Exception($"Index of zero length! {Path.GetFullPath(file)}");
                 index = Arrays.CreateJagged<long>(indexLength, 3);
                 records = 0;
                 int maxRecordLength = 0;
@@ -233,7 +234,7 @@ namespace NCDK.IO.RandomAccess
                 int indexLength2 = int.Parse(line);
                 if (indexLength2 <= 0)
                 {
-                    throw new Exception("Index of zero lenght!");
+                    throw new Exception("Index of zero length!");
                 }
                 if (indexLength2 != indexLength)
                 {

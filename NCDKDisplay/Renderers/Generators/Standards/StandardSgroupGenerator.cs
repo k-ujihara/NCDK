@@ -92,7 +92,7 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 if (sgroup.Type == SgroupType.CtabAbbreviation)
                 {
-                    bool? expansion = (bool?)sgroup.GetValue(SgroupKey.CtabExpansion);
+                    bool? expansion = (bool?)sgroup.GetValue(SgroupKeys.CtabExpansion);
                     // abbreviation is displayed as expanded
                     if (expansion ?? false)
                         continue;
@@ -202,7 +202,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var crossing = sgroup.Bonds;
             var atoms = sgroup.Atoms;
-            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
 
             foreach (var bond in container.Bonds)
             {
@@ -320,13 +320,13 @@ namespace NCDK.Renderers.Generators.Standards
         private IRenderingElement GenerateMultipleSgroup(Sgroup sgroup)
         {
             // just draw the brackets - multiplied group parts have already been hidden in prep phase
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
                 return GenerateSgroupBrackets(sgroup,
                                               brackets,
                                               Dictionaries.Empty<IAtom, AtomSymbol>(),
-                                              (string)sgroup.GetValue(SgroupKey.CtabSubScript),
+                                              (string)sgroup.GetValue(SgroupKeys.CtabSubScript),
                                               null);
             }
             else
@@ -393,20 +393,20 @@ namespace NCDK.Renderers.Generators.Standards
         private IRenderingElement GeneratePolymerSgroup(Sgroup sgroup, IDictionary<IAtom, AtomSymbol> symbolMap)
         {
             // draw the brackets
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
 
                 SgroupType type = sgroup.Type;
 
-                var subscript = (string)sgroup.GetValue(SgroupKey.CtabSubScript);
-                var connectivity = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
+                var subscript = (string)sgroup.GetValue(SgroupKeys.CtabSubScript);
+                var connectivity = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
 
                 switch (type.Ordinal)
                 {
                     case SgroupType.O.CtabCopolymer:
                         subscript = "co";
-                        string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
+                        string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
                         if ("RAN".Equals(subtype))
                             subscript = "ran";
                         else if ("BLK".Equals(subtype))
@@ -463,7 +463,7 @@ namespace NCDK.Renderers.Generators.Standards
             // draw the brackets
             // TODO - mixtures normally have attached Sgroup data
             // TODO - e.g. COMPONENT_FRACTION, ACTIVITY_TYPE, WEIGHT_PERCENT
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
                 SgroupType type = sgroup.Type;
@@ -471,7 +471,7 @@ namespace NCDK.Renderers.Generators.Standards
                 switch (type.Ordinal)
                 {
                     case SgroupType.O.CtabComponent:
-                        var compNum = (int?)sgroup.GetValue(SgroupKey.CtabComponentNumber);
+                        var compNum = (int?)sgroup.GetValue(SgroupKeys.CtabComponentNumber);
                         if (compNum != null)
                             subscript = "c" + compNum.ToString();
                         else
@@ -519,7 +519,7 @@ namespace NCDK.Renderers.Generators.Standards
                                                          string superscriptSuffix)
         {
             // brackets are square by default (style:0)
-            var style = (int?)sgroup.GetValue(SgroupKey.CtabBracketStyle);
+            var style = (int?)sgroup.GetValue(SgroupKeys.CtabBracketStyle);
             bool round = style != null && style == 1;
             ElementGroup result = new ElementGroup();
 

@@ -25,8 +25,10 @@ using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Smiles;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.IO
 {
@@ -83,7 +85,7 @@ namespace NCDK.IO
         public override bool Accepts(Type type)
         {
             if (typeof(IAtomContainer).IsAssignableFrom(type)) return true;
-            if (typeof(IAtomContainerSet<IAtomContainer>).IsAssignableFrom(type)) return true;
+            if (typeof(IEnumerableChemObject<IAtomContainer>).IsAssignableFrom(type)) return true;
             return false;
         }
 
@@ -93,9 +95,9 @@ namespace NCDK.IO
         /// <param name="obj">IChemObject of which the data is given as output.</param>
         public override void Write(IChemObject obj)
         {
-            if (obj is IAtomContainerSet<IAtomContainer>)
+            if (obj is IEnumerableChemObject<IAtomContainer>)
             {
-                WriteAtomContainerSet((IAtomContainerSet<IAtomContainer>)obj);
+                WriteAtomContainerSet((IEnumerableChemObject<IAtomContainer>)obj);
             }
             else if (obj is IAtomContainer)
             {
@@ -111,14 +113,15 @@ namespace NCDK.IO
         /// Writes a list of molecules to an Stream.
         /// </summary>
         /// <param name="som">MoleculeSet that is written to an Stream</param>
-        public void WriteAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
+        public void WriteAtomContainerSet(IEnumerable<IAtomContainer> som)
         {
-            WriteAtomContainer(som[0]);
-            for (int i = 1; i <= som.Count - 1; i++)
+            var listSom = som.ToList(); 
+            WriteAtomContainer(listSom[0]);
+            for (int i = 1; i <= listSom.Count - 1; i++)
             {
                 try
                 {
-                    WriteAtomContainer(som[i]);
+                    WriteAtomContainer(listSom[i]);
                 }
                 catch (Exception)
                 {

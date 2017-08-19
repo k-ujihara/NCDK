@@ -253,7 +253,7 @@
   <Codes id="NCDK.Geometries.CIP.CIPTool_Example.cs">
     <code>            IAtom[] ligandAtoms = mol.GetConnectedAtoms(centralAtom).ToArray();
             ITetrahedralChirality tetraStereo = new TetrahedralChirality(centralAtom, ligandAtoms, TetrahedralStereo.AntiClockwise);
-            CIPChirality cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
+            CIPChiralities cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
 </code>
   </Codes>
   <Codes id="NCDK.Geometries.RDFCalculator_Example.cs">
@@ -968,11 +968,11 @@ namespace NCDK.Graphs
                                                                        .Molecular();
 </code>
   </Codes>
-  <Codes id="NCDK.IO.Iterator.IteratingMDLConformerReader_Example.cs">
+  <Codes id="NCDK.IO.Iterator.EnumerableMDLConformerReader_Example.cs">
     <code>                string filename = "/Users/rguha/conf2.sdf";
                 using (var srm = new FileStream(filename, FileMode.Open))
                 {
-                    IteratingMDLConformerReader reader = new IteratingMDLConformerReader(srm, Default.ChemObjectBuilder.Instance);
+                    IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance);
                     foreach (var cc in reader)
                     {
                         // do something 
@@ -981,10 +981,10 @@ namespace NCDK.Graphs
                 // do something with this set of conformers
 </code>
   </Codes>
-  <Codes id="NCDK.IO.Iterator.IteratingSDFReader_Example.cs">
+  <Codes id="NCDK.IO.Iterator.EnumerableSDFReader_Example.cs">
     <code>                using (var srm = new FileStream("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf", FileMode.Open))
                 {
-                    IteratingSDFReader reader = new IteratingSDFReader(srm, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader reader = new EnumerableSDFReader(srm, Default.ChemObjectBuilder.Instance);
                     foreach (var molecule in reader)
                     {
                         // do something
@@ -1447,7 +1447,7 @@ namespace NCDK.Graphs
             string filename = "/Users/rguha/pcore1.sdf";
             using (var srm = new FileStream(filename, FileMode.Open))
             {
-                foreach (var conformers in new IteratingMDLConformerReader(srm, Default.ChemObjectBuilder.Instance))
+                foreach (var conformers in new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance))
                 {
                     bool firstTime = true;
                     foreach (var conf in conformers)
@@ -2044,7 +2044,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.ConformerContainer_Example.cs">
-    <code>            var reader = new IteratingMDLConformerReader(
+    <code>            var reader = new IEnumerableMDLConformerReader(
                 new FileStream(filename, FileMode.Open),
                 Default.ChemObjectBuilder.Instance);
             foreach (ConformerContainer cc in reader)

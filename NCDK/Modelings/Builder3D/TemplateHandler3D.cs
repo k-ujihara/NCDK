@@ -95,7 +95,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 using (var gin = GetType().Assembly.GetManifestResourceStream(GetType(), TEMPLATE_PATH))
                 using (var ins = new GZipStream(gin, CompressionMode.Decompress))
-                using (IteratingSDFReader sdfr = new IteratingSDFReader(ins, builder))
+                using (EnumerableSDFReader sdfr = new EnumerableSDFReader(ins, builder))
                 {
                     foreach (var mol in sdfr)
                     {

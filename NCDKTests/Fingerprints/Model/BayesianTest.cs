@@ -213,7 +213,7 @@ namespace NCDK.Fingerprints.Model
             string strType = classType == CircularFingerprinter.CLASS_ECFP6 ? "ECFP6" : "FCFP6";
             WriteLine("Comparing hash codes for " + strType + "/folding=" + folding);
 
-            IAtomContainer mol = new IteratingSDFReader(new StringReader(molstr), Default.ChemObjectBuilder.Instance).First();
+            IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), Default.ChemObjectBuilder.Instance).First();
             Bayesian model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
@@ -280,7 +280,7 @@ namespace NCDK.Fingerprints.Model
             {
                 using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
                     foreach (var mol in rdr)
                     {
@@ -344,7 +344,7 @@ namespace NCDK.Fingerprints.Model
             {
                 using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
                     int row = 0;
                     foreach (var mol in rdr)
@@ -391,7 +391,7 @@ namespace NCDK.Fingerprints.Model
             try
             {
                 Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
-                IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
+                EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
                 Bayesian model = new Bayesian(classType, folding);
 
                 int row = 0, numActives = 0;

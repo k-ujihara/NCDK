@@ -605,7 +605,7 @@ namespace NCDK.Smiles
                     }
 
                     sgroup.Subscript = psgroup.Subscript;
-                    sgroup.PutValue(SgroupKey.CtabConnectivity, psgroup.Supscript);
+                    sgroup.PutValue(SgroupKeys.CtabConnectivity, psgroup.Supscript);
 
                     switch (psgroup.Type)
                     {
@@ -647,15 +647,15 @@ namespace NCDK.Smiles
                             break;
                         case "alt":
                             sgroup.Type = SgroupType.CtabCopolymer;
-                            sgroup.PutValue(SgroupKey.CtabSubType, "ALT");
+                            sgroup.PutValue(SgroupKeys.CtabSubType, "ALT");
                             break;
                         case "ran":
                             sgroup.Type = SgroupType.CtabCopolymer;
-                            sgroup.PutValue(SgroupKey.CtabSubType, "RAN");
+                            sgroup.PutValue(SgroupKeys.CtabSubType, "RAN");
                             break;
                         case "blk":
                             sgroup.Type = SgroupType.CtabCopolymer;
-                            sgroup.PutValue(SgroupKey.CtabSubType, "BLO");
+                            sgroup.PutValue(SgroupKeys.CtabSubType, "BLO");
                             break;
                     }
                     sgroupMap.Add(mol, sgroup);

@@ -55,7 +55,7 @@ namespace NCDK.Geometries.CIP
         /// Enumeration with the two tetrahedral chiralities defined by the CIP schema.
         /// </summary>
        // @author egonw
-        public enum CIPChirality
+        public enum CIPChiralities
         {
             R, S, E, Z, None
         }
@@ -66,22 +66,22 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="stereoCenter">Chiral center for which the CIP chirality is to be
         ///                     determined as <see cref="LigancyFourChirality"/> object.</param>
-        /// <returns>A <see cref="CIPChirality"/> value.</returns>
-        public static CIPChirality GetCIPChirality(LigancyFourChirality stereoCenter)
+        /// <returns>A <see cref="CIPChiralities"/> value.</returns>
+        public static CIPChiralities GetCIPChirality(LigancyFourChirality stereoCenter)
         {
             ILigand[] ligands = Order(stereoCenter.Ligands);
             LigancyFourChirality rsChirality = stereoCenter.Project(ligands);
 
             bool allAreDifferent = CheckIfAllLigandsAreDifferent(ligands);
-            if (!allAreDifferent) return CIPChirality.None;
+            if (!allAreDifferent) return CIPChiralities.None;
 
-            if (rsChirality.Stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
+            if (rsChirality.Stereo == TetrahedralStereo.Clockwise) return CIPChiralities.R;
 
-            return CIPChirality.S;
+            return CIPChiralities.S;
         }
 
         /// <summary>
-        /// Convenience method for labelling all stereo elements. The <see cref="CIPChirality"/> is determined for each element and stored as as <see cref="string"/> 
+        /// Convenience method for labelling all stereo elements. The <see cref="CIPChiralities"/> is determined for each element and stored as as <see cref="string"/> 
         /// on the <see cref="CDKPropertyName.CIP_Descriptor"/> property key.
         /// Atoms/bonds that are not stereocenters have no label assigned and the
         /// property will be null.
@@ -111,8 +111,8 @@ namespace NCDK.Geometries.CIP
         /// </summary>
         /// <param name="container"><see cref="IAtomContainer"/> to which the <paramref name="stereoCenter"/> belongs.</param>              
         /// <param name="stereoCenter">Chiral center for which the CIP chirality is to be determined as <see cref="ITetrahedralChirality"/> object.</param>
-        /// <returns>A <see cref="CIPChirality"/> value.</returns>
-        public static CIPChirality GetCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter)
+        /// <returns>A <see cref="CIPChiralities"/> value.</returns>
+        public static CIPChiralities GetCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter)
         {
             // the LigancyFourChirality is kind of redundant but we keep for an
             // easy way to get the ILigands array
@@ -121,16 +121,16 @@ namespace NCDK.Geometries.CIP
 
             int parity = PermParity(tmp.Ligands);
 
-            if (parity == 0) return CIPChirality.None;
+            if (parity == 0) return CIPChiralities.None;
             if (parity < 0) stereo = stereo.Invert();
 
-            if (stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
-            if (stereo == TetrahedralStereo.AntiClockwise) return CIPChirality.S;
+            if (stereo == TetrahedralStereo.Clockwise) return CIPChiralities.R;
+            if (stereo == TetrahedralStereo.AntiClockwise) return CIPChiralities.S;
 
-            return CIPChirality.None;
+            return CIPChiralities.None;
         }
 
-        public static CIPChirality GetCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter)
+        public static CIPChiralities GetCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter)
         {
             IBond stereoBond = stereoCenter.StereoBond;
             IBond leftBond = stereoCenter.Bonds[0];
@@ -155,7 +155,7 @@ namespace NCDK.Geometries.CIP
             ILigand[] leftLigands = GetLigands(u, container, v);
             ILigand[] rightLigands = GetLigands(v, container, u);
 
-            if (leftLigands.Length > 2 || rightLigands.Length > 2) return CIPChirality.None;
+            if (leftLigands.Length > 2 || rightLigands.Length > 2) return CIPChiralities.None;
 
             // invert if x/y aren't in the first position
             if (leftLigands[0].GetLigandAtom() != x) conformation = conformation.Invert();
@@ -163,14 +163,14 @@ namespace NCDK.Geometries.CIP
 
             int p = PermParity(leftLigands) * PermParity(rightLigands);
 
-            if (p == 0) return CIPChirality.None;
+            if (p == 0) return CIPChiralities.None;
 
             if (p < 0) conformation = conformation.Invert();
 
-            if (conformation == DoubleBondConformation.Together) return CIPChirality.Z;
-            if (conformation == DoubleBondConformation.Opposite) return CIPChirality.E;
+            if (conformation == DoubleBondConformation.Together) return CIPChiralities.Z;
+            if (conformation == DoubleBondConformation.Opposite) return CIPChiralities.E;
 
-            return CIPChirality.None;
+            return CIPChiralities.None;
         }
 
         /// <summary>

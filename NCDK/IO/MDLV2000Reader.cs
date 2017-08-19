@@ -1052,7 +1052,7 @@ namespace NCDK.IO
                         if (ReaderMode == ChemObjectReaderModes.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
                             HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
 
-                        sgroup.PutValue(SgroupKey.CtabSubType, sst);
+                        sgroup.PutValue(SgroupKeys.CtabSubType, sst);
                     }
                 }
                 else if (key == PropertyKey.M_SAL)
@@ -1111,7 +1111,7 @@ namespace NCDK.IO
                         string con = Strings.Substring(line, st + 4, 3).Trim();
                         if (ReaderMode == ChemObjectReaderModes.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
                             HandleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
-                        sgroup.PutValue(SgroupKey.CtabConnectivity,
+                        sgroup.PutValue(SgroupKeys.CtabConnectivity,
                                         con);
                     }
                 }
@@ -1137,7 +1137,7 @@ namespace NCDK.IO
                     // (For multiple groups, m... is the text representation of the multiple group multiplier.
                     //  For abbreviation Sgroups, m... is the text of the abbreviation Sgroup label.)
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
-                    sgroup.PutValue(SgroupKey.CtabSubScript,
+                    sgroup.PutValue(SgroupKeys.CtabSubScript,
                                     Strings.Substring(line, 11).Trim());
                 }
                 else if (key == PropertyKey.M_SBT)
@@ -1154,7 +1154,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SgroupKey.CtabBracketStyle,
+                        sgroup.PutValue(SgroupKeys.CtabBracketStyle,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1169,7 +1169,7 @@ namespace NCDK.IO
                         for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                         {
                             sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, st));
-                            sgroup.PutValue(SgroupKey.CtabExpansion, true);
+                            sgroup.PutValue(SgroupKeys.CtabExpansion, true);
                         }
                     }
                     else if (ReaderMode == ChemObjectReaderModes.Strict)
@@ -1189,10 +1189,10 @@ namespace NCDK.IO
                     //       Sgroup Atom List M SAL entry.
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
                     count = ReadMolfileInt(line, 10);
-                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
                     if (parentAtomList == null)
                     {
-                        sgroup.PutValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                        sgroup.PutValue(SgroupKeys.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
                     }
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                     {
@@ -1211,7 +1211,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SgroupKey.CtabComponentNumber,
+                        sgroup.PutValue(SgroupKeys.CtabComponentNumber,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1940,20 +1940,20 @@ namespace NCDK.IO
                 newBond = new CTFileQueryBond(builder);
                 newBond.SetAtoms(new[] { a1, a2 });
                 newBond.Order = BondOrder.Unset;
-                CTFileQueryBond.BondType queryBondType = CTFileQueryBond.BondType.Unset;
+                CTFileQueryBond.BondTypes queryBondType = CTFileQueryBond.BondTypes.Unset;
                 switch (order)
                 {
                     case 5:
-                        queryBondType = CTFileQueryBond.BondType.SingleOrDouble;
+                        queryBondType = CTFileQueryBond.BondTypes.SingleOrDouble;
                         break;
                     case 6:
-                        queryBondType = CTFileQueryBond.BondType.SingleOrAromatic;
+                        queryBondType = CTFileQueryBond.BondTypes.SingleOrAromatic;
                         break;
                     case 7:
-                        queryBondType = CTFileQueryBond.BondType.DoubleOrAromatic;
+                        queryBondType = CTFileQueryBond.BondTypes.DoubleOrAromatic;
                         break;
                     case 8:
-                        queryBondType = CTFileQueryBond.BondType.Any;
+                        queryBondType = CTFileQueryBond.BondTypes.Any;
                         break;
                 }
                 ((CTFileQueryBond)newBond).Type = queryBondType;

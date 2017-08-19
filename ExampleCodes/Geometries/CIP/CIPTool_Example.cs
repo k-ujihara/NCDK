@@ -14,7 +14,7 @@ namespace NCDK.Geometries.CIP
             #region
             IAtom[] ligandAtoms = mol.GetConnectedAtoms(centralAtom).ToArray();
             ITetrahedralChirality tetraStereo = new TetrahedralChirality(centralAtom, ligandAtoms, TetrahedralStereo.AntiClockwise);
-            CIPChirality cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
+            CIPChiralities cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
             #endregion
         }
     }

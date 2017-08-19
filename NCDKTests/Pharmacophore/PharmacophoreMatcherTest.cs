@@ -33,7 +33,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.pcoretest1.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IteratingMDLConformerReader(ins, Silent.ChemObjectBuilder.Instance).GetEnumerator();
+            var reader = new IEnumerableMDLConformerReader(ins, Silent.ChemObjectBuilder.Instance).GetEnumerator();
             if (reader.MoveNext())
                 conformers = (ConformerContainer)reader.Current;
         }
@@ -205,7 +205,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
+            var reader = new EnumerableSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
             PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
@@ -234,7 +234,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
+            EnumerableSDFReader reader = new EnumerableSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
             PharmacophoreQueryAtom arom = new PharmacophoreQueryAtom("A", "c1ccccc1");
@@ -270,7 +270,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
+            EnumerableSDFReader reader = new EnumerableSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
             PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -295,7 +295,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
+            EnumerableSDFReader reader = new EnumerableSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
             PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("BasicAmine", "[NX3;h2,h1,H1,H2;!$(NC=O)]");
@@ -399,7 +399,7 @@ namespace NCDK.Pharmacophore
 
             string filename = "NCDK.Data.PCore.multismartpcore.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
+            var reader = new EnumerableSDFReader(ins, Silent.ChemObjectBuilder.Instance);
             var enumerator = reader.GetEnumerator();
 
             enumerator.MoveNext();

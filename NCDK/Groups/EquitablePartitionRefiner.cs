@@ -45,7 +45,7 @@ namespace NCDK.Groups
         /// refined from lowest to highest. A reverse split order is, of course, the
         /// opposite.
         /// </summary>
-        public enum SplitOrder
+        public enum SplitOrders
         {
             FORWARD, REVERSE
         };
@@ -53,7 +53,7 @@ namespace NCDK.Groups
         /// <summary>
         /// The bias in splitting cells when refining
         /// </summary>
-        private SplitOrder splitOrder = SplitOrder.FORWARD;
+        private SplitOrders splitOrder = SplitOrders.FORWARD;
 
         /// <summary>
         /// The block of the partition that is being refined
@@ -74,7 +74,7 @@ namespace NCDK.Groups
         /// Set the preference for splitting cells.
         /// </summary>
         /// <param name="splitOrder">either FORWARD or REVERSE</param>
-        public void SetSplitOrder(SplitOrder splitOrder)
+        public void SetSplitOrder(SplitOrders splitOrder)
         {
             this.splitOrder = splitOrder;
         }
@@ -165,7 +165,7 @@ namespace NCDK.Groups
                         new List<Invariant>(invariants.Keys);
                 partition.RemoveCell(currentBlockIndex);
                 int k = currentBlockIndex;
-                if (splitOrder == SplitOrder.REVERSE)
+                if (splitOrder == SplitOrders.REVERSE)
                 {
                     invariantKeys.Sort();
                 }

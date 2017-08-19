@@ -46,7 +46,7 @@ namespace NCDK.IO.Iterator
     // @author     Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created    2004-12-16
     // @cdk.keyword    file format, SMILES
-    public class IteratingSMILESReader : DefaultIteratingChemObjectReader<IAtomContainer>
+    public class EnumerableSMILESReader : DefaultEnumerableChemObjectReader<IAtomContainer>
     {
         private TextReader input;
         private SmilesParser sp = null;
@@ -56,13 +56,13 @@ namespace NCDK.IO.Iterator
         public const string BadSmilesInput = "bad.smiles.input";
 
         /// <summary>
-        /// Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
+        /// Constructs a new EnumerableSMILESReader that can read Molecule from a given Reader.
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         /// <param name="builder">The builder to use</param>
         /// <seealso cref="Default.ChemObjectBuilder"/>
         /// <seealso cref="Silent.ChemObjectBuilder"/>
-        public IteratingSMILESReader(TextReader input, IChemObjectBuilder builder)
+        public EnumerableSMILESReader(TextReader input, IChemObjectBuilder builder)
         {
             sp = new SmilesParser(builder);
             this.input = input;
@@ -70,11 +70,11 @@ namespace NCDK.IO.Iterator
         }
 
         /// <summary>
-        /// Constructs a new <see cref="IteratingSMILESReader"/> that can read Molecule from a given <see cref="Stream"/>  and <see cref="IChemObjectBuilder"/> .
+        /// Constructs a new <see cref="EnumerableSMILESReader"/> that can read Molecule from a given <see cref="Stream"/>  and <see cref="IChemObjectBuilder"/> .
         /// </summary>
         /// <param name="input">The input stream</param>
         /// <param name="builder">The builder</param>
-        public IteratingSMILESReader(Stream input, IChemObjectBuilder builder)
+        public EnumerableSMILESReader(Stream input, IChemObjectBuilder builder)
            : this(new StreamReader(input), builder)
         { }
 

@@ -329,7 +329,7 @@ namespace NCDK.Validate
 
         public ValidationReport ValidateMoleculeSet(IAtomContainerSet<IAtomContainer> subject)
         {
-            Trace.TraceInformation($"Validating {nameof(IAtomContainerSet)}");
+            Trace.TraceInformation($"Validating {nameof(IAtomContainerSet<IAtomContainer>)}");
             ValidationReport report = new ValidationReport();
             // apply validators
             foreach (var test in validators.Values)

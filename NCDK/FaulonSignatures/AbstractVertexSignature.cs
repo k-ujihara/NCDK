@@ -44,15 +44,15 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         private Dictionary<int, int> vertexMapping;
 
-        public enum InvariantType { STRING, INTEGER };
+        public enum InvariantTypes { STRING, INTEGER };
 
-        private InvariantType invariantType;
+        private InvariantTypes invariantType;
 
         /// <summary>
         /// Create an abstract vertex signature.
         /// </summary>
         public AbstractVertexSignature()
-           : this(InvariantType.STRING)
+           : this(InvariantTypes.STRING)
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace NCDK.FaulonSignatures
         /// for the initial invariants. 
         /// </summary>
         /// <param name="invariantType"></param>
-        public AbstractVertexSignature(InvariantType invariantType)
+        public AbstractVertexSignature(InvariantTypes invariantType)
         {
             this.vertexCount = 0;
             this.invariantType = invariantType;
@@ -116,11 +116,11 @@ namespace NCDK.FaulonSignatures
             dag = new DAG(0, graphVertexCount);
             vertexCount = 1;
             Builder(1, dag.GetRootLayer(), new List<DAG.Arc>(), height);
-            if (invariantType == InvariantType.STRING)
+            if (invariantType == InvariantTypes.STRING)
             {
                 CreateWithStringLabels();
             }
-            else if (invariantType == InvariantType.INTEGER)
+            else if (invariantType == InvariantTypes.INTEGER)
             {
                 CreateWithIntLabels();
             }

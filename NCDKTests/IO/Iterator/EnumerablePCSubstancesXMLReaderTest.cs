@@ -29,7 +29,7 @@ namespace NCDK.IO.Iterator
 {
     // @cdk.module test-io
     [TestClass()]
-    public class IteratingPCSubstancesXMLReaderTest : CDKTestCase
+    public class EnumerablePCSubstancesXMLReaderTest : CDKTestCase
     {
         [TestMethod()]
         public void TestTaxols()
@@ -41,7 +41,7 @@ namespace NCDK.IO.Iterator
             IChemSequence set;
             using (var ins = ResourceLoader.GetAsStream(filename))
             using (var sr = new StreamReader(ins))
-            using (var reader = new IteratingPCSubstancesXMLReader(sr, Default.ChemObjectBuilder.Instance))
+            using (var reader = new EnumerablePCSubstancesXMLReader(sr, Default.ChemObjectBuilder.Instance))
             {
                 set = Default.ChemObjectBuilder.Instance.NewChemSequence();
                 foreach (var obj in reader)

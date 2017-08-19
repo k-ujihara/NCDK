@@ -199,7 +199,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                         }
                     }
                 }
-                //if we have combineable fragments
+                //if we have combinable fragments
                 if (isok)
                 {
                     //combine the fragments crosswise

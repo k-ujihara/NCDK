@@ -34,6 +34,8 @@ namespace NCDK.IO.Iterator
     // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-19
-    public interface IIteratingChemObjectReader<T> : IChemObjectReader, IEnumerable<T> where T : IChemObject
+    public interface IEnumerableChemObjectReader<T> 
+        : IChemObjectReader, IEnumerable<T> 
+        where T : IChemObject
     { }
 }

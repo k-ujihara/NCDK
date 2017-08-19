@@ -42,29 +42,30 @@ namespace NCDK.IO.Iterator
     // @cdk.created  2008-05-05
     // @cdk.keyword  file format, ASN
     // @cdk.keyword  PubChem
-    public class IteratingPCCompoundASNReader : DefaultIteratingChemObjectReader<IAtomContainer>
+    public class EnumerablePCCompoundASNReader
+        : DefaultEnumerableChemObjectReader<IAtomContainer>
     {
         private TextReader input;
         private IChemObjectBuilder builder;
         private int depth;
 
         /// <summary>
-        /// Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given Reader.
+        /// Constructs a new EnumerablePCCompoundASNReader that can read Molecule from a given Reader.
         /// </summary>
         /// <param name="ins"> The Reader to read from</param>
         /// <param name="builder"></param>
-        public IteratingPCCompoundASNReader(TextReader input, IChemObjectBuilder builder)
+        public EnumerablePCCompoundASNReader(TextReader input, IChemObjectBuilder builder)
         {
             this.builder = builder;
             this.input = input;
         }
 
         /// <summary>
-        /// Constructs a new <see cref="IteratingPCCompoundASNReader"/> that can read molecule from a given <see cref="Stream"/> and <see cref="IChemObjectBuilder"/>.
+        /// Constructs a new <see cref="EnumerablePCCompoundASNReader"/> that can read molecule from a given <see cref="Stream"/> and <see cref="IChemObjectBuilder"/>.
         /// </summary>
         /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
-        public IteratingPCCompoundASNReader(Stream ins, IChemObjectBuilder builder)
+        public EnumerablePCCompoundASNReader(Stream ins, IChemObjectBuilder builder)
             : this(new StreamReader(ins), builder)
         { }
 

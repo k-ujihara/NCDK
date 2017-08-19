@@ -559,7 +559,7 @@ namespace NCDK
         public void TestNewAtomContainerSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainerSet set = builder.NewAtomContainerSet();
+            var set = builder.NewAtomContainerSet();
             Assert.IsNotNull(set);
         }
 
@@ -567,7 +567,7 @@ namespace NCDK
         public void TestNewMoleculeSet()
         {
             IChemObjectBuilder builder = RootObject.Builder;
-            IAtomContainerSet set = builder.NewAtomContainerSet();
+            var set = builder.NewAtomContainerSet();
             Assert.IsNotNull(set);
         }
 

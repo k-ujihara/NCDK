@@ -1587,7 +1587,7 @@ namespace NCDK.Tools
             Assert.IsTrue(Aromaticity.CDKLegacy.Apply(molecule));
 
             StructureResonanceGenerator gRI = new StructureResonanceGenerator(true);
-            IAtomContainerSet setOfContainers = gRI.GetContainers(molecule);
+            var setOfContainers = gRI.GetContainers(molecule);
 
             Assert.IsNull(setOfContainers);
         }

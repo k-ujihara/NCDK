@@ -41,7 +41,7 @@ namespace NCDK.IO.Iterator
     /// for SDF files with MDL formats prior to the V2000 format.
     /// </summary>
     /// <example>
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.IteratingSDFReader_Example.cs"]/*' />
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.EnumerableSDFReader_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="MDLV2000Reader"/>
     /// <seealso cref="MDLV3000Reader"/>
@@ -52,7 +52,7 @@ namespace NCDK.IO.Iterator
     // @cdk.keyword    file format, MDL molfile
     // @cdk.keyword    file format, SDF
     // @cdk.iooptions
-    public class IteratingSDFReader : DefaultIteratingChemObjectReader<IAtomContainer>
+    public class EnumerableSDFReader : DefaultEnumerableChemObjectReader<IAtomContainer>
     {
         private TextReader input;
         private string currentLine;
@@ -75,25 +75,25 @@ namespace NCDK.IO.Iterator
         private readonly IDictionary<IChemFormat, Type> readerTypeMap = new Dictionary<IChemFormat, Type>(5);
 
         /// <summary>
-        /// Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
+        /// Constructs a new EnumerableMDLReader that can read Molecule from a given Reader.
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         /// <param name="builder">The builder</param>
-        public IteratingSDFReader(TextReader input, IChemObjectBuilder builder)
+        public EnumerableSDFReader(TextReader input, IChemObjectBuilder builder)
             : this(input, builder, false)
         { }
 
         /// <summary>
-        /// Constructs a new <see cref="IteratingSDFReader"/> that can read Molecule from a given Stream.
+        /// Constructs a new <see cref="EnumerableSDFReader"/> that can read Molecule from a given Stream.
         /// </summary>
         /// <param name="input">The Stream to read from</param>
         /// <param name="builder">The builder</param>
-        public IteratingSDFReader(Stream input, IChemObjectBuilder builder)
+        public EnumerableSDFReader(Stream input, IChemObjectBuilder builder)
             : this(new StreamReader(input), builder)
         { }
 
         /// <summary>
-        /// Constructs a new IteratingMDLReader that can read Molecule from a given a
+        /// Constructs a new EnumerableMDLReader that can read Molecule from a given a
         /// Stream. This constructor allows specification of whether the reader will
         /// skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
         /// is read the iterating reader will stop at the broken molecule. However if
@@ -103,12 +103,12 @@ namespace NCDK.IO.Iterator
         /// <param name="input">the <see cref="Stream"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        public IteratingSDFReader(Stream input, IChemObjectBuilder builder, bool skip)
+        public EnumerableSDFReader(Stream input, IChemObjectBuilder builder, bool skip)
             : this(new StreamReader(input), builder, skip)
         { }
 
         /// <summary>
-        /// Constructs a new IteratingMDLReader that can read Molecule from a given a
+        /// Constructs a new EnumerableMDLReader that can read Molecule from a given a
         /// Reader. This constructor allows specification of whether the reader will
         /// skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
         /// is read the iterating reader will stop at the broken molecule. However if
@@ -118,7 +118,7 @@ namespace NCDK.IO.Iterator
         /// <param name="input">the <see cref="TextReader"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        public IteratingSDFReader(TextReader input, IChemObjectBuilder builder, bool skip)
+        public EnumerableSDFReader(TextReader input, IChemObjectBuilder builder, bool skip)
         {
             this.builder = builder;
             this.input = input;

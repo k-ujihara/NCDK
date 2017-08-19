@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -219,6 +219,12 @@
     <Compile Include="IO\Formats\XEDFormatTest.cs" />
     <Compile Include="IO\Formats\YasaraFormatTest.cs" />
     <Compile Include="IO\Formats\ZindoFormatTest.cs" />
+    <Compile Include="IO\Iterator\EnumerableMDLConformerReaderTest.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCCompoundASNReaderTest.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCCompoundXMLReaderTest.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCSubstancesXMLReaderTest.cs" />
+    <Compile Include="IO\Iterator\EnumerableSDFReaderTest.cs" />
+    <Compile Include="IO\Iterator\EnumerableSMILESReaderTest.cs" />
     <Compile Include="NInChI\TestExamples.cs" />
     <Compile Include="NInChI\TestNInchiAtom.cs" />
     <Compile Include="NInChI\TestNInchiBond.cs" />
@@ -863,7 +869,6 @@
     <Compile Include="IO\MDLRXNV2000ReaderTest.cs" />
     <Compile Include="IO\InChIPlainTextReaderTest.cs" />
     <Compile Include="IO\InChIReaderTest.cs" />
-    <Compile Include="IO\Iterator\IteratingMDLConformerReaderTest.cs" />
     <Compile Include="IO\MDLRXNV3000ReaderTest.cs" />
     <Compile Include="IO\MDLRXNWriterTest.cs" />
     <Compile Include="IO\MDLV2000AtomBlockTest.cs" />
@@ -894,10 +899,6 @@
     <Compile Include="IO\WriterFactoryTest.cs" />
     <Compile Include="IO\XYZReaderTest.cs" />
     <Compile Include="IO\XYZWriterTest.cs" />
-    <Compile Include="Geometries\Iterator\IteratingPCCompoundASNReaderTest.cs" />
-    <Compile Include="Geometries\Iterator\IteratingPCCompoundXMLReaderTest.cs" />
-    <Compile Include="Geometries\Iterator\IteratingPCSubstancesXMLReaderTest.cs" />
-    <Compile Include="Geometries\Iterator\IteratingSDFReaderTest.cs" />
     <Compile Include="IO\GaussianInputWriterTest.cs" />
     <Compile Include="IO\Mopac7WriterTest.cs" />
     <Compile Include="Geometries\Volume\VABCVolumeTest.cs" />
@@ -1001,7 +1002,6 @@
     <Compile Include="IO\Formats\VASPFormatTest.cs" />
     <Compile Include="IO\Formats\XYZFormatTest.cs" />
     <Compile Include="IO\Formats\ZMatrixFormatTest.cs" />
-    <Compile Include="IO\Iterator\IteratingSMILESReaderTest.cs" />
     <Compile Include="IO\MDLCMLRoundtripTest.cs" />
     <Compile Include="IO\MoSSOutputReaderTest.cs" />
     <Compile Include="IO\PDBReaderFactoryTest.cs" />

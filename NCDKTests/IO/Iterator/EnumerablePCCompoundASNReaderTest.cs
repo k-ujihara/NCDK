@@ -19,47 +19,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
- */
+ *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using System.IO;
 
 namespace NCDK.IO.Iterator
 {
     // @cdk.module test-io
     [TestClass()]
-    public class IteratingPCCompoundXMLReaderTest : CDKTestCase
+    public class EnumerablePCCompoundASNReaderTest : CDKTestCase
     {
         [TestMethod()]
         public void TestList()
         {
-            string filename = "NCDK.Data.ASN.PubChem.aceticAcids38.xml";
+            string filename = "NCDK.Data.ASN.PubChem.list.asn";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IteratingPCCompoundXMLReader(new StreamReader(ins), Default.ChemObjectBuilder.Instance);
+            EnumerablePCCompoundASNReader reader = new EnumerablePCCompoundASNReader(ins,
+                    Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
-            var set = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
             foreach (var obj in reader)
             {
-                // Console.Out.WriteLine("next molecule found");
                 Assert.IsNotNull(obj);
                 Assert.IsTrue(obj is IAtomContainer);
-                set.Add((IAtomContainer)obj);
                 molCount++;
             }
+            reader.Close();
 
-            Assert.AreEqual(3, molCount);
-            IAtomContainer first = set[0];
-            Assert.AreEqual(8, first.Atoms.Count);
-            Assert.AreEqual(7, first.Bonds.Count);
-            Assert.IsNotNull(first.GetProperty<string>("IUPAC Name (Traditional)"));
-            Assert.AreEqual("acetic acid", first.GetProperty<string>("IUPAC Name (Traditional)"));
-            Assert.IsNotNull(first.GetProperty<string>("InChI"));
-            Assert.AreEqual("InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3H", first.GetProperty<string>("InChI"));
-            Assert.IsNotNull(first.GetProperty<string>("InChI"));
-            Assert.AreEqual("176", first.GetProperty<string>("PubChem CID"));
+            Assert.AreEqual(2, molCount);
         }
     }
 }

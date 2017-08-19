@@ -283,12 +283,12 @@ namespace NCDK.LibIO.CML
             return reactionList;
         }
 
-        public CMLMoleculeList CDKAtomContainerSetToCMLList(IAtomContainerSet<IAtomContainer> moleculeSet)
+        public CMLMoleculeList CDKAtomContainerSetToCMLList(IEnumerableChemObject<IAtomContainer> moleculeSet)
         {
             return CDKAtomContainerSetToCMLList(moleculeSet, true);
         }
 
-        private CMLMoleculeList CDKAtomContainerSetToCMLList(IAtomContainerSet<IAtomContainer> moleculeSet, bool setIDs)
+        private CMLMoleculeList CDKAtomContainerSetToCMLList(IEnumerableChemObject<IAtomContainer> moleculeSet, bool setIDs)
         {
             CMLMoleculeList cmlList = new CMLMoleculeList();
             cmlList.Convention = "cdk:moleculeSet";

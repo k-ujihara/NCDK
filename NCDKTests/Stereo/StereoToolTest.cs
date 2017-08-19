@@ -93,8 +93,8 @@ namespace NCDK.Stereo
             IAtom baseC = new Atom("C", new Vector3(1, 1, 1));
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 2));
-            TetrahedralSign tetSign = StereoTool.GetHandedness(baseC, baseB, baseA, positiveApex);
-            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
+            TetrahedralSigns tetSign = StereoTool.GetHandedness(baseC, baseB, baseA, positiveApex);
+            Assert.AreEqual(TetrahedralSigns.Minus, tetSign);
         }
 
         [TestMethod()]
@@ -106,8 +106,8 @@ namespace NCDK.Stereo
             IAtom baseC = new Atom("C", new Vector3(1, 1, 1));
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 2));
-            TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
-            Assert.AreEqual(TetrahedralSign.Plus, tetSign);
+            TetrahedralSigns tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
+            Assert.AreEqual(TetrahedralSigns.Plus, tetSign);
         }
 
         [TestMethod()]
@@ -119,8 +119,8 @@ namespace NCDK.Stereo
             IAtom baseC = new Atom("C", new Vector3(1, 1, 1));
 
             IAtom negativeApex = new Atom("C", new Vector3(0.5, 0.5, -1));
-            TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
-            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
+            TetrahedralSigns tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
+            Assert.AreEqual(TetrahedralSigns.Minus, tetSign);
         }
 
         [TestMethod()]
@@ -132,8 +132,8 @@ namespace NCDK.Stereo
             IAtom baseC = new Atom("C", new Vector3(1, 1, -1));
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 0));
-            TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
-            Assert.AreEqual(TetrahedralSign.Plus, tetSign);
+            TetrahedralSigns tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
+            Assert.AreEqual(TetrahedralSigns.Plus, tetSign);
         }
 
         [TestMethod()]
@@ -145,8 +145,8 @@ namespace NCDK.Stereo
             IAtom baseC = new Atom("C", new Vector3(1, 1, -1));
 
             IAtom negativeApex = new Atom("C", new Vector3(0.5, 0.5, -2));
-            TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
-            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
+            TetrahedralSigns tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
+            Assert.AreEqual(TetrahedralSigns.Minus, tetSign);
         }
 
         [TestMethod()]

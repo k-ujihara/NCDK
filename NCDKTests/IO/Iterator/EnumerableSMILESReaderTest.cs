@@ -34,7 +34,7 @@ namespace NCDK.IO.Iterator
     // @cdk.module test-smiles
     // @see org.openscience.cdk.io.SMILESReader
     [TestClass()]
-    public class IteratingSMILESReaderTest : CDKTestCase
+    public class EnumerableSMILESReaderTest : CDKTestCase
     {
         [TestMethod()]
         public void TestSMILESFileWithNames()
@@ -42,7 +42,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -63,7 +63,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -84,7 +84,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
             foreach (var mol in reader)
             {
                 string title = (string)mol.GetProperty<string>(CDKPropertyName.Title);
@@ -99,7 +99,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
             foreach (var obj in reader)
@@ -118,7 +118,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance);
             IResourceFormat format = reader.Format;
             Assert.IsTrue(format is SMILESFormat);
         }
@@ -128,7 +128,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader1 = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader1 = new EnumerableSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader1)
             {
@@ -136,7 +136,7 @@ namespace NCDK.IO.Iterator
             }
             filename = "NCDK.Data.Smiles.tabs.smi";
             var ins2 = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader2 = new IteratingSMILESReader(ins2, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader2 = new EnumerableSMILESReader(ins2, Default.ChemObjectBuilder.Instance);
             molCount = 0;
             foreach (var mol in reader2)
             {
@@ -151,7 +151,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             var ins1 = ResourceLoader.GetAsStream(filename);
-            IteratingSMILESReader reader = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
+            EnumerableSMILESReader reader = new EnumerableSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader)
             {
@@ -165,7 +165,7 @@ namespace NCDK.IO.Iterator
         public void IsEmptyTest()
         {
             TextReader reader = new StringReader(" empty1\n empty2");
-            var smis = new IteratingSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
+            var smis = new EnumerableSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);
@@ -182,7 +182,7 @@ namespace NCDK.IO.Iterator
         {
 
             TextReader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
-            var smis = new IteratingSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
+            var smis = new EnumerableSMILESReader(reader, Silent.ChemObjectBuilder.Instance).GetEnumerator();
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);
@@ -191,7 +191,7 @@ namespace NCDK.IO.Iterator
             IAtomContainer m2 = smis.Current;
             Assert.AreEqual(0, m2.Atoms.Count);
             Assert.AreEqual("bad", m2.GetProperty<string>(CDKPropertyName.Title));
-            Assert.AreEqual("n1cccc1 bad", m2.GetProperty<string>(IteratingSMILESReader.BadSmilesInput));
+            Assert.AreEqual("n1cccc1 bad", m2.GetProperty<string>(EnumerableSMILESReader.BadSmilesInput));
             smis.MoveNext();
             IAtomContainer m3 = smis.Current;
             Assert.AreEqual(0, m3.Atoms.Count);

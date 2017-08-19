@@ -34,7 +34,7 @@ namespace NCDK.Pharmacophore
         {
             string filename = "NCDK.Data.MDL.pcoretest1.sdf";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, Default.ChemObjectBuilder.Instance);
+            IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins, Default.ChemObjectBuilder.Instance);
             conformers = reader.FirstOrDefault();
         }
 

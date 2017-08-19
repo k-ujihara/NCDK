@@ -31,7 +31,7 @@ using NCDK.Graphs;
 using NCDK.Numerics;
 using static NCDK.Graphs.GraphUtil;
 using static NCDK.Stereo.CyclicCarbohydrateRecognition;
-using static NCDK.Stereo.CyclicCarbohydrateRecognition.Turn;
+using static NCDK.Stereo.CyclicCarbohydrateRecognition.Turns;
 
 namespace NCDK.Stereo
 {
@@ -42,23 +42,23 @@ namespace NCDK.Stereo
         public void HaworthAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Left, Left, Left, Left, Left, Left },
-                CyclicCarbohydrateRecognition.Turns(new Vector2[]{
-                new Vector2(4.1, 3.0),
-                new Vector2(3.3, 2.6),
-                new Vector2(3.3, 1.8),
-                new Vector2(4.1, 1.4),
-                new Vector2(4.8, 1.8),
-                new Vector2(4.8, 2.6),
-                    })));
+                new Turns[] { Left, Left, Left, Left, Left, Left },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
+                    new Vector2(4.1, 3.0),
+                    new Vector2(3.3, 2.6),
+                    new Vector2(3.3, 1.8),
+                    new Vector2(4.1, 1.4),
+                    new Vector2(4.8, 1.8),
+                    new Vector2(4.8, 2.6),
+                })));
         }
 
         [TestMethod()]
         public void HaworthClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Right, Right, Right, Right, Right, Right },
-                CyclicCarbohydrateRecognition.Turns(new Vector2[]{
+                new Turns[] { Right, Right, Right, Right, Right, Right },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
                     new Vector2(4.1, 3.0),
                     new Vector2(4.8, 2.6),
                     new Vector2(4.8, 1.8),
@@ -72,14 +72,14 @@ namespace NCDK.Stereo
         public void ChairAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Left, Right, Right, Left, Right, Right },
-                CyclicCarbohydrateRecognition.Turns(new Vector2[]{
-                new Vector2(0.9, 2.6),
-                new Vector2(0.1, 2.4),
-                new Vector2(0.2, 3.1),
-                new Vector2(0.5, 2.9),
-                new Vector2(1.3, 3.1),
-                new Vector2(1.7, 2.4)
+                new Turns[] { Left, Right, Right, Left, Right, Right },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
+                    new Vector2(0.9, 2.6),
+                    new Vector2(0.1, 2.4),
+                    new Vector2(0.2, 3.1),
+                    new Vector2(0.5, 2.9),
+                    new Vector2(1.3, 3.1),
+                    new Vector2(1.7, 2.4)
                 })));
         }
 
@@ -87,14 +87,14 @@ namespace NCDK.Stereo
         public void ChairClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Left, Left, Right, Left, Left, Right },
-                CyclicCarbohydrateRecognition.Turns(new Vector2[]{
-                new Vector2(1.7, 2.4),
-                new Vector2(1.3, 3.1),
-                new Vector2(0.5, 2.9),
-                new Vector2(0.2, 3.1),
-                new Vector2(0.1, 2.4),
-                new Vector2(0.9, 2.6)
+                new Turns[] { Left, Left, Right, Left, Left, Right },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
+                    new Vector2(1.7, 2.4),
+                    new Vector2(1.3, 3.1),
+                    new Vector2(0.5, 2.9),
+                    new Vector2(0.2, 3.1),
+                    new Vector2(0.1, 2.4),
+                    new Vector2(0.9, 2.6)
                 })));
         }
 
@@ -102,14 +102,14 @@ namespace NCDK.Stereo
         public void BoatAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Right, Right, Right, Left, Left, Right },
-CyclicCarbohydrateRecognition.Turns(new Vector2[]{
-                new Vector2(3.3, 3.8),
-                new Vector2(2.1, 3.8),
-                new Vector2(1.6, 4.9),
-                new Vector2(2.3, 4.2),
-                new Vector2(3.1, 4.2),
-                new Vector2(3.8, 4.8)
+                new Turns[] { Right, Right, Right, Left, Left, Right },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
+                    new Vector2(3.3, 3.8),
+                    new Vector2(2.1, 3.8),
+                    new Vector2(1.6, 4.9),
+                    new Vector2(2.3, 4.2),
+                    new Vector2(3.1, 4.2),
+                    new Vector2(3.8, 4.8)
                 })));
         }
 
@@ -117,15 +117,15 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
         public void BoatClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
-                new Turn[] { Left, Right, Right, Left, Left, Left },
-CyclicCarbohydrateRecognition.Turns(new Vector2[]{
-                new Vector2(3.8, 4.8),
-                new Vector2(3.1, 4.2),
-                new Vector2(2.3, 4.2),
-                new Vector2(1.6, 4.9),
-                new Vector2(2.1, 3.8),
-                new Vector2(3.3, 3.8)
-        })));
+                new Turns[] { Left, Right, Right, Left, Left, Left },
+                CyclicCarbohydrateRecognition.GetTurns(new Vector2[]{
+                    new Vector2(3.8, 4.8),
+                    new Vector2(3.1, 4.2),
+                    new Vector2(2.3, 4.2),
+                    new Vector2(1.6, 4.9),
+                    new Vector2(2.1, 3.8),
+                    new Vector2(3.3, 3.8)
+                })));
         }
 
         /// <summary>

@@ -141,7 +141,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroups[0].Type);
             Assert.AreEqual("m", sgroups[0].Subscript);
-            Assert.AreEqual("ht", sgroups[0].GetValue(SgroupKey.CtabConnectivity));
+            Assert.AreEqual("ht", sgroups[0].GetValue(SgroupKeys.CtabConnectivity));
             Assert.AreEqual(1, sgroups[0].Atoms.Count);
             Assert.AreEqual(2, sgroups[0].Bonds.Count);
         }

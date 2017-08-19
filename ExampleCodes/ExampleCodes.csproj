@@ -92,8 +92,8 @@
     <Compile Include="IAtomContainer_Example.cs" />
     <Compile Include="IO\CMLWriter_Example.cs" />
     <Compile Include="IO\FormatFactory_Example.cs" />
-    <Compile Include="IO\Iterator\IteratingMDLConformerReader_Example.cs" />
-    <Compile Include="IO\Iterator\IteratingSDFReader_Example.cs" />
+    <Compile Include="IO\Iterator\EnumerableMDLConformerReader_Example.cs" />
+    <Compile Include="IO\Iterator\EnumerableSDFReader_Example.cs" />
     <Compile Include="IO\MDLRXNWriter_Example.cs" />
     <Compile Include="IO\MDLV2000Writer_Example.cs" />
     <Compile Include="IO\NCDKSourceCodeWriter_Example.cs" />

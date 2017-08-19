@@ -2,7 +2,7 @@
 
 namespace NCDK.IO.Iterator
 {
-    class IteratingMDLConformerReader_Example
+    class EnumerableMDLConformerReader_Example
     {
         void Main()
         {
@@ -11,7 +11,7 @@ namespace NCDK.IO.Iterator
                 string filename = "/Users/rguha/conf2.sdf";
                 using (var srm = new FileStream(filename, FileMode.Open))
                 {
-                    IteratingMDLConformerReader reader = new IteratingMDLConformerReader(srm, Default.ChemObjectBuilder.Instance);
+                    IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance);
                     foreach (var cc in reader)
                     {
                         // do something 

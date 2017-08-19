@@ -11,7 +11,7 @@ namespace NCDK.IO.Iterator
     /// <seealso cref="MDLReader"/>
     // @cdk.module test-extra
     [TestClass()]
-    public class IteratingMDLConformerReaderTest : CDKTestCase
+    public class EnumerableMDLConformerReaderTest : CDKTestCase
     {
         [TestMethod()]
         public void TestSDF()
@@ -19,7 +19,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
             Stream ins = ResourceLoader.GetAsStream(filename);
-            IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
+            IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(ins,
                     Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -46,7 +46,7 @@ namespace NCDK.IO.Iterator
             string filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
             Stream ins = ResourceLoader.GetAsStream(filename);
-            var reader = new IteratingMDLConformerReader(ins, Default.ChemObjectBuilder.Instance).GetEnumerator();
+            var reader = new IEnumerableMDLConformerReader(ins, Default.ChemObjectBuilder.Instance).GetEnumerator();
 
             reader.MoveNext();
             var dummy = reader.Current;

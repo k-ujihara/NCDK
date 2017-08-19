@@ -28,14 +28,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public class StereoBond : SMARTSBond
     {
         private readonly bool unspecified;
-        private readonly Direction direction;
+        private readonly Directions direction;
 
-        public enum Direction
+        public enum Directions
         {
             Up, Down
         }
 
-        public StereoBond(IChemObjectBuilder builder, Direction direction, bool unspecified)
+        public StereoBond(IChemObjectBuilder builder, Directions direction, bool unspecified)
             : base(builder)
         {
             this.unspecified = unspecified;
@@ -49,7 +49,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public bool IsUnspecified => unspecified;
 
-        public Direction GetDirection(IAtom atom)
+        public Directions GetDirection(IAtom atom)
         {
             if (Begin == atom)
                 return direction;
@@ -58,9 +58,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             throw new ArgumentException("atom is not a memeber of this bond");
         }
 
-        private Direction Inv(Direction direction)
+        private Directions Inv(Directions direction)
         {
-            return direction == Direction.Up ? Direction.Down : Direction.Up;
+            return direction == Directions.Up ? Directions.Down : Directions.Up;
         }
     }
 }

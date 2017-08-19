@@ -34,7 +34,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Bond types, as stated in the CTFile manual
         /// </summary>
-        public enum BondType
+        public enum BondTypes
         {
             Unset = 0,
             Single = 1,
@@ -55,7 +55,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// The type of this bond.
         /// </summary>
-        public CTFileQueryBond.BondType Type { get; set; } = BondType.Unset;
+        public CTFileQueryBond.BondTypes Type { get; set; } = BondTypes.Unset;
 
         public bool Matches(IBond bond)
         {
@@ -78,28 +78,28 @@ namespace NCDK.Isomorphisms.Matchers
             switch (type)
             {
                 case 1:
-                    queryBond.Type = BondType.Single;
+                    queryBond.Type = BondTypes.Single;
                     break;
                 case 2:
-                    queryBond.Type = BondType.Double;
+                    queryBond.Type = BondTypes.Double;
                     break;
                 case 3:
-                    queryBond.Type = BondType.Triple;
+                    queryBond.Type = BondTypes.Triple;
                     break;
                 case 4:
-                    queryBond.Type = BondType.Aromatic;
+                    queryBond.Type = BondTypes.Aromatic;
                     break;
                 case 5:
-                    queryBond.Type = BondType.SingleOrDouble;
+                    queryBond.Type = BondTypes.SingleOrDouble;
                     break;
                 case 6:
-                    queryBond.Type = BondType.SingleOrAromatic;
+                    queryBond.Type = BondTypes.SingleOrAromatic;
                     break;
                 case 7:
-                    queryBond.Type = BondType.DoubleOrAromatic;
+                    queryBond.Type = BondTypes.DoubleOrAromatic;
                     break;
                 case 8:
-                    queryBond.Type = BondType.Any;
+                    queryBond.Type = BondTypes.Any;
                     break;
                 default:
                     throw new ArgumentException("Unknown bond type: " + type);

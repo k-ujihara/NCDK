@@ -22,41 +22,40 @@
  */
 using NCDK.IO.Formats;
 using NCDK.IO.PubChemXml;
-using System;
 using System.IO;
 using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.IO.Iterator
 {
     /// <summary>
-    /// Iterating PubChem PCCompound ASN.1 XML reader.
+    /// Iterating PubChem PC-Substances ASN.1 XML reader.
     /// </summary>
-    /// <seealso cref="PCCompoundASNReader"/>
-    // @cdk.module io
+    // @cdk.module   io
     // @cdk.githash
     // @cdk.iooptions
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
     // @cdk.keyword  file format, ASN
     // @cdk.keyword  PubChem
-    public class IteratingPCCompoundXMLReader : DefaultIteratingChemObjectReader<IAtomContainer>
+    public class EnumerablePCSubstancesXMLReader
+        : DefaultEnumerableChemObjectReader<IChemModel>
     {
         private TextReader primarySource;
         private XElement parser;
         private PubChemXMLHelper parserHelper;
-        private IChemObjectBuilder builder;
 
         /// <summary>
-        /// Constructs a new IteratingPCCompoundXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
+        /// Constructs a new EnumerablePCSubstancesXMLReader that can read 
         /// </summary>
         /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
-        /// <exception cref="Exception">if there is an error in setting up the XML parser</exception>
-        public IteratingPCCompoundXMLReader(TextReader input, IChemObjectBuilder builder)
+        /// <exception cref="IOException">if there is error in getting the <see cref="IsotopeFactory"/></exception>
+        /// <event cref="Exception">if there is an error in setting up the XML parser</event>
+        public EnumerablePCSubstancesXMLReader(TextReader input, IChemObjectBuilder builder)
         {
-            this.builder = builder;
             parserHelper = new PubChemXMLHelper(builder);
 
             primarySource = input;
@@ -71,26 +70,38 @@ namespace NCDK.IO.Iterator
         }
 
         /// <summary>
-        /// Constructs a new IteratingPCCompoundXLReader that can read Molecule from a given Stream and IChemObjectBuilder.
+        /// Constructs a new EnumerablePCSubstancesXMLReader that can read Molecule from a given Stream and IChemObjectBuilder.
         /// </summary>
         /// <param name="ins">The input stream</param>
-        /// <param name="builder">The builder. In general, use <see cref="Default.ChemObjectBuilder"/></param>
-        /// <exception cref="Exception">if there is a problem creating an InputStreamReader</exception>
-        public IteratingPCCompoundXMLReader(Stream ins, IChemObjectBuilder builder)
+        /// <param name="builder">The builder. In general, use <see cref="IChemObjectBuilder"/></param>
+        /// <exception cref="Exception">if there is a problem creating an <see cref="StreamReader"/></exception>
+        public EnumerablePCSubstancesXMLReader(Stream ins, IChemObjectBuilder builder)
             : this(new StreamReader(ins), builder)
         { }
 
-        public override IResourceFormat Format => PubChemCompoundsXMLFormat.Instance;
+        public override IResourceFormat Format => PubChemSubstancesXMLFormat.Instance;
 
-        public override IEnumerator<IAtomContainer> GetEnumerator()
+        public override IEnumerator<IChemModel> GetEnumerator()
         {
-            Debug.WriteLine($"start: '{parser.Name}'");
-            foreach (var elm in parser.Elements(PubChemXMLHelper.Name_EL_PCCOMPOUND))
+            foreach (var elm in parser.Elements(PubChemXMLHelper.Name_EL_PCSUBSTANCE))
             {
-                var molecule = parserHelper.ParseMolecule(elm, builder);
-                yield return molecule;
+                IChemModel substance = null;
+                try
+                {
+                    substance = parserHelper.ParseSubstance(elm);
+                }
+                catch (Exception e)
+                {
+                    if (ReaderMode == ChemObjectReaderModes.Strict)
+                    {
+                        throw new ApplicationException("Error while parsing the XML: " + e.Message, e);
+                    }
+                }
+                if (substance != null)
+                    yield return substance;
+                else
+                    Debug.WriteLine("Substance is empty.");
             }
-            yield break;
         }
 
         #region IDisposable Support

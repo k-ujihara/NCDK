@@ -20,59 +20,20 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    /// <summary>
-    /// A set of <see cref="IAtomContainer"/>s.
-    /// </summary>
-    // @author     egonw
-    // @cdk.module interfaces
-    // @cdk.githash
-    public interface IAtomContainerSet : IChemObject
+    public interface IEnumerableChemObject<out T>
+        : IEnumerable<T>, IChemObject
     {
-        /// <summary>
-        /// Sets the coefficient of a <see cref="IAtomContainer"/> to a given value.
-        /// </summary>
-        /// <param name="position">The position of the <see cref="IAtomContainer"/> for which the multiplier is set in [0,..]</param>
-        /// <param name="multiplier">The new multiplier for the <see cref="IAtomContainer"/> at <paramref name="position"/></param>
-        /// <seealso cref="GetMultiplier(int)"/>
-        void SetMultiplier(int position, double? multiplier);
-
-        /// <summary>
-        /// Returns an array of double with the stoichiometric coefficients
-        /// of the products.
-        /// </summary>
-        /// <returns>The multipliers for the AtomContainer's in this set</returns>
-        /// <seealso cref="SetMultipliers(IEnumerable{double?})"/>
-        IReadOnlyList<double?> GetMultipliers();
-
-        /// <summary>
-        /// Sets the multipliers of the <see cref="IAtomContainer"/>s.
-        /// </summary>
-        /// <param name="multipliers">The new multipliers for the <see cref="IAtomContainer"/>s in this set</param>
-        /// <returns>true if multipliers have been set.</returns>
-        /// <seealso cref="GetMultipliers()"/>
-        bool SetMultipliers(IEnumerable<double?> multipliers);
-
-        /// <summary>
-        /// Returns the multiplier of the given AtomContainer.
-        /// </summary>
-        /// <param name="number">The <see cref="IAtomContainer"/> for which the multiplier is given</param>
-        /// <returns>-1, if the given molecule is not a container in this set</returns>
-        /// <seealso cref="SetMultiplier(int, double?)"/>
-        double? GetMultiplier(int number);
-
-        /// <summary>
-        /// Returns <see langword="true"/> if this <see cref="IAtomContainerSet"/> is empty.
-        /// </summary>
-        /// <returns>a boolean indicating if this ring set no atom containers</returns>
-        bool IsEmpty();
     }
 
     /// <summary>
     /// A generic set of <see cref="IAtomContainer"/>s.
     /// </summary>
     /// <typeparam name="T">Type of element.</typeparam>
+    // @author     egonw
+    // @cdk.module interfaces
+    // @cdk.githash
     public interface IAtomContainerSet<T>
-        : IAtomContainerSet, IList<T>
+        : IChemObject, IList<T>, IEnumerableChemObject<T>
         where T : IAtomContainer
     {
         /// <summary>
@@ -108,5 +69,43 @@ namespace NCDK
         /// </summary>
         /// <param name="comparator">defines the sorting method</param>
         void Sort(IComparer<T> comparator);
+
+        /// Sets the coefficient of a <see cref="IAtomContainer"/> to a given value.
+        /// </summary>
+        /// <param name="position">The position of the <see cref="IAtomContainer"/> for which the multiplier is set in [0,..]</param>
+        /// <param name="multiplier">The new multiplier for the <see cref="IAtomContainer"/> at <paramref name="position"/></param>
+        /// <seealso cref="GetMultiplier(int)"/>
+        void SetMultiplier(int position, double? multiplier);
+
+
+        /// <summary>
+        /// Returns an array of double with the stoichiometric coefficients
+        /// of the products.
+        /// </summary>
+        /// <returns>The multipliers for the AtomContainer's in this set</returns>
+        /// <seealso cref="SetMultipliers(IEnumerable{double?})"/>
+        IReadOnlyList<double?> GetMultipliers();
+
+        /// <summary>
+        /// Sets the multipliers of the <see cref="IAtomContainer"/>s.
+        /// </summary>
+        /// <param name="multipliers">The new multipliers for the <see cref="IAtomContainer"/>s in this set</param>
+        /// <returns>true if multipliers have been set.</returns>
+        /// <seealso cref="GetMultipliers()"/>
+        bool SetMultipliers(IEnumerable<double?> multipliers);
+
+        /// <summary>
+        /// Returns the multiplier of the given AtomContainer.
+        /// </summary>
+        /// <param name="number">The <see cref="IAtomContainer"/> for which the multiplier is given</param>
+        /// <returns>-1, if the given molecule is not a container in this set</returns>
+        /// <seealso cref="SetMultiplier(int, double?)"/>
+        double? GetMultiplier(int number);
+
+        /// <summary>
+        /// Returns <see langword="true"/> if this <see cref="IAtomContainerSet"/> is empty.
+        /// </summary>
+        /// <returns>a boolean indicating if this ring set no atom containers</returns>
+        bool IsEmpty();
     }
 }

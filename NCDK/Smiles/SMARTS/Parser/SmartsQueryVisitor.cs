@@ -520,19 +520,19 @@ namespace NCDK.Smiles.SMARTS.Parser
                     bond = new Smarts.RingBond(builder);
                     break;
                 case SMARTSParserConstants.UP_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, false);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Up, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, false);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Down, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, true);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Up, true);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, true);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Down, true);
                     stereoBonds.Add(bond);
                     break;
                 default:

@@ -76,7 +76,7 @@ namespace NCDK.IO
         public override bool Accepts(Type type)
         {
             if (typeof(IAtomContainer).IsAssignableFrom(type)) return true;
-            if (typeof(IAtomContainerSet).IsAssignableFrom(type)) return true;
+            if (typeof(IEnumerableChemObject<IAtomContainer>).IsAssignableFrom(type)) return true;
             return false;
         }
 
@@ -97,11 +97,11 @@ namespace NCDK.IO
                     throw new CDKException("Error while writing HIN file: " + ex.Message, ex);
                 }
             }
-            else if (obj is IAtomContainerSet<IAtomContainer>)
+            else if (obj is IEnumerableChemObject<IAtomContainer>)
             {
                 try
                 {
-                    WriteAtomContainer((IAtomContainerSet<IAtomContainer>)obj);
+                    WriteAtomContainer((IEnumerableChemObject<IAtomContainer>)obj);
                 }
                 catch (IOException)
                 {
@@ -121,7 +121,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="som">the set of molecules to write</param>
         /// <exception cref="IOException">if there is a problem writing the molecule</exception>
-        private void WriteAtomContainer(IAtomContainerSet<IAtomContainer> som)
+        private void WriteAtomContainer(IEnumerableChemObject<IAtomContainer> som)
         {
             //int na = 0;
             //string info = "";
@@ -129,13 +129,14 @@ namespace NCDK.IO
             double chrg;
             //bool writecharge = true;
 
-            for (int molnum = 0; molnum < som.Count; molnum++)
+            int molnumber = 0;
+            foreach (var mol in som)
             {
-                IAtomContainer mol = som[molnum];
+                molnumber++;
 
                 try
                 {
-                    string molname = "mol " + (molnum + 1) + " " + mol.GetProperty<string>(CDKPropertyName.Title);
+                    string molname = "mol " + molnumber + " " + mol.GetProperty<string>(CDKPropertyName.Title);
 
                     writer.Write(molname, 0, molname.Length);
                     writer.WriteLine();
@@ -186,7 +187,7 @@ namespace NCDK.IO
                         writer.WriteLine();
                         i++;
                     }
-                    string buf = "endmol " + (molnum + 1);
+                    string buf = "endmol " + molnumber;
                     writer.Write(buf, 0, buf.Length);
                     writer.WriteLine();
                 }

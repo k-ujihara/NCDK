@@ -152,6 +152,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Elements.tt</DependentUpon>
     </Compile>
+    <Compile Include="IO\Iterator\DefaultEnumerableChemObjectReader.cs" />
+    <Compile Include="IO\Iterator\EnumerableMDLConformerReader.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCCompoundXMLReader.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCSubstancesXMLReader.cs" />
+    <Compile Include="IO\Iterator\EnumerableSDFReader.cs" />
+    <Compile Include="IO\Iterator\EnumerableSMILESReader.cs" />
     <Compile Include="Fingerprints\AbstractFingerprinter.cs" />
     <Compile Include="Formula\FullEnumerationFormulaGenerator.cs" />
     <Compile Include="Formula\IFormulaGenerator.cs" />
@@ -173,12 +179,14 @@
     <Compile Include="Groups\Invariant.cs" />
     <Compile Include="Groups\PartitionRefinement.cs" />
     <Compile Include="Groups\Refinable.cs" />
+    <Compile Include="IO\Iterator\IEnumerableChemObjectReader.cs" />
     <Compile Include="IHasProperties.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IHasProperties.tt</DependentUpon>
     </Compile>
     <Compile Include="IO\InChIContentProcessorTool.cs" />
+    <Compile Include="IO\Iterator\EnumerablePCCompoundASNReader.cs" />
     <Compile Include="Isomorphisms\Matchers\SMARTS\ReactionRoleQueryAtom.cs" />
     <Compile Include="LibIO\CML\CMLElementBodies.tt.cs">
       <AutoGen>True</AutoGen>
@@ -1448,14 +1456,6 @@
     <Compile Include="IO\InChIReader.cs" />
     <Compile Include="IO\InChI\InChIContentProcessorTool.cs" />
     <Compile Include="IO\InChI\InChIHandler.cs" />
-    <Compile Include="IO\Iterator\DefaultIteratingChemObjectReader.cs" />
-    <Compile Include="IO\Iterator\IIteratingChemObjectReader.cs" />
-    <Compile Include="IO\Iterator\IteratingMDLConformerReader.cs" />
-    <Compile Include="IO\Iterator\IteratingPCCompoundASNReader.cs" />
-    <Compile Include="IO\Iterator\IteratingPCCompoundXMLReader.cs" />
-    <Compile Include="IO\Iterator\IteratingPCSubstancesXMLReader.cs" />
-    <Compile Include="IO\Iterator\IteratingSDFReader.cs" />
-    <Compile Include="IO\Iterator\IteratingSMILESReader.cs" />
     <Compile Include="IO\Listener\IChemObjectIOListener.cs" />
     <Compile Include="IO\Listener\IReaderListener.cs" />
     <Compile Include="IO\Listener\IWriterListener.cs" />

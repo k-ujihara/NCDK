@@ -29,7 +29,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using static NCDK.Beam.Configuration.DoubleBond;
+using static NCDK.Beam.Configuration.DoubleBonds;
 
 namespace NCDK.Beam
 {

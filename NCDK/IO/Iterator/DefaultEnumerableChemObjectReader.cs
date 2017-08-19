@@ -20,18 +20,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 
 namespace NCDK.IO.Iterator
 {
     /// <summary>
-    /// Abstract class that IteratingChemObjectReader's can implement to have it
+    /// Abstract class that EnumerableChemObjectReader's can implement to have it
     /// take care of basic stuff, like managing the ReaderListeners.
     /// </summary>
     // @cdk.module io
     // @cdk.githash
-    public abstract class DefaultIteratingChemObjectReader<T> : ChemObjectIO,
-            IIteratingChemObjectReader<T> where T : IChemObject
+    public abstract class DefaultEnumerableChemObjectReader<T> 
+        : ChemObjectIO, IEnumerableChemObjectReader<T> 
+        where T : IChemObject
     {
         public override bool Accepts(Type type)
         {

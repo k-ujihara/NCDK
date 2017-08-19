@@ -1067,7 +1067,7 @@ namespace NCDK.Layout
             Sgroup sgroup = new Sgroup();
             sgroup.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKey.CtabConnectivity, "HT");
+            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HT");
             sgroup.Atoms.Add(mol.Atoms[1]);
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
@@ -1075,7 +1075,7 @@ namespace NCDK.Layout
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             Assert.IsNotNull(brackets);
             Assert.AreEqual(2, brackets.Count);
         }
@@ -1099,13 +1099,13 @@ namespace NCDK.Layout
             Sgroup sgroup = new Sgroup();
             sgroup.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKey.CtabConnectivity, "HT");
+            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HT");
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             Assert.IsNotNull(brackets);
             Assert.AreEqual(2, brackets.Count);
         }
@@ -1132,7 +1132,7 @@ namespace NCDK.Layout
             Sgroup sgroup1 = new Sgroup();
             sgroup1.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup1.Subscript = "n";
-            sgroup1.PutValue(SgroupKey.CtabConnectivity, "HT");
+            sgroup1.PutValue(SgroupKeys.CtabConnectivity, "HT");
             sgroup1.Atoms.Add(mol.Atoms[1]);
             sgroup1.Atoms.Add(mol.Atoms[2]);
             sgroup1.Bonds.Add(mol.Bonds[1]);
@@ -1141,7 +1141,7 @@ namespace NCDK.Layout
             Sgroup sgroup2 = new Sgroup();
             sgroup2.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup2.Subscript = "m";
-            sgroup2.PutValue(SgroupKey.CtabConnectivity, "HT");
+            sgroup2.PutValue(SgroupKeys.CtabConnectivity, "HT");
             sgroup2.Atoms.Add(mol.Atoms[1]);
             sgroup2.Atoms.Add(mol.Atoms[2]);
             sgroup2.Atoms.Add(mol.Atoms[3]);
@@ -1150,10 +1150,10 @@ namespace NCDK.Layout
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup1, sgroup2 });
 
             Layout(mol);
-            var brackets1 = (IList<SgroupBracket>)sgroup1.GetValue(SgroupKey.CtabBracket);
+            var brackets1 = (IList<SgroupBracket>)sgroup1.GetValue(SgroupKeys.CtabBracket);
             Assert.IsNotNull(brackets1);
             Assert.AreEqual(2, brackets1.Count);
-            var brackets2 = (IList<SgroupBracket>)sgroup2.GetValue(SgroupKey.CtabBracket);
+            var brackets2 = (IList<SgroupBracket>)sgroup2.GetValue(SgroupKeys.CtabBracket);
             Assert.IsNotNull(brackets2);
             Assert.AreEqual(2, brackets2.Count);
         }
@@ -1228,7 +1228,7 @@ namespace NCDK.Layout
                 if (patoms.Count == 6)
                     break;
             }
-            sgroup.PutValue(SgroupKey.CtabParentAtomList, patoms);
+            sgroup.PutValue(SgroupKeys.CtabParentAtomList, patoms);
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
             Layout(mol);
             for (int i = 0; i < 6; i++)

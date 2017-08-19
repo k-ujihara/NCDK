@@ -110,7 +110,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return GetFirstMapping().Count != 0;
         }
 
-        protected IAtomContainerSet GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
+        protected IAtomContainerSet<IAtomContainer> GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
         {
             List<int> atomSerialsToDelete = new List<int>();
 

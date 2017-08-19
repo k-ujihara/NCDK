@@ -1089,7 +1089,7 @@ namespace NCDK.Hash
             Assert.IsNotNull(ins, path + " could not be found in classpath");
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IteratingSDFReader sdf = new IteratingSDFReader(ins, builder, false);
+            EnumerableSDFReader sdf = new EnumerableSDFReader(ins, builder, false);
             List<IAtomContainer> structures = new List<IAtomContainer>(exp);
             foreach (var mol in sdf)
             {

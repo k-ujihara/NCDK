@@ -442,7 +442,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             string filename = "drugs.smi";
             var ins = ResourceLoader.GetAsStream(GetType(), filename);
-            using (IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance))
+            using (EnumerableSMILESReader reader = new EnumerableSMILESReader(ins, Default.ChemObjectBuilder.Instance))
             {
                 SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));

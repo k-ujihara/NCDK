@@ -240,7 +240,7 @@ namespace NCDK.Tools.Manipulator
                 //if (o is IBond) ++bondCount;
                 if (o is IAtomContainer)
                     ++molCount;
-                else if (o is IAtomContainerSet)
+                else if (o is IAtomContainerSet<IAtomContainer>)
                     ++molSetCount;
                 else if (o is IReaction)
                     ++reactionCount;

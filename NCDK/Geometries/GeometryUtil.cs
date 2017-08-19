@@ -54,7 +54,7 @@ namespace NCDK.Geometries
         /// </summary>
         /// <seealso cref="Get2DCoordinateCoverage(IAtomContainer)"/>
         /// <seealso cref="Get3DCoordinateCoverage(IAtomContainer)"/>
-        public enum CoordinateCoverage
+        public enum CoordinateCoverages
         {
             /// <summary>
             /// All atoms have coordinates.
@@ -150,7 +150,7 @@ namespace NCDK.Geometries
                 IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)
@@ -203,7 +203,7 @@ namespace NCDK.Geometries
                 IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)
@@ -929,21 +929,21 @@ namespace NCDK.Geometries
         /// <summary>
         /// Determines the coverage of this <see cref="IAtomContainer"/>'s 2D
         /// coordinates. If all atoms are non-null and have 2D coordinates this method will return 
-        /// <see cref="CoordinateCoverage.Full"/>. If one or more atoms does have 2D coordinates and any others atoms
+        /// <see cref="CoordinateCoverages.Full"/>. If one or more atoms does have 2D coordinates and any others atoms
         /// are null or are missing 2D coordinates this method will return
-        /// <see cref="CoordinateCoverage.Partial"/>. If all atoms are null or are all missing 2D coordinates this
-        /// method will return <see cref="CoordinateCoverage.None"/>. If the provided container is null 
-        /// <see cref="CoordinateCoverage.None"/> is also returned.
+        /// <see cref="CoordinateCoverages.Partial"/>. If all atoms are null or are all missing 2D coordinates this
+        /// method will return <see cref="CoordinateCoverages.None"/>. If the provided container is null 
+        /// <see cref="CoordinateCoverages.None"/> is also returned.
         /// </summary>
         /// <param name="container">the container to inspect</param>
-        /// <returns><see cref="CoordinateCoverage.Full"/>, <see cref="CoordinateCoverage.Partial"/> or <see cref="CoordinateCoverage.None"/> depending on the number of 3D coordinates present</returns>
-        /// <seealso cref="CoordinateCoverage"/>
+        /// <returns><see cref="CoordinateCoverages.Full"/>, <see cref="CoordinateCoverages.Partial"/> or <see cref="CoordinateCoverages.None"/> depending on the number of 3D coordinates present</returns>
+        /// <seealso cref="CoordinateCoverages"/>
         /// <seealso cref="Has2DCoordinates(IAtomContainer)"/>
         /// <seealso cref="Get3DCoordinateCoverage(IAtomContainer)"/>
         /// <seealso cref="IAtom.Point2D"/>
-        public static CoordinateCoverage Get2DCoordinateCoverage(IAtomContainer container)
+        public static CoordinateCoverages Get2DCoordinateCoverage(IAtomContainer container)
         {
-            if (container == null || container.Atoms.Count == 0) return CoordinateCoverage.None;
+            if (container == null || container.Atoms.Count == 0) return CoordinateCoverages.None;
 
             int count = 0;
 
@@ -952,8 +952,8 @@ namespace NCDK.Geometries
                 count += atom != null && atom.Point2D != null ? 1 : 0;
             }
 
-            return count == 0 ? CoordinateCoverage.None : count == container.Atoms.Count ? CoordinateCoverage.Full
-                    : CoordinateCoverage.Partial;
+            return count == 0 ? CoordinateCoverages.None : count == container.Atoms.Count ? CoordinateCoverages.Full
+                    : CoordinateCoverages.Partial;
         }
 
         /// <summary>
@@ -1045,19 +1045,19 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Determines the coverage of this <see cref="IAtomContainer"/>'s 3D
-        /// coordinates. If all atoms are non-null and have 3D coordinates this method will return <see cref="CoordinateCoverage.Full"/>. If one or more atoms does have 3D coordinates and any others atoms
-        /// are null or are missing 3D coordinates this method will return <see cref="CoordinateCoverage.Partial"/>. If all atoms are null or are all missing 3D coordinates this
-        /// method will return <see cref="CoordinateCoverage.None"/>. If the provided container is null <see cref="CoordinateCoverage.None"/> is also returned.
+        /// coordinates. If all atoms are non-null and have 3D coordinates this method will return <see cref="CoordinateCoverages.Full"/>. If one or more atoms does have 3D coordinates and any others atoms
+        /// are null or are missing 3D coordinates this method will return <see cref="CoordinateCoverages.Partial"/>. If all atoms are null or are all missing 3D coordinates this
+        /// method will return <see cref="CoordinateCoverages.None"/>. If the provided container is null <see cref="CoordinateCoverages.None"/> is also returned.
         /// </summary>
         /// <param name="container">the container to inspect</param>
-        /// <returns><see cref="CoordinateCoverage.Full"/>, <see cref="CoordinateCoverage.Partial"/> or <see cref="CoordinateCoverage.None"/> depending on the number of 3D coordinates present</returns>
-        /// <seealso cref="CoordinateCoverage"/>
+        /// <returns><see cref="CoordinateCoverages.Full"/>, <see cref="CoordinateCoverages.Partial"/> or <see cref="CoordinateCoverages.None"/> depending on the number of 3D coordinates present</returns>
+        /// <seealso cref="CoordinateCoverages"/>
         /// <seealso cref="Has3DCoordinates(IAtomContainer)"/>
         /// <seealso cref="Get2DCoordinateCoverage(IAtomContainer)"/>
         /// <seealso cref="IAtom.Point3D"/>
-        public static CoordinateCoverage Get3DCoordinateCoverage(IAtomContainer container)
+        public static CoordinateCoverages Get3DCoordinateCoverage(IAtomContainer container)
         {
-            if (container == null || container.Atoms.Count == 0) return CoordinateCoverage.None;
+            if (container == null || container.Atoms.Count == 0) return CoordinateCoverages.None;
 
             int count = 0;
 
@@ -1066,8 +1066,8 @@ namespace NCDK.Geometries
                 count += atom != null && atom.Point3D != null ? 1 : 0;
             }
 
-            return count == 0 ? CoordinateCoverage.None : count == container.Atoms.Count ? CoordinateCoverage.Full
-                    : CoordinateCoverage.Partial;
+            return count == 0 ? CoordinateCoverages.None : count == container.Atoms.Count ? CoordinateCoverages.Full
+                    : CoordinateCoverages.Partial;
         }
 
         /// <summary>

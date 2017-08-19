@@ -37,7 +37,7 @@ namespace NCDK.Pharmacophore
             string filename = "/Users/rguha/pcore1.sdf";
             using (var srm = new FileStream(filename, FileMode.Open))
             {
-                foreach (var conformers in new IteratingMDLConformerReader(srm, Default.ChemObjectBuilder.Instance))
+                foreach (var conformers in new IEnumerableMDLConformerReader(srm, Default.ChemObjectBuilder.Instance))
                 {
                     bool firstTime = true;
                     foreach (var conf in conformers)

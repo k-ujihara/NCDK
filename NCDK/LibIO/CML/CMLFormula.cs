@@ -45,9 +45,9 @@ namespace NCDK.LibIO.CML
         /// type of hydrogen counting
         /// </summary>
         // @author pm286
-        public enum HydrogenStrategy
+        public enum HydrogenStrategies
         {
-            /// <summary>use hydorgen count attribute</summary>
+            /// <summary>use hydrogen count attribute</summary>
             HYDROGEN_COUNT,
             /// <summary>use explicit hydrogens</summary>
             EXPLICIT_HYDROGENS,

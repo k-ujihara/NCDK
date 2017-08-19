@@ -962,7 +962,7 @@ namespace NCDK.IO
                         if (bond is CTFileQueryBond)
                         {
                             queryBondCount++;
-                            Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.Any);
+                            Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondTypes.Any);
                             Assert.AreEqual(BondOrder.Unset, bond.Order);
                         }
                     }
@@ -989,7 +989,7 @@ namespace NCDK.IO
                 if (bond is CTFileQueryBond)
                 {
                     queryBondCount++;
-                    Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.SingleOrAromatic);
+                    Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondTypes.SingleOrAromatic);
                     Assert.AreEqual(BondOrder.Unset, bond.Order);
                 }
             }
@@ -1612,10 +1612,10 @@ namespace NCDK.IO
                 Sgroup sgroup = sgroups[0];
                 Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
                 Assert.AreEqual("n", sgroup.Subscript);
-                Assert.AreEqual("HT", (string)sgroup.GetValue(SgroupKey.CtabConnectivity));
+                Assert.AreEqual("HT", (string)sgroup.GetValue(SgroupKeys.CtabConnectivity));
                 Assert.AreEqual(10, sgroup.Atoms.Count);
                 Assert.AreEqual(2, sgroup.Bonds.Count);
-                IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+                IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                 Assert.AreEqual(2, brackets.Count);
                 // M  SDI   1  4    2.2579   -0.8756    1.7735   -1.6600
                 Assert.AreEqual(2.2579, brackets[0].FirstPoint.X, 0.001);
@@ -1672,17 +1672,17 @@ namespace NCDK.IO
                 Sgroup sgroup = sgroups[0];
                 Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
                 // second sgroup
                 sgroup = sgroups[1];
                 Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
                 // third sgroup
                 sgroup = sgroups[2];
                 Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
             }
         }
 
@@ -1722,10 +1722,10 @@ namespace NCDK.IO
                 Assert.AreEqual(2, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
                 Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKey.CtabBracketStyle));
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
                 sgroup = sgroups[1];
                 Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKey.CtabBracketStyle));
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
             }
         }
 

@@ -16,13 +16,13 @@ namespace NCDK.FaulonSignatures.Chemistry
             mol.AddAtom("O");
             mol.AddSingleBond(0, 1);
             mol.AddSingleBond(0, 2);
-            MoleculeSignature firstSig = new MoleculeSignature(mol, InvariantType.INTEGER);
+            MoleculeSignature firstSig = new MoleculeSignature(mol, InvariantTypes.INTEGER);
             string firstSigString = firstSig.ToCanonicalString();
             Console.Out.WriteLine(firstSigString);
             AtomPermutor permutor = new AtomPermutor(mol);
             foreach (Molecule pMol in permutor)
             {
-                MoleculeSignature pSig = new MoleculeSignature(pMol, InvariantType.INTEGER);
+                MoleculeSignature pSig = new MoleculeSignature(pMol, InvariantTypes.INTEGER);
                 string pSigString = pSig.ToCanonicalString();
                 Console.Out.WriteLine(pSigString);
             }

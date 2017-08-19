@@ -123,7 +123,7 @@ namespace NCDK.IO
             if (typeof(IAtomContainer).IsAssignableFrom(type)) return true;
             if (typeof(IChemFile).IsAssignableFrom(type)) return true;
             if (typeof(IChemModel).IsAssignableFrom(type)) return true;
-            if (typeof(IAtomContainerSet<IAtomContainer>).IsAssignableFrom(type)) return true;
+            if (typeof(IEnumerableChemObject<IAtomContainer>).IsAssignableFrom(type)) return true;
             return false;
         }
 
@@ -138,9 +138,9 @@ namespace NCDK.IO
         {
             try
             {
-                if (obj is IAtomContainerSet<IAtomContainer>)
+                if (obj is IEnumerableChemObject<IAtomContainer>)
                 {
-                    WriteMoleculeSet((IAtomContainerSet<IAtomContainer>)obj);
+                    WriteMoleculeSet((IEnumerableChemObject<IAtomContainer>)obj);
                     return;
                 }
                 else if (obj is IChemFile)
@@ -177,7 +177,7 @@ namespace NCDK.IO
         /// Writes an <see cref="IAtomContainerSet"/>.
         /// </summary>
         /// <param name="som">the <see cref="IAtomContainerSet"/> to serialize</param>
-        private void WriteMoleculeSet(IAtomContainerSet<IAtomContainer> som)
+        private void WriteMoleculeSet(IEnumerable<IAtomContainer> som)
         {
             foreach (var mol in som)
             {

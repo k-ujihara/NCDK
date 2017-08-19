@@ -144,7 +144,6 @@ namespace NCDK.IO
             }
             try
             {
-
                 IRGroupQuery rGroupQuery = (IRGroupQuery)obj;
                 string now = DateTime.UtcNow.ToString("MMddyyHHmm");
                 IAtomContainer rootAtc = rGroupQuery.RootStructure;

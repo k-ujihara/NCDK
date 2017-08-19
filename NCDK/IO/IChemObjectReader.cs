@@ -36,13 +36,13 @@ namespace NCDK.IO
     /// This interface specifies the common functionality all IO readers should provide.
     ///
     /// IO readers should not implement this interface directly, but rather implement
-    /// one of its child interfaces: <see cref="ISimpleChemObjectReader"/> or <see cref="Iterator.IIteratingChemObjectReader{T}"/>.
+    /// one of its child interfaces: <see cref="ISimpleChemObjectReader"/> or <see cref="Iterator.IEnumerableChemObjectReader{T}"/>.
     /// These sub-interfaces specify the information access methods:
     /// a simple Read() method for the <see cref="ISimpleChemObjectReader"/> and
-    /// more advanced iterator based access for the <see cref="Iterator.IIteratingChemObjectReader{T}"/> (suitable for large files)
+    /// more advanced iterator based access for the <see cref="Iterator.IEnumerableChemObjectReader{T}"/> (suitable for large files)
     /// </summary>
     /// <seealso cref="ISimpleChemObjectReader"/>
-    /// <seealso cref="Iterator.IIteratingChemObjectReader{T}"/>
+    /// <seealso cref="Iterator.IEnumerableChemObjectReader{T}"/>
     // @cdk.module io
     // @cdk.githash
     // @author     Egon Willighagen <egonw@users.sf.net>

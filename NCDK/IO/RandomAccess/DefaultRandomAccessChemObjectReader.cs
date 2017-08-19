@@ -37,7 +37,7 @@ namespace NCDK.IO.RandomAccess
         /// <summary>
         /// Holder of reader event listeners.
         /// </summary>
-        private List<IChemObjectIOListener> listenerList = new List<IChemObjectIOListener>();
+        private readonly List<IChemObjectIOListener> listenerList = new List<IChemObjectIOListener>();
 
         public virtual void AddChemObjectIOListener(IChemObjectIOListener listener)
         {

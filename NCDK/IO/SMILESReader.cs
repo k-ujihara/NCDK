@@ -40,13 +40,13 @@ namespace NCDK.IO
     /// that is stored as <see cref="CDKPropertyName.Title"/>. For legacy comparability the
     /// title is also placed in a "SMIdbNAME" property. If a line is invalid an empty
     /// molecule is inserted into the container set. The molecule with have the prop
-    /// <see cref="IteratingSMILESReader.BadSmilesInput"/> set to the input line that
+    /// <see cref="EnumerableSMILESReader.BadSmilesInput"/> set to the input line that
     /// could not be read. 
     ///
     /// <para>For each line a molecule is generated, and multiple Molecules are
     /// read as MoleculeSet.</para>
     /// </summary>
-    /// <seealso cref="IteratingSMILESReader"/>
+    /// <seealso cref="EnumerableSMILESReader"/>
     // @cdk.module  smiles
     // @cdk.githash
     // @cdk.iooptions
@@ -141,7 +141,7 @@ namespace NCDK.IO
                         Trace.TraceWarning("Because of: ", exception.Message);
                         Debug.WriteLine(exception);
                         IAtomContainer empty = som.Builder.NewAtomContainer();
-                        empty.SetProperty(IteratingSMILESReader.BadSmilesInput, line);
+                        empty.SetProperty(EnumerableSMILESReader.BadSmilesInput, line);
                         som.Add(empty);
                     }
                 }

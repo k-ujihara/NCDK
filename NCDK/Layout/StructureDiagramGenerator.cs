@@ -2154,7 +2154,7 @@ namespace NCDK.Layout
                 // extract substructure
                 IAtomContainer substructure = mol.Builder.NewAtomContainer();
                 var visit = new HashSet<IAtom>();
-                var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+                var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
                 if (patoms == null)
                     continue;
                 foreach (var atom in patoms)
@@ -2571,7 +2571,7 @@ namespace NCDK.Layout
                 var xbonds = sgroup.Bonds;
 
                 // clear all the existing brackets
-                sgroup.PutValue(SgroupKey.CtabBracket, null);
+                sgroup.PutValue(SgroupKeys.CtabBracket, null);
 
                 // assign brackets to crossing bonds
                 if (xbonds.Count >= 2)
@@ -2701,7 +2701,7 @@ namespace NCDK.Layout
                 case SgroupType.O.CtabMultipleGroup:
                     return true;
                 case SgroupType.O.CtabGeneric:
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     return brackets != null && brackets.Count != 0;
                 default:
                     return false;

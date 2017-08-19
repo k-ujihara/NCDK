@@ -5,7 +5,7 @@ namespace NCDK.Beam
     // @author John May 
     internal sealed class BondBasedConfiguration
     {
-        public static Configuration.DoubleBond ConfigurationOf(Graph g,
+        public static Configuration.DoubleBonds ConfigurationOf(Graph g,
                                                         int x, int u, int v, int y)
         {
             Edge e = g.CreateEdge(u, v);
@@ -20,12 +20,12 @@ namespace NCDK.Beam
             Bond b2 = e2.GetBond(v);
 
             if (b1 == Bond.Implicit || b1 == Bond.Single)
-                return Configuration.DoubleBond.Unspecified;
+                return Configuration.DoubleBonds.Unspecified;
             if (b2 == Bond.Implicit || b2 == Bond.Single)
-                return Configuration.DoubleBond.Unspecified;
+                return Configuration.DoubleBonds.Unspecified;
 
-            return b1 == b2 ? Configuration.DoubleBond.Together
-                            : Configuration.DoubleBond.Opposite;
+            return b1 == b2 ? Configuration.DoubleBonds.Together
+                            : Configuration.DoubleBonds.Opposite;
         }
     }
 }
