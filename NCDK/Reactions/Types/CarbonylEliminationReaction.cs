@@ -94,7 +94,7 @@ namespace NCDK.Reactions.Types
                                             var bondList = new List<IBond>();
                                             bondList.Add(bondj);
 
-                                            IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet<IAtomContainer>();
+                                            IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                             moleculeSet.Add(reactant);
                                             IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                             if (reaction == null)

@@ -39,7 +39,7 @@ namespace <#= ns.NS #>
     // @cdk.keyword ring, set of
     [Serializable]
     public class RingSet
-        : AtomContainerSet<IRing>,  IRingSet, ICloneable
+        : ChemObjectSet<IRing>,  IRingSet, ICloneable
     {
         /// <summary>
         /// The constructor.

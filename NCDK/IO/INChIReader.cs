@@ -177,7 +177,7 @@ namespace NCDK.IO
                 chemFile = builder.NewChemFile();
                 chemSequence = builder.NewChemSequence();
                 chemModel = builder.NewChemModel();
-                setOfMolecules = builder.NewAtomContainerSet<IAtomContainer>();
+                setOfMolecules = builder.NewChemObjectSet<IAtomContainer>();
             }
 
             public override void EndDocument()
