@@ -59,8 +59,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         private int componentId = 0;
 
         /// <summary>
-        /// This method parses a Smarts String and returns an instance of
-        /// <code>QueryAtomContainer</code>
+        /// This method parses a Smarts String and returns an instance of <see cref="QueryAtomContainer"/>.
         /// </summary>
         public static QueryAtomContainer Parse(string smarts, IChemObjectBuilder builder)
         {
