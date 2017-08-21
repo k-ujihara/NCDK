@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int period;
             string symbol = atom.Symbol;
             period = periodicTable[symbol];
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(period), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(period), NAMES);
         }
 
         /// <summary>

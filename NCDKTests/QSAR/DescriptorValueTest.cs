@@ -40,7 +40,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], new DoubleResult(0.7),
+            DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], new Result<double>(0.7),
                     new string[] { "bla" });
             Assert.IsNotNull(value);
         }
@@ -50,7 +50,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
             Assert.AreEqual(doubleVal, value.Value);
         }
@@ -60,7 +60,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
             Assert.AreEqual(spec, value.Specification);
         }
@@ -70,7 +70,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
             Assert.AreEqual(0, value.Parameters.Length);
         }
@@ -80,7 +80,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
             Assert.AreEqual(0, value.ParameterNames.Length);
         }
@@ -90,7 +90,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
             Assert.AreEqual(1, value.Names.Length);
         }
@@ -100,7 +100,7 @@ namespace NCDK.QSAR
         {
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
-            DoubleResult doubleVal = new DoubleResult(0.7);
+            Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" },
                     new CDKException("A test exception"));
             Assert.IsInstanceOfType(value.Exception, typeof(CDKException));

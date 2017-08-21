@@ -31,28 +31,28 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestIntegerResult_int()
         {
-            IntegerResult result = new IntegerResult(5);
+            Result<int> result = new Result<int>(5);
             Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            IntegerResult result = new IntegerResult(5);
+            Result<int> result = new Result<int>(5);
             Assert.AreEqual("5", result.ToString());
         }
 
         [TestMethod()]
         public void TestIntValue()
         {
-            IntegerResult result = new IntegerResult(5);
+            Result<int> result = new Result<int>(5);
             Assert.AreEqual(5, result.Value);
         }
 
         [TestMethod()]
         public void TestLength()
         {
-            IntegerResult result = new IntegerResult(5);
+            Result<int> result = new Result<int>(5);
             Assert.AreEqual(1, result.Length);
         }
     }

@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         internal DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult result = new DoubleArrayResult(desc_length);
+            ArrayResult<double> result = new ArrayResult<double>(desc_length);
             for (int i = 0; i < desc_length; i++)
                 result.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
@@ -92,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             int atomPosition = atomContainer.Atoms.IndexOf(atom);
             IAtom clonedAtom = varAtomContainer.Atoms[atomPosition];
-            DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(desc_length);
+            ArrayResult<double> rdfProtonCalculatedValues = new ArrayResult<double>(desc_length);
             if (!atom.Symbol.Equals("H"))
             {
                 return GetDummyDescriptorValue(new CDKException("Invalid atom specified"));
@@ -324,7 +324,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         internal abstract bool MakeDescriptorLastStage(
-            DoubleArrayResult rdfProtonCalculatedValues,
+            ArrayResult<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,
             IAtomContainer mol,

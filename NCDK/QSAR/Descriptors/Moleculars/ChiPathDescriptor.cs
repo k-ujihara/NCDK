@@ -142,7 +142,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double order6v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph6);
                 double order7v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph7);
 
-                DoubleArrayResult retval = new DoubleArrayResult();
+                ArrayResult<double> retval = new ArrayResult<double>();
                 retval.Add(order0s);
                 retval.Add(order1s);
                 retval.Add(order2s);
@@ -172,7 +172,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames, e);
@@ -189,7 +189,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
         ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(16);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(16);
 
         private List<IList<int>> Order0(IAtomContainer atomContainer)
         {

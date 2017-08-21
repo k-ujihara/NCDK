@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomicDescriptor descriptor = new InductiveAtomicSoftnessDescriptor();
 
-            double retval = ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).Value).Value;
+            double retval = ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).Value).Value;
             Assert.AreEqual(testResult[0], retval, 0.1);
 
             // F: expected is 0.32, calculated is 0.35

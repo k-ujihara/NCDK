@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
             for (int i = 0; i < 2; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
             for (int i = 0; i < 8; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.035);
             }
         }
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
-            double result = ((DoubleResult)descriptor.Calculate(mol.Bonds[0], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Bonds[0], mol).Value).Value;
             Assert.AreEqual(testResult, result, 0.001);
         }
 
@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
             for (int i = 0; i < 9; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
+                double result = ((Result<double>)descriptor.Calculate(mol.Bonds[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.03);
             }
         }

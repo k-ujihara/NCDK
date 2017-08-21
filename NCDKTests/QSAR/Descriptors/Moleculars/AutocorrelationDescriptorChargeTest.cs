@@ -25,8 +25,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer container = reader.Read(new AtomContainer());
             DescriptorValue count = Descriptor.Calculate(container);
             Assert.AreEqual(5, count.Value.Length);
-            Assert.IsTrue(count.Value is DoubleArrayResult);
-            DoubleArrayResult result = (DoubleArrayResult)count.Value;
+            Assert.IsTrue(count.Value is ArrayResult<double>);
+            ArrayResult<double> result = (ArrayResult<double>)count.Value;
             for (int i = 0; i < 5; i++)
             {
                 Assert.IsFalse(double.IsNaN(result[i]));

@@ -144,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (maxBondOrder == BondOrder.Single && cc == 4) c4sp3++;
             }
 
-            IntegerArrayResult retval = new IntegerArrayResult(9);
+            ArrayResult<int> retval = new ArrayResult<int>(9);
             retval.Add(c1sp1);
             retval.Add(c2sp1);
             retval.Add(c1sp2);
@@ -170,6 +170,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerArrayResultType(9);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
     }
 }

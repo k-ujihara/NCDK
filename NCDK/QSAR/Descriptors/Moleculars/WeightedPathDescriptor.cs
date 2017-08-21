@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
     /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
-    /// The class returns a <see cref="DoubleArrayResult"/> containing the five
+    /// The class returns a <see cref="ArrayResult<double>"/> containing the five
     /// descriptors in the order described below.
     /// <list type="bullet">
     /// <listheader>
@@ -101,12 +101,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the weighted path descriptors.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A DoubleArrayResult value representing the weighted path values</returns>
+        /// <returns>A ArrayResult<double> value representing the weighted path values</returns>
         public override DescriptorValue Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
             int natom = local.Atoms.Count;
-            DoubleArrayResult retval = new DoubleArrayResult();
+            ArrayResult<double> retval = new ArrayResult<double>();
 
             var pathList = new List<IList<IAtom>>();
 
@@ -200,7 +200,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
         private double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)
         {

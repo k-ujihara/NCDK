@@ -100,12 +100,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException e)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
             }
 
             double result = stabil.CalculatePositive(clone, localAtom);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(result), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
         }
 
         /// <summary>

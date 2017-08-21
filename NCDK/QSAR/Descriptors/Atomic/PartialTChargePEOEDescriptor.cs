@@ -137,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+                    new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
 
                 if (lpeChecker)
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                     catch (CDKException e)
                     {
-                        new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                        new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                                 double.NaN), NAMES, e);
                     }
                 }
@@ -168,11 +168,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
                     pepe.AssignGasteigerPiPartialCharges(ac, true);
                     for (int i = 0; i < ac.Atoms.Count; i++)
-                        CacheDescriptorValue(ac.Atoms[i], ac, new DoubleResult(peoeAtom[i] + ac.Atoms[i].Charge.Value));
+                        CacheDescriptorValue(ac.Atoms[i], ac, new Result<double>(peoeAtom[i] + ac.Atoms[i].Charge.Value));
                 }
                 catch (Exception e)
                 {
-                    new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+                    new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
             }
             // restore original props

@@ -30,9 +30,22 @@ namespace NCDK.QSAR.Results
         { }
 
         [TestMethod()]
+        public void TestDoubleArrayResultType()
+        {
+            IDescriptorResult type = new ArrayResult<double>(6);
+            Assert.IsNotNull(type);
+        }
+
+        [TestMethod()]
+        public void TestLength()
+        {
+            Assert.AreEqual(7, new ArrayResult<double>(7).Length);
+        }
+
+        [TestMethod()]
         public void TestDoubleArrayResult_int()
         {
-            DoubleArrayResult result = new DoubleArrayResult(5);
+            ArrayResult<double> result = new ArrayResult<double>(5);
             Assert.IsNotNull(result);
             Assert.AreEqual(5, result.Length);
         }
@@ -40,7 +53,7 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestDoubleArrayResult()
         {
-            DoubleArrayResult result = new DoubleArrayResult();
+            ArrayResult<double> result = new ArrayResult<double>();
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Length);
         }
@@ -48,7 +61,7 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestSize()
         {
-            DoubleArrayResult result = new DoubleArrayResult();
+            ArrayResult<double> result = new ArrayResult<double>();
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Length);
             result.Add(5);
@@ -58,7 +71,7 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestAdd_Double()
         {
-            DoubleArrayResult result = new DoubleArrayResult();
+            ArrayResult<double> result = new ArrayResult<double>();
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);
@@ -70,7 +83,7 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestToString()
         {
-            DoubleArrayResult result = new DoubleArrayResult();
+            ArrayResult<double> result = new ArrayResult<double>();
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);
@@ -84,7 +97,7 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestGet_int()
         {
-            DoubleArrayResult result = new DoubleArrayResult();
+            ArrayResult<double> result = new ArrayResult<double>();
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);

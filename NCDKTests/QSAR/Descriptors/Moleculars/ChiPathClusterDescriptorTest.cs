@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(0.0000, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = mol.Builder.NewBond(a8, a2, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(0.7416, ret[0], 0.0001);
             Assert.AreEqual(1.0934, ret[1], 0.0001);
@@ -164,7 +164,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b10 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
             mol.Bonds.Add(b10);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(1.6076, ret[0], 0.0001);
             Assert.AreEqual(3.6550, ret[1], 0.0001);
@@ -181,7 +181,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.IsNotNull(ret);
         }
 

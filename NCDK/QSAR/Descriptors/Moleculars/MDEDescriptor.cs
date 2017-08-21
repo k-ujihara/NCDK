@@ -135,7 +135,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
 
-            DoubleArrayResult retval = new DoubleArrayResult(19);
+            ArrayResult<double> retval = new ArrayResult<double>(19);
             for (int i = 0; i < 19; i++)
             {
                 retval.Add(Dedge(local, i));
@@ -146,7 +146,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(19);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(19);
 
         private double Dedge(IAtomContainer atomContainer, int which)
         {

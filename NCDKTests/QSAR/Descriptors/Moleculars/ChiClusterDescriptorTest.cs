@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(0.2887, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = mol.Builder.NewBond(a8, a2, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(0.5774, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -168,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b10 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
             mol.Bonds.Add(b10);
 
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
 
             Assert.AreEqual(1.7845, ret[0], 0.0001);
             Assert.AreEqual(0.2500, ret[1], 0.0001);
@@ -186,7 +186,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            DoubleArrayResult ret = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> ret = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.IsNotNull(ret);
         }
      
@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         //        IAtomContainer mol = null;
         //
         //        ChiClusterDescriptor desc = new ChiClusterDescriptor();
-        //        DoubleArrayResult ret = (DoubleArrayResult) desc.Calculate(mol).GetValue();
+        //        ArrayResult<double> ret = (ArrayResult<double>) desc.Calculate(mol).GetValue();
         //
         //        Assert.AreEqual(0.0000, ret[0], 0.0001);
         //        Assert.AreEqual(0.0000, ret[1], 0.0001);

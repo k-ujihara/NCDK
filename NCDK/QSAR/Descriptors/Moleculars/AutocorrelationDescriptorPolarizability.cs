@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (k > 0) polarizabilitySum[k] = polarizabilitySum[k] / 2;
 
                 }
-                DoubleArrayResult result = new DoubleArrayResult(5);
+                ArrayResult<double> result = new ArrayResult<double>(5);
                 foreach (var aPolarizabilitySum in polarizabilitySum)
                 {
                     result.Add(aPolarizabilitySum);
@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult results = new DoubleArrayResult(5);
+            ArrayResult<double> results = new ArrayResult<double>(5);
             for (int i = 0; i < 5; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
@@ -179,6 +179,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                typeof(AutocorrelationDescriptorPolarizability).FullName, 
                "The Chemistry Development Kit");
 
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
     }
 }

@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -179,12 +179,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 container.Atoms[i].IsVisited = originalFlag4[i];
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
                     largestPiSystemAtomsCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// Performs a breadthFirstSearch in an AtomContainer starting with a

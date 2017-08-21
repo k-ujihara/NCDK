@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception exception)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, exception);
+                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
                 }
 
             double covalentradius;
@@ -91,13 +91,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 string symbol = atom.Symbol;
                 IAtomType type = factory.GetAtomType(symbol);
                 covalentradius = type.CovalentRadius.Value;
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                         covalentradius), DescriptorNames);
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, exception);
             }
         }

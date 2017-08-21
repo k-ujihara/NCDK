@@ -251,35 +251,35 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="errorMessage">error message to report when the results are not the same</param>
         private void AssertEqualOutput(IDescriptorResult v1, IDescriptorResult v2, string errorMessage)
         {
-            if (v1 is IntegerResult)
+            if (v1 is Result<int>)
             {
-                Assert.AreEqual(((IntegerResult)v1).Value, ((IntegerResult)v2).Value, errorMessage);
+                Assert.AreEqual(((Result<int>)v1).Value, ((Result<int>)v2).Value, errorMessage);
             }
-            else if (v1 is DoubleResult)
+            else if (v1 is Result<double>)
             {
-                var p1 = ((DoubleResult)v1).Value;
-                var p2 = ((DoubleResult)v2).Value;
+                var p1 = ((Result<double>)v1).Value;
+                var p2 = ((Result<double>)v2).Value;
                 if (!(double.IsNaN(p1) && double.IsNaN(p2)))
                     Assert.AreEqual(p1, p2, 0.00001, errorMessage);
             }
-            else if (v1 is BooleanResult)
+            else if (v1 is Result<bool>)
             {
-                Assert.AreEqual(((BooleanResult)v1).Value, ((BooleanResult)v2).Value, errorMessage);
+                Assert.AreEqual(((Result<bool>)v1).Value, ((Result<bool>)v2).Value, errorMessage);
             }
-            else if (v1 is DoubleArrayResult)
+            else if (v1 is ArrayResult<double>)
             {
-                DoubleArrayResult da1 = (DoubleArrayResult)v1;
-                DoubleArrayResult da2 = (DoubleArrayResult)v2;
+                ArrayResult<double> da1 = (ArrayResult<double>)v1;
+                ArrayResult<double> da2 = (ArrayResult<double>)v2;
                 for (int i = 0; i < da1.Length; i++)
                 {
                     if (!(double.IsNaN(da1[i])) && double.IsNaN(da2[i]))
                         Assert.AreEqual(da1[i], da2[i], 0.00001, errorMessage);
                 }
             }
-            else if (v1 is IntegerArrayResult)
+            else if (v1 is ArrayResult<int>)
             {
-                IntegerArrayResult da1 = (IntegerArrayResult)v1;
-                IntegerArrayResult da2 = (IntegerArrayResult)v2;
+                ArrayResult<int> da1 = (ArrayResult<int>)v1;
+                ArrayResult<int> da2 = (ArrayResult<int>)v2;
                 for (int i = 0; i < da1.Length; i++)
                 {
                     Assert.AreEqual(da1[i], da2[i], errorMessage);

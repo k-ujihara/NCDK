@@ -50,13 +50,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer ac = (IAtomContainer)cList[0];
 
             DescriptorValue result = Descriptor.Calculate(ac);
-            DoubleArrayResult dar = (DoubleArrayResult)result.Value;
+            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
             Assert.AreEqual(0.5, dar[0], 0.00001);
             Assert.AreEqual(0.606477, dar[1], 0.000001);
 
             ac = (IAtomContainer)cList[1];
             result = Descriptor.Calculate(ac);
-            dar = (DoubleArrayResult)result.Value;
+            dar = (ArrayResult<double>)result.Value;
             Assert.AreEqual(0.666666, dar[0], 0.000001);
             Assert.AreEqual(0.845452, dar[1], 0.000001);
 
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CCCOCCC(O)=O");
             DescriptorValue result = Descriptor.Calculate(atomContainer);
-            DoubleArrayResult dar = (DoubleArrayResult)result.Value;
+            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
             Assert.IsTrue(double.IsNaN(dar[1]));
         }
     }

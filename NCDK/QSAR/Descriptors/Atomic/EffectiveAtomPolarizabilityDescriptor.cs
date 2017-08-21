@@ -105,11 +105,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atom.Hybridization = originalHybridization;
                 atom.MaxBondOrder = originalMaxBondOrder;
                 atom.BondOrderSum = originalBondOrderSum;
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(polarizability), DescriptorNames);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
             }
             catch (Exception ex1)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, ex1);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
             }
         }
 

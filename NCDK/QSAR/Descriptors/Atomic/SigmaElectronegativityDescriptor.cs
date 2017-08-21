@@ -124,14 +124,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException e)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
             }
 
             if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
 
             double result = electronegativity.CalculateSigmaElectronegativity(clone, localAtom);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(result), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
         }
 
         /// <summary>

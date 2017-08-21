@@ -51,8 +51,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             DescriptorValue dv = descriptor.Calculate(atom, mol);
             IDescriptorResult result = dv.Value;
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is DoubleArrayResult);
-            DoubleArrayResult dResult = (DoubleArrayResult)result;
+            Assert.IsTrue(result is ArrayResult<double>);
+            ArrayResult<double> dResult = (ArrayResult<double>)result;
             for (int i = 0; i < result.Length; i++)
             {
                 Assert.AreEqual(double.NaN, dResult[i]);

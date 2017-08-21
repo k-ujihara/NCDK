@@ -146,15 +146,15 @@ namespace NCDK.IO.CML
             IDescriptorResult result = null;
             if ("xsd:double".Equals(currentDescriptorDataType))
             {
-                result = new DoubleResult(double.Parse(descriptorValue));
+                result = new Result<double>(double.Parse(descriptorValue));
             }
             else if ("xsd:integer".Equals(currentDescriptorDataType))
             {
-                result = new IntegerResult(int.Parse(descriptorValue));
+                result = new Result<int>(int.Parse(descriptorValue));
             }
             else if ("xsd:boolean".Equals(currentDescriptorDataType))
             {
-                result = new BooleanResult(bool.Parse(descriptorValue));
+                result = new Result<bool>(bool.Parse(descriptorValue));
             }
             return result;
         }
@@ -164,18 +164,18 @@ namespace NCDK.IO.CML
             IDescriptorResult result = null;
             if ("xsd:double".Equals(currentDescriptorDataType))
             {
-                result = new DoubleArrayResult();
+                result = new ArrayResult<double>();
                 foreach (var token in descriptorValue.Split(' '))
                 {
-                    ((DoubleArrayResult)result).Add(double.Parse(token));
+                    ((ArrayResult<double>)result).Add(double.Parse(token));
                 }
             }
             else if ("xsd:integer".Equals(currentDescriptorDataType))
             {
-                result = new IntegerArrayResult();
+                result = new ArrayResult<int>();
                 foreach (var token in descriptorValue.Split(' '))
                 {
-                    ((IntegerArrayResult)result).Add(int.Parse(token));
+                    ((ArrayResult<int>)result).Add(int.Parse(token));
                 }
             }
             return result;

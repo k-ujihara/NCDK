@@ -48,12 +48,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual("H", mol.Atoms[14].Symbol);
             Assert.AreEqual("H", mol.Atoms[15].Symbol);
             Assert.AreEqual("H", mol.Atoms[16].Symbol);
-            Assert.AreEqual(0, ((IntegerResult)descriptor.Calculate(mol.Atoms[11], mol).Value).Value);
-            Assert.AreEqual(1, ((IntegerResult)descriptor.Calculate(mol.Atoms[12], mol).Value).Value);
-            Assert.AreEqual(0, ((IntegerResult)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
-            Assert.AreEqual(0, ((IntegerResult)descriptor.Calculate(mol.Atoms[14], mol).Value).Value);
-            Assert.AreEqual(0, ((IntegerResult)descriptor.Calculate(mol.Atoms[15], mol).Value).Value);
-            Assert.AreEqual(1, ((IntegerResult)descriptor.Calculate(mol.Atoms[16], mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[11], mol).Value).Value);
+            Assert.AreEqual(1, ((Result<int>)descriptor.Calculate(mol.Atoms[12], mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[14], mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)descriptor.Calculate(mol.Atoms[15], mol).Value).Value);
+            Assert.AreEqual(1, ((Result<int>)descriptor.Calculate(mol.Atoms[16], mol).Value).Value);
         }
     }
 }

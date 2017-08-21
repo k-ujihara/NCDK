@@ -114,7 +114,7 @@ namespace NCDK.QSAR
                 if (descriptorNames == null || descriptorNames.Length == 0)
                 {
                     string title = specification.ImplementationTitle;
-                    if (value is BooleanResult || value is DoubleResult || value is IntegerResult)
+                    if (value is Result<bool> || value is Result<double> || value is Result<int>)
                     {
                         descriptorNames = new string[1];
                         descriptorNames[0] = title;
@@ -122,11 +122,11 @@ namespace NCDK.QSAR
                     else
                     {
                         int ndesc = 0;
-                        if (value is DoubleArrayResult)
+                        if (value is ArrayResult<double>)
                         {
                             ndesc = value.Length;
                         }
-                        else if (value is IntegerArrayResult)
+                        else if (value is ArrayResult<int>)
                         {
                             ndesc = value.Length;
                         }

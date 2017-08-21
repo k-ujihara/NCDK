@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
             IAtomContainer mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
-            Assert.AreEqual(1, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         // @cdk.bug   3133610
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol.Bonds.Add(b8);
 
             Descriptor.Parameters = new object[] { true };
-            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
     }
 }

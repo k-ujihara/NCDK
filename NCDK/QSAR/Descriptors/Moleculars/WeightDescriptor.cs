@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -182,13 +182,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(weight),
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(weight),
                     DescriptorNames);
 
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.

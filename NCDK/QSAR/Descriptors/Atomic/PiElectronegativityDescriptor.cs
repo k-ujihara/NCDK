@@ -141,7 +141,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, null);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
             }
 
             if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             double result = electronegativity.CalculatePiElectronegativity(clone, localAtom);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(result),
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(result),
                                        NAMES);
         }
 

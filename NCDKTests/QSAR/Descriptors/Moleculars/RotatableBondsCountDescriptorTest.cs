@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true, false };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC2CCC(C1CCCCC1)CC2"); // molecule with 2 bridged cicloexane and 1 methyl
-            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         private IAtomContainer MakeEthane()
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { true, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
 
         [TestMethod()]
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(0, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(0, ((Result<int>)result.Value).Value);
         }
 
         [TestMethod()]
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { true, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(3, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }
 
         [TestMethod()]
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
 
         // @cdk.bug 2449257
@@ -118,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { true, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
 
         // @cdk.bug 2449257
@@ -133,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(0, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(0, ((Result<int>)result.Value).Value);
         }
 
         // @cdk.bug 2449257
@@ -148,7 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { true, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(3, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }
 
         // @cdk.bug 2449257
@@ -163,7 +163,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, false };
             DescriptorValue result = Descriptor.Calculate(container);
-            Assert.AreEqual(1, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(1, ((Result<int>)result.Value).Value);
         }
 
         [TestMethod()]
@@ -177,7 +177,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, false };
             DescriptorValue result = Descriptor.Calculate(mol);
-            Assert.AreEqual(4, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(4, ((Result<int>)result.Value).Value);
         }
 
         [TestMethod()]
@@ -191,7 +191,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new RotatableBondsCountDescriptor();
             Descriptor.Parameters = new object[] { false, true };
             DescriptorValue result = Descriptor.Calculate(mol);
-            Assert.AreEqual(3, ((IntegerResult)result.Value).Value);
+            Assert.AreEqual(3, ((Result<int>)result.Value).Value);
         }
     }
 }

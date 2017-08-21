@@ -158,7 +158,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -1212,7 +1212,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(xlogP),
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(xlogP),
                     DescriptorNames);
         }
 
@@ -1224,7 +1224,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Method initialise the HydrogenpairCheck with a value

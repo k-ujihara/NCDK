@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             IBioPolymer pepseq = ProteinBuilderTool.CreateProtein("ACDEFGH", Silent.ChemObjectBuilder.Instance);
             DescriptorValue result = descriptor.Calculate(pepseq);
 
-            DoubleArrayResult dar = (DoubleArrayResult)result.Value;
+            ArrayResult<double> dar = (ArrayResult<double>)result.Value;
             Assert.AreEqual(147, dar.Length);
         }
     }

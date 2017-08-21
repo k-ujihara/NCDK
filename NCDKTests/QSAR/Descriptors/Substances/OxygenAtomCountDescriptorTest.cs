@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, ((IntegerResult)result).Value);
+            Assert.AreEqual(1, ((Result<int>)result).Value);
         }
 
         [TestMethod()]
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
-            Assert.AreEqual(4, ((IntegerResult)result).Value);
+            Assert.AreEqual(4, ((Result<int>)result).Value);
         }
     }
 }

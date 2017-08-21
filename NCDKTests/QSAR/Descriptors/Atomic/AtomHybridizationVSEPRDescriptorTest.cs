@@ -62,11 +62,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.SP2.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP2.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP3.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
         }
 
          /// <summary>
@@ -94,11 +94,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.SP1.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP1.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP3.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
         }
 
         [TestMethod()]
@@ -125,11 +125,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.Planar3.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP3.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[1], molecule).Value).Value);
             Assert.AreEqual(Hybridization.SP3.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[2], molecule).Value).Value);
         }
 
         // @cdk.bug 2323124
@@ -157,7 +157,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.SP2.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
 
         }
 
@@ -190,7 +190,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.SP3D2.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             AssertAtomTypesPerceived(molecule);
             Assert.AreEqual(Hybridization.SP3D1.Ordinal,
-                    ((IntegerResult)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
+                    ((Result<int>)descriptor.Calculate(molecule.Atoms[0], molecule).Value).Value);
 
         }
 
@@ -247,7 +247,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 3; i++)
             {
                 Assert.AreEqual(testResult[i],
-                        ((IntegerResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
+                        ((Result<int>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
             }
         }
 
@@ -276,7 +276,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 3; i++)
             {
                 Assert.AreEqual(testResult[i],
-                        ((IntegerResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
+                        ((Result<int>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
             }
         }
     }

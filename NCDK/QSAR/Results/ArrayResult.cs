@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+﻿/* Copyright (C) 2004-2017  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,48 +16,53 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.QSAR.Results
 {
-    // @cdk.module standard
-    // @cdk.githash
-    public class DoubleArrayResult : DoubleArrayResultType
+    public class ArrayResult<T>
+        : IDescriptorResult, IReadOnlyList<T>
     {
-        private List<double> array;
+        int size;
+        List<T> array;
 
-        public DoubleArrayResult()
-            : base(0)
+        public ArrayResult()
         {
-            this.array = new List<double>();
+            this.size = 0;
+            this.array = new List<T>();
         }
 
-        public DoubleArrayResult(int size)
-            : base(size)
+        public ArrayResult(int size)
         {
-            this.array = new List<double>(size);
+            this.size = size;
+            this.array = new List<T>(size);
         }
 
-        public void Add(double value)
+        public void Add(T value)
         {
             array.Add(value);
         }
 
-        public double this[int index]
+        public T this[int index]
         {
             get
             {
                 if (index >= this.array.Count)
                 {
-                    return 0.0;
+                    return default(T);
                 }
                 return this.array[index];
             }
         }
 
-        public override int Length => Math.Max(base.Length, this.array.Count);
+        public virtual int Length => Math.Max(this.size, this.array.Count);
+
+        public int Count => Length;
 
         public override string ToString()
         {
@@ -69,5 +74,9 @@ namespace NCDK.QSAR.Results
             }
             return buf.ToString();
         }
+
+        public IEnumerator<T> GetEnumerator() => array.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult result = new DoubleArrayResult(2);
+            ArrayResult<double> result = new ArrayResult<double>(2);
             result.Add(double.NaN);
             result.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluate the descriptor for the molecule.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>A <see cref="DoubleArrayResult"/> containing LOBMAX and LOBMIN in that order</returns>
+        /// <returns>A <see cref="ArrayResult<double>"/> containing LOBMAX and LOBMIN in that order</returns>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
             if (!GeometryUtil.Has3DCoordinates(atomContainer))
@@ -156,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            DoubleArrayResult result = new DoubleArrayResult(2);
+            ArrayResult<double> result = new ArrayResult<double>(2);
             result.Add(maxLOB);
             result.Add(mmLOB);
 
@@ -164,7 +164,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
         private void RotateZ(double[][] coords, double theta)
         {

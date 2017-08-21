@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// are related to the Polar Surface Area descriptors. The original
     /// implementation was in the ADAPT software package and the the definitions
     /// of the individual descriptors are presented in the following table. This class
-    /// returns a <see cref="DoubleArrayResult"/> containing the 29 descriptors in the order
+    /// returns a <see cref="ArrayResult<double>"/> containing the 29 descriptors in the order
     /// described in the table.
     /// </para>
     /// <para>
@@ -158,7 +158,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>An ArrayList containing 29 elements in the order described above</returns>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
-            DoubleArrayResult retval = new DoubleArrayResult();
+            ArrayResult<double> retval = new ArrayResult<double>();
 
             if (!GeometryUtil.Has3DCoordinates(atomContainer))
             {
@@ -342,6 +342,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(29);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(29);
     }
 }

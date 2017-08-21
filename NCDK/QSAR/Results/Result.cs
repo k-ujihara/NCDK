@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+﻿/* Copyright (C) 2004-2017  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,22 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.QSAR.Results
 {
-    /// <summary>
-    /// Object that provides access to the calculated descriptor value.
-    /// </summary>
-    // @cdk.module standard
-    // @cdk.githash
-    public class BooleanResult : BooleanResultType
+    public class Result<T>
+        : IDescriptorResult
     {
-        public bool Value { get; private set; }
+        public static Result<T> Instance { get; } = new Result<T>();
 
-        public BooleanResult(bool value)
+        public T Value { get; private set; }
+
+        public Result()
+            : this(default(T))             
+        { }
+
+        public Result(T value)
         {
             Value = value;
         }
 
-        public override string ToString() => Value ? "true" : "false";
+        public override string ToString() => Value.ToString();
+        public int Length => 1;
     }
 }

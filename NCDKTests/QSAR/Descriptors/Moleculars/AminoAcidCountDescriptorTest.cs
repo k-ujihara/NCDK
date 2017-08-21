@@ -42,8 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("ARNDCFQEGHIPLKMSTYVW", Silent.ChemObjectBuilder.Instance);
             IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is IntegerArrayResult);
-            IntegerArrayResult iaResult = (IntegerArrayResult)result;
+            Assert.IsTrue(result is ArrayResult<int>);
+            ArrayResult<int> iaResult = (ArrayResult<int>)result;
             for (int i = 0; i < iaResult.Length; i++)
             {
                 Assert.IsTrue(iaResult[i] >= 1); // all AAs are found at least once
@@ -56,8 +56,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("FF", Silent.ChemObjectBuilder.Instance);
             IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is IntegerArrayResult);
-            IntegerArrayResult iaResult = (IntegerArrayResult)result;
+            Assert.IsTrue(result is ArrayResult<int>);
+            ArrayResult<int> iaResult = (ArrayResult<int>)result;
             Assert.AreEqual(2, iaResult[8]);
             Assert.AreEqual(4, iaResult[5]); // thingy is symmetrical, so two mappings at each AA position possible
         }
@@ -67,8 +67,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("TT", Silent.ChemObjectBuilder.Instance);
             IDescriptorResult result = Descriptor.Calculate(protein).Value;
-            Assert.IsTrue(result is IntegerArrayResult);
-            IntegerArrayResult iaResult = (IntegerArrayResult)result;
+            Assert.IsTrue(result is ArrayResult<int>);
+            ArrayResult<int> iaResult = (ArrayResult<int>)result;
             Assert.AreEqual(2, iaResult[8]);
             Assert.AreEqual(2, iaResult[16]);
         }

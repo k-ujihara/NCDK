@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[6], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[6], mol).Value).Value;
             double resultAccordingNIST = 753.1;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             double resultAccordingNIST = 693.4;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);

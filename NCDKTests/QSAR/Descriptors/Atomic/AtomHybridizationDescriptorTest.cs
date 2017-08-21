@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Hybridization.SP3};
             for (int i = 0; i < expectedStates.Length; i++)
             {
-                Assert.AreEqual(expectedStates[i].Ordinal, ((IntegerResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
+                Assert.AreEqual(expectedStates[i].Ordinal, ((Result<int>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
             }
         }
 
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
                 foreach (var atom in mol.Atoms)
                 {
-                    var dummy = ((IntegerResult)descriptor.Calculate(atom, mol).Value).Value;
+                    var dummy = ((Result<int>)descriptor.Calculate(atom, mol).Value).Value;
                 }
             }
         }

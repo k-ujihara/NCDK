@@ -119,14 +119,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if (container == null)
             {
                 return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                    new IntegerResult(0), DescriptorNames,
+                    new Result<int>(0), DescriptorNames,
                     new CDKException("The supplied AtomContainer was NULL"));
             }
 
             if (container.Atoms.Count == 0)
             {
                 return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                    new IntegerResult(0), DescriptorNames, new CDKException(
+                    new Result<int>(0), DescriptorNames, new CDKException(
                         "The supplied AtomContainer did not have any atoms"));
             }
 
@@ -167,12 +167,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
                     atomCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  The parameterNames attribute of the AtomCountDescriptor object.

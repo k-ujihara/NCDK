@@ -231,7 +231,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames, e);
@@ -241,7 +241,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// Calculates the 147 TAE descriptors for amino acids.
         /// </summary>
         /// <param name="container">Parameter is the atom container which should implement <see cref="IBioPolymer"/>.</param>
-        /// <returns>A DoubleArrayResult value representing the 147 TAE descriptors</returns>
+        /// <returns>A ArrayResult<double> value representing the 147 TAE descriptors</returns>
         public override DescriptorValue Calculate(IAtomContainer container)
         {
             if (taeParams == null) return GetDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
@@ -277,7 +277,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
                     desc[i] += parameters[i];
             }
 
-            DoubleArrayResult retval = new DoubleArrayResult(ndesc);
+            ArrayResult<double> retval = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 retval.Add(desc[i]);
 
@@ -285,6 +285,6 @@ namespace NCDK.QSAR.Descriptors.Proteins
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(147);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(147);
     }
 }

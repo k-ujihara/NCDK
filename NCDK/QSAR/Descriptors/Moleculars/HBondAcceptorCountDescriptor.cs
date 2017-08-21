@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -189,11 +189,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ;
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(hBondAcceptors), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the HBondAcceptorCountDescriptor object.

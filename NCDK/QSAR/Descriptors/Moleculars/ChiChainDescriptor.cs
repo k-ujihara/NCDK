@@ -104,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
@@ -167,7 +167,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Error in substructure search: " + e.Message));
             }
 
-            DoubleArrayResult retval = new DoubleArrayResult();
+            ArrayResult<double> retval = new ArrayResult<double>();
             retval.Add(order3s);
             retval.Add(order4s);
             retval.Add(order5s);
@@ -184,7 +184,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(10);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
 
         private IList<IList<int>> Order3(IAtomContainer container)
         {

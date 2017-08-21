@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// and considered the molecular graph. This class also implements the geometric analog
     /// of the topological shape index described by Bath et al (<token>cdk-cite-BAT95</token>).
     /// <para>
-    /// The descriptor returns a <see cref="DoubleArrayResult"/> which contains
+    /// The descriptor returns a <see cref="ArrayResult<double>"/> which contains
     /// <list type="bullet"> 
     /// <item>topoShape - topological shape index</item>
     /// <item>geomShape - geometric shape index</item>
@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the two Petitjean shape indices.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A DoubleArrayResult value representing the Petitjean shape indices</returns>
+        /// <returns>A ArrayResult<double> value representing the Petitjean shape indices</returns>
         public override DescriptorValue Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int tradius = PathTools.GetMolecularGraphRadius(local);
             int tdiameter = PathTools.GetMolecularGraphDiameter(local);
 
-            DoubleArrayResult retval = new DoubleArrayResult();
+            ArrayResult<double> retval = new ArrayResult<double>();
             retval.Add((double)(tdiameter - tradius) / (double)tradius);
 
             // get the 3D distance matrix
@@ -158,7 +158,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
     }
 }
 

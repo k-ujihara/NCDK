@@ -348,7 +348,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            IntegerArrayResult result = new IntegerArrayResult();
+            ArrayResult<int> result = new ArrayResult<int>();
             foreach (var smart in SMARTS)
                 result.Add(0);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
@@ -390,7 +390,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            IntegerArrayResult result = new IntegerArrayResult();
+            ArrayResult<int> result = new ArrayResult<int>();
             foreach (var i in counts)
                 result.Add(i);
 
@@ -398,7 +398,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerArrayResult(SMARTS.Length);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Length);
 
         /// <summary>
         /// Gets the parameterNames attribute of the descriptor.

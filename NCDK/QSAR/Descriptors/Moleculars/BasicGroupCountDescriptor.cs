@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (tool.Matches(atomContainer)) count += tool.MatchesCount;
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(count), DescriptorNames);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
             }
             catch (CDKException exception)
             {
@@ -104,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IDescriptorResult DescriptorResultType => IntegerResultType.Instance;
+        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
         public override string[] ParameterNames { get; } 
             = new string[] { };
 
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception exception)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(-1),
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(-1),
                     DescriptorNames, exception);
         }
     }

@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = parameters;
             DescriptorValue descriptorValue = Descriptor.Calculate(ac);
 
-            DoubleArrayResult retval = (DoubleArrayResult)descriptorValue.Value;
+            ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
             Assert.IsNotNull(retval);
             /* Console.Out.WriteLine("Num ret = "+retval.Count); */
             for (int i = 0; i < retval.Length; i++)
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = parameters;
             DescriptorValue descriptorValue = Descriptor.Calculate(ac);
 
-            DoubleArrayResult retval = (DoubleArrayResult)descriptorValue.Value;
+            ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
             int nheavy = 20;
 
             Assert.AreEqual(75, retval.Length);
@@ -135,8 +135,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol1);
             Aromaticity.CDKLegacy.Apply(mol2);
 
-            DoubleArrayResult result1 = (DoubleArrayResult)Descriptor.Calculate(mol1).Value;
-            DoubleArrayResult result2 = (DoubleArrayResult)Descriptor.Calculate(mol2).Value;
+            ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol1).Value;
+            ArrayResult<double> result2 = (ArrayResult<double>)Descriptor.Calculate(mol2).Value;
 
             Assert.AreEqual(result1.Length, result2.Length);
             for (int i = 0; i < result1.Length; i++)
@@ -150,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
-            DoubleArrayResult result1 = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> result1 = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             for (int i = 0; i < result1.Length; i++)
                 Assert.IsTrue(result1[i] != double.NaN);
         }

@@ -117,21 +117,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 xlogP.Parameters = xlogPparams;
-                double xlogPvalue = ((DoubleResult)xlogP.Calculate(mol).Value).Value;
+                double xlogPvalue = ((Result<double>)xlogP.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
                 object[] hBondparams = { checkAromaticity };
                 acc.Parameters = hBondparams;
-                int acceptors = ((IntegerResult)acc.Calculate(mol).Value).Value;
+                int acceptors = ((Result<int>)acc.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor don = new HBondDonorCountDescriptor();
                 don.Parameters = hBondparams;
-                int donors = ((IntegerResult)don.Calculate(mol).Value).Value;
+                int donors = ((Result<int>)don.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor mw = new WeightDescriptor();
                 object[] mwparams = { "" };
                 mw.Parameters = mwparams;
-                double mwvalue = ((DoubleResult)mw.Calculate(mol).Value).Value;
+                double mwvalue = ((Result<double>)mw.Calculate(mol).Value).Value;
 
                 // exclude (heavy atom) terminal bonds
                 // exclude amide C-N bonds because of their high rotational barrier
@@ -139,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
                 object[] rotatableBondsParams = { false, true };
                 rotata.Parameters = rotatableBondsParams;
-                int rotatablebonds = ((IntegerResult)rotata.Calculate(mol).Value).Value;
+                int rotatablebonds = ((Result<int>)rotata.Calculate(mol).Value).Value;
 
                 if (xlogPvalue > 5.0)
                 {
@@ -164,14 +164,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (CDKException e)
             {
-                new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), DescriptorNames, e);
+                new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(lipinskifailures), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.

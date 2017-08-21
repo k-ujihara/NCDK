@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
+            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(1820.692519, retval[0], 0.00001);
             Assert.AreEqual(1274.532522, retval[1], 0.00001);
@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
+            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(10068.419360, retval[0], 0.00001);
             Assert.AreEqual(9731.078356, retval[1], 0.00001);

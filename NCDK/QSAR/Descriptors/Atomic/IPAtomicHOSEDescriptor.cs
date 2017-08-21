@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                             double.NaN), NAMES, e);
                 }
 
@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(value),
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(value),
                                        NAMES);
 
         }

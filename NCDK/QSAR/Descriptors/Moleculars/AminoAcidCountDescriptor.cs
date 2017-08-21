@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override DescriptorValue Calculate(IAtomContainer ac)
         {
             int resultLength = substructureSet.Count;
-            IntegerArrayResult results = new IntegerArrayResult(resultLength);
+            ArrayResult<int> results = new ArrayResult<int>(resultLength);
 
             UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
             IAtomContainer substructure;
@@ -131,7 +131,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>
-        public override IDescriptorResult DescriptorResultType => new IntegerArrayResult(20);
+        public override IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
 
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.

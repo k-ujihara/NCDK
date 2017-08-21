@@ -140,7 +140,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     if (!hasHydrogen) bondCount++;
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(bondCount), DescriptorNames, null);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
             }
             else
             {
@@ -152,7 +152,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         bondCount += 1;
                     }
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(bondCount), DescriptorNames);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
             }
         }
 
@@ -169,7 +169,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the BondCountDescriptor object

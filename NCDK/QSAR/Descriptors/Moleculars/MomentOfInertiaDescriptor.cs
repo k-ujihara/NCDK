@@ -106,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
@@ -131,7 +131,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             factory = Isotopes.Instance;
             factory.ConfigureAtoms(clone);
 
-            DoubleArrayResult retval = new DoubleArrayResult(7);
+            ArrayResult<double> retval = new ArrayResult<double>(7);
 
             double ccf = 1.000138;
             double eps = 1e-5;
@@ -216,6 +216,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(7);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
     }
 }

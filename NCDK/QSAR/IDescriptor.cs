@@ -33,20 +33,20 @@ namespace NCDK.QSAR
     /// extend the <see cref="IDescriptorResult"/>, and is embedded in a
     /// <see cref="DescriptorValue"/>. Currently, there are five result types:
     /// <list type="bullet">
-    ///   <item><see cref="BooleanResultType"/></item>
-    ///   <item><see cref="DoubleResultType"/> </item>
-    ///   <item><see cref="IntegerResultType"/></item>
-    ///   <item><see cref="DoubleArrayResultType"/></item>
-    ///   <item><see cref="IntegerArrayResultType"/></item>
+    ///   <item><see cref="Result<bool>"/></item>
+    ///   <item><see cref="Result<double>"/> </item>
+    ///   <item><see cref="Result<int>"/></item>
+    ///   <item><see cref="ArrayResult<double>"/></item>
+    ///   <item><see cref="ArrayResult<int>"/></item>
     /// </list>
     /// But the DescriptorValue will hold an actual value using one of the
     /// following five classes:
     /// <list type="bullet">
-    ///   <item><see cref="BooleanResult"/></item>
-    ///   <item><see cref="DoubleResult"/> </item>
-    ///   <item><see cref="IntegerResult"/></item>
-    ///   <item><see cref="DoubleArrayResult"/></item>
-    ///   <item><see cref="IntegerArrayResult"/></item>
+    ///   <item><see cref="Result<bool>"/></item>
+    ///   <item><see cref="Result<double>"/> </item>
+    ///   <item><see cref="Result<int>"/></item>
+    ///   <item><see cref="ArrayResult<double>"/></item>
+    ///   <item><see cref="ArrayResult<int>"/></item>
     /// </list>
     /// </para>
     /// <para>

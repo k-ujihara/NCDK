@@ -141,12 +141,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     bpol += difference;
                 }
                 return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                        new DoubleResult(bpol), DescriptorNames);
+                        new Result<double>(bpol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException("Problems with IsotopeFactory due to "
                         + ex1.ToString(), ex1));
             }
@@ -160,7 +160,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.</para>
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         ///  The parameterNames attribute of the BPolDescriptor object

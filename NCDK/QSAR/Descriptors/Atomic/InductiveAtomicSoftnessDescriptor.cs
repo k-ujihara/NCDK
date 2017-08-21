@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             atomicSoftness = 2 * atomicSoftness;
             atomicSoftness = atomicSoftness * 0.172;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(atomicSoftness), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(atomicSoftness), NAMES);
         }
 
         private double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)

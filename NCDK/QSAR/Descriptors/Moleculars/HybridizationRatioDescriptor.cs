@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>a dummy value</returns>
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 double ratio = nsp3 / (double)(nsp2 + nsp3);
                 return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                        new DoubleResult(ratio), DescriptorNames);
+                        new Result<double>(ratio), DescriptorNames);
             }
             catch (CDKException e)
             {
@@ -104,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the HybridizationRatioDescriptor object.

@@ -118,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), NAMES, e);
+                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), NAMES, e);
                 }
             }
             var neighboor = mol.GetConnectedAtoms(clonedAtom);
@@ -150,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 isProtonInAromaticSystem = 0;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(isProtonInAromaticSystem), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(isProtonInAromaticSystem), NAMES);
         }
 
         /// <summary>

@@ -102,11 +102,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             int b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
             double c = Math.Abs(b * b - a * a + a) + (h / 100);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(c), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the FragmentComplexityDescriptor object.

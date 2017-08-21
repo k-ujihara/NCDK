@@ -118,12 +118,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     for (int i = 0; i < ac.Atoms.Count; i++)
                     {
                         // assume same order, so mol.Atoms[i] == ac.Atoms[i]
-                        CacheDescriptorValue(ac.Atoms[i], ac, new DoubleResult(mol.Atoms[i].Charge.Value));
+                        CacheDescriptorValue(ac.Atoms[i], ac, new Result<double>(mol.Atoms[i].Charge.Value));
                     }
                 }
                 catch (Exception e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
             }
             atom.Charge = originalCharge;

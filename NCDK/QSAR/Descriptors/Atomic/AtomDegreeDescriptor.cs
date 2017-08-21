@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 if (!neighboor.Symbol.Equals("H")) atomDegree += 1;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(atomDegree), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
         }
 
         /// <summary>

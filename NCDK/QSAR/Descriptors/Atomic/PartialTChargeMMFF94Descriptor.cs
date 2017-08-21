@@ -91,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     {
                         Trace.TraceError("Hydrogens must be explict for MMFF charge calculation");
                         return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                                                   new DoubleResult(double.NaN), NAMES);
+                                                   new Result<double>(double.NaN), NAMES);
                     }
                 }
 
@@ -110,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue(_Specification,
                                        ParameterNames,
                                        Parameters,
-                                       new DoubleResult(atom.GetProperty<double>(CHARGE_CACHE)),
+                                       new Result<double>(atom.GetProperty<double>(CHARGE_CACHE)),
                                        NAMES);
         }
 

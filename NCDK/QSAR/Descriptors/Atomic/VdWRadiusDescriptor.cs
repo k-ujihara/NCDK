@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             string symbol = atom.Symbol;
             double vdwradius = PeriodicTable.GetVdwRadius(symbol).Value;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(vdwradius), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(vdwradius), NAMES);
         }
 
         /// <summary>

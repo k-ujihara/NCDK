@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                         + ") " + atom.Symbol));
             }
             Hybridization atomHybridization = matched.Hybridization;
-            IntegerResult result = new IntegerResult(atomHybridization.Ordinal);
+            Result<int> result = new Result<int>(atomHybridization.Ordinal);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 

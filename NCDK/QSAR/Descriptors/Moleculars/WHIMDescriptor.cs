@@ -269,7 +269,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
@@ -412,7 +412,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
                 double d = eta[0] + eta[1] + eta[2];
 
                 // return all the stuff we calculated
-                DoubleArrayResult retval = new DoubleArrayResult(11 + 6);
+                ArrayResult<double> retval = new ArrayResult<double>(11 + 6);
                 retval.Add(lambda[0]);
                 retval.Add(lambda[1]);
                 retval.Add(lambda[2]);
@@ -440,7 +440,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(17);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
 
         class PCA
         {

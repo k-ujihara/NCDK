@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             atomContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
 
             //IAtom[] atoms = atomContainer.GetAtoms();
-            DoubleArrayResult kierValues = new DoubleArrayResult(3);
+            ArrayResult<double> kierValues = new ArrayResult<double>(3);
             double bond1;
             double bond2;
             double bond3;
@@ -210,7 +210,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(3);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(3);
 
         /// <summary>
         /// The parameterNames attribute of the

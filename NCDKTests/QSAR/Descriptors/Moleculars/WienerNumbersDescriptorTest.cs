@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(testResult[0], retval[0], 0.0001);
             Assert.AreEqual(testResult[1], retval[1], 0.0001);
         }
@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double[] testResult = { 18, 2 };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+            ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(testResult[0], retval[0], 0.0001);
             Assert.AreEqual(testResult[1], retval[1], 0.0001);
         }
@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 smiles += "C"; // create the matching paraffin
                 IAtomContainer mol = sp.ParseSmiles(smiles);
-                DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
+                ArrayResult<double> retval = (ArrayResult<double>)Descriptor.Calculate(mol).Value;
                 Assert.AreEqual(testResult[i], retval[0], 0.0001);
             }
         }

@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { "*" };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCC");
-            Assert.AreEqual(44.06, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(44.06, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         // @cdk.bug 2185475
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
-            Assert.AreEqual(12.00, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(12.00, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         // @cdk.bug 2185475
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
-            Assert.AreEqual(16.01, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(16.01, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         // @cdk.bug 2185475
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = builder.NewAtomContainer();
             mol.Atoms.Add(builder.NewAtom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 4;
-            Assert.AreEqual(16.01, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(16.01, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
     }
 }

@@ -2328,7 +2328,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException(e.Message));
             }
 
-            DoubleArrayResult results = new DoubleArrayResult();
+            ArrayResult<double> results = new ArrayResult<double>();
             results.Add(ret[0]);
             results.Add(ret[1]);
             results.Add(ret[2]);
@@ -2338,7 +2338,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult results = new DoubleArrayResult();
+            ArrayResult<double> results = new ArrayResult<double>();
             results.Add(double.NaN);
             results.Add(double.NaN);
             results.Add(double.NaN);
@@ -2347,7 +2347,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType => new DoubleArrayResultType(3);
+        public override IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
 
         /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;

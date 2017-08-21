@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atomicHardness = 2 * atomicHardness;
             atomicHardness = atomicHardness * 0.172;
             atomicHardness = 1 / atomicHardness;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                     atomicHardness), NAMES);
         }
 

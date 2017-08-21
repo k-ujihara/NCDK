@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CNC=CC=C");
             AddExplicitHydrogens(mol);
-            Assert.IsTrue(((BooleanResult)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
+            Assert.IsTrue(((Result<bool>)descriptor.Calculate(mol.Atoms[13], mol).Value).Value);
         }
     }
 }

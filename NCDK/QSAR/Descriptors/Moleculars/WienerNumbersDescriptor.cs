@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static readonly string[] NAMES = { "WPATH", "WPOL" };
 
         double[][] matr = null;
-        DoubleArrayResult wienerNumbers = null;
+        ArrayResult<double> wienerNumbers = null;
         ConnectionMatrix connectionMatrix = new ConnectionMatrix();
         AtomContainerManipulator atm = new AtomContainerManipulator();
 
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>wiener numbers as array of 2 doubles</returns>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
-            wienerNumbers = new DoubleArrayResult(2);
+            wienerNumbers = new ArrayResult<double>(2);
             double wienerPathNumber = 0; //wienerPath
             double wienerPolarityNumber = 0; //wienerPol
 
@@ -133,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
         /// <summary>
         /// The parameterNames attribute of the WienerNumbersDescriptor object.

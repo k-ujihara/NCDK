@@ -33,22 +33,22 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestBooleanResult_bool()
         {
-            BooleanResult result = new BooleanResult(true);
+            Result<bool> result = new Result<bool>(true);
             Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void TestBooleanValue()
         {
-            Assert.IsTrue(new BooleanResult(true).Value);
-            Assert.IsFalse(new BooleanResult(false).Value);
+            Assert.IsTrue(new Result<bool>(true).Value);
+            Assert.IsFalse(new Result<bool>(false).Value);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            Assert.AreEqual("true", new BooleanResult(true).ToString());
-            Assert.AreEqual("false", new BooleanResult(false).ToString());
+            Assert.AreEqual(true.ToString(), new Result<bool>(true).ToString());
+            Assert.AreEqual(false.ToString(), new Result<bool>(false).ToString());
         }
     }
 }

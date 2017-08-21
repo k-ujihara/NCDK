@@ -1097,15 +1097,10 @@
     <Compile Include="QSAR\DescriptorSpecificationTest.cs" />
     <Compile Include="QSAR\DescriptorValueTest.cs" />
     <Compile Include="QSAR\Results\BooleanResultTest.cs" />
-    <Compile Include="QSAR\Results\BooleanResultTypeTest.cs" />
     <Compile Include="QSAR\Results\DoubleArrayResultTest.cs" />
-    <Compile Include="QSAR\Results\DoubleArrayResultTypeTest.cs" />
     <Compile Include="QSAR\Results\DoubleResultTest.cs" />
-    <Compile Include="QSAR\Results\DoubleResultTypeTest.cs" />
     <Compile Include="QSAR\Results\IntegerArrayResultTest.cs" />
-    <Compile Include="QSAR\Results\IntegerArrayResultTypeTest.cs" />
     <Compile Include="QSAR\Results\IntegerResultTest.cs" />
-    <Compile Include="QSAR\Results\IntegerResultTypeTest.cs" />
     <Compile Include="RingSearches\AllRingsFinderTest.cs" />
     <Compile Include="RingSearches\RingPartitionerTest.cs" />
     <Compile Include="RingSearches\RingSearchTest.cs" />

@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[4], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[4], mol).Value).Value;
             double resultAccordingNIST = 10.57; //value for CC(C)Cl
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8; //value for CCCCl aprox.
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
             double resultAccordingNIST = 11.26;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.42);
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             double resultAccordingNIST = 11.29;
 
             Assert.AreEqual(resultAccordingNIST, result, 1.95);
@@ -151,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
+            double result = ((Result<double>)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 9.27;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.02);
@@ -171,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         //        double resultAccordingNIST = 10.48;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 1.24);
@@ -191,7 +191,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
         //        double resultAccordingNIST = 7.77;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.02);
@@ -211,7 +211,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[1],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[1],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.24;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.09);
@@ -231,7 +231,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[2],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.9;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.35);
@@ -251,7 +251,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.5;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.051);
@@ -272,7 +272,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value;
         //        double resultAccordingNIST = 9.3;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.051);
@@ -292,7 +292,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 9.01;
         //
         //        Assert.AreEqual(resultAccordingNIST, result, 0.06);
@@ -313,10 +313,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
         ////        Assert.IsNotNull(result);
         //
-        //        result= ((DoubleResult)descriptor.Calculate(mol.Atoms[7], mol).GetValue()).Value;
+        //        result= ((Result<double>)descriptor.Calculate(mol.Atoms[7], mol).GetValue()).Value;
         ////        Assert.IsNotNull(result);
         //
         //    }
@@ -399,7 +399,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.03;
         //        Assert.AreEqual(resultAccordingNIST, result, 0.11);
         //
@@ -427,7 +427,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[0],mol).GetValue()).Value;
         //        double resultAccordingNIST = 8.64;
         //        Assert.AreEqual(resultAccordingNIST, result, 0.21);
         //
@@ -455,7 +455,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(mol);
         //
-        //        double result= ((DoubleResult)descriptor.Calculate(mol.Atoms[5],mol).GetValue()).Value;
+        //        double result= ((Result<double>)descriptor.Calculate(mol.Atoms[5],mol).GetValue()).Value;
         //        double resultAccordingNIST = 7.77;
         //        Assert.AreEqual(resultAccordingNIST, result, 0.3);
         //

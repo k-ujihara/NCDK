@@ -60,21 +60,21 @@ namespace NCDK.LibIO.CML
         private XElement CreateScalar(IDescriptorResult value)
         {
             XElement scalar = null;
-            if (value is DoubleResult)
+            if (value is Result<double>)
             {
-                scalar = new CMLScalar(((DoubleResult)value).Value);
+                scalar = new CMLScalar(((Result<double>)value).Value);
             }
-            else if (value is IntegerResult)
+            else if (value is Result<int>)
             {
-                scalar = new CMLScalar(((IntegerResult)value).Value);
+                scalar = new CMLScalar(((Result<int>)value).Value);
             }
-            else if (value is BooleanResult)
+            else if (value is Result<bool>)
             {
-                scalar = new CMLScalar(((BooleanResult)value).Value);
+                scalar = new CMLScalar(((Result<bool>)value).Value);
             }
-            else if (value is IntegerArrayResult)
+            else if (value is ArrayResult<int>)
             {
-                IntegerArrayResult result = (IntegerArrayResult)value;
+                ArrayResult<int> result = (ArrayResult<int>)value;
                 scalar = new CMLArray();
                 scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
                 scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString());
@@ -85,9 +85,9 @@ namespace NCDK.LibIO.CML
                 }
                 scalar.Add(buffer.ToString());
             }
-            else if (value is DoubleArrayResult)
+            else if (value is ArrayResult<double>)
             {
-                DoubleArrayResult result = (DoubleArrayResult)value;
+                ArrayResult<double> result = (ArrayResult<double>)value;
                 scalar = new CMLArray();
                 scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:double");
                 scalar.SetAttributeValue(CMLElement.Attribute_size, "" + result.Length);

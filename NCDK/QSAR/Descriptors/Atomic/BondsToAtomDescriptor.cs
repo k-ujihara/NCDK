@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             // could be cached
             int bondsToAtom = new ShortestPaths(container, atom).GetDistanceTo(focus);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
                     bondsToAtom), DescriptorNames);
         }
 

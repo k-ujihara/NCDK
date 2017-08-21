@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (k > 0) chargeSum[k] = chargeSum[k] / 2;
 
                 }
-                DoubleArrayResult result = new DoubleArrayResult(5);
+                ArrayResult<double> result = new ArrayResult<double>(5);
                 foreach (var aChargeSum in chargeSum)
                 {
                     result.Add(aChargeSum);
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (Exception ex)
             {
-                DoubleArrayResult result = new DoubleArrayResult(5);
+                ArrayResult<double> result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
                 return new DescriptorValue(_Specification, ParameterNames, Parameters, result, NAMES,
@@ -126,6 +126,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     typeof(AutocorrelationDescriptorCharge).FullName,
                     "The Chemistry Development Kit");
 
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
     }
 }

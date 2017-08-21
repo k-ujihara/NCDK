@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  Calculates the eccentric connectivity
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>An IntegerResult value representing the eccentric connectivity index</returns>
+        /// <returns>An Result<int> value representing the eccentric connectivity index</returns>
         public override DescriptorValue Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
@@ -119,12 +119,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int degree = local.GetConnectedBonds(local.Atoms[i]).Count();
                 eccenindex += max * degree;
             }
-            IntegerResult retval = new IntegerResult(eccenindex);
+            Result<int> retval = new Result<int>(eccenindex);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames, null);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
     }
 }

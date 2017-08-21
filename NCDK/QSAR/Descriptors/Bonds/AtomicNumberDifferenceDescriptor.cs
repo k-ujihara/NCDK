@@ -74,13 +74,13 @@ namespace NCDK.QSAR.Descriptors.Bonds
             EnsureIsotopeFactory();
             if (bond.Atoms.Count != 2)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
             }
 
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                     Math.Abs(factory.GetElement(atoms[0].Symbol).AtomicNumber.Value - factory.GetElement(atoms[1].Symbol).AtomicNumber.Value)), NAMES);
         }
 

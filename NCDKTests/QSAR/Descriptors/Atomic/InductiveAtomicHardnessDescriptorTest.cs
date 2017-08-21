@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomicDescriptor descriptor = new InductiveAtomicHardnessDescriptor();
 
-            double retval = ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).Value).Value;
+            double retval = ((Result<double>)descriptor.Calculate(mol.Atoms[0], mol).Value).Value;
             Assert.AreEqual(testResult[0], retval, 0.1);
         }
     }

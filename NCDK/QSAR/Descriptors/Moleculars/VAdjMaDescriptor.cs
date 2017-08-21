@@ -95,11 +95,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 vadjMa += (Math.Log(n) / Math.Log(2)) + 1;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(vadjMa), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the VAdjMaDescriptor object

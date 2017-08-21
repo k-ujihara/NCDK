@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { true };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Oc1ccccc1"); //
-            Assert.AreEqual(1, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         // @cdk.bug   3133610
@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = builder.NewBond(a5, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            Assert.AreEqual(1, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(1, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
     }
 }

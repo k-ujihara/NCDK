@@ -175,7 +175,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -305,11 +305,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             profiles.Clear(); // remove all profiles from the profiles-Vector
                               //Debug.WriteLine("tpsa: " + tpsa);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(tpsa), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(tpsa), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Gets the parameterNames attribute of the  TPSADescriptor object.

@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // polar surface area: chain it off the TPSADescriptor
                 TPSADescriptor tpsa = new TPSADescriptor();
                 DescriptorValue value = tpsa.Calculate(mol);
-                polar = ((DoubleResult)value.Value).Value;
+                polar = ((Result<double>)value.Value).Value;
 
                 //  molecular weight
                 foreach (var atom in mol.Atoms)
@@ -120,11 +120,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     throw;
                 return GetDummyDescriptorValue(exception);
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                     weight == 0 ? 0 : polar / weight), DescriptorNames);
         }
 
-        public IDescriptorResult DescriptorResultType { get; } = new DoubleResultType();
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
         public string[] ParameterNames { get; } = Array.Empty<string>();
         public object GetParameterType(string name) => null;
     }

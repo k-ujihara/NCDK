@@ -96,11 +96,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 petitjeanNumber = 0;
             else
                 petitjeanNumber = (diameter - radius) / (double)diameter;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(petitjeanNumber), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the PetitjeanNumberDescriptor object

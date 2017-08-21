@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
                     foreach (var bondi in ac.Bonds)
                     {
                         double result = Math.Abs(bondi.Atoms[0].Charge.Value - bondi.Atoms[1].Charge.Value);
-                        CacheDescriptorValue(bondi, ac, new DoubleResult(result));
+                        CacheDescriptorValue(bondi, ac, new Result<double>(result));
                     }
                 }
                 catch (Exception ex1)

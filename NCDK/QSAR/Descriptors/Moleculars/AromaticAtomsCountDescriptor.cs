@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 catch (CDKException)
                 {
                     return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                        new IntegerResult(0), DescriptorNames,
+                        new Result<int>(0), DescriptorNames,
                         new CDKException("Error during atom type perception"));
                 }
                 try
@@ -126,7 +126,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 catch (CDKException e)
                 {
                     return new DescriptorValue(_Specification, ParameterNames, Parameters,
-                        new IntegerResult(0), DescriptorNames,
+                        new Result<int>(0), DescriptorNames,
                         new CDKException($"Error during aromaticity detection: {e.Message}"));
                 }
             }
@@ -137,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     aromaticAtomsCount += 1;
                 }
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(aromaticAtomsCount), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(aromaticAtomsCount), DescriptorNames);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
         ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.

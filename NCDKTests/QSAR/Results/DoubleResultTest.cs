@@ -30,28 +30,28 @@ namespace NCDK.QSAR.Results
         [TestMethod()]
         public void TestDoubleResult_Double()
         {
-            DoubleResult result = new DoubleResult(5.0);
+            Result<double> result = new Result<double>(5.0);
             Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            DoubleResult result = new DoubleResult(5.0);
+            Result<double> result = new Result<double>(5.0);
             Assert.AreEqual("5.0", result.ToString());
         }
 
         [TestMethod()]
         public void TestDoubleValue()
         {
-            DoubleResult result = new DoubleResult(5);
+            Result<double> result = new Result<double>(5);
             Assert.AreEqual(5.0, result.Value, 0.000001);
         }
 
         [TestMethod()]
         public void TestLength()
         {
-            DoubleResult result = new DoubleResult(5);
+            Result<double> result = new Result<double>(5);
             Assert.AreEqual(1, result.Length);
         }
     }

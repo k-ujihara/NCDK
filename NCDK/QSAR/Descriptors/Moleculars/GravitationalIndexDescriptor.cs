@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Length;
-            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
@@ -241,7 +241,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 allheavysum += (mass1 * mass2) / dist;
             }
 
-            DoubleArrayResult retval = new DoubleArrayResult(9);
+            ArrayResult<double> retval = new ArrayResult<double>(9);
             retval.Add(heavysum);
             retval.Add(Math.Sqrt(heavysum));
             retval.Add(Math.Pow(heavysum, 1.0 / 3.0));
@@ -259,7 +259,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(9);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(9);
     }
 }
 

@@ -43,8 +43,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             methanol.Atoms.Add(builder.NewAtom("O"));
             methanol.AddBond(methanol.Atoms[0], methanol.Atoms[1], BondOrder.Single);
             IDescriptorResult result = Descriptor.Calculate(methanol).Value;
-            Assert.IsTrue(result is DoubleResult);
-            Assert.AreEqual(1.46, ((DoubleResult)result).Value, 0.01);
+            Assert.IsTrue(result is Result<double>);
+            Assert.AreEqual(1.46, ((Result<double>)result).Value, 0.01);
         }
 
         [TestMethod()]
@@ -54,8 +54,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer methane = builder.NewAtomContainer();
             methane.Atoms.Add(builder.NewAtom("C"));
             IDescriptorResult result = Descriptor.Calculate(methane).Value;
-            Assert.IsTrue(result is DoubleResult);
-            Assert.AreEqual(1.57, ((DoubleResult)result).Value, 0.01);
+            Assert.IsTrue(result is Result<double>);
+            Assert.AreEqual(1.57, ((Result<double>)result).Value, 0.01);
         }
 
         [TestMethod()]
@@ -70,8 +70,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 chloroform.AddBond(chloroform.Atoms[0], chloroform.Atoms[i + 1], BondOrder.Single);
             }
             IDescriptorResult result = Descriptor.Calculate(chloroform).Value;
-            Assert.IsTrue(result is DoubleResult);
-            Assert.AreEqual(1.24, ((DoubleResult)result).Value, 0.01);
+            Assert.IsTrue(result is Result<double>);
+            Assert.AreEqual(1.24, ((Result<double>)result).Value, 0.01);
         }
     }
 }

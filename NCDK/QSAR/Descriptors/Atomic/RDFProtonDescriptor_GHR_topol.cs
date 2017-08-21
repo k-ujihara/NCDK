@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         internal override DescriptorSpecification _Specification => __Specification;
 
         internal override bool MakeDescriptorLastStage(
-            DoubleArrayResult rdfProtonCalculatedValues,
+            ArrayResult<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,
             IAtomContainer mol,

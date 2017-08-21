@@ -470,7 +470,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 enhigh = 0;
             }
 
-            DoubleArrayResult retval = new DoubleArrayResult((lnlow + enlow + lnhigh + enhigh) * 3);
+            ArrayResult<double> retval = new ArrayResult<double>((lnlow + enlow + lnhigh + enhigh) * 3);
 
             for (int i = 0; i < lnlow; i++)
                 retval.Add(eval1[i]);
@@ -518,11 +518,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(6);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult results = new DoubleArrayResult(6);
+            ArrayResult<double> results = new ArrayResult<double>(6);
             for (int i = 0; i < 6; i++)
                 results.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, results,

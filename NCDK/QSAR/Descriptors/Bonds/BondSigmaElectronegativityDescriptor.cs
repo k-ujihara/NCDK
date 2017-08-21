@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             double electroAtom1 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[0]);
             double electroAtom2 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[1]);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
         }
 
         /// <summary>

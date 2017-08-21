@@ -104,11 +104,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, null);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
             }
 
             value = db.ExtractAffinity(container, atom);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(value), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(value), NAMES);
         }
 
         /// <summary>

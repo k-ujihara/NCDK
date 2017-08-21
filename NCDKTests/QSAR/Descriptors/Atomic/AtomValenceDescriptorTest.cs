@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomicDescriptor descriptor = new AtomValenceDescriptor();
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCl"); //
-            Assert.AreEqual(7, ((IntegerResult)descriptor.Calculate(mol.Atoms[2], mol).Value).Value);
+            Assert.AreEqual(7, ((Result<int>)descriptor.Calculate(mol.Atoms[2], mol).Value).Value);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
         {
             int atomValence = AtomValenceTool.GetValence(atom);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(atomValence), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
         }
 
         /// <summary>

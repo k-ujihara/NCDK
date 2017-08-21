@@ -44,11 +44,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = null;
             DescriptorValue value = null;
-            DoubleArrayResult result = null;
+            ArrayResult<double> result = null;
 
             mol = sp.ParseSmiles("CCCC");
             value = Descriptor.Calculate(mol);
-            result = (DoubleArrayResult)value.Value;
+            result = (ArrayResult<double>)value.Value;
             Assert.AreEqual(6.871320, result[0], 0.000001);
             Assert.AreEqual(1.717830, result[1], 0.000001);
             Assert.AreEqual(0.0, result[2], 0.000001);
@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol = AtomContainerManipulator.RemoveHydrogens(mol);
 
             value = Descriptor.Calculate(mol);
-            result = (DoubleArrayResult)value.Value;
+            result = (ArrayResult<double>)value.Value;
             Assert.AreEqual(18.42026, result[0], 0.00001);
             Assert.AreEqual(1.842026, result[1], 0.00001);
             Assert.AreEqual(13.45733, result[2], 0.00001);
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol = (IAtomContainer)cList[0];
             mol = AtomContainerManipulator.RemoveHydrogens(mol);
             value = Descriptor.Calculate(mol);
-            result = (DoubleArrayResult)value.Value;
+            result = (ArrayResult<double>)value.Value;
             Assert.AreEqual(26.14844, result[0], 0.00001);
             Assert.AreEqual(1.867746, result[1], 0.00001);
             Assert.AreEqual(19.02049, result[2], 0.00001);

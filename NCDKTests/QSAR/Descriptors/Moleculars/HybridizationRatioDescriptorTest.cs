@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCC");
-            Assert.AreEqual(1.0, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(1.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         [TestMethod()]
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("c1ccccc1");
-            Assert.AreEqual(0.0, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1);
+            Assert.AreEqual(0.0, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1);
         }
 
         [TestMethod()]
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[H]C#N");
-            Assert.AreEqual(double.NaN, ((DoubleResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(mol).Value).Value);
         }
     }
 }

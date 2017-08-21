@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestIronChloride()
         {
             IAtomContainer ironChloride = new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles("Cl[Fe]Cl");
-            Assert.AreEqual(double.NaN, ((DoubleResult)Descriptor.Calculate(ironChloride).Value).Value);
+            Assert.AreEqual(double.NaN, ((Result<double>)Descriptor.Calculate(ironChloride).Value).Value);
         }
     }
 }

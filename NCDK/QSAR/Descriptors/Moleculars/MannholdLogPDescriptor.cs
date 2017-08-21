@@ -69,14 +69,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
         ///  Calculates the Mannhold LogP for an atom container.
         /// </summary>
         /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
-        /// <returns>A descriptor value wrapping a <see cref="DoubleResult"/>.</returns>
+        /// <returns>A descriptor value wrapping a <see cref="Result<double>"/>.</returns>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
@@ -99,13 +99,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(mLogP), DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
         }
 
         /// <summary>
         /// A type of return value calculated by this descriptor.
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResultType();
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <summary>
         /// The parameterNames attribute for this descriptor.

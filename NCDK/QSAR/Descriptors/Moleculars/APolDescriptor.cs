@@ -117,18 +117,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         apol += polarizabilities[1] * atom.ImplicitHydrogenCount.Value;
                     }
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(apol), DescriptorNames);
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, 
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
                     new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
             }
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the APolDescriptor object.

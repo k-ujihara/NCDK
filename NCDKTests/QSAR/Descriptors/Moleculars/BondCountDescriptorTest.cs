@@ -47,9 +47,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             Descriptor.Parameters = new string[] { "s" };
             IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
-            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
-            Assert.AreEqual(0, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         [TestMethod()]
@@ -57,9 +57,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             Descriptor.Parameters = new string[] { "d" };
             IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
-            Assert.AreEqual(0, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(0, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
-            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         /// <summary>
@@ -71,13 +71,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IMolecularDescriptor descriptor = new BondCountDescriptor();
             IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
-            Assert.AreEqual(2, ((IntegerResult)descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("C=C=C");
-            Assert.AreEqual(2, ((IntegerResult)descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("CC=O");
-            Assert.AreEqual(2, ((IntegerResult)descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);
             mol = sp.ParseSmiles("CC#N");
-            Assert.AreEqual(2, ((IntegerResult)descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(2, ((Result<int>)descriptor.Calculate(mol).Value).Value);
         }
     }
 }

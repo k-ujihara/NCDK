@@ -103,14 +103,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             if (atom.Point3D == null || focus.Point3D == null)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException(
                         "Target or focus atom must have 3D coordinates."));
             }
 
             distanceToAtom = CalculateDistanceBetweenTwoAtoms(atom, focus);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
                     distanceToAtom), DescriptorNames);
         }
 

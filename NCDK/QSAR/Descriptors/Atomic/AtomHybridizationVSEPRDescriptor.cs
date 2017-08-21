@@ -108,22 +108,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), // does that work??
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType == null)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), // does that work??
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType.Hybridization == Hybridization.Unset)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(0), // does that work??
+                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Hybridization was null"));
             }
             int hybridizationCDK = atomType.Hybridization.Ordinal;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
                     hybridizationCDK), DescriptorNames);
         }
 

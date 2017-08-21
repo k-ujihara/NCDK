@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override DescriptorValue Calculate(IAtomContainer container)
         {
             MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
-            DoubleResult result;
+            Result<double> result;
             try
             {
                 fragmenter.GenerateFragments(container);
@@ -69,18 +69,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var ringSystems = fragmenter.GetRingSystemsAsContainers().ToList();
                 if (framework.Count == 1)
                 {
-                    result = new DoubleResult(framework[0].Atoms.Count / (double)container.Atoms.Count);
+                    result = new Result<double>(framework[0].Atoms.Count / (double)container.Atoms.Count);
                 }
                 else if (framework.Count == 0 && ringSystems.Count == 1)
                 {
-                    result = new DoubleResult(ringSystems[0].Atoms.Count / (double)container.Atoms.Count);
+                    result = new Result<double>(ringSystems[0].Atoms.Count / (double)container.Atoms.Count);
                 }
                 else
-                    result = new DoubleResult(0.0);
+                    result = new Result<double>(0.0);
             }
             catch (CDKException)
             {
-                result = new DoubleResult(double.NaN);
+                result = new Result<double>(double.NaN);
             }
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }
@@ -100,8 +100,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// length of array result types vary with the values of the parameters. See
         /// <see cref="IDescriptor"/> for more details.</para>
         /// </summary>
-        /// <returns>an instance of the <see cref="DoubleResultType"/></returns>
-        public override IDescriptorResult DescriptorResultType { get; } = new DoubleResultType();
+        /// <returns>an instance of the <see cref="Result<double>"/></returns>
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;

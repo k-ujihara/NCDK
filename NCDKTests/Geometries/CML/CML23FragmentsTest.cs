@@ -508,8 +508,8 @@ namespace NCDK.IO.CML
             DescriptorValue value = mol.GetProperty<DescriptorValue>(key);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is DoubleResult);
-            Assert.AreEqual(72.0, ((DoubleResult)result).Value, 0.001);
+            Assert.IsTrue(result is Result<double>);
+            Assert.AreEqual(72.0, ((Result<double>)result).Value, 0.001);
         }
 
         private IChemFile ParseCMLString(string cmlString)

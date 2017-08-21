@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new BooleanResult(false), NAMES, e);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             {
                 piContact = true;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new BooleanResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(
                     piContact), DescriptorNames);
         }
 

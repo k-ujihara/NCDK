@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            DoubleArrayResult result = new DoubleArrayResult(MAX_PROTON_COUNT);
+            ArrayResult<double> result = new ArrayResult<double>(MAX_PROTON_COUNT);
             for (int i = 0; i < neighboors.Count + 1; i++)
                 result.Add(double.NaN);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             // we assume that an atom has a mxa number of protons = MAX_PROTON_COUNT
             // if it has less, we pad with NaN
-            DoubleArrayResult protonPartialCharge = new DoubleArrayResult(MAX_PROTON_COUNT);
+            ArrayResult<double> protonPartialCharge = new ArrayResult<double>(MAX_PROTON_COUNT);
             Trace.Assert(neighboors.Count < MAX_PROTON_COUNT);
 
             protonPartialCharge.Add(localAtom.Charge.Value);

@@ -69,11 +69,11 @@ namespace NCDK.QSAR.Descriptors.Substances
 
             return new DescriptorValue(
                 _Specification, ParameterNames, Parameters,
-                new IntegerResult(count), DescriptorNames
+                new Result<int>(count), DescriptorNames
             );
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = IntegerResultType.Instance;
+        public IDescriptorResult DescriptorResultType { get; } = Result<int>.Instance;
     }
 }

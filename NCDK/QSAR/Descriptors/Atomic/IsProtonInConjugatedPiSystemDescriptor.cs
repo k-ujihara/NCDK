@@ -109,7 +109,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new BooleanResult(false), NAMES, e);
+                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
                 }
             }
             if (atom.Symbol.Equals("H"))
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new BooleanResult(
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(
                     isProtonInPiSystem), NAMES);
         }
 
