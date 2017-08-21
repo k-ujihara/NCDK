@@ -23,7 +23,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
             DescriptorValue count = Descriptor.Calculate(container);
-            Console.Out.WriteLine(count.GetValue());
+            Console.Out.WriteLine(count.Value);
 
             Assert.Fail("Not validated yet");
         }

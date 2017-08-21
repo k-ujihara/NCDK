@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
             // Console.Out.WriteLine("Num ret = "+retval.Count); for (int i = 0; i <
             // retval.Count; i++) { Console.Out.WriteLine( retval[i] ); }
 
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
             int ndesc = retval.Length;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);
@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
             int ndesc = retval.Length;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);

@@ -21,7 +21,7 @@ using System;
 namespace NCDK.QSAR.Result
 {
     /// <summary>
-    /// IDescriptorResult type for bools.
+    /// IDescriptorResult type for doubles.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash

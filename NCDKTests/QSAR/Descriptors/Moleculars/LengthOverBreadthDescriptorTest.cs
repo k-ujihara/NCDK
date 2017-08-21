@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer ac = (IAtomContainer)cList[0];
             Isotopes.Instance.ConfigureAtoms(ac);
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(3.5029, result[0], 0.001);
             Assert.AreEqual(3.5029, result[1], 0.001);
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer ac = (IAtomContainer)cList[1];
             Isotopes.Instance.ConfigureAtoms(ac);
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(1.1476784, result[0], 0.01);
             Assert.AreEqual(1.0936984, result[1], 0.01);
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             Isotopes.Instance.ConfigureAtoms(ac);
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(1.3083278, result[0], 0.01);
             Assert.AreEqual(1.3083278, result[1], 0.01);
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer ac = (IAtomContainer)cList[3];
             Isotopes.Instance.ConfigureAtoms(ac);
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
 
             Assert.AreEqual(2.0880171, result[0], 0.000001);
             Assert.AreEqual(2.0880171, result[1], 0.000001);
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer ac = (IAtomContainer)cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
             Assert.IsNotNull(result);
         }
     }

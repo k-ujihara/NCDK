@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < 6; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 3; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C=CCBr");
             AddExplicitHydrogens(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             Assert.AreEqual(testResult, result, 0.01);
         }
 
@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < 6; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -125,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("CCOCC");
             AddExplicitHydrogens(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             Assert.AreEqual(testResult, result, 0.01);
         }
 
@@ -143,7 +143,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 4; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -162,7 +162,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             for (int i = 0; i < 4; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.02);
             }
         }

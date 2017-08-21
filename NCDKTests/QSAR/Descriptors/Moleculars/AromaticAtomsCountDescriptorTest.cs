@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = parameters;
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
-            Assert.AreEqual(6, ((IntegerResult)Descriptor.Calculate(mol).GetValue()).Value);
+            Assert.AreEqual(6, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
         }
 
         [TestMethod()]
@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 atom.IsAromatic = true;
             }
-            Assert.AreEqual(6, ((IntegerResult)Descriptor.Calculate(molecule).GetValue()).Value);
+            Assert.AreEqual(6, ((IntegerResult)Descriptor.Calculate(molecule).Value).Value);
         }
     }
 }

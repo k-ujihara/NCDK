@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 SmallRingDescriptor descr = new SmallRingDescriptor();
                 DescriptorValue results = descr.Calculate(mol);
                 string[] names = results.Names;
-                IntegerArrayResult values = (IntegerArrayResult)results.GetValue();
+                IntegerArrayResult values = (IntegerArrayResult)results.Value;
 
                 int gotSmallRings = 0, gotRingBlocks = 0, gotAromRings = 0, gotAromBlocks = 0;
                 for (int n = 0; n < names.Length; n++)

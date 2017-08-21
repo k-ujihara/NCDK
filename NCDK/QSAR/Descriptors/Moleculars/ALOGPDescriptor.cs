@@ -2333,7 +2333,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             results.Add(ret[1]);
             results.Add(ret[2]);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,DescriptorNames);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)

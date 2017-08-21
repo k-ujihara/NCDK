@@ -120,7 +120,7 @@ namespace NCDK.LibIO.CML
                 {
                     DescriptorSpecification specs = (DescriptorSpecification)key;
                     DescriptorValue value = (DescriptorValue)props[key];
-                    IDescriptorResult result = value.GetValue();
+                    IDescriptorResult result = value.Value;
                     if (propList == null)
                     {
                         propList = new CMLPropertyList();

@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CF");
             AddExplicitHydrogens(mol);
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.Calculate(mol.Atoms[0], mol).Value;
             for (int i = 0; i < testResult.Length; ++i)
             {
                 Assert.AreEqual(testResult[i], retval[i], 0.00001);
@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C(F)(F)");
             AddExplicitHydrogens(mol);
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)descriptor.Calculate(mol.Atoms[0], mol).Value;
             Assert.AreEqual(5, retval.Length);
             Assert.IsTrue(double.IsNaN(retval[3]));
             Assert.IsTrue(double.IsNaN(retval[4]));

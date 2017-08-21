@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("NC");
-            IntegerResult result = (IntegerResult)Descriptor.Calculate(mol).GetValue();
+            IntegerResult result = (IntegerResult)Descriptor.Calculate(mol).Value;
             Assert.AreEqual(1, result.Value);
         }
 
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
-            IntegerResult result = (IntegerResult)Descriptor.Calculate(mol).GetValue();
+            IntegerResult result = (IntegerResult)Descriptor.Calculate(mol).Value;
             // two SMARTS matches
             Assert.AreEqual(2, result.Value);
         }

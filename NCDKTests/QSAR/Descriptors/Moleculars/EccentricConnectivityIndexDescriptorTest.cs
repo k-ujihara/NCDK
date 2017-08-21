@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             AddImplicitHydrogens(ac);
 
-            IntegerResult retval = (IntegerResult)Descriptor.Calculate(ac).GetValue();
+            IntegerResult retval = (IntegerResult)Descriptor.Calculate(ac).Value;
             //Debug.WriteLine(retval.Value);
 
             Assert.AreEqual(254, retval.Value, 0);

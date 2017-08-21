@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             string[] names = results.Names;
             if (names.Length != 1 || !names[0].Equals("tpsaEfficiency"))
                 throw new CDKException("Only expecting 'tpsaEfficiency'");
-            DoubleResult value = (DoubleResult)results.GetValue();
+            DoubleResult value = (DoubleResult)results.Value;
             double tpsaEfficiency = value.Value;
             double ANSWER = 0.4036, ANSWER_LO = ANSWER * 0.999, ANSWER_HI = ANSWER * 1.001; // (we can tolerate rounding errors)
             if (tpsaEfficiency < ANSWER_LO || tpsaEfficiency > ANSWER_HI)

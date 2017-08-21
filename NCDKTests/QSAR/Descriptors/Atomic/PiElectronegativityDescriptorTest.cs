@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -125,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -156,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -187,7 +187,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 4; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -218,7 +218,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 descriptor.Parameters = new object[] { 10 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -250,7 +250,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             lpcheck.Saturate(mol);
             for (int i = 0; i < 3; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -283,7 +283,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < 3; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -316,7 +316,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -349,7 +349,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine("result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -382,7 +382,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine(mol.GetAtomAt(i).Symbol+"-result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -418,7 +418,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 //            Debug.WriteLine(mol.Atoms[i].Symbol+"-result: "+result);
                 if (result == 0.0)
                     Assert.AreEqual(testResult[i], result, 0.0001);
@@ -451,7 +451,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(molA);
             lpcheck.Saturate(molA);
 
-            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).GetValue()).Value;
+            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
 
             IAtomContainer molB = builder.NewAtomContainer();
             molB.Atoms.Add(builder.NewAtom("C"));
@@ -475,7 +475,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual(2, molB.LonePairs.Count, 0.00001);
 
             IAtomicDescriptor descriptor_ = new PiElectronegativityDescriptor();
-            double resultB = ((DoubleResult)descriptor_.Calculate(molB.Atoms[3], molB).GetValue()).Value;
+            double resultB = ((DoubleResult)descriptor_.Calculate(molB.Atoms[3], molB).Value).Value;
 
             Assert.AreEqual(resultA, resultB, 0.00001);
         }

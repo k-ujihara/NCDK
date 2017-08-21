@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             Assert.IsNotNull(v);
             Trace.Assert(v != null);
-            Assert.AreNotEqual(0, v.GetValue().Length, "The descriptor did not calculate any value.");
+            Assert.AreNotEqual(0, v.Value.Length, "The descriptor did not calculate any value.");
         }
 
         /// <summary>
@@ -94,8 +94,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.AreNotEqual(0, name.Length, "The label string must not be empty.");
                 //            Console.Out.WriteLine("Label: " + names[i]);
             }
-            Assert.IsNotNull(v.GetValue());
-            int valueCount = v.GetValue().Length;
+            Assert.IsNotNull(v.Value);
+            int valueCount = v.Value.Length;
             Assert.AreEqual(names.Length, valueCount, "The number of labels must equals the number of values.");
         }
 
@@ -118,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual(names1.Length, names2.Length, $"({descriptor.GetType().FullName}) fails.");
             Assert.IsTrue(Compares.AreDeepEqual(names1, names2));
 
-            int valueCount = v.GetValue().Length;
+            int valueCount = v.Value.Length;
             Assert.AreEqual(valueCount, names1.Length);
         }
 

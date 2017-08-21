@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            Assert.AreEqual(0.33333334, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.01);
+            Assert.AreEqual(0.33333334, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.01);
         }
 
         [TestMethod()]
@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O");
-            Assert.AreEqual(0, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.01);
+            Assert.AreEqual(0, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.01);
         }
     }
 }

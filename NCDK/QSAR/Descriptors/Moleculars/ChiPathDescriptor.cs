@@ -167,7 +167,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 return GetDummyDescriptorValue(new CDKException(e.Message));
             }
-
         }
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)

@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Assert.Fail("A descriptor must not throw an exception. Exception was:\n" + e.Message);
             }
             Assert.IsNotNull(v);
-            Assert.IsTrue(0 != v.GetValue().Length, "The descriptor did not calculate any value.");
+            Assert.IsTrue(0 != v.Value.Length, "The descriptor did not calculate any value.");
         }
 
         [TestMethod()]
@@ -105,8 +105,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Assert.AreNotSame(0, names[i].Length, "The label string must not be empty.");
                 //            Console.Out.WriteLine("Label: " + names[i]);
             }
-            Assert.IsNotNull(v.GetValue());
-            int valueCount = v.GetValue().Length;
+            Assert.IsNotNull(v.Value);
+            int valueCount = v.Value.Length;
             Assert.AreEqual(names.Length, valueCount, "The number of labels must equals the number of values.");
         }
 
@@ -128,7 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(names1.Length, names2.Length);
             Assert.IsTrue(Compares.AreDeepEqual(names1, names2));
 
-            int valueCount = v.GetValue().Length;
+            int valueCount = v.Value.Length;
             Assert.AreEqual(valueCount, names1.Length);
         }
 
@@ -142,9 +142,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             DescriptorValue v = Descriptor.Calculate(mol);
 
             Assert.IsTrue(
-                    result.GetType().FullName.Contains(v.GetValue().GetType().FullName),
+                    result.GetType().FullName.Contains(v.Value.GetType().FullName),
                     "The DescriptorResultType is inconsistent with the calculated descriptor results");
-            Assert.AreEqual(v.GetValue().Length, result.Length,
+            Assert.AreEqual(v.Value.Length, result.Length,
                     "The specified DescriptorResultType length does not match the actually calculated result vector length");
         }
 
@@ -178,8 +178,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(methane1);
             AddImplicitHydrogens(methane2);
 
-            IDescriptorResult v1 = Descriptor.Calculate(methane1).GetValue();
-            IDescriptorResult v2 = Descriptor.Calculate(methane2).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(methane1).Value;
+            IDescriptorResult v2 = Descriptor.Calculate(methane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()
@@ -234,8 +234,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddImplicitHydrogens(ethane1);
             AddImplicitHydrogens(ethane2);
 
-            IDescriptorResult v1 = Descriptor.Calculate(ethane1).GetValue();
-            IDescriptorResult v2 = Descriptor.Calculate(ethane2).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(ethane1).Value;
+            IDescriptorResult v2 = Descriptor.Calculate(ethane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()
@@ -293,8 +293,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer water1 = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
             IAtomContainer water2 = SomeoneBringMeSomeWater(Silent.ChemObjectBuilder.Instance);
 
-            IDescriptorResult v1 = Descriptor.Calculate(water1).GetValue();
-            IDescriptorResult v2 = Descriptor.Calculate(water2).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(water1).Value;
+            IDescriptorResult v2 = Descriptor.Calculate(water2).Value;
 
             string errorMessage = "(" + Descriptor.GetType().ToString()
                     + ") The descriptor does not give the same results depending on "
@@ -309,8 +309,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // creates an AtomContainer with the atoms / bonds from water1
             IAtomContainer water2 = new AtomContainer(water1);
 
-            IDescriptorResult v1 = Descriptor.Calculate(water1).GetValue();
-            IDescriptorResult v2 = Descriptor.Calculate(water2).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(water1).Value;
+            IDescriptorResult v2 = Descriptor.Calculate(water2).Value;
 
             string errorMessage = "(" + Descriptor.GetType().ToString()
                     + ") The descriptor does not give the same results depending on "
@@ -335,7 +335,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(disconnected);
             AddImplicitHydrogens(disconnected);
 
-            IDescriptorResult v1 = Descriptor.Calculate(disconnected).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(disconnected).Value;
         }
 
         //@Ignore
@@ -364,8 +364,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             ethane2.Atoms.Add(c4);
             ethane2.AddBond(ethane2.Atoms[0], ethane2.Atoms[1], BondOrder.Single);
 
-            IDescriptorResult v1 = Descriptor.Calculate(ethane1).GetValue();
-            IDescriptorResult v2 = Descriptor.Calculate(ethane2).GetValue();
+            IDescriptorResult v1 = Descriptor.Calculate(ethane1).Value;
+            IDescriptorResult v2 = Descriptor.Calculate(ethane2).Value;
 
             string errorMessage = "("
                     + Descriptor.GetType().ToString()

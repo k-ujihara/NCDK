@@ -78,8 +78,8 @@ namespace NCDK.QSAR
         public DescriptorSpecification Specification => this.specification;
         public object[] Parameters => this.parameterSettings;
         public string[] ParameterNames=> this.parameterNames;
-        public IDescriptorResult GetValue() => this.value;
-        public Exception GetException() => exception;
+        public IDescriptorResult Value => this.value;
+        public Exception Exception => exception;
 
         /// <summary>
         /// An array of names for each descriptor value calculated.

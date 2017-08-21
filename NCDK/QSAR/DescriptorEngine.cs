@@ -150,12 +150,12 @@ namespace NCDK.QSAR
                 if (descriptor is IMolecularDescriptor)
                 {
                     DescriptorValue value = ((IMolecularDescriptor)descriptor).Calculate(molecule);
-                    if (value.GetException() == null)
+                    if (value.Exception == null)
                         molecule.SetProperty(speclist[i], value);
                     else
                     {
                         Trace.TraceError($"Could not calculate descriptor value for: {descriptor.GetType().FullName}");
-                        Debug.WriteLine(value.GetException());
+                        Debug.WriteLine(value.Exception);
                     }
                     Debug.WriteLine("Calculated molecular descriptors...");
                 }
@@ -164,12 +164,12 @@ namespace NCDK.QSAR
                     foreach (var atom in molecule.Atoms)
                     {
                         DescriptorValue value = ((IAtomicDescriptor)descriptor).Calculate(atom, molecule);
-                        if (value.GetException() == null)
+                        if (value.Exception == null)
                             atom.SetProperty(speclist[i], value);
                         else
                         {
                             Trace.TraceError("Could not calculate descriptor value for: ", descriptor.GetType().FullName);
-                            Debug.WriteLine(value.GetException());
+                            Debug.WriteLine(value.Exception);
                         }
                     }
                     Debug.WriteLine("Calculated atomic descriptors...");
@@ -179,12 +179,12 @@ namespace NCDK.QSAR
                     foreach (var bond in molecule.Bonds)
                     {
                         DescriptorValue value = ((IBondDescriptor)descriptor).Calculate(bond, molecule);
-                        if (value.GetException() == null)
+                        if (value.Exception == null)
                             bond.SetProperty(speclist[i], value);
                         else
                         {
                             Trace.TraceError("Could not calculate descriptor value for: ", descriptor.GetType().FullName);
-                            Debug.WriteLine(value.GetException());
+                            Debug.WriteLine(value.Exception);
                         }
                     }
                     Debug.WriteLine("Calculated bond descriptors...");

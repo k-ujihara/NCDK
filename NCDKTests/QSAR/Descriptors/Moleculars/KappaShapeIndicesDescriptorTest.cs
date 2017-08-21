@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(mol).GetValue();
+            DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(mol).Value;
             // position 0 =  kier1
             // positions 1 = kier2
             // THIS IS OK: Assert.AreEqual(testResult[1], ((Double)retval[1]).Value, 0.0001);

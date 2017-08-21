@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomicDescriptor descriptor = new CovalentRadiusDescriptor();
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("NCCN(C)(C)");
-            double retval = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).GetValue()).Value;
+            double retval = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
 
             Assert.AreEqual(testResult[0], retval, 0.01);
         }

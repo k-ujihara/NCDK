@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no688:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-1.69, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(-1.69, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1596:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(0.86, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(0.86, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no367:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-3.30, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(-3.30, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1837:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-1.19, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(-1.19, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no87:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(7.00, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(7.00, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1782:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(1.84, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(1.84, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no30:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(4.62, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(4.62, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         //@Ignore
@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no937:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(0.66, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(0.66, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -144,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no990:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(1.834, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(1.834, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -156,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no10000:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(2.809, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(2.809, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -168,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("Aspirin:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(1.422, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(1.422, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -180,7 +180,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1429:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(0.31, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(0.31, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -192,7 +192,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1274:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-1.487, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(-1.487, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -207,7 +207,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no454:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-2.11, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(-2.11, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -220,7 +220,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no498:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-0.59, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(-0.59, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -233,7 +233,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("Aprindine:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(5.03, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(5.03, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -246,7 +246,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1844:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(5.22, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(5.22, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         [TestMethod()]
@@ -258,7 +258,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1810:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(4.56, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
+            Assert.AreEqual(4.56, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 1.0); //at:  16
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
             //Debug.WriteLine("no1822:"+((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(2.36, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.1); //at:  16
+            Assert.AreEqual(2.36, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -286,7 +286,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             aromaticity.Apply(mol);
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2.02, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.01);
+            Assert.AreEqual(2.02, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.01);
         }
 
         [TestMethod()]
@@ -297,7 +297,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2.08, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.01);
+            Assert.AreEqual(2.08, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.01);
         }
 
         [TestMethod()]
@@ -308,7 +308,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2.02, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 0.01);
+            Assert.AreEqual(2.02, ((DoubleResult)Descriptor.Calculate(mol).Value).Value, 0.01);
         }
     }
 }

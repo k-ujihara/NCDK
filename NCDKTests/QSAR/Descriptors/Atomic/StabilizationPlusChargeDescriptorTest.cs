@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).GetValue());
+            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).Value);
 
             Assert.AreNotSame(0.0, result.Value);
         }
@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue());
+            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).Value);
 
             Assert.AreEqual(0.0, result.Value, 0.00001);
         }
@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).GetValue());
+            DoubleResult result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).Value);
 
             Assert.AreNotSame(0.0, result.Value);
         }
@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol1);
             lpcheck.Saturate(mol1);
 
-            DoubleResult result1 = ((DoubleResult)descriptor.Calculate(mol1.Atoms[1], mol1).GetValue());
+            DoubleResult result1 = ((DoubleResult)descriptor.Calculate(mol1.Atoms[1], mol1).Value);
 
             IAtomContainer mol2 = builder.NewAtomContainer();
             mol2.Atoms.Add(builder.NewAtom("C"));
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol2);
             lpcheck.Saturate(mol2);
 
-            DoubleResult result2 = ((DoubleResult)descriptor.Calculate(mol2.Atoms[1], mol2).GetValue());
+            DoubleResult result2 = ((DoubleResult)descriptor.Calculate(mol2.Atoms[1], mol2).Value);
 
             IAtomContainer mol3 = builder.NewAtomContainer();
             mol3.Atoms.Add(builder.NewAtom("C"));
@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol3);
             lpcheck.Saturate(mol3);
 
-            DoubleResult result3 = ((DoubleResult)descriptor.Calculate(mol3.Atoms[1], mol3).GetValue());
+            DoubleResult result3 = ((DoubleResult)descriptor.Calculate(mol3.Atoms[1], mol3).Value);
 
             Assert.IsTrue(result3.Value < result2.Value);
             Assert.IsTrue(result2.Value < result1.Value);
@@ -174,7 +174,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(molA);
             lpcheck.Saturate(molA);
 
-            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).GetValue()).Value;
+            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
 
             IAtomContainer molB = builder.NewAtomContainer();
             molB.Atoms.Add(builder.NewAtom("C"));
@@ -197,7 +197,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual(1, molB.SingleElectrons.Count, 0.00001);
             Assert.AreEqual(2, molB.LonePairs.Count, 0.00001);
 
-            double resultB = ((DoubleResult)descriptor.Calculate(molB.Atoms[3], molB).GetValue()).Value;
+            double resultB = ((DoubleResult)descriptor.Calculate(molB.Atoms[3], molB).Value).Value;
 
             Assert.AreNotSame(resultA, resultB);
         }

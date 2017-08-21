@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
-            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
+            DoubleArrayResult result = (DoubleArrayResult)Descriptor.Calculate(ac).Value;
 
             for (int i = 0; i < 19; i++)
                 Console.Out.WriteLine(result[i]);

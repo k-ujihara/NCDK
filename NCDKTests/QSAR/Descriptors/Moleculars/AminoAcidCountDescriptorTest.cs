@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAACount()
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("ARNDCFQEGHIPLKMSTYVW", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).GetValue();
+            IDescriptorResult result = Descriptor.Calculate(protein).Value;
             Assert.IsTrue(result is IntegerArrayResult);
             IntegerArrayResult iaResult = (IntegerArrayResult)result;
             for (int i = 0; i < iaResult.Length; i++)
@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestFCount()
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("FF", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).GetValue();
+            IDescriptorResult result = Descriptor.Calculate(protein).Value;
             Assert.IsTrue(result is IntegerArrayResult);
             IntegerArrayResult iaResult = (IntegerArrayResult)result;
             Assert.AreEqual(2, iaResult[8]);
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTCount()
         {
             IBioPolymer protein = ProteinBuilderTool.CreateProtein("TT", Silent.ChemObjectBuilder.Instance);
-            IDescriptorResult result = Descriptor.Calculate(protein).GetValue();
+            IDescriptorResult result = Descriptor.Calculate(protein).Value;
             Assert.IsTrue(result is IntegerArrayResult);
             IntegerArrayResult iaResult = (IntegerArrayResult)result;
             Assert.AreEqual(2, iaResult[8]);

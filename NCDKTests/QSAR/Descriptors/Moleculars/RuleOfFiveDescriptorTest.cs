@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).GetValue()).Value);
+            Assert.AreEqual(2, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
         }
 
         [TestMethod()]
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(0, ((IntegerResult)Descriptor.Calculate(mol).GetValue()).Value);
+            Assert.AreEqual(0, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
         }
 
         [TestMethod()]
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(1, ((IntegerResult)Descriptor.Calculate(mol).GetValue()).Value);
+            Assert.AreEqual(1, ((IntegerResult)Descriptor.Calculate(mol).Value).Value);
         }
     }
 }

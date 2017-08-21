@@ -74,7 +74,7 @@ namespace NCDK.IO.CML
             Assert.IsTrue(value is DescriptorValue);
             DescriptorValue descriptorResult = (DescriptorValue)value;
             Assert.AreEqual(originalValue.GetType().FullName, descriptorResult.GetType().FullName);
-            Assert.AreEqual(originalValue.GetValue().ToString(), descriptorResult.GetValue().ToString());
+            Assert.AreEqual(originalValue.Value.ToString(), descriptorResult.Value.ToString());
         }
 
         [TestMethod()]

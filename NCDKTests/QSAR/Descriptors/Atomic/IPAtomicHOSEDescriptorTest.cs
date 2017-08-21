@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[4], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[4], mol).Value).Value;
             double resultAccordingNIST = 10.57; //value for CC(C)Cl
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 10.8; //value for CCCCl aprox.
 
             Assert.AreEqual(resultAccordingNIST, result, 0.00001);
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[1], mol).Value).Value;
             double resultAccordingNIST = 11.26;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.42);
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[2], mol).Value).Value;
             double resultAccordingNIST = 11.29;
 
             Assert.AreEqual(resultAccordingNIST, result, 1.95);
@@ -151,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[3], mol).Value).Value;
             double resultAccordingNIST = 9.27;
 
             Assert.AreEqual(resultAccordingNIST, result, 0.02);

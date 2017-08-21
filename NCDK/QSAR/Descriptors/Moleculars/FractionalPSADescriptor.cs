@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // polar surface area: chain it off the TPSADescriptor
                 TPSADescriptor tpsa = new TPSADescriptor();
                 DescriptorValue value = tpsa.Calculate(mol);
-                polar = ((DoubleResult)value.GetValue()).Value;
+                polar = ((DoubleResult)value.Value).Value;
 
                 //  molecular weight
                 foreach (var atom in mol.Atoms)

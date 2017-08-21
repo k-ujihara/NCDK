@@ -117,21 +117,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             try
             {
                 xlogP.Parameters = xlogPparams;
-                double xlogPvalue = ((DoubleResult)xlogP.Calculate(mol).GetValue()).Value;
+                double xlogPvalue = ((DoubleResult)xlogP.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor acc = new HBondAcceptorCountDescriptor();
                 object[] hBondparams = { checkAromaticity };
                 acc.Parameters = hBondparams;
-                int acceptors = ((IntegerResult)acc.Calculate(mol).GetValue()).Value;
+                int acceptors = ((IntegerResult)acc.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor don = new HBondDonorCountDescriptor();
                 don.Parameters = hBondparams;
-                int donors = ((IntegerResult)don.Calculate(mol).GetValue()).Value;
+                int donors = ((IntegerResult)don.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor mw = new WeightDescriptor();
                 object[] mwparams = { "" };
                 mw.Parameters = mwparams;
-                double mwvalue = ((DoubleResult)mw.Calculate(mol).GetValue()).Value;
+                double mwvalue = ((DoubleResult)mw.Calculate(mol).Value).Value;
 
                 // exclude (heavy atom) terminal bonds
                 // exclude amide C-N bonds because of their high rotational barrier
@@ -139,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
                 object[] rotatableBondsParams = { false, true };
                 rotata.Parameters = rotatableBondsParams;
-                int rotatablebonds = ((IntegerResult)rotata.Calculate(mol).GetValue()).Value;
+                int rotatablebonds = ((IntegerResult)rotata.Calculate(mol).Value).Value;
 
                 if (xlogPvalue > 5.0)
                 {

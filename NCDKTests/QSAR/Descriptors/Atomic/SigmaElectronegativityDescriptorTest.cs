@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 2; i++)
             {
                 descriptor.Parameters = new object[] { 6 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
 
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 2; i++)
             {
                 descriptor.Parameters = new object[] { 6 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 4; i++)
             {
                 descriptor.Parameters = new object[] { 6 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.02);
             }
         }
@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = sp.ParseSmiles("C(C)(C)CCI");
             AddExplicitHydrogens(mol);
 
-            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[5], mol).GetValue()).Value;
+            double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[5], mol).Value).Value;
             Assert.AreEqual(testResult, result, 0.08);
         }
 
@@ -133,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 5; i++)
             {
                 descriptor.Parameters = new object[] { 6 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.002);
             }
         }
@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 4; i++)
             {
                 descriptor.Parameters = new object[] { 6 };
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.002);
             }
         }
@@ -175,7 +175,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             for (int i = 0; i < 4; i++)
             {
-                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
+                double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).Value).Value;
                 Assert.AreEqual(testResult[i], result, 0.01);
             }
         }
@@ -201,7 +201,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molA);
             lpcheck.Saturate(molA);
 
-            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).GetValue()).Value;
+            double resultA = ((DoubleResult)descriptor.Calculate(molA.Atoms[3], molA).Value).Value;
 
             IAtomContainer molB = builder.NewAtomContainer();
             molB.Atoms.Add(builder.NewAtom("C"));
@@ -224,7 +224,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreEqual(1, molB.SingleElectrons.Count, 0.00001);
             Assert.AreEqual(2, molB.LonePairs.Count, 0.00001);
 
-            double resultB = ((DoubleResult)descriptor.Calculate(molB.Atoms[3], molB).GetValue()).Value;
+            double resultB = ((DoubleResult)descriptor.Calculate(molB.Atoms[3], molB).Value).Value;
 
             Assert.AreEqual(resultA, resultB, 0.00001);
         }

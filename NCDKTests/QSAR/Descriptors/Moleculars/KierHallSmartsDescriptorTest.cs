@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol);
 
             DescriptorValue value = Descriptor.Calculate(mol);
-            IntegerArrayResult result = (IntegerArrayResult)value.GetValue();
+            IntegerArrayResult result = (IntegerArrayResult)value.Value;
 
             Assert.AreEqual(79, result.Length);
             Assert.AreEqual(1, result[GetIndex("khs.sOH")]);
@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol);
 
             DescriptorValue value = Descriptor.Calculate(mol);
-            IntegerArrayResult result = (IntegerArrayResult)value.GetValue();
+            IntegerArrayResult result = (IntegerArrayResult)value.Value;
 
             Assert.AreEqual(79, result.Length);
             Assert.AreEqual(2, result[GetIndex("khs.sOH")]);
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol);
 
             DescriptorValue value = Descriptor.Calculate(mol);
-            IntegerArrayResult result = (IntegerArrayResult)value.GetValue();
+            IntegerArrayResult result = (IntegerArrayResult)value.Value;
 
             Assert.AreEqual(79, result.Length);
             Assert.AreEqual(2, result[GetIndex("khs.tsC")]);

@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             );
             DescriptorValue value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.GetValue();
+            IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.AreEqual(1, ((IntegerResult)result).Value);
         }
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             );
             DescriptorValue value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.GetValue();
+            IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.AreEqual(4, ((IntegerResult)result).Value);
         }

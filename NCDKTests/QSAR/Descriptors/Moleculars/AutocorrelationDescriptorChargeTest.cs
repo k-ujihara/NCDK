@@ -24,9 +24,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
             DescriptorValue count = Descriptor.Calculate(container);
-            Assert.AreEqual(5, count.GetValue().Length);
-            Assert.IsTrue(count.GetValue() is DoubleArrayResult);
-            DoubleArrayResult result = (DoubleArrayResult)count.GetValue();
+            Assert.AreEqual(5, count.Value.Length);
+            Assert.IsTrue(count.Value is DoubleArrayResult);
+            DoubleArrayResult result = (DoubleArrayResult)count.Value;
             for (int i = 0; i < 5; i++)
             {
                 Assert.IsFalse(double.IsNaN(result[i]));

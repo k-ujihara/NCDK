@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             ISubstance material = new Substance();
             DescriptorValue value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.GetValue();
+            IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.AreNotSame(0, result.Length);
         }
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Substances
         {
             DescriptorValue value = descriptor.Calculate(null);
             Assert.IsNotNull(value);
-            IDescriptorResult result = value.GetValue();
+            IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.AreNotSame(0, result.Length);
         }

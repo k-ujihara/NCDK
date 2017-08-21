@@ -506,7 +506,7 @@ namespace NCDK.IO.CML
             Assert.IsNotNull(mol.GetProperty<object>(key));
             Assert.IsTrue(mol.GetProperty<DescriptorValue>(key) is DescriptorValue);
             DescriptorValue value = mol.GetProperty<DescriptorValue>(key);
-            IDescriptorResult result = value.GetValue();
+            IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.IsTrue(result is DoubleResult);
             Assert.AreEqual(72.0, ((DoubleResult)result).Value, 0.001);

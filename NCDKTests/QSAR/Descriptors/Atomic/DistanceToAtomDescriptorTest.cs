@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single); // 2
                                                                        // mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single); // 3 // jwmay: there is no atom at index 3
 
-            Assert.AreEqual(2.46, ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).GetValue()).Value, 0.1);
+            Assert.AreEqual(2.46, ((DoubleResult)descriptor.Calculate(mol.Atoms[0], mol).Value).Value, 0.1);
         }
     }
 }
