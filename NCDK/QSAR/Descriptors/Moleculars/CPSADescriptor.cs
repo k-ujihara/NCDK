@@ -20,7 +20,7 @@
 using NCDK.Charges;
 using NCDK.Geometries;
 using NCDK.Geometries.Surface;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using System;
 using System.Diagnostics;
 

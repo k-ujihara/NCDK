@@ -23,7 +23,7 @@
  *
  */
 using NCDK.QSAR;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using System.Text;
 using System.Xml.Linq;
 

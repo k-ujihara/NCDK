@@ -18,33 +18,34 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class IntegerResultTypeTest : CDKTestCase
+    public class BooleanResultTypeTest : CDKTestCase
     {
-        public IntegerResultTypeTest()
-            : base()
-        { }
+        public BooleanResultTypeTest()
+                : base()
+        {
+        }
 
         [TestMethod()]
-        public void TestIntegerResultType()
+        public void TestBooleanResultType()
         {
-            IDescriptorResult type = IntegerResultType.Instance;
+            IDescriptorResult type = new BooleanResultType();
             Assert.IsNotNull(type);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            Assert.AreEqual("IntegerResultType", IntegerResultType.Instance.ToString());
+            Assert.AreEqual("BooleanResultType", new BooleanResultType().ToString());
         }
 
         [TestMethod()]
         public void TestLength()
         {
-            Assert.AreEqual(1, IntegerResultType.Instance.Length);
+            Assert.AreEqual(1, new BooleanResultType().Length);
         }
     }
 }

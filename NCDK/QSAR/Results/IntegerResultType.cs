@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,22 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.QSAR.Result
+using System;
+
+namespace NCDK.QSAR.Results
 {
     /// <summary>
-    /// Object that provides access to the calculated descriptor value.
+    /// IDescriptorResult type for integer.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    public class BooleanResult : BooleanResultType
+    [Serializable]
+    public class IntegerResultType : IDescriptorResult
     {
-        public bool Value { get; private set; }
+        public static IntegerResultType Instance { get; } = new IntegerResultType();
 
-        public BooleanResult(bool value)
-        {
-            Value = value;
-        }
+        private IntegerResultType() { }
 
-        public override string ToString() => Value ? "true" : "false";
+        public override string ToString() => "IntegerResultType";
+        public int Length => 1;
     }
 }

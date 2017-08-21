@@ -18,42 +18,33 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class IntegerResultTest : CDKTestCase
+    public class DoubleArrayResultTypeTest : CDKTestCase
     {
-        public IntegerResultTest()
-                : base()
+        public DoubleArrayResultTypeTest()
+            : base()
         { }
 
         [TestMethod()]
-        public void TestIntegerResult_int()
+        public void TestDoubleArrayResultType()
         {
-            IntegerResult result = new IntegerResult(5);
-            Assert.IsNotNull(result);
+            IDescriptorResult type = new DoubleArrayResultType(6);
+            Assert.IsNotNull(type);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            IntegerResult result = new IntegerResult(5);
-            Assert.AreEqual("5", result.ToString());
-        }
-
-        [TestMethod()]
-        public void TestIntValue()
-        {
-            IntegerResult result = new IntegerResult(5);
-            Assert.AreEqual(5, result.Value);
+            Assert.AreEqual("DoubleArrayResultType", new DoubleArrayResultType(7).ToString());
         }
 
         [TestMethod()]
         public void TestLength()
         {
-            IntegerResult result = new IntegerResult(5);
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual(7, new DoubleArrayResultType(7).Length);
         }
     }
 }

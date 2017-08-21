@@ -19,7 +19,7 @@
  */
 using NCDK.Aromaticities;
 using NCDK.Graphs.Invariant;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;

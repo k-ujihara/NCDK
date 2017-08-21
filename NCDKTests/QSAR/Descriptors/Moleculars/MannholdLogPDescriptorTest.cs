@@ -17,7 +17,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {

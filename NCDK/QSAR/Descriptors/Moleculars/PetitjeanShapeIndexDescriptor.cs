@@ -21,7 +21,7 @@ using NCDK.Common.Collections;
 using NCDK.Numerics;
 using NCDK.Geometries;
 using NCDK.Graphs;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 

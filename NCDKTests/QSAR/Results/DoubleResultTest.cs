@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module test-standard
     public class DoubleResultTest : CDKTestCase

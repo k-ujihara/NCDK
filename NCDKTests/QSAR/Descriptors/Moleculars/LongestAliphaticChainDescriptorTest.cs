@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Smiles;
 
 namespace NCDK.QSAR.Descriptors.Moleculars

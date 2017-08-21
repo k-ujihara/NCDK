@@ -17,7 +17,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Primitives;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 

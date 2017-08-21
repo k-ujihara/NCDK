@@ -18,33 +18,37 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class DoubleArrayResultTypeTest : CDKTestCase
+    public class BooleanResultTest : CDKTestCase
     {
-        public DoubleArrayResultTypeTest()
+        public BooleanResultTest()
             : base()
         { }
 
+        // well, these tests are not shocking...
+
         [TestMethod()]
-        public void TestDoubleArrayResultType()
+        public void TestBooleanResult_bool()
         {
-            IDescriptorResult type = new DoubleArrayResultType(6);
-            Assert.IsNotNull(type);
+            BooleanResult result = new BooleanResult(true);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod()]
+        public void TestBooleanValue()
+        {
+            Assert.IsTrue(new BooleanResult(true).Value);
+            Assert.IsFalse(new BooleanResult(false).Value);
         }
 
         [TestMethod()]
         public void TestToString()
         {
-            Assert.AreEqual("DoubleArrayResultType", new DoubleArrayResultType(7).ToString());
-        }
-
-        [TestMethod()]
-        public void TestLength()
-        {
-            Assert.AreEqual(7, new DoubleArrayResultType(7).Length);
+            Assert.AreEqual("true", new BooleanResult(true).ToString());
+            Assert.AreEqual("false", new BooleanResult(false).ToString());
         }
     }
 }

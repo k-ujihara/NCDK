@@ -19,7 +19,7 @@
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;

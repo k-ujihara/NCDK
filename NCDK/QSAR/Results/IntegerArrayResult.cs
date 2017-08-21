@@ -17,47 +17,54 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module standard
     // @cdk.githash
-    public class DoubleArrayResult : DoubleArrayResultType
+    public class IntegerArrayResult : IntegerArrayResultType, IList<int>
     {
-        private List<double> array;
+        private List<int> array;
 
-        public DoubleArrayResult()
+        public IntegerArrayResult()
             : base(0)
         {
-            this.array = new List<double>();
+            this.array = new List<int>();
         }
 
-        public DoubleArrayResult(int size)
+        public IntegerArrayResult(int size)
             : base(size)
         {
-            this.array = new List<double>(size);
+            this.array = new List<int>(size);
         }
 
-        public void Add(double value)
+        public void Add(int value)
         {
             array.Add(value);
         }
 
-        public double this[int index]
+        public int this[int index]
         {
             get
             {
                 if (index >= this.array.Count)
                 {
-                    return 0.0;
+                    return 0;
                 }
                 return this.array[index];
+            }
+            set
+            {
+                throw new InvalidOperationException();
             }
         }
 
         public override int Length => Math.Max(base.Length, this.array.Count);
+        public int Count => Length;
+        public bool IsReadOnly => true;
 
         public override string ToString()
         {
@@ -69,5 +76,17 @@ namespace NCDK.QSAR.Result
             }
             return buf.ToString();
         }
+
+        public int IndexOf(int item) => array.IndexOf(item);
+        public void Insert(int index, int item) { throw new InvalidOperationException(); }
+        public void RemoveAt(int index) { throw new InvalidOperationException(); }
+        public void Clear() { throw new InvalidOperationException(); }
+        public bool Contains(int item) => array.Contains(item);
+        public void CopyTo(int[] array, int arrayIndex) { throw new InvalidOperationException(); }
+        public bool Remove(int item) { throw new InvalidOperationException(); }
+
+        public IEnumerator<int> GetEnumerator() => array.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
+

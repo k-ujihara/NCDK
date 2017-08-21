@@ -28,7 +28,7 @@
 
 using NCDK.AtomTypes;
 using NCDK.Config;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;

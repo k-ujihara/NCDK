@@ -18,7 +18,7 @@
  */
 
 using NCDK.Config.Fragments;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Smiles.SMARTS;
 using NCDK.Tools.Manipulator;
 using System;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,30 +16,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
-    /// <summary>
-    /// IDescriptorResult type for doubles.
-    /// </summary>
-    // @cdk.module standard
-    // @cdk.githash
-    [Serializable]
-    public class DoubleArrayResultType : IDescriptorResult
+    // @cdk.module test-standard
+    [TestClass()]
+    public class DoubleResultTypeTest : CDKTestCase
     {
-        private int size;
+        public DoubleResultTypeTest()
+            : base()
+        { }
 
-        public DoubleArrayResultType(int size)
+        [TestMethod()]
+        public void TestDoubleResultType()
         {
-            this.size = size;
+            IDescriptorResult type = new DoubleResultType();
+            Assert.IsNotNull(type);
         }
 
-        public override string ToString()
+        [TestMethod()]
+        public void TestToString()
         {
-            return "DoubleArrayResultType";
+            Assert.AreEqual("DoubleResultType", new DoubleResultType().ToString());
         }
 
-        public virtual int Length => size;
+        [TestMethod()]
+        public void TestLength()
+        {
+            Assert.AreEqual(1, new DoubleResultType().Length);
+        }
     }
 }

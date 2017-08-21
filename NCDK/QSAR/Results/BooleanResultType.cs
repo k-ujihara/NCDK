@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,35 +16,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
-    // @cdk.module test-standard
-    [TestClass()]
-    public class IntegerArrayResultTypeTest : CDKTestCase
+    /// <summary>
+    /// IDescriptorResult type for booleans.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    [Serializable]
+    public class BooleanResultType : IDescriptorResult
     {
-        public IntegerArrayResultTypeTest()
-            : base()
-        { }
-
-        [TestMethod()]
-        public void TestIntegerArrayResultType()
+        public override string ToString()
         {
-            IDescriptorResult type = new IntegerArrayResultType(6);
-            Assert.IsNotNull(type);
+            return "BooleanResultType";
         }
 
-        [TestMethod()]
-        public void TestToString()
-        {
-            Assert.AreEqual("IntegerArrayResultType", new IntegerArrayResultType(7).ToString());
-        }
-
-        [TestMethod()]
-        public void TestLength()
-        {
-            Assert.AreEqual(7, new IntegerArrayResultType(7).Length);
-        }
+        public int Length => 1;
     }
 }

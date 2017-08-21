@@ -19,7 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.QSAR.Descriptors.Moleculars;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools;
 
 namespace NCDK.QSAR.Descriptors.Proteins

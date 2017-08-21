@@ -18,7 +18,7 @@
  */
 using NCDK.Common.Mathematics;
 using NCDK.Numerics;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {

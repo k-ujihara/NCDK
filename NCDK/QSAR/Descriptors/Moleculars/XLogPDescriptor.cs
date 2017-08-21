@@ -25,7 +25,7 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Isomorphisms.MCSS;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;

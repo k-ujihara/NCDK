@@ -19,7 +19,7 @@
 using NCDK.Common.Collections;
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Geometries;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

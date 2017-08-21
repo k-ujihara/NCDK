@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.IO;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 

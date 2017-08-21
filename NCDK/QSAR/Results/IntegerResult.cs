@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.ne>
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -18,20 +18,24 @@
  */
 using System;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     /// <summary>
-    /// IDescriptorResult type for double.
+    /// Object that provides access to the calculated descriptor value.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
     [Serializable]
-    public class DoubleResultType : IDescriptorResult
+    public class IntegerResult : IDescriptorResult
     {
-        public override string ToString()
+        public int Value { get; private set; }
+
+        public IntegerResult(int value)
         {
-            return "DoubleResultType";
+            Value = value;
         }
+
+        public override string ToString() => Value.ToString();
 
         public int Length => 1;
     }

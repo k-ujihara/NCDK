@@ -19,7 +19,7 @@
 using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;

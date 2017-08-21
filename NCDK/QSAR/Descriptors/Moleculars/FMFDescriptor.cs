@@ -19,7 +19,7 @@
  */
 
 using NCDK.Fragments;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars

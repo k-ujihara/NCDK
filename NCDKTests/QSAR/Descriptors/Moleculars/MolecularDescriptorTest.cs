@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Dict;
 using NCDK.Tools.Diff;
 using NCDK.Common.Base;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using NCDK.Default;
 using NCDK.Numerics;

@@ -18,21 +18,28 @@
  */
 using System;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     /// <summary>
-    /// IDescriptorResult type for integer.
+    /// IDescriptorResult type for doubles.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
     [Serializable]
-    public class IntegerResultType : IDescriptorResult
+    public class DoubleArrayResultType : IDescriptorResult
     {
-        public static IntegerResultType Instance { get; } = new IntegerResultType();
+        private int size;
 
-        private IntegerResultType() { }
+        public DoubleArrayResultType(int size)
+        {
+            this.size = size;
+        }
 
-        public override string ToString() => "IntegerResultType";
-        public int Length => 1;
+        public override string ToString()
+        {
+            return "DoubleArrayResultType";
+        }
+
+        public virtual int Length => size;
     }
 }

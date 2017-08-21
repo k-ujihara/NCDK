@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Dict;
 using NCDK.QSAR;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Stereo;
 using System.IO;
 using System.Linq;

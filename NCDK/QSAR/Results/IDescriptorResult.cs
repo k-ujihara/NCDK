@@ -1,4 +1,4 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -16,35 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
-    // @cdk.module test-standard
-    [TestClass()]
-    public class DoubleResultTypeTest : CDKTestCase
+    /// <summary>
+    /// Object that provides access to the calculated descriptor value.
+    /// The concept was taken from JOELib.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    public interface IDescriptorResult 
     {
-        public DoubleResultTypeTest()
-            : base()
-        { }
-
-        [TestMethod()]
-        public void TestDoubleResultType()
-        {
-            IDescriptorResult type = new DoubleResultType();
-            Assert.IsNotNull(type);
-        }
-
-        [TestMethod()]
-        public void TestToString()
-        {
-            Assert.AreEqual("DoubleResultType", new DoubleResultType().ToString());
-        }
-
-        [TestMethod()]
-        public void TestLength()
-        {
-            Assert.AreEqual(1, new DoubleResultType().Length);
-        }
+        /// <summary>
+        /// The length of this descriptor.
+        /// </summary>
+        int Length { get; }
     }
 }

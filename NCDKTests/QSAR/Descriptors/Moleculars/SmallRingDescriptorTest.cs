@@ -30,7 +30,7 @@ using NCDK.Common.Primitives;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;

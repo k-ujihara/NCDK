@@ -16,7 +16,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Substances

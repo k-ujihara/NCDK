@@ -21,7 +21,7 @@ using NCDK.Common.Collections;
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Config;
 using NCDK.Geometries;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Linq;

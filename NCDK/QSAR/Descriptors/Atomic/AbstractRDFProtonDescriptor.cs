@@ -22,7 +22,7 @@ using NCDK.Numerics;
 using NCDK.Aromaticities;
 using NCDK.Charges;
 using NCDK.Graphs.Invariant;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;

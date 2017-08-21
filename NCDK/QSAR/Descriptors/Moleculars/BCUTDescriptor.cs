@@ -23,7 +23,7 @@ using NCDK.Charges;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
-using NCDK.QSAR.Result;
+using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;

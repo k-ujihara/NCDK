@@ -16,20 +16,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
-    /// <summary>
-    /// Object that provides access to the calculated descriptor value.
-    /// The concept was taken from JOELib.
-    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    public interface IDescriptorResult 
+    [Serializable]
+    public class DoubleResult : IDescriptorResult
     {
-        /// <summary>
-        /// The length of this descriptor.
-        /// </summary>
-        int Length { get; }
+        public double Value { get; private set; }
+
+        public DoubleResult(double value)
+        {
+            Value = value;
+        }
+
+        public override string ToString() => Value.ToString();
+
+        public int Length => 1;
     }
 }

@@ -17,50 +17,38 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class IntegerArrayResultTest : CDKTestCase
+    public class DoubleArrayResultTest : CDKTestCase
     {
-        public IntegerArrayResultTest()
+        public DoubleArrayResultTest()
             : base()
         { }
 
         [TestMethod()]
-        public void IntegerArrayResult_int()
+        public void TestDoubleArrayResult_int()
         {
-            IntegerArrayResult result = new IntegerArrayResult(5);
+            DoubleArrayResult result = new DoubleArrayResult(5);
             Assert.IsNotNull(result);
             Assert.AreEqual(5, result.Length);
         }
 
         [TestMethod()]
-        public void TestIntegerArrayResult()
+        public void TestDoubleArrayResult()
         {
-            IntegerArrayResult result = new IntegerArrayResult();
+            DoubleArrayResult result = new DoubleArrayResult();
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Length);
         }
 
         [TestMethod()]
-        public void TestAdd_int()
-        {
-            IntegerArrayResult result = new IntegerArrayResult();
-            Assert.IsNotNull(result);
-            result.Add(5);
-            result.Add(5);
-            result.Add(5);
-            result.Add(5);
-            result.Add(5);
-            Assert.AreEqual(5, result.Length);
-        }
-
-        [TestMethod()]
         public void TestSize()
         {
-            IntegerArrayResult result = new IntegerArrayResult();
+            DoubleArrayResult result = new DoubleArrayResult();
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Length);
             result.Add(5);
@@ -68,34 +56,46 @@ namespace NCDK.QSAR.Result
         }
 
         [TestMethod()]
-        public void TestToString()
+        public void TestAdd_Double()
         {
-            IntegerArrayResult result = new IntegerArrayResult();
+            DoubleArrayResult result = new DoubleArrayResult();
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);
-            Assert.AreEqual("5", result.ToString());
             result.Add(2);
-            Assert.AreEqual("5,2", result.ToString());
             result.Add(-3);
-            Assert.AreEqual("5,2,-3", result.ToString());
+            Assert.AreEqual(3, result.Length);
+        }
+
+        [TestMethod()]
+        public void TestToString()
+        {
+            DoubleArrayResult result = new DoubleArrayResult();
+            Assert.IsNotNull(result);
+            Assert.AreEqual("", result.ToString());
+            result.Add(5);
+            Assert.IsTrue(new[] { "5.0", "5" }.ToList().Contains(result.ToString()));
+            result.Add(2);
+            Assert.IsTrue(new[] { "5.0,2.0", "5,2" }.ToList().Contains(result.ToString()));
+            result.Add(-3);
+            Assert.IsTrue(new[] { "5.0,2.0,-3.0", "5,2,-3" }.ToList().Contains(result.ToString()));
         }
 
         [TestMethod()]
         public void TestGet_int()
         {
-            IntegerArrayResult result = new IntegerArrayResult();
+            DoubleArrayResult result = new DoubleArrayResult();
             Assert.IsNotNull(result);
             Assert.AreEqual("", result.ToString());
             result.Add(5);
-            Assert.AreEqual(5, result[0]);
+            Assert.AreEqual(5, result[0], 0.000001);
             result.Add(2);
-            Assert.AreEqual(5, result[0]);
-            Assert.AreEqual(2, result[1]);
+            Assert.AreEqual(5, result[0], 0.000001);
+            Assert.AreEqual(2, result[1], 0.000001);
             result.Add(-1);
-            Assert.AreEqual(5, result[0]);
-            Assert.AreEqual(2, result[1]);
-            Assert.AreEqual(-1, result[2]);
+            Assert.AreEqual(5, result[0], 0.000001);
+            Assert.AreEqual(2, result[1], 0.000001);
+            Assert.AreEqual(-1, result[2], 0.000001);
         }
     }
 }

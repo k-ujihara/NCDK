@@ -18,7 +18,7 @@
  */
 using System;
 
-namespace NCDK.QSAR.Result
+namespace NCDK.QSAR.Results
 {
     /// <summary>
     /// IDescriptorResult type for integers.
