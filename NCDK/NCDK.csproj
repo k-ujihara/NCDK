@@ -54,6 +54,13 @@
     <NoWarn>0164,0612,0618,0672,3021</NoWarn>
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
       <HintPath>..\packages\dotNetRDF.1.0.12\lib\net40\dotNetRDF.dll</HintPath>
