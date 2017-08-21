@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         };
         private readonly static string[] NAMES = { "nAcid" };
 
-        private List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
+        private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
         private bool checkAromaticity;
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.checkAromaticity = true;
         }
 
-        public override void Initialise(IChemObjectBuilder builder)
+        static AcidicGroupCountDescriptor()
         {
             foreach (var smarts in SMARTS_STRINGS)
             {
-                tools.Add(new SMARTSQueryTool(smarts, builder));
+                tools.Add(new SMARTSQueryTool(smarts, Silent.ChemObjectBuilder.Instance));
             }
         }
 
@@ -103,11 +103,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
-            if (!tools.Any())
-            {
-                throw new InvalidOperationException("descriptor is not initialised, invoke 'initialise' first");
-            }
-
             // do aromaticity detection
             if (this.checkAromaticity)
             {

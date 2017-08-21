@@ -39,7 +39,6 @@ namespace NCDK.QSAR.Descriptors
             {
                 var defaultConstructor = descriptorClass.GetConstructor(Type.EmptyTypes);
                 this.Descriptor = (T)defaultConstructor.Invoke(Array.Empty<object>());
-                this.Descriptor.Initialise(Default.ChemObjectBuilder.Instance);
             }
         }
 

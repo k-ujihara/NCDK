@@ -111,7 +111,6 @@ namespace NCDK.QSAR
             var o = new DescriptorEngine(builder);
             foreach (var descriptor in ServiceLoader<T>.Load())
             {
-                descriptor.Initialise(builder);
                 o.descriptors.Add(descriptor);
                 o.classNames.Add(descriptor.GetType().FullName);
             }
@@ -627,7 +626,6 @@ namespace NCDK.QSAR
                 {
                     var c = assembly.GetType(descriptorName);    // c is IDescriptor type
                     IDescriptor descriptor = Instantiate(c);
-                    descriptor.Initialise(builder);
                     descriptors.Add(descriptor);
                     Trace.TraceInformation("Loaded descriptor: ", descriptorName);
                 }

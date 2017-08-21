@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         };
         private readonly static string[] NAMES = { "nBase" };
 
-        private List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
+        private static readonly List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
 
         /// <summary>
         /// Creates a new <see cref="BasicGroupCountDescriptor"/>.
@@ -64,11 +64,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         { 
         }
 
-        public override void Initialise(IChemObjectBuilder builder)
+        static BasicGroupCountDescriptor()
         {
             foreach (var smarts in SMARTS_STRINGS)
             {
-                tools.Add(new SMARTSQueryTool(smarts, builder));
+                tools.Add(new SMARTSQueryTool(smarts, Silent.ChemObjectBuilder.Instance));
             }
         }
 
@@ -89,11 +89,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
-            if (!tools.Any())
-            {
-                throw new InvalidOperationException("descriptor is not initialised, invoke 'initialise' first");
-            }
-
             try
             {
                 int count = 0;

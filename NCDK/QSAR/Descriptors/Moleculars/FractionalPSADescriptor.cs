@@ -51,8 +51,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         public FractionalPSADescriptor() { }
 
-        public void Initialise(IChemObjectBuilder builder) { }
-
         public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(

@@ -30,15 +30,6 @@ namespace NCDK.QSAR
     // @cdk.module qsar
     public abstract class AbstractDescriptor : IDescriptor
     {
-        /// <summary>
-        /// Default implementation of initialise allows optional override.
-        /// </summary>
-        /// <param name="builder">chem object build</param>
-        public virtual void Initialise(IChemObjectBuilder builder)
-        {
-            // do nothing
-        }
-
         public abstract string[] DescriptorNames { get; }
         public abstract string[] ParameterNames { get; }
 

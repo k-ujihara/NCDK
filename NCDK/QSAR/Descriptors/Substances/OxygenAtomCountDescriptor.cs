@@ -75,11 +75,5 @@ namespace NCDK.QSAR.Descriptors.Substances
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = IntegerResultType.Instance;
-
-        /// <inheritdoc/>
-        public void Initialise(IChemObjectBuilder builder)
-        {
-            // nothing to be done
-        }
     }
 }

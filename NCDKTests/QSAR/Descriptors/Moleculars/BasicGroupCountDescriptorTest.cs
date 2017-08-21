@@ -49,13 +49,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(1, result.Value);
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void UninitalisedError()
-        {
-            new BasicGroupCountDescriptor().Calculate(new AtomContainer());
-        }
-
         // @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2
         [TestMethod()]
         public void Test()

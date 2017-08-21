@@ -42,13 +42,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void UninitalisedError()
-        {
-            new BasicGroupCountDescriptor().Calculate(new AtomContainer());
-        }
-
-        [TestMethod()]
         public void TestOneAcidGroup()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);

@@ -62,8 +62,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public SmallRingDescriptor() { }
 
-        public void Initialise(IChemObjectBuilder builder) { }
-
         /// <summary>
         /// Fetch descriptor specification.
         /// </summary>

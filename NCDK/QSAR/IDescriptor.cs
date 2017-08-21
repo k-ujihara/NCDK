@@ -85,15 +85,6 @@ namespace NCDK.QSAR
     public interface IDescriptor
     {
         /// <summary>
-        /// Initialise the descriptor with the specified chem object builder. This
-        /// allows descriptors that required domain objects, such as for SMARTS queries
-        /// to initialise correctly. If you do not need domain objects then this method
-        /// does not need to be implemented.
-        /// </summary>
-        /// <param name="builder">chem object builder to use with this descriptor</param>
-        void Initialise(IChemObjectBuilder builder);
-
-        /// <summary>
         /// A <see cref="IImplementationSpecification"/> which specifies which descriptor is implemented by this class.
         /// </summary>
         /// <remarks>
