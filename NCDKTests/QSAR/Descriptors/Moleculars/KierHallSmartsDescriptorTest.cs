@@ -21,6 +21,7 @@ using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -31,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class KierHallSmartsDescriptorTest : MolecularDescriptorTest
     {
-        private string[] names;
+        private readonly IReadOnlyList<string> names;
 
         public KierHallSmartsDescriptorTest()
         {
@@ -41,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private int GetIndex(string name)
         {
-            for (int i = 0; i < names.Length; i++)
+            for (int i = 0; i < names.Count; i++)
             {
                 if (names[i].Equals(name)) return i;
             }

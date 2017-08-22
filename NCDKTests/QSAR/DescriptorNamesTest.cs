@@ -62,7 +62,7 @@ namespace NCDK.QSAR
                 DescriptorValue value = (DescriptorValue)ac.GetProperty<DescriptorValue>(spec);
                 if (value == null) Assert.Fail(spec.ImplementationTitle + " was not calculated.");
                 ncalc++;
-                string[] names = value.Names;
+                var names = value.Names;
                 descNames.AddRange(names);
             }
 

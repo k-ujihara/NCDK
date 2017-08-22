@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -99,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  the method take a bool checkAromaticity: if the bool is true, it means that
@@ -176,7 +177,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the RuleOfFiveDescriptor object.

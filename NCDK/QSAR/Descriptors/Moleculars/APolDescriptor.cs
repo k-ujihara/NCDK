@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -90,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the sum of atomic polarizabilities in an <see cref="IAtomContainer"/>.
@@ -133,7 +134,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the APolDescriptor object.
         /// </summary>
-        public override string[] ParameterNames => null;  // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null;  // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the APolDescriptor object.

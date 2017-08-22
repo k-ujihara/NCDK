@@ -87,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculates the ionization potential of an atom.
@@ -150,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the IPAtomicHOSEDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the IPAtomicHOSEDescriptor object.

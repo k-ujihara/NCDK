@@ -25,6 +25,7 @@ using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -89,12 +90,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
@@ -105,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

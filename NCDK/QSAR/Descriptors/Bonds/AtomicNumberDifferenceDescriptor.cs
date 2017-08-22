@@ -21,6 +21,7 @@ using NCDK.Config;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Bonds
@@ -67,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public override DescriptorValue Calculate(IBond bond, IAtomContainer ac)
         {
@@ -84,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
                     Math.Abs(factory.GetElement(atoms[0].Symbol).AtomicNumber.Value - factory.GetElement(atoms[1].Symbol).AtomicNumber.Value)), NAMES);
         }
 
-        public override string[] ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         public override object GetParameterType(string name) => null;
     }

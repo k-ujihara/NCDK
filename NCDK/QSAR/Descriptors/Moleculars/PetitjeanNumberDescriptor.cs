@@ -19,6 +19,7 @@
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -78,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Evaluate the descriptor for the molecule.
@@ -105,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// The parameterType attribute of the PetitjeanNumberDescriptor object

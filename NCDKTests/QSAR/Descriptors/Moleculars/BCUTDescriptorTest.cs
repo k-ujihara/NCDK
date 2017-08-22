@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Assert.IsTrue(Math.Abs(0.0 - retval[i]) > 0.0000001, "The returned value must be non-zero");
             }
 
-            string[] names = descriptorValue.Names;
+            var names = descriptorValue.Names;
             foreach (var name in names)
                 Assert.IsNotNull(name);
 

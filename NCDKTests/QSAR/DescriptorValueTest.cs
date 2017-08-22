@@ -82,7 +82,7 @@ namespace NCDK.QSAR
                     DESC_IMPL_VENDOR);
             Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
-            Assert.AreEqual(0, value.ParameterNames.Length);
+            Assert.AreEqual(0, value.ParameterNames.Count);
         }
 
         [TestMethod()]
@@ -92,7 +92,7 @@ namespace NCDK.QSAR
                     DESC_IMPL_VENDOR);
             Result<double> doubleVal = new Result<double>(0.7);
             DescriptorValue value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
-            Assert.AreEqual(1, value.Names.Length);
+            Assert.AreEqual(1, value.Names.Count);
         }
 
         [TestMethod()]

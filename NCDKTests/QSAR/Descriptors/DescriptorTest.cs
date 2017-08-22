@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors
         [TestMethod()]
         public void TestGetParameterNames()
         {
-            string[] paramNames = Descriptor.ParameterNames;
+            var paramNames = Descriptor.ParameterNames;
             if (paramNames == null) paramNames = new string[0];
             foreach (var paramName in paramNames)
             {
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors
             if (parameters == null)
             {
                 Assert.AreEqual(0,
-                        Descriptor.ParameterNames == null ? 0 : Descriptor.ParameterNames.Length,
+                        Descriptor.ParameterNames == null ? 0 : Descriptor.ParameterNames.Count,
                         "For all parameters a default or actual value must be returned.");
                 parameters = new object[0];
             }
@@ -105,12 +105,12 @@ namespace NCDK.QSAR.Descriptors
         [TestMethod()]
         public void TestGetParameterType_String()
         {
-            string[] paramNames = Descriptor.ParameterNames;
+            var paramNames = Descriptor.ParameterNames;
             if (paramNames == null) paramNames = new string[0];
             var parameters = Descriptor.Parameters;
             if (parameters == null) parameters = new object[0];
 
-            for (int i = 0; i < paramNames.Length; i++)
+            for (int i = 0; i < paramNames.Count; i++)
             {
                 object type = Descriptor.GetParameterType(paramNames[i]);
                 Assert.IsNotNull(type,
@@ -126,7 +126,7 @@ namespace NCDK.QSAR.Descriptors
         [TestMethod()]
         public void TestParameterConsistency()
         {
-            string[] paramNames = Descriptor.ParameterNames;
+            var paramNames = Descriptor.ParameterNames;
             //      FIXME: see TestGetParameterNames() comment on the same line
             if (paramNames == null) paramNames = new string[0];
             var parameters = Descriptor.Parameters;
@@ -134,7 +134,7 @@ namespace NCDK.QSAR.Descriptors
             if (parameters == null) parameters = new object[0];
 
             Assert.AreEqual(
-                paramNames.Length, parameters.Length,
+                paramNames.Count, parameters.Length,
                 "The number of returned parameter names must equate the number of returned parameters");
         }
 
@@ -179,9 +179,9 @@ namespace NCDK.QSAR.Descriptors
         [TestMethod()]
         public void TestGetDescriptorNames()
         {
-            string[] descNames = Descriptor.DescriptorNames;
+            var descNames = Descriptor.DescriptorNames;
             Assert.IsNotNull(descNames);
-            Assert.IsTrue(descNames.Length >= 1, "One or more descriptor names must be provided");
+            Assert.IsTrue(descNames.Count >= 1, "One or more descriptor names must be provided");
             foreach (var s in descNames)
             {
                 Assert.IsTrue(s.Length != 0, "Descriptor name must be non-zero length");

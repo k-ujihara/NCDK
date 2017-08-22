@@ -482,7 +482,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the RDFProtonDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the RDFProtonDescriptor object

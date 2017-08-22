@@ -19,6 +19,7 @@
 using NCDK.Charges;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -93,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method returns apha partial charges assigned to an heavy atom through Gasteiger Marsili
@@ -135,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameterNames attribute of the PartialSigmaChargeDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "maxIterations" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialSigmaChargeDescriptor object

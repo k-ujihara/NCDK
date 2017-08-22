@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -98,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -193,7 +194,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "elementSymbol" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the WeightDescriptor object.

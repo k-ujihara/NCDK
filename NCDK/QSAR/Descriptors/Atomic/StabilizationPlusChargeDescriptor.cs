@@ -19,6 +19,7 @@
 using NCDK.Charges;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -79,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </value>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method calculates the stabilization of charge of a given atom
@@ -111,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the StabilizationPlusChargeDescriptor object
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         ///  Gets the parameterType attribute of the StabilizationPlusChargeDescriptor object

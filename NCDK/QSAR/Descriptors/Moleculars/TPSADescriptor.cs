@@ -171,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -315,7 +315,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Gets the parameterNames attribute of the  TPSADescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override string[] ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the TPSADescriptor object.

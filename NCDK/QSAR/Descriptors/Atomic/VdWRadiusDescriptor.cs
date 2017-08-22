@@ -19,6 +19,7 @@
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -83,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculate the Van der Waals radius of an atom.
@@ -101,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameterNames attribute of the VdWRadiusDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override string[] ParameterNames { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the VdWRadiusDescriptor object.

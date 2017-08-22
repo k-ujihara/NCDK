@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
@@ -308,7 +308,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the WeightDescriptor object.

@@ -20,6 +20,7 @@
 
 using NCDK.Fragments;
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -116,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Since this descriptor takes no parameters, <see langword="null"/> is returned
         /// </summary>
         /// <returns><see langword="null"/>, since there are no parameters</returns>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Returns a class matching that of the parameter with the given name.
@@ -138,6 +139,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </para>
         /// </summary>
         /// <returns>A 1-element string array, with the value "FMF"</returns>
-        public override string[] DescriptorNames { get; } = new string[] { "FMF" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
     }
 }

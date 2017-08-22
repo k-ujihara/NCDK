@@ -19,6 +19,7 @@
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -102,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
+        public override IReadOnlyList<string> DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
 
         /// <summary>
         ///  The method calculates the number of rotatable bonds of an atom container.
@@ -214,7 +215,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the RotatableBondsCountDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the RotatableBondsCountDescriptor object

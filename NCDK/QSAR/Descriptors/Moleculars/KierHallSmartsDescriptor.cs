@@ -22,6 +22,7 @@ using NCDK.QSAR.Results;
 using NCDK.Smiles.SMARTS;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -344,7 +345,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => names;
+        public override IReadOnlyList<string> DescriptorNames => names;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -404,7 +405,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Gets the parameterNames attribute of the descriptor.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the descriptor.

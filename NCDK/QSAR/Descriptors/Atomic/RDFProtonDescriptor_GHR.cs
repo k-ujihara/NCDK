@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         private static string[] names;
-        public override string[] DescriptorNames => names;
+        public override IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
         /// The specification attribute of the RDFProtonDescriptor_GHR object

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR
 {
@@ -117,7 +118,7 @@ namespace NCDK.QSAR
         ///  does not have any parameters.
         /// </summary>
         /// <value>An array of string containing the names of the parameters that this descriptor can accept.</value>
-        string[] ParameterNames { get; }
+        IReadOnlyList<string> ParameterNames { get; }
 
         /// <summary>
         /// Returns a class matching that of the parameter with the given name. May
@@ -160,6 +161,6 @@ namespace NCDK.QSAR
         /// </para>
         /// </remarks>
         /// <value>An array of descriptor names, equal in length to the number of descriptor calculated.</value>
-        string[] DescriptorNames { get; }
+        IReadOnlyList<string> DescriptorNames { get; }
     }
 }

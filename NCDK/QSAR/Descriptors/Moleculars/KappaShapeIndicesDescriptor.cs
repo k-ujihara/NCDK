@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculates the kier shape indices for an atom container
@@ -216,7 +216,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameterNames attribute of the
         /// KappaShapeIndicesDescriptor object
         /// </summary>
-        public override string[] ParameterNames => null; // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the

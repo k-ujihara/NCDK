@@ -20,6 +20,7 @@ using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -112,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
         public override object GetParameterType(string name) => null;
 
         public override object[] Parameters
@@ -121,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             set { }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =

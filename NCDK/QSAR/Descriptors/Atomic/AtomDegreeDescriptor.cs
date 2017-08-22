@@ -22,6 +22,7 @@
  */
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -61,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames { get; } = new string[] { "aNeg" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aNeg" };
 
         /// <summary>
         /// This method calculates the number of not-H substituents of an atom.
@@ -84,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// Gets the parameterNames attribute of the AtomDegreeDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override string[] ParameterNames { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the AtomDegreeDescriptor object.

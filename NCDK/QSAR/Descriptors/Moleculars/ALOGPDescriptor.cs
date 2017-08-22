@@ -2355,7 +2355,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 typeof(ALOGPDescriptor).FullName, "The Chemistry Development Kit");
 
-        public override string[] ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => new string[0];
 
         public override object GetParameterType(string name) => null;
 
@@ -2365,7 +2365,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             set { }
         }
 
-        public override string[] DescriptorNames => STRINGS;
+        public override IReadOnlyList<string> DescriptorNames => STRINGS;
     }// end class
 }
 

@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -219,7 +219,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// <summary>
         /// Tthe parameterNames attribute of the TaeAminOAcidDescriptor object.
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the TaeAminoAcidDescriptor object.
@@ -230,7 +230,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

@@ -21,6 +21,7 @@ using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -79,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
         /// </summary>
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         ///  The parameterType attribute of the EccentricConnectivityIndexDescriptor object
@@ -88,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The parameterType value</returns>
         public override object GetParameterType(string name) => null;
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// the parameters attribute of the EccentricConnectivityIndexDescriptor object

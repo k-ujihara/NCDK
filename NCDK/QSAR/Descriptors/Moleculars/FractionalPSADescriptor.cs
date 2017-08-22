@@ -32,6 +32,7 @@ using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -73,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public string[] DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -125,7 +126,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-        public string[] ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
         public object GetParameterType(string name) => null;
     }
 }

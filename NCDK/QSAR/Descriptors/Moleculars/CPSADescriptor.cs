@@ -22,6 +22,7 @@ using NCDK.Geometries;
 using NCDK.Geometries.Surface;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -137,8 +138,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the CPSADescriptor object.
         /// </summary>
-        public override string[] ParameterNames => null;
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
         /// <summary>
         /// The parameters attribute of the CPSADescriptor object.
         /// </summary>

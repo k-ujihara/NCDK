@@ -19,6 +19,7 @@
 using NCDK.Common.Mathematics;
 using NCDK.Numerics;
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -87,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames { get; } = new string[] { "distanceToAtom" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "distanceToAtom" };
 
         /// <summary>
         ///  This method calculate the 3D distance between two atoms.
@@ -132,7 +133,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the DistanceToAtomDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "The position of the focus atom" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "The position of the focus atom" };
 
         /// <summary>
         ///  The parameterType attribute of the DistanceToAtomDescriptor object

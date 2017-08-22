@@ -18,6 +18,7 @@
  */
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -87,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames { get; } = new string[] { "bondsToAtom" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "bondsToAtom" };
 
         /// <summary>
         ///  This method calculate the number of bonds on the shortest path between two atoms.
@@ -110,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameterNames attribute of the BondsToAtomDescriptor object
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override string[] ParameterNames { get; } = new string[] { "focusPosition" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "focusPosition" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the BondsToAtomDescriptor object

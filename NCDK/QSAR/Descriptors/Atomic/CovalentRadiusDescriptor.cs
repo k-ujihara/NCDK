@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
@@ -64,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames { get; } = new string[] { "covalentRadius" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
 
         /// <summary>
         ///  This method calculates the Covalent radius of an atom.
@@ -105,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the VdWRadiusDescriptor object.

@@ -242,7 +242,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             }
         }
 
-        public override string[] DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -257,7 +257,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         /// <summary>
         /// The parameterNames attribute of the WHIMDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "type" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
 
         /// <summary>
         /// Gets the parameterType attribute of the WHIMDescriptor object.
@@ -268,7 +268,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

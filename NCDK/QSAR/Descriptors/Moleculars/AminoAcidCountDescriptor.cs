@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             set { } // no parameters exist
         }
 
-        public override string[] DescriptorNames => names;
+        public override IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
         /// Determine the number of amino acids groups the supplied <see cref="IAtomContainer"/>.
@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
-        public override string[] ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => new string[0];
 
         /// <summary>
         /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.

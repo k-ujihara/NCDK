@@ -28,6 +28,7 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -183,7 +184,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -209,7 +210,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the BCUTDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BCUTDescriptor object.

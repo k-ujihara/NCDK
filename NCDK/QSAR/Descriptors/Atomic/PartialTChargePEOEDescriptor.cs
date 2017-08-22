@@ -110,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method returns partial total charges assigned to an heavy atom through PEOE method.
@@ -191,7 +191,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the PartialTChargePEOEDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialTChargePEOEDescriptor object

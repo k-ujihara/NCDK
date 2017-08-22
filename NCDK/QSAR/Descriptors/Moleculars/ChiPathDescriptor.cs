@@ -68,11 +68,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath",
                 typeof(ChiPathDescriptor).FullName, "The Chemistry Development Kit");
 
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
         public override object GetParameterType(string name) => null;
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames { get; } = _DescriptorNames();
+        public override IReadOnlyList<string> DescriptorNames { get; } = _DescriptorNames();
         private static string[] _DescriptorNames()
         {
             string[] names = new string[16];
@@ -171,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

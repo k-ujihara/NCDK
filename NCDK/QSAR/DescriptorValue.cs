@@ -18,6 +18,7 @@
  */
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR
 {
@@ -30,10 +31,10 @@ namespace NCDK.QSAR
     public class DescriptorValue
     {
         private DescriptorSpecification specification;
-        private string[] parameterNames;
+        private IReadOnlyList<string> parameterNames;
         private object[] parameterSettings;
         private IDescriptorResult value;
-        private string[] descriptorNames;
+        private IReadOnlyList<string> descriptorNames;
         private Exception exception;
 
         /// <summary>
@@ -47,8 +48,8 @@ namespace NCDK.QSAR
         /// <param name="parameterSettings">The parameter settings</param>
         /// <param name="value">The actual values</param>
         /// <param name="descriptorNames">The names of the values</param>
-        public DescriptorValue(DescriptorSpecification specification, string[] parameterNames, object[] parameterSettings,
-                IDescriptorResult value, string[] descriptorNames)
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
+                IDescriptorResult value, IReadOnlyList<string> descriptorNames)
             : this(specification, parameterNames, parameterSettings, value, descriptorNames, null)
         { }
 
@@ -64,8 +65,8 @@ namespace NCDK.QSAR
         /// <param name="value">The actual values</param>
         /// <param name="descriptorNames">The names of the values</param>
         /// <param name="exception">The exception object that should have been caught if an error occurred during descriptor calculation</param>
-        public DescriptorValue(DescriptorSpecification specification, string[] parameterNames, object[] parameterSettings,
-                IDescriptorResult value, string[] descriptorNames, Exception exception)
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
+                IDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
         {
             this.specification = specification;
             this.parameterNames = parameterNames;
@@ -77,7 +78,7 @@ namespace NCDK.QSAR
 
         public DescriptorSpecification Specification => this.specification;
         public object[] Parameters => this.parameterSettings;
-        public string[] ParameterNames=> this.parameterNames;
+        public IReadOnlyList<string> ParameterNames => this.parameterNames;
         public IDescriptorResult Value => this.value;
         public Exception Exception => exception;
 
@@ -107,17 +108,16 @@ namespace NCDK.QSAR
         /// supplied at instantiation.
         /// </para>
         /// </remarks>
-        public string[] Names
+        public IReadOnlyList<string> Names
         {
             get
             {
-                if (descriptorNames == null || descriptorNames.Length == 0)
+                if (descriptorNames == null || descriptorNames.Count == 0)
                 {
                     string title = specification.ImplementationTitle;
                     if (value is Result<bool> || value is Result<double> || value is Result<int>)
                     {
-                        descriptorNames = new string[1];
-                        descriptorNames[0] = title;
+                        descriptorNames = new string[] { title };
                     }
                     else
                     {
@@ -130,9 +130,10 @@ namespace NCDK.QSAR
                         {
                             ndesc = value.Length;
                         }
-                        descriptorNames = new string[ndesc];
+                        var names = new string[ndesc];
                         for (int i = 1; i < ndesc + 1; i++)
-                            descriptorNames[i] = title + i;
+                            names[i] = title + i;
+                        descriptorNames = names;
                     }
                 }
                 return descriptorNames;

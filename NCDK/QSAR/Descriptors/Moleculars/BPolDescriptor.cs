@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -92,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculate the sum of the absolute value of
@@ -165,7 +166,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  The parameterNames attribute of the BPolDescriptor object
         /// </summary>
-        public override string[] ParameterNames => null; // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         ///  Gets the parameterType attribute of the BPolDescriptor object

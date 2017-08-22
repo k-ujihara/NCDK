@@ -18,6 +18,7 @@
  */
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -98,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -155,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameterNames of the HBondDonorCountDescriptor.
         /// <see langword="null"/> as this descriptor does not have any parameters.
         /// </summary>
-        public override string[] ParameterNames => null; // no parameters; thus we return null
+        public override IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
 
         /// <summary>
         /// Gets the parameterType of the HBondDonorCountDescriptor.

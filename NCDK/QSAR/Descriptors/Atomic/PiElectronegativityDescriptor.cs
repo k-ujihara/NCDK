@@ -20,6 +20,7 @@ using NCDK.Charges;
 using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -115,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method calculates the pi electronegativity of a given atom
@@ -156,7 +157,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the SigmaElectronegativityDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the SigmaElectronegativityDescriptor object

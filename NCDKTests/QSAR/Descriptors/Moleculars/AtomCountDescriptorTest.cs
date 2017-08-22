@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("CCO"); // ethanol
             DescriptorValue value = Descriptor.Calculate(mol);
             Assert.AreEqual(2, ((Result<int>)value.Value).Value);
-            Assert.AreEqual(1, value.Names.Length);
+            Assert.AreEqual(1, value.Names.Count);
             Assert.AreEqual("nC", value.Names[0]);
             Assert.AreEqual(Descriptor.DescriptorNames[0], value.Names[0]);
         }

@@ -79,10 +79,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
 
             DescriptorValue v = descriptor.Calculate(mol.Bonds[0], mol);
             Assert.IsNotNull(v);
-            string[] names = v.Names;
+            var names = v.Names;
             Assert.IsNotNull(names, "The descriptor must return labels using the Names method.");
-            Assert.AreNotEqual(0, names.Length, "At least one label must be given.");
-            for (int i = 0; i < names.Length; i++)
+            Assert.AreNotEqual(0, names.Count, "At least one label must be given.");
+            for (int i = 0; i < names.Count; i++)
             {
                 Assert.IsNotNull("A descriptor label may not be null.", names[i]);
                 Assert.AreNotEqual(0, names[i].Length, "The label string must not be empty.");
@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
             Assert.IsNotNull(v.Value);
             int valueCount = v.Value.Length;
-            Assert.AreEqual(names.Length, valueCount, "The number of labels must equals the number of values.");
+            Assert.AreEqual(names.Count, valueCount, "The number of labels must equals the number of values.");
         }
 
         /// <summary>
@@ -104,15 +104,15 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
 
-            string[] names1 = descriptor.DescriptorNames;
+            var names1 = descriptor.DescriptorNames;
             DescriptorValue v = descriptor.Calculate(mol.Bonds[1], mol);
-            string[] names2 = v.Names;
+            var names2 = v.Names;
 
-            Assert.AreEqual(names1.Length, names2.Length);
+            Assert.AreEqual(names1.Count, names2.Count);
             Assert.IsTrue(Compares.AreDeepEqual(names1, names2));
 
             int valueCount = v.Value.Length;
-            Assert.AreEqual(valueCount, names1.Length);
+            Assert.AreEqual(valueCount, names1.Count);
         }
 
         [TestMethod()]

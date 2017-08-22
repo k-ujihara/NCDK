@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The names of the descriptors made available by this class.
         /// </summary>
-        public string[] DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// A placeholder with the descriptor size and type.
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// parameters: empty, there are none.
         /// </summary>
-        public string[] ParameterNames => Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Parameter types: there aren't any.

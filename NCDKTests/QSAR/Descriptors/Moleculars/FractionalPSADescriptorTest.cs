@@ -59,8 +59,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             DescriptorValue results = fpsa.Calculate(mol);
 
             // note: test currently assumes that just one Descriptor is calculated
-            string[] names = results.Names;
-            if (names.Length != 1 || !names[0].Equals("tpsaEfficiency"))
+            var names = results.Names;
+            if (names.Count != 1 || !names[0].Equals("tpsaEfficiency"))
                 throw new CDKException("Only expecting 'tpsaEfficiency'");
             Result<double> value = (Result<double>)results.Value;
             double tpsaEfficiency = value.Value;

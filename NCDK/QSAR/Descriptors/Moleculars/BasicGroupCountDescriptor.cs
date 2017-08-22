@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             set { }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
-        public override string[] ParameterNames { get; } 
+        public override IReadOnlyList<string> ParameterNames { get; } 
             = new string[] { };
 
         public override object GetParameterType(string name) 

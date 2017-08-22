@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -1779,7 +1779,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the XLogPDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
 
         /// <summary>
         /// Gets the parameterType attribute of the XLogPDescriptor object.

@@ -21,6 +21,7 @@ using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -131,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -214,7 +215,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the PartialPiChargeDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = { "maxIterations", "lpeChecker", "maxResonStruc", };
+        public override IReadOnlyList<string> ParameterNames { get; } = new[] { "maxIterations", "lpeChecker", "maxResonStruc", };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialPiChargeDescriptor object

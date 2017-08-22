@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames { get; } = MakeDescriptorNames();
+        public override IReadOnlyList<string> DescriptorNames { get; } = MakeDescriptorNames();
         private static string[] MakeDescriptorNames()
         {
             string[] labels = new string[MAX_PROTON_COUNT];
@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the ProtonTotalPartialChargeDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor object

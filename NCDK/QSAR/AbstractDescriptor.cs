@@ -21,6 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.QSAR
 {
     /// <summary>
@@ -30,8 +32,8 @@ namespace NCDK.QSAR
     // @cdk.module qsar
     public abstract class AbstractDescriptor : IDescriptor
     {
-        public abstract string[] DescriptorNames { get; }
-        public abstract string[] ParameterNames { get; }
+        public abstract IReadOnlyList<string> DescriptorNames { get; }
+        public abstract IReadOnlyList<string> ParameterNames { get; }
 
         /// <inheritdoc/>
         public abstract IImplementationSpecification Specification { get; }

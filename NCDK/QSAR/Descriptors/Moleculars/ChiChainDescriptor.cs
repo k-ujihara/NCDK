@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(ChiChainDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public override string[] ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
+        public override IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
 
         public override object GetParameterType(string name)
         {
@@ -99,11 +99,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

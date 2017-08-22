@@ -78,14 +78,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 typeof(ChiClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
         public override object GetParameterType(string name) => null;
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
         public override object[] Parameters { get { return null; } set { } }
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            int ndesc = DescriptorNames.Length;
+            int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);

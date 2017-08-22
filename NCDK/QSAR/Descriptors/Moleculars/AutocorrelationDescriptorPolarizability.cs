@@ -26,6 +26,7 @@ using NCDK.QSAR.Results;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -161,7 +162,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames, e);
         }
 
-        public override string[] ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
         public override object GetParameterType(string name) => null;
 
         public override object[] Parameters
@@ -170,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             set { }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =

@@ -19,6 +19,7 @@
 using NCDK.Geometries.Volume;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -56,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames { get; } = new string[] { "VABC" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "VABC" };
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -88,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
 
         /// <inheritdoc/>
-        public override string[] ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
 
         /// <inheritdoc/>
         public override object GetParameterType(string name) => null;

@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -210,7 +210,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// Gets the parameterNames attribute of the BondPartialTChargeDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BondPartialTChargeDescriptor object.

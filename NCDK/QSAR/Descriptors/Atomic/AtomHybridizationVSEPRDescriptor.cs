@@ -18,6 +18,7 @@
  */
 using NCDK.AtomTypes;
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
@@ -91,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         public override object[] Parameters { get { return null; } set { } }
 
-        public override string[] DescriptorNames { get; } = new string[] { "hybr" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
 
         /// <summary>
         ///  This method calculates the hybridization of an atom.
@@ -130,7 +131,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[0];
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
 
         /// <summary>
         ///  Gets the parameterType attribute of the AtomHybridizationVSEPRDescriptor object

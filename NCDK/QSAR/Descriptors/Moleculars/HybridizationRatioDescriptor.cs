@@ -22,6 +22,7 @@
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -62,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public override object[] Parameters { get { return Array.Empty<object>(); } set { } }
 
-        public override string[] DescriptorNames { get; } = new string[] { "HybRatio" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
 
         /// <summary>
         /// </summary>
@@ -110,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameterNames attribute of the HybridizationRatioDescriptor object.
         /// This descriptor takes no parameters
         /// </summary>
-        public override string[] ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the HybridizationRatioDescriptor object.

@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -281,7 +281,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "checkRingSystem" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkRingSystem" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the LongestAliphaticChainDescriptor object.

@@ -16,6 +16,7 @@
  */
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Substances
 {
@@ -28,10 +29,10 @@ namespace NCDK.QSAR.Descriptors.Substances
     public class OxygenAtomCountDescriptor : ISubstanceDescriptor
     {
         /// <inheritdoc/>
-        public string[] DescriptorNames { get; } = new string[] { "NoMe" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "NoMe" };
 
         /// <inheritdoc/>
-        public string[] ParameterNames => Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <inheritdoc/>
         public object GetParameterType(string substance) => null;

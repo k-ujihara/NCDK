@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.QSAR.Results;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -106,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -174,7 +175,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the BondCountDescriptor object
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "order" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the BondCountDescriptor object

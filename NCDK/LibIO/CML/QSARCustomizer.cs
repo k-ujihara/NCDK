@@ -156,7 +156,7 @@ namespace NCDK.LibIO.CML
                     //                Debug.WriteLine("Value: " + value.Specification.ImplementationIdentifier);
                     if (parameters != null && parameters.Length > 0)
                     {
-                        string[] paramNames = value.ParameterNames;
+                        var paramNames = value.ParameterNames;
                         var paramSettings = new CMLMetadataList();
                         paramSettings.SetAttributeValue(CMLElement.Attribute_title, QSAR_NAMESPACE + ":" + "descriptorParameters");
                         for (int i = 0; i < parameters.Length; i++)

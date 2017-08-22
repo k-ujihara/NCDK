@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -202,7 +202,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <summary>
         /// The parameterNames attribute of the PiContactDetectionDescriptor object.
         /// </summary>
-        public override string[] ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the PiContactDetectionDescriptor object.

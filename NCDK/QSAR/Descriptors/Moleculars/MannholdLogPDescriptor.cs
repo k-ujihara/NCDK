@@ -19,6 +19,7 @@
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
+using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -65,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override string[] DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -111,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameterNames attribute for this descriptor.
         /// A zero-length string array.
         /// </summary>
-        public override string[] ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute for a given parameter name. It
