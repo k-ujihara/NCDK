@@ -93,9 +93,9 @@ namespace NCDK.QSAR
         /// in length to the number of descriptor calculated.
         /// </para>
         /// <para>
-        /// In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
-        /// and 1, 2, ..., N are the indices. On the other hand it is also possible to return
-        /// other arbitrary names, which should be documented in the JavaDocs for the descriptor
+        /// In many cases, these names can be as simple as X0, X1, ..., XN where X is a prefix
+        /// and 0, 1, ..., N are the indices. On the other hand it is also possible to return
+        /// other arbitrary names, which should be documented in the document for the descriptor
         /// (e.g., the CPSA descriptor).
         /// </para>
         /// <para>
@@ -115,24 +115,20 @@ namespace NCDK.QSAR
                 if (descriptorNames == null || descriptorNames.Count == 0)
                 {
                     string title = specification.ImplementationTitle;
-                    if (value is Result<bool> || value is Result<double> || value is Result<int>)
+                    if (value is IResult)
                     {
                         descriptorNames = new string[] { title };
                     }
                     else
                     {
                         int ndesc = 0;
-                        if (value is ArrayResult<double>)
-                        {
-                            ndesc = value.Length;
-                        }
-                        else if (value is ArrayResult<int>)
+                        if (value is IArrayResult)
                         {
                             ndesc = value.Length;
                         }
                         var names = new string[ndesc];
-                        for (int i = 1; i < ndesc + 1; i++)
-                            names[i] = title + i;
+                        for (int i = 0; i < ndesc; i++)
+                            names[i] = title + i.ToString();
                         descriptorNames = names;
                     }
                 }
