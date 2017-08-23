@@ -19,8 +19,13 @@
 
 namespace NCDK.QSAR.Results
 {
-    public class Result<T>
+    public interface IResult
         : IDescriptorResult
+    {
+    }
+
+    public class Result<T>
+        : IResult
     {
         public static Result<T> Instance { get; } = new Result<T>();
 

@@ -20,26 +20,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.QSAR.Results
 {
+    public interface IArrayResult
+        : IDescriptorResult
+    {
+    }
+
     public class ArrayResult<T>
-        : IDescriptorResult, IReadOnlyList<T>
+        : IArrayResult, IReadOnlyList<T>
     {
         int size;
         List<T> array;
 
         public ArrayResult()
+            : this(0)
         {
-            this.size = 0;
-            this.array = new List<T>();
         }
 
         public ArrayResult(int size)
         {
             this.size = size;
             this.array = new List<T>(size);
+        }
+
+        public ArrayResult(IEnumerable<T> array)
+            : this(array.Count())
+        {
+            this.array.AddRange(array);
         }
 
         public void Add(T value)
@@ -59,7 +70,7 @@ namespace NCDK.QSAR.Results
             }
         }
 
-        public virtual int Length => Math.Max(this.size, this.array.Count);
+        public int Length => Math.Max(this.size, this.array.Count);
 
         public int Count => Length;
 

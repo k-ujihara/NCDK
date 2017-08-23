@@ -159,9 +159,9 @@ namespace NCDK.IO.CML
             return result;
         }
 
-        private IDescriptorResult NewDescriptorResultArray(string descriptorValue)
+        private IArrayResult NewDescriptorResultArray(string descriptorValue)
         {
-            IDescriptorResult result = null;
+            IArrayResult result = null;
             if ("xsd:double".Equals(currentDescriptorDataType))
             {
                 result = new ArrayResult<double>();
