@@ -76,13 +76,7 @@ namespace NCDK.QSAR.Results
 
         public override string ToString()
         {
-            StringBuilder buf = new StringBuilder();
-            for (int i = 0; i < Length; i++)
-            {
-                buf.Append(this[i]);
-                if (i + 1 < Length) buf.Append(',');
-            }
-            return buf.ToString();
+            return string.Join(",", this.Select(n => n.ToString()));
         }
 
         public IEnumerator<T> GetEnumerator() => array.GetEnumerator();
