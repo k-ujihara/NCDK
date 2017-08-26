@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public class FractionalPSADescriptor : IMolecularDescriptor
+    public partial class FractionalPSADescriptor : IMolecularDescriptor
     {
         public FractionalPSADescriptor() { }
 
@@ -76,9 +76,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="mol">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
         /// <returns>Descriptor(s) retaining to polar surface area</returns>
-        public DescriptorValue Calculate(IAtomContainer mol)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer mol)
         {
             mol = (IAtomContainer)mol.Clone();
             double polar = 0, weight = 0;
@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     throw;
                 return GetDummyDescriptorValue(exception);
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                     weight == 0 ? 0 : polar / weight), DescriptorNames);
         }
 

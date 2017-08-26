@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:rotatableBondsCount
     // @cdk.keyword bond count, rotatable
     // @cdk.keyword descriptor
-    public class RotatableBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class RotatableBondsCountDescriptor : IMolecularDescriptor
     {
         private bool includeTerminals = false;
         private bool excludeAmides = false;
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the RotatableBondsCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the RotatableBondsCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
+        public IReadOnlyList<string> DescriptorNames => new string[] { includeTerminals ? "nRotBt" : "nRotB" };
 
         /// <summary>
         ///  The method calculates the number of rotatable bonds of an atom container.
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>number of rotatable bonds</returns>
-        public override DescriptorValue Calculate(IAtomContainer ac)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer ac)
         {
             int rotatableBondsCount = 0;
             int degree0;
@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (NoSuchAtomException e)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
             }
             foreach (var bond in ac.Bonds)
             {
@@ -168,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(rotatableBondsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(rotatableBondsCount), DescriptorNames);
         }
 
         /// <summary>
@@ -210,18 +210,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the RotatableBondsCountDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "includeTerminals", "excludeAmides" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the RotatableBondsCountDescriptor object
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public override object GetParameterType(string name) => true;
+        public object GetParameterType(string name) => true;
     }
 }

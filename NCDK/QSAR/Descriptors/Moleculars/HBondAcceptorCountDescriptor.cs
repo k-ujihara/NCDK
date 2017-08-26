@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    public class HBondAcceptorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class HBondAcceptorCountDescriptor : IMolecularDescriptor
     {
         // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
         private bool checkAromaticity = false;
@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         /// <returns>   The specification value</returns>
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <value>a bool true means that aromaticity has to be checked</value>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -120,11 +120,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>number of H bond acceptors</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             int hBondAcceptors = 0;
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
@@ -154,7 +154,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             //IAtom[] atoms = ac.GetAtoms();
             // labelled for loop to allow for labelled continue statements within the loop
-            atomloop: foreach (var atom in ac.Atoms)
+        atomloop:
+            foreach (var atom in ac.Atoms)
             {
                 // looking for suitable nitrogen atoms
                 if (atom.Symbol.Equals("N") && atom.FormalCharge <= 0)
@@ -190,22 +191,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ;
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(hBondAcceptors), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the HBondAcceptorCountDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the HBondAcceptorCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => false;
+        public object GetParameterType(string name) => false;
     }
 }

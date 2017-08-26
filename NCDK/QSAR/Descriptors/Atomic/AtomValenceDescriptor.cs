@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomValence
-    public class AtomValenceDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class AtomValenceDescriptor : IAtomicDescriptor
     {
         /// <summary>
         /// Constructor for the AtomValenceDescriptor object
@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the AtomValenceDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
@@ -52,9 +52,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "val" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "val" };
 
         /// <summary>
         /// This method calculates the valence of an atom.
@@ -62,22 +62,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The valence of an atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             int atomValence = AtomValenceTool.GetValence(atom);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(atomValence), DescriptorNames);
         }
 
         /// <summary>
         /// The parameterNames attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the VdWRadiusDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

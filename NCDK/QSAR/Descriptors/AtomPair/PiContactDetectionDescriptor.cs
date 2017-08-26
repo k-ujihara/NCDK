@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
     // @cdk.module     qsarmolecular
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:piContact
-    public class PiContactDetectionDescriptor : AbstractAtomPairDescriptor, IAtomPairDescriptor
+    public class PiContactDetectionDescriptor : IAtomPairDescriptor
     {
         private static readonly string[] NAMES = { "piContact" };
 
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <summary>
         /// The specification attribute of the PiContactDetectionDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact",
@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <para>Parameters contains a bool (true if is needed a checkAromaticity)Parameters contains a bool (true if is needed a checkAromaticity)</para>
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -107,11 +107,11 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<bool>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
+            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>true if the atoms have pi-contact</returns>
-        public override DescriptorValue Calculate(IAtom first, IAtom second, IAtomContainer atomContainer)
+        public DescriptorValue<Result<bool>> Calculate(IAtom first, IAtom second, IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
             IAtom clonedFirst = ac.Atoms[atomContainer.Atoms.IndexOf(first)];
@@ -170,7 +170,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             {
                 piContact = true;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(
+            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(
                     piContact), DescriptorNames);
         }
 
@@ -202,17 +202,20 @@ namespace NCDK.QSAR.Descriptors.AtomPair
         /// <summary>
         /// The parameterNames attribute of the PiContactDetectionDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the PiContactDetectionDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if (name.Equals("checkAromaticity")) return true;
             return null;
         }
+
+        DescriptorValue IAtomPairDescriptor.Calculate(IAtom atom, IAtom atom2, IAtomContainer container)
+            => Calculate(atom, atom2, container);
     }
 }

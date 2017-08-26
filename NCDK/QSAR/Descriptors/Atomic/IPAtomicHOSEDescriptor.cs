@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module   qsaratomic
     // @cdk.githash
     // @cdk.dictref  qsar-descriptors:ionizationPotential
-    public class IPAtomicHOSEDescriptor : AbstractAtomicDescriptor
+    public partial class IPAtomicHOSEDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "ipAtomicHOSE" };
 
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the IPAtomicHOSEDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
@@ -85,9 +85,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the IPAtomicHOSEDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculates the ionization potential of an atom.
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The IAtom to ionize.</param>
         /// <param name="container">Parameter is the IAtomContainer.</param>
         /// <returns>The ionization potential. Not possible the ionization.</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             double value;
             // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                             double.NaN), NAMES, e);
                 }
 
@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(value),
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(value),
                                        NAMES);
 
         }
@@ -150,14 +150,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the IPAtomicHOSEDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the IPAtomicHOSEDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
         /// <summary>
         /// Class defining the database containing the relation between the energy for ionizing and the HOSEcode

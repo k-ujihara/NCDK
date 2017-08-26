@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-02-08
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class AutocorrelationDescriptorMass : IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };
         private readonly static double CARBON_MASS = 12.010735896788;
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer container;
             container = (IAtomContainer)atomContainer.Clone();
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     result.Add(aMasSum);
                 }
 
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
                         DescriptorNames);
 
             }
@@ -107,30 +107,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ArrayResult<double> result = new ArrayResult<double>(5);
                 for (int i = 0; i < 5; i++)
                     result.Add(double.NaN);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
                         DescriptorNames, new CDKException("Error while calculating the ATS_mass descriptor: "
                                 + ex.Message, ex));
             }
         }
 
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
-        public override object GetParameterType(string name) => null;
+        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
                 typeof(AutocorrelationDescriptorMass).FullName,
                 "The Chemistry Development Kit");
 
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
     }
 }

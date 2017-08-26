@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:weight
-    public class WeightDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class WeightDescriptor : IMolecularDescriptor
     {
         private string elementName = "*";
 
@@ -67,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public WeightDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
                 typeof(WeightDescriptor).FullName,
@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the WeightDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -99,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -112,9 +112,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
         /// is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
         /// <returns>The total weight of atoms of the specified element type</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             double weight = 0;
             if (elementName.Equals("*"))
@@ -183,24 +183,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(weight),
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(weight),
                     DescriptorNames);
 
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the WeightDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public override object GetParameterType(string name) => "";
+        public object GetParameterType(string name) => "";
     }
 }

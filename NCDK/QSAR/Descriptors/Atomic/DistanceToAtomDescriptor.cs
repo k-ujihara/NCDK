@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:distanceToAtom
-    public class DistanceToAtomDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class DistanceToAtomDescriptor : IAtomicDescriptor
     {
         private int focusPosition = 0;
 
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the DistanceToAtomDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the DistanceToAtomDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "distanceToAtom" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "distanceToAtom" };
 
         /// <summary>
         ///  This method calculate the 3D distance between two atoms.
@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             double distanceToAtom;
 
@@ -104,14 +104,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             if (atom.Point3D == null || focus.Point3D == null)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException(
                         "Target or focus atom must have 3D coordinates."));
             }
 
             distanceToAtom = CalculateDistanceBetweenTwoAtoms(atom, focus);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                     distanceToAtom), DescriptorNames);
         }
 
@@ -133,14 +133,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the DistanceToAtomDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "The position of the focus atom" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "The position of the focus atom" };
 
         /// <summary>
         ///  The parameterType attribute of the DistanceToAtomDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => 0;
+        public object GetParameterType(string name) => 0;
     }
 }
 

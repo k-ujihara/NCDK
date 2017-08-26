@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:vAdjMa
-    public class VAdjMaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class VAdjMaDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "VAdjMat" };
 
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the VAdjMaDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
@@ -71,16 +71,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Tthe parameters attribute of the VAdjMaDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculates the VAdjMa descriptor for an atom container
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>VAdjMa</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             int n = 0; // count all heavy atom - heavy atom bonds
             foreach (var bond in atomContainer.Bonds)
@@ -96,22 +96,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 vadjMa += (Math.Log(n) / Math.Log(2)) + 1;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(vadjMa), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the VAdjMaDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the VAdjMaDescriptor object
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

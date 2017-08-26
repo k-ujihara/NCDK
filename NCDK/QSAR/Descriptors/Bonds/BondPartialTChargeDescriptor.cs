@@ -46,7 +46,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondPartialTCharge
-    public class BondPartialTChargeDescriptor : AbstractBondDescriptor
+    public partial class BondPartialTChargeDescriptor 
+        : IBondDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
         private GasteigerPEPEPartialCharges pepe = null;
@@ -72,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The specification attribute of the BondPartialTChargeDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialTCharge",
@@ -81,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The parameters attribute of the BondPartialTChargeDescriptor object.
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -113,11 +114,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>return the sigma electronegativity</returns>
-        public override DescriptorValue Calculate(IBond bond, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
         {
             // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
             var originalCharge1 = bond.Atoms[0].Charge;
@@ -203,21 +204,21 @@ namespace NCDK.QSAR.Descriptors.Bonds
             bond.Atoms[1].MaxBondOrder = originalMaxBondOrder2;
             bond.Atoms[1].BondOrderSum = originalBondOrderSum2;
 
-            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue(_Specification, ParameterNames,
-                    Parameters, GetCachedDescriptorValue(bond), NAMES) : null;
+            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+                    Parameters, (Result<double>)GetCachedDescriptorValue(bond), NAMES) : null;
         }
 
         /// <summary>
         /// Gets the parameterNames attribute of the BondPartialTChargeDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BondPartialTChargeDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             if ("lpeChecker".Equals(name)) return true;

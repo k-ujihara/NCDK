@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref   qsar-descriptors:atomicHardness
-    public class InductiveAtomicHardnessDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class InductiveAtomicHardnessDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "indAtomHardnesss" };
         private AtomTypeFactory factory = null;
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The specification attribute of the InductiveAtomicHardnessDescriptor object
         /// </summary>
         /// <returns>The specification value</returns>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness",
@@ -72,13 +72,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the InductiveAtomicHardnessDescripto object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>a double with polarizability of the heavy atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             if (factory == null)
                 try
@@ -156,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atomicHardness = 2 * atomicHardness;
             atomicHardness = atomicHardness * 0.172;
             atomicHardness = 1 / atomicHardness;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                     atomicHardness), NAMES);
         }
 
@@ -174,13 +174,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the InductiveAtomicHardnessDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
 
         /// <summary>
         ///  Gets the parameterType attribute of the InductiveAtomicHardnessDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

@@ -44,9 +44,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    public class RDFProtonDescriptor_G3R : AbstractRDFProtonDescriptor
+    public partial class RDFProtonDescriptor_G3R : IAtomicDescriptor
     {
-        internal override int desc_length => 13;
+        private int desc_length => 13;
 
         /// <summary>
         /// Constructor for the RDFProtonDescriptor object
@@ -61,21 +61,21 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         private static string[] names;
-        public override IReadOnlyList<string> DescriptorNames => names;
+        public IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
         /// Gets the specification attribute of the RDFProtonDescriptor_G3R object
         /// </summary>
         /// <returns>The specification value</returns>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification __Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
                 typeof(RDFProtonDescriptor_G3R).FullName,
                 "The Chemistry Development Kit");
-        internal override DescriptorSpecification _Specification => __Specification;
+        private DescriptorSpecification _Specification => __Specification;
 
-        internal override bool MakeDescriptorLastStage(
+        private bool MakeDescriptorLastStage(
             ArrayResult<double> rdfProtonCalculatedValues,
             IAtom atom,
             IAtom clonedAtom,

@@ -34,7 +34,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
-    public class AtomicNumberDifferenceDescriptor : AbstractBondDescriptor, IBondDescriptor
+    public partial class AtomicNumberDifferenceDescriptor
+        : IBondDescriptor
     {
         private static IsotopeFactory factory = null;
 
@@ -60,33 +61,33 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance",
                 typeof(AtomicNumberDifferenceDescriptor).FullName, "The Chemistry Development Kit");
 
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override DescriptorValue Calculate(IBond bond, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
         {
             EnsureIsotopeFactory();
             if (bond.Atoms.Count != 2)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), NAMES, new CDKException("Only 2-center bonds are considered"));
             }
 
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                     Math.Abs(factory.GetElement(atoms[0].Symbol).AtomicNumber.Value - factory.GetElement(atoms[1].Symbol).AtomicNumber.Value)), NAMES);
         }
 
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

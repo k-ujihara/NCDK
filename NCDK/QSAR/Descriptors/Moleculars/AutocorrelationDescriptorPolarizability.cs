@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-03-01
     // @cdk.module qsarmolecular
     // @cdk.githash
-    public class AutocorrelationDescriptorPolarizability : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class AutocorrelationDescriptorPolarizability : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5" };
 
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer molecule;
             molecule = (IAtomContainer)container.Clone();
@@ -142,7 +142,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 }
 
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, result,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result,
                         DescriptorNames);
 
             }
@@ -153,33 +153,33 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             ArrayResult<double> results = new ArrayResult<double>(5);
             for (int i = 0; i < 5; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
+        public IReadOnlyList<string> ParameterNames => null;
+        public object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
                typeof(AutocorrelationDescriptorPolarizability).FullName, 
                "The Chemistry Development Kit");
 
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
     }
 }

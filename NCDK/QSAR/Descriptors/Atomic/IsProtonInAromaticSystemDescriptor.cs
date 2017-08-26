@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
-    public class IsProtonInAromaticSystemDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class IsProtonInAromaticSystemDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "protonInArmaticSystem" };
 
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem",
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method is a proton descriptor that evaluate if a proton is bonded to an aromatic system or if there is distance of 2 bonds.
@@ -103,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>true if the proton is bonded to an aromatic atom.</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer atomContainer)
         {
             IAtomContainer clonedAtomContainer = (IAtomContainer)atomContainer.Clone();
             IAtom clonedAtom = clonedAtomContainer.Atoms[atomContainer.Atoms.IndexOf(atom)];
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), NAMES, e);
+                    return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), NAMES, e);
                 }
             }
             var neighboor = mol.GetConnectedAtoms(clonedAtom);
@@ -151,19 +151,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 isProtonInAromaticSystem = 0;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(isProtonInAromaticSystem), NAMES);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(isProtonInAromaticSystem), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the IsProtonInAromaticSystemDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => true;
+        public object GetParameterType(string name) => true;
     }
 }

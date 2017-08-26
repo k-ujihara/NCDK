@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword TPSA
     // @cdk.keyword total polar surface area
     // @cdk.keyword descriptor
-    public class TPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class TPSADescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static Dictionary<string, double> map;
@@ -135,7 +135,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Gets the specification attribute of the TPSADescriptor object.
         /// </summary>
         /// <returns>The specification value</returns>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// the descriptor routine should check for aromaticity (<see langword="true"/>) or
         /// not (<see langword="false"/>).</para>
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -171,11 +171,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer">The AtomContainer whose TPSA is to be calculated</param>
         /// <returns>A double containing the topological surface area</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
             List<string> profiles = new List<string>();
@@ -305,23 +305,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             profiles.Clear(); // remove all profiles from the profiles-Vector
                               //Debug.WriteLine("tpsa: " + tpsa);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(tpsa), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(tpsa), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Gets the parameterNames attribute of the  TPSADescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the TPSADescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => true;
+        public object GetParameterType(string name) => true;
     }
 }

@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:partialSigmaCharge
-    public class PartialSigmaChargeDescriptor : AbstractAtomicDescriptor
+    public partial class PartialSigmaChargeDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "partialSigmaCharge" };
 
@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialSigmaChargeDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge",
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <para>Number of maximum iterations</para>
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method returns apha partial charges assigned to an heavy atom through Gasteiger Marsili
@@ -104,7 +104,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>Value of the alpha partial charge</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             // FIXME: for now I'll cache the original charges, and restore them at the end of this method
             var originalCharge = atom.Charge;
@@ -124,26 +124,26 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
             }
             atom.Charge = originalCharge;
 
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue(_Specification, ParameterNames,
-                    Parameters, GetCachedDescriptorValue(atom), NAMES) : null;
+            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+                    Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
         }
 
         /// <summary>
         ///  The parameterNames attribute of the PartialSigmaChargeDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialSigmaChargeDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             return null;

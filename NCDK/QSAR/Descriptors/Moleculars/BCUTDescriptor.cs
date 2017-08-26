@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:BCUT
     // @cdk.keyword BCUT
     // @cdk.keyword descriptor
-    public class BCUTDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class BCUTDescriptor : IMolecularDescriptor
     {
         // the number of negative & positive eigenvalues
         // to return for each class of BCUT descriptor
@@ -129,7 +129,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.checkAromaticity = true;
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                typeof(BCUTDescriptor).FullName, "The Chemistry Development Kit");
@@ -145,7 +145,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
         /// <seealso cref="Parameters"/>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -184,7 +184,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -210,14 +210,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the BCUTDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BCUTDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             switch (name)
             {
@@ -314,7 +314,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///         above. If a parameter list was supplied, then only the specified number
         ///         of highest and lowest eigenvalues (for each class of BCUT) will be returned.
         ///         </returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             int counter;
             IAtomContainer molecule = (IAtomContainer)container.Clone();
@@ -514,19 +514,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             ArrayResult<double> results = new ArrayResult<double>(6);
             for (int i = 0; i < 6; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
     }

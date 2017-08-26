@@ -49,9 +49,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomDegree
-    public class AtomDegreeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class AtomDegreeDescriptor : IAtomicDescriptor
     {
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
@@ -60,9 +60,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the AtomDegreeDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aNeg" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aNeg" };
 
         /// <summary>
         /// This method calculates the number of not-H substituents of an atom.
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated for</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             int atomDegree = 0;
             var neighboors = container.GetConnectedAtoms(atom);
@@ -78,20 +78,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 if (!neighboor.Symbol.Equals("H")) atomDegree += 1;
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(atomDegree), DescriptorNames);
         }
 
         /// <summary>
         /// Gets the parameterNames attribute of the AtomDegreeDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the AtomDegreeDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

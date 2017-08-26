@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:bondsToAtom
-    public class BondsToAtomDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class BondsToAtomDescriptor : IAtomicDescriptor
     {
         private int focusPosition = 0;
 
@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the BondsToAtomDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom",
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
         /// <param name="value">The parameter is the position to focus</param>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "bondsToAtom" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "bondsToAtom" };
 
         /// <summary>
         ///  This method calculate the number of bonds on the shortest path between two atoms.
@@ -96,14 +96,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             IAtom focus = container.Atoms[focusPosition];
 
             // could be cached
             int bondsToAtom = new ShortestPaths(container, atom).GetDistanceTo(focus);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
                     bondsToAtom), DescriptorNames);
         }
 
@@ -111,13 +111,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameterNames attribute of the BondsToAtomDescriptor object
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "focusPosition" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "focusPosition" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the BondsToAtomDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => 0;
+        public object GetParameterType(string name) => 0;
     }
 }

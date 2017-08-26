@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     // @cdk.module  qsarprotein
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:taeAminoAcid
-    public class TaeAminoAcidDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class TaeAminoAcidDescriptor : IMolecularDescriptor
     {
         private Dictionary<string, double[]> taeParams = new Dictionary<string, double[]>();
         private int ndesc = 147;
@@ -194,7 +194,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             LoadTAEParams();
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
@@ -203,9 +203,9 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// <summary>
         /// The parameters attribute of the TaeAminoAcidDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -219,22 +219,22 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// <summary>
         /// Tthe parameterNames attribute of the TaeAminOAcidDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the TaeAminoAcidDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results, DescriptorNames, e);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// </summary>
         /// <param name="container">Parameter is the atom container which should implement <see cref="IBioPolymer"/>.</param>
         /// <returns>A ArrayResult<double> value representing the 147 TAE descriptors</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (taeParams == null) return GetDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
             if (!(container is IBioPolymer))
@@ -281,10 +281,13 @@ namespace NCDK.QSAR.Descriptors.Proteins
             for (int i = 0; i < ndesc; i++)
                 retval.Add(desc[i]);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container)
+            => Calculate(container);
+
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(147);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(147);
     }
 }

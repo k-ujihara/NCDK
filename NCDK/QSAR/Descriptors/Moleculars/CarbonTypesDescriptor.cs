@@ -52,13 +52,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:carbonTypes
     // @cdk.keyword topological bond order ctypes
     // @cdk.keyword descriptor
-    public class CarbonTypesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class CarbonTypesDescriptor : IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3" };
 
         public CarbonTypesDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Sets the parameters attribute of the GravitationalIndexDescriptor object.
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -82,26 +82,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// The parameterNames attribute of the GravitationalIndexDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
+        public IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
         /// <summary>
         /// Calculates the 9 carbon types descriptors
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer container)
         {
             int c1sp1 = 0;
             int c2sp1 = 0;
@@ -156,7 +156,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(c3sp3);
             retval.Add(c4sp3);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         private BondOrder GetHighestBondOrder(IAtomContainer container, IAtom atom)
@@ -171,6 +171,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
     }
 }

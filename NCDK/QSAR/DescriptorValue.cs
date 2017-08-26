@@ -22,12 +22,6 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR
 {
-    /// <summary>
-    /// Class that is used to store descriptor values as <see cref="IChemObject"/> properties.
-    /// </summary>
-    // @cdk.module standard
-    // @cdk.githash
-    [Serializable]
     public class DescriptorValue
     {
         private DescriptorSpecification specification;
@@ -134,6 +128,30 @@ namespace NCDK.QSAR
                 }
                 return descriptorNames;
             }
+        }
+    }
+
+    /// <summary>
+    /// Class that is used to store descriptor values as <see cref="IChemObject"/> properties.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    [Serializable]
+    public class DescriptorValue<TDescriptorResult>
+        : DescriptorValue
+        where TDescriptorResult : IDescriptorResult
+    {
+        /// <inheritdoc/>
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
+                TDescriptorResult value, IReadOnlyList<string> descriptorNames)
+            : this(specification, parameterNames, parameterSettings, value, descriptorNames, null)
+        { }
+
+        /// <inheritdoc/>
+        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
+                TDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
+            : base(specification, parameterNames, parameterSettings, value, descriptorNames, exception)
+        {
         }
     }
 }

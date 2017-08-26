@@ -47,14 +47,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:covalentradius
-    public class CovalentRadiusDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class CovalentRadiusDescriptor : IAtomicDescriptor
     {
         private AtomTypeFactory factory = null;
 
         public CovalentRadiusDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
@@ -63,9 +63,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "covalentRadius" };
 
         /// <summary>
         ///  This method calculates the Covalent radius of an atom.
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
         /// <returns>The Covalent radius of the atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             if (factory == null)
                 try
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception exception)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
+                    return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, exception);
                 }
 
             double covalentradius;
@@ -92,13 +92,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 string symbol = atom.Symbol;
                 IAtomType type = factory.GetAtomType(symbol);
                 covalentradius = type.CovalentRadius.Value;
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                         covalentradius), DescriptorNames);
             }
             catch (Exception exception)
             {
                 Debug.WriteLine(exception);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, exception);
             }
         }
@@ -106,13 +106,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the VdWRadiusDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

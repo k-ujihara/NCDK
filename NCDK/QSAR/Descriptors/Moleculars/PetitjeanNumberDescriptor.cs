@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:petitjeanNumber
     // @cdk.keyword    Petit-Jean, number
-    public class PetitjeanNumberDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class PetitjeanNumberDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };
 
@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
@@ -77,16 +77,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Evaluate the descriptor for the molecule.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>petitjean number</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer cloneContainer = AtomContainerManipulator.RemoveHydrogens(atomContainer);
             double petitjeanNumber; //weinerPath
@@ -97,22 +97,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 petitjeanNumber = 0;
             else
                 petitjeanNumber = (diameter - radius) / (double)diameter;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(petitjeanNumber), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// The parameterType attribute of the PetitjeanNumberDescriptor object
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

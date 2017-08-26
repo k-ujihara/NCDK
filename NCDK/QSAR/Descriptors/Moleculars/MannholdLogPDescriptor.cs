@@ -32,14 +32,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref    qsar-descriptors:mannholdLogP
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    public class MannholdLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class MannholdLogPDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MLogP" };
 
         /// <summary>
         /// The specification attribute of the MannholdLogPDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/" + "chemoinformatics-algorithms/#mannholdLogP",
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// would have been the method to set them.
         /// </summary>
         /// <exception cref="CDKException">Exception throw when invalid parameter values are passed</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -66,11 +66,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
         /// <returns>A descriptor value wrapping a <see cref="Result<double>"/>.</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
 
@@ -100,19 +100,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(mLogP), DescriptorNames);
         }
 
         /// <summary>
         /// A type of return value calculated by this descriptor.
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <summary>
         /// The parameterNames attribute for this descriptor.
         /// A zero-length string array.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute for a given parameter name. It
@@ -120,6 +120,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">Name of the parameter for which the type is requested.</param>
         /// <returns>The parameterType of the given parameter.</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

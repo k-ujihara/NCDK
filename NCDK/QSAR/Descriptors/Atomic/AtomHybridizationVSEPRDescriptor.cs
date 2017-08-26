@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
-    public class AtomHybridizationVSEPRDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class AtomHybridizationVSEPRDescriptor : IAtomicDescriptor
     {
         /// <summary>
         ///  Constructor for the AtomHybridizationVSEPRDescriptor object
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
@@ -90,9 +90,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The parameters attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
 
         /// <summary>
         ///  This method calculates the hybridization of an atom.
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The hybridization</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             IAtomType atomType;
             try
@@ -109,35 +109,35 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType == null)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType.Hybridization == Hybridization.Unset)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
                         DescriptorNames, new CDKException("Hybridization was null"));
             }
             int hybridizationCDK = atomType.Hybridization.Ordinal;
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
                     hybridizationCDK), DescriptorNames);
         }
 
         /// <summary>
         /// The parameterNames attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
 
         /// <summary>
         ///  Gets the parameterType attribute of the AtomHybridizationVSEPRDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

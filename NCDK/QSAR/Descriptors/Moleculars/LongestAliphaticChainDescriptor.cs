@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class LongestAliphaticChainDescriptor : IMolecularDescriptor
     {
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLAC" };
@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LongestAliphaticChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -97,11 +97,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the longest aliphatic chain of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer container = (IAtomContainer)atomContainer.Clone();
             container = AtomContainerManipulator.RemoveHydrogens(container);
@@ -181,11 +181,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(longestChainAtomsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(longestChainAtomsCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         private int GetLongestChainPath(int[][] apsp)
         {
@@ -281,14 +281,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkRingSystem" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkRingSystem" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             return true;
         }

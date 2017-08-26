@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarprotein
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:aminoAcidsCount
-    public class AminoAcidCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class AminoAcidCountDescriptor : IMolecularDescriptor
     {
         private IChemObjectSet<IAtomContainer> substructureSet;
 
@@ -67,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         public DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
@@ -78,13 +78,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set { } // no parameters exist
         }
 
-        public override IReadOnlyList<string> DescriptorNames => names;
+        public IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
         /// Determine the number of amino acids groups the supplied <see cref="IAtomContainer"/>.
@@ -92,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="ac">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
-        public override DescriptorValue Calculate(IAtomContainer ac)
+        public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer ac)
         {
             int resultLength = substructureSet.Count;
             ArrayResult<int> results = new ArrayResult<int>(resultLength);
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     for (int j = 0; j < resultLength; j++)
                         results.Add(0);    // TODO: original code is (int)double.NaN.
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
+                    return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames, new CDKException("Error in substructure search: " + e.Message));
                 }
                 if (maps != null)
                 {
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames);
+            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         /// <summary>
@@ -131,19 +131,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>
-        public override IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
+        public IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
 
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => new string[0];
+        public IReadOnlyList<string> ParameterNames => new string[0];
 
         /// <summary>
         /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             return null;
         }

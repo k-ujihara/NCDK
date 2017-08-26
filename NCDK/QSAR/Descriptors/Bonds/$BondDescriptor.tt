@@ -1,36 +1,40 @@
-/* Copyright (C) 2006-2007  The Chemistry Development Kit (CDK) project
- *
- * Contact: cdk-devel@lists.sourceforge.net
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".tt.cs" #>
+
+/// Abstract bond descriptor class with helper functions for descriptors
+/// that require the whole molecule to calculate the descriptor values,
+/// which in turn need to be cached for all bonds, so that they can be
+/// retrieved one by one.
+// @cdk.module qsar
+// @cdk.githash
+	
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 
-namespace NCDK.QSAR
+namespace NCDK.QSAR.Descriptors.Bonds
 {
-    /// <summary>
-    /// Abstract bond descriptor class with helper functions for descriptors
-    /// that require the whole molecule to calculate the descriptor values,
-    /// which in turn need to be cached for all bonds, so that they can be
-    /// retrieved one by one.
-    /// </summary>
-    // @cdk.module qsar
-    // @cdk.githash
-    public abstract class AbstractBondDescriptor : AbstractDescriptor, IBondDescriptor
-    {
+<#
+        var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.Parent.Parent.FullName, "IBondDescriptor");
+		using (var reader = new StreamReader(fn))
+		{
+			string line;
+			while ((line = reader.ReadLine()) != null)
+			{
+				if (line.StartsWith("#"))
+					continue;
+				line = line.Trim();
+				if (string.IsNullOrEmpty(line))
+					continue;
+				var cIndex = line.LastIndexOf(".");
+				var className = line.Substring(cIndex + 1);
+#>
+	public partial class <#=className#>
+	{
         private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
@@ -79,6 +83,11 @@ namespace NCDK.QSAR
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        public abstract DescriptorValue Calculate(IBond bond, IAtomContainer atomContainer);
-    }
+        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+            => Calculate(bond, atomContainer);
+	}
+<#
+			}
+		}
+#>
 }

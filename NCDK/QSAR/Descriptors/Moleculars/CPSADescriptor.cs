@@ -120,7 +120,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:CPSA
-    public class CPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class CPSADescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1",
             "DPSA-2", "DPSA-3", "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2",
@@ -128,7 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public CPSADescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
@@ -138,26 +138,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the CPSADescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
         /// <summary>
         /// The parameters attribute of the CPSADescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
         /// <summary>
         /// Gets the parameterType attribute of the CPSADescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
         /// <summary>
         /// Evaluates the 29 CPSA descriptors using Gasteiger-Marsilli charges.
         /// </summary>
         /// <param name="atomContainer">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 29 elements in the order described above</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
             ArrayResult<double> retval = new ArrayResult<double>();
 
@@ -165,7 +165,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                         DescriptorNames, new CDKException("Molecule must have 3D coordinates"));
             }
 
@@ -190,7 +190,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Debug.WriteLine("Error in assigning Gasteiger-Marsilli charges");
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                         DescriptorNames, new CDKException("Error in getting G-M charges"));
             }
 
@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Debug.WriteLine("Error in surface area calculation");
                 for (int i = 0; i < 29; i++)
                     retval.Add(double.NaN);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                         DescriptorNames, new CDKException("Error in surface area calculation"));
             }
 
@@ -339,10 +339,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(rhsa);
             retval.Add(rpsa);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(29);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(29);
     }
 }

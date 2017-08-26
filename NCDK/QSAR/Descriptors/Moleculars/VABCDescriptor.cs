@@ -31,10 +31,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:vabc
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public class VABCDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class VABCDescriptor : IMolecularDescriptor
     {
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "The Chemistry Development Kit");
 
         /// <inheritdoc/>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -57,11 +57,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "VABC" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "VABC" };
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
         /// <returns>A double containing the volume</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             double volume;
             try
@@ -81,17 +81,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(exception);
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(volume), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(volume), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
 
         /// <inheritdoc/>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
 
         /// <inheritdoc/>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

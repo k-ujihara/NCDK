@@ -64,13 +64,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
-    public class EccentricConnectivityIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class EccentricConnectivityIndexDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ECCEN" };
 
         public EccentricConnectivityIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex",
@@ -80,28 +80,28 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// the parameterNames attribute of the EccentricConnectivityIndexDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         ///  The parameterType attribute of the EccentricConnectivityIndexDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// the parameters attribute of the EccentricConnectivityIndexDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
         /// <summary>
         ///  Calculates the eccentric connectivity
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An Result<int> value representing the eccentric connectivity index</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
 
@@ -121,11 +121,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 eccenindex += max * degree;
             }
             Result<int> retval = new Result<int>(eccenindex);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames, null);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
     }
 }

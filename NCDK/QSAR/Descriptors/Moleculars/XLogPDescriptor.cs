@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:xlogP
     // @cdk.keyword XLogP
     // @cdk.keyword descriptor
-    public class XLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class XLogPDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private bool salicylFlag = false;
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the XLogPDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
@@ -127,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the XLogPDescriptor object.
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -154,11 +154,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>XLogP is a double</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac;
             try
@@ -1212,7 +1212,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(xlogP),
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(xlogP),
                     DescriptorNames);
         }
 
@@ -1224,7 +1224,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Method initialise the HydrogenpairCheck with a value
@@ -1779,14 +1779,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the XLogPDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
 
         /// <summary>
         /// Gets the parameterType attribute of the XLogPDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => true;
+        public object GetParameterType(string name) => true;
 
         private IAtomContainer CreatePaba(IChemObjectBuilder builder)
         {

@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:zagrebIndex
     // @cdk.keyword Zagreb index
     // @cdk.keyword descriptor
-    public class ZagrebIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class ZagrebIndexDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Zagreb" };
 
@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
@@ -53,16 +53,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  Evaluate the Zagreb Index for a molecule.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns> zagreb index</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             double zagreb = 0;
             foreach (var atom in atomContainer.Atoms)
@@ -79,22 +79,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 zagreb += (atomDegree * atomDegree);
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(zagreb), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(zagreb), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// The parameterType attribute of the ZagrebIndexDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }
