@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
-    public class IsProtonInConjugatedPiSystemDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class IsProtonInConjugatedPiSystemDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "protonInConjSystem" };
         private bool checkAromaticity = false;
@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the IsProtonInConjugatedPiSystemDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The parameters attribute of the IsProtonInConjugatedPiSystemDescriptor object
         /// <exception cref="CDKException"></exception>
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>true if the proton is bonded to a conjugated system</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer)
+        public DescriptorValue<Result<bool>> Calculate(IAtom atom, IAtomContainer atomContainer)
         {
             IAtomContainer clonedAtomContainer;
             clonedAtomContainer = (IAtomContainer)atomContainer.Clone();
@@ -110,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
+                    return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(false), NAMES, e);
                 }
             }
             if (atom.Symbol.Equals("H"))
@@ -135,14 +135,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<bool>(
+            return new DescriptorValue<Result<bool>>(_Specification, ParameterNames, Parameters, new Result<bool>(
                     isProtonInPiSystem), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the IsProtonInConjugatedPiSystemDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the
@@ -150,6 +150,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => true;
+        public object GetParameterType(string name) => true;
     }
 }

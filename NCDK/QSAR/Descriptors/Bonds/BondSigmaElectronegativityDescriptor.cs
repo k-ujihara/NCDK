@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
-    public class BondSigmaElectronegativityDescriptor : AbstractBondDescriptor, IBondDescriptor
+    public partial class BondSigmaElectronegativityDescriptor : IBondDescriptor
     {
        /// <summary>Number of maximum iterations</summary>
         private int maxIterations = 6;
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The specification attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity",
@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The parameters attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -94,11 +94,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>return the sigma electronegativity</returns>
-        public override DescriptorValue Calculate(IBond aBond, IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IBond aBond, IAtomContainer atomContainer)
         {
             IAtomContainer ac;
             IBond bond;
@@ -128,19 +128,19 @@ namespace NCDK.QSAR.Descriptors.Bonds
             double electroAtom1 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[0]);
             double electroAtom2 = electronegativity.CalculateSigmaElectronegativity(ac, bond.Atoms[1]);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(Math.Abs(electroAtom1 - electroAtom2)), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BondSigmaElectronegativityDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => 0;
+        public object GetParameterType(string name) => 0;
     }
 }

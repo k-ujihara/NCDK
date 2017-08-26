@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondCount
-    public class BondCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class BondCountDescriptor : IMolecularDescriptor
     {
         /// <summary>defaults to UNSET, which means: count all bonds </summary>
         private string order = "";
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  The specification attribute of the BondCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BondCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="container">AtomContainer</param>
         /// <returns>The number of bonds of a certain type.</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
             if (order.Equals(""))
             {
@@ -141,7 +141,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                     if (!hasHydrogen) bondCount++;
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames, null);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         bondCount += 1;
                     }
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(bondCount), DescriptorNames);
             }
         }
 
@@ -170,19 +170,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the BondCountDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the BondCountDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("order".Equals(name)) return "";
             return null;

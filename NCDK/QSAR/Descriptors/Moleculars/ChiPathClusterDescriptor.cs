@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPathCluster
     // @cdk.keyword chi path cluster index
     // @cdk.keyword descriptor
-    public class ChiPathClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class ChiPathClusterDescriptor : IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -69,19 +69,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiPathClusterDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
                 typeof(ChiPathClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public override IReadOnlyList<string> ParameterNames => null;
-        public override object GetParameterType(string name) => null;
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
-        public override object[] Parameters { get { return null; } set { } }
+        public IReadOnlyList<string> ParameterNames => null;
+        public object GetParameterType(string name) => null;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public object[] Parameters { get { return null; } set { } }
 
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (sp == null) sp = new SmilesParser(container.Builder);
 
@@ -139,21 +139,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(order5v);
             retval.Add(order6v);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
         private IList<IList<int>> Order4(IAtomContainer atomContainer)
         {

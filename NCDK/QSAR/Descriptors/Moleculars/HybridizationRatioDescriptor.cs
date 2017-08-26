@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hybratio
-    public class HybridizationRatioDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class HybridizationRatioDescriptor : IMolecularDescriptor
     {
         /// <summary>
         /// Constructor for the HybridizationRatioDescriptor object.
@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// A <see cref="DescriptorSpecification"/> which specifies which descriptor is implemented by this class.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio",
@@ -61,17 +61,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the HybridizationRatioDescriptor object.
         /// This descriptor takes no parameters
         /// </summary>
-        public override object[] Parameters { get { return Array.Empty<object>(); } set { } }
+        public object[] Parameters { get { return Array.Empty<object>(); } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
 
         /// <summary>
         /// </summary>
         /// <param name="e">the exception</param>
         /// <returns>a dummy value</returns>
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="container">The AtomContainer for which this descriptor is to be calculated.</param>
         /// <returns>The ratio of sp3 to sp2 carbons</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     else if (atom.Hybridization == Hybridization.SP3) nsp3++;
                 }
                 double ratio = nsp3 / (double)(nsp2 + nsp3);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters,
                         new Result<double>(ratio), DescriptorNames);
             }
             catch (CDKException e)
@@ -105,13 +105,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the HybridizationRatioDescriptor object.
         /// This descriptor takes no parameters
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the HybridizationRatioDescriptor object.
@@ -119,6 +119,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">the parameter name</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public override object GetParameterType(string name) => "";
+        public object GetParameterType(string name) => "";
     }
 }

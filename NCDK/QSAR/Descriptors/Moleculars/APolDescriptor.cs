@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:apol
     // @cdk.keyword polarizability, atomic
-    public class APolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class APolDescriptor : IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
         private static double[] polarizabilities;
@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                typeof(APolDescriptor).FullName, "The Chemistry Development Kit");
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the APolDescriptor object.
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set
@@ -91,14 +91,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the sum of atomic polarizabilities in an <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
         /// <returns>The sum of atomic polarizabilities <see cref="IsotopeFactory"/></returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             double apol = 0;
             int atomicNumber;
@@ -118,29 +118,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         apol += polarizabilities[1] * atom.ImplicitHydrogenCount.Value;
                     }
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(apol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, 
                     new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
             }
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the APolDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;  // no param names to return
+        public IReadOnlyList<string> ParameterNames => null;  // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the APolDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

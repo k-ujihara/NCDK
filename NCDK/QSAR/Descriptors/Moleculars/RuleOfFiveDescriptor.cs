@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword Lipinski
     // @cdk.keyword rule-of-five
     // @cdk.keyword descriptor
-    public class RuleOfFiveDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class RuleOfFiveDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
 
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public RuleOfFiveDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures",
@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  aromaticity should be checked or has already been checked. The name of the paramete
         ///  is checkAromaticity.</remarks>
         /// <exception cref="CDKException">if more than 1 parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  the method take a bool checkAromaticity: if the bool is true, it means that
@@ -108,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="mol">AtomContainer for which this descriptor is to be calculated</param>
         /// <returns>The number of failures of the Lipinski rule</returns>
-        public override DescriptorValue Calculate(IAtomContainer mol)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer mol)
         {
             int lipinskifailures = 0;
 
@@ -165,26 +165,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (CDKException e)
             {
-                new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+                new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(lipinskifailures), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  Gets the parameterNames attribute of the RuleOfFiveDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the RuleOfFiveDescriptor object.
         /// </summary>
         /// <param name="name">The name of the parameter. In this case it is 'checkAromaticity'.</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             return true;
         }

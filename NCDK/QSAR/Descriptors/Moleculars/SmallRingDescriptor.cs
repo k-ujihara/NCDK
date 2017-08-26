@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:smallrings
     // @cdk.keyword smallrings
     // @cdk.keyword descriptor
-    public class SmallRingDescriptor : IMolecularDescriptor
+    public partial class SmallRingDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
             "nAromRings", // total number of small aromatic rings
@@ -107,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="mol">the atoms and bonds that make up the molecular object</param>
         /// <returns>the various ring-based descriptors generated</returns>
-        public DescriptorValue Calculate(IAtomContainer mol)
+        public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer mol)
         {
             this.mol = mol;
             try
@@ -168,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             result.Add(nRings7);
             result.Add(nRings8);
             result.Add(nRings9);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, result, NAMES);
+            return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, result, NAMES);
         }
 
         // analyze the molecule graph, and build up the desired properties

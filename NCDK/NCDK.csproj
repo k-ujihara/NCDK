@@ -333,6 +333,22 @@
     </Content>
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
     <None Include="Numerics\LICENSE.txt" />
+    <Content Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>%24AtomicDescriptor.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>%24ProtonDescriptor.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>%24BondDescriptor.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>%24MolecularDescriptor.tt.cs</LastGenOutput>
+    </Content>
     <Content Include="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
@@ -341,6 +357,26 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SgroupType.tt.cs</LastGenOutput>
     </Content>
+    <Compile Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>%24AtomicDescriptor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>%24ProtonDescriptor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt.cs">
+      <DependentUpon>%24BondDescriptor.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt.cs">
+      <DependentUpon>%24MolecularDescriptor.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="QSAR\Results\ArrayResult.cs" />
     <Compile Include="QSAR\Results\Result.cs" />
     <Compile Include="SGroups\SgroupType.tt.cs">
@@ -390,7 +426,6 @@
     <Compile Include="LibIO\CML\CMLScalar.cs" />
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
-    <Compile Include="QSAR\Descriptors\Atomic\AbstractRDFProtonDescriptor.cs" />
     <Compile Include="ReactionRoles.cs" />
     <Compile Include="Reactions\ReactionChain.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
@@ -1659,11 +1694,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBStrand.tt.cs</LastGenOutput>
     </Content>
-    <Compile Include="QSAR\AbstractAtomicDescriptor.cs" />
-    <Compile Include="QSAR\AbstractAtomPairDescriptor.cs" />
-    <Compile Include="QSAR\AbstractBondDescriptor.cs" />
-    <Compile Include="QSAR\AbstractDescriptor.cs" />
-    <Compile Include="QSAR\AbstractMolecularDescriptor.cs" />
     <Compile Include="QSAR\AtomValenceTool.cs" />
     <Compile Include="QSAR\DescriptorSpecification.cs" />
     <Compile Include="QSAR\DescriptorValue.cs" />

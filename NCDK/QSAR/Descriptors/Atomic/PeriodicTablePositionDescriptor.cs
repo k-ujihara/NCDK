@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:period
-    public class PeriodicTablePositionDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class PeriodicTablePositionDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "periodicTablePosition" };
         public IDictionary<string, int> periodicTable;
@@ -97,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// The specification attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
         /// <returns>The specification value</returns>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
@@ -106,9 +106,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculates the period of an atom.
@@ -116,24 +116,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The period</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
         {
             int period;
             string symbol = atom.Symbol;
             period = periodicTable[symbol];
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(period), NAMES);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(period), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the PeriodicTablePositionDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

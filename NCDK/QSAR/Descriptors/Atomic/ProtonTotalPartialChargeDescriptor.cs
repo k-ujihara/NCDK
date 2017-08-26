@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:protonPartialCharge
-    public class ProtonTotalPartialChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class ProtonTotalPartialChargeDescriptor : IAtomicDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
         private List<IAtom> neighboors;
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the ProtonTotalPartialChargeDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
@@ -61,9 +61,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the ProtonTotalPartialChargeDescriptor
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = MakeDescriptorNames();
+        public IReadOnlyList<string> DescriptorNames { get; } = MakeDescriptorNames();
         private static string[] MakeDescriptorNames()
         {
             string[] labels = new string[MAX_PROTON_COUNT];
@@ -74,12 +74,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return labels;
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             ArrayResult<double> result = new ArrayResult<double>(MAX_PROTON_COUNT);
             for (int i = 0; i < neighboors.Count + 1; i++)
                 result.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>an array of doubles with partial charges of [heavy, proton_1 ... proton_n]</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             neighboors = ac.GetConnectedAtoms(atom).ToList();
 
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtom localAtom = clone.Atoms[ac.Atoms.IndexOf(atom)];
             neighboors = clone.GetConnectedAtoms(localAtom).ToList();
 
-            // we assume that an atom has a mxa number of protons = MAX_PROTON_COUNT
+            // we assume that an atom has a max number of protons = MAX_PROTON_COUNT
             // if it has less, we pad with NaN
             ArrayResult<double> protonPartialCharge = new ArrayResult<double>(MAX_PROTON_COUNT);
             Trace.Assert(neighboors.Count < MAX_PROTON_COUNT);
@@ -130,19 +130,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < remainder; i++)
                 protonPartialCharge.Add(double.NaN);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, protonPartialCharge, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, protonPartialCharge, DescriptorNames);
         }
 
         /// <summary>
         /// The parameterNames attribute of the ProtonTotalPartialChargeDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the ProtonTotalPartialChargeDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

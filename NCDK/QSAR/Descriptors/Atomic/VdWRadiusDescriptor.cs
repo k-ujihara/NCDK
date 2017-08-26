@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:vdwradius
-    public class VdWRadiusDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class VdWRadiusDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "vdwRadius" };
 
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <returns>An object containing the descriptor specification</returns>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius",
@@ -82,33 +82,33 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the VdWRadiusDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculate the Van der Waals radius of an atom.
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
         /// <returns>The Van der Waals radius of the atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             string symbol = atom.Symbol;
             double vdwradius = PeriodicTable.GetVdwRadius(symbol).Value;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(vdwradius), NAMES);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(vdwradius), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the VdWRadiusDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the VdWRadiusDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

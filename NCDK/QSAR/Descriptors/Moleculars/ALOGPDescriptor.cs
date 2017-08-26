@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
     // @see org.openscience.cdk.tools.CDKHydrogenAdder
-    public class ALOGPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class ALOGPDescriptor : IMolecularDescriptor
     {
         IAtomContainer atomContainer;
         IRingSet rs;
@@ -2274,7 +2274,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="atomContainer">the molecule to calculate on</param>
         /// <returns>the result of the calculation</returns>
         /// </summary>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer container;
             try
@@ -2333,39 +2333,39 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             results.Add(ret[1]);
             results.Add(ret[2]);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             ArrayResult<double> results = new ArrayResult<double>();
             results.Add(double.NaN);
             results.Add(double.NaN);
             results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
+        public IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         protected static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 typeof(ALOGPDescriptor).FullName, "The Chemistry Development Kit");
 
-        public override IReadOnlyList<string> ParameterNames => new string[0];
+        public IReadOnlyList<string> ParameterNames => new string[0];
 
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => STRINGS;
+        public IReadOnlyList<string> DescriptorNames => STRINGS;
     }// end class
 }
 

@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Substances
                 "The Chemistry Development Kit");
 
         /// <inheritdoc/>
-        public DescriptorValue Calculate(ISubstance substance)
+        public DescriptorValue<Result<int>> Calculate(ISubstance substance)
         {
             int count = 0;
             if (substance != null)
@@ -68,11 +68,14 @@ namespace NCDK.QSAR.Descriptors.Substances
                 }
             }
 
-            return new DescriptorValue(
+            return new DescriptorValue<Result<int>>(
                 _Specification, ParameterNames, Parameters,
                 new Result<int>(count), DescriptorNames
             );
         }
+
+        DescriptorValue ISubstanceDescriptor.Calculate(ISubstance substance)
+            => Calculate(substance);
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = Result<int>.Instance;

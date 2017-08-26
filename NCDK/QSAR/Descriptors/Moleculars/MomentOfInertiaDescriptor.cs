@@ -75,11 +75,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class MomentOfInertiaDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
@@ -88,29 +88,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -121,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 7 elements in the order described above</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (!GeometryUtil.Has3DCoordinates(container))
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -212,11 +212,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
     }
 }

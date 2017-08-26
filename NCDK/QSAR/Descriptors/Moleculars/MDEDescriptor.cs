@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:mde
-    public class MDEDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class MDEDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
             "MDEC-24", "MDEC-33", "MDEC-34", "MDEC-44", "MDEO-11", "MDEO-12", "MDEO-22", "MDEN-11", "MDEN-12",
@@ -111,7 +111,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
@@ -121,9 +121,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the WeightDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
@@ -131,7 +131,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
         ///                  is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
         /// <returns>The total weight of atoms of the specified element type</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);
 
@@ -141,12 +141,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 retval.Add(Dedge(local, i));
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(19);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(19);
 
         private double Dedge(IAtomContainer atomContainer, int which)
         {
@@ -308,13 +308,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the WeightDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

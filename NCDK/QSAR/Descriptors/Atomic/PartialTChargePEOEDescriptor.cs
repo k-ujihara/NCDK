@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:PartialTChargePEOE
-    public class PartialTChargePEOEDescriptor : AbstractAtomicDescriptor
+    public partial class PartialTChargePEOEDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "pepeT" };
 
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialTChargePEOEDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE",
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the PartialTChargePEOEDescriptor object
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -110,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method returns partial total charges assigned to an heavy atom through PEOE method.
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>an array of doubles with partial charges of [heavy, proton_1 ... proton_n]</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
             var originalCharge = atom.Charge;
@@ -137,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (CDKException e)
                 {
-                    new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                    new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
 
                 if (lpeChecker)
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                     catch (CDKException e)
                     {
-                        new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                        new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                                 double.NaN), NAMES, e);
                     }
                 }
@@ -172,7 +172,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
                 catch (Exception e)
                 {
-                    new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                    new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
                 }
             }
             // restore original props
@@ -184,21 +184,21 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue(_Specification, ParameterNames,
-                    Parameters, GetCachedDescriptorValue(atom), NAMES) : null;
+            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+                    Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
         }
 
         /// <summary>
         /// The parameterNames attribute of the PartialTChargePEOEDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialTChargePEOEDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             if ("lpeChecker".Equals(name)) return true;

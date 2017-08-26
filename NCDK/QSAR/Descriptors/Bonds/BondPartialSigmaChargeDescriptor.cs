@@ -44,7 +44,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
 
-    public class BondPartialSigmaChargeDescriptor : AbstractBondDescriptor
+    public partial class BondPartialSigmaChargeDescriptor
+        : IBondDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
        /// <summary>Number of maximum iterations</summary>
@@ -63,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The specification attribute of the BondPartialSigmaChargeDescriptor object.
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge",
@@ -72,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// <summary>
         /// The parameters attribute of the BondPartialSigmaChargeDescriptor object
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -93,11 +94,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>return the sigma electronegativity</returns>
-        public override DescriptorValue Calculate(IBond bond, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IBond bond, IAtomContainer ac)
         {
             // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
             var originalCharge1 = bond.Atoms[0].Charge;
@@ -131,20 +132,20 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
             bond.Atoms[0].Charge = originalCharge1;
             bond.Atoms[1].Charge = originalCharge2;
-            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue(_Specification, ParameterNames, Parameters, GetCachedDescriptorValue(bond), NAMES) : null;
+            return GetCachedDescriptorValue(bond) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, (Result<double>)GetCachedDescriptorValue(bond), NAMES) : null;
         }
 
         /// <summary>
         /// The parameterNames attribute of the BondPartialSigmaChargeDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BondPartialSigmaChargeDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             return null;

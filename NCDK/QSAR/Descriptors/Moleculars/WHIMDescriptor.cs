@@ -108,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     // @cdk.dictref qsar-descriptors:WHIM
     // @cdk.keyword WHIM
     // @cdk.keyword descriptor
-    public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class WHIMDescriptor : IMolecularDescriptor
     {
         string type = "";
         IDictionary<string, double> hashatwt, hashvdw, hasheneg, hashpol;
@@ -205,7 +205,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             this.hashpol["I"] = 3.040;
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
@@ -219,7 +219,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         ///               mass, volume, eneg, polar</para>
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -242,7 +242,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -257,22 +257,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         /// <summary>
         /// The parameterNames attribute of the WHIMDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
 
         /// <summary>
         /// Gets the parameterType attribute of the WHIMDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => "";
+        public object GetParameterType(string name) => "";
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -282,7 +282,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing the descriptors in the order described above.</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (!GeometryUtil.Has3DCoordinates(container))
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -435,12 +435,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
                 retval.Add(g);
                 retval.Add(d);
 
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+                return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
             }
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
 
         class PCA
         {

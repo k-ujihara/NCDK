@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiChain
     // @cdk.keyword chi chain index
     // @cdk.keyword descriptor
-    public class ChiChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class ChiChainDescriptor : IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -73,21 +73,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiChainDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain",
                 typeof(ChiChainDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public override IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
+        public IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
 
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             return null; //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -99,19 +99,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (sp == null) sp = new SmilesParser(container.Builder);
 
@@ -180,11 +180,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(order6v);
             retval.Add(order7v);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
 
         private IList<IList<int>> Order3(IAtomContainer container)
         {

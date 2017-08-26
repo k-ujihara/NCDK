@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:partialPiCharge
     // @see         GasteigerPEPEPartialCharges
-    public class PartialPiChargeDescriptor : AbstractAtomicDescriptor
+    public partial class PartialPiChargeDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "pepe" };
 
@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialPiChargeDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge",
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -132,11 +132,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>Value of the alpha partial charge</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
             var originalCharge = atom.Charge;
@@ -208,21 +208,21 @@ namespace NCDK.QSAR.Descriptors.Atomic
             atom.MaxBondOrder = originalMaxBondOrder;
             atom.BondOrderSum = originalBondOrderSum;
 
-            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue(_Specification, ParameterNames,
-                    Parameters, GetCachedDescriptorValue(atom), NAMES) : null;
+            return GetCachedDescriptorValue(atom) != null ? new DescriptorValue<Result<double>>(_Specification, ParameterNames,
+                    Parameters, (Result<double>)GetCachedDescriptorValue(atom), NAMES) : null;
         }
 
         /// <summary>
         /// The parameterNames attribute of the PartialPiChargeDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new[] { "maxIterations", "lpeChecker", "maxResonStruc", };
+        public IReadOnlyList<string> ParameterNames { get; } = new[] { "maxIterations", "lpeChecker", "maxResonStruc", };
 
         /// <summary>
         ///  Gets the parameterType attribute of the PartialPiChargeDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             if ("lpeChecker".Equals(name)) return true;

@@ -41,8 +41,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount
-    public class BasicGroupCountDescriptor 
-        : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class BasicGroupCountDescriptor 
+        : IMolecularDescriptor
     {
         private readonly static string[] SMARTS_STRINGS = 
         {
@@ -72,22 +72,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
                 typeof(BasicGroupCountDescriptor).FullName, 
                 "The Chemistry Development Kit");
 
-        public override object[] Parameters
+        public object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 {
                     if (tool.Matches(atomContainer)) count += tool.MatchesCount;
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(count), DescriptorNames);
             }
             catch (CDKException exception)
             {
@@ -104,19 +104,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
-        public override IReadOnlyList<string> ParameterNames { get; } 
+        public IDescriptorResult DescriptorResultType => Result<int>.Instance;
+        public IReadOnlyList<string> ParameterNames { get; } 
             = new string[] { };
 
-        public override object GetParameterType(string name) 
+        public object GetParameterType(string name) 
         {
             object obj = null;
             return obj;
         }
 
-        private DescriptorValue GetDummyDescriptorValue(Exception exception)
+        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception exception)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(-1),
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(-1),
                     DescriptorNames, exception);
         }
     }

@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:NilaComplexity
-    public class FragmentComplexityDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class FragmentComplexityDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "fragC" };
 
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public FragmentComplexityDescriptor() { }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the FragmentComplexityDescriptor object.
         /// This descriptor takes no parameter.
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -78,14 +78,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the complexity in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the complexity</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             //Console.Out.WriteLine("FragmentComplexityDescriptor");
             int a = 0;
@@ -103,22 +103,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             int b = container.Bonds.Count + AtomContainerManipulator.GetImplicitHydrogenCount(container);
             double c = Math.Abs(b * b - a * a + a) + (h / 100);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(c), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the FragmentComplexityDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the FragmentComplexityDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

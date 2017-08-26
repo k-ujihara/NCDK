@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:gravitationalIndex
     // @cdk.keyword gravitational index
     // @cdk.keyword descriptor
-    public class GravitationalIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class GravitationalIndexDescriptor : IMolecularDescriptor
     {
         private struct Pair
         {
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public GravitationalIndexDescriptor() { }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
@@ -92,29 +92,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the GravitationalIndexDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// The parameterNames attribute of the GravitationalIndexDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
             int ndesc = DescriptorNames.Count;
             ArrayResult<double> results = new ArrayResult<double>(ndesc);
             for (int i = 0; i < ndesc; i++)
                 results.Add(double.NaN);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
 
@@ -123,7 +123,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (!GeometryUtil.Has3DCoordinates(container))
                 return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -254,12 +254,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             retval.Add(Math.Sqrt(allheavysum));
             retval.Add(Math.Pow(allheavysum, 1.0 / 3.0));
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+            return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(9);
+        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(9);
     }
 }
 

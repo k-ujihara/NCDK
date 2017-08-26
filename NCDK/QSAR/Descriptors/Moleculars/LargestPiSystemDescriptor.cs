@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestPiSystem
-    public class LargestPiSystemDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class LargestPiSystemDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nAtomP" };
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LargestPiSystemDescriptor() { }
 
         /// <inheritdoc/> 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -97,11 +97,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the largest pi system of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
             bool[] originalFlag4 = new bool[container.Atoms.Count];
             for (int i = 0; i < originalFlag4.Length; i++)
@@ -179,12 +179,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 container.Atoms[i].IsVisited = originalFlag4[i];
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
                     largestPiSystemAtomsCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// Performs a breadthFirstSearch in an AtomContainer starting with a
@@ -237,14 +237,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameterNames attribute of the LargestPiSystemDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the LargestPiSystemDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("checkAromaticity".Equals(name)) return false;
             return null;

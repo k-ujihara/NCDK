@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:FMF
     // @cdk.githash
     // @see org.openscience.cdk.fragment.MurckoFragmenter
-    public class FMFDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class FMFDescriptor : IMolecularDescriptor
     {
         public FMFDescriptor() { }
 
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
         /// <returns>An object of <see cref="DescriptorValue"/> that contains the
         ///         calculated FMF descriptor value as well as specification details</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             MurckoFragmenter fragmenter = new MurckoFragmenter(true, 3);
             Result<double> result;
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 result = new Result<double>(double.NaN);
             }
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <summary>
@@ -102,10 +102,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <see cref="IDescriptor"/> for more details.</para>
         /// </summary>
         /// <returns>an instance of the <see cref="Result<double>"/></returns>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
@@ -117,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Since this descriptor takes no parameters, <see langword="null"/> is returned
         /// </summary>
         /// <returns><see langword="null"/>, since there are no parameters</returns>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Returns a class matching that of the parameter with the given name.
@@ -125,12 +125,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">The name of the parameter whose type is requested</param>
         /// <returns><see langword="null"/>, since this descriptor has no parameters</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
         /// <summary>
         /// The parameters for this descriptor.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
         /// <summary>
         /// Returns an array of names for each descriptor value calculated.
@@ -139,6 +139,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </para>
         /// </summary>
         /// <returns>A 1-element string array, with the value "FMF"</returns>
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
     }
 }

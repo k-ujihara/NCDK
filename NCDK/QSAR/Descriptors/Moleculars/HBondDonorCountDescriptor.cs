@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondDonors
-    public class HBondDonorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class HBondDonorCountDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "nHBDon" };
 
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the HBondDonorCountDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors",
@@ -86,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameter of this HBondDonorCountDescriptor instance.
         /// </summary>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -99,11 +99,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
         }
 
         /// <summary>
@@ -111,14 +111,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>number of H bond donors</returns>
-        public override DescriptorValue Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
             int hBondDonors = 0;
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
 
             //IAtom[] atoms = ac.GetAtoms();
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
-            atomloop: for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
+        atomloop:
+            for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
             {
                 IAtom atom = (IAtom)ac.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
@@ -146,23 +147,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     ;
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(hBondDonors), DescriptorNames);
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(hBondDonors), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames of the HBondDonorCountDescriptor.
         /// <see langword="null"/> as this descriptor does not have any parameters.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
+        public IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
 
         /// <summary>
         /// Gets the parameterType of the HBondDonorCountDescriptor.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns><see langword="null"/> as this descriptor does not have any parameters</returns>
-        public override object GetParameterType(string name) => null; // no parameters; thus we return null
+        public object GetParameterType(string name) => null; // no parameters; thus we return null
     }
 }

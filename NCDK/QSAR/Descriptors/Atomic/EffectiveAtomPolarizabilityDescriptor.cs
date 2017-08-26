@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:effectivePolarizability
-    public class EffectiveAtomPolarizabilityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class EffectiveAtomPolarizabilityDescriptor : IAtomicDescriptor
     {
         private Polarizability pol;
 
@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
@@ -71,9 +71,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "effAtomPol" };
+        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "effAtomPol" };
 
         /// <summary>
         ///  The method calculates the Effective Atom Polarizability of a given atom
@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>return the effective polarizability</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)
         {
             double polarizability;
             try
@@ -106,24 +106,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 atom.Hybridization = originalHybridization;
                 atom.MaxBondOrder = originalMaxBondOrder;
                 atom.BondOrderSum = originalBondOrderSum;
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(polarizability), DescriptorNames);
             }
             catch (Exception ex1)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, ex1);
             }
         }
 
         /// <summary>
         /// The parameterNames attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         ///  Gets the parameterType attribute of the EffectiveAtomPolarizabilityDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

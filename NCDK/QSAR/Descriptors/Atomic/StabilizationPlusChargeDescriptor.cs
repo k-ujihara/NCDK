@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2008-104-31
     // @cdk.module     qsaratomic
     // @cdk.githash
-    public class StabilizationPlusChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class StabilizationPlusChargeDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "stabilPlusC" };
 
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the StabilizationPlusChargeDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
@@ -78,9 +78,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </item>
         /// </list>       
         /// </value>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method calculates the stabilization of charge of a given atom
@@ -89,7 +89,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">AtomContainer</param>
         /// <returns>return the stabilization value</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             IAtomContainer clone;
             IAtom localAtom;
@@ -101,24 +101,24 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException e)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, e);
             }
 
             double result = stabil.CalculatePositive(clone, localAtom);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(result), NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the StabilizationPlusChargeDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null;
+        public IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         ///  Gets the parameterType attribute of the StabilizationPlusChargeDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

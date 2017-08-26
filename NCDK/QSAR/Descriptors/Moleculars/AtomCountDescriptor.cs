@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomCount
-    public class AtomCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class AtomCountDescriptor : IMolecularDescriptor
     {
         private string elementName = "*";
 
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  Sets the parameters attribute of the AtomCountDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if the number of parameters is greater than 1 or else the parameter is not of type string</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames
+        public IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -113,20 +113,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>Number of atoms of a certain type is returned.</returns>
         // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
         // this could be useful for other descriptors like polar surface area...
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
             int atomCount = 0;
 
             if (container == null)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
                     new Result<int>(0), DescriptorNames,
                     new CDKException("The supplied AtomContainer was NULL"));
             }
 
             if (container.Atoms.Count == 0)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters,
                     new Result<int>(0), DescriptorNames, new CDKException(
                         "The supplied AtomContainer did not have any atoms"));
             }
@@ -168,23 +168,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<int>(
+            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
                     atomCount), DescriptorNames);
         }
 
         /// <inheritdoc/>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  The parameterNames attribute of the AtomCountDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementName" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementName" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the AtomCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public override object GetParameterType(string name) => "";
+        public object GetParameterType(string name) => "";
     }
 }

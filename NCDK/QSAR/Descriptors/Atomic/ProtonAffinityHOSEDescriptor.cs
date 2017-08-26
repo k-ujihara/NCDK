@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module   qsaratomic
     // @cdk.githash
     // @cdk.dictref  qsar-descriptors:protonaffinity
-    public class ProtonAffinityHOSEDescriptor : AbstractAtomicDescriptor
+    public partial class ProtonAffinityHOSEDescriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "protonAffiHOSE" };
 
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the ProtonAffinityDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
@@ -75,9 +75,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the ProtonAffinityDescriptor object.
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculates the protonation affinity of an atom.
@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The IAtom to protonate</param>
         /// <param name="container">Parameter is the IAtomContainer.</param>
         /// <returns>The protonation affinity. Not possible the ionization.</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)
         {
             double value = 0;
 
@@ -104,11 +104,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
             }
 
             value = db.ExtractAffinity(container, atom);
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(value), NAMES);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(value), NAMES);
         }
 
         /// <summary>
@@ -125,14 +125,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the ProtonAffinityDescriptor object.
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the ProtonAffinityDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
 
         /// <summary>
         /// Class defining the database containing the relation between the energy for ionizing and the HOSEcode fingerprints

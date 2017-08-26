@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bpol
-    public class BPolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    public partial class BPolDescriptor : IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
         private static double[] polarizabilities;
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BPolDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculate the sum of the absolute value of
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The sum of atomic polarizabilities</returns>
-        public override DescriptorValue Calculate(IAtomContainer container)
+        public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
             double bpol = 0;
             int atomicNumber0;
@@ -141,13 +141,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     difference = Math.Abs(polarizabilities[atnum] - polarizabilities[1]) * impH;
                     bpol += difference;
                 }
-                return new DescriptorValue(_Specification, ParameterNames, Parameters,
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters,
                         new Result<double>(bpol), DescriptorNames);
             }
             catch (Exception ex1)
             {
                 Debug.WriteLine(ex1);
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(
                         double.NaN), DescriptorNames, new CDKException("Problems with IsotopeFactory due to "
                         + ex1.ToString(), ex1));
             }
@@ -161,19 +161,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.</para>
         /// </summary>
-        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         ///  The parameterNames attribute of the BPolDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
+        public IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         ///  Gets the parameterType attribute of the BPolDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }
 

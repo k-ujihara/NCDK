@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:partialTChargeMMFF94
     // @cdk.bug 1628461
-    public class PartialTChargeMMFF94Descriptor : AbstractAtomicDescriptor
+    public partial class PartialTChargeMMFF94Descriptor : IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "partialTCMMFF94" };
         private static readonly string CHARGE_CACHE = "mmff.qsar.charge.cache";
@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The specification attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
@@ -69,9 +69,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
-        public override object[] Parameters { get { return null; } set { } }
+        public object[] Parameters { get { return null; } set { } }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// The method returns partial charges assigned to an heavy atom through
@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="org">AtomContainer</param>
         /// <returns>partial charge of parameter atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer org)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer org)
         {
             if (atom.GetProperty<double?>(CHARGE_CACHE) == null)
             {
@@ -91,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     if (a.ImplicitHydrogenCount == null || a.ImplicitHydrogenCount != 0)
                     {
                         Trace.TraceError("Hydrogens must be explict for MMFF charge calculation");
-                        return new DescriptorValue(_Specification, ParameterNames, Parameters,
+                        return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters,
                                                    new Result<double>(double.NaN), NAMES);
                     }
                 }
@@ -108,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 }
             }
 
-            return new DescriptorValue(_Specification,
+            return new DescriptorValue<Result<double>>(_Specification,
                                        ParameterNames,
                                        Parameters,
                                        new Result<double>(atom.GetProperty<double>(CHARGE_CACHE)),
@@ -118,13 +118,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameterNames attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) => null;
+        public object GetParameterType(string name) => null;
     }
 }

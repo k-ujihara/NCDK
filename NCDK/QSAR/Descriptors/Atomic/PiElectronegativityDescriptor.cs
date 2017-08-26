@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:piElectronegativity
-    public class PiElectronegativityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    public partial class PiElectronegativityDescriptor : IAtomicDescriptor
     {
         /// <summary>Number of maximum iterations</summary>
         private int maxIterations = -1;
@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  Gets the specification attribute of the PiElectronegativityDescriptor object
         /// </summary>
-        public override IImplementationSpecification Specification => _Specification;
+        public IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity",
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </list>
         /// </remarks>
         /// <exception cref="CDKException"></exception>
-        public override object[] Parameters
+        public object[] Parameters
         {
             set
             {
@@ -116,7 +116,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  The method calculates the pi electronegativity of a given atom
@@ -125,7 +125,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>return the pi electronegativity</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer)
+        public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer atomContainer)
         {
             IAtomContainer clone;
             IAtom localAtom;
@@ -142,7 +142,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
+                return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), NAMES, null);
             }
 
             if (maxIterations != -1 && maxIterations != 0) electronegativity.MaxIterations = maxIterations;
@@ -150,21 +150,21 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             double result = electronegativity.CalculatePiElectronegativity(clone, localAtom);
 
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new Result<double>(result),
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(result),
                                        NAMES);
         }
 
         /// <summary>
         /// The parameterNames attribute of the SigmaElectronegativityDescriptor object
         /// </summary>
-        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "maxIterations", "lpeChecker", "maxResonStruc" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the SigmaElectronegativityDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name)
+        public object GetParameterType(string name)
         {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             if ("lpeChecker".Equals(name)) return true;
