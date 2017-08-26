@@ -19,11 +19,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ output extension=".tt.cs" #>
@@ -32,36 +32,46 @@ using System;
 using System.Runtime.InteropServices;
 
 <#
-CC("136161B3-6FC6-42B9-BAA8-DA181C5BD927", 
-	"NCDK.IChemObjectBuilder");
-CC("7930EF62-EED8-43B8-B984-D91A87A6D77D", 
-	"NCDK.IAtomContainer");
-CC("D4CFC8BC-C66E-49CF-B3CC-14F437406955", 
-	"NCDK.Smiles.SmilesParser", 
-	new[] {
-		"IAtomContainer ParseSmiles(string smiles)" 
-	});
-CC("124390C0-5C97-4351-800B-D27A31130D70", 
-	"NCDK.QSAR.IMolecularDescriptor",
-	new[] { "DescriptorValue Calculate(IAtomContainer container)" });
-CC("3FF6093F-CAFB-48F3-BAA1-69D5549CC720", "NCDK.QSAR.IDescriptor");
-CC("821CF389-3EFC-44BF-9157-7A4ED1ADA6F1", 
-	"NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor",  
-	new[] {
-		"DescriptorValue Calculate(IAtomContainer atomContainer)",
-	}, 
-	new[] { "IMolecularDescriptor", },
-	"6B6441F5-3131-4E69-BEE3-B94C809CC163");
-CC("ECB38294-A140-4566-96D1-66DFB14E050B", 
-	"NCDK.QSAR.DescriptorValue");
+		var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Class_Info.txt");
+		using (var reader = new StreamReader(fn))
+		{
+			bool isFirst = true;
+			string line;
+			while ((line = reader.ReadLine()) != null)
+			{
+				if (isFirst)
+				{
+					isFirst = false;
+					continue;
+				}
+				string[] cells = new string[5];
+				string[] line_split = line.Split('\t').Select(n => n.Trim()).Select(n => (string.IsNullOrEmpty(n) ? null : n)).ToArray();
+				Array.Copy(line_split, cells, line_split.Length);
+				string[] interfaces = null;
+				string[] methods = null;
+				if (cells[3] != null)
+					interfaces = cells[3].Split(',').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
+				if (cells[4] != null)
+					methods = cells[4].Split(';').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
+				CC(cells[0], cells[1], cells[2], interfaces, methods);
+			}
+		}
+/*
+CC("136161B3-6FC6-42B9-BAA8-DA181C5BD927", null, "NCDK.IChemObjectBuilder", null, null);
+CC("7930EF62-EED8-43B8-B984-D91A87A6D77D", null, "NCDK.IAtomContainer", null, null);
+CC("D4CFC8BC-C66E-49CF-B3CC-14F437406955", null, "NCDK.Smiles.SmilesParser", null, new[] { "IAtomContainer ParseSmiles(string smiles)" });
+CC("124390C0-5C97-4351-800B-D27A31130D70", null, "NCDK.QSAR.IMolecularDescriptor", null, new[] { "DescriptorValue Calculate(IAtomContainer container)" });
+CC("3FF6093F-CAFB-48F3-BAA1-69D5549CC720", null, "NCDK.QSAR.IDescriptor", null, null);
+CC("821CF389-3EFC-44BF-9157-7A4ED1ADA6F1", "6B6441F5-3131-4E69-BEE3-B94C809CC163", "NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor",  new[] { "IMolecularDescriptor", }, new[] { "DescriptorValue Calculate(IAtomContainer atomContainer)", });
+CC("ECB38294-A140-4566-96D1-66DFB14E050B", null, "NCDK.QSAR.DescriptorValue", null, null);
+*/
 #>
-
 <#+
 	public string WrapGenericTypeName(string genericTypeName)
 	{
 		return genericTypeName.Replace("<", "_").Replace(">", "");
 	}
-
+/*
 	public void CC(string guid, string fullName)
 	{
 		CC(guid, fullName, (string[])null);
@@ -76,8 +86,8 @@ CC("ECB38294-A140-4566-96D1-66DFB14E050B",
 	{
 		CC(guid, fullName, methods, (string[])null, guidClass);
 	}
-
-	public void CC(string guid, string fullName, string[] methods, string[] interfaces, string guidClass)
+*/
+	public void CC(string guid, string guidClass, string fullName, string[] interfaces, string[] methods)
 	{
 		if (methods == null)
 			methods = Array.Empty<string>();

@@ -58,6 +58,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Class_Info.txt" />
     <Content Include="WrapperClasses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WrapperClasses.tt.cs</LastGenOutput>
