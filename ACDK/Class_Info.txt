@@ -1,8 +1,63 @@
 Guid_interface	Guid_class	class_name	implement_interfaces	members
-136161B3-6FC6-42B9-BAA8-DA181C5BD927		NCDK.IChemObjectBuilder		
 7930EF62-EED8-43B8-B984-D91A87A6D77D		NCDK.IAtomContainer		
-D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles);
-124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container);
-3FF6093F-CAFB-48F3-BAA1-69D5549CC720		NCDK.QSAR.IDescriptor		
+136161B3-6FC6-42B9-BAA8-DA181C5BD927		NCDK.IChemObjectBuilder		
 821CF389-3EFC-44BF-9157-7A4ED1ADA6F1	6B6441F5-3131-4E69-BEE3-B94C809CC163	NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+49BEF8FE-0978-4A10-BEC9-5AB90C9FD0B5	49E49CF1-52FC-4C01-9884-AC518C5F7147	NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+12634381-787F-4FD2-BB21-CBED1BF80A92	AC1CF35F-8A96-4D7F-B1C8-519AC52457FB	NCDK.QSAR.Descriptors.Moleculars.APolDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+7AB2A629-EE5A-4439-951C-AA336EDCB0DE	9652026F-4AA6-4720-9A93-E78ACFE0175B	NCDK.QSAR.Descriptors.Moleculars.AromaticAtomsCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+FCEA971F-4AE8-44E5-B81E-BB16E0A5927E	FC6B0455-E099-4C06-A9E9-F262EF8B0879	NCDK.QSAR.Descriptors.Moleculars.AromaticBondsCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+6DFFCF12-F9AB-46A1-AAAA-741FED1F63B6	2B07DB2A-38DF-4C72-BB29-21D8465CC970	NCDK.QSAR.Descriptors.Moleculars.AtomCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+33F3637C-02D6-492C-8963-D4EDC69169A7	E5A4B43D-B12B-4609-A8B5-41DAA37A4E1C	NCDK.QSAR.Descriptors.Moleculars.AutocorrelationDescriptorCharge	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+492C8B59-EF61-4BD6-BEF7-C08603628C5D	6EF41B8E-5D74-4D0E-A989-2CA8406353FA	NCDK.QSAR.Descriptors.Moleculars.AutocorrelationDescriptorMass	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+091327C5-4394-4839-942B-3A5499673794	86DCE91F-2446-4166-8870-CB4654D77505	NCDK.QSAR.Descriptors.Moleculars.AutocorrelationDescriptorPolarizability	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+8DB695B3-6830-4B16-A494-F2E5950F5192	9273CE85-B671-48A0-8B80-D6125708912C	NCDK.QSAR.Descriptors.Moleculars.BasicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+AC87E58E-98D9-43BC-8D9A-4BCFCDFC7484	E8380587-3754-4898-9655-57DCA479BCBB	NCDK.QSAR.Descriptors.Moleculars.BCUTDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+BD33E72C-69A7-41EA-B6B0-CD118DE6F65F	04C9A6D4-FF6D-4F22-AE0E-442009ABCB13	NCDK.QSAR.Descriptors.Moleculars.BondCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+9F79EDB6-2F31-49B1-BE16-C871FB485D10	BE165ECB-619B-4B99-91A0-AC511E251F3F	NCDK.QSAR.Descriptors.Moleculars.BPolDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+5390A8E0-7406-4D50-859B-62F1BEC6411D	C915B2B6-92BD-400E-9C35-E398DDFCCE77	NCDK.QSAR.Descriptors.Moleculars.CarbonTypesDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+4C3128A4-3552-45D6-98F1-931C382B3038	70FD43F0-1553-4112-B050-DE923286F6C8	NCDK.QSAR.Descriptors.Moleculars.ChiChainDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+0EA0A718-6763-4C02-90C2-F6282C1AC7AE	2C2414FB-94E7-4CE7-90AB-604871E2E837	NCDK.QSAR.Descriptors.Moleculars.ChiClusterDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+9911A60C-0ACF-41ED-95A0-2ED846E14313	C1B2123B-40BF-4F33-B2FA-8632B3209A99	NCDK.QSAR.Descriptors.Moleculars.ChiPathClusterDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+4524047F-BE73-4E3F-AB45-46F8C18874CD	65C1831C-7757-424B-A3D1-8C7B38DC1D98	NCDK.QSAR.Descriptors.Moleculars.ChiPathDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+92696DAA-9E7A-4521-8771-515F32D14553	4E30FAE8-D98A-47C6-B9B0-B8E0E9D468A1	NCDK.QSAR.Descriptors.Moleculars.CPSADescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+AEE5E5B6-0515-4F6D-A053-40E300C518BC	DB4E6375-4289-4C11-AC6D-7E63F971565F	NCDK.QSAR.Descriptors.Moleculars.EccentricConnectivityIndexDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+E48A6380-4B81-4179-818A-D5C493DD00DB	126CD5CB-545F-4499-AADC-17104894B7C0	NCDK.QSAR.Descriptors.Moleculars.FMFDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+23C2FE91-94A6-45F7-B035-C4B68D2B8B75	B1300125-9DCA-49CF-B506-5A7374F6C138	NCDK.QSAR.Descriptors.Moleculars.FractionalPSADescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+43FE36CE-A225-4C45-8AD0-A83E6B7CD27D	0A455290-2FB3-4D03-9730-F786788DEF18	NCDK.QSAR.Descriptors.Moleculars.FragmentComplexityDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+ECAC5A33-DC1F-4088-8183-CC94729F0C1E	6DEDF9F5-021A-44AD-BA61-F4900207EB76	NCDK.QSAR.Descriptors.Moleculars.GravitationalIndexDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+2BA1F3C5-6475-48B7-BEF2-B7DE728B115D	855ECCC0-9FAF-41D7-8A42-94CBEE7B610A	NCDK.QSAR.Descriptors.Moleculars.HBondAcceptorCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+184CD217-3505-45AE-AEAB-2575733E2509	ECCFDB25-49A7-406B-8ACA-66C2760E5DDE	NCDK.QSAR.Descriptors.Moleculars.HBondDonorCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+C4F5E996-C825-4DF2-9842-67132B1B48F6	486DB6CB-3A43-45D1-8BF2-B8D3989789FA	NCDK.QSAR.Descriptors.Moleculars.HybridizationRatioDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+F6130C45-2C03-41FA-95A4-DB8B19081DB9	685B1E44-D743-461E-9B84-8DD505D8B0D0	NCDK.QSAR.Descriptors.Moleculars.KappaShapeIndicesDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+B3641A1D-4FAE-4320-946C-A498C75B87A4	6D2B0A5D-EADC-4B48-ABFB-E137F4B2F51F	NCDK.QSAR.Descriptors.Moleculars.KierHallSmartsDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+F1A8385C-4364-4E6B-A8CD-810393BF2CEA	D6D6F7A3-8B72-41B3-8DB9-404065CC1437	NCDK.QSAR.Descriptors.Moleculars.LargestChainDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+0C01A7F5-6508-400A-8437-F821C451088E	C57F6597-BD72-4148-BCFA-D05A3753510E	NCDK.QSAR.Descriptors.Moleculars.LargestPiSystemDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+72F7F73D-BD8E-439B-97E2-6AA5EC4D14C5	F612A06E-7818-4D20-96D2-63105D04082B	NCDK.QSAR.Descriptors.Moleculars.LengthOverBreadthDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+07014CB4-DDFB-4EDF-B4C5-7910C7884A55	496D4787-8E32-4DF4-9F4A-F27A22662150	NCDK.QSAR.Descriptors.Moleculars.LongestAliphaticChainDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+3B438F2D-D937-4312-A23D-FDE53A4F8B14	789D5541-AF14-42C4-9FE4-C25DEE8C6C35	NCDK.QSAR.Descriptors.Moleculars.MannholdLogPDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+543DB0EF-BCF5-4A34-9EF6-B773D0E4641E	C322BD15-0524-4752-BE85-C6690A99A976	NCDK.QSAR.Descriptors.Moleculars.MDEDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+88B0C32A-A58F-406B-A7BC-03AFD9D02307	0EA8CCF0-6BF1-4DAB-8240-1B5AF64AA934	NCDK.QSAR.Descriptors.Moleculars.MomentOfInertiaDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+9EB2FADF-F696-4F56-BEB1-634228E9CE60	D5732DE7-A677-4474-95D2-24AB6DF3E233	NCDK.QSAR.Descriptors.Moleculars.PetitjeanNumberDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+0ECD919F-A3DC-4AD8-BAB7-D0148588025A	FA1CD861-2DF0-47AB-8C9F-2F2C424DD4F3	NCDK.QSAR.Descriptors.Moleculars.PetitjeanShapeIndexDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+A9B89A02-D6E1-4CC8-8386-BD7B842F04AA	A7AACBE5-E75C-475A-AF2C-94F99A3C30AD	NCDK.QSAR.Descriptors.Moleculars.RotatableBondsCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+0A8A7BEB-475E-482E-8A75-1EC1F8391C43	5B964D88-16B2-46E3-B44C-2ECE3022200C	NCDK.QSAR.Descriptors.Moleculars.RuleOfFiveDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+DBB8C01C-B7EF-4D1A-BD74-47839CA5BB15	E7910BC5-C6C1-4889-AD0B-9BCF7E887486	NCDK.QSAR.Descriptors.Moleculars.SmallRingDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+EA18AB9C-5C7C-4675-9006-42703D5ADCD2	F6FE69D4-E10E-4997-B355-45E2A9914826	NCDK.QSAR.Descriptors.Moleculars.TPSADescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+DE8E4ADA-AF09-4EE7-9413-B00F5F3EAE8A	67F2C7B9-A129-4284-AECE-F483146D180E	NCDK.QSAR.Descriptors.Moleculars.VABCDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+B51E04D7-965B-49EB-8550-7ECC4AD6E3A0	28EE6422-847C-4B93-AEE6-CF35951D1701	NCDK.QSAR.Descriptors.Moleculars.VAdjMaDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+A4C53E6D-794C-4DD6-AFB1-25B59E431DC6	0CFD74E4-4954-44D9-8BA0-3244A0AA31DE	NCDK.QSAR.Descriptors.Moleculars.WeightDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+3B87D319-EF78-4DA7-A28D-1DF4E90B0A02	3DB2A54C-FF70-4EFE-97A5-101915B45AEB	NCDK.QSAR.Descriptors.Moleculars.WeightedPathDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+88084E7D-CB12-446A-B43B-327D48661800	C32F991E-3E67-4B5D-B400-E0D681A1B873	NCDK.QSAR.Descriptors.Moleculars.WHIMDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+B7DAEA62-FC3B-4022-AFF4-6CFC9A0287A7	76FE3CA2-0F87-4DE7-83AD-139DEF96041F	NCDK.QSAR.Descriptors.Moleculars.WienerNumbersDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+D3D34DBE-618C-46E3-AFBD-D216028BCA4F	A4C6C4EC-77C6-4D20-B129-7AB291641B00	NCDK.QSAR.Descriptors.Moleculars.XLogPDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
+C07724E2-BD3E-4EF9-8EF9-08E55E4F8973	5E98C730-AF19-4F5B-88BC-C91C2CC29579	NCDK.QSAR.Descriptors.Moleculars.ZagrebIndexDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
 ECB38294-A140-4566-96D1-66DFB14E050B		NCDK.QSAR.DescriptorValue		
+3FF6093F-CAFB-48F3-BAA1-69D5549CC720		NCDK.QSAR.IDescriptor		
+124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container);
+D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles);
+				
+				
+				
+				
+				
+				

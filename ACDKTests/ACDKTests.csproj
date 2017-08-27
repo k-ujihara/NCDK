@@ -58,8 +58,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ChemObjectBuilderTests.cs" />
-    <Compile Include="DynamicTests.cs" />
     <Compile Include="ExcelTests.cs" />
+    <Compile Include="MolecularDescriptorProviderTests.cs" />
     <Compile Include="ObjectFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +76,20 @@
       <Project>{B0B5EACF-5F39-42D0-BACD-1FF559CCC8B2}</Project>
       <Name>NCDK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MakeVBA.bas.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MakeVBA.tt</DependentUpon>
+    </None>
+    <Content Include="MakeVBA.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MakeVBA.bas.txt</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

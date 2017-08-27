@@ -1,0 +1,445 @@
+﻿' Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+'
+' This program is free software; you can redistribute it and/or
+' modify it under the terms of the GNU Lesser General Public License
+' as published by the Free Software Foundation; either version 2.1
+' of the License, or (at your option) any later version.
+' All we ask is that proper credit is given for our work, which includes
+' - but is not limited to - adding the above copyright notice to the beginning
+' of your source code files, and to any copyright notice that you may distribute
+' with programs based on this work.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT Any WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU Lesser General Public License for more details.
+'
+' You should have received a copy of the GNU Lesser General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ 
+
+
+Option Explicit
+
+Dim Factory As New ACDK.ObjectFactory
+Dim A_SmilesParser As ACDK.SmilesParser
+
+Dim A_SmallRingDescriptor As New SmallRingDescriptor
+Dim A_FractionalPSADescriptor As New FractionalPSADescriptor
+Dim A_ZagrebIndexDescriptor As New ZagrebIndexDescriptor
+Dim A_XLogPDescriptor As New XLogPDescriptor
+Dim A_WienerNumbersDescriptor As New WienerNumbersDescriptor
+Dim A_WHIMDescriptor As New WHIMDescriptor
+Dim A_WeightedPathDescriptor As New WeightedPathDescriptor
+Dim A_WeightDescriptor As New WeightDescriptor
+Dim A_VAdjMaDescriptor As New VAdjMaDescriptor
+Dim A_VABCDescriptor As New VABCDescriptor
+Dim A_TPSADescriptor As New TPSADescriptor
+Dim A_RuleOfFiveDescriptor As New RuleOfFiveDescriptor
+Dim A_RotatableBondsCountDescriptor As New RotatableBondsCountDescriptor
+Dim A_PetitjeanShapeIndexDescriptor As New PetitjeanShapeIndexDescriptor
+Dim A_PetitjeanNumberDescriptor As New PetitjeanNumberDescriptor
+Dim A_MomentOfInertiaDescriptor As New MomentOfInertiaDescriptor
+Dim A_MDEDescriptor As New MDEDescriptor
+Dim A_MannholdLogPDescriptor As New MannholdLogPDescriptor
+Dim A_LongestAliphaticChainDescriptor As New LongestAliphaticChainDescriptor
+Dim A_LengthOverBreadthDescriptor As New LengthOverBreadthDescriptor
+Dim A_LargestPiSystemDescriptor As New LargestPiSystemDescriptor
+Dim A_LargestChainDescriptor As New LargestChainDescriptor
+Dim A_KierHallSmartsDescriptor As New KierHallSmartsDescriptor
+Dim A_KappaShapeIndicesDescriptor As New KappaShapeIndicesDescriptor
+Dim A_HybridizationRatioDescriptor As New HybridizationRatioDescriptor
+Dim A_HBondDonorCountDescriptor As New HBondDonorCountDescriptor
+Dim A_HBondAcceptorCountDescriptor As New HBondAcceptorCountDescriptor
+Dim A_GravitationalIndexDescriptor As New GravitationalIndexDescriptor
+Dim A_FragmentComplexityDescriptor As New FragmentComplexityDescriptor
+Dim A_FMFDescriptor As New FMFDescriptor
+Dim A_EccentricConnectivityIndexDescriptor As New EccentricConnectivityIndexDescriptor
+Dim A_CPSADescriptor As New CPSADescriptor
+Dim A_ChiPathDescriptor As New ChiPathDescriptor
+Dim A_ChiPathClusterDescriptor As New ChiPathClusterDescriptor
+Dim A_ChiClusterDescriptor As New ChiClusterDescriptor
+Dim A_ChiChainDescriptor As New ChiChainDescriptor
+Dim A_CarbonTypesDescriptor As New CarbonTypesDescriptor
+Dim A_BPolDescriptor As New BPolDescriptor
+Dim A_BondCountDescriptor As New BondCountDescriptor
+Dim A_BCUTDescriptor As New BCUTDescriptor
+Dim A_BasicGroupCountDescriptor As New BasicGroupCountDescriptor
+Dim A_AutocorrelationDescriptorPolarizability As New AutocorrelationDescriptorPolarizability
+Dim A_AutocorrelationDescriptorMass As New AutocorrelationDescriptorMass
+Dim A_AutocorrelationDescriptorCharge As New AutocorrelationDescriptorCharge
+Dim A_AtomCountDescriptor As New AtomCountDescriptor
+Dim A_AromaticBondsCountDescriptor As New AromaticBondsCountDescriptor
+Dim A_AromaticAtomsCountDescriptor As New AromaticAtomsCountDescriptor
+Dim A_APolDescriptor As New APolDescriptor
+Dim A_ALOGPDescriptor As New ALOGPDescriptor
+Dim A_AcidicGroupCountDescriptor As New AcidicGroupCountDescriptor
+
+Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
+
+Public Function CDK_MolecularDescriptorValue(ByVal DescriptorName As String, ByVal Smiles As String) As String
+    Dim MolecularDescriptor As IMolecularDescriptor
+    Set MolecularDescriptor = MolecularDescriptorProvider.GetDescriptor(DescriptorName)
+    Dim Val As DescriptorValue
+    Set Val = MolecularDescriptor.Calculate(SmilesParser.ParseSmiles(Smiles))
+    CDK_MolecularDescriptorValue = Val.ValueAsString()
+End Function
+
+Function SmilesParser() As ACDK.SmilesParser
+    If A_SmilesParser Is Nothing Then
+        Set A_SmilesParser = Factory.NewSmilesParser(Factory.SilentChemObjectBuilder)
+    End If
+    Set SmilesParser = A_SmilesParser
+End Function
+
+Public Function CDK_SmallRingDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_SmallRingDescriptor.Calculate(A)
+    CDK_SmallRingDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_FractionalPSADescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_FractionalPSADescriptor.Calculate(A)
+    CDK_FractionalPSADescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ZagrebIndexDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ZagrebIndexDescriptor.Calculate(A)
+    CDK_ZagrebIndexDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_XLogPDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_XLogPDescriptor.Calculate(A)
+    CDK_XLogPDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_WienerNumbersDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_WienerNumbersDescriptor.Calculate(A)
+    CDK_WienerNumbersDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_WHIMDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_WHIMDescriptor.Calculate(A)
+    CDK_WHIMDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_WeightedPathDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_WeightedPathDescriptor.Calculate(A)
+    CDK_WeightedPathDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_WeightDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_WeightDescriptor.Calculate(A)
+    CDK_WeightDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_VAdjMaDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_VAdjMaDescriptor.Calculate(A)
+    CDK_VAdjMaDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_VABCDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_VABCDescriptor.Calculate(A)
+    CDK_VABCDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_TPSADescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_TPSADescriptor.Calculate(A)
+    CDK_TPSADescriptor = V.ValueAsString()
+End Function
+Public Function CDK_RuleOfFiveDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_RuleOfFiveDescriptor.Calculate(A)
+    CDK_RuleOfFiveDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_RotatableBondsCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_RotatableBondsCountDescriptor.Calculate(A)
+    CDK_RotatableBondsCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_PetitjeanShapeIndexDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_PetitjeanShapeIndexDescriptor.Calculate(A)
+    CDK_PetitjeanShapeIndexDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_PetitjeanNumberDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_PetitjeanNumberDescriptor.Calculate(A)
+    CDK_PetitjeanNumberDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_MomentOfInertiaDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_MomentOfInertiaDescriptor.Calculate(A)
+    CDK_MomentOfInertiaDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_MDEDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_MDEDescriptor.Calculate(A)
+    CDK_MDEDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_MannholdLogPDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_MannholdLogPDescriptor.Calculate(A)
+    CDK_MannholdLogPDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_LongestAliphaticChainDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_LongestAliphaticChainDescriptor.Calculate(A)
+    CDK_LongestAliphaticChainDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_LengthOverBreadthDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_LengthOverBreadthDescriptor.Calculate(A)
+    CDK_LengthOverBreadthDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_LargestPiSystemDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_LargestPiSystemDescriptor.Calculate(A)
+    CDK_LargestPiSystemDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_LargestChainDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_LargestChainDescriptor.Calculate(A)
+    CDK_LargestChainDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_KierHallSmartsDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_KierHallSmartsDescriptor.Calculate(A)
+    CDK_KierHallSmartsDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_KappaShapeIndicesDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_KappaShapeIndicesDescriptor.Calculate(A)
+    CDK_KappaShapeIndicesDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_HybridizationRatioDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_HybridizationRatioDescriptor.Calculate(A)
+    CDK_HybridizationRatioDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_HBondDonorCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_HBondDonorCountDescriptor.Calculate(A)
+    CDK_HBondDonorCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_HBondAcceptorCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_HBondAcceptorCountDescriptor.Calculate(A)
+    CDK_HBondAcceptorCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_GravitationalIndexDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_GravitationalIndexDescriptor.Calculate(A)
+    CDK_GravitationalIndexDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_FragmentComplexityDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_FragmentComplexityDescriptor.Calculate(A)
+    CDK_FragmentComplexityDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_FMFDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_FMFDescriptor.Calculate(A)
+    CDK_FMFDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_EccentricConnectivityIndexDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_EccentricConnectivityIndexDescriptor.Calculate(A)
+    CDK_EccentricConnectivityIndexDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_CPSADescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_CPSADescriptor.Calculate(A)
+    CDK_CPSADescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ChiPathDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ChiPathDescriptor.Calculate(A)
+    CDK_ChiPathDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ChiPathClusterDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ChiPathClusterDescriptor.Calculate(A)
+    CDK_ChiPathClusterDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ChiClusterDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ChiClusterDescriptor.Calculate(A)
+    CDK_ChiClusterDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ChiChainDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ChiChainDescriptor.Calculate(A)
+    CDK_ChiChainDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_CarbonTypesDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_CarbonTypesDescriptor.Calculate(A)
+    CDK_CarbonTypesDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_BPolDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_BPolDescriptor.Calculate(A)
+    CDK_BPolDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_BondCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_BondCountDescriptor.Calculate(A)
+    CDK_BondCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_BCUTDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_BCUTDescriptor.Calculate(A)
+    CDK_BCUTDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_BasicGroupCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_BasicGroupCountDescriptor.Calculate(A)
+    CDK_BasicGroupCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_AutocorrelationDescriptorPolarizability(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AutocorrelationDescriptorPolarizability.Calculate(A)
+    CDK_AutocorrelationDescriptorPolarizability = V.ValueAsString()
+End Function
+Public Function CDK_AutocorrelationDescriptorMass(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AutocorrelationDescriptorMass.Calculate(A)
+    CDK_AutocorrelationDescriptorMass = V.ValueAsString()
+End Function
+Public Function CDK_AutocorrelationDescriptorCharge(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AutocorrelationDescriptorCharge.Calculate(A)
+    CDK_AutocorrelationDescriptorCharge = V.ValueAsString()
+End Function
+Public Function CDK_AtomCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AtomCountDescriptor.Calculate(A)
+    CDK_AtomCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_AromaticBondsCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AromaticBondsCountDescriptor.Calculate(A)
+    CDK_AromaticBondsCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_AromaticAtomsCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AromaticAtomsCountDescriptor.Calculate(A)
+    CDK_AromaticAtomsCountDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_APolDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_APolDescriptor.Calculate(A)
+    CDK_APolDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_ALOGPDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_ALOGPDescriptor.Calculate(A)
+    CDK_ALOGPDescriptor = V.ValueAsString()
+End Function
+Public Function CDK_AcidicGroupCountDescriptor(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.DescriptorValue
+    Set V = A_AcidicGroupCountDescriptor.Calculate(A)
+    CDK_AcidicGroupCountDescriptor = V.ValueAsString()
+End Function
