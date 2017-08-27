@@ -1,8 +1,8 @@
-GUID interface	GUID class	class	implement interfaces	members
+Guid_interface	Guid_class	class_name	implement_interfaces	members
 136161B3-6FC6-42B9-BAA8-DA181C5BD927		NCDK.IChemObjectBuilder		
 7930EF62-EED8-43B8-B984-D91A87A6D77D		NCDK.IAtomContainer		
-D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles)
-124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container)
+D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles);
+124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container);
 3FF6093F-CAFB-48F3-BAA1-69D5549CC720		NCDK.QSAR.IDescriptor		
-821CF389-3EFC-44BF-9157-7A4ED1ADA6F1	6B6441F5-3131-4E69-BEE3-B94C809CC163	NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer)
+821CF389-3EFC-44BF-9157-7A4ED1ADA6F1	6B6441F5-3131-4E69-BEE3-B94C809CC163	NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
 ECB38294-A140-4566-96D1-66DFB14E050B		NCDK.QSAR.DescriptorValue		

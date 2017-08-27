@@ -32,9 +32,21 @@ using System;
 using System.Runtime.InteropServices;
 
 <#
+		const string C_Guid_Interface = "Guid_interface";
+		const string C_Guid_class = "Guid_class";
+		const string C_class_name = "class_name";
+		const string C_implement_interfaces = "implement_interfaces";
+		const string C_members = "members";
+
 		var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "Class_Info.txt");
 		using (var reader = new StreamReader(fn))
 		{
+			string[] titleRow = null;
+			string m_Guid_Interface = null;
+			string m_Guid_class = null;
+			string m_class_name = null;
+			string m_implement_interfaces = null;
+			string m_members = null;
 			bool isFirst = true;
 			string line;
 			while ((line = reader.ReadLine()) != null)
@@ -42,18 +54,45 @@ using System.Runtime.InteropServices;
 				if (isFirst)
 				{
 					isFirst = false;
+					titleRow = line.Split('\t').Select(n => n.Trim()).ToArray();
 					continue;
 				}
 				string[] cells = new string[5];
 				string[] line_split = line.Split('\t').Select(n => n.Trim()).Select(n => (string.IsNullOrEmpty(n) ? null : n)).ToArray();
-				Array.Copy(line_split, cells, line_split.Length);
+				for (int i = 0; i < titleRow.Length; i++)
+				{
+					switch (titleRow[i])
+					{
+						case C_Guid_Interface:
+							m_Guid_Interface = line_split[i];
+							break;
+						case C_Guid_class:
+							m_Guid_class = line_split[i];
+							break;
+						case C_class_name:
+							m_class_name = line_split[i];
+							break;
+						case C_implement_interfaces:
+							m_implement_interfaces = line_split[i];
+							break;
+						case C_members:
+							m_members = line_split[i];
+							break;
+						default:
+							break;
+					}
+				}
 				string[] interfaces = null;
-				string[] methods = null;
-				if (cells[3] != null)
-					interfaces = cells[3].Split(',').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
-				if (cells[4] != null)
-					methods = cells[4].Split(';').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
-				CC(cells[0], cells[1], cells[2], interfaces, methods);
+				string[] methods = null;	
+				if (m_implement_interfaces != null)
+				{
+					interfaces = m_implement_interfaces.Split(',').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
+				}
+				if (m_members != null)
+				{
+					methods = m_members.Split(';').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
+				}
+				CC(m_Guid_Interface, m_Guid_class, m_class_name, interfaces, methods);
 			}
 		}
 /*
