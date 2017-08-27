@@ -189,7 +189,7 @@ namespace NCDK.Proteins
         /// double rAtom, and double rSolvent.
         /// </summary>
         /// <exception cref="Exception"></exception>
-        public void assignProteinToGrid()
+        public void AssignProteinToGrid()
         {
             //        logger.debug.Print("    ASSIGN PROTEIN TO GRID");
             // 1. Step: Set all grid points to solvent accessible
@@ -247,7 +247,7 @@ namespace NCDK.Proteins
             //                + " ProteinGridPoints>" + proteinAtomCount);
         }
 
-        public void debuggCheckPSPEvent()
+        public void DebuggCheckPSPEvent()
         {
             Debug.WriteLine("    debugg_checkPSPEvent");
             int[] dim = gridGenerator.Dim;
@@ -330,7 +330,7 @@ namespace NCDK.Proteins
             //Debug.WriteLine("SITEFINDER");
             try
             {
-                assignProteinToGrid();
+                AssignProteinToGrid();
             }
             catch (Exception ex1)
             {
@@ -342,9 +342,9 @@ namespace NCDK.Proteins
             //        Debug.WriteLine("    SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
             //                + this.grid[0].Length + " grid point sum:" + this.grid.Length
             //               /// this.grid[0].Length * this.grid[0][0].Length);
-            axisScanX(dim[2], dim[1], dim[0]);// x-Axis
-            axisScanY(dim[2], dim[0], dim[1]);// y-Axis
-            axisScanZ(dim[0], dim[1], dim[2]);// z-Axis
+            AxisScanX(dim[2], dim[1], dim[0]);// x-Axis
+            AxisScanY(dim[2], dim[0], dim[1]);// y-Axis
+            AxisScanZ(dim[0], dim[1], dim[2]);// z-Axis
 
             DiagonalAxisScanXZY(dim[0], dim[2], dim[1]);// diagonal1-Axis
             DiagonalAxisScanYZX(dim[1], dim[2], dim[0]);// diagonal2-Axis
@@ -430,7 +430,7 @@ namespace NCDK.Proteins
                             // logger.debug.Print("new Point: "+grid[x][y][z]);
                             //significantPointsVisited++;
                             // Debug.WriteLine("visited:"+pointsVisited);
-                            subPocket = this.clusterPSPPocket(start, subPocket, dim);
+                            subPocket = this.ClusterPSPPocket(start, subPocket, dim);
                             if (subPocket != null && subPocket.Count >= PocketSize)
                             {
                                 Pockets.Add(subPocket);
@@ -458,7 +458,7 @@ namespace NCDK.Proteins
         }
 
         /// <summary>Method performs the clustering, is called by FindPockets().</summary>
-        public List<Vector3> clusterPSPPocket(Vector3 root, List<Vector3> subPocket, int[] dim)
+        public List<Vector3> ClusterPSPPocket(Vector3 root, List<Vector3> subPocket, int[] dim)
         {
             // Debug.WriteLine(" ****** New Root ******:"+root.X+" "+root.Y+"
             // "+root.Z);
@@ -488,7 +488,7 @@ namespace NCDK.Proteins
                         {
                             // Debug.WriteLine(" ---->FOUND");
                             subPocket.Add(node);
-                            this.clusterPSPPocket(node, subPocket, dim);
+                            this.ClusterPSPPocket(node, subPocket, dim);
                         }
                     }
                 }
@@ -533,7 +533,7 @@ namespace NCDK.Proteins
         }
 
         /// <summary>Method which assigns upon a PSP event +1 to these grid points.</summary>
-        private void firePSPEvent(List<Vector3> line)
+        private void FirePSPEvent(List<Vector3> line)
         {
             for (int i = 0; i < line.Count; i++)
             {
@@ -582,7 +582,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -642,7 +642,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -706,7 +706,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -770,7 +770,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -797,7 +797,7 @@ namespace NCDK.Proteins
         /// <param name="dimK">first dimension</param>
         /// <param name="dimL">second dimension</param>
         /// <param name="dimM">third dimension</param>
-        public void axisScanX(int dimK, int dimL, int dimM)
+        public void AxisScanX(int dimK, int dimL, int dimM)
         {
             // z,y,x
             //        logger.debug.Print("    diagonalAxisScanX");
@@ -824,7 +824,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -849,7 +849,7 @@ namespace NCDK.Proteins
         /// <param name="dimK">first dimension</param>
         /// <param name="dimL">second dimension</param>
         /// <param name="dimM">third dimension</param>
-        public void axisScanY(int dimK, int dimL, int dimM)
+        public void AxisScanY(int dimK, int dimL, int dimM)
         {
             // z,x,y
             List<Vector3> line = new List<Vector3>();
@@ -874,7 +874,7 @@ namespace NCDK.Proteins
                             else if (pspEvent == 2)
                             {
                                 // if (line.Count>2){
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 // }
                                 line.Clear();
                                 pspEvent = 1;
@@ -899,7 +899,7 @@ namespace NCDK.Proteins
         /// <param name="dimK">first dimension</param>
         /// <param name="dimL">second dimension</param>
         /// <param name="dimM">third dimension</param>
-        public void axisScanZ(int dimK, int dimL, int dimM)
+        public void AxisScanZ(int dimK, int dimL, int dimM)
         {
             // x,y,z
             List<Vector3> line = new List<Vector3>();
@@ -923,7 +923,7 @@ namespace NCDK.Proteins
                             }
                             else if (pspEvent == 2)
                             {
-                                firePSPEvent(line);
+                                FirePSPEvent(line);
                                 line.Clear();
                                 pspEvent = 1;
                             }
@@ -946,7 +946,7 @@ namespace NCDK.Proteins
         /// default org/openscience/cdk/config/data/pdb_atomtypes.xml
         /// stored in the variable string vanDerWaalsFile.
         /// </summary>
-        public void assignVdWRadiiToProtein()
+        public void AssignVdWRadiiToProtein()
         {
             AtomTypeFactory atf = null;
             IAtom[] atoms = AtomContainerManipulator.GetAtomArray(Protein);
@@ -973,7 +973,7 @@ namespace NCDK.Proteins
         }
 
         /// <summary>Method writes the grid to pmesh format.</summary>
-        public void gridToPmesh(string outPutFileName)
+        public void GridToPmesh(string outPutFileName)
         {
             try
             {
