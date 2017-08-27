@@ -75,6 +75,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B2ED3711C4784A523E1BAE05C214B68A"
+        "OwnerKey" = "8:_10B0869F6A4E41B1A2C03FC36A5A77DB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CA4C84447C235E5BEF1DB1886D68F84E"
         "OwnerKey" = "8:_10B0869F6A4E41B1A2C03FC36A5A77DB"
         "MsmSig" = "8:_UNDEFINED"
@@ -369,6 +375,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B2ED3711C4784A523E1BAE05C214B68A"
+            {
+            "SourcePath" = "8:ACDK.tlb"
+            "TargetName" = "8:ACDK.tlb"
+            "Tag" = "8:"
+            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:2"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CA4C84447C235E5BEF1DB1886D68F84E"
             {
             "AssemblyRegister" = "3:1"
@@ -490,7 +516,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ACDK"
         "ProductCode" = "8:{8BA54E2B-477B-4F7D-9DEB-3543BD05F23E}"
-        "PackageCode" = "8:{20D4E061-32E7-4984-BC1E-7F46220E015E}"
+        "PackageCode" = "8:{7E7584A1-2C2C-4664-8A45-7232972771CF}"
         "UpgradeCode" = "8:{A0604143-84FD-41BF-8A6C-839E66A4BDD4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
