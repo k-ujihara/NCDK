@@ -12,7 +12,10 @@ License: LGPL v2.1, see LICENSE.
 Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTests and NCDKDisplayTests project.
 
 ## Build and Test
-Open NCDK.sln or NCDKDisplay.sln. You can see the library and its test project.
+Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test projects.
+
+ACDK.sln creates COM-wrappers to NCDK. It provides access to CDK's molecular descriptor functions from VBA. 
+The sample Excel book is in ACDKTests\ACDK_Test.xlsm.
 
 ## Contribute
 The current release is based on cdk-2.0.
