@@ -55,11 +55,10 @@
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
@@ -332,6 +331,7 @@
       <LastGenOutput>CMLElementDefines.tt.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
+    <None Include="ncdk.snk" />
     <None Include="Numerics\LICENSE.txt" />
     <Content Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
