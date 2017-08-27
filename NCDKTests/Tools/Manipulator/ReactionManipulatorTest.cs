@@ -80,7 +80,7 @@ namespace NCDK.Tools.Manipulator
 
             var ids = ReactionManipulator.GetAllIDs(reaction);
             Assert.IsNotNull(ids);
-            Assert.AreEqual(5, ids.Count);
+            Assert.AreEqual(5, ids.Count());
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace NCDK.Tools.Manipulator
             var allObjects = ReactionManipulator.GetAllChemObjects(reaction);
             // does not recurse beyond the IAtomContainer, so:
             // reaction, 2xreactant, 1xproduct
-            Assert.AreEqual(4, allObjects.Count);
+            Assert.AreEqual(4, allObjects.Count());
         }
 
         [TestMethod()]
@@ -250,7 +250,7 @@ namespace NCDK.Tools.Manipulator
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
-            Assert.AreEqual(5, ReactionManipulator.GetAllMolecules(reaction).Count);
+            Assert.AreEqual(5, ReactionManipulator.GetAllMolecules(reaction).Count());
         }
 
         [TestMethod()]
@@ -262,7 +262,7 @@ namespace NCDK.Tools.Manipulator
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
-            Assert.AreEqual(3, ReactionManipulator.GetAllReactants(reaction).Count);
+            Assert.AreEqual(3, ReactionManipulator.GetAllReactants(reaction).Count());
         }
 
         [TestMethod()]
@@ -274,7 +274,7 @@ namespace NCDK.Tools.Manipulator
             reaction.Reactants.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
             reaction.Products.Add(builder.NewAtomContainer());
-            Assert.AreEqual(2, ReactionManipulator.GetAllProducts(reaction).Count);
+            Assert.AreEqual(2, ReactionManipulator.GetAllProducts(reaction).Count());
         }
 
         [TestMethod()]

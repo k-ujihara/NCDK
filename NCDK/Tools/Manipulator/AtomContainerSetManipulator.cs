@@ -34,7 +34,7 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     public class AtomContainerSetManipulator
     {
-        public static int GetAtomCount(IChemObjectSet<IAtomContainer> set)
+        public static int GetAtomCount(IEnumerable<IAtomContainer> set)
         {
             int count = 0;
             foreach (var atomContainer in set)
@@ -44,7 +44,7 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        public static int GetBondCount<T>(IChemObjectSet<T> set) where T : IAtomContainer
+        public static int GetBondCount<T>(IEnumerable<T> set) where T : IAtomContainer
         {
             int count = 0;
             foreach (var atomContainer in set)
@@ -103,11 +103,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A list of individual IAtomContainer's</returns>
         public static IEnumerable<T> GetAllAtomContainers<T>(IEnumerable<T> set) where T : IAtomContainer
         {
-            foreach (var atomContainer in set)
-            {
-                yield return atomContainer;
-            }
-            yield break;
+            return set;
         }
 
         /// <summary>
@@ -248,7 +244,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="id">The IAtomContainer to look for</param>
         /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
-        public static bool ContainsByID(IChemObjectSet<IAtomContainer> atomContainerSet, string id)
+        public static bool ContainsByID(IEnumerable<IAtomContainer> atomContainerSet, string id)
         {
             foreach (var ac in atomContainerSet)
             {

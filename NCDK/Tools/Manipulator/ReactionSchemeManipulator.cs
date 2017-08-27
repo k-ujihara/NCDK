@@ -32,13 +32,12 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     public class ReactionSchemeManipulator
     {
-
         /// <summary>
         /// Get all molecule objects from a set of Reactions given a <see cref="IAtomContainerSet"/> to add.
         /// </summary>
         /// <param name="scheme">The set of reaction to inspect</param>
         /// <param name="molSet">The set of molecules to be added</param>
-        /// <returns>The IAtomContainerSet</returns>
+        /// <returns>All molecules</returns>
         public static IChemObjectSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme, IChemObjectSet<IAtomContainer> molSet)
         {
             // A ReactionScheme can contain other IRreactionSet objects
@@ -73,7 +72,6 @@ namespace NCDK.Tools.Manipulator
                         }
                     }
                     if (!contain) molSet.Add(ac);
-
                 }
             }
 
@@ -81,10 +79,10 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// get all AtomContainers object from a set of Reactions.
+        /// Get all AtomContainers object from a set of Reactions.
         /// </summary>
         /// <param name="scheme">The scheme of reaction to inspect</param>
-        /// <returns>The IAtomContainerSet</returns>
+        /// <returns>All molecules</returns>
         public static IChemObjectSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme)
         {
             return GetAllAtomContainers(scheme, scheme.Builder.NewAtomContainerSet());

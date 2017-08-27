@@ -143,59 +143,37 @@ namespace NCDK.Tools.Manipulator
         /// Get all molecule of a <see cref="IReaction"/>: reactants + products.
         /// </summary>
         /// <param name="reaction">The IReaction</param>
-        /// <returns>The IAtomContainerSet</returns>
-        public static IChemObjectSet<IAtomContainer> GetAllMolecules(IReaction reaction)
+        /// <returns>All molecules</returns>
+        public static IEnumerable<IAtomContainer> GetAllMolecules(IReaction reaction)
         {
-            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
-
-            moleculeSet.AddRange(GetAllReactants(reaction));
-            moleculeSet.AddRange(GetAllAgents(reaction));
-            moleculeSet.AddRange(GetAllProducts(reaction));
-
-            return moleculeSet;
+            return GetAllReactants(reaction).
+                Union(GetAllAgents(reaction)).
+                Union(GetAllProducts(reaction));
         }
 
         /// <summary>
-        /// get all products of a IReaction
+        /// Get all products of a <see cref="IReaction"/>
         /// </summary>
-        /// <param name="reaction">The IReaction</param>
-        /// <returns>The IAtomContainerSet</returns>
-        public static IChemObjectSet<IAtomContainer> GetAllProducts(IReaction reaction)
+        /// <param name="reaction">The reaction</param>
+        /// <returns>Molecules</returns>
+        public static IEnumerable<IAtomContainer> GetAllProducts(IReaction reaction)
         {
-            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
-            IChemObjectSet<IAtomContainer> products = reaction.Products;
-            for (int i = 0; i < products.Count; i++)
-            {
-                moleculeSet.Add(products[i]);
-            }
-            return moleculeSet;
+            return reaction.Products;
         }
 
         /// <summary>
         /// get all reactants of a IReaction
         /// </summary>
         /// <param name="reaction">The IReaction</param>
-        /// <returns>The IAtomContainerSet</returns>
-        public static IChemObjectSet<IAtomContainer> GetAllReactants(IReaction reaction)
+        /// <returns>Molecules</returns>
+        public static IEnumerable<IAtomContainer> GetAllReactants(IReaction reaction)
         {
-            IChemObjectSet<IAtomContainer> moleculeSet = reaction.Builder.NewAtomContainerSet();
-            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
-            for (int i = 0; i < reactants.Count; i++)
-            {
-                moleculeSet.Add(reactants[i]);
-            }
-            return moleculeSet;
+            return reaction.Reactants;
         }
 
-        public static IChemObjectSet<IAtomContainer> GetAllAgents(IReaction reaction)
+        public static IEnumerable<IAtomContainer> GetAllAgents(IReaction reaction)
         {
-            var moleculeSet = reaction.Builder.NewAtomContainerSet();
-            var agents = reaction.Agents;
-            for (int i = 0; i < agents.Count; i++)
-            {
-                moleculeSet.Add(agents[i]);
-            }
-            return moleculeSet;
+            return reaction.Agents;
         }
 
         /// <summary>
@@ -244,23 +222,25 @@ namespace NCDK.Tools.Manipulator
             return MoleculeSetManipulator.GetAllAtomContainers(GetAllMolecules(reaction));
         }
 
-        public static IList<string> GetAllIDs(IReaction reaction)
+        public static IEnumerable<string> GetAllIDs(IReaction reaction)
         {
-            List<string> idList = new List<string>();
-            if (reaction.Id != null) idList.Add(reaction.Id);
+            if (reaction.Id != null)
+                yield return reaction.Id;
             IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
             for (int i = 0; i < reactants.Count; i++)
             {
                 IAtomContainer mol = reactants[i];
-                idList.AddRange(AtomContainerManipulator.GetAllIDs(mol));
+                foreach (var id in AtomContainerManipulator.GetAllIDs(mol))
+                    yield return id;
             }
             IChemObjectSet<IAtomContainer> products = reaction.Products;
             for (int i = 0; i < products.Count; i++)
             {
                 IAtomContainer mol = products[i];
-                idList.AddRange(AtomContainerManipulator.GetAllIDs(mol));
+                foreach (var id in AtomContainerManipulator.GetAllIDs(mol))
+                    yield return id;
             }
-            return idList;
+            yield break;
         }
 
         public static IAtomContainer GetRelevantAtomContainer(IReaction reaction, IAtom atom)
@@ -297,25 +277,18 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        public static IList<IChemObject> GetAllChemObjects(IReaction reaction)
+        public static IEnumerable<IChemObject> GetAllChemObjects(IReaction reaction)
         {
-            List<IChemObject> list = new List<IChemObject>();
-            list.Add(reaction);
-            IChemObjectSet<IAtomContainer> reactants = reaction.Reactants;
-            for (int i = 0; i < reactants.Count; i++)
-            {
-                list.Add(reactants[i]);
-            }
-            IChemObjectSet<IAtomContainer> products = reaction.Products;
-            for (int i = 0; i < products.Count; i++)
-            {
-                list.Add(products[i]);
-            }
-            return list;
+            yield return reaction;
+            foreach (var mol in reaction.Reactants)
+                yield return mol;
+            foreach (var mol in reaction.Products)
+                yield return mol;
+            yield break;
         }
 
         /// <summary>
-        /// get the IAtom which is mapped
+        /// Get the IAtom which is mapped
         /// </summary>
         /// <param name="reaction">The IReaction which contains the mapping</param>
         /// <param name="chemObject">The IChemObject which will be searched its mapped IChemObject</param>

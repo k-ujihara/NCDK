@@ -259,7 +259,8 @@ namespace NCDK.Tools
         /// </summary>
         private static void CreateIDsForReaction(IReaction reaction, IList<string> tabuList)
         {
-            if (tabuList == null) tabuList = ReactionManipulator.GetAllIDs(reaction);
+            if (tabuList == null)
+                tabuList = ReactionManipulator.GetAllIDs(reaction).ToList();
 
             if (null == reaction.Id)
             {

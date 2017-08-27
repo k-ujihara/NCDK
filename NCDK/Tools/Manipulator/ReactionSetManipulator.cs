@@ -78,7 +78,7 @@ namespace NCDK.Tools.Manipulator
             IChemObjectSet<IAtomContainer> moleculeSet = set.Builder.NewAtomContainerSet();
             foreach (var reaction in set)
             {
-                IChemObjectSet<IAtomContainer> molecules = ReactionManipulator.GetAllMolecules(reaction);
+                var molecules = ReactionManipulator.GetAllMolecules(reaction);
                 foreach (var ac in molecules)
                 {
                     bool contain = false;

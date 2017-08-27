@@ -56,7 +56,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>a list containing individual IAtomContainer's</returns>
-        public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemObjectSet<IAtomContainer> set)
+        public static IEnumerable<IAtomContainer> GetAllAtomContainers(IEnumerable<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAllAtomContainers(set);
         }
