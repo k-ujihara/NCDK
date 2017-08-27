@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACDK", "ACDK\ACDK.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACDKTests", "ACDKTests\ACDKTests.csproj", "{B134789D-B15E-45CA-B14F-6DF8ECB6022B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ACDK_Installer", "ACDK_Installer\ACDK_Installer.vdproj", "{BDB73B54-134A-48C5-ACE3-8C8436B846B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Analysis|Any CPU = Analysis|Any CPU
@@ -102,6 +104,19 @@ Global
 		{B134789D-B15E-45CA-B14F-6DF8ECB6022B}.Test|x64.Build.0 = Release|Any CPU
 		{B134789D-B15E-45CA-B14F-6DF8ECB6022B}.Test|x86.ActiveCfg = Release|Any CPU
 		{B134789D-B15E-45CA-B14F-6DF8ECB6022B}.Test|x86.Build.0 = Release|Any CPU
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Analysis|Any CPU.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Analysis|x64.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Analysis|x86.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Debug|Any CPU.ActiveCfg = Debug
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Debug|x64.ActiveCfg = Debug
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Debug|x86.ActiveCfg = Debug
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Release|Any CPU.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Release|Any CPU.Build.0 = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Release|x64.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Release|x86.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Test|Any CPU.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Test|x64.ActiveCfg = Release
+		{BDB73B54-134A-48C5-ACE3-8C8436B846B7}.Test|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
