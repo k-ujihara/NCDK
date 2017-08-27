@@ -83,10 +83,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MakeVBA.tt</DependentUpon>
     </None>
-    <Content Include="MakeVBA.tt">
+    <None Include="MakeVBA.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MakeVBA.bas.txt</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
