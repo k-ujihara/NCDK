@@ -36,6 +36,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
@@ -1715,6 +1721,7 @@
     <EmbeddedResource Include="IO\structure-with-radical.mol" />
     <EmbeddedResource Include="IO\CH3.mol" />
     <EmbeddedResource Include="FaulonSignatures\Data\buckyball.mol" />
+    <None Include="ncdk.snk" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
     <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
