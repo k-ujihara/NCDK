@@ -24,7 +24,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Fingerprints;
-using NCDK.Similarity;
 using NCDK.Smiles;
 using NCDK.Templates;
 using System.Collections.Generic;
