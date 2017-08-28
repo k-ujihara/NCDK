@@ -48,10 +48,10 @@
     <Compile Include="MolecularDescriptorProvider.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WrapperClasses.tt.cs">
+    <Compile Include="Class_Info.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WrapperClasses.tt</DependentUpon>
+      <DependentUpon>Class_Info.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -62,9 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Class_Info.txt" />
-    <None Include="WrapperClasses.tt">
+    <None Include="Class_Info.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>WrapperClasses.tt.cs</LastGenOutput>
+      <LastGenOutput>Class_Info.tt.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +74,9 @@
     <Content Include="ACDK_Example.xlsm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="WrapperClassesMaker.ttinclude">
+      <LastGenOutput>WrapperClasses1.tt.cs</LastGenOutput>
+    </None>
     <None Include="ncdk.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

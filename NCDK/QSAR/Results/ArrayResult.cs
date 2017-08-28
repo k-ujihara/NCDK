@@ -28,6 +28,7 @@ namespace NCDK.QSAR.Results
     public interface IArrayResult
         : IDescriptorResult
     {
+        object this[int index] { get; }
     }
 
     public class ArrayResult<T>
@@ -73,6 +74,8 @@ namespace NCDK.QSAR.Results
         public int Length => Math.Max(this.size, this.array.Count);
 
         public int Count => Length;
+
+        object IArrayResult.this[int index] => this[index];
 
         public override string ToString()
         {
