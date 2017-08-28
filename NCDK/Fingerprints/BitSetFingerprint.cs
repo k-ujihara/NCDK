@@ -23,6 +23,7 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
 {
@@ -148,18 +149,14 @@ namespace NCDK.Fingerprints
             return true;
         }
 
-        public int[] GetSetbits()
+        public IEnumerable<int> GetSetbits()
         {
-            int[] result = new int[BitArrays.Cardinality(bitset)];
-            int index = 0;
             for (int i = 0; i < bitset.Length; i++)
             {
                 if (bitset[i])
-                {
-                    result[index++] = i;
-                }
+                    yield return i;
             }
-            return result;
+            yield break;
         }
     }
 }
