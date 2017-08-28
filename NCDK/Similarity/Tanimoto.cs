@@ -70,7 +70,7 @@ namespace NCDK.Similarity
             double _bitset2_cardinality = BitArrays.Cardinality(bitset2);
             if (bitset1.Count != bitset2.Count)
             {
-                throw new CDKException("Bitsets must have the same bit length");
+                throw new CDKException($"{nameof(bitset1)} and {nameof(bitset2)} must have the same bit length");
             }
             BitArray one_and_two = (BitArray)bitset1.Clone();
             one_and_two.And(bitset2);
@@ -132,11 +132,10 @@ namespace NCDK.Similarity
         }
 
         /// <summary>
-        /// Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+        /// Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
         /// </summary>
         /// <remarks>
         /// Note that feature/count type fingerprints may be of different length.
-        ///
         /// Uses Tanimoto method from 10.1021/ci800326z
         /// </remarks>
         /// <param name="features1">The first feature map</param>
@@ -163,7 +162,7 @@ namespace NCDK.Similarity
         }
 
         /// <summary>
-        /// Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+        /// Evaluate continuous Tanimoto coefficient for two feature, count fingerprint representations.
         /// </summary>
         /// <remarks>
         /// Note that feature/count type fingerprints may be of different length.
@@ -181,20 +180,21 @@ namespace NCDK.Similarity
 
         /// <summary>
         /// Calculates Tanimoto distance for two count fingerprints using method 1.
-        ///
+        /// </summary>
+        /// <remarks>
         /// The feature/count type fingerprints may be of different length.
         /// Uses Tanimoto method from <token>cdk-cite-Steffen09</token>.
-        /// </summary>
+        /// </remarks>
         /// <param name="fp1">count fingerprint 1</param>
         /// <param name="fp2">count fingerprint 2</param>
         /// <returns>a Tanimoto distance</returns>
         public static double Method1(ICountFingerprint fp1, ICountFingerprint fp2)
         {
             long xy = 0, x = 0, y = 0;
-            for (int i = 0; i < fp1.GetNumOfPopulatedbins(); i++)
+            for (int i = 0; i < fp1.GetNumberOfPopulatedBins(); i++)
             {
                 int hash = fp1.GetHash(i);
-                for (int j = 0; j < fp2.GetNumOfPopulatedbins(); j++)
+                for (int j = 0; j < fp2.GetNumberOfPopulatedBins(); j++)
                 {
                     if (hash == fp2.GetHash(j))
                     {
@@ -203,7 +203,7 @@ namespace NCDK.Similarity
                 }
                 x += fp1.GetCount(i) * fp1.GetCount(i);
             }
-            for (int j = 0; j < fp2.GetNumOfPopulatedbins(); j++)
+            for (int j = 0; j < fp2.GetNumberOfPopulatedBins(); j++)
             {
                 y += fp2.GetCount(j) * fp2.GetCount(j);
             }
@@ -211,22 +211,24 @@ namespace NCDK.Similarity
         }
 
         /// <summary>
-        /// Calculates Tanimoto distance for two count fingerprints using method 2 <token>cdk-cite-Grant06</token>.
+        /// Calculates Tanimoto distance for two count fingerprints using method 2.
         /// </summary>
+        /// <remarks>
+        /// <token>cdk-cite-Grant06</token>.
+        /// </remarks>
         /// <param name="fp1">count fingerprint 1</param>
         /// <param name="fp2">count fingerprint 2</param>
         /// <returns>a Tanimoto distance</returns>
         public static double Method2(ICountFingerprint fp1, ICountFingerprint fp2)
         {
-
             long maxSum = 0, minSum = 0;
             int i = 0, j = 0;
-            while (i < fp1.GetNumOfPopulatedbins() || j < fp2.GetNumOfPopulatedbins())
+            while (i < fp1.GetNumberOfPopulatedBins() || j < fp2.GetNumberOfPopulatedBins())
             {
-                int? hash1 = i < fp1.GetNumOfPopulatedbins() ? fp1.GetHash(i) : (int?)null;
-                int? hash2 = j < fp2.GetNumOfPopulatedbins() ? fp2.GetHash(j) : (int?)null;
-                int? count1 = i < fp1.GetNumOfPopulatedbins() ? fp1.GetCount(i) : (int?)null;
-                int? count2 = j < fp2.GetNumOfPopulatedbins() ? fp2.GetCount(j) : (int?)null;
+                int? hash1 = i < fp1.GetNumberOfPopulatedBins() ? fp1.GetHash(i) : (int?)null;
+                int? hash2 = j < fp2.GetNumberOfPopulatedBins() ? fp2.GetHash(j) : (int?)null;
+                int? count1 = i < fp1.GetNumberOfPopulatedBins() ? fp1.GetCount(i) : (int?)null;
+                int? count2 = j < fp2.GetNumberOfPopulatedBins() ? fp2.GetCount(j) : (int?)null;
 
                 if (count2 == null || (hash1 != null && hash1 < hash2))
                 {

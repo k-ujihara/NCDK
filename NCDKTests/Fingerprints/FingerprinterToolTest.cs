@@ -105,7 +105,7 @@ namespace NCDK.Fingerprints
             features.Add("CC", 2);
             features.Add("C", 2);
             ICountFingerprint fp = FingerprinterTool.MakeCountFingerprint(features);
-            Assert.AreEqual(3, fp.GetNumOfPopulatedbins());
+            Assert.AreEqual(3, fp.GetNumberOfPopulatedBins());
             Assert.AreEqual(1, fp.GetCountForHash("CCO".GetHashCode()));
             Assert.AreEqual(2, fp.GetCountForHash("CC".GetHashCode()));
             Assert.AreEqual(2, fp.GetCountForHash("C".GetHashCode()));

@@ -233,11 +233,9 @@ namespace NCDK.Fingerprints
             return true;
         }
 
-        public int[] GetSetbits()
+        public IEnumerable<int> GetSetBits()
         {
-            int[] copy = new int[trueBits.Length];
-            Array.Copy(trueBits, 0, copy, 0, trueBits.Length);
-            return copy;
+            return trueBits;
         }
     }
 }

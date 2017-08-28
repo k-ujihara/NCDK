@@ -97,8 +97,8 @@ namespace NCDK.Fingerprints
                 -1059145289, 1, -801752141, 1, 790592664, 1, -289109509, 1, -1650154758, 1, 1286833445, 1};
 
             int wantBits = ANSWER_KEY.Length >> 1;
-            bool fail = result.GetNumOfPopulatedbins() != wantBits;
-            for (int n = 0; !fail && n < result.GetNumOfPopulatedbins(); n++)
+            bool fail = result.GetNumberOfPopulatedBins() != wantBits;
+            for (int n = 0; !fail && n < result.GetNumberOfPopulatedBins(); n++)
             {
                 int gotHash = result.GetHash(n), gotCount = result.GetCount(n);
                 bool found = false;

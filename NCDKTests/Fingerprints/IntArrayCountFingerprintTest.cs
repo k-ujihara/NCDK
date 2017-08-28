@@ -23,11 +23,11 @@ namespace NCDK.Fingerprints
             });
 
             IDictionary<int, int> hashCounts = new Dictionary<int, int>();
-            for (int i = 0; i < fp1.GetNumOfPopulatedbins(); i++)
+            for (int i = 0; i < fp1.GetNumberOfPopulatedBins(); i++)
             {
                 hashCounts[fp1.GetHash(i)] = fp1.GetCount(i);
             }
-            for (int i = 0; i < fp2.GetNumOfPopulatedbins(); i++)
+            for (int i = 0; i < fp2.GetNumberOfPopulatedBins(); i++)
             {
                 int hash = fp2.GetHash(i);
                 int count;
@@ -40,9 +40,9 @@ namespace NCDK.Fingerprints
 
             fp1.Merge(fp2);
 
-            Assert.AreEqual(fp1.GetNumOfPopulatedbins(), hashCounts.Count);
+            Assert.AreEqual(fp1.GetNumberOfPopulatedBins(), hashCounts.Count);
 
-            for (int i = 0; i < fp1.GetNumOfPopulatedbins(); i++)
+            for (int i = 0; i < fp1.GetNumberOfPopulatedBins(); i++)
             {
                 int hash = fp1.GetHash(i);
                 int count = fp1.GetCount(i);

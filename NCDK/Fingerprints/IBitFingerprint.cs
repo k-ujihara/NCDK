@@ -21,11 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Fingerprints
 {
@@ -97,7 +94,6 @@ namespace NCDK.Fingerprints
         /// Returns a listing of the bits in the fingerprint that are set to true.
         /// </summary>
         /// <returns>listing of all bits that are set</returns>
-        int[] GetSetbits();
+        IEnumerable<int> GetSetBits();
     }
 }
-
