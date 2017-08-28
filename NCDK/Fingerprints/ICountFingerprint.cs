@@ -46,7 +46,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <returns>the number of populated bins</returns>
         /// <see cref="Count"/>
-        int GetNumOfPopulatedbins();
+        int GetNumberOfPopulatedBins();
 
         /// <summary>
         /// Returns the count value for the bin with the given index.

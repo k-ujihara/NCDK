@@ -299,7 +299,7 @@ namespace NCDK.Fingerprints
             }
 
             public long Count => 4294967296L;
-            public int GetNumOfPopulatedbins() => map.Count;
+            public int GetNumberOfPopulatedBins() => map.Count;
             public int GetCount(int index) => count[index];
             public int GetHash(int index) => hash[index];
             public void Merge(ICountFingerprint fp) { }

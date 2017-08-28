@@ -95,7 +95,7 @@ namespace NCDK.Fingerprints
             return hitHashes[index];
         }
 
-        public int GetNumOfPopulatedbins()
+        public int GetNumberOfPopulatedBins()
         {
             return hitHashes.Length;
         }
@@ -110,7 +110,7 @@ namespace NCDK.Fingerprints
                 }
             }
             {
-                for (int i = 0; i < fp.GetNumOfPopulatedbins(); i++)
+                for (int i = 0; i < fp.GetNumberOfPopulatedBins(); i++)
                 {
                     int count;
                     if (!newFp.TryGetValue(fp.GetHash(i), out count))

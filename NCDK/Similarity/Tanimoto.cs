@@ -191,10 +191,10 @@ namespace NCDK.Similarity
         public static double Method1(ICountFingerprint fp1, ICountFingerprint fp2)
         {
             long xy = 0, x = 0, y = 0;
-            for (int i = 0; i < fp1.GetNumOfPopulatedbins(); i++)
+            for (int i = 0; i < fp1.GetNumberOfPopulatedBins(); i++)
             {
                 int hash = fp1.GetHash(i);
-                for (int j = 0; j < fp2.GetNumOfPopulatedbins(); j++)
+                for (int j = 0; j < fp2.GetNumberOfPopulatedBins(); j++)
                 {
                     if (hash == fp2.GetHash(j))
                     {
@@ -203,7 +203,7 @@ namespace NCDK.Similarity
                 }
                 x += fp1.GetCount(i) * fp1.GetCount(i);
             }
-            for (int j = 0; j < fp2.GetNumOfPopulatedbins(); j++)
+            for (int j = 0; j < fp2.GetNumberOfPopulatedBins(); j++)
             {
                 y += fp2.GetCount(j) * fp2.GetCount(j);
             }
@@ -221,12 +221,12 @@ namespace NCDK.Similarity
 
             long maxSum = 0, minSum = 0;
             int i = 0, j = 0;
-            while (i < fp1.GetNumOfPopulatedbins() || j < fp2.GetNumOfPopulatedbins())
+            while (i < fp1.GetNumberOfPopulatedBins() || j < fp2.GetNumberOfPopulatedBins())
             {
-                int? hash1 = i < fp1.GetNumOfPopulatedbins() ? fp1.GetHash(i) : (int?)null;
-                int? hash2 = j < fp2.GetNumOfPopulatedbins() ? fp2.GetHash(j) : (int?)null;
-                int? count1 = i < fp1.GetNumOfPopulatedbins() ? fp1.GetCount(i) : (int?)null;
-                int? count2 = j < fp2.GetNumOfPopulatedbins() ? fp2.GetCount(j) : (int?)null;
+                int? hash1 = i < fp1.GetNumberOfPopulatedBins() ? fp1.GetHash(i) : (int?)null;
+                int? hash2 = j < fp2.GetNumberOfPopulatedBins() ? fp2.GetHash(j) : (int?)null;
+                int? count1 = i < fp1.GetNumberOfPopulatedBins() ? fp1.GetCount(i) : (int?)null;
+                int? count2 = j < fp2.GetNumberOfPopulatedBins() ? fp2.GetCount(j) : (int?)null;
 
                 if (count2 == null || (hash1 != null && hash1 < hash2))
                 {
