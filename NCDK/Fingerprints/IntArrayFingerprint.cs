@@ -233,7 +233,7 @@ namespace NCDK.Fingerprints
             return true;
         }
 
-        public IEnumerable<int> GetSetbits()
+        public IEnumerable<int> GetSetBits()
         {
             return trueBits;
         }

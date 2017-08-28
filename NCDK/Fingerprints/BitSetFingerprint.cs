@@ -149,7 +149,7 @@ namespace NCDK.Fingerprints
             return true;
         }
 
-        public IEnumerable<int> GetSetbits()
+        public IEnumerable<int> GetSetBits()
         {
             for (int i = 0; i < bitset.Length; i++)
             {

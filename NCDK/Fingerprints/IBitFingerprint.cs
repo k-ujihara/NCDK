@@ -94,6 +94,6 @@ namespace NCDK.Fingerprints
         /// Returns a listing of the bits in the fingerprint that are set to true.
         /// </summary>
         /// <returns>listing of all bits that are set</returns>
-        IEnumerable<int> GetSetbits();
+        IEnumerable<int> GetSetBits();
     }
 }
