@@ -55,9 +55,4 @@ ECB38294-A140-4566-96D1-66DFB14E050B		NCDK.QSAR.DescriptorValue
 3FF6093F-CAFB-48F3-BAA1-69D5549CC720		NCDK.QSAR.IDescriptor		
 124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container);
 D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles);
-				
-				
-				
-				
-				
-				
+0A09F24F-5E55-4970-AB78-857CAE0993D2		System.Collections.BitArray		bool this[int index] { get; set; }

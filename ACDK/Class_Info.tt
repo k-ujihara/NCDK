@@ -21,7 +21,7 @@
  */
 
 <#@ include file="WrapperClassesMaker.ttinclude" #>
-<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ template debug="true" hostspecific="true" language="C#" #>
 <#@ output extension=".tt.cs" #>
 
 using System;

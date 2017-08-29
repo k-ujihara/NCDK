@@ -93,8 +93,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -124,8 +123,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -155,8 +153,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -186,8 +183,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -217,8 +213,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -248,8 +243,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -279,8 +273,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -310,8 +303,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -341,8 +333,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -372,8 +363,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -403,8 +393,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -434,8 +423,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -465,8 +453,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -496,8 +483,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -527,8 +513,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -558,8 +543,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -589,8 +573,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -620,8 +603,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -651,8 +633,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -682,8 +663,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -713,8 +693,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -744,8 +723,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -775,8 +753,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -806,8 +783,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -837,8 +813,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -868,8 +843,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -899,8 +873,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -930,8 +903,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -961,8 +933,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -992,8 +963,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1023,8 +993,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1054,8 +1023,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1085,8 +1053,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1116,8 +1083,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1147,8 +1113,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1178,8 +1143,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1209,8 +1173,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1240,8 +1203,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1271,8 +1233,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1302,8 +1263,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1333,8 +1293,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1364,8 +1323,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1395,8 +1353,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1426,8 +1383,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1457,8 +1413,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1488,8 +1443,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1519,8 +1473,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1550,8 +1503,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1581,8 +1533,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1612,8 +1563,7 @@ namespace ACDK
             this.obj = obj;
         }
 		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1676,8 +1626,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		public DescriptorValue Calculate(IAtomContainer container)
-			=> new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)container).Object));
+		public DescriptorValue Calculate(IAtomContainer container) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)container).Object));
     }
 }
 namespace ACDK
@@ -1700,7 +1649,29 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		public IAtomContainer ParseSmiles(string smiles)
-			=> new W_IAtomContainer(Object.ParseSmiles(smiles));
+		public IAtomContainer ParseSmiles(string smiles) => new W_IAtomContainer(Object.ParseSmiles(smiles));
+    }
+}
+namespace ACDK
+{
+    [Guid("0A09F24F-5E55-4970-AB78-857CAE0993D2")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface BitArray
+    {
+		[DispId(0x1001)]
+		bool this[int index] { get; set; }
+    }
+
+	[ComVisible(false)]
+    public sealed partial class W_BitArray
+        : BitArray
+    {
+        System.Collections.BitArray obj;
+        public System.Collections.BitArray Object => obj;
+        public W_BitArray(System.Collections.BitArray obj)
+        {
+            this.obj = obj;
+        }
+		public bool this[int index] {get { return Object[index]; }set { Object[index] = value; }}
     }
 }

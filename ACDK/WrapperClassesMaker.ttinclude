@@ -30,6 +30,20 @@
 #>
 
 <#+
+	static readonly HashSet<string> primitiveTypeNames = new HashSet<string>()
+		{ "void", "bool", "short", "int", "long", "float", "double", "string", };
+	static bool IsPrimitive(string typeName) => primitiveTypeNames.Contains(typeName);
+
+	const string G_Name = @"(?<name>\w+)";
+	const string G_Return = @"(?<return>\w+[\w\<\>]*)";
+	const string G_TP = @"(?<typeandparam>\w+[\w\<\>]* \w+)";
+	const string RE_TPs = "(" + G_TP + @"(\, " + G_TP + @")*)?";
+	const string re2_pattern = "(?<membermethod>" + G_Return + @"\s+" + G_Name + @"\(" + RE_TPs + @"\)\;)";
+	const string re_this_pattern = "(?<memberindexer>" + G_Return + @"\s+this\s*\[" + RE_TPs + @"\]\s*\{\s*(?<get>get\;)?\s*(?<set>set\;)?\s*\})";
+	static readonly Regex re2 = new Regex("^" + re2_pattern +"$", RegexOptions.Compiled);
+	static readonly Regex re_this = new Regex("^" + re_this_pattern + "$", RegexOptions.Compiled);
+	static readonly Regex re_members = new Regex(@"(\s*" + re2_pattern + "|" + re_this_pattern + @"\s*)*");
+
 	const string C_Guid_Interface = "Guid_interface";
 	const string C_Guid_class = "Guid_class";
 	const string C_class_name = "class_name";
@@ -89,7 +103,7 @@
 				}
 				if (m_members != null)
 				{
-					methods = m_members.Split(';').Select(n => n.Trim()).Where(n => !string.IsNullOrEmpty(n)).ToArray();
+					methods = re_members.Match(m_members).Captures.Cast<Capture>().Select(n => n.Value).ToArray();
 				}
 				CC(m_Guid_Interface, m_Guid_class, m_class_name, interfaces, methods);
 			}
@@ -97,26 +111,6 @@
 	}
 #>
 <#+
-	public string WrapGenericTypeName(string genericTypeName)
-	{
-		return genericTypeName.Replace("<", "_").Replace(">", "");
-	}
-/*
-	public void CC(string guid, string fullName)
-	{
-		CC(guid, fullName, (string[])null);
-	}
-
-	public void CC(string guid, string fullName, string[] methods)
-	{
-		CC(guid, fullName, methods, (string)null);
-	}
-
-	public void CC(string guid, string fullName, string[] methods, string guidClass)
-	{
-		CC(guid, fullName, methods, (string[])null, guidClass);
-	}
-*/
 	public void CC(string guid, string guidClass, string fullName, string[] interfaces, string[] methods)
 	{
 		if (methods == null)
@@ -151,10 +145,9 @@ namespace ACDK
 		{
 			if (!string.IsNullOrEmpty(method))
 			{
-				var wrapped = WrapGenericTypeName(method);
 #>
 		[DispId(0x<#=dispIdIndex.ToString("X4")#>)]
-		<#=wrapped#>;
+		<#=method#>
 <#+
 			}
 			dispIdIndex++;
@@ -218,8 +211,7 @@ namespace ACDK
 <#+
 				}
 #>
-		public <#=WrapGenericTypeName(method)#>
-			=> <#=MakeWrapperMethod(method)#>;
+		<#=MakeMemberWrapper(method)#>
 <#+
 			}
 			dispIdIndex++;
@@ -249,66 +241,128 @@ namespace ACDK
 			}
 		}
 	
-		Regex re = new Regex(@"^\b(?<return>\w+[\w\<\>]*)\s+(?<name>\w+)\(\)$", RegexOptions.Compiled);
-		Regex re2 = new Regex(@"^\b(?<return>\w+[\w\<\>]*)\s+(?<name>\w+)\((?<typeandparam>\w+[\w\<\>]* \w+)(\, (?<typeandparam>\w+[\w\<\>]* \w+))*\)$", RegexOptions.Compiled);
-		HashSet<string> primitiveTypeNames = new HashSet<string>()
-			{ "void", "bool", "short", "int", "long", "float", "double", "string", };
-		bool IsPrimitive(string typeName) => primitiveTypeNames.Contains(typeName);
-
-		string MakeWrapperMethod(string methodDefine)
+		List<TypeAndParamerterName> MakeTypeAndParameters(Match match)
 		{
+			List<TypeAndParamerterName> typeAndParameters = new List<TypeAndParamerterName>();
+			foreach (Capture tp in match.Groups["typeandparam"].Captures)
+			{
+				var tpa = tp.Value.Split(' ');
+				typeAndParameters.Add(new TypeAndParamerterName(tpa[0], tpa[1]));
+			}
+			return typeAndParameters;
+		}
+
+		string MakeMemberWrapper(string method)
+		{
+			var sb = new StringBuilder();
+			sb.Append("public ");
+
 			string methodName = null;
 			string returnTypeName = null;
 			List<TypeAndParamerterName> typeAndParameters = new List<TypeAndParamerterName>();
-			string str = methodDefine;
+			string str = method;
 			Match match;
-			if ((match = re.Match(str)).Success)
-			{
-				methodName = match.Groups["name"].Value;
-				returnTypeName = match.Groups["return"].Value;
-			}
 			if ((match = re2.Match(str)).Success)
 			{
 				methodName = match.Groups["name"].Value;
 				returnTypeName = match.Groups["return"].Value;
-				foreach (Capture tp in match.Groups["typeandparam"].Captures)
-				{
-					var tpa = tp.Value.Split(' ');
-					typeAndParameters.Add(new TypeAndParamerterName(tpa[0], tpa[1]));
-				}
+				typeAndParameters = MakeTypeAndParameters(match);
+				sb.Append(returnTypeName).Append(' ');
+				sb.Append(methodName).Append('(');
+				sb.Append(string.Join(", ", typeAndParameters));
+				sb.Append(") => ");
+				sb.Append(MakeMethodWrapper(methodName, returnTypeName, typeAndParameters));
+				sb.Append(';');
 			}
-			var  a = MakeMethodWrapper(methodName, returnTypeName, typeAndParameters);
-			return a;
+			else if ((match = re_this.Match(str)).Success)
+			{
+				bool hasGet = match.Groups["get"].Captures.Count > 0;
+				bool hasSet = match.Groups["set"].Captures.Count > 0;
+
+				methodName = "this";
+				returnTypeName = match.Groups["return"].Value;
+				typeAndParameters = MakeTypeAndParameters(match);
+				sb.Append(returnTypeName).Append(' ');
+				sb.Append(methodName).Append('[');
+				sb.Append(string.Join(", ", typeAndParameters));
+				sb.Append("] {");
+				sb.Append(MakeThisWrapper(returnTypeName, typeAndParameters, hasGet, hasSet));
+				sb.Append("}");
+			}
+			else
+			{
+#>
+		ERROR: <#=method#>
+<#+
+			}
+			return sb.ToString();
 		}
 
-		string MakeMethodWrapper(string methodName, string returnTypeName, IEnumerable<TypeAndParamerterName> parameters)
+		string MakeMethodWrappersParameters(IEnumerable<TypeAndParamerterName> parameters)
 		{
 			var ss = new List<string>();
 			foreach (var tp in parameters)
 			{
 				string t = tp.TypeName;
-				string wrapped_t = WrapGenericTypeName(t);
 				string p = tp.ParameterName;
 				string s = null;
-				s = !IsPrimitive(t) ? "((W_" + wrapped_t + ")" + p + ").Object" : p;
+				s = !IsPrimitive(t) ? "((W_" + t + ")" + p + ").Object" : p;
 				ss.Add(s);
 			}
+			return string.Join(", ", ss);
+		}
 
-			returnTypeName = WrapGenericTypeName(returnTypeName);
+		string MakeThisWrapper(string returnTypeName, IEnumerable<TypeAndParamerterName> parameters, bool hasGet, bool hasSet)
+		{
+			var sb = new StringBuilder();
+			if (hasGet)
+			{
+				sb.Append("get { return ");
+				sb.Append(MakeMethodWrapper2("this", returnTypeName, parameters));
+				sb.Append("; }");
+			}
+			if (hasSet)
+			{
+				sb.Append("set { Object[");
+				sb.Append(string.Join(", ", parameters.Select(n => n.ParameterName)));
+				sb.Append("] = value; }");
+			}
+			return sb.ToString();
+		}
+
+		string MakeMethodWrapper(string methodName, string returnTypeName, IEnumerable<TypeAndParamerterName> parameters)
+		{
+			return MakeMethodWrapper2(methodName, returnTypeName, parameters);
+		}
+
+		static string OpenP(bool isIndexer)
+			=> isIndexer ? "[" : "(";
+
+		static string CloseP(bool isIndexer)
+			=> isIndexer ? "]" : ")";
+
+		string MakeMethodWrapper2(string methodName, string returnTypeName, IEnumerable<TypeAndParamerterName> parameters)
+		{
+			bool isIndexer = methodName == "this";
+
 			var sb = new StringBuilder();
 			if (!IsPrimitive(returnTypeName))
 			{
 				sb.Append("new ");
 				sb.Append("W_" + returnTypeName).Append("(");
 			}
-			sb.Append("Object.").Append(methodName).Append("(");
-			sb.Append(string.Join(", ", ss));
-			sb.Append(")");
+			sb.Append("Object");
+			if (!isIndexer)
+			{
+				sb.Append('.').Append(methodName);
+			}
+			sb.Append(OpenP(isIndexer));
+			sb.Append(MakeMethodWrappersParameters(parameters));
+			sb.Append(CloseP(isIndexer));
 			if (!IsPrimitive(returnTypeName))
 			{
 				sb.Append(")");
 			}
 			return sb.ToString();
 		}
-
 #>
