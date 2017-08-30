@@ -79,7 +79,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    similarity
     // @cdk.module     standard
     // @cdk.githash
-    internal class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         /// ------------ constants ------------
 

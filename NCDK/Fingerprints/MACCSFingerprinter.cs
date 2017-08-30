@@ -24,7 +24,6 @@ using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers.SMARTS;
-using NCDK.RingSearches;
 using NCDK.Smiles.SMARTS.Parser;
 using System;
 using System.Collections;
@@ -66,7 +65,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.module  fingerprint
     // @cdk.githash
-    internal class MACCSFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class MACCSFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private const string KeyDefinitions = "Data.maccs.txt";
 

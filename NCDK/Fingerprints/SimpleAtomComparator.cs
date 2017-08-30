@@ -37,7 +37,7 @@ namespace NCDK.Fingerprints
     // @cdk.module fingerprint
     // @cdk.githash
     [Serializable]
-    internal class SimpleAtomComparator : IComparer<IAtom>
+    public class SimpleAtomComparator : IComparer<IAtom>
     {
         public int Compare(IAtom o1, IAtom o2)
         {

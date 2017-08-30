@@ -16,7 +16,7 @@ namespace NCDK.Fingerprints
     // @author yapchunwei
     // @cdk.module fingerprint
     // @cdk.githash
-    internal class KlekotaRothFingerprinter : SubstructureFingerprinter
+    public class KlekotaRothFingerprinter : SubstructureFingerprinter
     {
         public KlekotaRothFingerprinter()
             : base(

@@ -35,7 +35,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-    internal class SimpleAtomCanonicalizer
+    public class SimpleAtomCanonicalizer
     {
         /// <summary>
         /// <param name="container">the container</param>

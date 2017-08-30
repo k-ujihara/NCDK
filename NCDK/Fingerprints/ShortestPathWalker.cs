@@ -38,7 +38,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-    internal sealed class ShortestPathWalker
+    public sealed class ShortestPathWalker
     {
         /* container which is being traversed */
         private readonly IAtomContainer container;

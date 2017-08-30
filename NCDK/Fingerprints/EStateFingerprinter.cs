@@ -56,7 +56,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword estate
     // @cdk.module fingerprint
     // @cdk.githash
-    internal class EStateFingerprinter : AbstractFingerprinter, IFingerprinter
+    public class EStateFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private static readonly string[] PATTERNS = EStateFragments.Smarts;
 
