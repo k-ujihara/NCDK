@@ -25,7 +25,6 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprints
 {
@@ -193,6 +192,7 @@ namespace NCDK.Fingerprints
                     int[] tmp = new int[trueBits.Length - 1];
                     Array.Copy(trueBits, 0, tmp, 0, i);
                     Array.Copy(trueBits, i + 1, tmp, i, trueBits.Length - i - 1);
+                    trueBits = tmp;
                 }
                 // bit at index is set to false and shall be set to true
                 else if (i < 0 && value)
