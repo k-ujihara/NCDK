@@ -53,7 +53,7 @@ namespace NCDK.Fingerprints
         /// <see langword="true"/>.
         /// </summary>
         /// <param name="fingerprint">the fingerprint with which to perform the AND operation</param>
-        /// <exception cref="ArgumentException">if the two fingerprints are not of same size</exception>
+        /// <exception cref="System.ArgumentException">if the two fingerprints are not of same size</exception>
         void And(IBitFingerprint fingerprint);
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NCDK.Fingerprints
         /// bit in the bit set argument has the value <see langword="true"/>.
         /// </summary>        
         /// <param name="fingerprint">the fingerprint with which to perform the OR operation</param>
-        /// <exception cref="ArgumentException">if the two fingerprints are not of same size</exception>
+        /// <exception cref="System.ArgumentException">if the two fingerprints are not of same size</exception>
         void Or(IBitFingerprint fingerprint);
 
         /// <summary>
