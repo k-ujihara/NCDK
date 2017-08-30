@@ -35,14 +35,17 @@
 	static bool IsPrimitive(string typeName) => primitiveTypeNames.Contains(typeName);
 
 	const string G_Name = @"(?<name>\w+)";
-	const string G_Return = @"(?<return>\w+[\w\<\>]*)";
+	const string G_Return = @"(?<return>[A-Za-z_][A-Za-z0-9_]*)";
 	const string G_TP = @"(?<typeandparam>\w+[\w\<\>]* \w+)";
-	const string RE_TPs = "(" + G_TP + @"(\, " + G_TP + @")*)?";
+	const string RE_TPs = "(" + G_TP + @"(\,\s*" + G_TP + @")*)?";
+	const string RE_GetOrSet = @"\{\s*(?<get>get\;)?\s*(?<set>set\;)?\s*\}";
 	const string re2_pattern = "(?<membermethod>" + G_Return + @"\s+" + G_Name + @"\(" + RE_TPs + @"\)\;)";
-	const string re_this_pattern = "(?<memberindexer>" + G_Return + @"\s+this\s*\[" + RE_TPs + @"\]\s*\{\s*(?<get>get\;)?\s*(?<set>set\;)?\s*\})";
+	const string re_this_pattern = "(?<memberindexer>" + G_Return + @" this\[" + RE_TPs + @"\]\s*" + RE_GetOrSet + ")";
+	const string re_property_pattern = "(?<memberproperty>" + G_Return + @"\s+" + G_Name + @"\s*" + RE_GetOrSet + ")";
 	static readonly Regex re2 = new Regex("^" + re2_pattern +"$", RegexOptions.Compiled);
 	static readonly Regex re_this = new Regex("^" + re_this_pattern + "$", RegexOptions.Compiled);
-	static readonly Regex re_members = new Regex(@"(\s*" + re2_pattern + "|" + re_this_pattern + @"\s*)*");
+	static readonly Regex re_property = new Regex("^" + re_property_pattern + "$", RegexOptions.Compiled);
+	static readonly Regex re_members = new Regex(@"(\s*" + re2_pattern + @"\s*" + "|" + @"\s*" + re_this_pattern + @"\s*" + "|" + @"\s*" + re_property_pattern + @"\s*)");
 
 	const string C_Guid_Interface = "Guid_interface";
 	const string C_Guid_class = "Guid_class";
@@ -103,7 +106,7 @@
 				}
 				if (m_members != null)
 				{
-					methods = re_members.Match(m_members).Captures.Cast<Capture>().Select(n => n.Value).ToArray();
+					methods =re_members.Matches(m_members).Cast<Capture>().Select(n => n.Value.Trim()).ToArray();
 				}
 				CC(m_Guid_Interface, m_Guid_class, m_class_name, interfaces, methods);
 			}
@@ -222,8 +225,6 @@ namespace ACDK
 <#+
 	}
 
-/**************************************************************************/
-
 		class TypeAndParamerterName
 		{
 			public string TypeName { get; set; }
@@ -287,12 +288,25 @@ namespace ACDK
 				sb.Append(string.Join(", ", typeAndParameters));
 				sb.Append("] {");
 				sb.Append(MakeThisWrapper(returnTypeName, typeAndParameters, hasGet, hasSet));
+				sb.Append(" }");
+			}		
+			else if ((match = re_property.Match(str)).Success)
+			{
+				bool hasGet = match.Groups["get"].Captures.Count > 0;
+				bool hasSet = match.Groups["set"].Captures.Count > 0;
+
+				methodName = match.Groups["name"].Value;
+				returnTypeName = match.Groups["return"].Value;
+				sb.Append(returnTypeName).Append(' ');
+				sb.Append(methodName);
+				sb.Append(" {");
+				sb.Append(MakePropertyWrapper(methodName, returnTypeName, hasGet, hasSet));
 				sb.Append("}");
 			}
 			else
 			{
 #>
-		ERROR: <#=method#>
+		ERROR: "<#=method#>"
 <#+
 			}
 			return sb.ToString();
@@ -311,19 +325,37 @@ namespace ACDK
 			}
 			return string.Join(", ", ss);
 		}
+		
+		string MakePropertyWrapper(string methodName, string returnTypeName, bool hasGet, bool hasSet)
+		{
+			var sb = new StringBuilder();
+			if (hasGet)
+			{
+				sb.Append(" get { return ");
+				sb.Append(MakeMethodWrapper2(methodName, returnTypeName, null));
+				sb.Append("; }");
+			}
+			if (hasSet)
+			{
+				sb.Append(" set { Object.");
+				sb.Append(methodName);
+				sb.Append(" = value; }");
+			}
+			return sb.ToString();		
+		}
 
 		string MakeThisWrapper(string returnTypeName, IEnumerable<TypeAndParamerterName> parameters, bool hasGet, bool hasSet)
 		{
 			var sb = new StringBuilder();
 			if (hasGet)
 			{
-				sb.Append("get { return ");
+				sb.Append(" get { return ");
 				sb.Append(MakeMethodWrapper2("this", returnTypeName, parameters));
 				sb.Append("; }");
 			}
 			if (hasSet)
 			{
-				sb.Append("set { Object[");
+				sb.Append(" set { Object[");
 				sb.Append(string.Join(", ", parameters.Select(n => n.ParameterName)));
 				sb.Append("] = value; }");
 			}
@@ -356,9 +388,12 @@ namespace ACDK
 			{
 				sb.Append('.').Append(methodName);
 			}
-			sb.Append(OpenP(isIndexer));
-			sb.Append(MakeMethodWrappersParameters(parameters));
-			sb.Append(CloseP(isIndexer));
+			if (parameters != null)
+			{
+				sb.Append(OpenP(isIndexer));
+				sb.Append(MakeMethodWrappersParameters(parameters));
+				sb.Append(CloseP(isIndexer));
+			}
 			if (!IsPrimitive(returnTypeName))
 			{
 				sb.Append(")");
