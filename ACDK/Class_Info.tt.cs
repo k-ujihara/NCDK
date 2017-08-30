@@ -35,7 +35,7 @@ namespace ACDK
 		[DispId(0x1001)]
 		bool this[int index] { get; set; }
 		[DispId(0x1002)]
-		long Count { get; }
+		int Count { get; }
 		[DispId(0x1003)]
 		int Cardinality { get; }
 		[DispId(0x1004)]
@@ -61,7 +61,7 @@ namespace ACDK
 		[DispId(0x1001)]
 		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
 		[DispId(0x1002)]
-		public long Count { get { return Object.Count; }}
+		public int Count { get { return (int)Object.Count; }}
 		[DispId(0x1003)]
 		public int Cardinality { get { return Object.Cardinality; }}
 		[DispId(0x1004)]
@@ -77,7 +77,7 @@ namespace ACDK
 		[DispId(0x1001)]
 		bool this[int index] { get; set; }
 		[DispId(0x1002)]
-		long Count { get; }
+		int Count { get; }
 		[DispId(0x1003)]
 		int Cardinality { get; }
 		[DispId(0x1004)]
@@ -103,7 +103,7 @@ namespace ACDK
 		[DispId(0x1001)]
 		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
 		[DispId(0x1002)]
-		public long Count { get { return Object.Count; }}
+		public int Count { get { return (int)Object.Count; }}
 		[DispId(0x1003)]
 		public int Cardinality { get { return Object.Cardinality; }}
 		[DispId(0x1004)]
@@ -119,7 +119,7 @@ namespace ACDK
 		[DispId(0x1001)]
 		bool this[int index] { get; set; }
 		[DispId(0x1002)]
-		long Count { get; }
+		int Count { get; }
 		[DispId(0x1003)]
 		int Cardinality { get; }
 		[DispId(0x1004)]
@@ -137,7 +137,7 @@ namespace ACDK
             this.obj = obj;
         }
 		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
-		public long Count { get { return Object.Count; }}
+		public int Count { get { return (int)Object.Count; }}
 		public int Cardinality { get { return Object.Cardinality; }}
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
     }
