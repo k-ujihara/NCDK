@@ -1,4 +1,7 @@
 Guid_interface	Guid_class	class_name	implement_interfaces	members
+B91F59A3-44EC-44E7-AFA4-D79C6B5FC960	AC21006A-1797-406E-B017-7D73D9C65C39	NCDK.Fingerprints.BitSetFingerprint	IBitFingerprint	bool this[int index] { get; set; } long Count { get; } int Cardinality { get; } void And(IBitFingerprint fingerprint);  
+A51681B6-C94A-4CF5-805A-A03FD9DCB14A	FF43AADE-239E-4088-AA86-25C6EEFED330	NCDK.Fingerprints.IntArrayFingerprint	IBitFingerprint	bool this[int index] { get; set; } long Count { get; } int Cardinality { get; } void And(IBitFingerprint fingerprint);  
+0A09F24F-5E55-4970-AB78-857CAE0993D2		NCDK.Fingerprints.IBitFingerprint		bool this[int index] { get; set; } long Count { get; } int Cardinality { get; } void And(IBitFingerprint fingerprint);  
 7930EF62-EED8-43B8-B984-D91A87A6D77D		NCDK.IAtomContainer		
 136161B3-6FC6-42B9-BAA8-DA181C5BD927		NCDK.IChemObjectBuilder		
 821CF389-3EFC-44BF-9157-7A4ED1ADA6F1	6B6441F5-3131-4E69-BEE3-B94C809CC163	NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
@@ -55,4 +58,3 @@ ECB38294-A140-4566-96D1-66DFB14E050B		NCDK.QSAR.DescriptorValue
 3FF6093F-CAFB-48F3-BAA1-69D5549CC720		NCDK.QSAR.IDescriptor		
 124390C0-5C97-4351-800B-D27A31130D70		NCDK.QSAR.IMolecularDescriptor		DescriptorValue Calculate(IAtomContainer container);
 D4CFC8BC-C66E-49CF-B3CC-14F437406955		NCDK.Smiles.SmilesParser		IAtomContainer ParseSmiles(string smiles);
-0A09F24F-5E55-4970-AB78-857CAE0993D2		System.Collections.BitArray		bool this[int index] { get; set; }

@@ -28,6 +28,122 @@ using System.Runtime.InteropServices;
 
 namespace ACDK
 {
+    [Guid("B91F59A3-44EC-44E7-AFA4-D79C6B5FC960")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IBitSetFingerprint
+    {
+		[DispId(0x1001)]
+		bool this[int index] { get; set; }
+		[DispId(0x1002)]
+		long Count { get; }
+		[DispId(0x1003)]
+		int Cardinality { get; }
+		[DispId(0x1004)]
+		void And(IBitFingerprint fingerprint);
+    }
+
+	[Guid("AC21006A-1797-406E-B017-7D73D9C65C39")]
+	[ComDefaultInterface(typeof(IBitSetFingerprint))]
+    public sealed partial class BitSetFingerprint
+        : IBitSetFingerprint
+			, IBitFingerprint
+    {
+        NCDK.Fingerprints.BitSetFingerprint obj;
+        public NCDK.Fingerprints.BitSetFingerprint Object => obj;
+        public BitSetFingerprint()
+			 : this(new NCDK.Fingerprints.BitSetFingerprint())
+		{
+		}
+        public BitSetFingerprint(NCDK.Fingerprints.BitSetFingerprint obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
+		[DispId(0x1002)]
+		public long Count { get { return Object.Count; }}
+		[DispId(0x1003)]
+		public int Cardinality { get { return Object.Cardinality; }}
+		[DispId(0x1004)]
+		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+    }
+}
+namespace ACDK
+{
+    [Guid("A51681B6-C94A-4CF5-805A-A03FD9DCB14A")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IIntArrayFingerprint
+    {
+		[DispId(0x1001)]
+		bool this[int index] { get; set; }
+		[DispId(0x1002)]
+		long Count { get; }
+		[DispId(0x1003)]
+		int Cardinality { get; }
+		[DispId(0x1004)]
+		void And(IBitFingerprint fingerprint);
+    }
+
+	[Guid("FF43AADE-239E-4088-AA86-25C6EEFED330")]
+	[ComDefaultInterface(typeof(IIntArrayFingerprint))]
+    public sealed partial class IntArrayFingerprint
+        : IIntArrayFingerprint
+			, IBitFingerprint
+    {
+        NCDK.Fingerprints.IntArrayFingerprint obj;
+        public NCDK.Fingerprints.IntArrayFingerprint Object => obj;
+        public IntArrayFingerprint()
+			 : this(new NCDK.Fingerprints.IntArrayFingerprint())
+		{
+		}
+        public IntArrayFingerprint(NCDK.Fingerprints.IntArrayFingerprint obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
+		[DispId(0x1002)]
+		public long Count { get { return Object.Count; }}
+		[DispId(0x1003)]
+		public int Cardinality { get { return Object.Cardinality; }}
+		[DispId(0x1004)]
+		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+    }
+}
+namespace ACDK
+{
+    [Guid("0A09F24F-5E55-4970-AB78-857CAE0993D2")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IBitFingerprint
+    {
+		[DispId(0x1001)]
+		bool this[int index] { get; set; }
+		[DispId(0x1002)]
+		long Count { get; }
+		[DispId(0x1003)]
+		int Cardinality { get; }
+		[DispId(0x1004)]
+		void And(IBitFingerprint fingerprint);
+    }
+
+	[ComVisible(false)]
+    public sealed partial class W_IBitFingerprint
+        : IBitFingerprint
+    {
+        NCDK.Fingerprints.IBitFingerprint obj;
+        public NCDK.Fingerprints.IBitFingerprint Object => obj;
+        public W_IBitFingerprint(NCDK.Fingerprints.IBitFingerprint obj)
+        {
+            this.obj = obj;
+        }
+		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
+		public long Count { get { return Object.Count; }}
+		public int Cardinality { get { return Object.Cardinality; }}
+		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+    }
+}
+namespace ACDK
+{
     [Guid("7930EF62-EED8-43B8-B984-D91A87A6D77D")]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAtomContainer
@@ -1650,28 +1766,5 @@ namespace ACDK
             this.obj = obj;
         }
 		public IAtomContainer ParseSmiles(string smiles) => new W_IAtomContainer(Object.ParseSmiles(smiles));
-    }
-}
-namespace ACDK
-{
-    [Guid("0A09F24F-5E55-4970-AB78-857CAE0993D2")]
-    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
-    public partial interface BitArray
-    {
-		[DispId(0x1001)]
-		bool this[int index] { get; set; }
-    }
-
-	[ComVisible(false)]
-    public sealed partial class W_BitArray
-        : BitArray
-    {
-        System.Collections.BitArray obj;
-        public System.Collections.BitArray Object => obj;
-        public W_BitArray(System.Collections.BitArray obj)
-        {
-            this.obj = obj;
-        }
-		public bool this[int index] {get { return Object[index]; }set { Object[index] = value; }}
     }
 }

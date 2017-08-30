@@ -57,7 +57,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ChemObjectBuilderTests.cs" />
+    <Compile Include="WrapperClassesMakerTests.cs" />
     <Compile Include="ExcelTests.cs" />
     <Compile Include="MolecularDescriptorProviderTests.cs" />
     <Compile Include="ObjectFactoryTests.cs" />
