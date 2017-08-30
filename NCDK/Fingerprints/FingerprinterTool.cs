@@ -36,7 +36,7 @@ namespace NCDK.Fingerprints
     // @cdk.keyword    fingerprint
     // @cdk.module     standard
     // @cdk.githash
-    public class FingerprinterTool
+    public static class FingerprinterTool
     {
         /// <summary>
         /// Checks whether all the positive bits in BitArray bs2 occur in BitArray bs1. If
