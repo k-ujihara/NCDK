@@ -70,6 +70,472 @@ namespace ACDK
 }
 namespace ACDK
 {
+    [Guid("B7552D7E-F1E3-4226-B20C-E379637F17EA")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface ICircularFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("F754F9D2-8868-4C71-BFC7-983098355C99")]
+	[ComDefaultInterface(typeof(ICircularFingerprinter))]
+    public sealed partial class CircularFingerprinter
+        : ICircularFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.CircularFingerprinter obj;
+        public NCDK.Fingerprints.CircularFingerprinter Object => obj;
+        public CircularFingerprinter()
+			 : this(new NCDK.Fingerprints.CircularFingerprinter())
+		{
+		}
+        public CircularFingerprinter(NCDK.Fingerprints.CircularFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("D8FD0773-4B98-4FCF-915A-758048BC8FB6")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IEStateFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("E109EC36-9DDA-42B2-ABA3-4DA6999519C3")]
+	[ComDefaultInterface(typeof(IEStateFingerprinter))]
+    public sealed partial class EStateFingerprinter
+        : IEStateFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.EStateFingerprinter obj;
+        public NCDK.Fingerprints.EStateFingerprinter Object => obj;
+        public EStateFingerprinter()
+			 : this(new NCDK.Fingerprints.EStateFingerprinter())
+		{
+		}
+        public EStateFingerprinter(NCDK.Fingerprints.EStateFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("C99F726F-13E6-4895-A40D-369DA5E8F598")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IExtendedFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("192B2309-AA94-49CF-A2D5-296C18BB94E4")]
+	[ComDefaultInterface(typeof(IExtendedFingerprinter))]
+    public sealed partial class ExtendedFingerprinter
+        : IExtendedFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.ExtendedFingerprinter obj;
+        public NCDK.Fingerprints.ExtendedFingerprinter Object => obj;
+        public ExtendedFingerprinter()
+			 : this(new NCDK.Fingerprints.ExtendedFingerprinter())
+		{
+		}
+        public ExtendedFingerprinter(NCDK.Fingerprints.ExtendedFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("1CE912BE-7D39-4C6F-895E-45BA1DCE9A9E")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IGraphOnlyFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("33AFCCA5-86BF-4BB8-95D2-F68B54648CC2")]
+	[ComDefaultInterface(typeof(IGraphOnlyFingerprinter))]
+    public sealed partial class GraphOnlyFingerprinter
+        : IGraphOnlyFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.GraphOnlyFingerprinter obj;
+        public NCDK.Fingerprints.GraphOnlyFingerprinter Object => obj;
+        public GraphOnlyFingerprinter()
+			 : this(new NCDK.Fingerprints.GraphOnlyFingerprinter())
+		{
+		}
+        public GraphOnlyFingerprinter(NCDK.Fingerprints.GraphOnlyFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("70D1DB1F-9F58-42BE-AF95-A2BDD8A148D9")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IHybridizationFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("CCEB9C66-E442-4177-86A3-0672802F8926")]
+	[ComDefaultInterface(typeof(IHybridizationFingerprinter))]
+    public sealed partial class HybridizationFingerprinter
+        : IHybridizationFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.HybridizationFingerprinter obj;
+        public NCDK.Fingerprints.HybridizationFingerprinter Object => obj;
+        public HybridizationFingerprinter()
+			 : this(new NCDK.Fingerprints.HybridizationFingerprinter())
+		{
+		}
+        public HybridizationFingerprinter(NCDK.Fingerprints.HybridizationFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("DB6B34CA-5B84-4AA9-86AF-96D2CEEF4010")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IKlekotaRothFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("4085774B-E8A7-48FF-83B8-9C39ACC1F2F7")]
+	[ComDefaultInterface(typeof(IKlekotaRothFingerprinter))]
+    public sealed partial class KlekotaRothFingerprinter
+        : IKlekotaRothFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.KlekotaRothFingerprinter obj;
+        public NCDK.Fingerprints.KlekotaRothFingerprinter Object => obj;
+        public KlekotaRothFingerprinter()
+			 : this(new NCDK.Fingerprints.KlekotaRothFingerprinter())
+		{
+		}
+        public KlekotaRothFingerprinter(NCDK.Fingerprints.KlekotaRothFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("59C47EE7-8849-4275-A45F-5B1A20BE0C30")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface ILingoFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("EF8E295B-81C6-446C-AC89-8CAEB53C199E")]
+	[ComDefaultInterface(typeof(ILingoFingerprinter))]
+    public sealed partial class LingoFingerprinter
+        : ILingoFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.LingoFingerprinter obj;
+        public NCDK.Fingerprints.LingoFingerprinter Object => obj;
+        public LingoFingerprinter()
+			 : this(new NCDK.Fingerprints.LingoFingerprinter())
+		{
+		}
+        public LingoFingerprinter(NCDK.Fingerprints.LingoFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("5CAC1821-5333-461D-A318-5E4439CD44BE")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IMACCSFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("41A9917B-6109-48F3-B5B5-251AEE5AFA81")]
+	[ComDefaultInterface(typeof(IMACCSFingerprinter))]
+    public sealed partial class MACCSFingerprinter
+        : IMACCSFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.MACCSFingerprinter obj;
+        public NCDK.Fingerprints.MACCSFingerprinter Object => obj;
+        public MACCSFingerprinter()
+			 : this(new NCDK.Fingerprints.MACCSFingerprinter())
+		{
+		}
+        public MACCSFingerprinter(NCDK.Fingerprints.MACCSFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("5F88641A-6FC7-4079-B215-03863533CCF5")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IPubchemFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("D6E12A59-B707-4E93-AEF6-9D5A605D0601")]
+	[ComDefaultInterface(typeof(IPubchemFingerprinter))]
+    public sealed partial class PubchemFingerprinter
+        : IPubchemFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.PubchemFingerprinter obj;
+        public NCDK.Fingerprints.PubchemFingerprinter Object => obj;
+        public PubchemFingerprinter()
+			 : this(new NCDK.Fingerprints.PubchemFingerprinter())
+		{
+		}
+        public PubchemFingerprinter(NCDK.Fingerprints.PubchemFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("94480768-9696-4F43-A25B-C1737760403D")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IShortestPathFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("34534AE8-13C1-40A2-BB4D-B3350F0485D9")]
+	[ComDefaultInterface(typeof(IShortestPathFingerprinter))]
+    public sealed partial class ShortestPathFingerprinter
+        : IShortestPathFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.ShortestPathFingerprinter obj;
+        public NCDK.Fingerprints.ShortestPathFingerprinter Object => obj;
+        public ShortestPathFingerprinter()
+			 : this(new NCDK.Fingerprints.ShortestPathFingerprinter())
+		{
+		}
+        public ShortestPathFingerprinter(NCDK.Fingerprints.ShortestPathFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("5BC0FF04-0521-467B-A8E4-195E07BA723B")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface ISignatureFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("3AE60D45-046A-4A40-A240-F74057F41CAB")]
+	[ComDefaultInterface(typeof(ISignatureFingerprinter))]
+    public sealed partial class SignatureFingerprinter
+        : ISignatureFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.SignatureFingerprinter obj;
+        public NCDK.Fingerprints.SignatureFingerprinter Object => obj;
+        public SignatureFingerprinter()
+			 : this(new NCDK.Fingerprints.SignatureFingerprinter())
+		{
+		}
+        public SignatureFingerprinter(NCDK.Fingerprints.SignatureFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("1357EE46-EC07-47EA-ACFD-D77156CF5493")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface ISubstructureFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[Guid("CF5F546F-F800-4AE9-BD92-0194A6839D0B")]
+	[ComDefaultInterface(typeof(ISubstructureFingerprinter))]
+    public sealed partial class SubstructureFingerprinter
+        : ISubstructureFingerprinter
+			, IFingerprinter
+    {
+        NCDK.Fingerprints.SubstructureFingerprinter obj;
+        public NCDK.Fingerprints.SubstructureFingerprinter Object => obj;
+        public SubstructureFingerprinter()
+			 : this(new NCDK.Fingerprints.SubstructureFingerprinter())
+		{
+		}
+        public SubstructureFingerprinter(NCDK.Fingerprints.SubstructureFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		[DispId(0x1001)]
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		[DispId(0x1002)]
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
+    [Guid("0A09F24F-5E55-4970-AB78-857CAE0993D2")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IBitFingerprint
+    {
+		[DispId(0x1001)]
+		bool this[int index] { get; set; }
+		[DispId(0x1002)]
+		int Count { get; }
+		[DispId(0x1003)]
+		int Cardinality { get; }
+		[DispId(0x1004)]
+		void And(IBitFingerprint fingerprint);
+    }
+
+	[ComVisible(false)]
+    public sealed partial class W_IBitFingerprint
+        : IBitFingerprint
+    {
+        NCDK.Fingerprints.IBitFingerprint obj;
+        public NCDK.Fingerprints.IBitFingerprint Object => obj;
+        public W_IBitFingerprint(NCDK.Fingerprints.IBitFingerprint obj)
+        {
+            this.obj = obj;
+        }
+		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
+		public int Count { get { return (int)Object.Count; }}
+		public int Cardinality { get { return Object.Cardinality; }}
+		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+    }
+}
+namespace ACDK
+{
+    [Guid("8408E871-27AD-4EEE-8AE8-0F4F60B5709F")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IFingerprinter
+    {
+		[DispId(0x1001)]
+		IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		[DispId(0x1002)]
+		int Count { get; }
+    }
+
+	[ComVisible(false)]
+    public sealed partial class W_IFingerprinter
+        : IFingerprinter
+    {
+        NCDK.Fingerprints.IFingerprinter obj;
+        public NCDK.Fingerprints.IFingerprinter Object => obj;
+        public W_IFingerprinter(NCDK.Fingerprints.IFingerprinter obj)
+        {
+            this.obj = obj;
+        }
+		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count { get { return Object.Count; }}
+    }
+}
+namespace ACDK
+{
     [Guid("A51681B6-C94A-4CF5-805A-A03FD9DCB14A")]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IIntArrayFingerprint
@@ -107,38 +573,6 @@ namespace ACDK
 		[DispId(0x1003)]
 		public int Cardinality { get { return Object.Cardinality; }}
 		[DispId(0x1004)]
-		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
-    }
-}
-namespace ACDK
-{
-    [Guid("0A09F24F-5E55-4970-AB78-857CAE0993D2")]
-    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
-    public partial interface IBitFingerprint
-    {
-		[DispId(0x1001)]
-		bool this[int index] { get; set; }
-		[DispId(0x1002)]
-		int Count { get; }
-		[DispId(0x1003)]
-		int Cardinality { get; }
-		[DispId(0x1004)]
-		void And(IBitFingerprint fingerprint);
-    }
-
-	[ComVisible(false)]
-    public sealed partial class W_IBitFingerprint
-        : IBitFingerprint
-    {
-        NCDK.Fingerprints.IBitFingerprint obj;
-        public NCDK.Fingerprints.IBitFingerprint Object => obj;
-        public W_IBitFingerprint(NCDK.Fingerprints.IBitFingerprint obj)
-        {
-            this.obj = obj;
-        }
-		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
-		public int Count { get { return (int)Object.Count; }}
-		public int Cardinality { get { return Object.Cardinality; }}
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
     }
 }

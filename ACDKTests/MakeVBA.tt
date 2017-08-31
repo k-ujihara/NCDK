@@ -28,6 +28,22 @@
 <#@ output extension=".bas.txt" #>
 
 <#
+	var bit_fingerprinters = new string[]
+	{
+		"CircularFingerprinter",
+		"EStateFingerprinter",
+		"ExtendedFingerprinter",
+		"GraphOnlyFingerprinter",
+		"HybridizationFingerprinter",
+		"KlekotaRothFingerprinter",
+		"LingoFingerprinter",
+		"MACCSFingerprinter",
+		"PubchemFingerprinter",
+		"ShortestPathFingerprinter",
+		// SignatureFingerprinter does not support IBitFingerprint
+		"SubstructureFingerprinter",
+	};
+
 	// Molecular QSAR descriptors
 	var  molDescriptors = new string[] 
 	{
@@ -90,6 +106,15 @@ Dim Factory As New ACDK.ObjectFactory
 Dim A_SmilesParser As ACDK.SmilesParser
 
 <#
+	foreach (var text in bit_fingerprinters)
+	{
+#>
+Dim A_<#=text#> As New <#=text#>
+<#
+	}
+#>
+
+<#
 	foreach (var text in molDescriptors)
 	{
 #>
@@ -98,7 +123,16 @@ Dim A_<#=text#> As New <#=text#>
 	}
 #>
 
+Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
+
+Public Function CDK_BitFingerprinterValue(ByVal Name As String, ByVal Smiles As String) As String
+    Dim Fingerprinter As IFingerprinter
+    Set Fingerprinter = FingerprinterProvider.GetFingerprinter(Name)
+    Dim Val As IBitFingerprint
+    Set Val = Fingerprinter.GetBitFingerprint(SmilesParser.ParseSmiles(Smiles))
+    CDK_BitFingerprinterValue = FingerprinterProvider.BitFingerprintToString(Val)
+End Function
 
 Public Function CDK_MolecularDescriptorValue(ByVal DescriptorName As String, ByVal Smiles As String) As String
     Dim MolecularDescriptor As IMolecularDescriptor
@@ -114,6 +148,21 @@ Function SmilesParser() As ACDK.SmilesParser
     End If
     Set SmilesParser = A_SmilesParser
 End Function
+
+<#
+	foreach (var text in bit_fingerprinters)
+	{
+#>
+Public Function CDK_<#=text#>(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_<#=text#>.GetBitFingerprint(A)
+    CDK_<#=text#> = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+<#
+	}
+#>
 
 <#
 	foreach (var text in molDescriptors)

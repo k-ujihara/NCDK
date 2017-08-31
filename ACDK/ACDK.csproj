@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DescriptorValue.cs" />
+    <Compile Include="FingerprinterProvider.cs" />
     <Compile Include="MolecularDescriptorProvider.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

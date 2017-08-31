@@ -25,6 +25,18 @@ Option Explicit
 Dim Factory As New ACDK.ObjectFactory
 Dim A_SmilesParser As ACDK.SmilesParser
 
+Dim A_CircularFingerprinter As New CircularFingerprinter
+Dim A_EStateFingerprinter As New EStateFingerprinter
+Dim A_ExtendedFingerprinter As New ExtendedFingerprinter
+Dim A_GraphOnlyFingerprinter As New GraphOnlyFingerprinter
+Dim A_HybridizationFingerprinter As New HybridizationFingerprinter
+Dim A_KlekotaRothFingerprinter As New KlekotaRothFingerprinter
+Dim A_LingoFingerprinter As New LingoFingerprinter
+Dim A_MACCSFingerprinter As New MACCSFingerprinter
+Dim A_PubchemFingerprinter As New PubchemFingerprinter
+Dim A_ShortestPathFingerprinter As New ShortestPathFingerprinter
+Dim A_SubstructureFingerprinter As New SubstructureFingerprinter
+
 Dim A_SmallRingDescriptor As New SmallRingDescriptor
 Dim A_FractionalPSADescriptor As New FractionalPSADescriptor
 Dim A_ZagrebIndexDescriptor As New ZagrebIndexDescriptor
@@ -76,7 +88,16 @@ Dim A_APolDescriptor As New APolDescriptor
 Dim A_ALOGPDescriptor As New ALOGPDescriptor
 Dim A_AcidicGroupCountDescriptor As New AcidicGroupCountDescriptor
 
+Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
+
+Public Function CDK_BitFingerprinterValue(ByVal Name As String, ByVal Smiles As String) As String
+    Dim Fingerprinter As IFingerprinter
+    Set Fingerprinter = FingerprinterProvider.GetFingerprinter(Name)
+    Dim Val As IBitFingerprint
+    Set Val = Fingerprinter.GetBitFingerprint(SmilesParser.ParseSmiles(Smiles))
+    CDK_BitFingerprinterValue = FingerprinterProvider.BitFingerprintToString(Val)
+End Function
 
 Public Function CDK_MolecularDescriptorValue(ByVal DescriptorName As String, ByVal Smiles As String) As String
     Dim MolecularDescriptor As IMolecularDescriptor
@@ -91,6 +112,84 @@ Function SmilesParser() As ACDK.SmilesParser
         Set A_SmilesParser = Factory.NewSmilesParser(Factory.SilentChemObjectBuilder)
     End If
     Set SmilesParser = A_SmilesParser
+End Function
+
+Public Function CDK_CircularFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_CircularFingerprinter.GetBitFingerprint(A)
+    CDK_CircularFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_EStateFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_EStateFingerprinter.GetBitFingerprint(A)
+    CDK_EStateFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_ExtendedFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_ExtendedFingerprinter.GetBitFingerprint(A)
+    CDK_ExtendedFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_GraphOnlyFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_GraphOnlyFingerprinter.GetBitFingerprint(A)
+    CDK_GraphOnlyFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_HybridizationFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_HybridizationFingerprinter.GetBitFingerprint(A)
+    CDK_HybridizationFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_KlekotaRothFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_KlekotaRothFingerprinter.GetBitFingerprint(A)
+    CDK_KlekotaRothFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_LingoFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_LingoFingerprinter.GetBitFingerprint(A)
+    CDK_LingoFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_MACCSFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_MACCSFingerprinter.GetBitFingerprint(A)
+    CDK_MACCSFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_PubchemFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_PubchemFingerprinter.GetBitFingerprint(A)
+    CDK_PubchemFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_ShortestPathFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_ShortestPathFingerprinter.GetBitFingerprint(A)
+    CDK_ShortestPathFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
+End Function
+Public Function CDK_SubstructureFingerprinter(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IBitFingerprint
+    Set V = A_SubstructureFingerprinter.GetBitFingerprint(A)
+    CDK_SubstructureFingerprinter = FingerprinterProvider.BitFingerprintToString(V)
 End Function
 
 Public Function CDK_SmallRingDescriptor(ByVal Smiles As String) As String
