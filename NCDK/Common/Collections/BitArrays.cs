@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.Common.Collections
@@ -39,23 +40,37 @@ namespace NCDK.Common.Collections
 
         public static BitArray FromString(string str)
         {
-            var ret = new BitArray(str.Length);
-            for (var i = 0; i < str.Length; i++)
+            str = str.Trim();
+            if (str.StartsWith("{") && str.EndsWith("}"))
             {
-                var c = str[i];
-                switch (c)
+                var ret = new BitArray(0);
+                str = str.Substring(1, str.Length - 2);
+                foreach (var index in str.Split(',').Select(n => n.Trim()).Select(n => int.Parse(n)))
                 {
-                    case '0':
-                        ret[i] = false;
-                        break;
-                    case '1':
-                        ret[i] = true;
-                        break;
-                    default:
-                        throw new ArgumentException(nameof(FromString), nameof(str));
+                    BitArrays.SetValue(ret, index, true);
                 }
+                return ret;
             }
-            return ret;
+            else
+            {
+                var ret = new BitArray(str.Length);
+                for (var i = 0; i < str.Length; i++)
+                {
+                    var c = str[i];
+                    switch (c)
+                    {
+                        case '0':
+                            ret[i] = false;
+                            break;
+                        case '1':
+                            ret[i] = true;
+                            break;
+                        default:
+                            throw new ArgumentException(nameof(FromString), nameof(str));
+                    }
+                }
+                return ret;
+            }
         }
 
         public static void EnsureCapacity(BitArray a, int length)
