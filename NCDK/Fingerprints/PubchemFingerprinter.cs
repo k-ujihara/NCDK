@@ -86,6 +86,11 @@ namespace NCDK.Fingerprints
 
         private SMARTSQueryTool sqt;
 
+        public PubchemFingerprinter()
+            : this(Silent.ChemObjectBuilder.Instance)
+        {
+        }
+
         public PubchemFingerprinter(IChemObjectBuilder builder)
         {
             sqt = new SMARTSQueryTool("C", builder);
