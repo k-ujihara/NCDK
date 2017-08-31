@@ -40,6 +40,8 @@ namespace ACDK
 		int Cardinality { get; }
 		[DispId(0x1004)]
 		void And(IBitFingerprint fingerprint);
+		[DispId(0x1005)]
+		void Or(IBitFingerprint fingerprint);
     }
 
 	[Guid("AC21006A-1797-406E-B017-7D73D9C65C39")]
@@ -66,6 +68,8 @@ namespace ACDK
 		public int Cardinality { get { return Object.Cardinality; }}
 		[DispId(0x1004)]
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+		[DispId(0x1005)]
+		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
     }
 }
 namespace ACDK
@@ -418,6 +422,8 @@ namespace ACDK
 		IBitFingerprint GetBitFingerprint(IAtomContainer container);
 		[DispId(0x1002)]
 		int Count { get; }
+		[DispId(0x1003)]
+		IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("3AE60D45-046A-4A40-A240-F74057F41CAB")]
@@ -440,6 +446,8 @@ namespace ACDK
 		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
 		[DispId(0x1002)]
 		public int Count { get { return Object.Count; }}
+		[DispId(0x1003)]
+		public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -490,6 +498,8 @@ namespace ACDK
 		int Cardinality { get; }
 		[DispId(0x1004)]
 		void And(IBitFingerprint fingerprint);
+		[DispId(0x1005)]
+		void Or(IBitFingerprint fingerprint);
     }
 
 	[ComVisible(false)]
@@ -506,6 +516,7 @@ namespace ACDK
 		public int Count { get { return (int)Object.Count; }}
 		public int Cardinality { get { return Object.Cardinality; }}
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
     }
 }
 namespace ACDK
@@ -548,6 +559,8 @@ namespace ACDK
 		int Cardinality { get; }
 		[DispId(0x1004)]
 		void And(IBitFingerprint fingerprint);
+		[DispId(0x1005)]
+		void Or(IBitFingerprint fingerprint);
     }
 
 	[Guid("FF43AADE-239E-4088-AA86-25C6EEFED330")]
@@ -574,6 +587,8 @@ namespace ACDK
 		public int Cardinality { get { return Object.Cardinality; }}
 		[DispId(0x1004)]
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+		[DispId(0x1005)]
+		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
     }
 }
 namespace ACDK

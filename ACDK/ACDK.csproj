@@ -44,6 +44,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDictionary_string_int.cs" />
     <Compile Include="DescriptorValue.cs" />
     <Compile Include="FingerprinterProvider.cs" />
     <Compile Include="MolecularDescriptorProvider.cs" />
