@@ -47,6 +47,7 @@
     <Compile Include="IDictionary_string_int.cs" />
     <Compile Include="DescriptorValue.cs" />
     <Compile Include="FingerprinterProvider.cs" />
+    <Compile Include="IEnumerable_string.cs" />
     <Compile Include="MolecularDescriptorProvider.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

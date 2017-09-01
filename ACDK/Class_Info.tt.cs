@@ -32,16 +32,11 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBitSetFingerprint
     {
-		[DispId(0x1001)]
-		bool this[int index] { get; set; }
-		[DispId(0x1002)]
-		int Count { get; }
-		[DispId(0x1003)]
-		int Cardinality { get; }
-		[DispId(0x1004)]
-		void And(IBitFingerprint fingerprint);
-		[DispId(0x1005)]
-		void Or(IBitFingerprint fingerprint);
+		bool this[int index] {[DispId(0x1001)] get;[DispId(0x1002)] set; }
+		int Count {[DispId(0x1003)] get; }
+		int Cardinality {[DispId(0x1004)] get; }
+		[DispId(0x1005)]void And(IBitFingerprint fingerprint);
+		[DispId(0x1006)]void Or(IBitFingerprint fingerprint);
     }
 
 	[Guid("AC21006A-1797-406E-B017-7D73D9C65C39")]
@@ -60,16 +55,11 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
-		[DispId(0x1002)]
-		public int Count { get { return (int)Object.Count; }}
-		[DispId(0x1003)]
-		public int Cardinality { get { return Object.Cardinality; }}
-		[DispId(0x1004)]
-		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
-		[DispId(0x1005)]
-		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
+		public bool this[int index] {[DispId(0x1001)] get { return Object[index]; }[DispId(0x1002)] set { Object[index] = value; } }
+		public int Count {[DispId(0x1003)] get { return (int)Object.Count; }}
+		public int Cardinality {[DispId(0x1004)] get { return Object.Cardinality; }}
+		[DispId(0x1005)]public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+		[DispId(0x1006)]public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
     }
 }
 namespace ACDK
@@ -78,10 +68,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ICircularFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("F754F9D2-8868-4C71-BFC7-983098355C99")]
@@ -100,10 +89,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -112,10 +100,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IEStateFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("E109EC36-9DDA-42B2-ABA3-4DA6999519C3")]
@@ -134,10 +121,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -146,10 +132,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IExtendedFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("192B2309-AA94-49CF-A2D5-296C18BB94E4")]
@@ -168,10 +153,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -180,10 +164,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IGraphOnlyFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("33AFCCA5-86BF-4BB8-95D2-F68B54648CC2")]
@@ -195,17 +178,16 @@ namespace ACDK
         NCDK.Fingerprints.GraphOnlyFingerprinter obj;
         public NCDK.Fingerprints.GraphOnlyFingerprinter Object => obj;
         public GraphOnlyFingerprinter()
-			 : this(new NCDK.Fingerprints.GraphOnlyFingerprinter())
+			 : this(new NCDK.Fingerprints.GraphOnlyFingerprinter()) 
 		{
 		}
         public GraphOnlyFingerprinter(NCDK.Fingerprints.GraphOnlyFingerprinter obj)
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -214,10 +196,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IHybridizationFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("CCEB9C66-E442-4177-86A3-0672802F8926")]
@@ -236,10 +217,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -248,10 +228,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IKlekotaRothFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("4085774B-E8A7-48FF-83B8-9C39ACC1F2F7")]
@@ -270,10 +249,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -282,10 +260,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ILingoFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("EF8E295B-81C6-446C-AC89-8CAEB53C199E")]
@@ -304,10 +281,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -316,10 +292,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IMACCSFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("41A9917B-6109-48F3-B5B5-251AEE5AFA81")]
@@ -338,10 +313,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -350,10 +324,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IPubchemFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("D6E12A59-B707-4E93-AEF6-9D5A605D0601")]
@@ -372,10 +345,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -384,10 +356,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IShortestPathFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("34534AE8-13C1-40A2-BB4D-B3350F0485D9")]
@@ -406,10 +377,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -418,12 +388,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ISignatureFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
-		[DispId(0x1003)]
-		IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("3AE60D45-046A-4A40-A240-F74057F41CAB")]
@@ -442,12 +409,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
-		[DispId(0x1003)]
-		public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -456,10 +420,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ISubstructureFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[Guid("CF5F546F-F800-4AE9-BD92-0194A6839D0B")]
@@ -478,10 +441,9 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
-		[DispId(0x1002)]
-		public int Count { get { return Object.Count; }}
+		[DispId(0x1001)]public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
+		public int Count {[DispId(0x1002)] get { return Object.Count; }}
+		[DispId(0x1003)]public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -490,16 +452,11 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBitFingerprint
     {
-		[DispId(0x1001)]
-		bool this[int index] { get; set; }
-		[DispId(0x1002)]
-		int Count { get; }
-		[DispId(0x1003)]
-		int Cardinality { get; }
-		[DispId(0x1004)]
-		void And(IBitFingerprint fingerprint);
-		[DispId(0x1005)]
-		void Or(IBitFingerprint fingerprint);
+		bool this[int index] {[DispId(0x1001)] get;[DispId(0x1002)] set; }
+		int Count {[DispId(0x1003)] get; }
+		int Cardinality {[DispId(0x1004)] get; }
+		[DispId(0x1005)]void And(IBitFingerprint fingerprint);
+		[DispId(0x1006)]void Or(IBitFingerprint fingerprint);
     }
 
 	[ComVisible(false)]
@@ -525,10 +482,9 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IFingerprinter
     {
-		[DispId(0x1001)]
-		IBitFingerprint GetBitFingerprint(IAtomContainer container);
-		[DispId(0x1002)]
-		int Count { get; }
+		[DispId(0x1001)]IBitFingerprint GetBitFingerprint(IAtomContainer container);
+		int Count {[DispId(0x1002)] get; }
+		[DispId(0x1003)]IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer);
     }
 
 	[ComVisible(false)]
@@ -543,6 +499,7 @@ namespace ACDK
         }
 		public IBitFingerprint GetBitFingerprint(IAtomContainer container) => new W_IBitFingerprint(Object.GetBitFingerprint(((W_IAtomContainer)container).Object));
 		public int Count { get { return Object.Count; }}
+		public IDictionary_string_int GetRawFingerprint(IAtomContainer atomContainer) => new W_IDictionary_string_int(Object.GetRawFingerprint(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -551,16 +508,11 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IIntArrayFingerprint
     {
-		[DispId(0x1001)]
-		bool this[int index] { get; set; }
-		[DispId(0x1002)]
-		int Count { get; }
-		[DispId(0x1003)]
-		int Cardinality { get; }
-		[DispId(0x1004)]
-		void And(IBitFingerprint fingerprint);
-		[DispId(0x1005)]
-		void Or(IBitFingerprint fingerprint);
+		bool this[int index] {[DispId(0x1001)] get;[DispId(0x1002)] set; }
+		int Count {[DispId(0x1003)] get; }
+		int Cardinality {[DispId(0x1004)] get; }
+		[DispId(0x1005)]void And(IBitFingerprint fingerprint);
+		[DispId(0x1006)]void Or(IBitFingerprint fingerprint);
     }
 
 	[Guid("FF43AADE-239E-4088-AA86-25C6EEFED330")]
@@ -579,16 +531,11 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public bool this[int index] { get { return Object[index]; } set { Object[index] = value; } }
-		[DispId(0x1002)]
-		public int Count { get { return (int)Object.Count; }}
-		[DispId(0x1003)]
-		public int Cardinality { get { return Object.Cardinality; }}
-		[DispId(0x1004)]
-		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
-		[DispId(0x1005)]
-		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
+		public bool this[int index] {[DispId(0x1001)] get { return Object[index]; }[DispId(0x1002)] set { Object[index] = value; } }
+		public int Count {[DispId(0x1003)] get { return (int)Object.Count; }}
+		public int Cardinality {[DispId(0x1004)] get { return Object.Cardinality; }}
+		[DispId(0x1005)]public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
+		[DispId(0x1006)]public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
     }
 }
 namespace ACDK
@@ -637,8 +584,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAcidicGroupCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("6B6441F5-3131-4E69-BEE3-B94C809CC163")]
@@ -657,8 +603,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -667,8 +612,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IALOGPDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("49E49CF1-52FC-4C01-9884-AC518C5F7147")]
@@ -687,8 +631,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -697,8 +640,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAPolDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("AC1CF35F-8A96-4D7F-B1C8-519AC52457FB")]
@@ -717,8 +659,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -727,8 +668,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAromaticAtomsCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("9652026F-4AA6-4720-9A93-E78ACFE0175B")]
@@ -747,8 +687,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -757,8 +696,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAromaticBondsCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("FC6B0455-E099-4C06-A9E9-F262EF8B0879")]
@@ -777,8 +715,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -787,8 +724,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAtomCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("2B07DB2A-38DF-4C72-BB29-21D8465CC970")]
@@ -807,8 +743,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -817,8 +752,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAutocorrelationDescriptorCharge
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("E5A4B43D-B12B-4609-A8B5-41DAA37A4E1C")]
@@ -837,8 +771,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -847,8 +780,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAutocorrelationDescriptorMass
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("6EF41B8E-5D74-4D0E-A989-2CA8406353FA")]
@@ -867,8 +799,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -877,8 +808,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAutocorrelationDescriptorPolarizability
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("86DCE91F-2446-4166-8870-CB4654D77505")]
@@ -897,8 +827,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -907,8 +836,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBasicGroupCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("9273CE85-B671-48A0-8B80-D6125708912C")]
@@ -927,8 +855,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -937,8 +864,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBCUTDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("E8380587-3754-4898-9655-57DCA479BCBB")]
@@ -957,8 +883,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -967,8 +892,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBondCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("04C9A6D4-FF6D-4F22-AE0E-442009ABCB13")]
@@ -987,8 +911,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -997,8 +920,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IBPolDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("BE165ECB-619B-4B99-91A0-AC511E251F3F")]
@@ -1017,8 +939,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1027,8 +948,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ICarbonTypesDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("C915B2B6-92BD-400E-9C35-E398DDFCCE77")]
@@ -1047,8 +967,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1057,8 +976,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IChiChainDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("70FD43F0-1553-4112-B050-DE923286F6C8")]
@@ -1077,8 +995,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1087,8 +1004,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IChiClusterDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("2C2414FB-94E7-4CE7-90AB-604871E2E837")]
@@ -1107,8 +1023,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1117,8 +1032,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IChiPathClusterDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("C1B2123B-40BF-4F33-B2FA-8632B3209A99")]
@@ -1137,8 +1051,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1147,8 +1060,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IChiPathDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("65C1831C-7757-424B-A3D1-8C7B38DC1D98")]
@@ -1167,8 +1079,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1177,8 +1088,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ICPSADescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("4E30FAE8-D98A-47C6-B9B0-B8E0E9D468A1")]
@@ -1197,8 +1107,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1207,8 +1116,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IEccentricConnectivityIndexDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("DB4E6375-4289-4C11-AC6D-7E63F971565F")]
@@ -1227,8 +1135,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1237,8 +1144,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IFMFDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("126CD5CB-545F-4499-AADC-17104894B7C0")]
@@ -1257,8 +1163,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1267,8 +1172,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IFractionalPSADescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("B1300125-9DCA-49CF-B506-5A7374F6C138")]
@@ -1287,8 +1191,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1297,8 +1200,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IFragmentComplexityDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("0A455290-2FB3-4D03-9730-F786788DEF18")]
@@ -1317,8 +1219,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1327,8 +1228,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IGravitationalIndexDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("6DEDF9F5-021A-44AD-BA61-F4900207EB76")]
@@ -1347,8 +1247,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1357,8 +1256,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IHBondAcceptorCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("855ECCC0-9FAF-41D7-8A42-94CBEE7B610A")]
@@ -1377,8 +1275,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1387,8 +1284,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IHBondDonorCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("ECCFDB25-49A7-406B-8ACA-66C2760E5DDE")]
@@ -1407,8 +1303,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1417,8 +1312,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IHybridizationRatioDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("486DB6CB-3A43-45D1-8BF2-B8D3989789FA")]
@@ -1437,8 +1331,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1447,8 +1340,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IKappaShapeIndicesDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("685B1E44-D743-461E-9B84-8DD505D8B0D0")]
@@ -1467,8 +1359,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1477,8 +1368,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IKierHallSmartsDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("6D2B0A5D-EADC-4B48-ABFB-E137F4B2F51F")]
@@ -1497,8 +1387,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1507,8 +1396,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ILargestChainDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("D6D6F7A3-8B72-41B3-8DB9-404065CC1437")]
@@ -1527,8 +1415,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1537,8 +1424,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ILargestPiSystemDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("C57F6597-BD72-4148-BCFA-D05A3753510E")]
@@ -1557,8 +1443,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1567,8 +1452,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ILengthOverBreadthDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("F612A06E-7818-4D20-96D2-63105D04082B")]
@@ -1587,8 +1471,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1597,8 +1480,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ILongestAliphaticChainDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("496D4787-8E32-4DF4-9F4A-F27A22662150")]
@@ -1617,8 +1499,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1627,8 +1508,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IMannholdLogPDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("789D5541-AF14-42C4-9FE4-C25DEE8C6C35")]
@@ -1647,8 +1527,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1657,8 +1536,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IMDEDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("C322BD15-0524-4752-BE85-C6690A99A976")]
@@ -1677,8 +1555,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1687,8 +1564,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IMomentOfInertiaDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("0EA8CCF0-6BF1-4DAB-8240-1B5AF64AA934")]
@@ -1707,8 +1583,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1717,8 +1592,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IPetitjeanNumberDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("D5732DE7-A677-4474-95D2-24AB6DF3E233")]
@@ -1737,8 +1611,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1747,8 +1620,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IPetitjeanShapeIndexDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("FA1CD861-2DF0-47AB-8C9F-2F2C424DD4F3")]
@@ -1767,8 +1639,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1777,8 +1648,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IRotatableBondsCountDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("A7AACBE5-E75C-475A-AF2C-94F99A3C30AD")]
@@ -1797,8 +1667,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1807,8 +1676,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IRuleOfFiveDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("5B964D88-16B2-46E3-B44C-2ECE3022200C")]
@@ -1827,8 +1695,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1837,8 +1704,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ISmallRingDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("E7910BC5-C6C1-4889-AD0B-9BCF7E887486")]
@@ -1857,8 +1723,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1867,8 +1732,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface ITPSADescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("F6FE69D4-E10E-4997-B355-45E2A9914826")]
@@ -1887,8 +1751,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1897,8 +1760,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IVABCDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("67F2C7B9-A129-4284-AECE-F483146D180E")]
@@ -1917,8 +1779,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1927,8 +1788,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IVAdjMaDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("28EE6422-847C-4B93-AEE6-CF35951D1701")]
@@ -1947,8 +1807,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1957,8 +1816,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IWeightDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("0CFD74E4-4954-44D9-8BA0-3244A0AA31DE")]
@@ -1977,8 +1835,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -1987,8 +1844,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IWeightedPathDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("3DB2A54C-FF70-4EFE-97A5-101915B45AEB")]
@@ -2007,8 +1863,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -2017,8 +1872,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IWHIMDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("C32F991E-3E67-4B5D-B400-E0D681A1B873")]
@@ -2037,8 +1891,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -2047,8 +1900,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IWienerNumbersDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("76FE3CA2-0F87-4DE7-83AD-139DEF96041F")]
@@ -2067,8 +1919,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -2077,8 +1928,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IXLogPDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("A4C6C4EC-77C6-4D20-B129-7AB291641B00")]
@@ -2097,8 +1947,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -2107,8 +1956,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IZagrebIndexDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer atomContainer);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer atomContainer);
     }
 
 	[Guid("5E98C730-AF19-4F5B-88BC-C91C2CC29579")]
@@ -2127,8 +1975,7 @@ namespace ACDK
         {
             this.obj = obj;
         }
-		[DispId(0x1001)]
-		public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
+		[DispId(0x1001)]public DescriptorValue Calculate(IAtomContainer atomContainer) => new W_DescriptorValue(Object.Calculate(((W_IAtomContainer)atomContainer).Object));
     }
 }
 namespace ACDK
@@ -2177,8 +2024,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IMolecularDescriptor
     {
-		[DispId(0x1001)]
-		DescriptorValue Calculate(IAtomContainer container);
+		[DispId(0x1001)]DescriptorValue Calculate(IAtomContainer container);
     }
 
 	[ComVisible(false)]
@@ -2200,8 +2046,7 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface SmilesParser
     {
-		[DispId(0x1001)]
-		IAtomContainer ParseSmiles(string smiles);
+		[DispId(0x1001)]IAtomContainer ParseSmiles(string smiles);
     }
 
 	[ComVisible(false)]

@@ -152,15 +152,9 @@ namespace ACDK
 			if (!string.IsNullOrEmpty(method))
 			{
 #>
-		[DispId(0x<#=dispIdIndex.ToString("X4")#>)]
-		<#=re_long.Replace(
-			re_type.Replace(
-				method, 
-				m => m.Value.Replace("<", "_").Replace(",", "_").Replace(">", "").Replace(" ", "")), 
-			"int")#>
+		<#=MakeInterfaceMemberWrapper(method, ref dispIdIndex)#>
 <#+
 			}
-			dispIdIndex++;
 		}
 #>
     }
@@ -214,17 +208,10 @@ namespace ACDK
 		{
 			if (!string.IsNullOrEmpty(method))
 			{
-				if (isClass)
-				{
 #>
-		[DispId(0x<#=dispIdIndex.ToString("X4")#>)]
-<#+
-				}
-#>
-		<#=MakeMemberWrapper(method)#>
+		<#=MakeMemberWrapper(method, isClass, ref dispIdIndex)#>
 <#+
 			}
-			dispIdIndex++;
 		}
 #>
     }
@@ -264,76 +251,201 @@ namespace ACDK
 		{
 			return typeName.Replace("<", "_").Replace(",", "_").Replace(">", "").Replace(" ", "");
 		}
-/*
+
 		public class MemberInfo
 		{
 			public string ReturnTypeName { get; set; }
 			public string Name { get; set; }
 			public IList<TypeAndParamerterName> TypeAndParamerterNames { get; set; } = null;
+			public bool HasGet { get; set; }
+			public bool HasSet { get; set; }
 		}
-		*/
-		string MakeMemberWrapper(string method)
+
+		public MemberInfo ExtractToMemberInfo(string method)
 		{
-			var sb = new StringBuilder();
-			sb.Append("public ");
-
-			string methodName = null;
-			string returnTypeName = null;
-			List<TypeAndParamerterName> typeAndParameters = new List<TypeAndParamerterName>();
-			string str = method;
 			Match match;
-			
-			if ((match = re2.Match(str)).Success)
+			var mi = new MemberInfo();
+			if ((match = re2.Match(method)).Success)
 			{
-				var mi_Name = match.Groups["name"].Value;
-				var mi_ReturnTypeName = match.Groups["return"].Value;
-				var mi_TypeAndParamerterNames = MakeTypeAndParameters(match);
-				var wrapTypeName = WrapType(mi_ReturnTypeName);
-				var methoddef = wrapTypeName + " " + mi_Name + "(" + string.Join(", ", mi_TypeAndParamerterNames) + ")";
-				methoddef = re_long.Replace(methoddef, "int");
-				sb.Append(methoddef);
-				sb.Append(" => ");
-				sb.Append(MakeMethodWrapper(mi_Name, mi_ReturnTypeName, mi_TypeAndParamerterNames));
-
-				sb.Append(';');
+				mi.Name = match.Groups["name"].Value;
+				mi.ReturnTypeName = match.Groups["return"].Value;
+				mi.TypeAndParamerterNames = MakeTypeAndParameters(match);
 			}
-			else if ((match = re_this.Match(str)).Success)
+			else if ((match = re_this.Match(method)).Success)
 			{
-				bool hasGet = match.Groups["get"].Captures.Count > 0;
-				bool hasSet = match.Groups["set"].Captures.Count > 0;
-
-				methodName = "this";
-				returnTypeName = match.Groups["return"].Value;
-				typeAndParameters = MakeTypeAndParameters(match);
-
-				var methoddef =returnTypeName + " " + methodName + "[" + string.Join(", ", typeAndParameters) + "]";
-				methoddef = re_long.Replace(methoddef, "int");
-				sb.Append(methoddef);
-				sb.Append(" {");
-				sb.Append(MakeThisWrapper(returnTypeName, typeAndParameters, hasGet, hasSet));
-				sb.Append(" }");
+				mi.HasGet = match.Groups["get"].Captures.Count > 0;
+				mi.HasSet = match.Groups["set"].Captures.Count > 0;
+				mi.Name = "this";
+				mi.ReturnTypeName = match.Groups["return"].Value;
+				mi.TypeAndParamerterNames = MakeTypeAndParameters(match);
 			}		
-			else if ((match = re_property.Match(str)).Success)
+			else if ((match = re_property.Match(method)).Success)
 			{
-				bool hasGet = match.Groups["get"].Captures.Count > 0;
-				bool hasSet = match.Groups["set"].Captures.Count > 0;
-
-				methodName = match.Groups["name"].Value;
-				returnTypeName = match.Groups["return"].Value;
-
-				var methoddef =returnTypeName + " " + methodName;
-				methoddef = re_long.Replace(methoddef, "int");
-
-				sb.Append(methoddef);
-				sb.Append(" {");
-				sb.Append(MakePropertyWrapper(methodName, returnTypeName, hasGet, hasSet));
-				sb.Append("}");
+				mi.HasGet = match.Groups["get"].Captures.Count > 0;
+				mi.HasSet = match.Groups["set"].Captures.Count > 0;
+				mi.Name = match.Groups["name"].Value;
+				mi.ReturnTypeName = match.Groups["return"].Value;
 			}
 			else
 			{
 #>
 		ERROR: "<#=method#>"
 <#+
+			}
+			return mi;
+		}
+		
+		string MakeInterfaceMemberWrapper(string method, ref int dispIdIndex)
+		{
+			var sb = new StringBuilder();
+
+			var mi = ExtractToMemberInfo(method);
+
+			if (mi.ReturnTypeName == null)
+			{
+				throw new Exception("Could not parse '" + method + "'");
+			}
+			else if (mi.Name == "this")
+			{
+				if (mi.TypeAndParamerterNames == null)
+					throw new Exception("Could not parse '" + method + "'");
+				var method_def =WrapType(mi.ReturnTypeName) + " " + mi.Name + "[" + string.Join(", ", mi.TypeAndParamerterNames) + "]";
+				method_def = re_long.Replace(method_def, "int");
+				sb.Append(method_def);
+				sb.Append(" {");
+				if (mi.HasGet) 
+				{
+					sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+					dispIdIndex++;
+					sb.Append(" get;");
+				}
+				if (mi.HasSet) 
+				{
+					sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+					dispIdIndex++;
+					sb.Append(" set;");
+				}
+				sb.Append(" }");
+			}
+			else if (mi.TypeAndParamerterNames == null)
+			{
+				var method_def =WrapType(mi.ReturnTypeName) + " " + mi.Name;
+				method_def = re_long.Replace(method_def, "int");
+				sb.Append(method_def);
+				sb.Append(" {");
+				if (mi.HasGet) 
+				{
+					sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+					dispIdIndex++;
+					sb.Append(" get;");
+				}
+				if (mi.HasSet) 
+				{
+					sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+					dispIdIndex++;
+					sb.Append(" set;");
+				}
+				sb.Append(" }");
+			}
+			else
+			{
+				sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+				dispIdIndex++;
+				var method_def = WrapType(mi.ReturnTypeName) + " " + mi.Name + "(" + string.Join(", ", mi.TypeAndParamerterNames) + ")";
+				method_def = re_long.Replace(method_def, "int");
+				sb.Append(method_def);
+				sb.Append(';');
+			}
+			return sb.ToString();
+		}
+
+		string MakeMemberWrapper(string method, bool isClass, ref int dispIdIndex)
+		{
+			var sb = new StringBuilder();
+			var mi = ExtractToMemberInfo(method);
+
+			if (mi.ReturnTypeName == null)
+			{
+				throw new Exception("Could not parse '" + method + "'");
+			}
+			else if (mi.Name == "this")
+			{
+				sb.Append("public ");
+				if (mi.TypeAndParamerterNames == null)
+					throw new Exception("Could not parse '" + method + "'");
+				var method_def =WrapType(mi.ReturnTypeName) + " " + mi.Name + "[" + string.Join(", ", mi.TypeAndParamerterNames) + "]";
+				method_def = re_long.Replace(method_def, "int");
+				sb.Append(method_def);
+				sb.Append(" {");
+				if (mi.HasGet)
+				{
+					if (isClass)
+					{
+						sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+						dispIdIndex++;
+					}
+					sb.Append(" get { return ");
+					sb.Append(MakeMethodWrapper2(mi));
+					sb.Append("; }");
+				}
+				if (mi.HasSet)
+				{
+					if (isClass)
+					{
+						sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+						dispIdIndex++;
+					}
+					sb.Append(" set { Object[");
+					sb.Append(string.Join(", ", mi.TypeAndParamerterNames.Select(n => n.ParameterName)));
+					sb.Append("] = value; }");
+				}
+				sb.Append(" }");
+			}
+			else if (mi.TypeAndParamerterNames == null)
+			{
+				sb.Append("public ");
+				var method_def =WrapType(mi.ReturnTypeName) + " " + mi.Name;
+				method_def = re_long.Replace(method_def, "int");
+				sb.Append(method_def);
+				sb.Append(" {");
+				if (mi.HasGet)
+				{
+					if (isClass)
+					{
+						sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+						dispIdIndex++;
+					}
+					sb.Append(" get { return ");
+					sb.Append(MakeMethodWrapper2(mi));
+					sb.Append("; }");
+				}
+				if (mi.HasSet)
+				{
+					if (isClass)
+					{
+						sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+						dispIdIndex++;
+					}
+					sb.Append(" set { Object.");
+					sb.Append(mi.Name);
+					sb.Append(" = value; }");
+				}
+				sb.Append("}");
+			}
+			else
+			{
+				var method_def = WrapType(mi.ReturnTypeName) + " " + mi.Name + "(" + string.Join(", ", mi.TypeAndParamerterNames) + ")";
+				method_def = re_long.Replace(method_def, "int");
+				if (isClass)
+				{
+					sb.Append("[DispId(0x" + dispIdIndex.ToString("X4") + ")]");
+					dispIdIndex++;
+				}
+				sb.Append("public ");
+				sb.Append(method_def);
+				sb.Append(" => ");
+				sb.Append(MakeMethodWrapper2(mi));
+				sb.Append(';');
 			}
 			return sb.ToString();
 		}
@@ -358,47 +470,6 @@ namespace ACDK
 			}
 			return string.Join(", ", ss);
 		}
-		
-		string MakePropertyWrapper(string methodName, string returnTypeName, bool hasGet, bool hasSet)
-		{
-			var sb = new StringBuilder();
-			if (hasGet)
-			{
-				sb.Append(" get { return ");
-				sb.Append(MakeMethodWrapper2(methodName, returnTypeName, null));
-				sb.Append("; }");
-			}
-			if (hasSet)
-			{
-				sb.Append(" set { Object.");
-				sb.Append(methodName);
-				sb.Append(" = value; }");
-			}
-			return sb.ToString();		
-		}
-
-		string MakeThisWrapper(string returnTypeName, IEnumerable<TypeAndParamerterName> parameters, bool hasGet, bool hasSet)
-		{
-			var sb = new StringBuilder();
-			if (hasGet)
-			{
-				sb.Append(" get { return ");
-				sb.Append(MakeMethodWrapper2("this", returnTypeName, parameters));
-				sb.Append("; }");
-			}
-			if (hasSet)
-			{
-				sb.Append(" set { Object[");
-				sb.Append(string.Join(", ", parameters.Select(n => n.ParameterName)));
-				sb.Append("] = value; }");
-			}
-			return sb.ToString();
-		}
-
-		string MakeMethodWrapper(string methodName, string returnTypeName, IEnumerable<TypeAndParamerterName> parameters)
-		{
-			return MakeMethodWrapper2(methodName, returnTypeName, parameters);
-		}
 
 		static string OpenP(bool isIndexer)
 			=> isIndexer ? "[" : "(";
@@ -406,8 +477,12 @@ namespace ACDK
 		static string CloseP(bool isIndexer)
 			=> isIndexer ? "]" : ")";
 
-		string MakeMethodWrapper2(string methodName, string returnTypeName, IEnumerable<TypeAndParamerterName> parameters)
+		string MakeMethodWrapper2(MemberInfo mi)
 		{
+			var methodName = mi.Name;
+			var returnTypeName = mi.ReturnTypeName;
+			var parameters = mi.TypeAndParamerterNames;
+
 			bool isIndexer = methodName == "this";
 
 			var sb = new StringBuilder();
