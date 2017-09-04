@@ -53,10 +53,8 @@ namespace NCDK.Similarity
     // @cdk.keyword    jaccard
     // @cdk.keyword    similarity, tanimoto
     // @cdk.module fingerprint
-    public class Tanimoto
+    public static class Tanimoto
     {
-        private Tanimoto() { }
-
         /// <summary>
         /// Evaluates Tanimoto coefficient for two bit sets.
         /// </summary>
