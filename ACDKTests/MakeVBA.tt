@@ -123,6 +123,14 @@ Dim A_<#=text#> As New <#=text#>
 	}
 #>
 
+<#
+//////////////////////////////////// 
+#>
+Dim A_SignatureFingerprinter As New ACDK.SignatureFingerprinter
+<#
+//////////////////////////////////// 
+#>
+
 Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
 
@@ -178,3 +186,15 @@ End Function
 <#
 	}
 #>
+
+<#
+//////////////////////////////////// 
+#>
+
+Public Function CDK_SignatureFingerprinterAsJson(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IDictionary_string_int
+    Set V = A_SignatureFingerprinter.GetRawFingerprint(A)
+    CDK_SignatureFingerprinterAsJson = V.ToString()
+End Function

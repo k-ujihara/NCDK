@@ -38,6 +38,14 @@ namespace NCDK.Common.Collections
             a.Set(index, value);
         }
 
+        public static string AsBitString(BitArray a)
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < a.Length; i++)
+                sb.Append(a[i] ? '0' : '1');
+            return sb.ToString();
+        }
+
         public static BitArray FromString(string str)
         {
             str = str.Trim();

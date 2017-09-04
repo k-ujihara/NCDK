@@ -88,6 +88,8 @@ Dim A_APolDescriptor As New APolDescriptor
 Dim A_ALOGPDescriptor As New ALOGPDescriptor
 Dim A_AcidicGroupCountDescriptor As New AcidicGroupCountDescriptor
 
+Dim A_SignatureFingerprinter As New ACDK.SignatureFingerprinter
+
 Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
 
@@ -541,4 +543,13 @@ Public Function CDK_AcidicGroupCountDescriptor(ByVal Smiles As String) As String
     Dim V As ACDK.DescriptorValue
     Set V = A_AcidicGroupCountDescriptor.Calculate(A)
     CDK_AcidicGroupCountDescriptor = V.ValueAsString()
+End Function
+
+
+Public Function CDK_SignatureFingerprinterAsJson(ByVal Smiles As String) As String
+    Dim A As IAtomContainer
+    Set A = SmilesParser.ParseSmiles(Smiles)
+    Dim V As ACDK.IDictionary_string_int
+    Set V = A_SignatureFingerprinter.GetRawFingerprint(A)
+    CDK_SignatureFingerprinterAsJson = V.ToString()
 End Function

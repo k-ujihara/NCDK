@@ -42,8 +42,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBitFingerprint.cs" />
     <Compile Include="IDictionary_string_int.cs" />
     <Compile Include="DescriptorValue.cs" />
     <Compile Include="FingerprinterProvider.cs" />

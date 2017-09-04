@@ -14,7 +14,14 @@ namespace ACDK
         IFingerprinter GetFingerprinter(string name);
 
         [DispId(0x2002)]
+        IBitFingerprint BitFingerprintFromString(string @string);
+        [DispId(0x2003)]
         string BitFingerprintToString(IBitFingerprint fingerprint);
+
+        [DispId(0x2004)]
+        IBitFingerprint BitFingerprintFromBitString(string @string);
+        [DispId(0x2005)]
+        string BitFingerprintToBitString(IBitFingerprint fingerprint);
     }
 
     [Guid("2F703FC5-CEB0-4F1D-A083-457A7EB3D976")]
@@ -31,13 +38,29 @@ namespace ACDK
             var obj = ctor.Invoke(new object[0]);
             return (IFingerprinter)obj;
         }
-
+        
         [DispId(0x2002)]
+        public IBitFingerprint BitFingerprintFromString(string @string)
+        {
+            return new BitSetFingerprint(new NCDK.Fingerprints.BitSetFingerprint(BitArrays.FromString(@string)));
+        }
+
+        [DispId(0x2003)]
         public string BitFingerprintToString(IBitFingerprint fingerprint)
         {
-            var fp = ((W_IBitFingerprint)fingerprint).Object;
-            var bs = fp.AsBitSet();
-            return BitArrays.ToString(bs);
+            return fingerprint.ToString();
+        }
+
+        [DispId(0x2004)]
+        public IBitFingerprint BitFingerprintFromBitString(string @string)
+        {
+            return new BitSetFingerprint(new NCDK.Fingerprints.BitSetFingerprint(BitArrays.FromString(@string)));
+        }
+
+        [DispId(0x2005)]
+        public string BitFingerprintToBitString(IBitFingerprint fingerprint)
+        {
+            return BitArrays.AsBitString(fingerprint.AsBitArray());
         }
     }
 }

@@ -24,6 +24,7 @@
 
 
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 
 namespace ACDK
@@ -60,6 +61,7 @@ namespace ACDK
 		public int Cardinality {[DispId(0x1004)] get { return Object.Cardinality; }}
 		[DispId(0x1005)]public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
 		[DispId(0x1006)]public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
+
     }
 }
 namespace ACDK
@@ -474,6 +476,7 @@ namespace ACDK
 		public int Cardinality { get { return Object.Cardinality; }}
 		public void And(IBitFingerprint fingerprint) => Object.And(((W_IBitFingerprint)fingerprint).Object);
 		public void Or(IBitFingerprint fingerprint) => Object.Or(((W_IBitFingerprint)fingerprint).Object);
+        void A() { Object.AsBitSet(); }
     }
 }
 namespace ACDK
