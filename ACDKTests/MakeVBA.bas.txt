@@ -89,6 +89,7 @@ Dim A_ALOGPDescriptor As New ALOGPDescriptor
 Dim A_AcidicGroupCountDescriptor As New AcidicGroupCountDescriptor
 
 Dim A_SignatureFingerprinter As New ACDK.SignatureFingerprinter
+Dim A_Tanimoto As New ACDK.Tanimoto
 
 Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
@@ -98,7 +99,7 @@ Public Function CDK_BitFingerprinterValue(ByVal Name As String, ByVal Smiles As 
     Set Fingerprinter = FingerprinterProvider.GetFingerprinter(Name)
     Dim Val As IBitFingerprint
     Set Val = Fingerprinter.GetBitFingerprint(SmilesParser.ParseSmiles(Smiles))
-    CDK_BitFingerprinterValue = FingerprinterProvider.BitFingerprintToString(Val)
+    CDK_BitFingerprinterValue = FingerprinterProvider.BitFingerprintToBitString(Val)
 End Function
 
 Public Function CDK_MolecularDescriptorValue(ByVal DescriptorName As String, ByVal Smiles As String) As String
@@ -553,3 +554,8 @@ Public Function CDK_SignatureFingerprinterAsJson(ByVal Smiles As String) As Stri
     Set V = A_SignatureFingerprinter.GetRawFingerprint(A)
     CDK_SignatureFingerprinterAsJson = V.ToString()
 End Function
+
+Public Function CDK_Tanimoto(ByVal FingerPrint1 As String, ByVal FingerPrint2 As String) As Double
+    CDK_Tanimoto = A_Tanimoto.Calculate_String(FingerPrint1, FingerPrint2)
+End Function
+

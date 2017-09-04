@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ACDK: COM wrapper for NCDK")]
-[assembly: AssemblyDescription("ACDK: COM wrapper for NCDK")]
+[assembly: AssemblyDescription("ACDK: COM wrapper of NCDK")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kazuya Ujihara")]
 [assembly: AssemblyProduct("ACDK")]

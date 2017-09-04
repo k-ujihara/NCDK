@@ -58,6 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Class_Info.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tanimoto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
