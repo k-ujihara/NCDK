@@ -22,6 +22,11 @@ namespace ACDK
         IBitFingerprint BitFingerprintFromBitString(string @string);
         [DispId(0x2005)]
         string BitFingerprintToBitString(IBitFingerprint fingerprint);
+
+        [DispId(0x2006)]
+        IDictionary_string_int RawFingerprintFromString(string @string);
+        [DispId(0x2007)]
+        string RawFingerprintToString(IDictionary_string_int fingerprint);
     }
 
     [Guid("2F703FC5-CEB0-4F1D-A083-457A7EB3D976")]
@@ -29,9 +34,17 @@ namespace ACDK
     public class FingerprinterProvider
        : IFingerprinterProvider
     {
+        const string String_CircularFingerprinter = "CircularFingerprinter";
         [DispId(0x2001)]
         public IFingerprinter GetFingerprinter(string name)
         {
+            if (name.StartsWith(String_CircularFingerprinter + "_"))
+            {
+                string methodName = name.Substring(String_CircularFingerprinter.Length + 1);
+                var method = typeof(CircularFingerprinterProvider).GetMethod("Create" + methodName);
+                if (method != null)
+                    return (IFingerprinter)method.Invoke(new CircularFingerprinterProvider(), Type.EmptyTypes);
+            }
             string className = "ACDK." + name;
             var type = Assembly.GetExecutingAssembly().GetType(className);
             var ctor = type.GetConstructor(Type.EmptyTypes);
@@ -61,6 +74,20 @@ namespace ACDK
         public string BitFingerprintToBitString(IBitFingerprint fingerprint)
         {
             return BitArrays.AsBitString(fingerprint.AsBitArray());
+        }
+
+        [DispId(0x2006)]
+        public IDictionary_string_int RawFingerprintFromString(string @string)
+        {
+            var o = new W_IDictionary_string_int(null);
+            o.Load(@string);
+            return o;
+        }
+
+        [DispId(0x2007)]
+        public string RawFingerprintToString(IDictionary_string_int fingerprint)
+        {
+            return fingerprint.ToString();
         }
     }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CircularFingerprinterProvider.cs" />
     <Compile Include="IBitFingerprint.cs" />
     <Compile Include="IDictionary_string_int.cs" />
     <Compile Include="DescriptorValue.cs" />

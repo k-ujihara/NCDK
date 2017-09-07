@@ -59,12 +59,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FingerprinterProviderTests.cs" />
+    <Compile Include="IDictionary_string_intTests.cs" />
     <Compile Include="WrapperClassesMakerTests.cs" />
     <Compile Include="ExcelTests.cs" />
     <Compile Include="MolecularDescriptorProviderTests.cs" />
     <Compile Include="ObjectFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="W_IDictionary_string_intTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ACDK_Test.xlsm" />
