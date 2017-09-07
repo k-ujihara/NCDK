@@ -1,4 +1,3 @@
-using NCDK.Common.Mathematics;
 using System;
 using NCDK.Numerics;
 
@@ -36,7 +35,7 @@ namespace NCDK.Similarity
     // @cdk.keyword similarity, 3D, manhattan
     // @cdk.githash
     // @cdk.module fingerprint
-    public class DistanceMoment
+    public static class DistanceMoment
     {
         private static Vector3 GetGeometricCenter(IAtomContainer atomContainer)
         {

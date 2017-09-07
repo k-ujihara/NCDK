@@ -59,7 +59,6 @@ namespace NCDK.Similarity
             ICountFingerprint fp2 = fingerprinter.GetCountFingerprint(mol2);
             double tanimoto = Tanimoto.Calculate(fp1, fp2);
             Assert.AreEqual(1.0, tanimoto, 0.001);
-
         }
 
         [TestMethod()]
