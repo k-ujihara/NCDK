@@ -64,7 +64,7 @@ namespace NCDK.IO.Iterator
         private static readonly string LINE_SEPARATOR = Environment.NewLine;
 
         // patterns to match
-        private static Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
+        private static readonly Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
         private const string M_END = "M  END";
         private const string SDF_RECORD_SEPARATOR = "$$$$";
         private const string SDF_DATA_HEADER = "> ";
