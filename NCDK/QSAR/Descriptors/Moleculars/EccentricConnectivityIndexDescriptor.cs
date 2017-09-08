@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  Calculates the eccentric connectivity
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>An Result<int> value representing the eccentric connectivity index</returns>
+        /// <returns>A <see cref="Result{Int32}"/> value representing the eccentric connectivity index</returns>
         public DescriptorValue<Result<int>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);

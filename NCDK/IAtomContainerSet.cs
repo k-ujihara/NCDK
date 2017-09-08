@@ -74,13 +74,13 @@ namespace NCDK
         /// <param name="comparator">defines the sorting method</param>
         void Sort(IComparer<T> comparator);
 
+        /// <summary>
         /// Sets the coefficient of a <see cref="IAtomContainer"/> to a given value.
         /// </summary>
         /// <param name="position">The position of the <see cref="IAtomContainer"/> for which the multiplier is set in [0,..]</param>
         /// <param name="multiplier">The new multiplier for the <see cref="IAtomContainer"/> at <paramref name="position"/></param>
         /// <seealso cref="GetMultiplier(int)"/>
         void SetMultiplier(int position, double? multiplier);
-
 
         /// <summary>
         /// Returns an array of double with the stoichiometric coefficients

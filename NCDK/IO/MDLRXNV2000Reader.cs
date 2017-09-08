@@ -48,7 +48,7 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins">The Reader to read from</param>
+        /// <param name="input">The Reader to read from</param>
         public MDLRXNV2000Reader(TextReader input)
             : this(input, ChemObjectReaderModes.Relaxed)
         { }

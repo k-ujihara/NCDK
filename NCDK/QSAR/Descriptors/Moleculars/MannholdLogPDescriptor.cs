@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  Calculates the Mannhold LogP for an atom container.
         /// </summary>
         /// <param name="atomContainer"><see cref="IAtomContainer"/> to calculate the descriptor value for.</param>
-        /// <returns>A descriptor value wrapping a <see cref="Result<double>"/>.</returns>
+        /// <returns>A descriptor value wrapping a <see cref="Result{Double}"/>.</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();

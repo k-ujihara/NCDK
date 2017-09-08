@@ -24,13 +24,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-
 using System;
 
 namespace NCDK.Tools
 {
     /// <summary>
-    /// Tests the HOSECode genertor.
+    /// Tests the HOSECode generator.
     /// </summary>
     // @cdk.module test-extra
     // @author     steinbeck
@@ -38,8 +37,6 @@ namespace NCDK.Tools
     [TestClass()]
     public class BremserPredictorTest : CDKTestCase
     {
-        static bool standAlone = false;
-
         [TestMethod()]
         public void TestConstructor()
         {

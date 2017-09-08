@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// and considered the molecular graph. This class also implements the geometric analog
     /// of the topological shape index described by Bath et al (<token>cdk-cite-BAT95</token>).
     /// <para>
-    /// The descriptor returns a <see cref="ArrayResult<double>"/> which contains
+    /// The descriptor returns a <see cref="ArrayResult{Double}"/> which contains
     /// <list type="bullet"> 
     /// <item>topoShape - topological shape index</item>
     /// <item>geomShape - geometric shape index</item>
@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the two Petitjean shape indices.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A ArrayResult<double> value representing the Petitjean shape indices</returns>
+        /// <returns>A ArrayResult&lt;double&gt; value representing the Petitjean shape indices</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);

@@ -52,7 +52,7 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new EnumerablePCCompoundASNReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins"> The Reader to read from</param>
+        /// <param name="input"> The Reader to read from</param>
         /// <param name="builder"></param>
         public EnumerablePCCompoundASNReader(TextReader input, IChemObjectBuilder builder)
         {

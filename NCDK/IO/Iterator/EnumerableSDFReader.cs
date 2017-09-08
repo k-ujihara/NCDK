@@ -61,7 +61,7 @@ namespace NCDK.IO.Iterator
         private IChemObjectBuilder builder;
         private BooleanIOSetting forceReadAs3DCoords;
 
-        private static readonly string LINE_SEPARATOR = Environment.NewLine;
+        private static readonly string LINE_SEPARATOR = "\n";
 
         // patterns to match
         private static readonly Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
@@ -262,9 +262,9 @@ namespace NCDK.IO.Iterator
         }
 
         /// <summary>
-        ///        Indicate whether the reader should skip over SDF records
-        ///        that cause problems. If true the reader will fetch the next
-        ///        molecule
+        /// Indicate whether the reader should skip over SDF records
+        /// that cause problems. If true the reader will fetch the next
+        /// molecule
         /// </summary>
         public bool Skip { get; set; }
 

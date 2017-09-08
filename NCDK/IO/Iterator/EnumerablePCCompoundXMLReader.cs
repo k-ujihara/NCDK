@@ -51,7 +51,7 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new EnumerablePCCompoundXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
         /// </summary>
-        /// <param name="ins">The input stream</param>
+        /// <param name="input">The input stream</param>
         /// <param name="builder">The builder</param>
         /// <exception cref="Exception">if there is an error in setting up the XML parser</exception>
         public EnumerablePCCompoundXMLReader(TextReader input, IChemObjectBuilder builder)

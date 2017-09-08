@@ -98,7 +98,6 @@ namespace NCDK.Depict
         private readonly SmilesGenerator usmigen = SmilesGenerator.Unique();
 
         private readonly SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-        private bool contractOnHetero = true;
 
         public Abbreviations()
         {

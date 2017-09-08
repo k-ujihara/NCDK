@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
     /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
-    /// The class returns a <see cref="ArrayResult<double>"/> containing the five
+    /// The class returns a <see cref="ArrayResult{Double}"/> containing the five
     /// descriptors in the order described below.
     /// <list type="bullet">
     /// <listheader>
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the weighted path descriptors.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A ArrayResult<double> value representing the weighted path values</returns>
+        /// <returns>A <see cref="ArrayResult{Double}"/> value representing the weighted path values</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);

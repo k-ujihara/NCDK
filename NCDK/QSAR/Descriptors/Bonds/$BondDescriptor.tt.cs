@@ -1,8 +1,8 @@
 ﻿
-/// Abstract bond descriptor class with helper functions for descriptors
-/// that require the whole molecule to calculate the descriptor values,
-/// which in turn need to be cached for all bonds, so that they can be
-/// retrieved one by one.
+// Abstract bond descriptor class with helper functions for descriptors
+// that require the whole molecule to calculate the descriptor values,
+// which in turn need to be cached for all bonds, so that they can be
+// retrieved one by one.
 // @cdk.module qsar
 // @cdk.githash
 	
