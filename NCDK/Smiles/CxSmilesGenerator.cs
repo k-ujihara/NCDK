@@ -29,7 +29,7 @@ using static NCDK.Smiles.CxSmilesState;
 
 namespace NCDK.Smiles
 {
-    public class CxSmilesGenerator
+    internal static class CxSmilesGenerator
     {
         // calculate the inverse of a permutation
         private static int[] Inverse(int[] perm)
