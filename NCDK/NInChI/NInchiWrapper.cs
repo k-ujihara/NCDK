@@ -29,7 +29,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// <para>.NET Framework Wrapper for International Chemical Identifier (InChI) C++ library.</para>
-    ///
+    /// </summary>
+    /// <remarks>
     /// <para>This class is not intended to be used directly, but should be accessed
     /// through subclasses that read data formats and load them into the InChI
     /// data structures.</para>
@@ -41,17 +42,17 @@ namespace NCDK.NInChI
     /// happened.</para>
     ///
     /// <para>See <tt>inchi_api.h</tt>.</para>
-    /// </summary>
+    /// </remarks>
     // @author Sam Adams
     // @author Kazuya Ujihara
     unsafe public class NInchiWrapper
     {
-        private const string DllName_libinchi = "libinchi.dll";
+        private const string DllName_libinchi = "ncdk_libinchi.dll";
 
-        [SuppressUnmanagedCodeSecurityAttribute]
+        [SuppressUnmanagedCodeSecurity]
         internal static class UnsafeNativeMethods
         {
-            [System.Runtime.InteropServices.DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+            [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
             internal static extern bool SetDllDirectory(string lpPathName);
         }
 
