@@ -9,6 +9,16 @@ namespace NCDK.Smiles
         void Main()
         {
             {
+                #region SmiFlavor
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+                #endregion
+            }
+            {
+                #region SmiFlavor_Isomeric
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomicMass);
+                #endregion
+            }
+            {
                 string smi = null;
                 SmilesGenerator sg = null;
                 {
@@ -24,7 +34,7 @@ namespace NCDK.Smiles
                     #region 2
                     IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
-                    // 'benzene' molecule has no arom flags, we always get Kekulﾃｩ output
+                    // 'benzene' molecule has no arom flags, we always get Kekulé output
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 

@@ -37,7 +37,7 @@ namespace NCDK.QSAR
     ///   <item><see cref="Result<bool>"/></item>
     ///   <item><see cref="Result<double>"/> </item>
     ///   <item><see cref="Result<int>"/></item>
-    ///   <item><see cref="ArrayResult<double>"/></item>
+    ///   <item><see cref="ArrayResult{Double}"/></item>
     ///   <item><see cref="ArrayResult<int>"/></item>
     /// </list>
     /// But the DescriptorValue will hold an actual value using one of the
@@ -46,7 +46,7 @@ namespace NCDK.QSAR
     ///   <item><see cref="Result<bool>"/></item>
     ///   <item><see cref="Result<double>"/> </item>
     ///   <item><see cref="Result<int>"/></item>
-    ///   <item><see cref="ArrayResult<double>"/></item>
+    ///   <item><see cref="ArrayResult{Double}"/></item>
     ///   <item><see cref="ArrayResult<int>"/></item>
     /// </list>
     /// </para>

@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// and considered the molecular graph. This class also implements the geometric analog
     /// of the topological shape index described by Bath et al (<token>cdk-cite-BAT95</token>).
     /// <para>
-    /// The descriptor returns a <see cref="ArrayResult<double>"/> which contains
+    /// The descriptor returns a <see cref="ArrayResult{Double}"/> which contains
     /// <list type="bullet"> 
     /// <item>topoShape - topological shape index</item>
     /// <item>geomShape - geometric shape index</item>

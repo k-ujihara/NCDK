@@ -57,15 +57,10 @@ namespace NCDK.Smiles
     /// </list> 
     /// 
     /// To output a given flavour the flags in <see cref="SmiFlavor"/> are used:
-    /// <code>
-    /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor"]/*' />
     /// <see cref="SmiFlavor"/> provides more fine grained control, for example,
     /// for the following is equivalent to <see cref="SmiFlavor.Isomeric"/>:
-    /// <code>
-    /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
-    ///                                              SmiFlavor.AtomicMass);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor_Isomeric"]/*' />
     /// Bitwise logic can be used such that we can remove options:
     /// <see cref="SmiFlavor.Isomeric"/> <pre>^</pre> <see cref="SmiFlavor.AtomicMass"/>
     /// will generate isomeric SMILES without atomic mass.
@@ -81,7 +76,7 @@ namespace NCDK.Smiles
     /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.
     /// </para> 
     /// <para>
-    /// By default the generator will not write aromatic SMILES. Kekulﾃｩ SMILES are
+    /// By default the generator will not write aromatic SMILES. Kekulé SMILES are
     /// generally preferred for compatibility and aromaticity can easily be
     /// re-perceived by most tool kits whilst kekulisation may fail. If you
     /// really want aromatic SMILES the following code demonstrates
@@ -108,7 +103,7 @@ namespace NCDK.Smiles
     /// </para>
     /// <para>
     /// The two aggregate flavours are <see cref="SmiFlavor.CxSmiles"/> and <see cref="SmiFlavor.CxSmilesWithCoords"/>.
-    /// As with other flavours, fine grain control is possible {@see SmiFlavor}.
+    /// As with other flavours, fine grain control is possible <see cref="SmiFlavor"/>.
     /// </para>
     /// <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
     ///   and as such there are some structures which may not be unique. The number

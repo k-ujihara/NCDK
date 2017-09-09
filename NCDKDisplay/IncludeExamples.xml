@@ -1725,7 +1725,7 @@ namespace NCDK.Smiles
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+2">
     <code>                    IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
-                    // 'benzene' molecule has no arom flags, we always get Kekulﾃｩ output
+                    // 'benzene' molecule has no arom flags, we always get Kekulé output
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 

@@ -91,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluate the descriptor for the molecule.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>A <see cref="ArrayResult<double>"/> containing LOBMAX and LOBMIN in that order</returns>
+        /// <returns>A <see cref="ArrayResult{Double}"/> containing LOBMAX and LOBMIN in that order</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer atomContainer)
         {
             if (!GeometryUtil.Has3DCoordinates(atomContainer))

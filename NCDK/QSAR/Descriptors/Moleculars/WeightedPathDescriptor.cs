@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
     /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
-    /// The class returns a <see cref="ArrayResult<double>"/> containing the five
+    /// The class returns a <see cref="ArrayResult{Double}"/> containing the five
     /// descriptors in the order described below.
     /// <list type="bullet">
     /// <listheader>

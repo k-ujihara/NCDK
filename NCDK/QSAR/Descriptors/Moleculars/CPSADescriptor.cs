@@ -34,9 +34,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <para>
     /// The CPSA's were developed by Stanton et al. (<token>cdk-cite-STA90</token>) and
     /// are related to the Polar Surface Area descriptors. The original
-    /// implementation was in the ADAPT software package and the the definitions
+    /// implementation was in the ADAPT software package and the definitions
     /// of the individual descriptors are presented in the following table. This class
-    /// returns a <see cref="ArrayResult<double>"/> containing the 29 descriptors in the order
+    /// returns a <see cref="ArrayResult{Double}"/> containing the 29 descriptors in the order
     /// described in the table.
     /// </para>
     /// <para>
