@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// length of array result types vary with the values of the parameters. See
         /// <see cref="IDescriptor"/> for more details.</para>
         /// </summary>
-        /// <returns>an instance of the <see cref="Result<double>"/></returns>
+        /// <returns>an instance of the <see cref="Result{Double}"/></returns>
         public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <inheritdoc/>

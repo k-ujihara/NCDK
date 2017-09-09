@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the weighted path descriptors.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A ArrayResult<double> value representing the weighted path values</returns>
+        /// <returns>A <see cref="ArrayResult{Double}"/> value representing the weighted path values</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);

@@ -52,7 +52,7 @@ namespace NCDK.IO.Iterator
         /// </summary>
         /// <param name="input">The input stream</param>
         /// <param name="builder">The builder</param>
-        /// <exception cref="IOException">if there is error in getting the <see cref="IsotopeFactory"/></exception>
+        /// <exception cref="IOException">if there is error in getting the <see cref="NCDK.Config.IsotopeFactory"/></exception>
         /// <event cref="Exception">if there is an error in setting up the XML parser</event>
         public EnumerablePCSubstancesXMLReader(TextReader input, IChemObjectBuilder builder)
         {

@@ -58,9 +58,9 @@ namespace NCDK.IO
     // @cdk.created    2000-10-02
     // @cdk.keyword    file format, MDL molfile
     // @cdk.keyword    file format, SDF
-    [Obsolete("This reader is only for molfiles without a version tag, typically the most" 
-        + "common molfile now encountered is V2000 and the" + nameof(MDLV2000Reader) + "should be used"
-        + "instead. The V2000 reader can actually read files missing the version tag when"
+    [Obsolete("This reader is only for molfiles without a version tag, typically the most " 
+        + "common molfile now encountered is V2000 and the " + nameof(MDLV2000Reader) + " should be used "
+        + "instead. The " + nameof(MDLV2000Reader) + " reader can actually read files missing the version tag when "
         + "in relaxed mode.")]
     public class MDLReader : DefaultChemObjectReader
     {
@@ -72,7 +72,7 @@ namespace NCDK.IO
         /// <summary>
         ///  Constructs a new MDLReader that can read Molecule from a given Stream.
         /// </summary>
-        /// <param name="ins">The Stream to read from</param>
+        /// <param name="input">The Stream to read from</param>
         public MDLReader(Stream input)
             : this(input, ChemObjectReaderModes.Relaxed)
         {
@@ -87,7 +87,7 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="ins">The Reader to read from</param>
+        /// <param name="input">The Reader to read from</param>
         public MDLReader(TextReader input)
             : this(input, ChemObjectReaderModes.Relaxed)
         {
@@ -624,9 +624,7 @@ namespace NCDK.IO
                     {
                         Trace.TraceWarning("Missing expected stereo field at line: " + line);
                     }
-#if DEBUG
                     Debug.WriteLine("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-#endif
                     // interpret CTfile's special bond orders
                     IAtom a1 = molecule.Atoms[atom1 - 1];
                     IAtom a2 = molecule.Atoms[atom2 - 1];

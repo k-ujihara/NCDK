@@ -241,7 +241,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// Calculates the 147 TAE descriptors for amino acids.
         /// </summary>
         /// <param name="container">Parameter is the atom container which should implement <see cref="IBioPolymer"/>.</param>
-        /// <returns>A ArrayResult<double> value representing the 147 TAE descriptors</returns>
+        /// <returns>A <see cref="ArrayResult{Double}"/> value representing the 147 TAE descriptors</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             if (taeParams == null) return GetDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));

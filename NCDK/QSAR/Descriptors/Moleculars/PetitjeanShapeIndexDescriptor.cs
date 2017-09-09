@@ -98,7 +98,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the two Petitjean shape indices.
         /// </summary>
         /// <param name="container">Parameter is the atom container.</param>
-        /// <returns>A ArrayResult<double> value representing the Petitjean shape indices</returns>
+        /// <returns>A ArrayResult&lt;double&gt; value representing the Petitjean shape indices</returns>
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
             IAtomContainer local = AtomContainerManipulator.RemoveHydrogens(container);

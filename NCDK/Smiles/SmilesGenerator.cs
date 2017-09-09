@@ -31,7 +31,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace NCDK.Smiles
 {
@@ -76,7 +75,7 @@ namespace NCDK.Smiles
     /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.
     /// </para> 
     /// <para>
-    /// By default the generator will not write aromatic SMILES. Kekulé SMILES are
+    /// By default the generator will not write aromatic SMILES.Kekulé SMILES are
     /// generally preferred for compatibility and aromaticity can easily be
     /// re-perceived by most tool kits whilst kekulisation may fail. If you
     /// really want aromatic SMILES the following code demonstrates
@@ -168,19 +167,19 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Specifies that the generator should write atom classes in SMILES. Atom
-        /// classes are provided by the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+        /// classes are provided by the <see cref="CDKPropertyName.AtomAtomMapping"/>
         /// property. This method returns a new SmilesGenerator to use.
-        /// 
-        /// <blockquote><pre>
-        /// IAtomContainer  container = ...;
-        /// SmilesGenerator smilesGen = SmilesGenerator.unique()
-        ///                                            .atomClasses();
-        /// smilesGen.createSMILES(container); // C[CH2:4]O second atom has class = 4
-        /// </pre></blockquote>
         /// </summary>
+        /// <example>
+        /// <code>
+        /// IAtomContainer  container = ...;
+        /// SmilesGenerator smilesGen = SmilesGenerator.WithAtomClasses();
+        /// smilesGen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
+        /// </code>
+        /// </example>
         /// <returns>a generator for SMILES with atom classes</returns>
         [Obsolete("Configure with " + nameof(SmilesGenerator))]
-    public SmilesGenerator WithAtomClasses()
+        public SmilesGenerator WithAtomClasses()
         {
             return new SmilesGenerator(this.flavour | SmiFlavor.AtomAtomMap);
         }
@@ -199,7 +198,7 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Convenience method for creating an isomeric generator. Isomeric SMILES
-        /// are non-unique but contain isotope numbers (e.g. <code>[13C]</code>) and
+        /// are non-unique but contain isotope numbers (e.g. <pre>[13C]</pre>) and
         /// stereo-chemistry.
         /// </summary>
         /// <returns>a new isomeric SMILES generator</returns>
@@ -219,11 +218,14 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Create a absolute SMILES generator. Unique SMILES uses the InChI to
+        /// Create a absolute SMILES generator. 
+        /// </summary>
+        /// <remarks>
+        /// Unique SMILES uses the InChI to
         /// canonise SMILES and encodes isotope or stereo-chemistry. The InChI
         /// module is not a dependency of the SMILES module but should be present
-        /// on the classpath when generation absolute SMILES.
-        /// </summary>
+        /// on the path when generation absolute SMILES.
+        /// </remarks>
         /// <returns>a new absolute SMILES generator</returns>
         public static SmilesGenerator CreateAbsolute()
         {
