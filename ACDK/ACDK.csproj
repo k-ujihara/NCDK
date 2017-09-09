@@ -43,14 +43,17 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircularFingerprinterProvider.cs" />
+    <Compile Include="FileDialog.cs" />
     <Compile Include="IBitFingerprint.cs" />
     <Compile Include="IDictionary_string_int.cs" />
     <Compile Include="DescriptorValue.cs" />
     <Compile Include="FingerprinterProvider.cs" />
     <Compile Include="IEnumerable_string.cs" />
+    <Compile Include="EnumerableSDFReader.cs" />
     <Compile Include="MolecularDescriptorProvider.cs" />
     <Compile Include="ObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
