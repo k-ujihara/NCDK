@@ -544,11 +544,13 @@ namespace ACDK
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public partial interface IAtomContainer
     {
+		[DispId(0x1001)]IDictionary_object_object GetProperties();
     }
 
 	[ComVisible(false)]
     public sealed partial class W_IAtomContainer
         : IAtomContainer
+			, IChemObject
     {
         NCDK.IAtomContainer obj;
         public NCDK.IAtomContainer Object => obj;
@@ -556,6 +558,29 @@ namespace ACDK
         {
             this.obj = obj;
         }
+		public IDictionary_object_object GetProperties() => new W_IDictionary_object_object(Object.GetProperties());
+    }
+}
+namespace ACDK
+{
+    [Guid("4DB67F68-082F-49A1-9BCE-8A0FF7848E8A")]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public partial interface IChemObject
+    {
+		[DispId(0x1001)]IDictionary_object_object GetProperties();
+    }
+
+	[ComVisible(false)]
+    public sealed partial class W_IChemObject
+        : IChemObject
+    {
+        NCDK.IChemObject obj;
+        public NCDK.IChemObject Object => obj;
+        public W_IChemObject(NCDK.IChemObject obj)
+        {
+            this.obj = obj;
+        }
+		public IDictionary_object_object GetProperties() => new W_IDictionary_object_object(Object.GetProperties());
     }
 }
 namespace ACDK

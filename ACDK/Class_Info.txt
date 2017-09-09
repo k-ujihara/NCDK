@@ -15,7 +15,8 @@ DB6B34CA-5B84-4AA9-86AF-96D2CEEF4010	4085774B-E8A7-48FF-83B8-9C39ACC1F2F7	NCDK.F
 94480768-9696-4F43-A25B-C1737760403D	34534AE8-13C1-40A2-BB4D-B3350F0485D9	NCDK.Fingerprints.ShortestPathFingerprinter	IFingerprinter	"IBitFingerprint GetBitFingerprint(IAtomContainer container); int Count { get; } IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer);"
 5BC0FF04-0521-467B-A8E4-195E07BA723B	3AE60D45-046A-4A40-A240-F74057F41CAB	NCDK.Fingerprints.SignatureFingerprinter	IFingerprinter	"IBitFingerprint GetBitFingerprint(IAtomContainer container); int Count { get; } IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer);"
 1357EE46-EC07-47EA-ACFD-D77156CF5493	CF5F546F-F800-4AE9-BD92-0194A6839D0B	NCDK.Fingerprints.SubstructureFingerprinter	IFingerprinter	"IBitFingerprint GetBitFingerprint(IAtomContainer container); int Count { get; } IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer);"
-7930EF62-EED8-43B8-B984-D91A87A6D77D		NCDK.IAtomContainer		
+7930EF62-EED8-43B8-B984-D91A87A6D77D		NCDK.IAtomContainer	IChemObject	"IDictionary<object, object> GetProperties();""
+4DB67F68-082F-49A1-9BCE-8A0FF7848E8A		NCDK.IChemObject		"IDictionary<object, object> GetProperties();""
 136161B3-6FC6-42B9-BAA8-DA181C5BD927		NCDK.IChemObjectBuilder		
 821CF389-3EFC-44BF-9157-7A4ED1ADA6F1	6B6441F5-3131-4E69-BEE3-B94C809CC163	NCDK.QSAR.Descriptors.Moleculars.AcidicGroupCountDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);
 49BEF8FE-0978-4A10-BEC9-5AB90C9FD0B5	49E49CF1-52FC-4C01-9884-AC518C5F7147	NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor	IMolecularDescriptor	DescriptorValue Calculate(IAtomContainer atomContainer);

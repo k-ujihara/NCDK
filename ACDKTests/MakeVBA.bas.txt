@@ -646,6 +646,9 @@ End Function
 Public Sub ImportSmilesFromSDF(ByVal FileName As String)
     Dim Sheet As Object
     Set Sheet = Sheets.Add()
+    
+    Dim Titles As Dictionary
+    Set Titles = New Dictionary
 
     Dim AC As Excel.Range
     Dim Y As Long
@@ -661,6 +664,30 @@ Public Sub ImportSmilesFromSDF(ByVal FileName As String)
         If Mol Is Nothing Then Exit Do
         Debug.Print SmilesGenerator.Create(Mol)
         Sheet.Cells(Y, 1) = SmilesGenerator.Create(Mol)
+        
+        Dim Properties As IDictionary_object_object
+        Set Properties = Mol.GetProperties()
+        Dim Keys()
+        Keys = Properties.Keys
+        Dim i As Long
+        For i = LBound(Keys) To UBound(Keys)
+            Dim Key
+            Dim Val
+            Dim TitleX As Long
+            Key = Keys(i)
+            Val = Properties.Item(Key)
+            
+            If Not Titles.Exists(Key) Then
+                TitleX = Titles.Count + 2
+                Call Titles.Add(Key, TitleX)
+                Sheet.Cells(1, TitleX) = Key
+            Else
+                TitleX = Titles(Key)
+            End If
+            
+            Sheet.Cells(Y, TitleX) = Val
+        Next
+        
         Y = Y + 1
     Loop
 End Sub
@@ -672,4 +699,3 @@ Public Sub ImportSmilesFromSDFDialog()
         Call ImportSmilesFromSDF(FileName)
     End If
 End Sub
-

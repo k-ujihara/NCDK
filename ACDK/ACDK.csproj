@@ -49,7 +49,11 @@
     <Compile Include="CircularFingerprinterProvider.cs" />
     <Compile Include="FileDialog.cs" />
     <Compile Include="IBitFingerprint.cs" />
-    <Compile Include="IDictionary_string_int.cs" />
+    <Compile Include="IDictionary_o_o.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IDictionary_o_o.tt</DependentUpon>
+    </Compile>
     <Compile Include="DescriptorValue.cs" />
     <Compile Include="FingerprinterProvider.cs" />
     <Compile Include="IEnumerable_string.cs" />
@@ -62,6 +66,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Class_Info.tt</DependentUpon>
     </Compile>
+    <Content Include="IDictionary_o_o.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IDictionary_o_o.tt.cs</LastGenOutput>
+    </Content>
     <Content Include="SmiFlavor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SmiFlavor.tt.cs</LastGenOutput>
