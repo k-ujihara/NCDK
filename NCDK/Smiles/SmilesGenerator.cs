@@ -130,7 +130,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <seealso cref="SmiFlavor.Default"/>
         [Obsolete("Use " + nameof(SmilesGenerator) + "(int) configuring with " + nameof(SmiFlavor) + ".")]
-        public SmilesGenerator() 
+        public SmilesGenerator()
             : this(SmiFlavor.Default)
         {
         }
@@ -460,7 +460,7 @@ namespace NCDK.Smiles
             int[] agentOrder = new int[agentPart.Atoms.Count];
             int[] productOrder = new int[productPart.Atoms.Count];
 
-             int expectedSize = reactantOrder.Length + agentOrder.Length + productOrder.Length;
+            int expectedSize = reactantOrder.Length + agentOrder.Length + productOrder.Length;
             if (expectedSize != ordering.Length)
             {
                 throw new CDKException("Output ordering array does not have correct amount of space: " + ordering.Length +
@@ -493,7 +493,7 @@ namespace NCDK.Smiles
                 unified.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
 
                 // base CXSMILES state information
-                 CxSmilesState cxstate = GetCxSmilesState(flavour, unified);
+                CxSmilesState cxstate = GetCxSmilesState(flavour, unified);
 
                 int[] components = null;
 
@@ -555,7 +555,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="useAromaticityFlag">if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case</param>
         [Obsolete("Since 1.5.6, use " + nameof(Aromatic) + "()  - invoking this method does nothing")]
-    public void SetUseAromaticityFlag(bool useAromaticityFlag)
+        public void SetUseAromaticityFlag(bool useAromaticityFlag)
         {
         }
 
@@ -682,7 +682,7 @@ namespace NCDK.Smiles
             // set the atom labels, values, and coordinates,
             // and build the atom->idx map required by other parts
             IDictionary<IAtom, int> atomidx = new Dictionary<IAtom, int>(new Comp<IAtom>());
-                for (int idx = 0; idx < mol.Atoms.Count; idx++)
+            for (int idx = 0; idx < mol.Atoms.Count; idx++)
             {
                 IAtom atom = mol.Atoms[idx];
                 if (atom is IPseudoAtom)

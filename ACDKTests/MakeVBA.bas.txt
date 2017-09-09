@@ -94,6 +94,8 @@ Dim A_Tanimoto As New ACDK.Tanimoto
 Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
 Dim CircularFingerprinterProvider As New ACDK.CircularFingerprinterProvider
+Dim SmilesGenerator As New ACDK.SmilesGenerator
+Dim FileDialog As New ACDK.FileDialog
 
 Public Function CDK_BitFingerprinterValue(ByVal Name As String, ByVal Smiles As String) As String
     Dim Fingerprinter As IFingerprinter
@@ -632,4 +634,42 @@ End Function
 Public Function CDK_Tanimoto(ByVal FingerPrint1 As String, ByVal FingerPrint2 As String) As Double
     CDK_Tanimoto = A_Tanimoto.Calculate_String(FingerPrint1, FingerPrint2)
 End Function
+
+Public Function CDK_Tanimoto_Dictionary(ByVal Dic1 As String, ByVal Dic2 As String) As Double
+    Dim D1 As IDictionary_string_int
+    Set D1 = FingerprinterProvider.RawFingerprintFromString(Dic1)
+    Dim D2 As IDictionary_string_int
+    Set D2 = FingerprinterProvider.RawFingerprintFromString(Dic2)
+    CDK_Tanimoto_Dictionary = A_Tanimoto.Calculate_Dictionary(D1, D2)
+End Function
+
+Public Sub ImportSmilesFromSDF(ByVal FileName As String)
+    Dim Sheet As Object
+    Set Sheet = Sheets.Add()
+
+    Dim AC As Excel.Range
+    Dim Y As Long
+    Y = 1
+    Sheet.Cells(Y, 1) = "Smiles"
+    Y = Y + 1
+    
+    Dim Reader As New EnumerableSDFReader
+    Call Reader.Open(FileName, Factory.SilentChemObjectBuilder)
+    Do While True
+        Dim Mol As IAtomContainer
+        Set Mol = Reader.Read()
+        If Mol Is Nothing Then Exit Do
+        Debug.Print SmilesGenerator.Create(Mol)
+        Sheet.Cells(Y, 1) = SmilesGenerator.Create(Mol)
+        Y = Y + 1
+    Loop
+End Sub
+
+Public Sub ImportSmilesFromSDFDialog()
+    Dim FileName As String
+    FileName = FileDialog.OpenFile(vbNullString)
+    If FileName <> vbNullString Then
+        Call ImportSmilesFromSDF(FileName)
+    End If
+End Sub
 
