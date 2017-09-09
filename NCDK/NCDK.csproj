@@ -283,6 +283,12 @@
       <DependentUpon>DoubleBondConformation.tt</DependentUpon>
     </Compile>
     <Compile Include="Events\ICDKChangeListener.cs" />
+    <Content Include="x64\ncdk_libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\ncdk_libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="Beam\Snap.txt" />
     <None Include="cheminf.bibx" />
@@ -388,12 +394,6 @@
     <Content Include="Smiles\CxSmilesState.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CxSmilesState.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="x64\libinchi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\libinchi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Beam\element-defaults.txt" />
     <Compile Include="Config\Isotope\IsotopeHandler.cs" />

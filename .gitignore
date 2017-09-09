@@ -270,5 +270,5 @@ ModelManifest.xml
 !NCDKTests/**/*.pdb
 !NCDKTests/**/*.zip
 !NCDKTests/**/*.log
-!NCDK/x86/libinchi.dll
-!NCDK/x64/libinchi.dll
+!NCDK/x86/ncdk_libinchi.dll
+!NCDK/x64/ncdk_libinchi.dll

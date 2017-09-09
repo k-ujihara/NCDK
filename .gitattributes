@@ -66,4 +66,4 @@
 #*.RTF   diff=astextplain
 
 *.7z binary
-
+*.dll binary
