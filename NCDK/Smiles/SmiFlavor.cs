@@ -21,31 +21,42 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
+
 namespace NCDK.Smiles
 {
+    internal static class SmiFlavors
+    {
+        internal static bool IsSet(this SmiFlavor opts, SmiFlavor opt)
+        {
+            return (opts & opt) != 0;
+        }
+    }
+
     /// <summary>
     /// Flags for customising SMILES generation.
     /// </summary>
-    public static class SmiFlavor
+    [Flags]
+    public enum SmiFlavor
     {
         /// <summary>
         /// Output SMILES in a canonical order. The order is not guaranteed to be
         /// equivalent between releases.
         /// </summary>
-        public const int Canonical = 0x001;
+        Canonical = 0x001,
 
         /// <summary>
         /// Output SMILES in a canonical order using the InChI labelling algorithm.
         /// </summary>
         /// <seealso cref="UniversalSmiles"/>
-        public const int InChILabelling = 0x003;
+        InChILabelling = 0x003,
 
         /// <summary>
         /// Output atom-atom mapping for reactions and atom classes for molecules. The
-        /// map index is set on an atom with property {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
-        /// using {@link org.openscience.cdk.interfaces.IAtom#setProperty(Object, Object)}.
+        /// map index is set on an atom with property <see cref="CDKPropertyName.AtomAtomMapping"/>
+        /// using <see cref="IChemObject.SetProperty(object, object)"/>.
         /// </summary>
-        public const int AtomAtomMap = 0x004;
+        AtomAtomMap = 0x004,
 
         /// <summary>
         /// Output atomic mass on atoms. For historical reasons the atomic mass is
@@ -55,13 +66,13 @@ namespace NCDK.Smiles
         /// <see cref="AtomicMassStrict"/> this will output all mass numbers and only be
         /// omitted when the mass is unset (null).
         /// </summary>
-        public const int AtomicMass = 0x008;
+        AtomicMass = 0x008,
 
         /// <summary>
         /// Writes aromatic atoms as lower case letters. For portability
-        /// this option is not recomended.
+        /// this option is not recommended.
         /// </summary>
-        public const int UseAromaticSymbols = 0x010;
+        UseAromaticSymbols = 0x010,
 
         // public static final int SuppressHydrogens  = 0x020;
 
@@ -69,28 +80,28 @@ namespace NCDK.Smiles
         /// Output tetrahedral stereochemistry on atoms as <code>@</code> and <code>@@</code>.
         /// </summary>
         /// <seealso cref="Stereo"/>
-        public const int StereoTetrahedral = 0x100;
+        StereoTetrahedral = 0x100,
 
         /// <summary>
-        /// Output cis-trans stereochemistry specified by directional <code>\</code>
+        /// Output <i>cis</i>-<i>trans</i> stereochemistry specified by directional <code>\</code>
         /// of <code>/</code> bonds.
         /// </summary>
         /// <seealso cref="Stereo"/>
-        public const int StereoCisTrans = 0x200;
+        StereoCisTrans = 0x200,
 
         /// <summary>
-        /// Output extended tetrahedral stereochemistry on atoms as <code>@</code> and
-        /// <code>@@</code>. Extended tetrahedral captures rotations around a cumulated
-        /// carbon: <code>CC=[C@]=CC</code>.
+        /// Output extended tetrahedral stereochemistry on atoms as <pre>@</pre> and
+        /// <pre>@@</pre>. Extended tetrahedral captures rotations around a cumulated
+        /// carbon: <pre>CC=[C@]=CC</pre>.
         /// </summary>
         /// <seealso cref="Stereo"/>
-        public const int StereoExTetrahedral = 0x400;
+        StereoExTetrahedral = 0x400,
 
         /// <summary>
         /// Generate SMILES with the major isotopes, only omit mass numbers when it
         /// is unset.
         /// </summary>
-        public const int AtomicMassStrict = 0x800;
+        AtomicMassStrict = 0x800,
 
         /// <summary>
         /// Output supported stereochemistry types.
@@ -98,89 +109,89 @@ namespace NCDK.Smiles
         /// <seealso cref="StereoTetrahedral"/>
         /// <seealso cref="StereoCisTrans"/>
         /// <seealso cref="StereoExTetrahedral"/>
-        public const int Stereo = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral;
+        Stereo = StereoTetrahedral | StereoCisTrans | StereoExTetrahedral,
 
         /// <summary>
         /// Output 2D coordinates.
         /// </summary>
-        public const int Cx2dCoordinates = 0x001000;
+        Cx2dCoordinates = 0x001000,
 
         /// <summary>
         /// Output 3D coordinates.
         /// </summary>
-        public const int Cx3dCoordinates = 0x002000;
+        Cx3dCoordinates = 0x002000,
 
         /// <summary>
         /// Output either 2D/3D coordinates.
         /// </summary>
-        public const int CxCoordinates = Cx3dCoordinates | Cx2dCoordinates;
+        CxCoordinates = Cx3dCoordinates | Cx2dCoordinates,
 
         /// <summary>
         /// Output atom labels, atom labels are specified by <see cref="IPseudoAtom.Label"/>.
         /// </summary>
-        public const int CxAtomLabel = 0x008000;
+        CxAtomLabel = 0x008000,
 
         /// <summary>
         /// Output atom values, atom values are specified by <see cref="IPseudoAtom.Label"/>.
         /// </summary>
-        public const int CxAtomValue = 0x010000;
+        CxAtomValue = 0x010000,
 
         /// <summary>
         /// Output radicals, radicals are specified by <see cref="IAtomContainer.GetConnectedSingleElectrons(IAtom)"/>
         /// </summary>
-        public const int CxRadical = 0x020000;
+        CxRadical = 0x020000,
 
         /// <summary>
-        /// Output multicenter bonds, positional variation is specified with {@link org.openscience.cdk.sgroup.Sgroup}s
-        /// of the type {@link org.openscience.cdk.sgroup.SgroupType#ExtMulticenter}.
+        /// Output multi-center bonds, positional variation is specified with <see cref="SGroups.Sgroup"/>s
+        /// of the type <see cref="SGroups.SgroupType.ExtMulticenter"/>.
         /// </summary>
-        public const int CxMulticenter = 0x040000;
+        CxMulticenter = 0x040000,
 
         /// <summary>
-        /// Output polymer repeat units is specified with {@link org.openscience.cdk.sgroup.Sgroup}s.
+        /// Output polymer repeat units is specified with <see cref="SGroups.Sgroup"/>s.
         /// </summary>
-        public const int CxPolymer = 0x080000;
+        CxPolymer = 0x080000,
 
         /// <summary>
         /// Output fragment grouping for reactions.
         /// </summary>
-        public const int CxFragmentGroup = 0x100000;
+        CxFragmentGroup = 0x100000,
 
         /// <summary>
         /// Output CXSMILES layers.
         /// </summary>
-        public const int CxSmiles = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer;
+        CxSmiles = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer,
 
         /// <summary>
         /// Output CXSMILES layers and coordinates.
         /// </summary>
-        public const int CxSmilesWithCoords = CxSmiles | CxCoordinates;
+        CxSmilesWithCoords = CxSmiles | CxCoordinates,
 
         /// <summary>
         /// Output non-canonical SMILES without stereochemistry, atomic masses.
         /// </summary>
-        public const int Generic = 0;
+        Generic = 0,
 
         /// <summary>
         /// Output canonical SMILES without stereochemistry, atomic masses.
         /// </summary>
-        public const int Unique = Canonical;
+        Unique = Canonical,
 
         /// <summary>
         /// Output non-canonical SMILES with stereochemistry, atomic masses.
         /// </summary>
-        public const int Isomeric = Stereo | AtomicMass;
+        Isomeric = Stereo | AtomicMass,
 
         /// <summary>
         /// Output canonical SMILES with stereochemistry, atomic masses.
         /// </summary>
-        public const int Absolute = Canonical | Isomeric;
+        Absolute = Canonical | Isomeric,
 
         /// <summary>
         /// Default SMILES output write Stereochemistry, Atomic Mass, and CXSMILES layers. The
         /// ordering is not canonical.
         /// </summary>
-        public const int Default = Stereo | AtomicMass | CxSmiles;
+        Default = Stereo | AtomicMass | CxSmiles,
 
         /// <summary>
         /// Output canonical SMILES with stereochemistry and atomic masses, This output uses the
@@ -200,11 +211,6 @@ namespace NCDK.Smiles
         ///  <li>MINOR: The InChI library (v1.03) is not thread safe</li>
         /// </ul>
         /// </remarks>
-        public const int UniversalSmiles = InChILabelling | Isomeric;
-
-        internal static bool IsSet(int opts, int opt)
-        {
-            return (opts & opt) != 0;
-        }
+        UniversalSmiles = InChILabelling | Isomeric,
     }
 }

@@ -629,12 +629,12 @@ namespace NCDK.Smiles
             }
         }
 
-        static Beam.Graph Convert(IAtomContainer ac, int options)
+        static Beam.Graph Convert(IAtomContainer ac, SmiFlavor options)
         {
             return Convert(ac, false, options);
         }
 
-        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, int options)
+        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, SmiFlavor options)
         {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(ac);

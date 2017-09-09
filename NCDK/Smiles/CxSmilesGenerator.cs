@@ -71,9 +71,9 @@ namespace NCDK.Smiles
             return alen.CompareTo(blen);
         }
 
-        internal static string Generate(CxSmilesState state, int opts, int[] components, int[] ordering)
+        internal static string Generate(CxSmilesState state, SmiFlavor opts, int[] components, int[] ordering)
         {
-            if (!SmiFlavor.IsSet(opts, SmiFlavor.CxSmilesWithCoords))
+            if (!SmiFlavors.IsSet(opts, SmiFlavor.CxSmilesWithCoords))
                 return "";
 
             int[] invorder = Inverse(ordering);
@@ -86,7 +86,7 @@ namespace NCDK.Smiles
             Comparison<int> comp = (a, b) => ordering[a].CompareTo(ordering[b]);
 
             // Fragment Grouping
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxFragmentGroup) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxFragmentGroup) &&
                 state.fragGroups != null && state.fragGroups.Any())
             {
                 int maxCompId = 0;
@@ -127,7 +127,7 @@ namespace NCDK.Smiles
             }
 
             // Atom Labels
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxAtomLabel) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxAtomLabel) &&
                 state.atomLabels != null && state.atomLabels.Any())
             {
                 if (sb.Length > 2)
@@ -150,7 +150,7 @@ namespace NCDK.Smiles
             }
 
             // Atom Values
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxAtomValue) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxAtomValue) &&
                 state.atomValues != null && state.atomValues.Any())
             {
 
@@ -173,7 +173,7 @@ namespace NCDK.Smiles
             }
 
             // 2D/3D Coordinates
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxCoordinates) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxCoordinates) &&
                 state.AtomCoords != null && state.AtomCoords.Any())
             {
                 if (sb.Length > 2) sb.Append(',');
@@ -194,8 +194,8 @@ namespace NCDK.Smiles
                 sb.Append(')');
             }
 
-            // Multicenter/Positional variation bonds
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxMulticenter) &&
+            // Multi-center/Positional variation bonds
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxMulticenter) &&
                 state.positionVar != null && state.positionVar.Any())
             {
                 if (sb.Length > 2) sb.Append(',');
@@ -220,7 +220,7 @@ namespace NCDK.Smiles
             }
 
             // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxPolymer) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxPolymer) &&
                 state.sgroups != null && state.sgroups.Any())
             {
                 var sgroups = new List<PolymerSgroup>(state.sgroups);
@@ -255,7 +255,7 @@ namespace NCDK.Smiles
             }
 
             // [C]1[CH][CH]CCC1 |^1:1,2,^3:0|
-            if (SmiFlavor.IsSet(opts, SmiFlavor.CxRadical) &&
+            if (SmiFlavors.IsSet(opts, SmiFlavor.CxRadical) &&
                 state.atomRads != null && state.atomRads.Any())
             {
                 var radinv = new SortedDictionary<CxSmilesState.Radical, List<int>>();
