@@ -89,7 +89,7 @@ namespace NCDK.LibIO.CML
         }
 
         /// <summary>
-        /// generates concise representation. correponds to concise attribute in
+        /// generates concise representation. corresponds to concise attribute in
         /// schema. only works if atomArray has elementType and count in array format
         /// </summary>
         /// <param name="formalCharge">(maybe omit this)</param>
