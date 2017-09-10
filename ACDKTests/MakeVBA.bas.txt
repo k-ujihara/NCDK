@@ -95,7 +95,6 @@ Dim FingerprinterProvider As New ACDK.FingerprinterProvider
 Dim MolecularDescriptorProvider As New ACDK.MolecularDescriptorProvider
 Dim CircularFingerprinterProvider As New ACDK.CircularFingerprinterProvider
 Dim SmilesGenerator As New ACDK.SmilesGenerator
-Dim FileDialog As New ACDK.FileDialog
 
 Public Function CDK_BitFingerprinterValue(ByVal Name As String, ByVal Smiles As String) As String
     Dim Fingerprinter As IFingerprinter
@@ -662,8 +661,7 @@ Public Sub ImportSmilesFromSDF(ByVal FileName As String)
         Dim Mol As IAtomContainer
         Set Mol = Reader.Read()
         If Mol Is Nothing Then Exit Do
-        Debug.Print SmilesGenerator.Create(Mol)
-        Sheet.Cells(Y, 1) = SmilesGenerator.Create(Mol)
+        Sheet.Cells(Y, 1) = MolToSmiles(Mol)
         
         Dim Properties As IDictionary_object_object
         Set Properties = Mol.GetProperties()
@@ -692,9 +690,21 @@ Public Sub ImportSmilesFromSDF(ByVal FileName As String)
     Loop
 End Sub
 
+Function MolToSmiles(ByVal Mol As IAtomContainer) As String
+    On Error GoTo 1000
+    MolToSmiles = SmilesGenerator.Create(Mol)
+    Exit Function
+1000:
+    MolToSmiles = "ERROR: " & Err.Description
+End Function
+
 Public Sub ImportSmilesFromSDFDialog()
+    Dim FileDialog As ACDK.FileDialog
+    Set FileDialog = New ACDK.FileDialog
+    FileDialog.Filter = "SD files (*.sdf)|*.sdf|All files (*.*)|*.*"
+    
     Dim FileName As String
-    FileName = FileDialog.OpenFile(vbNullString)
+    FileName = FileDialog.OpenFile()
     If FileName <> vbNullString Then
         Call ImportSmilesFromSDF(FileName)
     End If

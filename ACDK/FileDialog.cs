@@ -8,7 +8,23 @@ namespace ACDK
     public interface IFileDialog
     {
         [DispId(0x2001)]
-        string OpenFile(string initialDirectory);
+        string OpenFile();
+
+        string InitialDirectory
+        {
+            [DispId(0x2002)]
+            get;
+            [DispId(0x2003)]
+            set;
+        }
+
+        string Filter
+        {
+            [DispId(0x2004)]
+            get;
+            [DispId(0x2005)]
+            set;
+        }
     }
 
     [Guid("E5170650-539E-41DF-A9E4-CA55D420EF0A")]
@@ -17,17 +33,32 @@ namespace ACDK
         : IFileDialog
     {
         [DispId(0x2001)]
-        public string OpenFile(string initialDirectory)
+        public string OpenFile()
         {
-            var dialog = new OpenFileDialog()
-            {
-                InitialDirectory = initialDirectory
-            };
+            var dialog = new OpenFileDialog();
+            dialog.InitialDirectory = this.InitialDirectory;
+            dialog.Filter = this.Filter;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 return dialog.FileName;
             }
             return null;
+        }
+
+        public string InitialDirectory
+        {
+            [DispId(0x2002)]
+            get;
+            [DispId(0x2003)]
+            set;
+        }
+
+        public string Filter
+        {
+            [DispId(0x2004)]
+            get;
+            [DispId(0x2005)]
+            set;
         }
     }
 }
