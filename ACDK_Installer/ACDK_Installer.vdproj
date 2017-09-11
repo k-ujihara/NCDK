@@ -100,12 +100,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EE0E6851F6CA92A3A5DD1C0500DC9A4D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E94EDFA704034333B5AA60ECC03966E3"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -137,6 +131,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_65EC39C7D90F70A0B483132F5CA7129C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EE0E6851F6CA92A3A5DD1C0500DC9A4D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -218,7 +218,7 @@
             "SourcePath" = "8:MathNet.Numerics.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -249,7 +249,7 @@
             "SourcePath" = "8:dotNetRDF.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -280,7 +280,7 @@
             "SourcePath" = "8:VDS.Common.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -331,7 +331,7 @@
             "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -362,7 +362,7 @@
             "SourcePath" = "8:NCDK.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -393,7 +393,7 @@
             "SourcePath" = "8:HtmlAgilityPack.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1053,7 +1053,7 @@
             "SourcePath" = "8:..\\ACDK\\obj\\Release\\ACDK.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_48BFE662218F4E378D8F9B3C6F037B5E"
+            "Folder" = "8:_D9BC456912224C139EE3A87D35E47EB9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
