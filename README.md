@@ -14,5 +14,7 @@ Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTest
 ## Build and Test
 Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test project.
 
+COM-wrapper and Excel example are availabe in <https://github.com/kazuyaujihara/ACDK>.
+
 ## Contribute
 The current release is based on cdk-2.0.
