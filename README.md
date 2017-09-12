@@ -14,11 +14,5 @@ Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTest
 ## Build and Test
 Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test project.
 
-ACDK.sln creates COM-wrappers to NCDK. It provides access to CDK's molecular descriptor functions from VBA. 
-The sample Excel file is in ACDK\ACDK_Example.xlsm .
-
-Installer is also available.
-It installs requied assemblies and Excel example in my documents folder.
-
 ## Contribute
 The current release is based on cdk-2.0.
