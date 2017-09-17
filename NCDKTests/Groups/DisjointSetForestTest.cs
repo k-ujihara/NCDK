@@ -20,8 +20,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
+using NCDK.Common.Collections;
 
 namespace NCDK.Groups
 {
@@ -78,7 +79,7 @@ namespace NCDK.Groups
             int[][] sets = forest.GetSets();
             int[][] expected = new int[][] { new[] { 0, 1 }, new[] { 2, 3 }, new[] { 4, 5 } };
             string failMessage = "Expected " + Arrays.DeepToString(expected) + " but was " + Arrays.DeepToString(sets);
-            Assert.IsTrue(Arrays.DeepEquals(expected, sets), failMessage);
+            Assert.IsTrue(Compares.DeepEquals(expected, sets), failMessage);
         }
     }
 }
