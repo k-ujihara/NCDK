@@ -114,7 +114,6 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Single, b5.Order);
 
             Assert.IsTrue(satcheck.IsSaturated(a0, mol));
-
         }
 
         /// <summary>
