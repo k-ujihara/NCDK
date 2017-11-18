@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondDonors
-    public partial class HBondDonorCountDescriptor : IMolecularDescriptor
+    public class HBondDonorCountDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "nHBDon" };
 
@@ -165,5 +165,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns><see langword="null"/> as this descriptor does not have any parameters</returns>
         public object GetParameterType(string name) => null; // no parameters; thus we return null
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

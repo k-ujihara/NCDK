@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:smallrings
     // @cdk.keyword smallrings
     // @cdk.keyword descriptor
-    public partial class SmallRingDescriptor : IMolecularDescriptor
+    public class SmallRingDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
             "nAromRings", // total number of small aromatic rings
@@ -669,5 +669,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (atomAdj[a1][n] == a2) return bondAdj[a1][n];
             return -1;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

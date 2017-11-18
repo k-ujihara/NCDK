@@ -296,7 +296,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:kierHallSmarts
-    public partial class KierHallSmartsDescriptor : IMolecularDescriptor
+    public class KierHallSmartsDescriptor : IMolecularDescriptor
     {
         private static string[] names;
         private static readonly string[] SMARTS = EStateFragments.Smarts;
@@ -413,5 +413,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

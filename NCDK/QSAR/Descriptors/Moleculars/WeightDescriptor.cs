@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:weight
-    public partial class WeightDescriptor : IMolecularDescriptor
+    public class WeightDescriptor : IMolecularDescriptor
     {
         private string elementName = "*";
 
@@ -202,5 +202,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
         public object GetParameterType(string name) => "";
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

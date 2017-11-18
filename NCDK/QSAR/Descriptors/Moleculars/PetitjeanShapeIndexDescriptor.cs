@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:petitjeanShapeIndex
     // @cdk.keyword Petit-Jean, shape index
-    public partial class PetitjeanShapeIndexDescriptor : IMolecularDescriptor
+    public class PetitjeanShapeIndexDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "topoShape", "geomShape" };
 
@@ -160,6 +160,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
 

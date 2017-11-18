@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    public partial class HBondAcceptorCountDescriptor : IMolecularDescriptor
+    public class HBondAcceptorCountDescriptor : IMolecularDescriptor
     {
         // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
         private bool checkAromaticity = false;
@@ -208,5 +208,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => false;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

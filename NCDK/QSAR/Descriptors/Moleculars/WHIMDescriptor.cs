@@ -108,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     // @cdk.dictref qsar-descriptors:WHIM
     // @cdk.keyword WHIM
     // @cdk.keyword descriptor
-    public partial class WHIMDescriptor : IMolecularDescriptor
+    public class WHIMDescriptor : IMolecularDescriptor
     {
         string type = "";
         IDictionary<string, double> hashatwt, hashvdw, hasheneg, hashpol;
@@ -441,6 +441,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
 
         class PCA
         {

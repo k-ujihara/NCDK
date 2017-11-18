@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-03-01
     // @cdk.module qsarmolecular
     // @cdk.githash
-    public partial class AutocorrelationDescriptorPolarizability : IMolecularDescriptor
+    public class AutocorrelationDescriptorPolarizability : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5" };
 
@@ -181,5 +181,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                "The Chemistry Development Kit");
 
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
-    public partial class AcidicGroupCountDescriptor 
+    public class AcidicGroupCountDescriptor 
         : IMolecularDescriptor
     {
         private readonly static string[] SMARTS_STRINGS =
@@ -148,5 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(-1), DescriptorNames, exception);
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

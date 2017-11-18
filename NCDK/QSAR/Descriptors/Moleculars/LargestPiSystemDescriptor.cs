@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestPiSystem
-    public partial class LargestPiSystemDescriptor : IMolecularDescriptor
+    public class LargestPiSystemDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nAtomP" };
@@ -249,5 +249,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if ("checkAromaticity".Equals(name)) return false;
             return null;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

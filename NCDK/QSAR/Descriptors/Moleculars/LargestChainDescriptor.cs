@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestChain
-    public partial class LargestChainDescriptor : IMolecularDescriptor
+    public class LargestChainDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private bool checkRingSystem = false;
@@ -180,5 +180,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             return cpy;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword TPSA
     // @cdk.keyword total polar surface area
     // @cdk.keyword descriptor
-    public partial class TPSADescriptor : IMolecularDescriptor
+    public class TPSADescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static Dictionary<string, double> map;
@@ -323,5 +323,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => true;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

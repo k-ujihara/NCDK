@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:weightedPath
-    public partial class WeightedPathDescriptor : IMolecularDescriptor
+    public class WeightedPathDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5" };
 
@@ -220,5 +220,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             return pathWts;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

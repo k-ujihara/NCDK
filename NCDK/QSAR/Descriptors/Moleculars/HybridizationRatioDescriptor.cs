@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hybratio
-    public partial class HybridizationRatioDescriptor : IMolecularDescriptor
+    public class HybridizationRatioDescriptor : IMolecularDescriptor
     {
         /// <summary>
         /// Constructor for the HybridizationRatioDescriptor object.
@@ -120,5 +120,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">the parameter name</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
         public object GetParameterType(string name) => "";
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

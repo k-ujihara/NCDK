@@ -351,10 +351,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24BondDescriptor.tt.cs</LastGenOutput>
     </Content>
-    <Content Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>%24MolecularDescriptor.tt.cs</LastGenOutput>
-    </Content>
     <Content Include="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
@@ -375,11 +371,6 @@
     </Compile>
     <Compile Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt.cs">
       <DependentUpon>%24BondDescriptor.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt.cs">
-      <DependentUpon>%24MolecularDescriptor.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

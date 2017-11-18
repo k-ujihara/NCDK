@@ -64,7 +64,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
-    public partial class EccentricConnectivityIndexDescriptor : IMolecularDescriptor
+    public class EccentricConnectivityIndexDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ECCEN" };
 
@@ -127,5 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

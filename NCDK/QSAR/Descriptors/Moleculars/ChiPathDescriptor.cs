@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPath
     // @cdk.keyword chi path index
     // @cdk.keyword descriptor
-    public partial class ChiPathDescriptor : IMolecularDescriptor
+    public class ChiPathDescriptor : IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -300,5 +300,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

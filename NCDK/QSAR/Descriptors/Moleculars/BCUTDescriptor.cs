@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:BCUT
     // @cdk.keyword BCUT
     // @cdk.keyword descriptor
-    public partial class BCUTDescriptor : IMolecularDescriptor
+    public class BCUTDescriptor : IMolecularDescriptor
     {
         // the number of negative & positive eigenvalues
         // to return for each class of BCUT descriptor
@@ -529,5 +529,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

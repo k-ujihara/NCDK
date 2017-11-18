@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:petitjeanNumber
     // @cdk.keyword    Petit-Jean, number
-    public partial class PetitjeanNumberDescriptor : IMolecularDescriptor
+    public class PetitjeanNumberDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };
 
@@ -114,5 +114,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name"></param>
         /// <returns></returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

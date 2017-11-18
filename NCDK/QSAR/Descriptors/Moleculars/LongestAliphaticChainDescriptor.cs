@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    public partial class LongestAliphaticChainDescriptor : IMolecularDescriptor
+    public class LongestAliphaticChainDescriptor : IMolecularDescriptor
     {
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLAC" };
@@ -292,5 +292,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             return true;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

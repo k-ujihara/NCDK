@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:FMF
     // @cdk.githash
     // @see org.openscience.cdk.fragment.MurckoFragmenter
-    public partial class FMFDescriptor : IMolecularDescriptor
+    public class FMFDescriptor : IMolecularDescriptor
     {
         public FMFDescriptor() { }
 
@@ -140,5 +140,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <returns>A 1-element string array, with the value "FMF"</returns>
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

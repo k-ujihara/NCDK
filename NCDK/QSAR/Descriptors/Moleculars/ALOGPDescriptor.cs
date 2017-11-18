@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
     // @see org.openscience.cdk.tools.CDKHydrogenAdder
-    public partial class ALOGPDescriptor : IMolecularDescriptor
+    public class ALOGPDescriptor : IMolecularDescriptor
     {
         IAtomContainer atomContainer;
         IRingSet rs;
@@ -2366,6 +2366,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         public IReadOnlyList<string> DescriptorNames => STRINGS;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }// end class
 }
 

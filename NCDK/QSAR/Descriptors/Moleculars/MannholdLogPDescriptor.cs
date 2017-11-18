@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref    qsar-descriptors:mannholdLogP
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    public partial class MannholdLogPDescriptor : IMolecularDescriptor
+    public class MannholdLogPDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MLogP" };
 
@@ -121,5 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Name of the parameter for which the type is requested.</param>
         /// <returns>The parameterType of the given parameter.</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:kierValues
     // @cdk.keyword Kappe shape index
     // @cdk.keyword descriptor
-    public partial class KappaShapeIndicesDescriptor : IMolecularDescriptor
+    public class KappaShapeIndicesDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };
 
@@ -225,5 +225,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

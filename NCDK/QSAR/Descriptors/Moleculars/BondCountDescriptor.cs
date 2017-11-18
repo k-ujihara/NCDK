@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondCount
-    public partial class BondCountDescriptor : IMolecularDescriptor
+    public class BondCountDescriptor : IMolecularDescriptor
     {
         /// <summary>defaults to UNSET, which means: count all bonds </summary>
         private string order = "";
@@ -187,5 +187,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             if ("order".Equals(name)) return "";
             return null;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:vabc
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public partial class VABCDescriptor : IMolecularDescriptor
+    public class VABCDescriptor : IMolecularDescriptor
     {
         /// <inheritdoc/>
         public IImplementationSpecification Specification => _Specification;
@@ -93,5 +93,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
