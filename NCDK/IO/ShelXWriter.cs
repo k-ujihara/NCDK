@@ -206,7 +206,7 @@ namespace NCDK.IO
             try
             {
                 writer.Write(s);
-                writer.WriteLine();
+                writer.Write('\n');
             }
             catch (IOException e)
             {

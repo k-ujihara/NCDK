@@ -106,7 +106,7 @@ namespace NCDK.IO.Listener
                     var settings = optionSet.GetOptions();
                     for (int i = 0; i < settings.Count; i++)
                     {
-                        this.output.WriteLine();
+                        this.output.Write('\n');
                         string option = (string)settings[i];
                         this.output.Write((i + 1) + ". " + option);
                         if (option.Equals(setting.Setting))
@@ -119,7 +119,7 @@ namespace NCDK.IO.Listener
                 {
                     this.output.Write(" [" + setting.Setting + "]");
                 }
-                this.output.WriteLine();
+                this.output.Write('\n');
                 this.output.Flush();
 
                 // get the answer, only if input != null
@@ -178,7 +178,7 @@ namespace NCDK.IO.Listener
                         }
                         catch (CDKException exception)
                         {
-                            this.output.WriteLine();
+                            this.output.Write('\n');
                             this.output.WriteLine(exception.ToString());
                         }
                     }

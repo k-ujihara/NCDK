@@ -1,4 +1,4 @@
- 
+
 
 
 // .NET Framework port by Kazuya Ujihara
@@ -154,10 +154,16 @@ namespace NCDK.Default
         public virtual IList<IAtom> Atoms => atoms;
 
 		/// <inheritdoc/>
-        public IAtom Begin => atoms[0];
+		public virtual int Index => -1;
+
+		/// <inheritdoc/>
+		public virtual IAtomContainer Container => null;
+
+		/// <inheritdoc/>
+        public IAtom Begin => atoms.Count < 1 ? null : atoms[0];
 
         /// <inheritdoc/>
-        public IAtom End => atoms[1];
+        public IAtom End => atoms.Count < 2 ? null : atoms[1];
 
         /// <inheritdoc/>
         public IAtom GetOther(IAtom atom)
@@ -329,7 +335,7 @@ namespace NCDK.Default
                 throw new ArgumentNullException(nameof(map));
 
             IBond iclone;
-            if (map.BondMap.TryGetValue(this, out iclone))
+            if (map.TryGetValue(this, out iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms
@@ -337,9 +343,23 @@ namespace NCDK.Default
             {
                 clone.InitAtoms(atoms.Select(n => (IAtom)n?.Clone(map)));
             }
-            map.BondMap.Add(this, clone);
+            map.Add(this, clone);
             return clone;
         }
+
+		/// <inheritdoc/>
+		public override int GetHashCode() 
+		{
+			return base.GetHashCode();
+		}
+
+		/// <inheritdoc/>
+		public override bool Equals(object obj) 
+		{
+			if (obj is BondRef)
+				return base.Equals(((BondRef) obj).Deref());
+			return base.Equals(obj);
+		}
 
         public override string ToString()
         {
@@ -515,10 +535,16 @@ namespace NCDK.Silent
         public virtual IList<IAtom> Atoms => atoms;
 
 		/// <inheritdoc/>
-        public IAtom Begin => atoms[0];
+		public virtual int Index => -1;
+
+		/// <inheritdoc/>
+		public virtual IAtomContainer Container => null;
+
+		/// <inheritdoc/>
+        public IAtom Begin => atoms.Count < 1 ? null : atoms[0];
 
         /// <inheritdoc/>
-        public IAtom End => atoms[1];
+        public IAtom End => atoms.Count < 2 ? null : atoms[1];
 
         /// <inheritdoc/>
         public IAtom GetOther(IAtom atom)
@@ -683,7 +709,7 @@ namespace NCDK.Silent
                 throw new ArgumentNullException(nameof(map));
 
             IBond iclone;
-            if (map.BondMap.TryGetValue(this, out iclone))
+            if (map.TryGetValue(this, out iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms
@@ -691,9 +717,23 @@ namespace NCDK.Silent
             {
                 clone.InitAtoms(atoms.Select(n => (IAtom)n?.Clone(map)));
             }
-            map.BondMap.Add(this, clone);
+            map.Add(this, clone);
             return clone;
         }
+
+		/// <inheritdoc/>
+		public override int GetHashCode() 
+		{
+			return base.GetHashCode();
+		}
+
+		/// <inheritdoc/>
+		public override bool Equals(object obj) 
+		{
+			if (obj is BondRef)
+				return base.Equals(((BondRef) obj).Deref());
+			return base.Equals(obj);
+		}
 
         public override string ToString()
         {

@@ -32,7 +32,7 @@ namespace NCDK
 		/// The <see cref="Ordinal"/> values of <see cref="Hybridization"/>.
 		/// </summary>
 		/// <seealso cref="Hybridization"/>
-        public static class O
+        public static partial class O
         {
             public const int Unset = 0;
             public const int S = 1;
@@ -84,7 +84,7 @@ namespace NCDK
 
         public static explicit operator Hybridization(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -150,7 +150,7 @@ namespace NCDK
             SP3D5, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Hybridization> Values => values;
+        public static Hybridization[] Values => values;
 
         /* Avoid to cause compiling error */
 

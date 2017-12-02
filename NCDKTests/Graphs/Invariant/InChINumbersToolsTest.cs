@@ -181,6 +181,14 @@ namespace NCDK.Graphs.Invariant
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 1, 2 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
 
+        [TestMethod()]
+        public void Protons()
+        {
+            IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
+                .ParseSmiles("[H+].[H+].F[Si-2](F)(F)(F)(F)F");
+            Assert.IsTrue(Compares.AreDeepEqual(new long[] { 8, 9, 1, 7, 2, 3, 4, 5, 6 }, InChINumbersTools.GetUSmilesNumbers(container)));
+        }
+
         static IAtomContainer Mock(int nAtoms)
         {
             var mock_container = new Mock<IAtomContainer>();

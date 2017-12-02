@@ -50,7 +50,7 @@ namespace NCDK.Isomorphisms
         private readonly IDictionary<IAtom, int> queryMap, targetMap;
 
         /// <summary>Indexed array of stereo elements.</summary>
-        private readonly IStereoElement[] queryElements, targetElements;
+        private readonly IReadOnlyStereoElement<IChemObject, IChemObject>[] queryElements, targetElements;
 
         /// <summary>Indexed array of stereo element types.</summary>
         private readonly StereoType[] queryTypes, targetTypes;
@@ -76,8 +76,8 @@ namespace NCDK.Isomorphisms
 
             this.queryMap = IndexAtoms(query);
             this.targetMap = IndexAtoms(target);
-            this.queryElements = new IStereoElement[query.Atoms.Count];
-            this.targetElements = new IStereoElement[target.Atoms.Count];
+            this.queryElements = new IReadOnlyStereoElement<IChemObject, IChemObject>[query.Atoms.Count];
+            this.targetElements = new IReadOnlyStereoElement<IChemObject, IChemObject>[target.Atoms.Count];
             this.queryTypes = new StereoType[query.Atoms.Count];
             this.targetTypes = new StereoType[target.Atoms.Count];
 
@@ -298,7 +298,7 @@ namespace NCDK.Isomorphisms
         /// <param name="types">type of stereo element indexed</param>
         /// <param name="container">the container to index the elements of</param>
         /// <returns>indices of atoms involved in stereo configurations</returns>
-        private static int[] IndexElements(IDictionary<IAtom, int> map, IStereoElement[] elements, StereoType[] types, IAtomContainer container)
+        private static int[] IndexElements(IDictionary<IAtom, int> map, IReadOnlyStereoElement<IChemObject, IChemObject>[] elements, StereoType[] types, IAtomContainer container)
         {
             int[] indices = new int[container.Atoms.Count];
             int nElements = 0;

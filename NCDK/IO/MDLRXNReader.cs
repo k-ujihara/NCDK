@@ -39,6 +39,7 @@ namespace NCDK.IO
     // @author     Egon Willighagen
     // @cdk.created    2003-07-24
     // @cdk.keyword    file format, MDL RXN
+    [Obsolete("Use V2000 or V3000")]
     public class MDLRXNReader : DefaultChemObjectReader
     {
         TextReader input = null;
@@ -236,7 +237,7 @@ namespace NCDK.IO
                                 data += line;
                                 // preserve newlines, unless the line is exactly 80 chars; in that case it
                                 // is assumed to continue on the next line. See MDL documentation.
-                                if (line.Length < 80) data += Environment.NewLine;
+                                if (line.Length < 80) data += "\n";
                             }
                             if (fieldName != null)
                             {
@@ -331,7 +332,7 @@ namespace NCDK.IO
                     {
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
-                        molFile.Append(Environment.NewLine);
+                        molFile.Append('\n');
                     } while (!molFileLine.Equals("M  END"));
 
                     // read MDL molfile content
@@ -370,7 +371,7 @@ namespace NCDK.IO
                     {
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
-                        molFile.Append(Environment.NewLine);
+                        molFile.Append('\n');
                     } while (!molFileLine.Equals("M  END"));
 
                     // read MDL molfile content

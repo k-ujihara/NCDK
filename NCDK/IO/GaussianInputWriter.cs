@@ -118,12 +118,12 @@ namespace NCDK.IO
             if (proccount.GetSettingValue() > 1)
             {
                 writer.Write("%nprocl=" + proccount.GetSettingValue());
-                writer.WriteLine();
+                writer.Write('\n');
             }
             if (!memory.Setting.Equals("unset"))
             {
                 writer.Write("%Mem=" + memory.Setting);
-                writer.WriteLine();
+                writer.Write('\n');
             }
             if (usecheckpoint.IsSet)
             {
@@ -136,7 +136,7 @@ namespace NCDK.IO
                     // force different file names
                     writer.Write($"%chk={DateTime.Now.Ticks}.chk"); // TODO: Better to use Guid?
                 }
-                writer.WriteLine();
+                writer.Write('\n');
             }
 
             // write the command line
@@ -163,17 +163,17 @@ namespace NCDK.IO
                 // assume that user knows what he's doing
                 writer.Write(commandString);
             }
-            writer.WriteLine();
+            writer.Write('\n');
 
             // next line is empty
-            writer.WriteLine();
+            writer.Write('\n');
 
             // next line is comment
             writer.Write(comment.Setting);
-            writer.WriteLine();
+            writer.Write('\n');
 
             // next line is empty
-            writer.WriteLine();
+            writer.Write('\n');
 
             // next line contains two digits the first is the total charge the
             // second is bool indicating: 0 = open shell 1 = closed shell
@@ -186,7 +186,7 @@ namespace NCDK.IO
             {
                 writer.Write("1");
             }
-            writer.WriteLine();
+            writer.Write('\n');
 
             // then come all the atoms.
             // Loop through the atoms and write them out:
@@ -206,11 +206,11 @@ namespace NCDK.IO
                 }
 
                 writer.Write(st, 0, st.Length);
-                writer.WriteLine();
+                writer.Write('\n');
             }
 
             // G98 expects an empty line at the end
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         private void InitIOSettings()

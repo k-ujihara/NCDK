@@ -25,6 +25,7 @@ using NCDK.Common.Collections;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
@@ -76,12 +77,9 @@ namespace NCDK.Stereo
     // @cdk.keyword extended tetrahedral
     // @cdk.keyword allene
     // @cdk.keyword axial chirality
-    public sealed class ExtendedTetrahedral : IStereoElement
+    public sealed class ExtendedTetrahedral
+        : AbstractStereo<IAtom, IAtom>
     {
-        private readonly IAtom focus;
-        private readonly IAtom[] peripherals;
-        private readonly TetrahedralStereo winding;
-
         /// <summary>
         /// Create an extended tetrahedral stereo element for the provided 'focus'
         /// and 'peripherals' in the given 'winding'. See class documentation an
@@ -90,33 +88,33 @@ namespace NCDK.Stereo
         /// <param name="focus">the central cumulated atom</param>
         /// <param name="peripherals">atoms attached to the terminal atoms</param>
         /// <param name="winding">the configuration</param>
-        public ExtendedTetrahedral(IAtom focus, IAtom[] peripherals, TetrahedralStereo winding)
+        public ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, TetrahedralStereo winding)
+            : this(focus, peripherals, TetrahedralStereo.ToConfigure(winding))
         {
-            Trace.Assert(focus != null && peripherals != null && !winding.IsUnset);
-            Trace.Assert(peripherals.Length == 4);
-            this.focus = focus;
-            this.peripherals = Arrays.CopyOf(peripherals, 4);
-            this.winding = winding;
         }
 
-        /// <summary>
-        /// The central atom in the cumulated system.
-        /// </summary>
-        /// <returns>the focus</returns>
-        public IAtom Focus => focus;
+        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement.Configurations configure)
+            : base(focus, peripherals.ToList(), new StereoElement(StereoElement.Classes.Allenal, configure))
+        {
+        }
+
+        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement stereo)
+            : this(focus, peripherals, stereo.Configure)
+        {
+        }
 
         /// <summary>
         /// The neighbouring peripherals atoms, these are attached to the terminal
         /// atoms in the cumulated system.
         /// </summary>
         /// <returns>the peripheral atoms</returns>
-        public IAtom[] Peripherals => Arrays.CopyOf(peripherals, 4);
+        public IAtom[] Peripherals => Carriers.ToArray();
 
         /// <summary>
         /// The winding of the peripherals, when viewed from the first atom.
         /// </summary>
         /// <returns>winding configuration</returns>
-        public TetrahedralStereo Winding => winding;
+        public TetrahedralStereo Winding => TetrahedralStereo.ToStereo(Configure);
 
         /// <summary>
         /// Helper method to locate two terminal atoms in a container for a given
@@ -147,16 +145,17 @@ namespace NCDK.Stereo
         /// <returns>the terminal atoms (ordered)</returns>
         public IAtom[] FindTerminalAtoms(IAtomContainer container)
         {
-            var focusBonds = container.GetConnectedBonds(focus);
+            var focusBonds = container.GetConnectedBonds(Focus).ToList();
 
-            if (focusBonds.Count() != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
+            if (focusBonds.Count != 2) throw new ArgumentException("focus must have exactly 2 neighbors");
 
-            IAtom left = focusBonds.ElementAt(0).GetOther(focus);
-            IAtom right = focusBonds.ElementAt(1).GetOther(focus);
+            IAtom left = focusBonds[0].GetOther(Focus);
+            IAtom right = focusBonds[1].GetOther(Focus);
 
             var leftAtoms = container.GetConnectedAtoms(left);
+            var carriers = Carriers;
 
-            if (leftAtoms.Contains(peripherals[2]) || leftAtoms.Contains(peripherals[3]))
+            if (leftAtoms.Contains(carriers[2]) || leftAtoms.Contains(carriers[3]))
             {
                 return new IAtom[] { right, left };
             }
@@ -166,39 +165,9 @@ namespace NCDK.Stereo
             }
         }
 
-        public bool Contains(IAtom atom)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
         {
-            // no way to test terminals
-            return focus.Equals(atom) || peripherals[0].Equals(atom) || peripherals[1].Equals(atom)
-                    || peripherals[2].Equals(atom) || peripherals[3].Equals(atom);
-        }
-
-        public ICDKObject Clone(CDKObjectMap map)
-        {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
-
-            return new ExtendedTetrahedral(map.AtomMap[focus],
-                new IAtom[]{
-                    map.AtomMap[peripherals[0]],
-                    map.AtomMap[peripherals[1]],
-                    map.AtomMap[peripherals[2]],
-                    map.AtomMap[peripherals[3]], },
-                winding);
-        }
-
-        public object Clone()
-        {
-            return Clone(new CDKObjectMap());
-        }
-
-        /// <inheritdoc/>
-        public IChemObjectBuilder Builder
-        {
-            get
-            {
-                throw new InvalidOperationException("non-domain object");
-            }
+            return new ExtendedTetrahedral(focus, carriers, stereo);
         }
     }
 }

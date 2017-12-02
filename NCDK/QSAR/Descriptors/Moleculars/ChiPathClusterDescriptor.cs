@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
 
+using NCDK.AtomTypes;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -187,7 +187,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IList<IList<int>> Order6(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[5];
+            QueryAtomContainer[] queries = new QueryAtomContainer[6];
             try
             {
                 queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)(C)CCC"), false);
@@ -195,6 +195,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 queries[2] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)CC(C)C"), false);
                 queries[3] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)CCCC"), false);
                 queries[4] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CCC(C)CCC"), false);
+                queries[5] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)(CC)CC"), false);
             }
             catch (InvalidSmilesException e)
             {

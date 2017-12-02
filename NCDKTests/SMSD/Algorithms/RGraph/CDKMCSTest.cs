@@ -246,11 +246,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
             var list = CDKMCS.GetOverlaps(mol1, mol2, true);
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(11, ((AtomContainer)list[0]).Atoms.Count);
+            Assert.AreEqual(11, list[0].Atoms.Count);
 
             list = CDKMCS.GetOverlaps(mol2, mol1, true);
             Assert.AreEqual(1, list.Count);
-            Assert.AreEqual(11, ((AtomContainer)list[0]).Atoms.Count);
+            Assert.AreEqual(11, list[0].Atoms.Count);
         }
 
         // @cdk.bug 999330
@@ -284,8 +284,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
             var list2 = CDKMCS.GetOverlaps(mol2, mol1, true);
             Assert.AreEqual(1, list1.Count);
             Assert.AreEqual(1, list2.Count);
-            Assert.AreEqual(((AtomContainer)list1[0]).Atoms.Count,
-                    ((AtomContainer)list2[0]).Atoms.Count);
+            Assert.AreEqual(list1[0].Atoms.Count, list2[0].Atoms.Count);
         }
 
         [TestMethod()]

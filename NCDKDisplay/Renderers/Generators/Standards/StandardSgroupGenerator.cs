@@ -505,6 +505,8 @@ namespace NCDK.Renderers.Generators.Standards
         private static bool IsUnsignedInt(string str)
         {
             int pos = 0;
+            if (str == null)
+                return false;
             int len = str.Length;
             while (pos < len)
                 if (!IsDigit(str[pos++]))

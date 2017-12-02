@@ -35,7 +35,7 @@ namespace NCDK
 		/// The <see cref="Ordinal"/> values of <see cref="DoubleBondConformation"/>.
 		/// </summary>
 		/// <seealso cref="DoubleBondConformation"/>
-        public static class O
+        public static partial class O
         {
             public const int Unset = 0;
             public const int Together = 1;
@@ -71,7 +71,7 @@ namespace NCDK
 
         public static explicit operator DoubleBondConformation(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -97,7 +97,7 @@ namespace NCDK
             Opposite, 
     
         };
-        public static System.Collections.Generic.IEnumerable<DoubleBondConformation> Values => values;
+        public static DoubleBondConformation[] Values => values;
 
         /* Avoid to cause compiling error */
 
@@ -174,5 +174,31 @@ namespace NCDK
         /// </summary>
         /// <returns>the inverse conformation</returns>
         public DoubleBondConformation Invert() => Ordinal == O.Together ? Opposite : Together;
+
+         public static DoubleBondConformation ToConformation(StereoElement.Configurations configure)
+        {
+            switch (configure.Ordinal)
+            {
+                case StereoElement.Configurations.O.Together:
+                    return Together;
+                case StereoElement.Configurations.O.Opposite:
+                    return Opposite;
+                default:
+                    throw new System.ArgumentException("Cannot map config to enum: " + configure);
+            }
+        }
+
+        public static StereoElement.Configurations ToConfig(DoubleBondConformation conformation)
+        {
+            switch (conformation.Ordinal)
+            {
+                case DoubleBondConformation.O.Together:
+                    return StereoElement.Configurations.Together;
+                case DoubleBondConformation.O.Opposite:
+                    return StereoElement.Configurations.Opposite;
+                default:
+                    throw new System.ArgumentException("Cannot map enum to config: " + conformation);
+            }
+        }
     }
 }

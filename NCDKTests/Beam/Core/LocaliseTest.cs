@@ -244,6 +244,22 @@ namespace NCDK.Beam
             Test("[cH+]1cccccc1", "[CH+]1C=CC=CC=C1");
         }
 
+        /// <summary>
+        /// Test case from Noel that should fail Kekulization
+        /// </summary>
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidSmilesException))]
+        public void ExocyclicCarbonFiveMemberRing()
+        {
+            Test("c1n(=C)ccc1", "n/a");
+        }
+
+        [TestMethod()]
+        public void ExocyclicCarbonSixMemberRing()
+        {
+            Test("c1cn(=C)ccc1", "C1=CN(=C)=CC=C1");
+        }
+
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void Pyrole_invalid()
@@ -505,6 +521,29 @@ namespace NCDK.Beam
             Graph g = Graph.FromSmiles(delocalised);
             Graph h = Localise.GenerateLocalise(g);
             Assert.AreEqual(localised, h.ToSmiles());   //fixed Beam
+        }
+
+        /// <summary>
+        /// Example from Noel's analysis generate with RDKit, the hcount changes before/after
+        /// kekulization. This was problematic because explicit single bonds were incorrectly
+        /// present in the SMILES string. Nether the less it should cause a problem.
+        /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
+        [TestMethod()]
+        public void UnchangedHydrogenCount()
+        {
+            string smi = "c12c3c4c5c6c7c-4c4c8c9c%10c%11c%12c%13c%14c%15c%16c%17c%18c%19c%20c(c1c1c%21c%20c%20c%22c%19c%16c%16c%22c%19c%22c%20c=%21c(c8c%22c%10c%19c%12c%14%16)C48C31CC(=N)C=C8)c-%18c1c2c5c2c3c6c(c%11c79)c%13c-3c%15C%17C12";
+            Graph g1 = Graph.FromSmiles(smi);
+            Graph g2 = Graph.FromSmiles(smi).Kekule();
+            for (int i = 0; i < g1.Order; i++)
+                Assert.AreEqual(g1.ImplHCount(i), g2.ImplHCount(i), "Atom idx=" + i + " had a different hydrogen count before/after kekulization");
+        }
+
+        [TestMethod()]
+        public void Biphenylene()
+        {
+            string smi = "c1cccc2-c3ccccc3-c12";
+            Assert.AreEqual("C1=CC=CC=2-C3=CC=CC=C3-C12", Graph.FromSmiles(smi).Kekule().ToSmiles());
         }
     }
 }

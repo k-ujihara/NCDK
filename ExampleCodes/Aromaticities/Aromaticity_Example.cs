@@ -10,16 +10,17 @@ namespace NCDK.Aromaticities
         public static void Main(string[] args)
         {
             {
+                var molecules = new Silent.AtomContainerSet();
                 #region 
-                // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
-                ElectronDonation model = ElectronDonation.CDKModel;
-                CycleFinder cycles = Cycles.CDKAromaticSetFinder;
+                ElectronDonation model = ElectronDonation.DaylightModel;
+                CycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
-                // apply our configured model to each molecule, the CDK model
-                // requires that atom types are perceived
-                var molecule = TestMoleculeFactory.MakeAnthracene();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                aromaticity.Apply(molecule);
+
+                // apply our configured model to each molecule
+                foreach (IAtomContainer molecule in molecules)
+                {
+                    aromaticity.Apply(molecule);
+                }
                 #endregion
             }
             {

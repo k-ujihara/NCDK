@@ -377,7 +377,10 @@ namespace NCDK.Graphs.Invariant
             // if not, something major is wrong
             for (int i = 0; i < ac.Atoms.Count; i++)
             {
-                hydrogens[i] = ac.Atoms[i].AtomicNumber == 1 && g[i].Length == 1;
+                var atom = ac.Atoms[i];
+                hydrogens[i] = atom.AtomicNumber == 1 &&
+                               atom.MassNumber == null &&
+                               g[i].Length == 1;
             }
 
             return hydrogens;

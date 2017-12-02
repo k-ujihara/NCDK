@@ -186,7 +186,7 @@ namespace NCDK.IO
                     ++lineCount;
                     while (line != null && !line.Equals("$END CTAB"))
                     {
-                        sb.Append(line + Environment.NewLine);
+                        sb.Append(line).Append('\n');
 
                         //LOG lines: Logic, Unsatisfied Sites, Range of Occurrence.
                         if (line.StartsWith("M  LOG"))
@@ -347,7 +347,7 @@ namespace NCDK.IO
                         line = input.ReadLine();
                         while (line != null && !line.StartsWith("$END CTAB"))
                         {
-                            sb.Append(line + Environment.NewLine);
+                            sb.Append(line).Append('\n');
                             line = input.ReadLine();
                             ++lineCount;
                         }

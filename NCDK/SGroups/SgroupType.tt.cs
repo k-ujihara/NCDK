@@ -43,7 +43,7 @@ namespace NCDK.SGroups
 		/// The <see cref="Ordinal"/> values of <see cref="SgroupType"/>.
 		/// </summary>
 		/// <seealso cref="SgroupType"/>
-        public static class O
+        public static partial class O
         {
             public const int Nil = 0;
             public const int CtabAbbreviation = 1;
@@ -107,7 +107,7 @@ namespace NCDK.SGroups
 
         public static explicit operator SgroupType(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -200,7 +200,7 @@ namespace NCDK.SGroups
             ExtMulticenter, 
     
         };
-        public static System.Collections.Generic.IEnumerable<SgroupType> Values => values;
+        public static SgroupType[] Values => values;
 
         /* Avoid to cause compiling error */
 

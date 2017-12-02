@@ -756,13 +756,21 @@ namespace NCDK.Stereo
             None("[Ge](#CC)C");
         }
 
+        /// <summary>
+        /// This one is a bit of an odd bull and changes depending on hydrogen
+        /// representation. In most cast it's probably tautomeric. Note that
+        /// InChI does allow it: InChI=1S/H2N2/c1-2/h1-2H/b2-1+
+        /// </summary>
         [TestMethod()]
         public void Nitrogen_neutral_geometric()
         {
-            Geometric("N(=NC)C");
-            None("N(=NC)");
-            None("N(=N)C");
-            None("N(=N)");
+            Test("N(=NC)C", Stereocenters.CoordinateTypes.Tricoordinate, true);
+            Test("N(=NC)", Stereocenters.CoordinateTypes.None, false);
+            Test("N(=N)C", Stereocenters.CoordinateTypes.None, false);
+            Test("N(=N)", Stereocenters.CoordinateTypes.None, false);
+            Test("N(=NC)[H]", Stereocenters.CoordinateTypes.Tricoordinate, false);
+            Test("N(=N[H])[H]", Stereocenters.CoordinateTypes.Tricoordinate, false);
+            Test("N(=N[H])[H]", Stereocenters.CoordinateTypes.Tricoordinate, false);
         }
 
         [TestMethod()]
@@ -777,36 +785,45 @@ namespace NCDK.Stereo
         void CreateTetrahedral(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tetracoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tetracoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a geometric center
         void Geometric(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tricoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tricoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is accepted as a bicoordinate center
         void Bicoordinate(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Bicoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Bicoordinate, smi + " was not accepted", true);
         }
 
         // assert the first atom of the SMILES is non stereogenic
         void None(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.None, smi + " was not rejected");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.None, smi + " was not rejected", true);
         }
 
         // check if the first atom of the container is accepted
-        void Test(IAtomContainer container, Stereocenters.CoordinateTypes type, string mesg)
+        void Test(IAtomContainer container, Stereocenters.CoordinateTypes type, string mesg, bool hnorm)
         {
-            Assert.AreEqual(Stereocenters.Of(container).ElementType(0), type, mesg);
-            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            Assert.AreEqual(Stereocenters.Of(container).ElementType(0), type, mesg + " (unsupressed hydrogens)");
+            Assert.AreEqual(type, Stereocenters.Of(container).ElementType(0), mesg);
+            if (hnorm)
+            {
+                AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+                Assert.AreEqual(type, Stereocenters.Of(container).ElementType(0), mesg + " (unsupressed hydrogens)");
+            }
+        }
+
+        void Test(string smi, Stereocenters.CoordinateTypes type, bool hnorm)
+        {
+            SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            Test(sp.ParseSmiles(smi), type, smi + " was not accepted", hnorm);
         }
     }
 }

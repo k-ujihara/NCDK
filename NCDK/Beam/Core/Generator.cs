@@ -93,8 +93,7 @@ namespace NCDK.Beam
                 {
                     if (g.TopologyOf(u).Configuration.Type == Configuration.Types.ExtendedTetrahedral)
                     {
-                        tokens[u].Configure(g.TopologyOf(u)
-                                             .ConfigurationOf(visitedAt));
+                        SetAllenalStereo(g, visitedAt, u);
                     }
                 }
             }
@@ -116,6 +115,56 @@ namespace NCDK.Beam
                         Write(u, u, Bond.Implicit);
                     }
                 }
+            }
+        }
+
+        private void SetAllenalStereo(Graph g, int[] visitedAt, int u)
+        {
+            Trace.Assert(g.Degree(u) == 2);
+            Edge a = g.EdgeAt(u, 0);
+            Edge b = g.EdgeAt(u, 1);
+            Trace.Assert(a.Bond == Bond.Double &&
+                   b.Bond == Bond.Double);
+
+            int aAtom = a.Other(u);
+            int bAtom = b.Other(u);
+
+            if (!rings.ContainsKey(aAtom) && !rings.ContainsKey(bAtom))
+            {
+                // no rings on either end, this is simply the order we visited the
+                // atoms in
+                tokens[u].Configure(g.TopologyOf(u).ConfigurationOf(visitedAt));
+            }
+            else
+            {
+                // hokay this case is harder... this makes me wince but BEAM v2
+                // has a much better way of handling this
+
+                // we can be clever here rollback any changes we make (see the
+                // tetrahedral handling) however since this is a very rare
+                // operation it much simpler to copy the array
+                int[] tmp = Arrays.CopyOf(visitedAt, visitedAt.Length);
+
+                if (visitedAt[aAtom] > visitedAt[bAtom])
+                {
+                    int swap = aAtom;
+                    aAtom = bAtom;
+                    bAtom = swap;
+                }
+
+                Trace.Assert(!rings.ContainsKey(aAtom) || rings[aAtom].Count == 1);
+                Trace.Assert(!rings.ContainsKey(bAtom) || rings[bAtom].Count == 1);
+
+                if (rings.ContainsKey(aAtom))
+                {
+                    tmp[rings[aAtom][0].Other(aAtom)] = visitedAt[aAtom];
+                }
+                if (rings.ContainsKey(bAtom))
+                {
+                    tmp[rings[bAtom][0].Other(bAtom)] = visitedAt[bAtom];
+                }
+
+                tokens[u].Configure(g.TopologyOf(u).ConfigurationOf(tmp));
             }
         }
 

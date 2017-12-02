@@ -216,14 +216,14 @@ namespace NCDK.IO
                     }
 
                     writer.Write(buffer.ToString(), 0, buffer.Length);
-                    writer.WriteLine();
+                    writer.Write('\n');
                     ++atomNumber;
                 }
 
                 if (writeTERRecord.IsSet)
                 {
                     writer.Write(terRecordName, 0, terRecordName.Length);
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 if (connectRecords != null && writeCONECTRecords.IsSet)
@@ -233,7 +233,7 @@ namespace NCDK.IO
                         if (connectRecord != null)
                         {
                             writer.Write(connectRecord);
-                            writer.WriteLine();
+                            writer.Write('\n');
                         }
                     }
                 }
@@ -241,7 +241,7 @@ namespace NCDK.IO
                 if (writeENDRecord.IsSet)
                 {
                     writer.Write("END   ");
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
             catch (IOException exception)
@@ -253,7 +253,7 @@ namespace NCDK.IO
         private void WriteHeader()
         {
             writer.Write("HEADER created with the CDK (http://cdk.sf.net/)");
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         private static string F_LENGTH_FORMAT(double length) => length.ToString("F3").PadLeft(8);   //"%4.3f";
@@ -273,7 +273,7 @@ namespace NCDK.IO
                 writer.Write(F_LENGTH_FORMAT(ucParams[2]));
                 writer.Write(F_ANGLE_FORMAT(ucParams[3]));
                 writer.Write(F_ANGLE_FORMAT(ucParams[4]));
-                writer.WriteLine();
+                writer.Write('\n');
 
                 // before saving the atoms, we need to create cartesian coordinates
                 foreach (var atom in crystal.Atoms)

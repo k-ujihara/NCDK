@@ -132,7 +132,7 @@ namespace NCDK.Stereo
         // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         /// </summary>
         [TestMethod()]
-        public void betaDGlucose_Haworth()
+        public void BetaDGlucose_Haworth()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 4.16d, 1.66d));
@@ -162,8 +162,10 @@ namespace NCDK.Stereo
 
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                      new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
 
             var elements = recon.Recognise(new[] { Projection.Haworth });
             AssertTetrahedralCenter(elements[0],
@@ -192,7 +194,7 @@ namespace NCDK.Stereo
         // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         /// </summary>
         [TestMethod()]
-        public void betaDGlucose_Chair()
+        public void BetaDGlucose_Chair()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));
@@ -220,11 +222,12 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[0], m.Atoms[10], BondOrder.Single);
             m.AddBond(m.Atoms[5], m.Atoms[11], BondOrder.Single);
 
-
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                      new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
 
             var elements = recon.Recognise(new[] { Projection.Chair });
             AssertTetrahedralCenter(elements[0],
@@ -253,7 +256,7 @@ namespace NCDK.Stereo
         // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
         /// </summary>
         [TestMethod()]
-        public void betaDGlucoseWithExplicitHydrogens_Haworth()
+        public void BetaDGlucoseWithExplicitHydrogens_Haworth()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 4.16d, 1.66d));
@@ -294,8 +297,11 @@ namespace NCDK.Stereo
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
 
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                     new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
+
             var elements = recon.Recognise(new[] { Projection.Haworth });
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -367,8 +373,11 @@ namespace NCDK.Stereo
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
 
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
+
             var elements = recon.Recognise(new[] { Projection.Haworth });
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[2],
@@ -467,8 +476,11 @@ namespace NCDK.Stereo
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
 
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                           new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
+
             var elements = recon.Recognise(new[] { Projection.Haworth });
             AssertTetrahedralCenter(elements[0],
                                     m.Atoms[1],
@@ -523,8 +535,11 @@ namespace NCDK.Stereo
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
 
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
+
             Assert.IsTrue(recon.Recognise(new[] { Projection.Haworth }).Count == 0);
         }
 
@@ -536,7 +551,7 @@ namespace NCDK.Stereo
         // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5?,6-/s2
         /// </summary>
         [TestMethod()]
-        public void betaDGlucose_Chair_Rotated()
+        public void BetaDGlucose_Chair_Rotated()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));
@@ -573,8 +588,10 @@ namespace NCDK.Stereo
 
                 EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
                 int[][] graph = GraphUtil.ToAdjList(m, bondMap);
+                Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+                stereocenters.CheckSymmetry();
                 CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                        new Stereocenters(m, graph, bondMap));
+                                                                                        stereocenters);
 
                 var elements = recon.Recognise(new[] { Projection.Chair });
                 m.SetStereoElements(elements);
@@ -633,8 +650,10 @@ namespace NCDK.Stereo
 
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
 
             var elements = recon.Recognise(new[] { Projection.Haworth });
             Assert.IsTrue(elements.Count == 0);
@@ -666,8 +685,10 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(m);
             int[][] graph = GraphUtil.ToAdjList(m, bondMap);
+            Stereocenters stereocenters = new Stereocenters(m, graph, bondMap);
+            stereocenters.CheckSymmetry();
             CyclicCarbohydrateRecognition recon = new CyclicCarbohydrateRecognition(m, graph, bondMap,
-                                                                                    new Stereocenters(m, graph, bondMap));
+                                                                                    stereocenters);
 
             var elements = recon.Recognise(new[] { Projection.Haworth });
             Assert.IsTrue(elements.Count == 0);

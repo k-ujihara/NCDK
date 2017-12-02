@@ -32,7 +32,7 @@ namespace NCDK
 		/// The <see cref="Ordinal"/> values of <see cref="BondOrder"/>.
 		/// </summary>
 		/// <seealso cref="BondOrder"/>
-        public static class O
+        public static partial class O
         {
             public const int Unset = 0;
             public const int Single = 1;
@@ -76,7 +76,7 @@ namespace NCDK
 
         public static explicit operator BondOrder(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -104,7 +104,7 @@ namespace NCDK
             Sextuple, 
     
         };
-        public static System.Collections.Generic.IEnumerable<BondOrder> Values => values;
+        public static BondOrder[] Values => values;
 
         /* Avoid to cause compiling error */
 

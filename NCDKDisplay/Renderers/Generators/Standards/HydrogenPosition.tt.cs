@@ -12,7 +12,7 @@ namespace NCDK.Renderers.Generators.Standards
 		/// The <see cref="Ordinal"/> values of <see cref="HydrogenPosition"/>.
 		/// </summary>
 		/// <seealso cref="HydrogenPosition"/>
-        public static class O
+        public static partial class O
         {
             public const int Right = 0;
             public const int Left = 1;
@@ -50,7 +50,7 @@ namespace NCDK.Renderers.Generators.Standards
 
         public static explicit operator HydrogenPosition(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -72,7 +72,7 @@ namespace NCDK.Renderers.Generators.Standards
             Below, 
     
         };
-        public static System.Collections.Generic.IEnumerable<HydrogenPosition> Values => values;
+        public static HydrogenPosition[] Values => values;
 
         /* Avoid to cause compiling error */
 

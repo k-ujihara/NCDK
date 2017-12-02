@@ -84,7 +84,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CC(=O)N1CCN(CC1)c2ccc(NC(=O)COc3ccc(cc3)C(C)(C)C)cc2");
             //Debug.WriteLine("test7>"+((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
-            Assert.AreEqual(2, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(3, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+        }
+
+        [TestMethod()]
+        public void Ethanol()
+        {
+            AssertSmiles("CCO", 2);
+            AssertSmiles("OCC", 2);
+        }
+
+        private void AssertSmiles(string smi, int expected)
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles(smi);
+            Descriptor.Parameters = new object[] { true };
+            Assert.AreEqual(expected.ToString(), Descriptor.Calculate(mol).Value.ToString());
         }
     }
 }

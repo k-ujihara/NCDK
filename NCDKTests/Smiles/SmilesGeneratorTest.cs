@@ -337,14 +337,14 @@ namespace NCDK.Smiles
             IsotopeFactory ifac = Isotopes.Instance;
             ifac.ConfigureAtoms(mol1);
 
-            mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
+            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
             string smiles1 = sg.Create(mol1);
             Assert.IsNotNull(smiles1);
             Assert.AreEqual("S\\C(\\F)=C(/F)\\S", smiles1);
 
-            mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
+            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 
@@ -362,7 +362,7 @@ namespace NCDK.Smiles
             mol1.Atoms[mol1.Atoms.Count - 1].ImplicitHydrogenCount = 0;
             mol1.AddBond(mol1.Atoms[5], mol1.Atoms[7], BondOrder.Single);
 
-            mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
+            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
 
@@ -370,7 +370,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(smiles1);
             Assert.AreEqual("S(/C(/F)=C(/F)\\S[H])[H]", smiles1);
 
-            mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
+            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 
@@ -673,7 +673,7 @@ namespace NCDK.Smiles
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
-            Assert.AreEqual("C1=CCCCCCC1", moleculeSmile);
+            Assert.AreEqual("C\\1=C\\CCCCCC1", moleculeSmile);
         }
 
         [TestMethod()]
@@ -685,7 +685,7 @@ namespace NCDK.Smiles
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
-            Assert.AreEqual("C1C=CCCCCC1", moleculeSmile);
+            Assert.AreEqual("C1/C=C\\CCCCC1", moleculeSmile);
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace NCDK.Smiles
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
-            Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
+            Assert.AreEqual("C=1\\CC/C=C\\CC/C1", moleculeSmile);
         }
 
         // @cdk.bug 1089770
@@ -717,6 +717,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CCC2=C(C1)CCC2", moleculeSmile);
         }
 
+        /// <see href="https://sourceforge.net/p/cdk/bugs/242/">CDK Bug 1089770</see>
         // @cdk.bug 1089770
         [TestMethod()]
         public void TestSFBug1089770_2()
@@ -728,7 +729,7 @@ namespace NCDK.Smiles
         SmilesGenerator sg = new SmilesGenerator();
         string moleculeSmile = sg.Create(mol1);
         //Debug.WriteLine(filename + " -> " + moleculeSmile);
-        Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
+        Assert.AreEqual("C=1\\CC/C=C\\CC/C1", moleculeSmile);
         }
 
         // @cdk.bug 1014344
@@ -1182,7 +1183,14 @@ namespace NCDK.Smiles
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = smipar.ParseSmiles("[12CH3]C");
             Assert.AreEqual("[12CH3]C", new SmilesGenerator(SmiFlavor.AtomicMassStrict).Create(mol));
-            Assert.AreEqual("CC", new SmilesGenerator(SmiFlavor.AtomicMass).Create(mol));
+        }
+
+        [TestMethod()]
+        public void TestIsotopes()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[12CH3]C");
+            Assert.AreEqual("[12CH3]C", new SmilesGenerator(SmiFlavor.AtomicMass).Create(mol));
         }
 
         static ITetrahedralChirality Anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4)
@@ -1199,9 +1207,9 @@ namespace NCDK.Smiles
                                             TetrahedralStereo.Clockwise);
         }
 
-        static void Define(IAtomContainer container, params IStereoElement[] elements)
+        static void Define(IAtomContainer container, params IReadOnlyStereoElement<IChemObject, IChemObject>[] elements)
         {
-            container.SetStereoElements(new List<IStereoElement>(elements));
+            container.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(elements));
         }
 
         static string Canon(string smi)

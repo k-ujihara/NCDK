@@ -33,7 +33,7 @@ namespace NCDK.LibIO.CML
 		/// The <see cref="Ordinal"/> values of <see cref="Types"/>.
 		/// </summary>
 		/// <seealso cref="Types"/>
-        public static class O
+        public static partial class O
         {
             public const int NOPUNCTUATION = 0;
             public const int ELEMENT_COUNT_WHITESPACE = 1;
@@ -64,16 +64,16 @@ namespace NCDK.LibIO.CML
 
         private static readonly string[] names = new string[] 
         {
-            "NoPunctuation", 
-            "Element Count Whitespace", 
-            "Element Whitespace Count", 
-            "CML Concise", 
-            "Multiplied Element Whitespace Count", 
-            "NestedBrackets", 
+            "No punctuation", 
+            "Element count whitespace", 
+            "Element whitespace count", 
+            "CML concise", 
+            "Multiplied element whitespace count", 
+            "Nested brackets", 
             "IUPAC", 
             "Moiety", 
-            "SubMoiety", 
-            "STRUCTURAL", 
+            "Submoiety", 
+            "Structural", 
             "Any", 
          
         };
@@ -85,7 +85,7 @@ namespace NCDK.LibIO.CML
 
         public static explicit operator Types(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -128,7 +128,7 @@ namespace NCDK.LibIO.CML
         /// </summary>
         public static readonly Types MOIETY = new Types(7);
         /// <summary>
-        /// SubMoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA
+        /// Submoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA
         /// </summary>
         public static readonly Types SUBMOIETY = new Types(8);
         /// <summary>
@@ -154,7 +154,7 @@ namespace NCDK.LibIO.CML
             ANY, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Types> Values => values;
+        public static Types[] Values => values;
 
         /* Avoid to cause compiling error */
 
@@ -232,7 +232,7 @@ namespace NCDK.LibIO.CML
 		/// The <see cref="Ordinal"/> values of <see cref="Sorts"/>.
 		/// </summary>
 		/// <seealso cref="Sorts"/>
-        public static class O
+        public static partial class O
         {
             public const int ALPHABETIC_ELEMENTS = 0;
             public const int CHFIRST = 1;
@@ -254,7 +254,7 @@ namespace NCDK.LibIO.CML
 
         private static readonly string[] names = new string[] 
         {
-            "Alphabetic Elements", 
+            "Alphabetic elements", 
             "C and H first):C H and then alphabetically. (output only", 
          
         };
@@ -266,7 +266,7 @@ namespace NCDK.LibIO.CML
 
         public static explicit operator Sorts(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -280,9 +280,6 @@ namespace NCDK.LibIO.CML
         /// sort alphabetically. output only. Not sure where this is
         /// </summary>
         public static readonly Sorts ALPHABETIC_ELEMENTS = new Sorts(0);
-        /// <summary>
-        /// C H and then alphabetically. (output only)
-        /// </summary>
         public static readonly Sorts CHFIRST = new Sorts(1);
         private static readonly Sorts[] values = new Sorts[]
         {
@@ -290,7 +287,7 @@ namespace NCDK.LibIO.CML
             CHFIRST, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Sorts> Values => values;
+        public static Sorts[] Values => values;
 
         /* Avoid to cause compiling error */
 

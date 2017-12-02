@@ -36,7 +36,7 @@ namespace NCDK.FaulonSignatures.Chemistry
                         WriteBond(writer, molecule, i);
                     }
                     writer.Write("M  END");
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
             catch (IOException)
@@ -47,14 +47,14 @@ namespace NCDK.FaulonSignatures.Chemistry
         private static void WriteHeader(
                 TextWriter writer, Molecule molecule)
         {
-            writer.WriteLine();
+            writer.Write('\n');
             writer.Write(" Written by signature package");
-            writer.WriteLine();
-            writer.WriteLine();
+            writer.Write('\n');
+            writer.Write('\n');
             int a = molecule.GetAtomCount();
             int b = molecule.GetBondCount();
             writer.Write($"{a,3:D}{b,3:D}  0  0  0  0  0  0  0  0999 V2000");
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         private static void WriteAtom(
@@ -64,7 +64,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             string emptyTail = " 0  0  0  0  0  0  0  0  0  0  0  0";
             string symbol = molecule.GetSymbolFor(i);
             writer.Write(empty3DCoords + $"{symbol,-3:D}" + emptyTail);
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         private static void WriteBond(
@@ -74,7 +74,7 @@ namespace NCDK.FaulonSignatures.Chemistry
             int s = molecule.GetSecondInBond(i) + 1;
             int o = molecule.GetBondOrderAsInt(i);
             writer.Write($"{f,3:D}{s,3:D}{o,3:D} 0  0  0  0");
-            writer.WriteLine();
+            writer.Write('\n');
         }
     }
 }

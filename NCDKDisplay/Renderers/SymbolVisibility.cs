@@ -67,7 +67,7 @@ namespace NCDK.Renderers
         /// bonds, or are terminal (i.e. methyl, methylene, etc).
         /// </summary>
         /// <returns>symbol visibility instance</returns>
-        public static SymbolVisibility IUPACRecommendations { get; } = new IupacVisibility(true);
+        public static SymbolVisibility IupacRecommendations { get; } = new IupacVisibility(true);
 
         /// <summary>
         /// Displays a symbol based on the acceptable representation from the IUPAC guidelines (GR-2.1.2)
@@ -75,7 +75,7 @@ namespace NCDK.Renderers
         /// bonds. The recommendations note that it is acceptable to leave methyl groups unlabelled.
         /// </summary>
         /// <returns>symbol visibility instance</returns>
-        public static SymbolVisibility IUPACRecommendationsWithoutTerminalCarbon { get; } = new IupacVisibility(false);
+        public static SymbolVisibility IupacRecommendationsWithoutTerminalCarbon { get; } = new IupacVisibility(false);
 
         /// <summary>
         /// Visibility following IUPAC guidelines.
@@ -107,9 +107,13 @@ namespace NCDK.Renderers
                 // abnormal valence, could be due to charge or unpaired electrons
                 if (!IsFourValent(atom, bonds)) return true;
 
+                // charge, normally caught by previous rule but can have bad input: C=[CH-]C
+                if (atom.FormalCharge != null &&
+                    atom.FormalCharge != 0) return true;
+
                 // carbon isotopes are displayed
                 var mass = atom.MassNumber;
-                if (mass != null && !IsMajorIsotope(element.AtomicNumber, mass.Value)) return true;
+                if (mass != null) return true;
 
                 // no kink between bonds to imply the presence of a carbon and it must
                 // be displayed if the bonds have the same bond order
@@ -134,26 +138,6 @@ namespace NCDK.Renderers
                 // ProblemMarker ?
 
                 return false;
-            }
-
-            /// <summary>
-            /// Determine if the specified mass is the major isotope for the given atomic number.
-            ///
-            /// <param name="number">atomic number</param>
-            /// <param name="mass">atomic mass</param>
-            /// <returns>the mass is the major mass for the atomic number</returns>
-            /// </summary>
-            private static bool IsMajorIsotope(int number, int mass)
-            {
-                try
-                {
-                    IIsotope isotope = Config.Isotopes.Instance.GetMajorIsotope(number);
-                    return isotope != null && isotope.MassNumber.Equals(mass);
-                }
-                catch (IOException)
-                {
-                    return false;
-                }
             }
 
             /// <summary>

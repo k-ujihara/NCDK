@@ -6749,7 +6749,6 @@ namespace NCDK.AtomTypes
 
         // @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H
         [TestMethod()]
-        [TestCategory("Failed")]
         public void Test_n_planar3_sp2_aromaticity()
         {
             IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
@@ -6787,7 +6786,7 @@ namespace NCDK.AtomTypes
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(pyrrole);
 
-            Assert.AreEqual(pyrrole.Atoms[0].Hybridization.Name, "Planar3");
+            Assert.AreEqual("Planar3", pyrrole.Atoms[0].Hybridization.Name);
         }
 
         // @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H

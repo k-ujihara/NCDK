@@ -517,7 +517,8 @@ namespace NCDK.Layout
                     atom.IsPlaced = true;
             AtomPlacer.CopyPlaced(partiallyPlacedRing, ring);
 
-            if (partiallyPlacedRing.Atoms.Count > 0 && partiallyPlacedRing.Atoms.Count < ring.Atoms.Count)
+            if (partiallyPlacedRing.Atoms.Count > 1 &&
+                partiallyPlacedRing.Atoms.Count < ring.Atoms.Count)
             {
                 PlaceConnectedRings(rset, partiallyPlacedRing, RingPlacer.Fused, bondLength);
                 PlaceConnectedRings(rset, partiallyPlacedRing, RingPlacer.Bridged, bondLength);

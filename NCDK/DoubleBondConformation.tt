@@ -48,5 +48,31 @@ namespace NCDK
         /// </summary>
         /// <returns>the inverse conformation</returns>
         public DoubleBondConformation Invert() => Ordinal == O.Together ? Opposite : Together;
+
+         public static DoubleBondConformation ToConformation(StereoElement.Configurations configure)
+        {
+            switch (configure.Ordinal)
+            {
+                case StereoElement.Configurations.O.Together:
+                    return Together;
+                case StereoElement.Configurations.O.Opposite:
+                    return Opposite;
+                default:
+                    throw new System.ArgumentException("Cannot map config to enum: " + configure);
+            }
+        }
+
+        public static StereoElement.Configurations ToConfig(DoubleBondConformation conformation)
+        {
+            switch (conformation.Ordinal)
+            {
+                case DoubleBondConformation.O.Together:
+                    return StereoElement.Configurations.Together;
+                case DoubleBondConformation.O.Opposite:
+                    return StereoElement.Configurations.Opposite;
+                default:
+                    throw new System.ArgumentException("Cannot map enum to config: " + conformation);
+            }
+        }
     }
 }

@@ -107,7 +107,7 @@ namespace NCDK.LibIO.CML
             for (int i = 0; i < elems.Length; i++)
             {
                 sb.Append(' ').Append(elems[i]).Append(' ');
-                sb.Append(Strings.JavaFormat(counts[i], "F4"));
+                sb.Append(Strings.JavaFormat(counts[i], 4, true));
             }
             if (formalCharge != 0)
             {

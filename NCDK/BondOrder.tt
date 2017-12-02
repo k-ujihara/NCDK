@@ -28,7 +28,7 @@ namespace NCDK
 <# 
     GenerateEnumBody(
         "BondOrder", 
-            new[]
+		new[]
         {
             "Unset",
             "Single",

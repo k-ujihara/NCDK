@@ -90,14 +90,16 @@ namespace NCDK.QSAR
             DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
                     DESC_IMPL_VENDOR);
             Result<double> doubleVal = new Result<double>(0.7);
-            DescriptorValue value;
-            value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
-            Assert.AreEqual(1, value.Names.Count);
-            value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, null);
-            Assert.AreEqual(1, value.Names.Count);
             ArrayResult<double> doubleVals = new ArrayResult<double>();
             doubleVals.Add(0.1);
             doubleVals.Add(0.2);
+            DescriptorValue value;
+            value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { "bla" });
+            Assert.AreEqual(1, value.Names.Count);
+            value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, new string[] { });
+            Assert.AreEqual(1, value.Names.Count);
+            value = new DescriptorValue(spec, new string[0], new object[0], doubleVal, null);
+            Assert.AreEqual(1, value.Names.Count);
             value = new DescriptorValue(spec, new string[0], new object[0], doubleVals, null);
             Assert.AreEqual(2, value.Names.Count);
         }

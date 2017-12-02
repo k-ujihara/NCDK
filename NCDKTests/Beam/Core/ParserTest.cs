@@ -27,6 +27,8 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
+using System;
 
 namespace NCDK.Beam
 {
@@ -297,6 +299,25 @@ namespace NCDK.Beam
         public void Chembl345045Mangleded()
         {
             Parser.Parse("c1c(ccc(c1)F)c2/c3n/c(c(\\c4[nH]c(/c(c/5\\nc(/c(c/6\\s\\c2\\cc6)/c7ccc(cc7)F)C=C5)/c8ccc(cc8)S(=O)(=O)[O-])cc4)/c9ccc(cc9)S(=O)(=O)[O-])/C=C3.[Na+].[Na+] CHEMBL345045");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidSmilesException))]
+        public void LowPercentNums()
+        {
+            Parser.GetStrict("C%1CCCC%1");
+        }
+
+        [TestMethod()]
+        public void AlleneStereochemistryWithRingClosures()
+        {
+            Graph g = Graph.FromSmiles("CC=[C@]=C1OCCCC1");
+            Topology topology = g.TopologyOf(2);
+            Assert.AreEqual(Configuration.AL1, topology.Configuration);
+            int[] order = new int[4];
+            topology.Copy(order);
+            Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 8, 4 }, order));
+            Console.Out.WriteLine (g.ToSmiles());
         }
 
         [TestMethod()]

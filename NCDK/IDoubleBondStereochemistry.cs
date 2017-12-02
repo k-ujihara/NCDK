@@ -35,7 +35,7 @@ namespace NCDK
     /// orientation of the methyls in but-2-ene respectively as <i>Z</i> and <i>E</i>.
     /// </summary>
     public interface IDoubleBondStereochemistry
-        : IStereoElement
+        : IStereoElement<IBond, IBond>
     {
         /// <summary>
         /// An array of ligand bonds around the double bond.

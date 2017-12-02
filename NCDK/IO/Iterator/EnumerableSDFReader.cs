@@ -57,7 +57,6 @@ namespace NCDK.IO.Iterator
         private TextReader input;
         private string currentLine;
         private IChemFormat currentFormat;
-        private readonly ReaderFactory factory = new ReaderFactory();
         private IChemObjectBuilder builder;
         private BooleanIOSetting forceReadAs3DCoords;
 
@@ -68,11 +67,6 @@ namespace NCDK.IO.Iterator
         private const string M_END = "M  END";
         private const string SDF_RECORD_SEPARATOR = "$$$$";
         private const string SDF_DATA_HEADER = "> ";
-
-        /// <summary>
-        /// map of MDL formats to their type
-        /// </summary>
-        private readonly IDictionary<IChemFormat, Type> readerTypeMap = new Dictionary<IChemFormat, Type>(5);
 
         /// <summary>
         /// Constructs a new EnumerableMDLReader that can read Molecule from a given Reader.
@@ -138,13 +132,22 @@ namespace NCDK.IO.Iterator
         /// <returns>instance of a reader appropriate for the provided format</returns>
         private ISimpleChemObjectReader GetReader(IChemFormat format, TextReader input)
         {
-            ISimpleChemObjectReader reader = factory.CreateReader(format, input);
+            ISimpleChemObjectReader reader;
+            if (format is MDLV2000Format)
+                reader = new MDLV2000Reader(input);
+            else if (format is MDLV3000Format)
+                reader = new MDLV3000Reader(input);
+            else if (format is MDLFormat)
+                reader = new MDLReader(input);
+            else
+                throw new ArgumentException("Unexpected format: " + format);
             reader.ErrorHandler = this.ErrorHandler;
             reader.ReaderMode = this.ReaderMode;
             if (currentFormat is MDLV2000Format)
             {
                 reader.AddSettings(IOSettings.Settings);
             }
+
             return reader;
         }
 

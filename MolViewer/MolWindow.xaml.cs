@@ -73,7 +73,6 @@ namespace NCDK.MolViewer
         {
             InitializeComponent();
 
-            sdg.BondLength = 40;
             sdg.UseIdentityTemplates = false;
             Model = new RendererModel();
             molgen = new BasicGenerator();

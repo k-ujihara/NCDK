@@ -101,8 +101,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="container">structure to which the atom belongs</param>
         /// <param name="atom">the atom to generate the symbol for</param>
         /// <param name="position">the hydrogen position</param>
+        /// <param name="model">additional rendering options</param>
         /// <returns>atom symbol</returns>
-        public AtomSymbol GenerateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position)
+        public AtomSymbol GenerateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position, RendererModel model)
         {
             if (atom is IPseudoAtom)
             {
@@ -120,7 +121,10 @@ namespace NCDK.Renderers.Generators.Standards
 
                 // unset the mass if it's the major isotope (could be an option)
                 var mass = atom.MassNumber;
-                if (mass != null && IsMajorIsotope(number, mass.Value))
+                if (mass != null &&
+                              model != null &&
+                              model.GetV<bool>(typeof(StandardGenerator.OmitMajorIsotopes)) &&
+                              IsMajorIsotope(number, mass.Value))
                 {
                     mass = null;
                 }

@@ -90,6 +90,10 @@ namespace NCDK.Layout
             Vector2 newDirection = atom.Point2D.Value;
             Vector2 occupiedDirection = sharedAtomsCenter;
             occupiedDirection = Vector2.Subtract(occupiedDirection, newDirection);
+            // if the placing on the centre atom we get NaNs just give a arbitary direciton the
+            // rest works it's self out
+            if (Math.Abs(occupiedDirection.Length()) < 0.001)
+                occupiedDirection = new Vector2(0, 1);
             Debug.WriteLine("distributePartners->occupiedDirection.Lenght(): " + occupiedDirection.Length());
             List<IAtom> atomsToDraw = new List<IAtom>();
 

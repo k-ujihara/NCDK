@@ -140,18 +140,18 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void DefaultIsotope()
+        public void NoDefaultIsotope()
         {
             IAtom a = new Atom("C");
             a.ImplicitHydrogenCount = 0;
             a.MassNumber = 12;
-            Assert.AreEqual(-1, new CDKToBeam().ToBeamAtom(a).Isotope);
+            Assert.AreEqual(12, new CDKToBeam().ToBeamAtom(a).Isotope);
         }
 
         // special check that a CDK pseudo atom will default to 0 hydrogens if
         // the hydrogens are set to null
         [TestMethod()]
-        public void PseuDoAtom_nullH()
+        public void PseudoAtom_nullH()
         {
             Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new PseudoAtom("R")).NumOfHydrogens);
             Assert.AreEqual(0, new CDKToBeam().ToBeamAtom(new PseudoAtom("*")).NumOfHydrogens);
@@ -537,7 +537,7 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            IStereoElement element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
+            var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
                         m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.AntiClockwise);
             m.SetStereoElements(new[] { element });
 
@@ -558,7 +558,7 @@ namespace NCDK.Smiles
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
 
-            IStereoElement element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
+            var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[1],
                         m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.Clockwise);
             m.SetStereoElements(new[] { element });
 
@@ -589,7 +589,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
+                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
                             m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
@@ -621,7 +621,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
+                var element = new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[atoms[i][0]],
                             m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
@@ -643,4 +643,3 @@ namespace NCDK.Smiles
         }
     }
 }
-

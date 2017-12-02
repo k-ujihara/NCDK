@@ -98,9 +98,9 @@ namespace NCDK.Beam
             g = new Graph(1 + (2 * (buffer.Length / 3)));
             ReadSmiles(buffer);
             if (openRings > 0)
-                throw new InvalidSmilesException("Unclosed ring detected:", buffer);
+                throw new InvalidSmilesException("Unclosed ring detected, SMILES may be truncated:", buffer);
             if (stack.Count > 1)
-                throw new InvalidSmilesException("Unclosed branch detected:", buffer);
+                throw new InvalidSmilesException("Unclosed branch detected, SMILES may be truncated:", buffer);
             start.Add(0); // always include first vertex as start
             if (g.GetFlags(Graph.HAS_STRO) != 0)
             {
@@ -222,6 +222,17 @@ namespace NCDK.Beam
             }
         }
 
+        public IList<Edge> GetEdges(LocalArrangement localArrangement, int u)
+        {
+            if (localArrangement == null)
+                return g.GetEdges(u);
+            int[] vs = localArrangement.ToArray();
+            var edges = new List<Edge>(vs.Length);
+            foreach (int v in vs)
+                edges.Add(g.CreateEdge(u, v));
+            return edges;
+        }
+
         /// <summary>
         /// Add a topology for vertex 'u' with configuration 'c'. If the atom 'u' was
         /// involved in a ring closure the local arrangement is used instead of the
@@ -236,22 +247,62 @@ namespace NCDK.Beam
             // stereo on ring closure - use local arrangement
             if (arrangement.ContainsKey(u))
             {
-                int[] vs = arrangement[u].ToArray();
-                List<Edge> es = new List<Edge>(vs.Length);
-                foreach (var v in vs)
-                    es.Add(g.CreateEdge(u, v));
+                int[] us = arrangement[u].ToArray();
+                var es = GetEdges(arrangement[u], u);
 
-                if (c.Type == Types.Tetrahedral)
-                    vs = InsertThImplicitRef(u, vs); // XXX: temp fix
-                else if (c.Type == Types.DoubleBond)
-                    vs = InsertDbImplicitRef(u, vs); // XXX: temp fix
+                if (c.Type == Configuration.Types.Tetrahedral)
+                    us = InsertThImplicitRef(u, us); // XXX: temp fix
+                else if (c.Type == Configuration.Types.DoubleBond)
+                    us = InsertDbImplicitRef(u, us); // XXX: temp fix
+                else if (c.Type == Configuration.Types.ExtendedTetrahedral)
+                {
+                    g.AddFlags(Graph.HAS_EXT_STRO);
+                    // Extended tetrahedral is a little more complicated, note
+                    // following presumes the end atoms are not in ring closures
+                    int v = es[0].Other(u);
+                    int w = es[1].Other(u);
+                    var vs = GetEdges(arrangement[v], v);
+                    var ws = GetEdges(arrangement[w], w);
+                    us = new int[4];
+                    int i = 0;
+                    foreach (Edge e in vs)
+                    {
+                        int x = e.Other(v);
+                        if (e.Bond.Order == 1) us[i++] = x;
+                    }
+                    if (i < 2)
+                    {
+                        if (start.Contains(u))
+                        {
+                            us[i++] = us[0];
+                            us[0] = v;
+                        }
+                        else
+                        {
+                            us[i++] = v;
+                        }
+                    }
+                    if (i != 2) return;
+                    foreach (Edge e in ws)
+                    {
+                        int x = e.Other(w);
+                        if (e.Bond.Order == 1) us[i++] = x;
+                    }
+                    if (i < 4)
+                    {
+                        us[i++] = us[2];
+                        us[u] = w;
+                    }
+                    if (i != 4)
+                        return;
+                }
 
-                g.AddTopology(Topology.Create(u, vs, es, c));
+                g.AddTopology(Topology.Create(u, us, es, c));
             }
             else
             {
                 int[] us = new int[g.Degree(u)];
-                IList<Edge> es = g.GetEdges(u);
+                var es = g.GetEdges(u);
                 for (int i = 0; i < us.Length; i++)
                     us[i] = es[i].Other(u);
 
@@ -270,27 +321,37 @@ namespace NCDK.Beam
                     // following presumes the end atoms are not in ring closures
                     int v = es[0].Other(u);
                     int w = es[1].Other(u);
-                    IList<Edge> vs = g.GetEdges(v);
-                    IList<Edge> ws = g.GetEdges(w);
-                    us = new int[] { -1, v, -1, w };
+                    var vs = GetEdges(arrangement.ContainsKey(v) ? arrangement[v] : null, v);
+                    var ws = GetEdges(arrangement.ContainsKey(w) ? arrangement[w] : null, w);
+                    us = new int[4];
                     int i = 0;
-                    foreach (var e in vs)
+                    foreach (Edge e in vs)
                     {
                         int x = e.Other(v);
                         if (e.Bond.Order == 1) us[i++] = x;
                     }
-
-                    i = 2;
-                    foreach (var e in ws)
+                    if (i < 2)
+                    {
+                        if (start.Contains(u))
+                        {
+                            us[i++] = us[0];
+                            us[0] = v;
+                        }
+                        else
+                        {
+                            us[i++] = v;
+                        }
+                    }
+                    if (i != 2) return;
+                    if (ws.Count < 3)
+                        us[i++] = w;
+                    foreach (Edge e in ws)
                     {
                         int x = e.Other(w);
                         if (e.Bond.Order == 1) us[i++] = x;
                     }
-
-                    if (us[0] < 0 || us[2] < 0)
+                    if (i != 4)
                         return;
-
-                    Array.Sort(us);
                 }
 
                 g.AddTopology(Topology.Create(u, us, es, c));
@@ -535,14 +596,12 @@ namespace NCDK.Beam
                     // branching
                     case '(':
                         if (stack.IsEmpty)
-                            throw new InvalidSmilesException("cannot open branch - there were no previous atoms:",
-                                                             buffer);
+                            throw new InvalidSmilesException("Cannot open branch at this position, SMILES may be truncated:", buffer);
                         stack.Push(stack.Peek());
                         break;
                     case ')':
                         if (stack.Count < 2)
-                            throw new InvalidSmilesException("closing of an unopened branch:",
-                                                             buffer);
+                            throw new InvalidSmilesException("Closing of an unopened branch, SMILES may be truncated:", buffer);
                         stack.Pop();
                         break;
 
@@ -587,14 +646,14 @@ namespace NCDK.Beam
             bool arbitraryLabel = false;
 
             if (!buffer.HasRemaining())
-                throw new InvalidSmilesException("Unclosed bracket atom", buffer);
+                throw new InvalidSmilesException("Unclosed bracket atom, SMILES may be truncated", buffer);
 
             int isotope = buffer.GetNumber();
             bool aromatic = buffer.NextChar >= 'a' && buffer.NextChar <= 'z';
             Element element = Element.Read(buffer);
 
             if (strict && element == null)
-                throw new InvalidSmilesException("unrecognised element symbol: ", buffer);
+                throw new InvalidSmilesException("unrecognised element symbol, SMILES may be truncated: ", buffer);
 
             if (element != null && aromatic)
                 g.AddFlags(Graph.HAS_AROM);
@@ -905,7 +964,7 @@ namespace NCDK.Beam
         /// be stored directly on the graph (negated edge) it allows us to keep all
         /// edges in sorted Order.
         /// </summary>
-        private sealed class LocalArrangement
+        public sealed class LocalArrangement
         {
             int[] vs;
             int n;

@@ -21,67 +21,59 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System;
 
 namespace NCDK.Stereo
 {
     /// <summary>
-    /// Stereochemistry specification for quadrivalent atoms. See <see cref="ITetrahedralChirality"/> for
+    /// Stereochemistry specification for tetravalent atoms. See <see cref="ITetrahedralChirality"/> for
     /// further details.
     /// </summary>
     /// <seealso cref="ITetrahedralChirality"/>
     // @cdk.module core
     // @cdk.githash
     public class TetrahedralChirality
-        : ITetrahedralChirality
+        : AbstractStereo<IAtom, IAtom>, ITetrahedralChirality
     {
-        private IAtom chiralAtom;
-        private IList<IAtom> ligandAtoms;
-        private TetrahedralStereo stereo;
-        public IChemObjectBuilder Builder { get; set; }
-
-        /// <summary>
-        /// Constructor to create a new <see cref="ITetrahedralChirality"/> implementation instance.
-        /// </summary>
-        /// <param name="chiralAtom">The chiral <see cref="IAtom"/>.</param>
-        /// <param name="ligandAtoms">The ligand atoms around the chiral atom.</param>
-        /// <param name="chirality">The <see cref="Stereo"/> chirality.</param>
-        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
+        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, TetrahedralStereo stereo)
+            : this(chiralAtom, ligands, TetrahedralStereo.ToConfigure(stereo))
         {
-            this.chiralAtom = chiralAtom;
-            this.ligandAtoms = new List<IAtom>(ligandAtoms);
-            this.stereo = chirality;
+        }
+
+        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, StereoElement.Configurations configure)
+            : base(chiralAtom, ligands.ToList(), new StereoElement(StereoElement.Classes.Tetrahedral, configure))
+        {
+        }
+
+        public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, StereoElement stereo)
+            : this(chiralAtom, ligands, stereo.Configure)
+        {
         }
 
         /// <summary>
         /// An array of ligand atoms around the chiral atom.
         /// </summary>
-        public virtual IList<IAtom> Ligands => ligandAtoms;
+        public virtual IList<IAtom> Ligands => Carriers;
 
         /// <summary>
         /// Atom that is the chirality center.
         /// </summary>
-        public virtual IAtom ChiralAtom => chiralAtom;
+        public virtual IAtom ChiralAtom => Focus;
 
         /// <summary>
         /// Defines the stereochemistry around the chiral atom. The value depends on the order of ligand atoms.
         /// </summary>
         public virtual TetrahedralStereo Stereo
         {
-            get { return stereo; }
-            set { stereo = value; }
+            get { return TetrahedralStereo.ToStereo(Configure); }
+            set { Configure = TetrahedralStereo.ToConfigure(value); }
         }
 
-        public static object TetrahedralStereo { get; set; }
-
-        public virtual bool Contains(IAtom atom)
+        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)
         {
-            if (chiralAtom == atom)
-                return true;
-            return ligandAtoms.Any(ligand => ligand == atom);
+            return new TetrahedralChirality(focus, carriers, stereo);
         }
 
         public override string ToString()
@@ -95,34 +87,6 @@ namespace NCDK.Stereo
                 sb.Append(i + 1).Append(':').Append(ligands[i]).Append(", ");
             sb.Append('}');
             return sb.ToString();
-        }
-
-        public virtual object Clone()
-        {
-            return Clone(new CDKObjectMap());
-        }
-
-        public ICDKObject Clone(CDKObjectMap map)
-        {
-            if (map == null)
-                throw new ArgumentNullException(nameof(map));
-
-            var clone = (TetrahedralChirality)MemberwiseClone();
-
-            // convert the chiral atom and it's ligands to their equivalent
-            IAtom chiral = chiralAtom;
-            if (chiral != null && map.AtomMap.ContainsKey(chiralAtom))
-                chiral = map.AtomMap[chiralAtom];
-            clone.chiralAtom = chiral;
-            clone.ligandAtoms = new List<IAtom>();
-            foreach (var ligand in ligandAtoms)
-            {
-                IAtom atom;
-                if (ligand == null || !map.AtomMap.TryGetValue(ligand, out atom))
-                    atom = ligand;
-                clone.ligandAtoms.Add(atom);
-            }
-            return clone;
         }
     }
 }

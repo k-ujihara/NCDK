@@ -28,6 +28,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
 using System.Linq;
+using NCDK.Smiles;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.Stereo
 {
@@ -36,6 +38,114 @@ namespace NCDK.Stereo
     [TestClass()]
     public class StereoElementFactoryTest
     {
+        // don't create double bond configs in benzene
+        [TestMethod()]
+        public void Benzene()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, 1.30, -0.75));
+            mol.Atoms.Add(Atom("C", 1, -0.00, -1.50));
+            mol.Atoms.Add(Atom("C", 1, -1.30, -0.75));
+            mol.Atoms.Add(Atom("C", 1, -1.30, 0.75));
+            mol.Atoms.Add(Atom("C", 1, 0.00, 1.50));
+            mol.Atoms.Add(Atom("C", 1, 1.30, 0.75));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Double);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            Assert.AreEqual(0, factory.CreateAll().Count);
+        }
+
+        // >=8 is okay for db stereo (ala inchi)
+        [TestMethod()]
+        public void Cyclooctatetraene()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, -10.46, 6.36));
+            mol.Atoms.Add(Atom("C", 1, -11.34, 5.15));
+            mol.Atoms.Add(Atom("C", 1, -10.46, 3.93));
+            mol.Atoms.Add(Atom("C", 1, -9.03, 4.40));
+            mol.Atoms.Add(Atom("C", 1, -7.60, 3.93));
+            mol.Atoms.Add(Atom("C", 1, -6.72, 5.15));
+            mol.Atoms.Add(Atom("C", 1, -7.60, 6.36));
+            mol.Atoms.Add(Atom("C", 1, -9.03, 5.90));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Double);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Double);
+            mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Single);
+            mol.AddBond(mol.Atoms[6], mol.Atoms[7], BondOrder.Double);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[7], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            Assert.AreEqual(4, factory.CreateAll().Count);
+        }
+
+        // not okay... but technically the trans form exists
+        [TestMethod()]
+        public void DoubleBondInSevenMemberedRing()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 1, -10.46, 6.36));
+            mol.Atoms.Add(Atom("C", 1, -11.34, 5.15));
+            mol.Atoms.Add(Atom("C", 1, -10.46, 3.93));
+            mol.Atoms.Add(Atom("C", 1, -9.03, 4.40));
+            mol.Atoms.Add(Atom("C", 1, -7.60, 3.93));
+            mol.Atoms.Add(Atom("C", 1, -6.72, 5.15));
+            mol.Atoms.Add(Atom("C", 1, -7.60, 6.36));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
+            mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Single);
+            mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Single);
+            mol.AddBond(mol.Atoms[6], mol.Atoms[0], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            Assert.AreEqual(0, factory.CreateAll().Count);
+        }
+
+        [TestMethod()]
+        public void HydrogenIsotope()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 3, 0.00, 0.00));
+            mol.Atoms.Add(Atom("C", 1, 1.30, -0.75));
+            mol.Atoms.Add(Atom("C", 1, 2.60, -0.00));
+            mol.Atoms.Add(Atom("H", 0, 3.90, -0.75));
+            mol.Atoms[3].MassNumber = 2;
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Double);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            Assert.AreEqual(1, factory.CreateAll().Count);
+        }
+
+        [TestMethod()]
+        public void BridgeHeadNitrogen()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(Atom("C", 2, 1.23, 0.75));
+            mol.Atoms.Add(Atom("C", 2, 1.23, -0.75));
+            mol.Atoms.Add(Atom("N", 0, -0.07, -1.50));
+            mol.Atoms.Add(Atom("C", 2, -1.36, -0.75));
+            mol.Atoms.Add(Atom("C", 2, -1.36, 0.75));
+            mol.Atoms.Add(Atom("N", 0, -0.07, 1.50));
+            mol.Atoms.Add(Atom("C", 2, 0.39, -0.00));
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single, BondStereo.None);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[1], BondOrder.Single, BondStereo.Up);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single, BondStereo.None);
+            mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single, BondStereo.None);
+            mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Single, BondStereo.None);
+            mol.AddBond(mol.Atoms[5], mol.Atoms[0], BondOrder.Single, BondStereo.Up);
+            mol.AddBond(mol.Atoms[5], mol.Atoms[6], BondOrder.Single, BondStereo.None);
+            mol.AddBond(mol.Atoms[2], mol.Atoms[6], BondOrder.Single, BondStereo.None);
+            StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
+            Assert.AreEqual(2, factory.CreateAll().Count);
+        }
+
         [TestMethod()]
         public void E_but2ene()
         {
@@ -546,8 +656,10 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            ExtendedTetrahedral et = StereoElementFactory.Using3DCoordinates(m).CreateExtendedTetrahedral(2,
-                    Stereocenters.Of(m));
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, stereos.Count);
+            Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
+            ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
             Assert.AreEqual(TetrahedralStereo.Clockwise, et.Winding);
             Assert.IsTrue(Compares.AreDeepEqual(new IAtom[] { m.Atoms[0], m.Atoms[6], m.Atoms[4], m.Atoms[5] }, et.Peripherals));
             Assert.AreEqual(m.Atoms[2], et.Focus);
@@ -557,13 +669,13 @@ namespace NCDK.Stereo
         public void CreateExtendedTetrahedralFrom3DCoordinates_ccw()
         {
             IAtomContainer m = new AtomContainer();
-            m.Atoms.Add(Atom("C", 3, 1.3810, -0.7495, -1.4012));
+            m.Atoms.Add(Atom("C", 3, -1.4096, -2.1383, 0.6392));
             m.Atoms.Add(Atom("C", 0, -0.4383, -2.0366, 0.8166));
             m.Atoms.Add(Atom("C", 0, 0.2349, -1.2464, 0.0943));
             m.Atoms.Add(Atom("C", 0, 0.9377, -0.4327, -0.5715));
             m.Atoms.Add(Atom("C", 3, 1.0851, 0.9388, -0.1444));
+            m.Atoms.Add(Atom("H", 0, 1.3810, -0.7495, -1.4012));
             m.Atoms.Add(Atom("H", 0, 0.1925, -2.7911, 1.8739));
-            m.Atoms.Add(Atom("H", 0, -1.4096, -2.1383, 0.6392));
             m.AddBond(m.Atoms[1], m.Atoms[0], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double);
@@ -571,8 +683,10 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
 
-            ExtendedTetrahedral et = StereoElementFactory.Using3DCoordinates(m).CreateExtendedTetrahedral(2,
-                    Stereocenters.Of(m));
+            var stereos = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, stereos.Count);
+            Assert.IsInstanceOfType(stereos[0], typeof(ExtendedTetrahedral));
+            ExtendedTetrahedral et = (ExtendedTetrahedral)stereos[0];
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, et.Winding);
             Assert.IsTrue(Compares.AreDeepEqual(new IAtom[] { m.Atoms[0], m.Atoms[6], m.Atoms[4], m.Atoms[5] }, et.Peripherals));
             Assert.AreEqual(m.Atoms[2], et.Focus);
@@ -611,7 +725,7 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Double, BondStereo.None);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
-            m.SetStereoElements(StereoElementFactory.Using2DCoordinates(m).CreateAll());
+            m.SetStereoElements(StereoElementFactory.Using2DCoordinates(m).CheckSymmetry(true).CreateAll());
             Assert.IsFalse(m.StereoElements.GetEnumerator().MoveNext());
         }
 
@@ -670,6 +784,28 @@ namespace NCDK.Stereo
 
             var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
             Assert.AreEqual(3, elements.Count);
+        }
+
+        /// <summary>
+        /// Watch out for cumulated bonds with a kink in 3d. The generation program
+        /// has not understood the chemistry completely.
+        /// </summary>
+        // @cdk.smiles CC=[C@]=CC 
+        [TestMethod()]
+        public void BadlyOptimizedAllene()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 1, -4.02, 3.96, -1.09));
+            m.Atoms.Add(Atom("C", 0, -4.96, 3.82, 0.13));
+            m.Atoms.Add(Atom("C", 3, -3.70, 5.35, -1.67));
+            m.Atoms.Add(Atom("C", 1, -5.27, 2.44, 0.71));
+            m.Atoms.Add(Atom("C", 3, -6.21, 2.30, 1.92));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
+            m.AddBond(m.Atoms[1], m.Atoms[3], BondOrder.Double);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
+            var elements = StereoElementFactory.Using3DCoordinates(m).CreateAll();
+            Assert.AreEqual(0, elements.Count);
         }
 
         [TestMethod()]
@@ -858,6 +994,456 @@ namespace NCDK.Stereo
                                             .CreateAll()
                                             .Count == 0);
         }
+
+        /// <summary>
+        /// Pass through non-stereo configurations if check symmetry is disabled
+        /// </summary>
+        [TestMethod()]
+        public void KeepNonStereoConfiguration()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
+            m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
+            m.Atoms.Add(Atom("C", 3, -0.29, 2.04));
+            m.Atoms.Add(Atom("C", 3, -0.66, 0.82));
+            m.Atoms.Add(Atom("C", 2, 0.76, 0.74));
+            m.Atoms.Add(Atom("C", 3, 1.50, 1.12));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single, BondStereo.Down);
+            m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, elements.Count);
+            m.SetStereoElements(elements);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            Assert.AreEqual("[C@]([H])(C)(C)CC", smigen.Create(m));
+        }
+
+        [TestMethod()]
+        public void KeepNonStereoConfigurationPhosphorusTautomer()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("P", 0, 0.07, 1.19));
+            m.Atoms.Add(Atom("O", 0, 0.56, 2.02));
+            m.Atoms.Add(Atom("O", 1, -0.29, 2.04));
+            m.Atoms.Add(Atom("C", 3, -0.66, 0.82));
+            m.Atoms.Add(Atom("C", 2, 0.76, 0.74));
+            m.Atoms.Add(Atom("C", 3, 1.50, 1.12));
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single, BondStereo.Down);
+            m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
+            var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, elements.Count);
+            m.SetStereoElements(elements);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            Assert.AreEqual("[P@@](O)(C)(CC)=O", smigen.Create(m));
+        }
+
+        [TestMethod()]
+        public void DoNotkeepNonStereoConfigurationPhosphorusTautomer()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("P", 0, 0.07, 1.19));
+            m.Atoms.Add(Atom("O", 0, 0.56, 2.02));
+            m.Atoms.Add(Atom("O", 1, -0.29, 2.04));
+            m.Atoms.Add(Atom("C", 3, -0.66, 0.82));
+            m.Atoms.Add(Atom("C", 2, 0.76, 0.74));
+            m.Atoms.Add(Atom("C", 3, 1.50, 1.12));
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single, BondStereo.Down);
+            m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Double);
+            var elements = StereoElementFactory.Using2DCoordinates(m)
+                                                                            .CheckSymmetry(true)
+                                                                            .CreateAll();
+            Assert.AreEqual(0, elements.Count);
+            m.SetStereoElements(elements);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            Assert.AreEqual("P(O)(C)(CC)=O", smigen.Create(m));
+        }
+
+        /// <summary>
+        /// Do not pass through non-stereo configurations if check symmetry is enabled
+        /// </summary>
+        [TestMethod()]
+        public void DoNotKeepNonStereoConfiguration()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
+            m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
+            m.Atoms.Add(Atom("C", 3, -0.29, 2.04));
+            m.Atoms.Add(Atom("C", 3, -0.66, 0.82));
+            m.Atoms.Add(Atom("C", 2, 0.76, 0.74));
+            m.Atoms.Add(Atom("C", 3, 1.50, 1.12));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single, BondStereo.Down);
+            m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            var elements = StereoElementFactory.Using2DCoordinates(m)
+                                                                .CheckSymmetry(true)
+                                                                .CreateAll();
+            Assert.AreEqual(0, elements.Count);
+            m.SetStereoElements(elements);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            Assert.AreEqual("C([H])(C)(C)CC", smigen.Create(m));
+        }
+
+        /// <summary>
+        /// Pass through non-stereo configurations if check symmetry is disabled
+        /// </summary>
+        [TestMethod()]
+        public void KeepNonStereoConfigurationH2()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, 0.07, 1.19));
+            m.Atoms.Add(Atom("H", 0, 0.56, 2.02));
+            m.Atoms.Add(Atom("H", 0, -0.29, 2.04));
+            m.Atoms.Add(Atom("C", 3, -0.66, 0.82));
+            m.Atoms.Add(Atom("C", 2, 0.76, 0.74));
+            m.Atoms.Add(Atom("C", 3, 1.50, 1.12));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single, BondStereo.Down);
+            m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            var elements = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            Assert.AreEqual(1, elements.Count);
+            m.SetStereoElements(elements);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo);
+            Assert.AreEqual("[C@]([H])([H])(C)CC", smigen.Create(m));
+            AtomContainerManipulator.SuppressHydrogens(m);
+            Assert.AreEqual("[C@H2](C)CC", smigen.Create(m));
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(m);
+            Assert.AreEqual("[C@](C([H])([H])[H])(C(C([H])([H])[H])([H])[H])([H])[H]", smigen.Create(m));
+        }
+
+        /// <summary>
+        /// BiNOL - SMILES/InChI can't represent the atropoisomerism but the single
+        ///         bond rotation is restricted.
+        /// </summary>
+        // @cdk.smiles OC1=CC=C2C=CC=CC2=C1C1=C(O)C=CC2=C1C=CC=C2 
+        [TestMethod()]
+        public void Binol2D()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, -0.83, -0.01));
+            m.Atoms.Add(Atom("C", 0, -1.55, -0.42));
+            m.Atoms.Add(Atom("C", 1, -1.55, -1.25));
+            m.Atoms.Add(Atom("C", 1, -0.83, -1.66));
+            m.Atoms.Add(Atom("C", 0, -0.12, -1.25));
+            m.Atoms.Add(Atom("C", 0, -0.12, -0.42));
+            m.Atoms.Add(Atom("C", 0, -0.83, 0.82));
+            m.Atoms.Add(Atom("C", 1, -0.83, 2.47));
+            m.Atoms.Add(Atom("C", 1, -1.55, 2.05));
+            m.Atoms.Add(Atom("C", 0, -1.55, 1.23));
+            m.Atoms.Add(Atom("C", 0, -0.12, 1.23));
+            m.Atoms.Add(Atom("C", 0, -0.12, 2.05));
+            m.Atoms.Add(Atom("O", 1, -2.26, 0.82));
+            m.Atoms.Add(Atom("O", 1, -2.26, -0.01));
+            m.Atoms.Add(Atom("C", 1, 0.60, 2.47));
+            m.Atoms.Add(Atom("C", 1, 0.60, 0.82));
+            m.Atoms.Add(Atom("C", 1, 1.31, 1.23));
+            m.Atoms.Add(Atom("C", 1, 1.31, 2.05));
+            m.Atoms.Add(Atom("C", 1, 0.60, -0.01));
+            m.Atoms.Add(Atom("C", 1, 0.60, -1.66));
+            m.Atoms.Add(Atom("C", 1, 1.31, -1.25));
+            m.Atoms.Add(Atom("C", 1, 1.31, -0.42));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Double);
+            m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
+            m.AddBond(m.Atoms[7], m.Atoms[8], BondOrder.Double);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Double);
+            m.AddBond(m.Atoms[7], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[6], BondOrder.Double);
+            m.AddBond(m.Atoms[6], m.Atoms[10], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[12], BondOrder.Single);
+            m.AddBond(m.Atoms[1], m.Atoms[13], BondOrder.Single);
+            m.AddBond(m.Atoms[15], m.Atoms[16], BondOrder.Double);
+            m.AddBond(m.Atoms[16], m.Atoms[17], BondOrder.Single);
+            m.AddBond(m.Atoms[14], m.Atoms[17], BondOrder.Double);
+            m.AddBond(m.Atoms[10], m.Atoms[15], BondOrder.Single);
+            m.AddBond(m.Atoms[14], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[19], m.Atoms[20], BondOrder.Double);
+            m.AddBond(m.Atoms[20], m.Atoms[21], BondOrder.Single);
+            m.AddBond(m.Atoms[18], m.Atoms[21], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[19], BondOrder.Single);
+            m.AddBond(m.Atoms[18], m.Atoms[5], BondOrder.Single);
+            var stereo =
+                StereoElementFactory.Using2DCoordinates(m)
+                                    .CreateAll();
+            Assert.AreEqual(0, stereo.Count);
+            m.Bonds[12].Stereo = BondStereo.Up;
+            var stereoUp =
+                StereoElementFactory.Using2DCoordinates(m)
+                                    .CreateAll();
+            Assert.AreEqual(1, stereoUp.Count);
+            m.Bonds[12].Stereo = BondStereo.Down;
+            var stereoDown =
+                StereoElementFactory.Using2DCoordinates(m)
+                                    .CreateAll();
+            Assert.AreEqual(1, stereoDown.Count);
+            var s1 = stereoUp[0];
+            var s2 = stereoDown[0];
+            Assert.AreEqual(s2.Focus, s1.Focus);
+            Assert.IsTrue(Compares.AreDeepEqual(s2.ReadOnlyCarriers, s1.ReadOnlyCarriers));
+            Assert.AreEqual(StereoElement.Configurations.Right, s1.Configure);
+            Assert.AreEqual(StereoElement.Configurations.Left, s2.Configure);
+
+            // now test placement of wedges else where
+            m.Bonds[12].Stereo = BondStereo.None;
+            m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Up;
+            var stereoUpOther =
+                StereoElementFactory.Using2DCoordinates(m)
+                                    .CreateAll();
+            Assert.AreEqual(1, stereoUpOther.Count);
+            var s3 = stereoUpOther[0];
+            Assert.AreEqual(s2.Focus, s3.Focus);
+            Assert.IsTrue(Compares.AreDeepEqual(s2.ReadOnlyCarriers, s3.ReadOnlyCarriers));
+            Assert.AreEqual(s2.Configure, s3.Configure);
+
+            m.GetBond(m.Atoms[9], m.Atoms[12]).Stereo = BondStereo.Down;
+            var stereoDownOther =
+                StereoElementFactory.Using2DCoordinates(m)
+                                    .CreateAll();
+            Assert.AreEqual(1, stereoDownOther.Count);
+            var s4 = stereoDownOther[0];
+            Assert.AreEqual(s1.Focus, s4.Focus);
+            Assert.IsTrue(Compares.AreDeepEqual(s1.ReadOnlyCarriers, s4.ReadOnlyCarriers));
+            Assert.AreEqual(s1.Configure, s4.Configure);
+        }
+
+        // @cdk.smiles CC1=C(C=CC=C1)C1=C(C)C=CC=C1O 
+        [TestMethod()]
+        public void Atropisomer1()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
+            m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
+            m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
+            m.Atoms.Add(Atom("C", 1, -7.53, -3.77));
+            m.Atoms.Add(Atom("C", 1, -6.82, -3.36));
+            m.Atoms.Add(Atom("C", 0, -6.82, -2.53));
+            m.Atoms.Add(Atom("C", 0, -7.53, -1.30));
+            m.Atoms.Add(Atom("C", 0, -6.82, -0.88));
+            m.Atoms.Add(Atom("C", 1, -6.82, -0.06));
+            m.Atoms.Add(Atom("C", 1, -7.53, 0.35));
+            m.Atoms.Add(Atom("C", 1, -8.24, -0.06));
+            m.Atoms.Add(Atom("C", 0, -8.24, -0.88));
+            m.Atoms.Add(Atom("C", 3, -8.96, -1.30));
+            m.Atoms.Add(Atom("O", 1, -6.10, -1.30));
+            m.Atoms.Add(Atom("C", 3, -6.10, -2.12));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Double);
+            m.AddBond(m.Atoms[7], m.Atoms[8], BondOrder.Double);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[10], BondOrder.Double);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[11], BondOrder.Double);
+            m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
+            m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
+            m.AddBond(m.Atoms[7], m.Atoms[13], BondOrder.Single);
+            m.AddBond(m.Atoms[5], m.Atoms[14], BondOrder.Single);
+            var stereo =
+                 StereoElementFactory.Using2DCoordinates(m)
+                                     .CreateAll();
+            Assert.AreEqual(1, stereo.Count);
+        }
+
+        // @cdk.smiles CC1=C(C(O)=CC=C1)C1=CC=CC=C1 
+        [TestMethod()]
+        public void NonAtropisomer2()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
+            m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
+            m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
+            m.Atoms.Add(Atom("C", 1, -7.53, -3.77));
+            m.Atoms.Add(Atom("C", 1, -6.82, -3.36));
+            m.Atoms.Add(Atom("C", 1, -6.82, -2.53));
+            m.Atoms.Add(Atom("C", 0, -7.53, -1.30));
+            m.Atoms.Add(Atom("C", 0, -6.82, -0.88));
+            m.Atoms.Add(Atom("C", 1, -6.82, -0.06));
+            m.Atoms.Add(Atom("C", 1, -7.53, 0.35));
+            m.Atoms.Add(Atom("C", 1, -8.24, -0.06));
+            m.Atoms.Add(Atom("C", 0, -8.24, -0.88));
+            m.Atoms.Add(Atom("C", 3, -8.96, -1.30));
+            m.Atoms.Add(Atom("O", 1, -6.10, -1.30));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Double);
+            m.AddBond(m.Atoms[7], m.Atoms[8], BondOrder.Double);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[10], BondOrder.Double);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[11], BondOrder.Double);
+            m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
+            m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
+            m.AddBond(m.Atoms[7], m.Atoms[13], BondOrder.Single);
+            var stereo =
+                            StereoElementFactory.Using2DCoordinates(m)
+                                                .CreateAll();
+            Assert.AreEqual(0, stereo.Count);
+        }
+
+        // @cdk.smiles CC1=C(C=CC=C1)C1=C(C)C=CC=C1 
+        [TestMethod()]
+        public void NonAtropisomer3()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 0, -7.53, -2.12));
+            m.Atoms.Add(Atom("C", 1, -8.24, -2.53));
+            m.Atoms.Add(Atom("C", 1, -8.24, -3.36));
+            m.Atoms.Add(Atom("C", 1, -7.53, -3.77));
+            m.Atoms.Add(Atom("C", 1, -6.82, -3.36));
+            m.Atoms.Add(Atom("C", 0, -6.82, -2.53));
+            m.Atoms.Add(Atom("C", 0, -7.53, -1.30));
+            m.Atoms.Add(Atom("C", 1, -6.82, -0.88));
+            m.Atoms.Add(Atom("C", 1, -6.82, -0.06));
+            m.Atoms.Add(Atom("C", 1, -7.53, 0.35));
+            m.Atoms.Add(Atom("C", 1, -8.24, -0.06));
+            m.Atoms.Add(Atom("C", 0, -8.24, -0.88));
+            m.Atoms.Add(Atom("C", 3, -8.96, -1.30));
+            m.Atoms.Add(Atom("C", 3, -6.10, -2.12));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Double);
+            m.AddBond(m.Atoms[7], m.Atoms[8], BondOrder.Double);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[10], BondOrder.Double);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
+            m.AddBond(m.Atoms[6], m.Atoms[11], BondOrder.Double);
+            m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
+            m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Single);
+            m.AddBond(m.Atoms[5], m.Atoms[13], BondOrder.Single);
+            var stereo =
+                   StereoElementFactory.Using2DCoordinates(m)
+                                       .CreateAll();
+            Assert.AreEqual(0, stereo.Count);
+        }
+
+        // @cdk.smiles [H]C1=CC=C2C=CC=CC2=C1C1=C([H])C=CC2=C1C=CC=C2 
+        [TestMethod()]
+        public void NonAtropisomerExplHydrogens()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("H", 0, -1.43, 0.83));
+            m.Atoms.Add(Atom("C", 0, -0.71, 1.24));
+            m.Atoms.Add(Atom("C", 1, -0.71, 2.06));
+            m.Atoms.Add(Atom("C", 1, 0.00, 2.48));
+            m.Atoms.Add(Atom("C", 0, 0.71, 2.06));
+            m.Atoms.Add(Atom("C", 1, 1.43, 2.48));
+            m.Atoms.Add(Atom("C", 1, 2.14, 2.06));
+            m.Atoms.Add(Atom("C", 1, 2.14, 1.24));
+            m.Atoms.Add(Atom("C", 1, 1.43, 0.83));
+            m.Atoms.Add(Atom("C", 0, 0.71, 1.24));
+            m.Atoms.Add(Atom("C", 0, 0.00, 0.83));
+            m.Atoms.Add(Atom("C", 0, 0.00, 0.00));
+            m.Atoms.Add(Atom("C", 0, -0.71, -0.41));
+            m.Atoms.Add(Atom("H", 0, -1.43, 0.00));
+            m.Atoms.Add(Atom("C", 1, -0.71, -1.24));
+            m.Atoms.Add(Atom("C", 1, 0.00, -1.65));
+            m.Atoms.Add(Atom("C", 0, 0.71, -1.24));
+            m.Atoms.Add(Atom("C", 0, 0.71, -0.41));
+            m.Atoms.Add(Atom("C", 1, 1.43, 0.00));
+            m.Atoms.Add(Atom("C", 1, 2.14, -0.41));
+            m.Atoms.Add(Atom("C", 1, 2.14, -1.24));
+            m.Atoms.Add(Atom("C", 1, 1.43, -1.65));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[5], m.Atoms[6], BondOrder.Double);
+            m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
+            m.AddBond(m.Atoms[7], m.Atoms[8], BondOrder.Double);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[10], BondOrder.Double);
+            m.AddBond(m.Atoms[1], m.Atoms[10], BondOrder.Single);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Double);
+            m.AddBond(m.Atoms[12], m.Atoms[14], BondOrder.Single);
+            m.AddBond(m.Atoms[14], m.Atoms[15], BondOrder.Double);
+            m.AddBond(m.Atoms[15], m.Atoms[16], BondOrder.Single);
+            m.AddBond(m.Atoms[16], m.Atoms[17], BondOrder.Double);
+            m.AddBond(m.Atoms[11], m.Atoms[17], BondOrder.Single, BondStereo.Up);
+            m.AddBond(m.Atoms[17], m.Atoms[18], BondOrder.Single);
+            m.AddBond(m.Atoms[18], m.Atoms[19], BondOrder.Double);
+            m.AddBond(m.Atoms[19], m.Atoms[20], BondOrder.Single);
+            m.AddBond(m.Atoms[20], m.Atoms[21], BondOrder.Double);
+            m.AddBond(m.Atoms[16], m.Atoms[21], BondOrder.Single);
+            m.AddBond(m.Atoms[12], m.Atoms[13], BondOrder.Single);
+            var stereo =
+                            StereoElementFactory.Using2DCoordinates(m)
+                                                .CreateAll();
+            Assert.AreEqual(0, stereo.Count);
+        }
+
+        // @cdk.smiles CC1=CC=CC(Cl)=C1C1=C(C)C=CC=C1 
+        [TestMethod()]
+        public void Atropisomer3D()
+        {
+            IAtomContainer m = new AtomContainer();
+            m.Atoms.Add(Atom("C", 1, -4.95, 1.27));
+            m.Atoms.Add(Atom("C", 1, -4.26, 1.73));
+            m.Atoms.Add(Atom("C", 0, -2.85, 1.74));
+            m.Atoms.Add(Atom("C", 0, -2.12, 1.25));
+            m.Atoms.Add(Atom("C", 0, -2.83, 0.80));
+            m.Atoms.Add(Atom("C", 1, -4.23, 0.82));
+            m.Atoms.Add(Atom("C", 3, -2.16, 2.26));
+            m.Atoms.Add(Atom("Cl", 0, -2.04, 0.24));
+            m.Atoms.Add(Atom("C", 0, -0.70, 1.20));
+            m.Atoms.Add(Atom("C", 1, 0.00, 2.39));
+            m.Atoms.Add(Atom("C", 1, 1.41, 2.39));
+            m.Atoms.Add(Atom("C", 1, 2.12, 1.22));
+            m.Atoms.Add(Atom("C", 1, 1.44, 0.04));
+            m.Atoms.Add(Atom("C", 0, 0.02, 0.01));
+            m.Atoms.Add(Atom("C", 3, -0.62, -1.29));
+            m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
+            m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
+            m.AddBond(m.Atoms[3], m.Atoms[2], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Double);
+            m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
+            m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Double);
+            m.AddBond(m.Atoms[2], m.Atoms[6], BondOrder.Single);
+            m.AddBond(m.Atoms[4], m.Atoms[7], BondOrder.Single);
+            m.AddBond(m.Atoms[3], m.Atoms[8], BondOrder.Single);
+            m.AddBond(m.Atoms[9], m.Atoms[10], BondOrder.Double);
+            m.AddBond(m.Atoms[10], m.Atoms[11], BondOrder.Single);
+            m.AddBond(m.Atoms[11], m.Atoms[12], BondOrder.Double);
+            m.AddBond(m.Atoms[12], m.Atoms[13], BondOrder.Single);
+            m.AddBond(m.Atoms[8], m.Atoms[9], BondOrder.Single);
+            m.AddBond(m.Atoms[8], m.Atoms[13], BondOrder.Double);
+            m.AddBond(m.Atoms[13], m.Atoms[14], BondOrder.Single);
+            var stereo =
+                       StereoElementFactory.Using3DCoordinates(m)
+                                           .CreateAll();
+            Assert.AreEqual(1, stereo.Count);
+        }
+
         static IAtom Atom(string symbol, int h, double x, double y)
         {
             IAtom a = new Atom(symbol);

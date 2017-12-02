@@ -244,7 +244,7 @@ namespace NCDK.IO
                                 data += line;
                                 // preserve newlines, unless the line is exactly 80 chars; in that case it
                                 // is assumed to continue on the next line. See MDL documentation.
-                                if (line.Length < 80) data += Environment.NewLine;
+                                if (line.Length < 80) data += "\n";
                             }
                             if (fieldName != null)
                             {

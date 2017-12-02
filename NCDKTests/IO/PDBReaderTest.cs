@@ -135,8 +135,8 @@ namespace NCDK.IO
 
             IAtom nAtom = oMol.Atoms[0];
             Assert.IsNotNull(nAtom);
-            Assert.IsTrue(nAtom is PDBAtom);
-            PDBAtom oAtom = (PDBAtom)nAtom;
+            Assert.IsTrue(nAtom is IPDBAtom);
+            IPDBAtom oAtom = (IPDBAtom)nAtom;
             Assert.AreEqual("C", oAtom.Symbol);
             Assert.AreEqual(1, oAtom.Serial.Value);
             Assert.AreEqual("C1", oAtom.Name);
@@ -147,8 +147,8 @@ namespace NCDK.IO
 
             nAtom = oMol.Atoms[3];
             Assert.IsNotNull(nAtom);
-            Assert.IsTrue(nAtom is PDBAtom);
-            oAtom = (PDBAtom)nAtom;
+            Assert.IsTrue(nAtom is IPDBAtom);
+            oAtom = (IPDBAtom)nAtom;
             Assert.AreEqual("O", oAtom.Symbol);
             Assert.AreEqual(4, oAtom.Serial.Value);
             Assert.AreEqual("O4", oAtom.Name);
@@ -159,8 +159,8 @@ namespace NCDK.IO
 
             nAtom = oMol.Atoms[oMol.Atoms.Count - 1];
             Assert.IsNotNull(nAtom);
-            Assert.IsTrue(nAtom is PDBAtom);
-            oAtom = (PDBAtom)nAtom;
+            Assert.IsTrue(nAtom is IPDBAtom);
+            oAtom = (IPDBAtom)nAtom;
             Assert.AreEqual("N", oAtom.Symbol);
             Assert.AreEqual(14, oAtom.Serial.Value);
             Assert.AreEqual("N14", oAtom.Name);

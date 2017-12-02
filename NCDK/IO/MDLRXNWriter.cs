@@ -168,31 +168,31 @@ namespace NCDK.IO
                 if (reactionNumber == 2)
                 {
                     writer.Write("$$$$");
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 writer.Write("$RXN");
-                writer.WriteLine();
+                writer.Write('\n');
                 // reaction name
                 string line = reaction.GetProperty<string>(CDKPropertyName.Title);
                 if (line == null) line = "";
                 if (line.Length > 80) line = line.Substring(0, 80);
                 writer.Write(line);
-                writer.WriteLine();
+                writer.Write('\n');
                 // user/program/date&time/reaction registry no. line
-                writer.WriteLine();
+                writer.Write('\n');
                 // comment line
                 line = reaction.GetProperty<string>(CDKPropertyName.Remark);
                 if (line == null) line = "";
                 if (line.Length > 80) line = line.Substring(0, 80);
                 writer.Write(line);
-                writer.WriteLine();
+                writer.Write('\n');
 
                 line = "";
                 line += FormatMDLInt(reactantCount, 3);
                 line += FormatMDLInt(productCount, 3);
                 writer.Write(line);
-                writer.WriteLine();
+                writer.Write('\n');
 
                 int i = 0;
                 foreach (var mapping in reaction.Mappings)
@@ -212,10 +212,10 @@ namespace NCDK.IO
                     foreach (var element in set)
                     {
                         writer.Write("> <" + (string)element + ">");
-                        writer.WriteLine();
+                        writer.Write('\n');
                         writer.Write(rdFields[element].ToString());
-                        writer.WriteLine();
-                        writer.WriteLine();
+                        writer.Write('\n');
+                        writer.Write('\n');
                     }
                 }
                 // taking care of the $$$$ signs:
@@ -223,7 +223,7 @@ namespace NCDK.IO
                 if (reactionNumber != 1)
                 {
                     writer.Write("$$$$");
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
                 reactionNumber++;
             }
@@ -248,7 +248,7 @@ namespace NCDK.IO
                 {
                     StringWriter sw = new StringWriter();
                     writer.Write("$MOL");
-                    writer.WriteLine();
+                    writer.Write('\n');
                     MDLV2000Writer mdlwriter = null;
                     try
                     {

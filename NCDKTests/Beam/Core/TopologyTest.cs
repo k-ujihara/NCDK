@@ -327,19 +327,52 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Create_tb()
         {
-            Assert.AreEqual(Topology.Unknown, Topology.Create(0, new int[0], new List<Edge>(), Configuration.TB1));
+            int[] vs = new int[] { 1, 2, 3, 4, 5 };
+            List<Edge> es = new List<Edge>
+            {
+                new Edge(0, 1, Bond.Implicit),
+                new Edge(0, 2, Bond.Implicit),
+                new Edge(0, 3, Bond.Implicit),
+                new Edge(0, 4, Bond.Implicit),
+                new Edge(0, 5, Bond.Implicit),
+            };
+            Topology t = Topology.Create(0, vs, es, Configuration.TB5);
+            Assert.AreEqual(Configuration.TB5, t.Configuration);
+            Assert.AreEqual(0, t.Atom);
         }
 
         [TestMethod()]
         public void Create_sp()
         {
-            Assert.AreEqual(Topology.Unknown, Topology.Create(0, new int[0], new List<Edge>(), Configuration.SP1));
+            int[] vs = new int[] { 1, 2, 3, 4 };
+            List<Edge> es = new List<Edge>()
+            {
+                new Edge(0, 1, Bond.Implicit),
+                new Edge(0, 2, Bond.Implicit),
+                new Edge(0, 3, Bond.Implicit),
+                new Edge(0, 4, Bond.Implicit),
+            };
+            Topology t = Topology.Create(0, vs, es, Configuration.SP1);
+            Assert.AreEqual(Configuration.SP1, t.Configuration);
+            Assert.AreEqual(0, t.Atom);
         }
 
         [TestMethod()]
         public void Create_oh()
         {
-            Assert.AreEqual(Topology.Unknown, Topology.Create(0, new int[0], new List<Edge>(), Configuration.OH1));
+            int[] vs = new int[] { 1, 2, 3, 4, 5, 6 };
+            List<Edge> es = new List<Edge>()
+            {
+                new Edge(0, 1, Bond.Implicit),
+                new Edge(0, 2, Bond.Implicit),
+                new Edge(0, 3, Bond.Implicit),
+                new Edge(0, 4, Bond.Implicit),
+                new Edge(0, 5, Bond.Implicit),
+                new Edge(0, 6, Bond.Implicit),
+            };
+            Topology t = Topology.Create(0, vs, es, Configuration.OH1);
+            Assert.AreEqual(Configuration.OH1, t.Configuration);
+            Assert.AreEqual(0, t.Atom);
         }
 
         [TestMethod()]

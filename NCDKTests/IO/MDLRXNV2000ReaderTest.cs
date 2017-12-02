@@ -115,5 +115,16 @@ namespace NCDK.IO
             var maps = reaction2.Mappings.GetEnumerator();
             Assert.IsTrue(maps.MoveNext());
         }
+
+        [TestMethod()]
+        public void TestAgentParts()
+        {
+            using (var ins = ResourceLoader.GetAsStream(this.GetType(), ("ethylesterification.mol")))
+            {
+                MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(ins);
+                IReaction reaction = rdr.Read(new Reaction());
+                Assert.AreEqual(1, reaction.Agents.Count);
+            }
+        }
     }
 }

@@ -789,7 +789,7 @@ namespace NCDK.Hash
             long rConfiguration = generator.Generate(butan2ol);
 
             // C[C@H](O)CC  (2S)-butan-2-ol
-            butan2ol.SetStereoElements(new List<IStereoElement>(1));
+            butan2ol.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[0],
                 butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[2], butan2ol.Atoms[3],}, TetrahedralStereo.AntiClockwise));
@@ -812,7 +812,7 @@ namespace NCDK.Hash
             // okay now let's move around the atoms in the stereo element
 
             // [C@H](C)(O)CC (2R)-butan-2-ol
-            butan2ol.SetStereoElements(new List<IStereoElement>(1));
+            butan2ol.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[0], butan2ol.Atoms[2], butan2ol.Atoms[3],},
                     TetrahedralStereo.AntiClockwise));
@@ -821,7 +821,7 @@ namespace NCDK.Hash
             Assert.AreEqual(generator.Generate(butan2ol), generator.Generate(butan2ols[0]));
 
             // [C@@H](C)(O)CC (2S)-butan-2-ol
-            butan2ol.SetStereoElements(new List<IStereoElement>(1));
+            butan2ol.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[0], butan2ol.Atoms[2], butan2ol.Atoms[3],}, TetrahedralStereo.Clockwise));
 
@@ -845,14 +845,14 @@ namespace NCDK.Hash
             IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
 
             // set E configuration
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
 
             long eConfiguration = generator.Generate(dichloroethene);
 
             // set Z configuration
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             long zConfiguration = generator.Generate(dichloroethene);
@@ -903,27 +903,27 @@ namespace NCDK.Hash
             // ClC(/[H])=C([H])/Cl
             // ClC(/[H])=C(\[H])Cl
             // Cl/C([H])=C(\[H])Cl
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[2]}, // CL4-C3
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[4]}, // C3-H6
@@ -932,22 +932,22 @@ namespace NCDK.Hash
 
             // set Z configurations - we can specify using the C-CL bonds or the
             // C-H bonds so there are four possible combinations
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[4]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[4]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
@@ -1002,27 +1002,27 @@ namespace NCDK.Hash
             // ClC(/[H])=C([H])/Cl
             // ClC(/[H])=C(\[H])Cl
             // Cl/C([H])=C(\[H])Cl
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[2]}, // CL4-C3
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[4]}, // C3-H6
@@ -1031,22 +1031,22 @@ namespace NCDK.Hash
 
             // set Z configurations - we can specify using the C-CL bonds or the
             // C-H bonds so there are four possible combinations
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[4]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
-            dichloroethene.SetStereoElements(new List<IStereoElement>());
+            dichloroethene.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
             dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[4]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));

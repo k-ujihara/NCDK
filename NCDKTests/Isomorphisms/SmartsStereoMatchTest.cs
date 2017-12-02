@@ -160,7 +160,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
@@ -274,7 +274,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -289,7 +289,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -304,7 +304,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -319,7 +319,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -334,7 +334,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -349,7 +349,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
@@ -364,7 +364,7 @@ namespace NCDK.Isomorphisms
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsTrue(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));
-            target.SetStereoElements(new List<IStereoElement>(1));
+            target.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(1));
             target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsFalse(new SmartsStereoMatch(query, target).Apply(new int[] { 2, 0, 1, 3 }));

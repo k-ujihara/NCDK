@@ -27,7 +27,7 @@ using System.Linq;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Class that returns the number of atoms in the longest aliphatic chain.
+    ///  Counts the number of atoms in the longest aliphatic chain.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:
@@ -47,12 +47,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </remarks>
     /// Returns a single value named <i>nAtomLAC</i>
     // @author      chhoppe from EUROSCREEN
+    // @author John Mayfield
     // @cdk.created 2006-1-03
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
     public class LongestAliphaticChainDescriptor : IMolecularDescriptor
     {
+        public const string CHECK_RING_SYSTEM = "checkRingSystem";
         private bool checkRingSystem = false;
         private static readonly string[] NAMES = { "nAtomLAC" };
 
@@ -85,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("Both parameters must be of type bool");
+                    throw new CDKException("Expected parameter of type " + typeof(bool).ToString());
                 }
                 // ok, all should be fine
                 checkRingSystem = (bool)value[0];
@@ -101,7 +103,40 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<int>>(
+                _Specification,
+                ParameterNames,
+                Parameters,
+                new Result<int>(0),
+                DescriptorNames,
+                e);
+        }
+
+        private static bool IsAcyclicCarbon(IAtom atom)
+        {
+            return atom.AtomicNumber == 6 && !atom.IsInRing;
+        }
+
+        /// <summary>
+        /// Depth-First-Search on an acyclic graph. Since we have no cycles we
+        /// don't need the visit flags and only need to know which atom we came from.
+        /// </summary>
+        /// <param name="adjlist">adjacency list representation of grah</param>
+        /// <param name="v">the current atom index</param>
+        /// <param name="prev">the previous atom index</param>
+        /// <returns>the max length traversed</returns>
+        private static int GetMaxDepth(int[][] adjlist, int v, int prev)
+        {
+            int longest = 0;
+            foreach (var w in adjlist[v])
+            {
+                if (w == prev) continue;
+                // no cycles so don't need to check previous
+                int length = GetMaxDepth(adjlist, w, v);
+                if (length > longest)
+                    longest = length;
+            }
+            return 1 + longest;
         }
 
         /// <summary>
@@ -111,177 +146,54 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  The method require one parameter:
         ///  if checkRingSyste is true the <see cref="IMolecularEntity.IsInRing"/> will be set
         ///  </remarks>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
+        /// <param name="mol">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the longest aliphatic chain of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
-        public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
+        public DescriptorValue<Result<int>> Calculate(IAtomContainer mol)
         {
-            IAtomContainer container = (IAtomContainer)atomContainer.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            IRingSet rs;
             if (checkRingSystem)
+                Cycles.MarkRingAtomsAndBonds(mol);
+
+            IAtomContainer aliphaticParts = mol.Builder.NewAtomContainer();
+            foreach (var atom in mol.Atoms)
             {
-                try
-                {
-                    rs = new SpanningTree(container).GetBasicRings();
-                }
-                catch (NoSuchAtomException e)
-                {
-                    return GetDummyDescriptorValue(e);
-                }
-                for (int i = 0; i < container.Atoms.Count; i++)
-                {
-                    if (rs.Contains(container.Atoms[i]))
-                    {
-                        container.Atoms[i].IsInRing = true;
-                    }
-                }
+                if (IsAcyclicCarbon(atom))
+                    aliphaticParts.Atoms.Add(atom);
+            }
+            foreach (var bond in mol.Bonds)
+            {
+                if (IsAcyclicCarbon(bond.Begin) &&
+                    IsAcyclicCarbon(bond.End))
+                    aliphaticParts.Bonds.Add(bond);
             }
 
-            int longestChainAtomsCount = 0;
-            int tmpLongestChainAtomCount;
-
-            for (int i = 0; i < container.Atoms.Count; i++)
+            int longest = 0;
+            int[][] adjlist = GraphUtil.ToAdjList(aliphaticParts);
+            for (int i = 0; i < adjlist.Length; i++)
             {
-                container.Atoms[i].IsVisited = false;
+                // atom deg > 1 can't find the longest chain
+                if (adjlist[i].Length != 1)
+                    continue;
+                int length = GetMaxDepth(adjlist, i, -1);
+                if (length > longest)
+                    longest = length;
             }
 
-            for (int i = 0; i < container.Atoms.Count; i++)
-            {
-                IAtom atomi = container.Atoms[i];
-                if (atomi.Symbol.Equals("H")) continue;
-
-                if ((!atomi.IsAromatic && !atomi.IsInRing
-                        & atomi.Symbol.Equals("C"))
-                        & !atomi.IsVisited)
-                {
-
-                    var startSphere = new List<IAtom>();
-                    var path = new List<IAtom>();
-                    startSphere.Add(atomi);
-                    try
-                    {
-                        BreadthFirstSearch(container, startSphere, path);
-                    }
-                    catch (CDKException e)
-                    {
-                        return GetDummyDescriptorValue(e);
-                    }
-                    IAtomContainer aliphaticChain = CreateAtomContainerFromPath(container, path);
-                    if (aliphaticChain.Atoms.Count > 1)
-                    {
-                        double[][] conMat = ConnectionMatrix.GetMatrix(aliphaticChain);
-                        int[][] apsp = PathTools.ComputeFloydAPSP(conMat);
-                        tmpLongestChainAtomCount = GetLongestChainPath(apsp);
-                        if (tmpLongestChainAtomCount > longestChainAtomsCount)
-                        {
-                            longestChainAtomsCount = tmpLongestChainAtomCount;
-                        }
-                    }
-                }
-            }
-
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(longestChainAtomsCount), DescriptorNames);
+            return new DescriptorValue<Result<int>>(
+                _Specification,
+                ParameterNames,
+                Parameters,
+                new Result<int>(longest),
+                DescriptorNames);
         }
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
-        private int GetLongestChainPath(int[][] apsp)
-        {
-            int longestPath = 0;
-            for (int i = 0; i < apsp.Length; i++)
-            {
-                for (int j = 0; j < apsp.Length; j++)
-                {
-                    if (apsp[i][j] + 1 > longestPath)
-                    {
-                        longestPath = apsp[i][j] + 1;
-                    }
-                }
-            }
-            return longestPath;
-        }
-
-        private IAtomContainer CreateAtomContainerFromPath(IAtomContainer container, List<IAtom> path)
-        {
-            IAtomContainer aliphaticChain = container.Builder.NewAtomContainer();
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                if (!aliphaticChain.Contains(path[i]))
-                {
-                    aliphaticChain.Atoms.Add(path[i]);
-                }
-                for (int j = 1; j < path.Count; j++)
-                {
-                    if (container.GetBond(path[i], path[j]) != null)
-                    {
-                        if (!aliphaticChain.Contains(path[j]))
-                        {
-                            aliphaticChain.Atoms.Add(path[j]);
-                        }
-                        aliphaticChain.Bonds.Add(container.GetBond(path[i], path[j]));
-                    }
-                }
-            }
-
-            //for (int i=0;i<aliphaticChain.Atoms.Count;i++){
-            //    Debug.WriteLine("container-->atom:"+i+" Nr: "+container.Atoms.IndexOf(aliphaticChain.GetAtomAt(i))+" maxBondOrder:"+aliphaticChain.GetMaximumBondOrder(aliphaticChain.GetAtomAt(i))+" Aromatic:"+aliphaticChain.GetAtomAt(i).IsAromatic+" Ring:"+aliphaticChain.GetAtomAt(i).IsInRing+" FormalCharge:"+aliphaticChain.GetAtomAt(i).FormalCharge+" Charge:"+aliphaticChain.GetAtomAt(i).Charge+" Flag:"+aliphaticChain.GetAtomAt(i).IsVisited);
-            //}
-            //Debug.WriteLine("BondCount:"+aliphaticChain.Bonds.Count);
-            if (aliphaticChain.Bonds.Count == 0)
-            {
-                aliphaticChain.RemoveAllElements();
-            }
-            return aliphaticChain;
-        }
-
-        /// <summary>
-        ///  Performs a breadthFirstSearch in an AtomContainer starting with a
-        ///  particular sphere, which usually consists of one start atom, and searches
-        ///  for a pi system.
-        /// </summary>
-        /// <param name="container">The AtomContainer to be searched</param>
-        /// <param name="sphere">A sphere of atoms to start the search with</param>
-        /// <param name="path">A vector which stores the atoms belonging to the pi system</param>
-        /// <exception cref="CDKException"></exception>
-        private void BreadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path)
-        {
-            IAtom nextAtom;
-            List<IAtom> newSphere = new List<IAtom>();
-            foreach (var atom in sphere)
-            {
-                var bonds = container.GetConnectedBonds(atom);
-                foreach (var bond in bonds)
-                {
-                    nextAtom = bond.GetConnectedAtom(atom);
-                    if ((!nextAtom.IsAromatic && !nextAtom.IsInRing
-                            & nextAtom.Symbol.Equals("C"))
-                            & !nextAtom.IsVisited)
-                    {
-                        path.Add(nextAtom);
-                        nextAtom.IsVisited = true;
-                        if (container.GetConnectedBonds(nextAtom).Count() > 1)
-                        {
-                            newSphere.Add(nextAtom);
-                        }
-                    }
-                    else
-                    {
-                        nextAtom.IsVisited = true;
-                    }
-                }
-            }
-            if (newSphere.Count > 0)
-            {
-                BreadthFirstSearch(container, newSphere, path);
-            }
-        }
-
         /// <summary>
         /// The parameterNames attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkRingSystem" };
+        public IReadOnlyList<string> ParameterNames { get; } = new string[] { CHECK_RING_SYSTEM };
 
         /// <summary>
         ///  Gets the parameterType attribute of the LongestAliphaticChainDescriptor object.
@@ -290,7 +202,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public object GetParameterType(string name)
         {
-            return true;
+            if (name.Equals(CHECK_RING_SYSTEM))
+                return true;
+            else
+                throw new ArgumentException("No parameter for name", nameof(name));
         }
 
         DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);

@@ -207,13 +207,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private IList<IList<int>> Order6(IAtomContainer atomContainer)
         {
-            QueryAtomContainer[] queries = new QueryAtomContainer[2];
+            QueryAtomContainer[] queries = new QueryAtomContainer[1];
             try
             {
-                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("C1(C)C(C)C1(C)"),
-                        false);
-                queries[1] = QueryAtomContainerCreator
-                        .CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)C(C)(C)C"), false);
+                queries[0] = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(sp.ParseSmiles("CC(C)C(C)(C)C"), false);
             }
             catch (InvalidSmilesException e)
             {

@@ -69,6 +69,9 @@ namespace NCDK.Aromaticities
     /// </para>
     /// </remarks>
     /// <example>
+    /// <para>Recommended Usage:</para>
+    /// <para>Which model/cycles to use depends on the situation but a good general
+    /// purpose configuration is shown below:</para>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs"]/*' />
     /// </example>
     /// <seealso href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</seealso>

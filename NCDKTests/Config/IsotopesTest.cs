@@ -173,6 +173,16 @@ namespace NCDK.Config
             Assert.AreEqual(13.00335484, isofac.GetIsotope("C", 13).ExactMass.Value, 0.0000001);
         }
 
+        /// <summary>
+        /// Elements without a major isotope should return null.
+        /// </summary>
+        [TestMethod()]
+        public void TestMajorUnstableIsotope()
+        {
+            Isotopes isotopes = Isotopes.Instance;
+            Assert.IsNull(isotopes.GetMajorIsotope("Es"));
+        }
+
         [TestMethod()]
         public void TestGetIsotope_NonElement()
         {
@@ -214,6 +224,18 @@ namespace NCDK.Config
             IIsotope match = isofac.GetIsotope(carbon13.Symbol, carbon13.ExactMass.Value, 2.0);
             Assert.IsNotNull(match);
             Assert.AreEqual(13, match.MassNumber.Value);
+        }
+
+        [TestMethod()]
+        public void ConfigureDoesNotSetMajorIsotope()
+        {
+            IAtom atom = new Atom("CH4");
+            Isotopes isotopes = Isotopes.Instance;
+            IIsotope major = isotopes.GetMajorIsotope(atom.Symbol);
+            Assert.IsNotNull(major);
+            Assert.AreEqual(12, major.MassNumber);
+            isotopes.Configure(atom);
+            Assert.IsNull(atom.MassNumber);
         }
 
         // @cdk.bug 3534288

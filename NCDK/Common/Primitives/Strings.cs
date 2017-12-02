@@ -37,13 +37,25 @@ namespace NCDK.Common.Primitives
             return s.Substring(0, maxChars);
         }
 
-        public static string JavaFormat(double value, string format)
+        public static string JavaFormat(double value, int numberOfDecimalPlaces)
         {
-            var s = value.ToString(format);
-            if (s.StartsWith("0"))
-                s = s.Substring(1);
-            else if (s.StartsWith("-0"))
-                s = "-" + s.Substring(2);
+            return JavaFormat(value, numberOfDecimalPlaces, false);
+        }
+
+        public static string JavaFormat(double value, int numberOfDecimalPlaces, bool isZeroLeading)
+        {
+            if (numberOfDecimalPlaces < 0)
+                throw new ArgumentException("Invalid arguemnt", nameof(numberOfDecimalPlaces));
+            var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString()));
+            if (!isZeroLeading)
+            {
+                if (s.StartsWith("0"))
+                    s = s.Substring(1);
+                else if (s.StartsWith("-0"))
+                    s = "-" + s.Substring(2);
+            }
+            if (!s.Contains("."))
+                return s;
             while (s.EndsWith("0"))
                 s = s.Substring(0, s.Length - 1);
             if (s.EndsWith("."))

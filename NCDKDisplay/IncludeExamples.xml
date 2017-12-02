@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Comments>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs">
-    <code>                // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
-                ElectronDonation model = ElectronDonation.CDKModel;
-                CycleFinder cycles = Cycles.CDKAromaticSetFinder;
+    <code>                ElectronDonation model = ElectronDonation.DaylightModel;
+                CycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
-                // apply our configured model to each molecule, the CDK model
-                // requires that atom types are perceived
-                var molecule = TestMoleculeFactory.MakeAnthracene();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-                aromaticity.Apply(molecule);
+
+                // apply our configured model to each molecule
+                foreach (IAtomContainer molecule in molecules)
+                {
+                    aromaticity.Apply(molecule);
+                }
 </code>
   </Codes>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs+ctor">
@@ -1711,6 +1711,14 @@ namespace NCDK.Smiles
         }
     }
 }
+</code>
+  </Codes>
+  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor">
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+</code>
+  </Codes>
+  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor_Isomeric">
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.AtomicMass);
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+1">

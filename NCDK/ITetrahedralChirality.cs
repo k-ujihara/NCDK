@@ -39,7 +39,7 @@ namespace NCDK
     // @cdk.module interfaces
     // @cdk.githash
     public interface ITetrahedralChirality
-        : IStereoElement
+        : IStereoElement<IAtom, IAtom>
     {
         /// <summary>
         /// Returns an array of ligand atoms around the chiral atom. If the chiral

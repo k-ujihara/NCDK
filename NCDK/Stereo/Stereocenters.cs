@@ -122,13 +122,17 @@ namespace NCDK.Stereo
         private readonly EdgeToBondMap bondMap;
 
         /// <summary>the type of stereo center - indexed by atom.</summary>
-        private readonly CenterTypes[] stereocenters;
+        private CenterTypes[] stereocenters;
 
         /// <summary>the stereo elements - indexed by atom.</summary>
-        private readonly StereoElement[] elements;
+        private StereoElement[] elements;
 
         /// <summary>basic cycle information (i.e. is atom/bond cyclic) and cycle systems.</summary>
         private readonly RingSearch ringSearch;
+
+        private int numStereoElements;
+
+        private bool checkSymmetry = false;
 
         /// <summary>
         /// Determine the stereocenter atoms in the provided container based on connectivity.
@@ -142,7 +146,9 @@ namespace NCDK.Stereo
         {
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
             int[][] g = GraphUtil.ToAdjList(container, bondMap);
-            return new Stereocenters(container, g, bondMap);
+            Stereocenters stereocenters = new Stereocenters(container, g, bondMap);
+            stereocenters.CheckSymmetry();
+            return stereocenters;
         }
 
         /// <summary>
@@ -158,16 +164,22 @@ namespace NCDK.Stereo
             this.bondMap = bondMap;
             this.g = graph;
             this.ringSearch = new RingSearch(container, graph);
+            this.elements = new StereoElement[g.Length];
+            this.stereocenters = new CenterTypes[g.Length];
+            this.numStereoElements = CreateElements();
+        }
 
-            this.stereocenters = new CenterTypes[graph.Length];
-            this.elements = new StereoElement[graph.Length];
+        internal void CheckSymmetry()
+        {
+            if (!checkSymmetry)
+            {
+                checkSymmetry = true;
+                numStereoElements = CreateElements();
+                int[] symmetry = ToIntArray(Canon.Symmetry(container, g));
 
-            if (CreateElements() == 0) return;
-
-            int[] symmetry = ToIntArray(Canon.Symmetry(container, graph));
-
-            LabelTrueCenters(symmetry);
-            LabelIsolatedPara(symmetry);
+                LabelTrueCenters(symmetry);
+                LabelIsolatedPara(symmetry);
+            }
         }
 
         /// <summary>
@@ -184,8 +196,10 @@ namespace NCDK.Stereo
         /// <returns>the type of element</returns>
         public CoordinateTypes ElementType(int v)
         {
-            if (stereocenters[v] == CenterTypes.Non || elements[v] == null) return CoordinateTypes.None;
-            return elements[v].type;
+            if (stereocenters[v] == CenterTypes.None || elements[v] == null)
+                return CoordinateTypes.None;
+            else
+                return elements[v].type;
         }
 
         /// <summary>
@@ -229,13 +243,14 @@ namespace NCDK.Stereo
 
             // all atoms we don't define as potential are considered
             // non-stereogenic
-            Arrays.Fill(stereocenters, CenterTypes.Non);
+            Arrays.Fill(stereocenters, CenterTypes.None);
 
             for (int i = 0; i < g.Length; i++)
             {
                 // determine hydrogen count, connectivity and valence
                 int h = container.Atoms[i].ImplicitHydrogenCount.Value;
                 int x = g[i].Length + h;
+                int d = g[i].Length;
                 int v = h;
 
                 if (x < 2 || x > 4 || h > 1) continue;
@@ -243,7 +258,9 @@ namespace NCDK.Stereo
                 int piNeighbor = 0;
                 foreach (var w in g[i])
                 {
-                    if (GetAtomicNumber(container.Atoms[w]) == 1) h++;
+                    if (GetAtomicNumber(container.Atoms[w]) == 1 &&
+                        container.Atoms[w].MassNumber == null)
+                        h++;
                     switch (bondMap[i, w].Order.Ordinal)
                     {
                         case BondOrder.O.Single:
@@ -260,7 +277,7 @@ namespace NCDK.Stereo
                 }
 
                 // check the type of stereo chemistry supported
-                switch (SupportedType(i, v, h, x))
+                switch (SupportedType(i, v, d, h, x))
                 {
                     case CoordinateTypes.Bicoordinate:
                         stereocenters[i] = CenterTypes.Potential;
@@ -280,7 +297,6 @@ namespace NCDK.Stereo
                         }
                         break;
                     case CoordinateTypes.Tricoordinate:
-
                         u = i;
                         w = piNeighbor;
 
@@ -296,10 +312,6 @@ namespace NCDK.Stereo
                             continue;
                         }
 
-                        // TODO: we reject all cyclic double bonds but could
-                        // TODO: allow flexible rings (> 7 atoms)
-                        if (ringSearch.Cyclic(w, u)) continue;
-
                         stereocenters[w] = CenterTypes.Potential;
                         stereocenters[u] = CenterTypes.Potential;
                         elements[u] = new Tricoordinate(u, w, g[u]);
@@ -314,11 +326,11 @@ namespace NCDK.Stereo
                         break;
 
                     default:
-                        stereocenters[i] = CenterTypes.Non;
+                        stereocenters[i] = CenterTypes.None;
                         break;
                 }
 
-                GoNext_VERTICES:
+            GoNext_VERTICES:
                 ;
             }
 
@@ -356,7 +368,6 @@ namespace NCDK.Stereo
             {
                 if (stereocenters[v] == CenterTypes.Potential)
                 {
-
                     int[] ws = elements[v].neighbors;
                     int nUnique = 0;
                     bool terminal = true;
@@ -386,7 +397,7 @@ namespace NCDK.Stereo
                     // all the symmetric neighbors are terminal then 'v' can not
                     // be a stereocenter. There is an automorphism which inverts
                     // only this stereocenter
-                    else if (terminal) stereocenters[v] = CenterTypes.Non;
+                    else if (terminal) stereocenters[v] = CenterTypes.None;
                 }
             }
         }
@@ -421,7 +432,7 @@ namespace NCDK.Stereo
                 if (potential.Count + trueCentres.Count < 2)
                 {
                     foreach (var element in potential)
-                        stereocenters[element.focus] = CenterTypes.Non;
+                        stereocenters[element.focus] = CenterTypes.None;
                     continue;
                 }
 
@@ -460,7 +471,7 @@ namespace NCDK.Stereo
                         if (deg == 3 || (deg == 4 && nUnique == 2)) paraElements.Add(element);
 
                         // remove those we know cannot possibly be stereocenters
-                        if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterTypes.Non;
+                        if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterTypes.None;
                     }
                     else if (element.type == CoordinateTypes.Tricoordinate)
                     {
@@ -474,7 +485,7 @@ namespace NCDK.Stereo
                         stereocenters[para.focus] = CenterTypes.Para;
                 else
                     foreach (var para in paraElements)
-                        stereocenters[para.focus] = CenterTypes.Non;
+                        stereocenters[para.focus] = CenterTypes.None;
             }
         }
 
@@ -488,7 +499,7 @@ namespace NCDK.Stereo
         /// <param name="h">hydrogen</param>
         /// <param name="x">connectivity</param>
         /// <returns>type of stereo chemistry</returns>
-        private CoordinateTypes SupportedType(int i, int v, int h, int x)
+        private CoordinateTypes SupportedType(int i, int v, int d, int h, int x)
         {
             IAtom atom = container.Atoms[i];
 
@@ -506,7 +517,8 @@ namespace NCDK.Stereo
             int q = Charge(atom);
 
             // more than one hydrogen
-            if (h > 1) return CoordinateTypes.None;
+            if (checkSymmetry && h > 1)
+                return CoordinateTypes.None;
 
             switch (GetAtomicNumber(atom))
             {
@@ -514,7 +526,6 @@ namespace NCDK.Stereo
                     return CoordinateTypes.None;
                 case 5: // boron
                     return q == -1 && v == 4 && x == 4 ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-
                 case 6: // carbon
                     if (v != 4 || q != 0) return CoordinateTypes.None;
                     if (x == 2) return CoordinateTypes.Bicoordinate;
@@ -522,12 +533,12 @@ namespace NCDK.Stereo
                     if (x == 4) return CoordinateTypes.Tetracoordinate;
                     return CoordinateTypes.None;
                 case 7: // nitrogen
-                    if (x == 2 && v == 3 && h == 0 && q == 0) return CoordinateTypes.Tricoordinate;
+                    if (x == 2 && v == 3 && d == 2 && q == 0) return CoordinateTypes.Tricoordinate;
                     if (x == 3 && v == 4 && q == 1) return CoordinateTypes.Tricoordinate;
                     if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                         return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-                    return x == 3 && h == 0 && InThreeMemberRing(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-
+                    // note: bridgehead not allowed by InChI but makes sense
+                    return x == 3 && h == 0 && (IsBridgeHeadNitrogen(i) || InThreeMemberRing(i)) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
                 case 14: // silicon
                     if (v != 4 || q != 0) return CoordinateTypes.None;
                     if (x == 3) return CoordinateTypes.Tricoordinate;
@@ -587,6 +598,9 @@ namespace NCDK.Stereo
         /// <returns>the atom does not have > 2 terminal neighbors with a combined hydrogen count of > 0</returns>
         private bool VerifyTerminalHCount(int v)
         {
+            if (!checkSymmetry)
+                return true;
+
             int[] counts = new int[6];
             int[][] atoms = Arrays.CreateJagged<int>(6, g[v].Length);
 
@@ -614,7 +628,11 @@ namespace NCDK.Stereo
                     int[] ws = g[atoms[i][j]];
                     foreach (var w in g[atoms[i][j]])
                     {
-                        if (GetAtomicNumber(container.Atoms[w]) == 1) hCount++;
+                        IAtom atom = container.Atoms[w];
+                        if (GetAtomicNumber(atom) == 1 && atom.MassNumber == null)
+                        {
+                            hCount++;
+                        }
                     }
 
                     // is terminal?
@@ -676,6 +694,15 @@ namespace NCDK.Stereo
             return false;
         }
 
+        private bool IsBridgeHeadNitrogen(int v)
+        {
+            if (g[v].Length != 3)
+                return false;
+            return ringSearch.Cyclic(v, g[v][0]) &&
+                   ringSearch.Cyclic(v, g[v][1]) &&
+                   ringSearch.Cyclic(v, g[v][2]);
+        }
+
         /// <summary>
         /// Safely obtain the atomic number of an atom. If the atom has undefined
         /// atomic number and is not a pseudo-atom it is considered an error. Pseudo
@@ -730,7 +757,7 @@ namespace NCDK.Stereo
             Potential,
 
             /// <summary>Non stereo-centre.</summary>
-            Non
+            None,
         }
 
         public enum CoordinateTypes

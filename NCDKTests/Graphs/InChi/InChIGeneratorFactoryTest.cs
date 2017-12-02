@@ -165,7 +165,15 @@ namespace NCDK.Graphs.InChI
             string actual = generator.InChI;
 
             Assert.AreEqual(expected, actual, "Incorrect InCHI generated for topological centre");
+        }
 
+        [TestMethod()]
+        public void DontIgnoreMajorIsotopes()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            InChIGeneratorFactory inchifact = InChIGeneratorFactory.Instance;
+            Assert.IsTrue(inchifact.GetInChIGenerator(smipar.ParseSmiles("[12CH4]")).InChI.Contains("/i"));
+            Assert.IsFalse(inchifact.GetInChIGenerator(smipar.ParseSmiles("C")).InChI.Contains("/i"));
         }
 
         /// <summary>

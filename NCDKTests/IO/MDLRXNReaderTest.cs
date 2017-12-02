@@ -259,7 +259,7 @@ namespace NCDK.IO
             {
                 for (int k = 0; k < reactionSet[0].Reactants[i].Atoms.Count; k++)
                 {
-                    if (reactionSet[0].Reactants[i].Atoms[k] == chemObject)
+                    if (reactionSet[0].Reactants[i].Atoms[k].Equals(chemObject))
                         return "reactant:" + i + "_" + k;
                 }
             }
@@ -267,7 +267,7 @@ namespace NCDK.IO
             {
                 for (int k = 0; k < reactionSet[0].Products[i].Atoms.Count; k++)
                 {
-                    if (reactionSet[0].Products[i].Atoms[k] == chemObject)
+                    if (reactionSet[0].Products[i].Atoms[k].Equals(chemObject))
                         return "product:" + i + "_" + k;
                 }
             }

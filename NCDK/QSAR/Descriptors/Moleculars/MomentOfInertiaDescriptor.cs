@@ -150,7 +150,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 IAtom currentAtom = clone.Atoms[i];
 
-                double mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass.Value;
+                var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
+                double mass = _mass == null ? factory.GetNaturalMass(currentAtom) : _mass.Value;
 
                 var p = currentAtom.Point3D.Value;
                 xdif = p.X - centerOfMass.X;

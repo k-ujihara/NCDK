@@ -134,6 +134,8 @@ namespace NCDK.Beam
                 for (int j = 0; j < d; ++j)
                 {
                      Edge e = graph.EdgeAt(v, j);
+                    if (e.Bond == Bond.Single)
+                        continue;
                     int w = e.Other(v);
 
                     if (!subset.Contains(w))

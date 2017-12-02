@@ -115,7 +115,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(NotSupportedException))]
         public void NoBuilder()
         {
             IAtom focus = new Mock<IAtom>().Object;

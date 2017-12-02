@@ -475,7 +475,7 @@ namespace NCDK.Modelings.Builder3D
                             try
                             {
                                 fout.Write(data[i].ToString());
-                                fout.WriteLine();
+                                fout.Write('\n');
                             }
                             catch (Exception)
                             {

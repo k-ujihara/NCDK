@@ -90,7 +90,7 @@ namespace NCDK.IO
             {
                 return (T)ReadMolecule(obj.Builder);
             }
-            return default(T);
+            throw new CDKException("Only supports AtomContainer objects.");
         }
 
         public IAtomContainer ReadMolecule(IChemObjectBuilder builder)

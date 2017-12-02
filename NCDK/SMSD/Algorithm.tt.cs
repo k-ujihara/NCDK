@@ -48,7 +48,7 @@ namespace NCDK.SMSD
 		/// The <see cref="Ordinal"/> values of <see cref="Algorithm"/>.
 		/// </summary>
 		/// <seealso cref="Algorithm"/>
-        public static class O
+        public static partial class O
         {
             public const int Default = 0;
             public const int MCSPlus = 1;
@@ -90,7 +90,7 @@ namespace NCDK.SMSD
 
         public static explicit operator Algorithm(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -134,7 +134,7 @@ namespace NCDK.SMSD
             TurboSubStructure, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Algorithm> Values => values;
+        public static Algorithm[] Values => values;
 
         /* Avoid to cause compiling error */
 

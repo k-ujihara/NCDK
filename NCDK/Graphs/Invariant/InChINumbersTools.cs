@@ -137,7 +137,6 @@ namespace NCDK.Graphs.Invariant
                     string[] fixedHNumbers = aux.Substring(index + 3, aux.IndexOf('/', index + 3) - (index + 3)).Split(';');
                     for (int i = 0; i < fixedHNumbers.Length; i++)
                     {
-
                         string component = fixedHNumbers[i];
 
                         // m, 2m, 3m ... need to lookup number in the base numbering
@@ -156,7 +155,6 @@ namespace NCDK.Graphs.Invariant
                         else
                         {
                             string[] numbering = component.Split(',');
-                            first[i] = int.Parse(numbering[0]) - 1;
                             foreach (var number in numbering)
                                 numbers[int.Parse(number) - 1] = label++;
                         }

@@ -201,7 +201,7 @@ namespace NCDK.SMSD.Tools
                         remove.Add(atom);
                 }
                 foreach (var a in remove)
-                    mol.RemoveAtomAndConnectedElectronContainers(map.AtomMap[a]);
+                    mol.RemoveAtomAndConnectedElectronContainers(map.Get(a));
                 foreach (var atom in mol.Atoms.Where(n => !n.ImplicitHydrogenCount.HasValue))
                     atom.ImplicitHydrogenCount = 0;
                 //            Recompute hydrogen counts of neighbours of removed Hydrogens.
@@ -274,8 +274,8 @@ namespace NCDK.SMSD.Tools
                 // Process neighbours.
                 foreach (var iAtom in atomContainer.GetConnectedAtoms(aRemove))
                 {
-                    IAtom neighb = map.AtomMap[iAtom];
-                    if (neighb == null)
+                    IAtom neighb;
+                    if (!map.TryGetValue(iAtom, out neighb))
                     {
                         continue; // since for the case of H2, neight H has atom heavy atom neighbor
                     }

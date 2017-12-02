@@ -57,7 +57,7 @@ namespace NCDK.IO
             sourceWriter.Write(molecule);
             sourceWriter.Close();
             string output = writer.ToString();
-            string newline = Environment.NewLine;
+            const string newline = "\n";
             Assert.AreEqual("{" + newline +
                     "  IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;" + newline +
                     "  IAtomContainer mol = builder.NewAtomContainer();" + newline +
