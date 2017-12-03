@@ -2080,9 +2080,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Br[C@@H](Cl)I");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2109,9 +2109,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Br[C@H](Cl)I");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2133,9 +2133,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Br[C@@]([H])(Cl)I");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2155,9 +2155,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Br[C@]([H])(Cl)I");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2191,9 +2191,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[C@]12(OC1)NCN2");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2215,14 +2215,14 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C[C@H](O)[C@H](O)C");
-            List<IStereoElement> stereoElements = new List<IStereoElement>(mol.StereoElements);
+            var stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(mol.StereoElements);
             stereoElements.Sort((o1, o2) =>
                 Ints.Compare(mol.Atoms.IndexOf(((ITetrahedralChirality)o1).ChiralAtom),
                                 mol.Atoms.IndexOf(((ITetrahedralChirality)o2).ChiralAtom)));
 
             // first chiral center
             Assert.AreEqual(2, stereoElements.Count);
-            IStereoElement stereoElement = stereoElements[0];
+            var stereoElement = stereoElements[0];
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2256,10 +2256,10 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("NC([C@H](O)C)Cl");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             // first chiral center
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2279,9 +2279,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("I1.Cl2.Br3.[C@]123CCC");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2301,9 +2301,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("Br1.[C@]1(Cl)(OC)CCC");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2323,9 +2323,9 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[C@@H]231.C2.N1.F3");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement stereoElement = stereoElements.Current;
+            var stereoElement = stereoElements.Current;
             Assert.IsNotNull(stereoElement);
             Assert.IsTrue(stereoElement is ITetrahedralChirality);
             ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2347,11 +2347,11 @@ namespace NCDK.Smiles
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[C@@H](Cl)1[C@H](C)(F).Br1");
-            IEnumerator<IStereoElement> stereoElements = mol.StereoElements.GetEnumerator();
+            var stereoElements = mol.StereoElements.GetEnumerator();
             for (int i = 0; i < 2; i++)
             {
                 Assert.IsTrue(stereoElements.MoveNext());
-                IStereoElement stereoElement = stereoElements.Current;
+                var stereoElement = stereoElements.Current;
                 Assert.IsNotNull(stereoElement);
                 Assert.IsTrue(stereoElement is ITetrahedralChirality);
                 ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2547,7 +2547,7 @@ namespace NCDK.Smiles
         public void Cisplatin()
         {
             IAtomContainer mol = Load("[NH3][Pt@SP1]([NH3])(Cl)Cl");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
             Assert.AreEqual(1, ((SquarePlanar)se).Configure.Order);
         }
@@ -2556,7 +2556,7 @@ namespace NCDK.Smiles
         public void Cisplatin_Z()
         {
             IAtomContainer mol = Load("[NH3][Pt@SP3]([NH3])(Cl)Cl");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
             Assert.AreEqual(3, ((SquarePlanar)se).Configure.Order);
         }
@@ -2565,7 +2565,7 @@ namespace NCDK.Smiles
         public void Transplatin()
         {
             IAtomContainer mol = Load("[NH3][Pt@SP2]([NH3])(Cl)Cl");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
             Assert.AreEqual(2, ((SquarePlanar)se).Configure.Order);
         }
@@ -2574,7 +2574,7 @@ namespace NCDK.Smiles
         public void Tbpy1()
         {
             IAtomContainer mol = Load("S[As@TB1](F)(Cl)(Br)N");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
             Assert.AreEqual(1, ((TrigonalBipyramidal)se).Configure.Order);
         }
@@ -2583,7 +2583,7 @@ namespace NCDK.Smiles
         public void Tbpy2()
         {
             IAtomContainer mol = Load("S[As@TB2](F)(Cl)(Br)N");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
             Assert.AreEqual(2, ((TrigonalBipyramidal)se).Configure.Order);
         }
@@ -2592,7 +2592,7 @@ namespace NCDK.Smiles
         public void Oh1()
         {
             IAtomContainer mol = Load("C[Co@](F)(Cl)(Br)(I)S");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
             Assert.AreEqual(1, ((Octahedral)se).Configure.Order);
         }
@@ -2601,7 +2601,7 @@ namespace NCDK.Smiles
         public void Oh8()
         {
             IAtomContainer mol = Load("C[Co@OH8](F)(Br)(Cl)(I)S");
-            IStereoElement se = mol.StereoElements.First();
+            var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
             Assert.AreEqual(8, ((Octahedral)se).Configure.Order);
         }

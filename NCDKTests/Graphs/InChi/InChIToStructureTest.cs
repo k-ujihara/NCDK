@@ -165,10 +165,10 @@ namespace NCDK.Graphs.InChI
                     Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            var ses = container.StereoElements.GetEnumerator();
             Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
-            IStereoElement se = ses.Current;
+            var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
             Assert.AreEqual(DoubleBondConformation.Opposite, ((IDoubleBondStereochemistry)se).Stereo);
         }
@@ -180,10 +180,10 @@ namespace NCDK.Graphs.InChI
                     Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            var ses = container.StereoElements.GetEnumerator();
             Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
-            IStereoElement se = ses.Current;
+            var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
             Assert.AreEqual(DoubleBondConformation.Together, ((IDoubleBondStereochemistry)se).Stereo);
         }
@@ -198,10 +198,10 @@ namespace NCDK.Graphs.InChI
                     Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
 
-            IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            var ses = container.StereoElements.GetEnumerator();
             Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
-            IStereoElement se = ses.Current;
+            var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
             ExtendedTetrahedral element = (ExtendedTetrahedral)se;
             Assert.IsTrue(
@@ -223,10 +223,10 @@ namespace NCDK.Graphs.InChI
                     Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
 
-            IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            var ses = container.StereoElements.GetEnumerator();
             Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
-            IStereoElement se = ses.Current;
+            var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
             ExtendedTetrahedral element = (ExtendedTetrahedral)se;
 

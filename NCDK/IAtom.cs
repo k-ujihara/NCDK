@@ -60,7 +60,7 @@ namespace NCDK
         /// <summary>
         /// The stereo parity of this atom. It uses the predefined values found in CDKConstants.
         /// </summary>
-        [Obsolete("Use " + nameof(IStereoElement) + " for storing stereochemistry")]
+        [Obsolete("Use " + nameof(IStereoElement<IChemObject, IChemObject>) + " for storing stereochemistry")]
         int? StereoParity { get; set; }
 
         /// <summary>
@@ -85,14 +85,14 @@ namespace NCDK
 
         /// <summary>
         /// Acces the index of an atom in the context of an <see cref="IAtomContainer"/>. If the
-        /// index is not known, < 0 is returned.
+        /// index is not known, &lt; 0 is returned.
         /// </summary>
         int Index { get; }
 
         /// <summary>
         /// Returns the bonds connected to this atom. If the bonds are not
         /// known an exception is thrown. This method will only throw an exception
-        /// if <see cref="Index"/> returns < 0 or <see cref="Container"/> returns <see langword="null"/>.
+        /// if <see cref="Index"/> returns &lt; 0 or <see cref="Container"/> returns <see langword="null"/>.
         /// </summary>
         /// <example>
         /// <code>

@@ -70,7 +70,7 @@ namespace NCDK.Smiles
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+1"]/*' />
     /// <para>
     /// The isomeric and absolute generator encode tetrahedral and double bond
-    /// stereochemistry using <see cref="IStereoElement"/>s
+    /// stereochemistry using <see cref="IStereoElement{TFocus, TCarriers}"/>s
     /// provided on the <see cref="IAtomContainer"/>. If stereochemistry is not being
     /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.
     /// </para> 

@@ -452,6 +452,7 @@
     <Compile Include="Smiles\SMARTS\Parser\ParseException.cs" />
     <Compile Include="Smiles\SMARTS\SmartsAtomAtomMapFilter.cs" />
     <Compile Include="Smiles\SmiFlavor.cs" />
+    <Compile Include="StereoElement.cs" />
     <Compile Include="Stereo\AbstractStereo.cs" />
     <Compile Include="Stereo\Atropisomeric.cs" />
     <Compile Include="Stereo\Octahedral.cs" />

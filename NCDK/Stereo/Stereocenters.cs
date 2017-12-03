@@ -219,7 +219,7 @@ namespace NCDK.Stereo
         /// <item><see cref="CenterTypes.Para"/> - the atom resembles a stereo centre but has constitutionally equivalent neighbors
         /// (e.g. inositol, decalin). The stereocenter depends on the configuration of one or more stereocenters.</item> 
         /// <item><see cref="CenterTypes.Potential"/> - the atom can supported stereo chemistry but has not be shown ot be a true or para center.</item> 
-        /// <item><see cref="CenterTypes.Non"/> - the atom is not a stereocenter (e.g. methane).</item>
+        /// <item><see cref="CenterTypes.None"/> - the atom is not a stereocenter (e.g. methane).</item>
         /// </list>
         /// </summary>
         /// <param name="v">atom index.</param>
