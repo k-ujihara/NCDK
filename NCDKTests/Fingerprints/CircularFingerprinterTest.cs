@@ -37,6 +37,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using NCDK.Common.Base;
 
 namespace NCDK.Fingerprints
 {
@@ -70,6 +71,46 @@ namespace NCDK.Fingerprints
             ins.Close();
 
             Trace.TraceInformation("CircularFingerprinter test: completed without any problems");
+        }
+
+        [TestMethod()]
+        public void TestUseStereoElements()
+        {
+            const string smiles1 = "CC[C@@H](C)O";
+            const string smiles2 = "CC[C@H](O)C";
+            const string molfile = "\n"
+                                 + "  CDK     10121722462D          \n"
+                                 + "\n"
+                                 + "  5  4  0  0  0  0            999 V2000\n"
+                                 + "   -4.1837    2.6984    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                                 + "   -3.4692    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                                 + "   -2.7547    2.6984    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"
+                                 + "   -2.0403    3.1109    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                                 + "   -2.7547    1.8734    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"
+                                 + "  1  2  1  0  0  0  0\n"
+                                 + "  2  3  1  0  0  0  0\n"
+                                 + "  3  4  1  0  0  0  0\n"
+                                 + "  3  5  1  1  0  0  0\n"
+                                 + "M  END\n";
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            MDLV2000Reader mdlr = new MDLV2000Reader(new StringReader(molfile));
+            SmilesParser smipar = new SmilesParser(bldr);
+
+            IAtomContainer mol1 = smipar.ParseSmiles(smiles1);
+            IAtomContainer mol2 = smipar.ParseSmiles(smiles2);
+            IAtomContainer mol3 = mdlr.Read(bldr.NewAtomContainer());
+
+            CircularFingerprinter fpr = new CircularFingerprinter();
+
+            // when stereo-chemistry is perceived we don't have coordinates from the
+            // SMILES and so get a different fingerprint
+            fpr.SetPerceiveStereo(true);
+            Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol1), fpr.GetFingerprint(mol2)));
+            Assert.IsFalse(Compares.AreEqual(fpr.GetFingerprint(mol2), fpr.GetFingerprint(mol3)));
+
+            fpr.SetPerceiveStereo(false);
+            Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol1), fpr.GetFingerprint(mol2)));
+            Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol2), fpr.GetFingerprint(mol3)));
         }
 
         [TestMethod()]
@@ -344,8 +385,9 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestVersion()
         {
-            IFingerprinter fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
-            string expected = "CDK-CircularFingerprinter/" + CDK.Version + " classType=ECFP4";
+            var fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
+            string expected = "CDK-CircularFingerprinter/" + CDK.Version + 
+                " classType=ECFP4 perceiveStereochemistry=false";
             Assert.AreEqual(expected, fpr.GetVersionDescription());
         }
     }

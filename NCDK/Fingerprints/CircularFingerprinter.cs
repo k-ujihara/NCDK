@@ -117,7 +117,6 @@ namespace NCDK.Fingerprints
         private const int ATOMCLASS_ECFP = 1;
         private const int ATOMCLASS_FCFP = 2;
 
-        private int classType, atomClass;
         private IAtomContainer mol;
         private readonly int length;
 
@@ -144,6 +143,10 @@ namespace NCDK.Fingerprints
         private bool[] isOxide;                                             // true if the atom has a double bond to oxygen
         private bool[] lonePair;                                            // true if the atom is N,O,S with octet valence and at least one lone pair
         private bool[] tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
+
+        // ------------ options -------------------
+        private int classType, atomClass;
+        private bool optPerceiveStereo = false;
 
         /// ------------ methods ------------
 
@@ -179,6 +182,17 @@ namespace NCDK.Fingerprints
             this.length = len;
         }
 
+        /// <summary>
+        /// Sets whether stereochemistry should be re-perceived from 2D/3D
+        /// coordinates. By default stereochemistry encoded as <see cref="IStereoElement{TFocus, TCarriers}"/>s
+        /// are used.
+        /// </summary>
+        /// <param name="val">perceived from 2D</param>
+        public void SetPerceiveStereo(bool val)
+        {
+            this.optPerceiveStereo = val;
+        }
+
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
         {
             string type = null;
@@ -196,6 +210,7 @@ namespace NCDK.Fingerprints
                     break;
             }
             yield return new KeyValuePair<string, string>("classType", type);
+            yield return new KeyValuePair<string, string>("perceiveStereochemistry", optPerceiveStereo.ToString().ToLower()); // True/False to true/false
             yield break;
         }
 
@@ -622,8 +637,15 @@ namespace NCDK.Fingerprints
             DetectStrictAromaticity();
 
             tetra = new int[na][];
-            for (int n = 0; n < na; n++)
-                tetra[n] = RubricTetrahedral(n);
+            if (optPerceiveStereo)
+            {
+                for (int n = 0; n < na; n++)
+                    tetra[n] = RubricTetrahedral(n);
+            }
+            else
+            {
+                RubricTetrahedralsCdk();
+            }
         }
 
         /// assign a ring block ID to each atom (0=not in ring)
@@ -871,6 +893,44 @@ namespace NCDK.Fingerprints
             }
         }
 
+        // tetrahedral 'rubric': for any sp3 atom that has stereo defined
+        // in the CDK's object model.
+        private void RubricTetrahedralsCdk()
+        {
+            foreach (var se in mol.StereoElements)
+            {
+                if (se.Class == StereoElement.Classes.Tetrahedral)
+                {
+                    var th = (IStereoElement<IAtom, IAtom>)se;
+                    IAtom focus = th.Focus;
+                    var carriers = th.Carriers;
+                    int[] adj = new int[4];
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (focus.Equals(carriers[i]))
+                            adj[i] = -1; // impl H
+                        else
+                            adj[i] = mol.Atoms.IndexOf(carriers[i]);
+                    }
+                    switch (th.Configure.Ordinal)
+                    {
+                        case StereoElement.Configurations.O.Left:
+                            int i = adj[2];
+                            adj[2] = adj[3];
+                            adj[3] = i;
+                            tetra[mol.Atoms.IndexOf(focus)] = adj;
+                            break;
+                        case StereoElement.Configurations.O.Right:
+                            tetra[mol.Atoms.IndexOf(focus)] = adj;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         /// tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
         /// build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
         /// 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
@@ -969,15 +1029,9 @@ namespace NCDK.Fingerprints
             if (adjc == 3)
             {
                 adj = AppendInteger(adj, -1);
-                xp[3] = -(xp[0] + xp[1] + xp[2]);
-                yp[3] = -(yp[0] + yp[1] + yp[2]);
-                zp[3] = -(zp[0] + zp[1] + zp[2]);
-                var dsq = xp[3] * xp[3] + yp[3] * yp[3] + zp[3] * zp[3];
-                if (dsq < 0.01f * 0.01f) return null;
-                var inv = 1.0 / Math.Sqrt(dsq);
-                xp[3] *= inv;
-                yp[3] *= inv;
-                zp[3] *= inv;
+                xp[3] = x0;
+                yp[3] = y0;
+                zp[3] = z0;
             }
 
             // make the call on permutational parity
