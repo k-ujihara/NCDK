@@ -34,15 +34,26 @@ namespace NCDK.Config
     // @cdk.created    2001-08-29
     public abstract class IsotopeFactory
     {
-        protected IDictionary<string, IList<IIsotope>> isotopes = null;
-        protected IDictionary<string, IIsotope> majorIsotopes = null;
+        public static readonly IIsotope[] EMPTY_ISOTOPE_ARRAY = new IIsotope[0];
+        private List<IIsotope>[] isotopes = new List<IIsotope>[256];
+        private IIsotope[] majorIsotope = new IIsotope[256];
 
         /// <summary>
         /// The number of isotopes defined by this class. The classes
         /// <see cref="Isotopes"/> extends this class and is to be used to get isotope
         /// information.
         /// </summary>
-        public int Count => isotopes.Count;
+        public int Count
+        {
+            get
+            {
+                int count = 0;
+                foreach (var isotope in isotopes)
+                    if (isotope != null)
+                        count += isotope.Count;
+                return count;
+            }
+        }
 
         /// <summary>
         /// Protected methods only to be used by classes extending this class to add an <see cref="IIsotope"/>.
@@ -50,13 +61,15 @@ namespace NCDK.Config
         /// <param name="isotope"></param>
         protected void Add(IIsotope isotope)
         {
-            IList<IIsotope> isotopesForSymbol;
-            if (!isotopes.TryGetValue(isotope.Symbol, out isotopesForSymbol))
+            var atomicNum = isotope.AtomicNumber;
+            Trace.Assert(atomicNum != null);
+            var isotopesForElement = isotopes[atomicNum.Value];
+            if (isotopesForElement == null)
             {
-                isotopesForSymbol = new List<IIsotope>();
-                isotopes.Add(isotope.Symbol, isotopesForSymbol);
+                isotopesForElement = new List<IIsotope>();
+                isotopes[atomicNum.Value] = isotopesForElement;
             }
-            isotopesForSymbol.Add(isotope);
+            isotopesForElement.Add(isotope);
         }
 
         /// <summary>
@@ -66,12 +79,13 @@ namespace NCDK.Config
         /// <returns><see cref="IIsotope"/>s that matches the given element symbol</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(string symbol)
         {
-            if (!isotopes.ContainsKey(symbol))
+    int elem = Elements.OfString(symbol).AtomicNumber;
+            if (isotopes[elem] == null)
                 yield break;
-            foreach (var isotope in isotopes[symbol])
+            List<IIsotope> list = new List<IIsotope>();
+            foreach (IIsotope isotope in isotopes[elem])
             {
-                IIsotope clone = (IIsotope)isotope.Clone();
-                yield return clone;
+                yield return Clone(isotope);
             }
             yield break;
         }
@@ -82,12 +96,14 @@ namespace NCDK.Config
         /// <returns>All isotopes</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes()
         {
-            foreach (var isotopesForValue in isotopes.Values)
-                foreach (var isotope in isotopesForValue)
+            foreach (List<IIsotope> isotopes in this.isotopes)
+            {
+                if (isotopes == null) continue;
+                foreach (IIsotope isotope in isotopes)
                 {
-                    IIsotope clone = (IIsotope)isotope.Clone();
-                    yield return clone;
+                    yield return Clone(isotope);
                 }
+            }
             yield break;
         }
 
@@ -99,15 +115,17 @@ namespace NCDK.Config
         /// <returns>All isotopes</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(double exactMass, double difference)
         {
-            foreach (var isotopesForValue in isotopes.Values)
-                foreach (var isotope in isotopesForValue)
+            foreach (var isotopes in this.isotopes)
+            {
+                if (isotopes == null) continue;
+                foreach (IIsotope isotope in isotopes)
                 {
                     if (Math.Abs(isotope.ExactMass.Value - exactMass) <= difference)
                     {
-                        IIsotope clone = (IIsotope)isotope.Clone();
-                        yield return clone;
+                        yield return Clone(isotope);
                     }
                 }
+            }
             yield break;
         }
 
@@ -119,11 +137,18 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, int massNumber)
         {
-            IList<IIsotope> isotopesForValue;
-            if (isotopes.TryGetValue(symbol, out isotopesForValue))
-                return (IIsotope)isotopesForValue
-                    .Where(n => n.MassNumber.HasValue && n.MassNumber.Value == massNumber)
-                    .FirstOrDefault()?.Clone(); ;
+            IIsotope ret = null;
+            int elem = Elements.OfString(symbol).AtomicNumber;
+            var isotopes = this.isotopes[elem];
+            if (isotopes == null)
+                return null;
+            foreach (IIsotope isotope in isotopes)
+            {
+                if (isotope.Symbol.Equals(symbol) && isotope.MassNumber == massNumber)
+                {
+                    return Clone(isotope);
+                }
+            }
             return null;
         }
 
@@ -136,23 +161,24 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, double exactMass, double tolerance)
         {
-            IList<IIsotope> isotopesForValue;
-            if (!isotopes.TryGetValue(symbol, out isotopesForValue))
-                return null;
             IIsotope ret = null;
             double minDiff = double.MaxValue;
-            foreach (var isotope in isotopesForValue)
+            int elem = Elements.OfString(symbol).AtomicNumber;
+            List<IIsotope> isotopes = this.isotopes[elem];
+            if (isotopes == null)
+                return null;
+            foreach (IIsotope isotope in isotopes)
             {
                 double diff = Math.Abs(isotope.ExactMass.Value - exactMass);
                 if (isotope.Symbol.Equals(symbol) && diff <= tolerance && diff < minDiff)
                 {
-                    ret = (IIsotope)isotope.Clone();
+                    ret = Clone(isotope);
                     minDiff = diff;
                 }
             }
             return ret;
         }
-        
+
         /// <summary>
         /// Returns the most abundant (major) isotope with a given atomic number.
         /// </summary>
@@ -162,27 +188,42 @@ namespace NCDK.Config
         /// isotope. For atoms with higher atomic numbers, the abundance is defined
         /// as a percentage.
         /// </remarks>
-        /// <param name="atomicNumber">The atomicNumber for which an isotope is to be returned</param>
+        /// <param name="elem">The atomicNumber for which an isotope is to be returned</param>
         /// <returns>The isotope corresponding to the given atomic number</returns>
         /// <seealso cref="GetMajorIsotope(string)"/>
-        public virtual IIsotope GetMajorIsotope(int atomicNumber)
+        public IIsotope GetMajorIsotope(int elem)
         {
             IIsotope major = null;
-            IList<IIsotope> isotopesForValue;
-            if (isotopes.TryGetValue(PeriodicTable.GetSymbol(atomicNumber), out isotopesForValue))
+            if (this.majorIsotope[elem] != null)
             {
-                foreach (var isotope in isotopesForValue)
-                    if (major == null)
-                    {
-                        major = (IIsotope)isotope.Clone();
-                    }
-                    else if (isotope.NaturalAbundance > major.NaturalAbundance)
-                    {
-                        major = (IIsotope)isotope.Clone();
-                    }
+                return Clone(this.majorIsotope[elem]);
             }
-            Trace.TraceError($"Could not find major isotope for: {atomicNumber}");
-            return major;
+            List<IIsotope> isotopes = this.isotopes[elem];
+            if (isotopes != null)
+            {
+                foreach (IIsotope isotope in isotopes)
+                {
+                    if (isotope.NaturalAbundance <= 0)
+                        continue;
+                    if (major == null ||
+                        isotope.NaturalAbundance > major.NaturalAbundance)
+                    {
+                        major = isotope;
+                    }
+                }
+                if (major != null)
+                    this.majorIsotope[elem] = major;
+                else
+                    Trace.TraceError("Could not find major isotope for: ", elem);
+            }
+            return Clone(major);
+        }
+
+        private IIsotope Clone(IIsotope isotope)
+        {
+            if (isotope == null)
+                return null;
+            return (IIsotope)isotope.Clone();
         }
 
         /// <summary>
@@ -202,38 +243,7 @@ namespace NCDK.Config
         /// <returns>The Major Isotope value</returns>
         public virtual IIsotope GetMajorIsotope(string symbol)
         {
-            IIsotope major = null;
-            if (!majorIsotopes.TryGetValue(symbol, out major))
-            {
-                IList<IIsotope> isotopesForValue;
-                if (!isotopes.TryGetValue(symbol, out isotopesForValue))
-                {
-                    Trace.TraceError($"Could not find major isotope for: {symbol}");
-                    return null;
-                }
-                foreach (var isotope in isotopesForValue)
-                {
-                    if (isotope.Symbol == symbol)
-                    {
-                        if (major == null)
-                        {
-                            major = (IIsotope)isotope.Clone();
-                        }
-                        else
-                        {
-                            if (isotope.NaturalAbundance > major.NaturalAbundance)
-                            {
-                                major = (IIsotope)isotope.Clone();
-                            }
-                        }
-                    }
-                }
-                if (major == null)
-                    Trace.TraceError("Could not find major isotope for: {symbol}");
-                else
-                    majorIsotopes.Add(symbol, major);
-            }
-            return major;
+            return GetMajorIsotope(Elements.OfString(symbol).AtomicNumber);
         }
 
         /// <summary>
@@ -278,12 +288,11 @@ namespace NCDK.Config
         {
             IIsotope isotope;
             if (atom.MassNumber == null)
-                isotope = GetMajorIsotope(atom.Symbol);
+                return atom;
             else
                 isotope = GetIsotope(atom.Symbol, atom.MassNumber.Value);
-
             if (isotope == null)
-                throw new ArgumentException($"Cannot configure an unrecognized element: {atom}", nameof(atom));
+                throw new ArgumentException("Cannot configure an unrecognized element/mass: " + atom.MassNumber + " " + atom);
             return Configure(atom, isotope);
         }
 

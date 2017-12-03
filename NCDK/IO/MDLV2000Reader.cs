@@ -22,11 +22,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Numerics;
 using NCDK.SGroups;
 using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
@@ -36,7 +38,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using NCDK.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using static NCDK.IO.MDLV2000Writer;
@@ -145,7 +146,7 @@ namespace NCDK.IO
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object that subclasses IChemObject</param>
         /// <returns>The IChemObject read</returns>
-        public override T Read<T>(T obj) 
+        public override T Read<T>(T obj)
         {
             if (obj is IAtomContainer)
             {
@@ -256,6 +257,7 @@ namespace NCDK.IO
 
             int linecount = 0;
             string title = null;
+            string program = null;
             string remark = null;
             string line = "";
 
@@ -278,6 +280,7 @@ namespace NCDK.IO
                 }
                 line = input.ReadLine();
                 linecount++;
+                program = line;
                 line = input.ReadLine();
                 linecount++;
                 if (line.Length > 0)
@@ -367,8 +370,10 @@ namespace NCDK.IO
                 }
                 else if (!hasZ)
                 {
-
-                    if (!forceReadAs3DCoords.IsSet)
+                    //'  CDK     09251712073D'
+                    // 0123456789012345678901
+                    if (!(program.Length >= 22 && program.Substring(20, 2).Equals("3D"))
+                        && !forceReadAs3DCoords.IsSet)
                     {
                         foreach (var atomToUpdate in atoms)
                         {
@@ -418,45 +423,47 @@ namespace NCDK.IO
 
                 // create 0D stereochemistry
 
-                foreach (var e in parities)
+                if (addStereoElements.IsSet)
                 {
-                    int parity = e.Value;
-                    if (parity != 1 && parity != 2)
-                        continue; // 3=unspec
-                    int idx = 0;
-                    IAtom focus = e.Key;
-                    IAtom[] carriers = new IAtom[4];
-                    int hidx = -1;
-                    foreach (var nbr in molecule.GetConnectedAtoms(focus))
+                    foreach (var e in parities)
                     {
-                        if (idx == 4)
-                            goto Next_Parities; // too many neighbors
-                        if (nbr.AtomicNumber == 1)
+                        int parity = e.Value;
+                        if (parity != 1 && parity != 2)
+                            continue; // 3=unspec
+                        int idx = 0;
+                        IAtom focus = e.Key;
+                        IAtom[] carriers = new IAtom[4];
+                        int hidx = -1;
+                        foreach (var nbr in outputContainer.GetConnectedAtoms(focus))
                         {
-                            if (hidx >= 0)
-                                goto Next_Parities;
-                            hidx = idx;
+                            if (idx == 4)
+                                goto Next_Parities; // too many neighbors
+                            if (nbr.AtomicNumber == 1)
+                            {
+                                if (hidx >= 0)
+                                    goto Next_Parities;
+                                hidx = idx;
+                            }
+                            carriers[idx++] = nbr;
                         }
-                        carriers[idx++] = nbr;
-                    }
-                    // to few neighbors, or already have a hydrogen defined
-                    if (idx < 3 || idx < 4 && hidx >= 0)
-                        continue;
-                    if (idx == 3)
-                        carriers[idx++] = focus;
+                        // to few neighbors, or already have a hydrogen defined
+                        if (idx < 3 || idx < 4 && hidx >= 0)
+                            continue;
+                        if (idx == 3)
+                            carriers[idx++] = focus;
 
-                    if (idx == 4)
-                    {
-                        TetrahedralStereo winding = parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
-                        // H is always at back, even if explicit! At least this seems to be the case.
-                        // we adjust the winding as needed
-                        if (hidx == 0 || hidx == 2)
-                            winding = winding.Invert();
-                        molecule.StereoElements.Add(new TetrahedralChirality(focus, carriers, winding));
-                    }
+                        if (idx == 4)
+                        {
+                            TetrahedralStereo winding = parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
+                            // H is always at back, even if explicit! At least this seems to be the case.
+                            // we adjust the winding as needed
+                            if (hidx == 0 || hidx == 2)
+                                winding = winding.Invert();
+                            outputContainer.StereoElements.Add(new TetrahedralChirality(focus, carriers, winding));
+                        }
                     Next_Parities:
-                    ;
-
+                        ;
+                    }
                 }
 
                 // read PROPERTY block
@@ -609,7 +616,7 @@ namespace NCDK.IO
             interpretHydrogenIsotopes = IOSettings.Add((new BooleanIOSetting("InterpretHydrogenIsotopes",
                     IOSetting.Importance.Low, "Should D and T be interpreted as hydrogen isotopes?", "true")));
             addStereoElements = IOSettings.Add((new BooleanIOSetting("AddStereoElements", IOSetting.Importance.Low,
-                    "Assign stereo configurations to stereocenters utilising 2D/3D coordinates.", "true")));
+                    "Detect and create IStereoElements for the input.", "true")));
         }
 
         public void CustomizeJob()
@@ -723,8 +730,13 @@ namespace NCDK.IO
 
             // if there was a mass difference, set the mass number
             if (massDiff != 0 && atom.AtomicNumber > 0)
-                atom.MassNumber = Isotopes.Instance.GetMajorIsotope(atom.AtomicNumber.Value).MassNumber
-                        + massDiff;
+            {
+                IIsotope majorIsotope = Isotopes.Instance.GetMajorIsotope(atom.AtomicNumber.Value);
+                if (majorIsotope == null)
+                    atom.MassNumber = -1; // checked after M ISO is processed
+                else
+                    atom.MassNumber = majorIsotope.MassNumber + massDiff;
+            }
 
             if (valence > 0 && valence < 16) atom.Valency = valence == 15 ? 0 : valence;
 
@@ -924,7 +936,10 @@ namespace NCDK.IO
                     {
                         index = ReadMolfileInt(line, st) - 1;
                         int mass = ReadMolfileInt(line, st + 4);
-                        container.Atoms[offset + index].MassNumber = mass;
+                        if (mass < 0)
+                            HandleError("Absolute mass number should be >= 0, " + line);
+                        else
+                            container.Atoms[offset + index].MassNumber = mass;
                     }
                 }
                 else if (key == PropertyKey.M_RAD)
@@ -1226,7 +1241,17 @@ namespace NCDK.IO
             }
             GoNext_LINES:
 
-            if (sgroups.Count != 0)
+            // check of ill specified atomic mass
+            foreach (IAtom atom in container.Atoms)
+            {
+                if (atom.MassNumber != null && atom.MassNumber < 0)
+                {
+                    HandleError("Unstable use of mass delta on " + atom.Symbol + " please use M  ISO");
+                    atom.MassNumber = null;
+                }
+            }
+
+            if (sgroups.Any())
             {
                 // load Sgroups into molecule, first we downcast
                 List<Sgroup> sgroupOrgList = new List<Sgroup>(sgroups.Values);
@@ -1391,22 +1416,35 @@ namespace NCDK.IO
         /// <param name="offset">first character of the coordinate</param>
         /// <returns>the specified value</returns>
         /// <exception cref="CDKException">the coordinates specification was not valid</exception>
-        internal static double ReadMDLCoordinate(string line, int offset)
+        internal double ReadMDLCoordinate(string line, int offset)
         {
             // to be valid the decimal should be at the fifth index (4 sig fig)
-            if (line[offset + 5] != '.') throw new CDKException("invalid coordinate specification");
+            if (line[offset + 5] != '.')
+            {
+                HandleError("Bad coordinate format specified, expected 4 decimal places: " + line.Substring(offset));
+                int start = offset;
+                int end = offset;
+                while (line[start] == ' ')
+                    start++;
+                end = start;
+                while (line[end] != ' ')
+                    end++;
+                return double.Parse(line.Substring(start, end - start));
+            }
+            else
+            {
+                int start = offset;
+                while (line[start] == ' ')
+                    start++;
 
-            int start = offset;
-            while (line[start] == ' ')
-                start++;
+                int sign = Sign(line[start]);
+                if (sign < 0) start++;
 
-            int sign = Sign(line[start]);
-            if (sign < 0) start++;
+                int integral = ReadUInt(line, start, (offset + 5) - start);
+                int fraction = ReadUInt(line, offset + 6, 4);
 
-            int integral = ReadUInt(line, start, (offset + 5) - start);
-            int fraction = ReadUInt(line, offset + 6, 4);
-
-            return sign * (integral * 10000L + fraction) / 10000d;
+                return sign * (integral * 10000L + fraction) / 10000d;
+            }
         }
 
         /// <summary>
@@ -1610,10 +1648,10 @@ namespace NCDK.IO
         {
             IAtom atom;
             line = TRAILING_SPACE.Replace(line, match =>
-                {
-                    HandleError("Trailing space found", linecount, match.Index, match.Index + match.Length);
-                    return "";
-                });
+            {
+                HandleError("Trailing space found", linecount, match.Index, match.Index + match.Length);
+                return "";
+            });
             double x = double.Parse(Strings.Substring(line, 0, 10).Trim());
             double y = double.Parse(Strings.Substring(line, 10, 10).Trim());
             double z = double.Parse(Strings.Substring(line, 20, 10).Trim());

@@ -61,6 +61,11 @@ namespace NCDK.Stereo
         protected readonly List<Projection> projections = new List<Projection>();
 
         /// <summary>
+        /// Verify if created stereochemistry are actually stereo-centres.
+        /// </summary>
+        private bool check = false;
+
+        /// <summary>
         /// Internal constructor.
         /// </summary>
         /// <param name="container">an atom container</param>
@@ -73,6 +78,41 @@ namespace NCDK.Stereo
             this.bondMap = bondMap;
         }
 
+        private bool VisitSmallRing(bool[] mark, int aidx, int prev,
+                                   int first, int depth)
+        {
+            if (depth > 7)
+                return false;
+            mark[aidx] = true;
+            foreach (int nbr in graph[aidx])
+            {
+                if (nbr == prev)
+                    continue;
+                if (nbr == first)
+                    return true;
+                else if (!mark[nbr] && VisitSmallRing(mark, nbr, aidx, first, depth + 1))
+                    return true;
+            }
+            mark[aidx] = false;
+            return false;
+        }
+
+        private bool IsInSmallRing(IBond bond)
+        {
+            if (!bond.IsInRing)
+                return false;
+            IAtom beg = bond.Begin;
+            IAtom end = bond.End;
+            bool[] mark = new bool[container.Atoms.Count];
+            int bidx = container.Atoms.IndexOf(beg);
+            int eidx = container.Atoms.IndexOf(end);
+            return VisitSmallRing(mark,
+                                  bidx,
+                                  eidx,
+                                  bidx,
+                                  1);
+        }
+
         /// <summary>
         /// Creates all stereo elements found by <see cref="Stereocenters"/> using the or
         /// 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
@@ -80,10 +120,16 @@ namespace NCDK.Stereo
         /// elements are created..
         /// </summary>
         /// <returns>a list of stereo elements</returns>
-        public IList<IStereoElement> CreateAll()
+        public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> CreateAll()
         {
+            Cycles.MarkRingAtomsAndBonds(container);
             Stereocenters centers = new Stereocenters(container, graph, bondMap);
-            List<IStereoElement> elements = new List<IStereoElement>();
+            if (check)
+            {
+                centers.CheckSymmetry();
+            }
+
+            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             // projection recognition (note no action in constructors)
             FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);
@@ -96,37 +142,77 @@ namespace NCDK.Stereo
             {
                 switch (centers.ElementType(v))
                 {
+                    // elongated tetrahedrals
                     case Stereocenters.CoordinateTypes.Bicoordinate:
                         int t0 = graph[v][0];
                         int t1 = graph[v][1];
                         if (centers.ElementType(t0) == Stereocenters.CoordinateTypes.Tricoordinate
                                 && centers.ElementType(t1) == Stereocenters.CoordinateTypes.Tricoordinate)
                         {
-                            if (centers.IsStereocenter(t0) && centers.IsStereocenter(t1))
+                            if (check && centers.IsStereocenter(t0) && centers.IsStereocenter(t1))
                             {
-                                IStereoElement element_ = CreateExtendedTetrahedral(v, centers);
+                                var element = CreateExtendedTetrahedral(v, centers);
+                                if (element != null) elements.Add(element);
+                            }
+                            else
+                            {
+                                var element_ = CreateExtendedTetrahedral(v, centers);
                                 if (element_ != null) elements.Add(element_);
                             }
                         }
                         break;
-                    case Stereocenters.CoordinateTypes.Tricoordinate:
-                        if (!centers.IsStereocenter(v)) continue;
-                        foreach (var w in graph[v])
+                    // tetrahedrals
+                    case Stereocenters.CoordinateTypes.Tetracoordinate:
                         {
-                            if (w > v && bondMap[v, w].Order == BondOrder.Double)
+                            var element = CreateTetrahedral(v, centers);
+                            if (element != null) elements.Add(element);
+                        }
+                        break;
+                    // aryl-aryl atropisomers
+                    case Stereocenters.CoordinateTypes.Tricoordinate:
+                        foreach (int w in graph[v])
+                        {
+                            IBond bond = bondMap[v, w];
+                            if (w > v &&
+                                centers.ElementType(w) == Stereocenters.CoordinateTypes.Tricoordinate &&
+                                bond.Order == BondOrder.Single &&
+                                !bond.IsInRing &&
+                                bond.Begin.IsInRing && bond.End.IsInRing)
                             {
-                                if (centers.IsStereocenter(w))
-                                {
-                                    IStereoElement element_ = CreateGeometric(v, w, centers);
-                                    if (element_ != null) elements.Add(element_);
-                                }
+                                var element = CreateAtropisomer(v, w, centers);
+                                if (element != null)
+                                    elements.Add(element);
                                 break;
                             }
                         }
                         break;
-                    case Stereocenters.CoordinateTypes.Tetracoordinate:
-                        IStereoElement element = CreateTetrahedral(v, centers);
-                        if (element != null) elements.Add(element);
+                }
+            }
+
+            // always need to verify for db...
+            centers.CheckSymmetry();
+            for (int v = 0; v < graph.Length; v++)
+            {
+                switch (centers.ElementType(v))
+                {
+                    // Cis/Trans double bonds
+                    case Stereocenters.CoordinateTypes.Tricoordinate:
+                        if (!centers.IsStereocenter(v))
+                            continue;
+                        foreach (int w in graph[v])
+                        {
+                            IBond bond = bondMap[v, w];
+                            if (w > v && bond.Order == BondOrder.Double)
+                            {
+                                if (centers.ElementType(w) == Stereocenters.CoordinateTypes.Tricoordinate
+                                    && centers.IsStereocenter(w) && !IsInSmallRing(bond))
+                                {
+                                    var element = CreateGeometric(v, w, centers);
+                                    if (element != null) elements.Add(element);
+                                }
+                                break;
+                            }
+                        }
                         break;
                 }
             }
@@ -148,6 +234,15 @@ namespace NCDK.Stereo
         /// <param name="v">atom index (vertex)</param>
         /// <returns>a new stereo element</returns>
         public abstract ITetrahedralChirality CreateTetrahedral(int v, Stereocenters stereocenters);
+
+        /// <summary>
+        /// Create axial atropisomers.
+        /// </summary>
+        /// <param name="v">first atom of single bond</param>
+        /// <param name="w">other atom of single bond</param>
+        /// <param name="stereocenters">stereo centres</param>
+        /// <returns>new stereo element</returns>
+        public abstract IReadOnlyStereoElement<IChemObject, IChemObject> CreateAtropisomer(int v, int w, Stereocenters stereocenters);
 
         /// <summary>
         /// Create a tetrahedral element for the atom. If a tetrahedral element could
@@ -221,6 +316,13 @@ namespace NCDK.Stereo
         public StereoElementFactory InterpretProjections(params Projection[] projections)
         {
             this.projections.AddRange(projections);
+            this.check = true;
+            return this;
+        }
+
+        public StereoElementFactory CheckSymmetry(bool check)
+        {
+            this.check = check;
             return this;
         }
 
@@ -247,12 +349,12 @@ namespace NCDK.Stereo
         {
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
             int[][] graph = GraphUtil.ToAdjList(container, bondMap);
-            return new StereoElementFactory3D(container, graph, bondMap);
+            return new StereoElementFactory3D(container, graph, bondMap).CheckSymmetry(true);
         }
 
         private static bool HasUnspecifiedParity(IAtom atom)
         {
-            return atom.StereoParity != null && atom.StereoParity == 3;
+            return atom.StereoParity == 3;
         }
 
         /// <summary>Create stereo-elements from 2D coordinates.</summary>
@@ -360,10 +462,135 @@ namespace NCDK.Stereo
                 return new TetrahedralChirality(focus, neighbors, winding);
             }
 
+            private static bool IsWedged(IBond bond)
+            {
+                switch (bond.Stereo.Ordinal)
+                {
+                    case BondStereo.O.Up:
+                    case BondStereo.O.Down:
+                    case BondStereo.O.UpInverted:
+                    case BondStereo.O.DownInverted:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public override IReadOnlyStereoElement<IChemObject, IChemObject> CreateAtropisomer(int u, int v, Stereocenters stereocenters)
+            {
+                IAtom end1 = container.Atoms[u];
+                IAtom end2 = container.Atoms[v];
+
+                if (HasUnspecifiedParity(end1) || HasUnspecifiedParity(end2))
+                    return null;
+
+                if (graph[u].Length != 3 || graph[v].Length != 3)
+                    return null;
+
+                // check degrees of connected atoms, we only create the
+                // atropisomer if the rings are 3x ortho substituted
+                // CC1=CC=CC(C)=C1-C1=C(C)C=CC=C1C yes (sum1=9,sum2=9)
+                // CC1=CC=CC=C1-C1=C(C)C=CC=C1C yes    (sum1=8,sum2=9)
+                // CC1=CC=CC(C)=C1-C1=CC=CC=C1 no      (sum1=7,sum2=9)
+                // CC1=CC=CC=C1-C1=C(C)C=CC=C1 no      (sum1=8,sum2=8)
+                int sum1 = graph[graph[u][0]].Length +
+                        graph[graph[u][1]].Length +
+                        graph[graph[u][2]].Length;
+                int sum2 = graph[graph[v][0]].Length +
+                           graph[graph[v][1]].Length +
+                           graph[graph[v][2]].Length;
+                if (sum1 > 9 || sum1 < 8)
+                    return null;
+                if (sum2 > 9 || sum2 < 8)
+                    return null;
+                if (sum1 + sum2 < 17)
+                    return null;
+
+                IAtom[] carriers = new IAtom[4];
+                int[] elevation = new int[4];
+
+                int n = 0;
+                foreach (int w in graph[u])
+                {
+                    IBond bond = bondMap[u, w];
+                    if (w == v) continue;
+                    if (IsUnspecified(bond)) return null;
+
+                    carriers[n] = container.Atoms[w];
+                    elevation[n] = ElevationOf(end1, bond);
+
+                    foreach (int w2 in graph[w])
+                    {
+                        if (IsHydrogen(container.Atoms[w2]))
+                            sum1--;
+                        else if (elevation[n] == 0 &&
+                                 IsWedged(bondMap[w, w2]))
+                        {
+                            elevation[n] = ElevationOf(container.Atoms[w], bondMap[w, w2]);
+                        }
+                    }
+
+
+                    n++;
+                }
+                n = 2;
+                foreach (int w in graph[v])
+                {
+                    IBond bond = bondMap[v, w];
+                    if (w == u) continue;
+                    if (IsUnspecified(bond)) return null;
+
+                    carriers[n] = container.Atoms[w];
+                    elevation[n] = ElevationOf(end2, bond);
+
+                    foreach (int w2 in graph[w])
+                    {
+                        if (IsHydrogen(container.Atoms[w2]))
+                            sum2--;
+                        else if (elevation[n] == 0 &&
+                                 IsWedged(bondMap[w, w2]))
+                        {
+                            elevation[n] = ElevationOf(container.Atoms[w], bondMap[w, w2]);
+                        }
+                    }
+
+                    n++;
+                }
+
+                if (n != 4)
+                    return null;
+
+                // recheck now we have accounted for explicit hydrogens
+                if (sum1 > 9 || sum1 < 8)
+                    return null;
+                if (sum2 > 9 || sum2 < 8)
+                    return null;
+                if (sum1 + sum2 < 17)
+                    return null;
+
+                if (elevation[0] != 0 || elevation[1] != 0)
+                {
+                    if (elevation[2] != 0 || elevation[3] != 0) return null;
+                }
+                else
+                {
+                    if (elevation[2] == 0 && elevation[3] == 0) return null; // undefined configuration
+                }
+
+                IAtom tmp = end1.Builder.NewAtom();
+                tmp.Point2D = new Vector2((end1.Point2D.Value.X + end2.Point2D.Value.X) / 2,
+                                           (end2.Point2D.Value.Y + end2.Point2D.Value.Y) / 2);
+                int parity = Parity(tmp, carriers, elevation);
+                var cfg = parity > 0 ? StereoElement.Configurations.Left : StereoElement.Configurations.Right;
+
+                return new Atropisomeric(container.GetBond(end1, end2), carriers, cfg);
+            }
+
             /// <inheritdoc/>
             public override IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters)
             {
-                if (HasUnspecifiedParity(container.Atoms[u]) || HasUnspecifiedParity(container.Atoms[v])) return null;
+                if (HasUnspecifiedParity(container.Atoms[u]) ||
+                 HasUnspecifiedParity(container.Atoms[v])) return null;
 
                 int[] us = graph[u];
                 int[] vs = graph[v];
@@ -374,8 +601,12 @@ namespace NCDK.Stereo
                 MoveToBack(us, v);
                 MoveToBack(vs, u);
 
-                IAtom[] vAtoms = new IAtom[]{container.Atoms[us[0]], container.Atoms[us.Length > 2 ? us[1] : u], container.Atoms[v]};
-                IAtom[] wAtoms = new IAtom[]{container.Atoms[vs[0]], container.Atoms[vs.Length > 2 ? vs[1] : v], container.Atoms[u]};
+                IAtom[] vAtoms = new IAtom[]{container.Atoms[us[0]],
+                                         container.Atoms[us.Length > 2 ? us[1] : u],
+                                         container.Atoms[v]};
+                IAtom[] wAtoms = new IAtom[]{container.Atoms[vs[0]],
+                                         container.Atoms[vs.Length > 2 ? vs[1] : v],
+                                         container.Atoms[u]};
 
                 // are any substituents a wavy unspecified bond
                 if (IsUnspecified(bondMap[u, us[0]]) || IsUnspecified(bondMap[u, us[1]])
@@ -666,6 +897,88 @@ namespace NCDK.Stereo
                 return new TetrahedralChirality(focus, neighbors, winding);
             }
 
+            public override IReadOnlyStereoElement<IChemObject, IChemObject> CreateAtropisomer(int u, int v, Stereocenters stereocenters)
+            {
+                IAtom end1 = container.Atoms[u];
+                IAtom end2 = container.Atoms[v];
+
+                if (HasUnspecifiedParity(end1) || HasUnspecifiedParity(end2))
+                    return null;
+
+                if (graph[u].Length != 3 || graph[v].Length != 3)
+                    return null;
+
+                // check degrees of connected atoms, we only create the
+                // atropisomer if the rings are 3x ortho substituted
+                // CC1=CC=CC(C)=C1-C1=C(C)C=CC=C1C yes (sum1=9,sum2=9)
+                // CC1=CC=CC=C1-C1=C(C)C=CC=C1C yes    (sum1=8,sum2=9)
+                // CC1=CC=CC(C)=C1-C1=CC=CC=C1 no      (sum1=7,sum2=9)
+                // CC1=CC=CC=C1-C1=C(C)C=CC=C1 no      (sum1=8,sum2=8)
+                int sum1 = graph[graph[u][0]].Length +
+                           graph[graph[u][1]].Length +
+                           graph[graph[u][2]].Length;
+                int sum2 = graph[graph[v][0]].Length +
+                           graph[graph[v][1]].Length +
+                           graph[graph[v][2]].Length;
+
+                if (sum1 > 9 || sum1 < 8)
+                    return null;
+                if (sum2 > 9 || sum2 < 8)
+                    return null;
+                if (sum1 + sum2 < 17)
+                    return null;
+
+
+                IAtom[] carriers = new IAtom[4];
+
+                int n = 0;
+                foreach (int w in graph[u])
+                {
+                    if (w == v) continue;
+
+                    carriers[n] = container.Atoms[w];
+
+                    foreach (int w2 in graph[w])
+                    {
+                        if (IsHydrogen(container.Atoms[w2]))
+                            sum1--;
+                    }
+
+                    n++;
+                }
+                n = 2;
+                foreach (int w in graph[v])
+                {
+                    if (w == u) continue;
+
+                    carriers[n] = container.Atoms[w];
+
+                    foreach (int w2 in graph[w])
+                    {
+                        if (IsHydrogen(container.Atoms[w2]))
+                            sum2--;
+                    }
+
+                    n++;
+                }
+
+                if (n != 4)
+                    return null;
+
+                // recheck now we have account for explicit hydrogens
+                if (sum1 > 9 || sum1 < 8)
+                    return null;
+                if (sum2 > 9 || sum2 < 8)
+                    return null;
+                if (sum1 + sum2 < 17)
+                    return null;
+
+                int parity = Parity(carriers);
+                var cfg = parity > 0 ? StereoElement.Configurations.Left : StereoElement.Configurations.Right;
+
+                return new Atropisomeric(container.GetBond(end1, end2), carriers, cfg);
+            }
+
             /// <inheritdoc/>
             public override IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters)
             {
@@ -713,6 +1026,10 @@ namespace NCDK.Stereo
                 if (bondMap[v, t0].Order != BondOrder.Double
                         || bondMap[v, t1].Order != BondOrder.Double) return null;
 
+                // check for kinked cumulated bond
+                if (!IsColinear(focus, terminals))
+                    return null;
+
                 neighbors[1] = terminals[0];
                 neighbors[3] = terminals[1];
 
@@ -734,6 +1051,19 @@ namespace NCDK.Stereo
                 TetrahedralStereo winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
                 return new ExtendedTetrahedral(focus, neighbors, winding);
+            }
+
+            private bool IsColinear(IAtom focus, IAtom[] terminals)
+            {
+                var vec0 = new Vector3(terminals[0].Point3D.Value.X - focus.Point3D.Value.X,
+                                             terminals[0].Point3D.Value.Y - focus.Point3D.Value.Y,
+                                             terminals[0].Point3D.Value.Z - focus.Point3D.Value.Z);
+                var vec1 = new Vector3(terminals[1].Point3D.Value.X - focus.Point3D.Value.X,
+                                             terminals[1].Point3D.Value.Y - focus.Point3D.Value.Y,
+                                             terminals[1].Point3D.Value.Z - focus.Point3D.Value.Z);
+                vec0 = Vector3.Normalize(vec0);
+                vec1 = Vector3.Normalize(vec1);
+                return Math.Abs(Vector3.Dot(vec0, vec1) + 1) < 0.05;
             }
 
             /// <summary>3x3 determinant helper for a constant third column</summary>
@@ -844,8 +1174,13 @@ namespace NCDK.Stereo
             /// <returns>the cross-product</returns>
             private static double[] CrossProduct(double[] u, double[] v)
             {
-                return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1])};
+                return new double[] { (u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1]) };
             }
+        }
+
+        private static bool IsHydrogen(IAtom atom)
+        {
+            return atom.AtomicNumber == 1;
         }
     }
 }

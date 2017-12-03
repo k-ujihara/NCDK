@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:atomCount
-    public partial class AtomCountDescriptor : IMolecularDescriptor
+    public class AtomCountDescriptor : IMolecularDescriptor
     {
         private string elementName = "*";
 
@@ -186,5 +186,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
         public object GetParameterType(string name) => "";
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

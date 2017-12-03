@@ -97,7 +97,7 @@ namespace NCDK.Smiles
         }
 
         //[TestMethod()]
-        // Maybe, reason of failure is in Beam module.
+        //@Ignore("Random failure: to be resolved https://github.com/cdk/cdk/issues/336")
         public void Test_DbStereoCanonGeneration()
         {
             string ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";

@@ -49,36 +49,44 @@ namespace NCDK
     /// </summary>
     public class CDKObjectMap
     {
-        IDictionary<IAtom, IAtom> atomMap;
-        IDictionary<IBond, IBond> bondMap;
+        Dictionary<IChemObject, IChemObject> map = null;
+
+        Dictionary<IChemObject, IChemObject> Map
+        {
+            get
+            {
+                if (map == null)
+                {
+                    map = new Dictionary<IChemObject, IChemObject>();
+                }
+                return map;
+            }
+        }
 
         public CDKObjectMap()
         { }
 
-        /// <summary>
-        /// A map of <see cref="IAtom"/>s. 
-        /// </summary>
-        public IDictionary<IAtom, IAtom> AtomMap
+        public void Add<T>(T a, T b) where T : IChemObject
         {
-            get
-            {
-                if (atomMap == null)
-                    atomMap = new Dictionary<IAtom, IAtom>();
-                return atomMap;
-            }
+            Map.Add(a, b);
         }
 
-        /// <summary>
-        /// A map of <see cref="IBond"/>s. 
-        /// </summary>
-        public IDictionary<IBond, IBond> BondMap
+        public T Get<T>(T key) where T : IChemObject
         {
-            get
-            {
-                if (bondMap == null)
-                    bondMap = new Dictionary<IBond, IBond>();
-                return bondMap;
-            }
+            return (T)Map[key];
+        }
+
+        public void Set<T>(T key, T value) where T : IChemObject
+        {
+            Map[key] = value;
+        }
+
+        public bool TryGetValue<T>(T key, out T value) where T : IChemObject
+        {
+            IChemObject v;
+            bool ret = Map.TryGetValue(key, out v);
+            value = ret ? (T)v : default(T);
+            return ret;
         }
     }
 }

@@ -107,5 +107,17 @@ namespace NCDK.Geometries.CIP
         public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
 
         public IChemObjectBuilder Builder => null;
+
+        public IAtomContainer Container => null;
+
+        public int Index => 0;
+
+        public IEnumerable<IBond> Bonds
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
     }
 }

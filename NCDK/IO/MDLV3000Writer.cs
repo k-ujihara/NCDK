@@ -80,7 +80,7 @@ namespace NCDK.IO
         public MDLV3000Writer(Stream output)
             : this(new StreamWriter(output))
         { }
-        
+
         /// <summary>
         /// Safely access nullable int fields by defaulting to zero.
         /// </summary>
@@ -127,6 +127,12 @@ namespace NCDK.IO
             //  form. A blank line can be substituted for line 2.
             writer.WriteDirect("  CDK     ");
             writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm"));
+            int dim = GetNumberOfDimensions(mol);
+            if (dim != 0)
+            {
+                writer.WriteDirect(dim.ToString());
+                writer.WriteDirect('D');
+            }
             writer.WriteDirect('\n');
 
             string comment = mol.GetProperty<string>(CDKPropertyName.Remark);
@@ -194,6 +200,7 @@ namespace NCDK.IO
         {
             if (mol.Atoms.Count == 0)
                 return;
+            int dim = GetNumberOfDimensions(mol);
             writer.Write("BEGIN ATOM\n");
             int atomIdx = 0;
             foreach (var atom in atoms)
@@ -202,7 +209,7 @@ namespace NCDK.IO
                 int chg = NullAsZero(atom.FormalCharge);
                 int mass = NullAsZero(atom.MassNumber);
                 int hcnt = NullAsZero(atom.ImplicitHydrogenCount);
-                 int elec = mol.GetConnectedSingleElectrons(atom).Count();
+                int elec = mol.GetConnectedSingleElectrons(atom).Count();
                 int rad = 0;
                 switch (elec)
                 {
@@ -239,23 +246,37 @@ namespace NCDK.IO
                       .Write(' ')
                       .Write(symbol)
                       .Write(' ');
-                if (atom.Point2D != null)
+                var p2d = atom.Point2D;
+                var p3d = atom.Point3D;
+                switch (dim)
                 {
-                    Vector2 p2d = atom.Point2D.Value;
-                    writer.Write(p2d.X).Write(' ')
-                            .Write(p2d.Y).Write(' ')
-                            .Write("0 ");
-                }
-                else if (atom.Point3D != null)
-                {
-                    Vector3 p3d = atom.Point3D.Value;
-                    writer.Write(p3d.X).Write(' ')
-                          .Write(p3d.Y).Write(' ')
-                          .Write(p3d.Z).Write(' ');
-                }
-                else
-                {
-                    writer.Write("0 0 0 ");
+                    case 0:
+                        writer.Write("0 0 0 ");
+                        break;
+                    case 2:
+                        if (p2d != null)
+                        {
+                            writer.Write(p2d.Value.X).WriteDirect(' ')
+                                  .Write(p2d.Value.Y).WriteDirect(' ')
+                                  .Write("0 ");
+                        }
+                        else
+                        {
+                            writer.Write("0 0 0 ");
+                        }
+                        break;
+                    case 3:
+                        if (p3d != null)
+                        {
+                            writer.Write(p3d.Value.X).WriteDirect(' ')
+                                  .Write(p3d.Value.Y).WriteDirect(' ')
+                                  .Write(p3d.Value.Z).WriteDirect(' ');
+                        }
+                        else
+                        {
+                            writer.Write("0 0 0 ");
+                        }
+                        break;
                 }
                 writer.Write(NullAsZero(atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping)));
 
@@ -484,6 +505,18 @@ namespace NCDK.IO
             }
         }
 
+        private int GetNumberOfDimensions(IAtomContainer mol)
+        {
+            foreach (IAtom atom in mol.Atoms)
+            {
+                if (atom.Point3D != null)
+                    return 3;
+                else if (atom.Point2D != null)
+                    return 2;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// Write the Sgroup block to the output.
         /// </summary>
@@ -501,8 +534,8 @@ namespace NCDK.IO
                 sgroups
                 .Where(g => g.Type != SgroupType.ExtMulticenter)    // remove non-ctab Sgroups
                 .OrderBy(g => g, aSgroupComparator));
-                    // going to reorder but keep the originals untouched
-                    // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
+            // going to reorder but keep the originals untouched
+            // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
             if (a_sgroups.Count == 0)
                 return;
 
@@ -585,11 +618,11 @@ namespace NCDK.IO
                             foreach (var bracket in brackets)
                             {
                                 writer.Write(" BRKXYZ=(");
-                                 Vector2 p1 = bracket.FirstPoint;
-                                 Vector2 p2 = bracket.SecondPoint;
+                                Vector2 p1 = bracket.FirstPoint;
+                                Vector2 p2 = bracket.SecondPoint;
                                 writer.Write("9");
-                                writer.Write(' ').Write(p1.X).Write(' ').Write(Strings.JavaFormat(p1.Y, "F4")).Write(" 0");
-                                writer.Write(' ').Write(p2.X).Write(' ').Write(Strings.JavaFormat(p2.Y, "F4")).Write(" 0");
+                                writer.Write(' ').Write(p1.X).Write(' ').Write(Strings.JavaFormat(p1.Y, 4, true)).Write(" 0");
+                                writer.Write(' ').Write(p2.X).Write(' ').Write(Strings.JavaFormat(p2.Y, 4, true)).Write(" 0");
                                 writer.Write(" 0 0 0");
                                 writer.Write(")");
                             }
@@ -796,7 +829,7 @@ namespace NCDK.IO
             /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(double num)
             {
-                return Write(Strings.JavaFormat(num, "F4"));
+                return Write(Strings.JavaFormat(num, 4, true)); 
             }
 
             /// <summary>

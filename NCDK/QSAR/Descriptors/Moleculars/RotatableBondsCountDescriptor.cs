@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:rotatableBondsCount
     // @cdk.keyword bond count, rotatable
     // @cdk.keyword descriptor
-    public partial class RotatableBondsCountDescriptor : IMolecularDescriptor
+    public class RotatableBondsCountDescriptor : IMolecularDescriptor
     {
         private bool includeTerminals = false;
         private bool excludeAmides = false;
@@ -223,5 +223,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name"></param>
         /// <returns></returns>
         public object GetParameterType(string name) => true;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

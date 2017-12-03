@@ -107,28 +107,26 @@ namespace NCDK.Stereo
         /// <param name="projections">allowed projection types</param>
         /// <returns>zero of more stereo elements</returns>
         /// </summary>
-        public IList<IStereoElement> Recognise(ICollection<Projection> projections)
+        public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
         {
-
             if (!projections.Contains(Projection.Fischer))
-                return Array.Empty<IStereoElement>();
+                return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             // build atom index and only recognize 2D depictions
             IDictionary<IAtom, int> atomToIndex = new Dictionary<IAtom, int>();
             foreach (var atom in container.Atoms)
             {
                 if (atom.Point2D == null)
-                    return Array.Empty<IStereoElement>();
+                    return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
                 atomToIndex.Add(atom, atomToIndex.Count);
             }
 
             RingSearch ringSearch = new RingSearch(container, graph);
 
-            IList<IStereoElement> elements = new List<IStereoElement>(5);
+            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(5);
 
             for (int v = 0; v < container.Atoms.Count; v++)
             {
-
                 IAtom focus = container.Atoms[v];
                 Elements elem = Elements.OfNumber(focus.AtomicNumber.Value);
 

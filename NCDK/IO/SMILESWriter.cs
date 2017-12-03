@@ -143,7 +143,7 @@ namespace NCDK.IO
                 smiles = sg.Create(molecule);
                 Debug.WriteLine("Generated SMILES: " + smiles);
                 writer.Write(smiles);
-                writer.WriteLine();
+                writer.Write('\n');
                 writer.Flush();
                 Debug.WriteLine("file flushed...");
             }

@@ -950,7 +950,7 @@ namespace NCDK.Tools.Manipulator
             container.Atoms.Add(atom2);
             container.Bonds.Add(new Bond(atom1, atom2, BondOrder.Single));
             container.AddSingleElectronTo(container.Atoms[1]);
-            
+
             IAtom atom3 = Default.ChemObjectBuilder.Instance.NewAtom("Br");
 
             AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
@@ -1093,6 +1093,9 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
+        /// <summary>
+        /// https://sourceforge.net/p/cdk/mailman/message/20639023/
+        /// </summary>
         // @cdk.bug  1969156
         [TestMethod()]
         public void TestOverWriteConfig()
@@ -1104,20 +1107,25 @@ namespace NCDK.Tools.Manipulator
             IList<IAtomContainer> cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = cList[0];
 
+            var exactMass = new Dictionary<IAtom, double?>();
+
             Isotopes.Instance.ConfigureAtoms(ac);
 
             foreach (var atom in ac.Atoms)
             {
-                Assert.IsNotNull(atom.ExactMass);
-                Assert.IsTrue(atom.ExactMass > 0);
+                exactMass[atom] = atom.ExactMass;
             }
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
 
             foreach (var atom in ac.Atoms)
             {
-                Assert.IsNotNull(atom.ExactMass, "exact mass should not be null, after typing");
-                Assert.IsTrue(atom.ExactMass > 0);
+                var expected = exactMass[atom];
+                var actual = atom.ExactMass;
+                if (expected == null)
+                    Assert.IsNull(actual);
+                else
+                    Assert.IsTrue(Math.Abs(expected.Value - actual.Value) < 0.001);
             }
         }
 
@@ -1286,6 +1294,46 @@ namespace NCDK.Tools.Manipulator
         {
             AssertRemoveH("[H][H]", "[H][H]");
             AssertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
+        }
+
+        [TestMethod()]
+        public void MolecularWeight()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[13CH4]CO");
+            double molecularWeight = AtomContainerManipulator.GetMolecularWeight(mol);
+            double naturalExactMass = AtomContainerManipulator.GetNaturalExactMass(mol);
+            Isotopes isotopes = Isotopes.Instance;
+            foreach (IAtom atom in mol.Atoms)
+            {
+                if (atom.MassNumber == null)
+                    atom.ExactMass = isotopes.GetMajorIsotope(atom.AtomicNumber.Value)
+                                              .ExactMass;
+                else
+                    isotopes.Configure(atom);
+            }
+            double exactMass = AtomContainerManipulator.GetTotalExactMass(mol);
+            Assert.IsTrue(Math.Abs(molecularWeight - 48.069) < 0.001);
+            Assert.IsTrue(Math.Abs(naturalExactMass - 47.076) < 0.001);
+            Assert.IsTrue(Math.Abs(exactMass - 48.053) < 0.001);
+        }
+
+        [TestMethod()]
+        public void RemoveBondStereo()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[2H]/C=C/[H]");
+            AtomContainerManipulator.SuppressHydrogens(mol);
+            Assert.IsFalse(mol.StereoElements.Any());
+        }
+
+        [TestMethod()]
+        public void Keep1Hisotopes()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[2H]/C=C/[1H]");
+            AtomContainerManipulator.SuppressHydrogens(mol);
+            Assert.AreEqual(4, mol.Atoms.Count);
         }
 
         // util for testing hydrogen removal using SMILES

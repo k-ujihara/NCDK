@@ -309,7 +309,7 @@ namespace NCDK.Beam
             throw new ArgumentException(u + ", " + v + " are not adjacent");
         }
 
-        internal Edge EdgeAt(int u, int j)
+        public Edge EdgeAt(int u, int j)
         {
             return edges[u][j];
         }
@@ -353,7 +353,7 @@ namespace NCDK.Beam
         /* fixed returns tags are removed. */
         internal void AddTopology(Topology t)
         {
-            if (t != Topology.Unknown)
+            if (t != null && t != Topology.Unknown)
                 topologies[t.Atom] = t;
         }
 
@@ -368,7 +368,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="u">a vertex to access the topology of</param>
         /// <returns>the topology of vertex 'u'</returns>
-        internal Topology TopologyOf(int u)
+        public Topology TopologyOf(int u)
         {
             if (topologies[u] == null)
                 return Topology.Unknown;
@@ -663,12 +663,12 @@ namespace NCDK.Beam
             size = 0;
         }
 
-        internal int GetFlags(int mask)
+        public int GetFlags(int mask)
         {
             return this.flags & mask;
         }
 
-        internal int GetFlags()
+        public int GetFlags()
         {
             return this.flags;
         }

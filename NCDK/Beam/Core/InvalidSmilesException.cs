@@ -84,7 +84,7 @@ namespace NCDK.Beam
         /// <returns>the invalid smiles exception with buffer information</returns>
         public static InvalidSmilesException InvalidBracketAtom(CharBuffer buffer)
         {
-            return new InvalidSmilesException("Invalid bracket atom, [ <isotope>? <symbol> <chiral>? <hcount>? <charge>? <class>? ]:", buffer);
+            return new InvalidSmilesException("Invalid bracket atom, [ <isotope>? <symbol> <chiral>? <hcount>? <charge>? <class>? ], SMILES may be truncated:", buffer);
         }
     }
 }

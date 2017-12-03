@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NCDK</RootNamespace>
     <AssemblyName>NCDK</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtomRef.cs" />
     <Compile Include="Beam\Core\AllCycles.cs" />
     <Compile Include="Beam\Core\ArbitraryMatching.cs" />
     <Compile Include="Beam\Core\Atom.cs" />
@@ -91,6 +92,11 @@
     <Compile Include="Beam\Core\Bond.cs" />
     <Compile Include="Beam\Core\CharBuffer.cs" />
     <Compile Include="Beam\Core\Configuration.cs" />
+    <Compile Include="Beam\Core\Configuration.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Configuration.tt</DependentUpon>
+    </Compile>
     <Compile Include="Beam\Core\Edge.cs" />
     <Compile Include="Beam\Core\ElectronAssignment.cs" />
     <Compile Include="Beam\Core\ElectronDonation.cs" />
@@ -126,11 +132,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BondOrder.tt</DependentUpon>
     </Compile>
+    <Compile Include="BondRef.cs" />
     <Compile Include="BondStereo.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BondStereo.tt</DependentUpon>
     </Compile>
+    <Compile Include="ChemObjectRef.cs" />
     <Compile Include="Common\Base\Compares.cs" />
     <Compile Include="Common\Base\Preconditions.cs" />
     <Compile Include="Common\Collections\Arrays.cs" />
@@ -283,6 +291,10 @@
       <DependentUpon>DoubleBondConformation.tt</DependentUpon>
     </Compile>
     <Compile Include="Events\ICDKChangeListener.cs" />
+    <Content Include="Beam\Core\Configuration.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Configuration.tt.cs</LastGenOutput>
+    </Content>
     <Content Include="x64\ncdk_libinchi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -351,10 +363,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24BondDescriptor.tt.cs</LastGenOutput>
     </Content>
-    <Content Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>%24MolecularDescriptor.tt.cs</LastGenOutput>
-    </Content>
     <Content Include="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
@@ -375,11 +383,6 @@
     </Compile>
     <Compile Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt.cs">
       <DependentUpon>%24BondDescriptor.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="QSAR\Descriptors\Moleculars\%24MolecularDescriptor.tt.cs">
-      <DependentUpon>%24MolecularDescriptor.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -449,6 +452,11 @@
     <Compile Include="Smiles\SMARTS\Parser\ParseException.cs" />
     <Compile Include="Smiles\SMARTS\SmartsAtomAtomMapFilter.cs" />
     <Compile Include="Smiles\SmiFlavor.cs" />
+    <Compile Include="Stereo\AbstractStereo.cs" />
+    <Compile Include="Stereo\Atropisomeric.cs" />
+    <Compile Include="Stereo\Octahedral.cs" />
+    <Compile Include="Stereo\SquarePlanar.cs" />
+    <Compile Include="Stereo\TrigonalBipyramidal.cs" />
     <Compile Include="Templates\IsoAlkanes.cs" />
     <Compile Include="NInChI\INCHI_BOND_STEREO.cs" />
     <Compile Include="NInChI\INCHI_BOND_TYPE.cs" />

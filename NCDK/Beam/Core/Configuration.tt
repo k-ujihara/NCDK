@@ -1,0 +1,136 @@
+﻿<#@ include file="..\..\..\Config.ttinclude" #>
+
+/*
+ * Copyright (c) 2013, European Bioinformatics Institute (EMBL-EBI)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * Any EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * Any DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON Any THEORY OF LIABILITY, WHETHER IN CONTRACT, Strict LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN Any WAY OUT OF THE USE OF THIS
+ * SOFTWARE, Even IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * The views and conclusions contained in the software and documentation are those
+ * of the authors and should not be interpreted as representing official policies,
+ * either expressed or implied, of the FreeBSD Project.
+ */
+
+namespace NCDK.Beam
+{
+    /// <summary>
+    /// Enumeration of atom-based relative configurations. Each value defines a
+    /// configuration of a given topology.
+    /// </summary>
+    /// <seealso href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</seealso>
+    // @author John May
+<# 
+    GenerateEnumBody(
+        "Configuration", 
+            new[]
+        {
+            "Unknown{**Types.None, \"\"**}:An atoms has Unknown/no configuration.",
+			"AntiClockwise{**Types.Implicit, \"@\"**}:Shorthand for TH1, AL1, DB1, TB1 or OH1 configurations.",
+			"Clockwise{**Types.Implicit, \"@@\"**}:Shorthand for TH2, AL2, DB2, TB2 or OH2 configurations.",
+			"TH1{**Types.Tetrahedral, \"@TH1\", AntiClockwise**}:Tetrahedral, neighbors proceed anti-clockwise looking from the first atom.",
+			"TH2{**Types.Tetrahedral, \"@TH2\", Clockwise**}:Tetrahedral, neighbors proceed clockwise looking from the first atom. ",
+			"DB1{**Types.DoubleBond, \"@DB1\", AntiClockwise**}:Atom-based double bond configuration, neighbors proceed anti-clockwise in a plane. <i>Note - this configuration is currently specific to grins.</i>",
+			"DB2{**Types.DoubleBond, \"@DB2\", Clockwise**}:Atom-based double bond configuration, neighbors proceed clockwise in a plane.<i>Note - this configuration is currently specific to grins.</i>",
+
+			// extended tetrahedral, allene-like = new Configuration(Sp)
+			"AL1{**Types.ExtendedTetrahedral, \"@AL1\", AntiClockwise**}",
+			"AL2{**Types.ExtendedTetrahedral, \"@AL2\", Clockwise**}",
+
+			// square planar
+			"SP1{**Types.SquarePlanar, \"@SP1\"**}",
+			"SP2{**Types.SquarePlanar, \"@SP2\"**}",
+			"SP3{**Types.SquarePlanar, \"@SP3\"**}",
+
+			// trigonal bipyramidal
+			"TB1{**Types.TrigonalBipyramidal, \"@TB1\", AntiClockwise**}",
+			"TB2{**Types.TrigonalBipyramidal, \"@TB2\", Clockwise**}",
+			"TB3{**Types.TrigonalBipyramidal, \"@TB3\"**}",
+			"TB4{**Types.TrigonalBipyramidal, \"@TB4\"**}",
+			"TB5{**Types.TrigonalBipyramidal, \"@TB5\"**}",
+			"TB6{**Types.TrigonalBipyramidal, \"@TB6\"**}",
+			"TB7{**Types.TrigonalBipyramidal, \"@TB7\"**}",
+			"TB8{**Types.TrigonalBipyramidal, \"@TB8\"**}",
+			"TB9{**Types.TrigonalBipyramidal, \"@TB9\"**}",
+			"TB10{**Types.TrigonalBipyramidal, \"@TB10\"**}",
+			"TB11{**Types.TrigonalBipyramidal, \"@TB11\"**}",
+			"TB12{**Types.TrigonalBipyramidal, \"@TB12\"**}",
+			"TB13{**Types.TrigonalBipyramidal, \"@TB13\"**}",
+			"TB14{**Types.TrigonalBipyramidal, \"@TB14\"**}",
+			"TB15{**Types.TrigonalBipyramidal, \"@TB15\"**}",
+			"TB16{**Types.TrigonalBipyramidal, \"@TB16\"**}",
+			"TB17{**Types.TrigonalBipyramidal, \"@TB17\"**}",
+			"TB18{**Types.TrigonalBipyramidal, \"@TB18\"**}",
+			"TB19{**Types.TrigonalBipyramidal, \"@TB19\"**}",
+			"TB20{**Types.TrigonalBipyramidal, \"@TB20\"**}",
+
+	        // octahedral
+			"OH1{**Types.Octahedral, \"@OH1\", AntiClockwise**}",
+			"OH2{**Types.Octahedral, \"@OH2\", Clockwise**}",
+			"OH3{**Types.Octahedral, \"@OH3\"**}",
+			"OH4{**Types.Octahedral, \"@OH4\"**}",
+			"OH5{**Types.Octahedral, \"@OH5\"**}",
+			"OH6{**Types.Octahedral, \"@OH6\"**}",
+			"OH7{**Types.Octahedral, \"@OH7\"**}",
+			"OH8{**Types.Octahedral, \"@OH8\"**}",
+			"OH9{**Types.Octahedral, \"@OH9\"**}",
+			"OH10{**Types.Octahedral, \"@OH10\"**}",
+			"OH11{**Types.Octahedral, \"@OH11\"**}",
+			"OH12{**Types.Octahedral, \"@OH12\"**}",
+			"OH13{**Types.Octahedral, \"@OH13\"**}",
+			"OH14{**Types.Octahedral, \"@OH14\"**}",
+			"OH15{**Types.Octahedral, \"@OH15\"**}",
+			"OH16{**Types.Octahedral, \"@OH16\"**}",
+			"OH17{**Types.Octahedral, \"@OH17\"**}",
+			"OH18{**Types.Octahedral, \"@OH18\"**}",
+			"OH19{**Types.Octahedral, \"@OH19\"**}",
+			"OH20{**Types.Octahedral, \"@OH20\"**}",
+			"OH21{**Types.Octahedral, \"@OH21\"**}",
+			"OH22{**Types.Octahedral, \"@OH22\"**}",
+			"OH23{**Types.Octahedral, \"@OH23\"**}",
+			"OH24{**Types.Octahedral, \"@OH24\"**}",
+			"OH25{**Types.Octahedral, \"@OH25\"**}",
+			"OH26{**Types.Octahedral, \"@OH26\"**}",
+			"OH27{**Types.Octahedral, \"@OH27\"**}",
+			"OH28{**Types.Octahedral, \"@OH28\"**}",
+			"OH29{**Types.Octahedral, \"@OH29\"**}",
+			"OH30{**Types.Octahedral, \"@OH30\"**}",
+        },
+        false
+	);
+#>
+    {
+        private Configuration(int ordinal, Types type, string symbol, Configuration shorthand)
+			: this(ordinal)
+        {
+            this.type = type;
+            this.symbol = symbol;
+            this.shorthand = shorthand;
+        }
+
+        private Configuration(int ordinal, Types type, string symbol)
+			: this(ordinal)
+        {
+            this.type = type;
+            this.symbol = symbol;
+            this.shorthand = this;
+        }
+	}
+}

@@ -720,9 +720,12 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">coordinates could not be generated</exception>
         private void Ensure2dLayout(IReaction rxn)
         {
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            sdg.SetAlignMappedReaction(alignMappedReactions);
-            sdg.GenerateCoordinates(rxn);
+            if (!GeometryUtil.Has2DCoordinates(rxn))
+            {
+                StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                sdg.SetAlignMappedReaction(alignMappedReactions);
+                sdg.GenerateCoordinates(rxn);
+            }
         }
 
         /// <summary>
@@ -814,9 +817,8 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Display atom numbers on the molecule or reaction. The numbers are based on the
-        /// ordering of atoms in the molecule data structure and not a systematic system
-        /// such as IUPAC numbering.
+        /// Display atom values on the molecule or reaction. The values need to be assigned by 
+        /// <c>atom.SetProperty(CDKConstants.COMMENT, myValueToBeDisplayedNextToAtom);</c>
         /// </summary>
         /// <remarks>
         /// <note type="note">
@@ -982,7 +984,7 @@ namespace NCDK.Depict
         /// <seealso cref="StandardGenerator.Visibility"/>
         public DepictionGenerator WithTerminalCarbons()
         {
-            return WithParam(typeof(StandardGenerator.Visibility), SelectionVisibility.Disconnected(SymbolVisibility.IUPACRecommendations));
+            return WithParam(typeof(StandardGenerator.Visibility), SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations));
         }
 
         /// <summary>

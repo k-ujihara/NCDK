@@ -22,7 +22,7 @@
  */
  #>
 <#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".tt.cs" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>
 <#@ Assembly Name="System.Xml.Linq.dll" #>
@@ -38,7 +38,7 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 
 <#+
-    static Regex OSplitter = new Regex(@"(?<name>\w+)(\((?<tostring>.*)\))?(\:(?<summary>.*))?", RegexOptions.Compiled);
+    static Regex OSplitter = new Regex(@"(?<name>\w+)(\((?<tostring>.*)\))?(\{\*\*(?<parameters>.*)\*\*\})?(\:(?<summary>.*))?", RegexOptions.Compiled);
 
     public string OName(string s)
     {
@@ -54,9 +54,22 @@
         return t;
     }
 
-    public string[] Split(string s)
+	public string ParametersString(string s)
     {
-        return s.Split(':');
+        var m = OSplitter.Match(s);
+        var t = m.Groups["parameters"].Value;
+        if (string.IsNullOrEmpty(t))
+            return null;
+        return t;
+    }
+
+	public string SummaryString(string s)
+    {
+        var m = OSplitter.Match(s);
+        var t = m.Groups["summary"].Value;
+        if (string.IsNullOrEmpty(t))
+            return null;
+        return t;
     }
 
 	public string StructOrClass(bool isStruct)
@@ -91,14 +104,15 @@
 		/// The <see cref="Ordinal"/> values of <see cref="<#= name #>"/>.
 		/// </summary>
 		/// <seealso cref="<#= name #>"/>
-        public static class O
+        public static partial class O
         {
 <#+ 
         for (var i = 0; i < entities.Length; i++) 
         {
             var s = entities[i];
+			string value_string = " " + i.ToString();
 #>
-            public const int <#= OName(s) #> = <#= i #>;
+            public const int <#= OName(s) #> =<#= value_string #>;
 <#+ 
         }
 #>          
@@ -136,7 +150,7 @@ foreach (var s in entities)
 
         public static explicit operator <#= name #>(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -150,17 +164,22 @@ foreach (var s in entities)
     for (var i = 0; i < entities.Length; i++)
     {
         var s = entities[i];
-        var ss = Split(s);
-        if (ss.Length > 1)
+        var ss = SummaryString(s);
+        if (ss != null)
         {
 #>
         /// <summary>
-        /// <#= ss[1] #>
+        /// <#= ss #>
         /// </summary>
 <#+
         }
+		string init_param = ParametersString(s);
+		if (init_param == null)
+			init_param = i.ToString();
+		else
+			init_param = i.ToString() + "," + init_param;
 #>
-        public static readonly <#= name #> <#= OName(s) #> = new <#= name #>(<#= i #>);
+        public static readonly <#= name #> <#= OName(s) #> = new <#= name #>(<#= init_param #>);
 <#+
     }
 #>
@@ -170,7 +189,7 @@ foreach (var s in entities)
             <#= OName(s) #>, 
 <#+ } #>    
         };
-        public static System.Collections.Generic.IEnumerable<<#= name #>> Values => values;
+        public static <#= name #>[] Values => values;
 
 <#+
          if (isStruct) 

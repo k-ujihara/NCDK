@@ -138,17 +138,6 @@ namespace NCDK.Graphs.InChI
                 }
             }
 
-            // Process atoms
-            IsotopeFactory ifact = null;
-            try
-            {
-                ifact = Isotopes.Instance;
-            }
-            catch (Exception)
-            {
-                // Do nothing
-            }
-
             IDictionary<IAtom, NInchiAtom> atomMap = new Dictionary<IAtom, NInchiAtom>();
             foreach (var atom in atomContainer.Atoms)
             {
@@ -192,16 +181,7 @@ namespace NCDK.Graphs.InChI
 
                 // Check whether isotopic
                 int? isotopeNumber = atom.MassNumber;
-                if (isotopeNumber.HasValue && ifact != null)
-                {
-                    IAtom isotope = atomContainer.Builder.NewAtom(el);
-                    ifact.Configure(isotope);
-                    if (isotope.MassNumber.Value == isotopeNumber.Value)
-                    {
-                        isotopeNumber = 0;
-                    }
-                }
-                if (isotopeNumber.HasValue)
+                if (isotopeNumber != null)
                 {
                     iatom.IsotopicMass = isotopeNumber.Value;
                 }

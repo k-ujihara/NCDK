@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Beam;
 using NCDK.Common.Collections;
 using NCDK.Stereo;
@@ -106,7 +107,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i < g.Order; i++)
             {
-                checkAtomStereo = checkAtomStereo || g.ConfigurationOf(i).Type != Configuration.Types.None;
+                checkAtomStereo = checkAtomStereo || g.ConfigurationOf(i).Type != Beam.Configuration.Types.None;
                 atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
             }
             ac.SetAtoms(atoms);
@@ -171,26 +172,44 @@ namespace NCDK.Smiles
             {
                 for (int u = 0; u < g.Order; u++)
                 {
-                    Configuration c = g.ConfigurationOf(u);
+                    Beam.Configuration c = g.ConfigurationOf(u);
                     switch (c.Type)
                     {
-                        case Configuration.Types.Tetrahedral:
+                        case Beam.Configuration.Types.Tetrahedral:
                             {
-                                IStereoElement se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
+                                var se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
 
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case Configuration.Types.ExtendedTetrahedral:
+                        case Beam.Configuration.Types.ExtendedTetrahedral:
                             {
-                                IStereoElement se = NewExtendedTetrahedral(u, g, atoms);
+                                var se = NewExtendedTetrahedral(u, g, atoms);
 
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case DoubleBond:
+                        case Beam.Configuration.Types.DoubleBond:
                             {
                                 checkBondStereo = true;
+                                break;
+                            }
+                        case Beam.Configuration.Types.SquarePlanar:
+                            {
+                                var se = NewSquarePlanar(u, g.Neighbors(u), atoms, c);
+                                if (se != null) ac.StereoElements.Add(se);
+                                break;
+                            }
+                        case Beam.Configuration.Types.TrigonalBipyramidal:
+                            {
+                                var se = NewTrigonalBipyramidal(u, g.Neighbors(u), atoms, c);
+                                if (se != null) ac.StereoElements.Add(se);
+                                break;
+                            }
+                        case Beam.Configuration.Types.Octahedral:
+                            {
+                                var se = NewOctahedral(u, g.Neighbors(u), atoms, c);
+                                if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
                     }
@@ -252,10 +271,10 @@ namespace NCDK.Smiles
                 // extension F[C@]=[C@@]F
                 else
                 {
-                    Configuration uConf = g.ConfigurationOf(u);
-                    Configuration vConf = g.ConfigurationOf(v);
-                    if (uConf.Type == Configuration.Types.DoubleBond &&
-                        vConf.Type == Configuration.Types.DoubleBond)
+                    Beam.Configuration uConf = g.ConfigurationOf(u);
+                    Beam.Configuration vConf = g.ConfigurationOf(v);
+                    if (uConf.Type == Beam.Configuration.Types.DoubleBond &&
+                        vConf.Type == Beam.Configuration.Types.DoubleBond)
                     {
 
                         int[] nbrs = new int[6];
@@ -288,13 +307,13 @@ namespace NCDK.Smiles
                         vhi = nbrs[3 + ((uPos + 1) % 3)];
                         vlo = nbrs[3 + ((uPos + 2) % 3)];
 
-                        if (uConf.Shorthand == Configuration.Clockwise)
+                        if (uConf.Shorthand == Beam.Configuration.Clockwise)
                         {
                             int tmp = uhi;
                             uhi = ulo;
                             ulo = tmp;
                         }
-                        if (vConf.Shorthand == Configuration.AntiClockwise)
+                        if (vConf.Shorthand == Beam.Configuration.AntiClockwise)
                         {
                             int tmp = vhi;
                             vhi = vlo;
@@ -372,7 +391,7 @@ namespace NCDK.Smiles
         /// <param name="atoms">array of the CDK atoms (pre-converted)</param>
         /// <param name="c">the configuration of the neighbors (vs) for the order they are given</param>
         /// <returns>tetrahedral stereo element for addition to an atom container</returns>
-        private IStereoElement NewTetrahedral(int u, int[] vs, IAtom[] atoms, Configuration c)
+        private IReadOnlyStereoElement<IChemObject, IChemObject> NewTetrahedral(int u, int[] vs, IAtom[] atoms, Beam.Configuration c)
         {
             // no way to handle tetrahedral configurations with implicit
             // hydrogen or lone pair at the moment
@@ -387,12 +406,67 @@ namespace NCDK.Smiles
             }
 
             // @TH1/@TH2 = anti-clockwise and clockwise respectively
-            TetrahedralStereo stereo = c == Configuration.TH1 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
+            TetrahedralStereo stereo = c == Beam.Configuration.TH1 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
             return new TetrahedralChirality(atoms[u], new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]] }, stereo);
         }
 
-        private IStereoElement NewExtendedTetrahedral(int u, Graph g, IAtom[] atoms)
+        private IReadOnlyStereoElement<IChemObject, IChemObject> NewSquarePlanar(int u, int[] vs, IAtom[] atoms, Configuration c)
+        {
+            if (vs.Length != 4)
+                return null;
+
+            StereoElement order;
+            switch (c.Ordinal)
+            {
+                case Configuration.O.SP1:
+                    order = new StereoElement(StereoElement.Classes.SquarePlanar, 1);
+                    break;
+                case Configuration.O.SP2:
+                    order = new StereoElement(StereoElement.Classes.SquarePlanar, 2);
+                    break;
+                case Configuration.O.SP3:
+                    order = new StereoElement(StereoElement.Classes.SquarePlanar, 3);
+                    break;
+                default:
+                    return null;
+            }
+
+            return new SquarePlanar(atoms[u],
+                                    new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]] },
+                                    order);
+        }
+
+        private IReadOnlyStereoElement<IChemObject, IChemObject> NewTrigonalBipyramidal(int u, int[] vs, IAtom[] atoms, Configuration c)
+        {
+            if (vs.Length != 5)
+                return null;
+            int order = 1 + c.Ordinal - Configuration.TB1.Ordinal;
+            if (order < 1 || order > 20)
+                return null;
+            return new TrigonalBipyramidal(atoms[u],
+                                           new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]], atoms[vs[4]] },
+                                           order);
+        }
+
+        private IReadOnlyStereoElement<IChemObject, IChemObject> NewOctahedral(int u, int[] vs, IAtom[] atoms, Configuration c)
+        {
+            if (vs.Length != 6)
+                return null;
+            int order = 1 + c.Ordinal - Configuration.OH1.Ordinal;
+            if (order < 1 || order > 30)
+                return null;
+            return new Octahedral(atoms[u],
+                                  new IAtom[]{atoms[vs[0]],
+                                          atoms[vs[1]],
+                                          atoms[vs[2]],
+                                          atoms[vs[3]],
+                                          atoms[vs[4]],
+                                          atoms[vs[5]]},
+                                  order);
+        }
+
+        private IReadOnlyStereoElement<IChemObject, IChemObject> NewExtendedTetrahedral(int u, Graph g, IAtom[] atoms)
         {
             int[] terminals = g.Neighbors(u);
             int[] xs = new int[] { -1, terminals[0], -1, terminals[1] };
@@ -410,7 +484,7 @@ namespace NCDK.Smiles
 
             Array.Sort(xs);
 
-            TetrahedralStereo stereo = g.ConfigurationOf(u).Shorthand == Configuration.Clockwise ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
+            TetrahedralStereo stereo = g.ConfigurationOf(u).Shorthand == Beam.Configuration.Clockwise ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
 
             return new ExtendedTetrahedral(atoms[u], new IAtom[] { atoms[xs[0]], atoms[xs[1]], atoms[xs[2]], atoms[xs[3]] }, stereo);
         }

@@ -198,8 +198,7 @@ namespace NCDK.Beam
                     Edge e = g.EdgeAt(v, j);
                     if (e.Bond == Bond.Double)
                     {
-                        if (q == 0 && (a.Element == Element.Nitrogen || (a.Element == Element.Sulfur && deg > 3))
-                                && g.GetAtom(e.Other(v)).Element == Element.Oxygen)
+                        if (q == 0 && (a.Element == Element.Nitrogen || (a.Element == Element.Sulfur && deg > 3)))
                             return false;
                         return true;
                     }

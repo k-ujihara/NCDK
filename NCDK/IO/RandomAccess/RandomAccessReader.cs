@@ -161,13 +161,13 @@ namespace NCDK.IO.RandomAccess
             using (var o = new StreamWriter(file))
             {
                 o.Write(indexVersion.ToString());
-                o.WriteLine();
+                o.Write('\n');
                 o.Write(filename);
-                o.WriteLine();
+                o.Write('\n');
                 o.Write(raFile.Length.ToString());
-                o.WriteLine();
+                o.Write('\n');
                 o.Write(records.ToString());
-                o.WriteLine();
+                o.Write('\n');
                 for (int i = 0; i < records; i++)
                 {
                     o.Write(index[i][0].ToString());
@@ -178,9 +178,9 @@ namespace NCDK.IO.RandomAccess
                     o.Write("\t");
                 }
                 o.Write(records.ToString());
-                o.WriteLine();
+                o.Write('\n');
                 o.Write(filename);
-                o.WriteLine();
+                o.Write('\n');
             }
         }
 

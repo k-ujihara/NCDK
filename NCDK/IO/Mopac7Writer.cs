@@ -78,11 +78,11 @@ namespace NCDK.IO
                     writer.Write(mopacCommands.Setting);
                     int formalCharge = AtomContainerManipulator.GetTotalFormalCharge(container);
                     if (formalCharge != 0) writer.Write(" CHARGE=" + formalCharge);
-                    writer.WriteLine();
+                    writer.Write('\n');
                     //if (container.GetProperty("Names") != null) writer.Write(container.GetProperty("Names").ToString());
-                    writer.WriteLine();
+                    writer.Write('\n');
                     writer.Write(Title);
-                    writer.WriteLine();
+                    writer.Write('\n');
 
                     for (int i = 0; i < container.Atoms.Count; i++)
                     {
@@ -101,7 +101,7 @@ namespace NCDK.IO
                             WriteAtom(atom, 0, 0, 0, 1);
                     }
                     writer.Write("0");
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
                 catch (IOException ioException)
                 {
@@ -128,7 +128,7 @@ namespace NCDK.IO
             writer.Write(BLANK);
             writer.Write(optimize);
             writer.Write(BLANK);
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         #region IDisposable Support

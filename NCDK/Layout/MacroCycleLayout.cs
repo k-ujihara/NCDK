@@ -190,8 +190,39 @@ namespace NCDK.Layout
                         nConcaveHetero++;
                 }
 
+                int nCorrectStereo = 0;
+                int nIncorrectStereo = 0;
+                foreach (var se in macrocycle.StereoElements)
+                {
+                    if (se.Class == StereoElement.Classes.CisTrans)
+                    {
+                        IBond bond = (IBond)se.Focus;
+                        IAtom beg = bond.Begin;
+                        IAtom end = bond.End;
+                        StereoElement.Configurations cfg;
+                        if (winding[(macrocycle.Atoms.IndexOf(beg) + i) % numAtoms] ==
+                            winding[(macrocycle.Atoms.IndexOf(end) + i) % numAtoms])
+                        {
+                            cfg = StereoElement.Configurations.Together;
+                        }
+                        else
+                        {
+                            cfg = StereoElement.Configurations.Opposite;
+                        }
+                        if (cfg == se.Configure)
+                        {
+                            nCorrectStereo++;
+                        }
+                        else
+                        {
+                            nIncorrectStereo++;
+                        }
+                    }
+                }
+
                 MacroScore score = new MacroScore(i,
                                                   nConcaveHetero,
+                                                  nCorrectStereo,
                                                   nRingClick);
                 if (score.CompareTo(best) < 0)
                 {
@@ -313,12 +344,14 @@ namespace NCDK.Layout
             public readonly int offset;
             readonly int nConcaveHetero;
             readonly int nRingClick;
+            readonly int nCorrectStereo;
 
-            public MacroScore(int offset, int nConcaveHetero, int nRingClick)
+            public MacroScore(int offset, int nConcaveHetero, int nCorrectStereo, int nRingClick)
             {
                 this.offset = offset;
                 this.nConcaveHetero = nConcaveHetero;
                 this.nRingClick = nRingClick;
+                this.nCorrectStereo = nCorrectStereo;
             }
 
             public int CompareTo(MacroScore o)
@@ -327,6 +360,9 @@ namespace NCDK.Layout
                     return -1;
                 int cmp = 0;
                 cmp = -this.nRingClick.CompareTo(o.nRingClick);
+                if (cmp != 0)
+                    return cmp;
+                cmp = -this.nCorrectStereo.CompareTo(o.nCorrectStereo);
                 if (cmp != 0)
                     return cmp;
                 cmp = -this.nConcaveHetero.CompareTo(o.nConcaveHetero);

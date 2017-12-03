@@ -35,7 +35,7 @@ namespace NCDK
 		/// The <see cref="Ordinal"/> values of <see cref="TetrahedralStereo"/>.
 		/// </summary>
 		/// <seealso cref="TetrahedralStereo"/>
-        public static class O
+        public static partial class O
         {
             public const int Unset = 0;
             public const int Clockwise = 1;
@@ -71,7 +71,7 @@ namespace NCDK
 
         public static explicit operator TetrahedralStereo(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -91,7 +91,7 @@ namespace NCDK
             AntiClockwise, 
     
         };
-        public static System.Collections.Generic.IEnumerable<TetrahedralStereo> Values => values;
+        public static TetrahedralStereo[] Values => values;
 
         /* Avoid to cause compiling error */
 
@@ -175,6 +175,32 @@ namespace NCDK
             if (this == AntiClockwise)
                 return Clockwise;
             return this;
+        }
+
+        public static StereoElement.Configurations ToConfigure(TetrahedralStereo stereo)
+        {
+            switch (stereo.Ordinal)
+            {
+                case TetrahedralStereo.O.AntiClockwise:
+                    return StereoElement.Configurations.Left;
+                case TetrahedralStereo.O.Clockwise:
+                    return StereoElement.Configurations.Right;
+                default:
+                    throw new System.ArgumentException("Unknown enum value: " + stereo);
+            }
+        }
+
+        public static TetrahedralStereo ToStereo(StereoElement.Configurations configure)
+        {
+            switch (configure.Ordinal)
+            {
+                case StereoElement.Configurations.O.Left:
+                    return AntiClockwise;
+                case StereoElement.Configurations.O.Right:
+                    return Clockwise;
+                default:
+                    throw new System.ArgumentException("Cannot map to enum value: " + configure);
+            }
         }
     }
 }

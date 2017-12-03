@@ -153,8 +153,8 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(1, roundTrippedMol.Atoms.Count);
             IAtom roundTrippedAtom = roundTrippedMol.Atoms[0];
             Assert.IsNotNull(roundTrippedAtom);
-            Assert.IsTrue(roundTrippedAtom is PseudoAtom);
-            Assert.AreEqual("Glu55", ((PseudoAtom)roundTrippedAtom).Label);
+            Assert.IsTrue(roundTrippedAtom is IPseudoAtom);
+            Assert.AreEqual("Glu55", ((IPseudoAtom)roundTrippedAtom).Label);
         }
 
         /// <summary>

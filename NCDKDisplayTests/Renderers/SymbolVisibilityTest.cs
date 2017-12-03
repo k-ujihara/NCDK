@@ -41,19 +41,19 @@ namespace NCDK.Renderers
         [TestMethod()]
         public void IupacOxygen()
         {
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(new Atom("O"), Array.Empty<IBond>(), new RendererModel()));
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations.Visible(new Atom("O"), Array.Empty<IBond>(), new RendererModel()));
         }
 
         [TestMethod()]
         public void IupacNitrogen()
         {
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(new Atom("N"), Array.Empty<IBond>(), new RendererModel()));
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations.Visible(new Atom("N"), Array.Empty<IBond>(), new RendererModel()));
         }
 
         [TestMethod()]
         public void IupacMethane()
         {
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(new Atom("C"), Array.Empty<IBond>(),
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations.Visible(new Atom("C"), Array.Empty<IBond>(),
                     new RendererModel()));
         }
 
@@ -65,7 +65,7 @@ namespace NCDK.Renderers
             IBond bond = new Bond(a1, a2);
             a1.Point2D = new Vector2(0, 0);
             a2.Point2D = new Vector2(0, 0);
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(a1, new[] { bond }, new RendererModel()));
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations.Visible(a1, new[] { bond }, new RendererModel()));
         }
 
         [TestMethod()]
@@ -78,7 +78,7 @@ namespace NCDK.Renderers
             IBond bond = new Bond(a1, a2);
             a1.Point2D = new Vector2(0, 0);
             a2.Point2D = new Vector2(0, 0);
-            Assert.IsFalse(SymbolVisibility.IUPACRecommendationsWithoutTerminalCarbon.Visible(a1, new[] { bond }, new RendererModel()));
+            Assert.IsFalse(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon.Visible(a1, new[] { bond }, new RendererModel()));
         }
 
         [TestMethod()]
@@ -99,7 +99,7 @@ namespace NCDK.Renderers
             a2.ImplicitHydrogenCount = 3;
             a3.ImplicitHydrogenCount = 3;
 
-            Assert.IsFalse(SymbolVisibility.IUPACRecommendations.Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
+            Assert.IsFalse(SymbolVisibility.IupacRecommendations.Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
         }
 
         [TestMethod()]
@@ -121,7 +121,7 @@ namespace NCDK.Renderers
             a2.ImplicitHydrogenCount = 3;
             a3.ImplicitHydrogenCount = 3;
 
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations
                     .Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
         }
 
@@ -144,7 +144,7 @@ namespace NCDK.Renderers
             a3.ImplicitHydrogenCount = 3;
 
             var model = new RendererModel();
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations.Visible(a1, new[] { bond1, bond2 }, model));
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations.Visible(a1, new[] { bond1, bond2 }, model));
         }
 
         // produces an NaN internally
@@ -166,7 +166,7 @@ namespace NCDK.Renderers
             a2.ImplicitHydrogenCount = 3;
             a3.ImplicitHydrogenCount = 3;
 
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations
                     .Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
         }
 
@@ -190,7 +190,7 @@ namespace NCDK.Renderers
             a2.ImplicitHydrogenCount = 3;
             a3.ImplicitHydrogenCount = 3;
 
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendations
+            Assert.IsTrue(SymbolVisibility.IupacRecommendations
                     .Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
         }
 
@@ -208,7 +208,25 @@ namespace NCDK.Renderers
             a1.ImplicitHydrogenCount = 3;
             a2.ImplicitHydrogenCount = 3;
 
-            Assert.IsTrue(SymbolVisibility.IUPACRecommendationsWithoutTerminalCarbon.Visible(a1, new[] { bond1 }, new RendererModel()));
+            Assert.IsTrue(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon.Visible(a1, new[] { bond1 }, new RendererModel()));
+        }
+
+        [TestMethod()]
+        public void AlwaysDisplayCharges()
+        {
+            IAtom a1 = new Atom("CH-");
+            IAtom a2 = new Atom("CH2");
+            IAtom a3 = new Atom("CH3");
+
+            a1.Point2D = new Vector2(0, 0);
+            a2.Point2D = new Vector2(0.5, -0.5);
+            a2.Point2D = new Vector2(1, 0);
+
+            IBond bond1 = new Bond(a1, a2, BondOrder.Double);
+            IBond bond2 = new Bond(a2, a3, BondOrder.Single);
+
+            Assert.IsTrue(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon
+                                       .Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
         }
     }
 }

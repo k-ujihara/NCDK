@@ -383,7 +383,7 @@ namespace NCDK.IO
                                     if (lineLength > 12)
                                     {
                                         comment = comment + cRead.Substring(11).Trim()
-                                                + Environment.NewLine;
+                                                + "\n";
                                         oFile.SetProperty(CDKPropertyName.Comment, comment);
                                     }
                                     else

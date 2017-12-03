@@ -14,7 +14,7 @@ namespace NCDK.Renderers.Elements
 		/// The <see cref="Ordinal"/> values of <see cref="Position"/>.
 		/// </summary>
 		/// <seealso cref="Position"/>
-        public static class O
+        public static partial class O
         {
             public const int NW = 0;
             public const int SW = 1;
@@ -60,7 +60,7 @@ namespace NCDK.Renderers.Elements
 
         public static explicit operator Position(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -90,7 +90,7 @@ namespace NCDK.Renderers.Elements
             E, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Position> Values => values;
+        public static Position[] Values => values;
 
         /* Avoid to cause compiling error */
 

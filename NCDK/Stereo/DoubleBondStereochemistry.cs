@@ -35,48 +35,34 @@ namespace NCDK.Stereo
     // @cdk.module core
     // @cdk.githash
     public class DoubleBondStereochemistry
-        : IDoubleBondStereochemistry
+        : AbstractStereo<IBond, IBond>, IDoubleBondStereochemistry
     {
-        private DoubleBondConformation stereo;
-        private List<IBond> ligandBonds;
-        private IBond stereoBond;
-        public IChemObjectBuilder Builder { get; set; }
-
         /// <summary>
         /// Creates a new double bond stereo chemistry. The path of length three is defined by
         /// <c>ligandBonds[0]</c>, <c>stereoBonds</c>, and <c>ligandBonds[1]</c>.
         /// </summary>
-        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
+        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo) 
+            : this(stereoBond, ligandBonds, DoubleBondConformation.ToConfig(stereo))
         {
-            if (ligandBonds.Count() > 2) throw new ArgumentException("expected two ligand bonds");
-            this.stereoBond = stereoBond;
-            this.ligandBonds = new List<IBond>(ligandBonds);
-            this.stereo = stereo;
         }
 
-        public virtual IReadOnlyList<IBond> Bonds => new ReadOnlyCollection<IBond>(ligandBonds);
-        public virtual IBond StereoBond => stereoBond;
-        public virtual DoubleBondConformation Stereo => stereo;
-
-        public virtual bool Contains(IAtom atom)
+        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement.Configurations configure)
+            : base(stereoBond, ligandBonds.ToList(), new StereoElement(StereoElement.Classes.CisTrans, configure))
         {
-            return stereoBond.Contains(atom) || ligandBonds.Any(bond => bond.Contains(atom));
         }
 
-        public virtual object Clone()
+        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement stereo)
+            : this(stereoBond, ligandBonds, stereo.Configure)
         {
-            return Clone(new CDKObjectMap());
         }
 
-        public virtual ICDKObject Clone(CDKObjectMap map)
+        public virtual IReadOnlyList<IBond> Bonds => new ReadOnlyCollection<IBond>(new List<IBond>(Carriers));
+        public virtual IBond StereoBond => Focus;
+        public virtual DoubleBondConformation Stereo => DoubleBondConformation.ToConformation(Configure);
+
+        protected override IStereoElement<IBond, IBond> Create(IBond focus, IList<IBond> carriers, StereoElement stereo)
         {
-            var clone = (DoubleBondStereochemistry)base.MemberwiseClone();
-            clone.stereo = stereo;
-            clone.stereoBond = (IBond)stereoBond?.Clone(map);
-            clone.ligandBonds = new List<IBond>();
-            foreach (var bond in ligandBonds)
-                clone.ligandBonds.Add((IBond)bond.Clone(map));
-            return clone;
+            return new DoubleBondStereochemistry(focus, carriers, stereo);
         }
     }
 }

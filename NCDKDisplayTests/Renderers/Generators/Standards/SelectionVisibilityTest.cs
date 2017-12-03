@@ -23,7 +23,7 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[2], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
-            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IUPACRecommendations);
+            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
             Assert.IsFalse(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
@@ -41,7 +41,7 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[2], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
-            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IUPACRecommendations);
+            SymbolVisibility visibility = SelectionVisibility.GetAll(SymbolVisibility.IupacRecommendations);
             Assert.IsTrue(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]),
                     new RendererModel()));
         }
@@ -60,7 +60,7 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[3], BondOrder.Single);
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
             methyl.Atoms[0].SetProperty(StandardGenerator.HIGHLIGHT_COLOR, WPF::Media.Colors.Red);
-            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IUPACRecommendations);
+            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
             Assert.IsTrue(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]), new RendererModel()));
         }
 
@@ -79,7 +79,7 @@ namespace NCDK.Renderers.Generators.Standards
             methyl.AddBond(methyl.Atoms[0], methyl.Atoms[4], BondOrder.Single);
             methyl.Atoms[0].SetProperty(StandardGenerator.HIGHLIGHT_COLOR, WPF::Media.Colors.Red);
             methyl.Bonds[0].SetProperty(StandardGenerator.HIGHLIGHT_COLOR, WPF::Media.Colors.Red);
-            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IUPACRecommendations);
+            SymbolVisibility visibility = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations);
             Assert.IsFalse(visibility.Visible(methyl.Atoms[0], methyl.GetConnectedBonds(methyl.Atoms[0]),
                     new RendererModel()));
         }

@@ -265,6 +265,7 @@ namespace NCDK.IO
         /// <param name="container">Molecule that is written to an Stream</param>
         public void WriteMolecule(IAtomContainer container)
         {
+            int dim = GetNumberOfDimensions(container);
             string line = "";
             IDictionary<int, int> rgroups = null;
             IDictionary<int, string> aliases = null;
@@ -274,7 +275,7 @@ namespace NCDK.IO
             if (title == null) title = "";
             if (title.Length > 80) title = title.Substring(0, 80);
             writer.Write(title);
-            writer.WriteLine();
+            writer.Write('\n');
 
             // From CTX spec This line has the format:
             // IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR (FORTRAN:
@@ -285,20 +286,18 @@ namespace NCDK.IO
             // form. A blank line can be substituted for line 2.
             writer.Write("  CDK     ");
             writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm"));
-            writer.WriteLine();
+            if (dim != 0)
+            {
+                writer.Write(dim.ToString());
+                writer.Write('D');
+            }
+            writer.Write('\n');
 
             string comment = container.GetProperty<string>(CDKPropertyName.Remark);
             if (comment == null) comment = "";
             if (comment.Length > 80) comment = comment.Substring(0, 80);
             writer.Write(comment);
-            writer.WriteLine();
-
-            // write Counts line
-            line += FormatMDLInt(container.Atoms.Count, 3);
-            line += FormatMDLInt(container.Bonds.Count, 3);
-            line += "  0  0  0  0  0  0  0  0999 V2000";
-            writer.Write(line);
-            writer.WriteLine();
+            writer.Write('\n');
 
             // index stereo elements for setting atom parity values
             IDictionary<IAtom, ITetrahedralChirality> atomstereo = new Dictionary<IAtom, ITetrahedralChirality>();
@@ -309,30 +308,52 @@ namespace NCDK.IO
             foreach (var atom in container.Atoms)
                 atomindex[atom] = atomindex.Count;
 
+            // write Counts line
+            line += FormatMDLInt(container.Atoms.Count, 3);
+            line += FormatMDLInt(container.Bonds.Count, 3);
+            line += "  0  0";
+            // we mark all stereochemistry to absolute for now
+            line += !atomstereo.Any() ? "  0" : "  1";
+            line += "  0  0  0  0  0999 V2000";
+            writer.Write(line);
+            writer.Write('\n');
+
             // write Atom block
             for (int f = 0; f < container.Atoms.Count; f++)
             {
                 IAtom atom = container.Atoms[f];
                 line = "";
-                if (atom.Point3D.HasValue && !ForceWriteAs2DCoords.IsSet)
+                switch (dim)
                 {
-                    line += FormatMDLFloat(atom.Point3D.Value.X);
-                    line += FormatMDLFloat(atom.Point3D.Value.Y);
-                    line += FormatMDLFloat(atom.Point3D.Value.Z) + " ";
-                }
-                else if (atom.Point2D.HasValue)
-                {
-                    line += FormatMDLFloat(atom.Point2D.Value.X);
-                    line += FormatMDLFloat(atom.Point2D.Value.Y);
-                    line += "    0.0000 ";
-                }
-                else
-                {
-                    // if no coordinates available, then output a number
-                    // of zeros
-                    line += FormatMDLFloat(0.0);
-                    line += FormatMDLFloat(0.0);
-                    line += FormatMDLFloat(0.0) + " ";
+                    case 0:
+                        // if no coordinates available, then output a number
+                        // of zeros
+                        line += "    0.0000    0.0000    0.0000 ";
+                        break;
+                    case 2:
+                        if (atom.Point2D != null)
+                        {
+                            line += FormatMDLFloat(atom.Point2D.Value.X);
+                            line += FormatMDLFloat(atom.Point2D.Value.Y);
+                            line += "    0.0000 ";
+                        }
+                        else
+                        {
+                            line += "    0.0000    0.0000    0.0000 ";
+                        }
+                        break;
+                    case 3:
+                        if (atom.Point3D != null)
+                        {
+                            line += FormatMDLFloat((float)atom.Point3D.Value.X);
+                            line += FormatMDLFloat((float)atom.Point3D.Value.Y);
+                            line += FormatMDLFloat((float)atom.Point3D.Value.Z) + " ";
+                        }
+                        else
+                        {
+                            line += "    0.0000    0.0000    0.0000 ";
+                        }
+                        break;
                 }
                 if (container.Atoms[f] is IPseudoAtom)
                 {
@@ -544,7 +565,7 @@ namespace NCDK.IO
                 }
                 line += "  0  0";
                 writer.Write(line);
-                writer.WriteLine();
+                writer.Write('\n');
             }
 
             // write Bond block
@@ -652,7 +673,7 @@ namespace NCDK.IO
                     }
                     line += "  0  0  0 ";
                     writer.Write(line);
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
 
@@ -668,7 +689,7 @@ namespace NCDK.IO
                     writer.Write(FormatMDLInt(i + 1, 3));
                     writer.Write(" ");
                     writer.Write(atom.GetProperty<string>(CDKPropertyName.Comment));
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
 
@@ -683,7 +704,7 @@ namespace NCDK.IO
                     writer.Write(FormatMDLInt(i + 1, 3));
                     writer.Write(" ");
                     writer.Write(FormatMDLInt(charge.Value, 3));
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
 
@@ -717,15 +738,15 @@ namespace NCDK.IO
                     {
                         writer.Write("M  RAD" + FormatMDLInt(atomIndexSpinMap.Count - i, WIDTH));
                         iterator.MoveNext();
-                        WriteRadicalPattern(iterator, i);
+                        WriteRadicalPattern(iterator, 0);
                     }
                     else
                     {
                         writer.Write("M  RAD" + FormatMDLInt(NN8, WIDTH));
                         iterator.MoveNext();
-                        WriteRadicalPattern(iterator, i);
+                        WriteRadicalPattern(iterator, 0);
                     }
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
             }
 
@@ -745,7 +766,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(i + 1, 3));
                             writer.Write(" ");
                             writer.Write(FormatMDLInt(atomicMass.Value, 3));
-                            writer.WriteLine();
+                            writer.Write('\n');
                         }
                     }
                 }
@@ -768,7 +789,7 @@ namespace NCDK.IO
                     {
                         rgpLine.Insert(0, "M  RGP" + FormatMDLInt(cnt, 3));
                         writer.Write(rgpLine.ToString());
-                        writer.WriteLine();
+                        writer.Write('\n');
                         rgpLine = new StringBuilder();
                         cnt = 0;
                     }
@@ -777,7 +798,7 @@ namespace NCDK.IO
                 {
                     rgpLine.Insert(0, "M  RGP" + FormatMDLInt(cnt, 3));
                     writer.Write(rgpLine.ToString());
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
             }
@@ -789,7 +810,7 @@ namespace NCDK.IO
                 foreach (var e in aliases)
                 {
                     writer.Write("A" + FormatMDLInt(e.Key, 5));
-                    writer.WriteLine();
+                    writer.Write('\n');
 
                     string label = e.Value;
 
@@ -797,7 +818,7 @@ namespace NCDK.IO
                     if (label.Length > 70) label = label.Substring(0, 70);
 
                     writer.Write(label);
-                    writer.WriteLine();
+                    writer.Write('\n');
 
                 }
             }
@@ -806,7 +827,7 @@ namespace NCDK.IO
 
             // close molecule
             writer.Write("M  END");
-            writer.WriteLine();
+            writer.Write('\n');
             writer.Flush();
         }
 
@@ -840,7 +861,7 @@ namespace NCDK.IO
                     writer.Write(' ');
                     writer.Write(sgroup.Type.Key);
                 }
-                writer.WriteLine();
+                writer.Write('\n');
             }
 
             // Sgroup output is non-compact for now - but valid
@@ -859,7 +880,7 @@ namespace NCDK.IO
                         writer.Write(' ');
                         writer.Write(FormatMDLInt(1 + atomidxs[atom], 3));
                     }
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 // Sgroup Bond List
@@ -873,7 +894,7 @@ namespace NCDK.IO
                         writer.Write(' ');
                         writer.Write(FormatMDLInt(1 + container.Bonds.IndexOf(bond), 3));
                     }
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 // Sgroup Parent List
@@ -888,7 +909,7 @@ namespace NCDK.IO
                         writer.Write(' ');
                         writer.Write(FormatMDLInt(1 + sgroups.IndexOf(parent), 3));
                     }
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 ICollection<SgroupKeys> attributeKeys = sgroup.AttributeKeys;
@@ -902,7 +923,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write((string)sgroup.GetValue(key));
-                            writer.WriteLine();
+                            writer.Write('\n');
                             break;
                         case SgroupKeys.CtabExpansion:
                             bool expanded = (bool)sgroup.GetValue(key);
@@ -912,7 +933,7 @@ namespace NCDK.IO
                                 writer.Write(FormatMDLInt(1, 3));
                                 writer.Write(' ');
                                 writer.Write(FormatMDLInt(id, 3));
-                                writer.WriteLine();
+                                writer.Write('\n');
                             }
                             break;
                         case SgroupKeys.CtabBracket:
@@ -926,7 +947,7 @@ namespace NCDK.IO
                                 writer.Write(FormatMDLFloat(bracket.FirstPoint.Y));
                                 writer.Write(FormatMDLFloat(bracket.SecondPoint.X));
                                 writer.Write(FormatMDLFloat(bracket.SecondPoint.Y));
-                                writer.WriteLine();
+                                writer.Write('\n');
                             }
                             break;
                         case SgroupKeys.CtabBracketStyle:
@@ -936,7 +957,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write(FormatMDLInt((int)sgroup.GetValue(key), 3));
-                            writer.WriteLine();
+                            writer.Write('\n');
                             break;
                         case SgroupKeys.CtabConnectivity:
                             writer.Write("M  SCN");
@@ -945,7 +966,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write(((string)sgroup.GetValue(key)).ToUpperInvariant());
-                            writer.WriteLine();
+                            writer.Write('\n');
                             break;
                         case SgroupKeys.CtabSubType:
                             writer.Write("M  SST");
@@ -954,7 +975,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write((string)sgroup.GetValue(key));
-                            writer.WriteLine();
+                            writer.Write('\n');
                             break;
                         case SgroupKeys.CtabParentAtomList:
                             IEnumerable<IAtom> parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
@@ -968,7 +989,7 @@ namespace NCDK.IO
                                     writer.Write(' ');
                                     writer.Write(FormatMDLInt(1 + atomidxs[atom], 3));
                                 }
-                                writer.WriteLine();
+                                writer.Write('\n');
                             }
                             break;
                         case SgroupKeys.CtabComponentNumber:
@@ -979,7 +1000,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write(FormatMDLInt(compNumber, 3));
-                            writer.WriteLine();
+                            writer.Write('\n');
                             break;
                     }
                 }
@@ -1005,6 +1026,18 @@ namespace NCDK.IO
                 wrapped.Add(list.GetRange(i, list.Count - i));
             }
             return wrapped;
+        }
+
+        private int GetNumberOfDimensions(IAtomContainer mol)
+        {
+            foreach (IAtom atom in mol.Atoms)
+            {
+                if (atom.Point3D != null && !ForceWriteAs2DCoords.IsSet)
+                    return 3;
+                else if (atom.Point2D != null)
+                    return 2;
+            }
+            return 0;
         }
 
         private void WriteRadicalPattern(IEnumerator<KeyValuePair<int, SpinMultiplicity>> iterator, int i)
@@ -1041,7 +1074,11 @@ namespace NCDK.IO
         /// <returns>The string to be written into the connectiontable</returns>
         protected static string FormatMDLFloat(double fl)
         {
-            string s = fl.ToString("F4", CultureInfo.InvariantCulture);
+            string s;
+            if (double.IsNaN(fl) || double.IsInfinity(fl))
+                s = "0.0000";
+            else
+                s = fl.ToString("F4", CultureInfo.InvariantCulture);
             return s.PadLeft(10);
         }
 

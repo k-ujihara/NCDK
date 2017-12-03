@@ -166,6 +166,9 @@ namespace NCDK.Graphs
             var bonds = molecule.GetConnectedBonds(root);
             IAtom nextAtom;
             root.IsVisited = true;
+            bool first = path.IsEmpty();
+            if (first)
+                path.Atoms.Add(root);
             foreach (var bond in bonds)
             {
                 nextAtom = bond.GetOther(root);
@@ -175,6 +178,8 @@ namespace NCDK.Graphs
                     path.Bonds.Add(bond);
                     if (nextAtom == target)
                     {
+                        if (first)
+                            path.Atoms.Remove(root);
                         return true;
                     }
                     else
@@ -187,11 +192,15 @@ namespace NCDK.Graphs
                         }
                         else
                         {
+                            if (first)
+                                path.Atoms.Remove(root);
                             return true;
                         }
                     }
                 }
             }
+            if (first)
+                path.Atoms.Remove(root);
             return false;
         }
 

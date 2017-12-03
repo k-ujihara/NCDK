@@ -1,5 +1,4 @@
-﻿using NCDK.Common.Base;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -88,11 +87,6 @@ namespace NCDK.Common.Collections
                 ret += e.GetHashCode();
             }
             return ret;
-        }
-
-        public static bool DeepEquals(IEnumerable expected, IEnumerable sets)
-        {
-            return Compares.AreDeepEqual(expected, sets);
         }
 
         public static string DeepToString(IEnumerable array)

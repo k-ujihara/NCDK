@@ -250,7 +250,7 @@ namespace NCDK.Graphs
         {
             Dictionary<Tuple, IBond> lookup = new Dictionary<Tuple, IBond>();
 
-            public EdgeToBondMap()
+            internal EdgeToBondMap()
             { }
 
             /// <summary>

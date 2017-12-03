@@ -116,7 +116,7 @@ namespace NCDK.Tools.Manipulator
                 throw new ArgumentNullException(nameof(oldAtom), "Atom to be replaced was null!");
             if (newAtom == null)
                 throw new ArgumentNullException(nameof(newAtom), "Replacement atom was null!");
-             int idx = container.Atoms.IndexOf(oldAtom);
+            int idx = container.Atoms.IndexOf(oldAtom);
             if (idx < 0)
                 return false;
             container.SetAtom(idx, newAtom);
@@ -188,6 +188,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="atomContainer">The IAtomContainer to manipulate</param>
         /// <returns>The summed exact mass of all atoms in this AtomContainer.</returns>
+        /// <seealso cref="GetMolecularWeight(IAtomContainer)"/>
         public static double GetTotalExactMass(IAtomContainer atomContainer)
         {
             try
@@ -211,10 +212,51 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
+        /// Calculate the molecular weight of a molecule.
+        /// </summary>
+        /// <param name="mol">the molecule</param>
+        /// <returns>the molecular weight</returns>
+        public static double GetMolecularWeight(IAtomContainer mol)
+        {
+            try
+            {
+                Isotopes isotopes = Isotopes.Instance;
+                double hmass = isotopes.GetNaturalMass(Elements.Hydrogen.ToIElement());
+                double mw = 0.0;
+                foreach (IAtom atom in mol.Atoms)
+                {
+                    if (atom.AtomicNumber == null || atom.AtomicNumber == 0)
+                        throw new ArgumentException("An atom had with unknown (null) atomic number");
+                    if (atom.ImplicitHydrogenCount == null)
+                        throw new ArgumentException("An atom had with unknown (null) implicit hydrogens");
+                    mw += hmass * atom.ImplicitHydrogenCount.Value;
+                    if (atom.MassNumber == null)
+                        mw += isotopes.GetNaturalMass(atom);
+                    else if (atom.ExactMass != null)
+                        mw += atom.ExactMass.Value;
+                    else
+                    {
+                        IIsotope isotope = isotopes.GetIsotope(atom.Symbol, atom.MassNumber.Value);
+                        if (isotope == null)
+                            mw += isotopes.GetNaturalMass(atom);
+                        else
+                            mw += isotope.ExactMass.Value;
+                    }
+                }
+                return mw;
+            }
+            catch (IOException e)
+            {
+                throw new ApplicationException("Isotopes definitions could not be loaded", e);
+            }
+        }
+
+        /// <summary>
         /// Returns the molecular mass of the IAtomContainer. For the calculation it
         /// uses the masses of the isotope mixture using natural abundances.
         /// </summary>
         /// <param name="atomContainer"></param>
+        /// <seealso cref="GetMolecularWeight(IAtomContainer)"/>
         // @cdk.keyword mass, molecular
         public static double GetNaturalExactMass(IAtomContainer atomContainer)
         {
@@ -400,6 +442,15 @@ namespace NCDK.Tools.Manipulator
             return hCount;
         }
 
+        private static void ReplaceAtom(IAtom[] atoms, IAtom org, IAtom rep)
+        {
+            for (int i = 0; i < atoms.Length; i++)
+            {
+                if (atoms[i].Equals(org))
+                    atoms[i] = rep;
+            }
+        }
+
         /// <summary>
         /// Adds explicit hydrogens (without coordinates) to the IAtomContainer,
         /// equaling the number of set implicit hydrogens.
@@ -439,16 +490,16 @@ namespace NCDK.Tools.Manipulator
             foreach (var bond in newBonds)
                 atomContainer.Bonds.Add(bond);
 
-            // update tetrahedral elements with an implicit part
-            List<IStereoElement> stereos = new List<IStereoElement>();
-            foreach (IStereoElement stereo in atomContainer.StereoElements)
+            // update stereo elements with an implicit part
+            var stereos = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            foreach (var stereo in atomContainer.StereoElements)
             {
                 if (stereo is ITetrahedralChirality)
                 {
                     ITetrahedralChirality tc = (ITetrahedralChirality)stereo;
 
-                    IAtom focus = tc.ChiralAtom;
-                    var neighbors = tc.Ligands;
+                    IAtom focus = tc.Focus;
+                    IAtom[] carriers = tc.Carriers.ToArray();
                     IAtom hydrogen;
 
                     // in sulfoxide - the implicit part of the tetrahedral centre
@@ -456,16 +507,29 @@ namespace NCDK.Tools.Manipulator
 
                     if (hNeighbor.TryGetValue(focus, out hydrogen))
                     {
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (neighbors[i] == focus)
-                            {
-                                neighbors[i] = hydrogen;
-                                break;
-                            }
-                        }
-                        // neighbors is a copy so need to create a new stereocenter
-                        stereos.Add(new TetrahedralChirality(focus, neighbors, tc.Stereo));
+                        ReplaceAtom(carriers, focus, hydrogen);
+                        stereos.Add(new TetrahedralChirality(focus, carriers, tc.Stereo));
+                    }
+                    else
+                    {
+                        stereos.Add(stereo);
+                    }
+                }
+                else if (stereo is ExtendedTetrahedral)
+                {
+                    ExtendedTetrahedral tc = (ExtendedTetrahedral)stereo;
+
+                    IAtom focus = tc.Focus;
+                    IAtom[] carriers = tc.Carriers.ToArray();
+                    IAtom hydrogen;
+
+                    // in sulfoxide - the implicit part of the tetrahedral centre
+                    // is a lone pair
+
+                    if (hNeighbor.TryGetValue(focus, out hydrogen))
+                    {
+                        ReplaceAtom(carriers, focus, hydrogen);
+                        stereos.Add(new TetrahedralChirality(focus, carriers, tc.Configure));
                     }
                     else
                     {
@@ -746,7 +810,7 @@ namespace NCDK.Tools.Manipulator
 
             org.SetBonds(cpyBonds);
 
-            IList<IStereoElement> elements = new List<IStereoElement>();
+            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             foreach (var se in org.StereoElements)
             {
@@ -754,7 +818,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     ITetrahedralChirality tc = (ITetrahedralChirality)se;
                     IAtom focus = tc.ChiralAtom;
-                    IList<IAtom> neighbors = tc.Ligands;
+                    var neighbors = tc.Ligands;
                     bool updated = false;
                     for (int i = 0; i < neighbors.Count; i++)
                     {
@@ -812,21 +876,30 @@ namespace NCDK.Tools.Manipulator
                         yNew = FindOther(org, v, u, y);
                     }
 
-                    // no other atoms connected, invalid double-bond configuration?
-                    if (x == null || y == null) continue;
+                    // no other atoms connected, invalid double-bond configuration
+                    // is removed. example [2H]/C=C/[H]
+                    if (x == null || y == null ||
+                        xNew == null || yNew == null) continue;
 
                     // no changes
-                    if (x == xNew && y == yNew)
+                    if (x.Equals(xNew) && y.Equals(yNew))
                     {
                         elements.Add(db);
                         continue;
                     }
 
                     // XXX: may perform slow operations but works for now
-                    IBond cpyLeft = xNew != x ? org.GetBond(u, xNew) : orgLeft;
-                    IBond cpyRight = yNew != y ? org.GetBond(v, yNew) : orgRight;
+                    IBond cpyLeft = !object.Equals(xNew, x) ? org.GetBond(u, xNew) : orgLeft;
+                    IBond cpyRight = !object.Equals(yNew, y) ? org.GetBond(v, yNew) : orgRight;
 
-                    elements.Add(new DoubleBondStereochemistry(orgStereo, new IBond[] { cpyLeft, cpyRight }, conformation));
+                    elements.Add(new DoubleBondStereochemistry(orgStereo,
+                                                               new IBond[] { cpyLeft, cpyRight },
+                                                               conformation));
+                }
+                else if (se is Atropisomeric)
+                {
+                    // can not have any H's
+                    elements.Add(se);
                 }
             }
 
@@ -895,7 +968,7 @@ namespace NCDK.Tools.Manipulator
             // is the hydrogen an ion?
             if (atom.FormalCharge != null && atom.FormalCharge != 0) return false;
             // is the hydrogen deuterium / tritium?
-            if (atom.MassNumber != null && atom.MassNumber != 1) return false;
+            if (atom.MassNumber != null) return false;
             // molecule hydrogen with implicit H?
             if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount != 0) return false;
             // molecule hydrogen
@@ -946,7 +1019,7 @@ namespace NCDK.Tools.Manipulator
             // is the hydrogen an ion?
             if (atom.FormalCharge != null && atom.FormalCharge != 0) return false;
             // is the hydrogen deuterium / tritium?
-            if (atom.MassNumber != null && atom.MassNumber != 1) return false;
+            if (atom.MassNumber != null) return false;
             // hydrogen is either not attached to 0 or 2 neighbors
             if (graph[v].Length != 1) return false;
             // non-single bond
@@ -975,7 +1048,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var neighbor in container.GetConnectedAtoms(atom))
             {
-                if (neighbor != exclude1 && neighbor != exclude2) return neighbor;
+                if (!neighbor.Equals(exclude1) && !neighbor.Equals(exclude2)) return neighbor;
             }
             return null;
         }
@@ -999,7 +1072,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="preserve">a list of H atoms to preserve.</param>
         /// <returns>The mol without Hs.</returns>
         // @cdk.keyword      hydrogens, removal
-        [Obsolete("not used by the internal API " +  nameof(SuppressHydrogens) + "will now only suppress hydrogens that can be represent as a h count")]
+        [Obsolete("not used by the internal API " + nameof(SuppressHydrogens) + "will now only suppress hydrogens that can be represent as a h count")]
         private static IAtomContainer RemoveHydrogens(IAtomContainer ac, List<IAtom> preserve)
         {
             IDictionary<IAtom, IAtom> map = new Dictionary<IAtom, IAtom>();

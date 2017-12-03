@@ -36,7 +36,7 @@ namespace NCDK
 		/// The <see cref="Ordinal"/> values of <see cref="BondStereo"/>.
 		/// </summary>
 		/// <seealso cref="BondStereo"/>
-        public static class O
+        public static partial class O
         {
             public const int None = 0;
             public const int Up = 1;
@@ -88,7 +88,7 @@ namespace NCDK
 
         public static explicit operator BondStereo(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -157,7 +157,7 @@ namespace NCDK
             EZByCoordinates, 
     
         };
-        public static System.Collections.Generic.IEnumerable<BondStereo> Values => values;
+        public static BondStereo[] Values => values;
 
         /* Avoid to cause compiling error */
 

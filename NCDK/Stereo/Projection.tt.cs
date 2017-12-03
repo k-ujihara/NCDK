@@ -37,7 +37,7 @@ namespace NCDK.Stereo
 		/// The <see cref="Ordinal"/> values of <see cref="Projection"/>.
 		/// </summary>
 		/// <seealso cref="Projection"/>
-        public static class O
+        public static partial class O
         {
             public const int Unset = 0;
             public const int Fischer = 1;
@@ -75,7 +75,7 @@ namespace NCDK.Stereo
 
         public static explicit operator Projection(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -106,7 +106,7 @@ namespace NCDK.Stereo
             Chair, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Projection> Values => values;
+        public static Projection[] Values => values;
 
         /* Avoid to cause compiling error */
 

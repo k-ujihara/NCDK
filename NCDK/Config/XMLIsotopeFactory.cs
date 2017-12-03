@@ -81,16 +81,10 @@ namespace NCDK.Config
             }
             var reader = new IsotopeReader(ins, builder);
             //in = new ObjIn(ins, new Config().aliasID(false));
-            this.isotopes = new Dictionary<string, IList<IIsotope>>();
             var isotopes = reader.ReadIsotopes();
             foreach (var isotope in isotopes)
                 Add(isotope);
             Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
-
-            // for (int f = 0; f < isotopes.Size(); f++) { Isotope isotope =
-            // (Isotope)isotopes.elementAt(f); } What's this loop for??
-            
-            majorIsotopes = new Dictionary<string, IIsotope>();
         }
 
         /// <summary>

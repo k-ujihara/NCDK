@@ -240,11 +240,11 @@ namespace NCDK.IO
                                     if (IsPrimitiveDataValue(val))
                                     {
                                         writer.Write("> <" + cleanHeaderKey + ">");
-                                        writer.WriteLine();
+                                        writer.Write('\n');
                                         if (val != null)
                                             writer.Write(val.ToString());
-                                        writer.WriteLine();
-                                        writer.WriteLine();
+                                        writer.Write('\n');
+                                        writer.Write('\n');
                                     }
                                 }
                             }

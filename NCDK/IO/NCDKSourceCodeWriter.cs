@@ -125,7 +125,7 @@ namespace NCDK.IO
             {
                 WriteAtom(atom);
                 writer.Write("  mol.Atoms.Add(" + atom.Id + ");");
-                writer.WriteLine();
+                writer.Write('\n');
             }
         }
 
@@ -135,25 +135,25 @@ namespace NCDK.IO
             {
                 WriteBond(bond);
                 writer.Write("  mol.Bonds.Add(" + bond.Id + ");");
-                writer.WriteLine();
+                writer.Write('\n');
             }
         }
 
         private void WriteAtomContainer(IAtomContainer molecule)
         {
             writer.Write("{");
-            writer.WriteLine();
+            writer.Write('\n');
             writer.Write("  IChemObjectBuilder builder = ");
             writer.Write(builder.Setting);
             writer.Write(".Instance;");
-            writer.WriteLine();
+            writer.Write('\n');
             writer.Write("  IAtomContainer mol = builder.NewAtomContainer();");
-            writer.WriteLine();
+            writer.Write('\n');
             IDCreator.CreateIDs(molecule);
             WriteAtoms(molecule);
             WriteBonds(molecule);
             writer.Write("}");
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         private void WriteAtom(IAtom atom)
@@ -161,38 +161,38 @@ namespace NCDK.IO
             if (atom is IPseudoAtom)
             {
                 writer.Write($"  IPseudoAtom {atom.Id} = builder.NewPseudoAtom();");
-                writer.WriteLine();
+                writer.Write('\n');
                 writer.Write($"  atom.Label = \"{((IPseudoAtom)atom).Label}\");");
-                writer.WriteLine();
+                writer.Write('\n');
             }
             else
             {
                 writer.Write($"  IAtom {atom.Id} = builder.NewAtom(\"{atom.Symbol}\");");
-                writer.WriteLine();
+                writer.Write('\n');
             }
             if (atom.FormalCharge != null)
             {
                 writer.Write($"  {atom.Id}.FormalCharge = {atom.FormalCharge};");
-                writer.WriteLine();
+                writer.Write('\n');
             }
             if (write2DCoordinates.IsSet && atom.Point2D != null)
             {
                 Vector2 p2d = atom.Point2D.Value;
                 writer.Write($"  {atom.Id}.Point2D = new Vector2({p2d.X}, {p2d.Y});");
-                writer.WriteLine();
+                writer.Write('\n');
             }
             if (write3DCoordinates.IsSet && atom.Point3D != null)
             {
                 Vector3 p3d = atom.Point3D.Value;
                 writer.Write($"  {atom.Id}.Point3D = new Vector3({p3d.X}, {p3d.Y}, {p3d.Z});");
-                writer.WriteLine();
+                writer.Write('\n');
             }
         }
 
         private void WriteBond(IBond bond)
         {
             writer.Write($"  IBond {bond.Id} = builder.NewBond({bond.Begin.Id}, {bond.End.Id}, BondOrder.{bond.Order});");
-            writer.WriteLine();
+            writer.Write('\n');
         }
 
         public int SupportedDataFeatures =>

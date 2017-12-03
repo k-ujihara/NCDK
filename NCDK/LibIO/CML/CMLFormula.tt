@@ -31,16 +31,16 @@ namespace NCDK.LibIO.CML
             "Types", 
                 new[]
             {
-                "NOPUNCTUATION(NoPunctuation):the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.",
-                "ELEMENT_COUNT_WHITESPACE(Element Count Whitespace):another simple representation. an input-only format. parsing is also fragile as charge sematics are not defined. Not recommended for output.",
-                "ELEMENT_WHITESPACE_COUNT(Element Whitespace Count):Yet another simple representation. an input-only format. Element counts of 1 should always be given. Fragile as charge field is likely to be undefined. Not recommended for output.",
-                "CONCISE(CML Concise):the format used in concise. recommended as the main output form. Element counts of 1 should always be given. the charge shoudl always be included. See concise.xsd and formulaType.xsd for syntax.",
-                "MULTIPLIED_ELEMENT_COUNT_WHITESPACE(Multiplied Element Whitespace Count):multipliers for moieties. an input only format. JUMBO will try to parse this correctly but no guarantee is given.", 
-                "NESTEDBRACKETS(NestedBrackets):hierarchical formula. an input-only format. JUMBO will try to parse this correctly but no guarantee is given.",
+                "NOPUNCTUATION(No punctuation):the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.",
+                "ELEMENT_COUNT_WHITESPACE(Element count whitespace):another simple representation. an input-only format. parsing is also fragile as charge sematics are not defined. Not recommended for output.",
+                "ELEMENT_WHITESPACE_COUNT(Element whitespace count):Yet another simple representation. an input-only format. Element counts of 1 should always be given. Fragile as charge field is likely to be undefined. Not recommended for output.",
+                "CONCISE(CML concise):the format used in concise. recommended as the main output form. Element counts of 1 should always be given. the charge shoudl always be included. See concise.xsd and formulaType.xsd for syntax.",
+                "MULTIPLIED_ELEMENT_COUNT_WHITESPACE(Multiplied element whitespace count):multipliers for moieties. an input only format. JUMBO will try to parse this correctly but no guarantee is given.", 
+                "NESTEDBRACKETS(Nested brackets):hierarchical formula. an input-only format. JUMBO will try to parse this correctly but no guarantee is given.",
                 "IUPAC(IUPAC):an input only format. JUMBO will not yet parse this correctly. comments from IUCr", 
                 "MOIETY(Moiety):Moiety, used by IUCr. an input-only format. moieties assumed to be comma separated then ELEMENT_COUNT_WHITESPACE, with optional brackets and post or pre-multipliers", 
-                "SUBMOIETY(SubMoiety):SubMoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA",
-                "STRUCTURAL(STRUCTURAL):Structural, used by IUCr. not currently implemented, I think. probably the same as nested brackets",
+                "SUBMOIETY(Submoiety):Submoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA",
+                "STRUCTURAL(Structural):Structural, used by IUCr. not currently implemented, I think. probably the same as nested brackets",
                 "ANY(Any):any of the above. input-only.",
             },
             true
@@ -54,7 +54,7 @@ namespace NCDK.LibIO.CML
             "Sorts", 
                 new[]
             {
-                "ALPHABETIC_ELEMENTS(Alphabetic Elements):sort alphabetically. output only. Not sure where this is",
+                "ALPHABETIC_ELEMENTS(Alphabetic elements):sort alphabetically. output only. Not sure where this is",
                 "CHFIRST(C and H first):C H and then alphabetically. (output only)",
             },
             true

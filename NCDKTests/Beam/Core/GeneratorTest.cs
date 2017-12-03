@@ -359,6 +359,14 @@ namespace NCDK.Beam
             }
         }
 
+        [TestMethod()]
+        public void AlleneStereochemistryWithRingClosures()
+        {
+            Graph g = Graph.FromSmiles("CC=[C@]=C1OCCCC1");
+            Topology topology = g.TopologyOf(2);
+            Assert.AreEqual("CC=[C@]=C1OCCCC1", g.ToSmiles());
+        }
+
         internal static void RoundTrip(string smi)
         {
             Assert.AreEqual(Generator.Generate(Parser.Parse(smi)), smi);

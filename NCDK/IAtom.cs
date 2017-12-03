@@ -18,6 +18,7 @@
  */
  using System;
 using NCDK.Numerics;
+using System.Collections.Generic;
 
 namespace NCDK
 {
@@ -61,6 +62,67 @@ namespace NCDK
         /// </summary>
         [Obsolete("Use " + nameof(IStereoElement) + " for storing stereochemistry")]
         int? StereoParity { get; set; }
+
+        /// <summary>
+        /// Access the <see cref="IAtomContainer"/> of which this atom is a member of. Because atoms
+        /// can be in multiple molecules this method will only work if the atom has been accessed
+        /// in the context of an <see cref="IAtomContainer"/>.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// IAtomContainer mol  = new AtomContainer();
+        /// IAtom atom = new Atom();
+        /// atom.Container; // null
+        /// mol.Add(atom);
+        /// atom.Container; // still null
+        /// mol.Atoms[0].Container; // not-null, returns 'mol'
+        /// </code>
+        /// </example>
+        /// <value>
+        /// the atom container or null if not accessed in the context of a container
+        /// </value>
+        IAtomContainer Container { get; }
+
+        /// <summary>
+        /// Acces the index of an atom in the context of an <see cref="IAtomContainer"/>. If the
+        /// index is not known, < 0 is returned.
+        /// </summary>
+        int Index { get; }
+
+        /// <summary>
+        /// Returns the bonds connected to this atom. If the bonds are not
+        /// known an exception is thrown. This method will only throw an exception
+        /// if <see cref="Index"/> returns < 0 or <see cref="Container"/> returns <see langword="null"/>.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// IAtom atom = ...;
+        /// if (atom.Index >= 0) 
+        /// {
+        ///   foreach (IBond bond in atom.Bonds) 
+        ///   {
+        /// 
+        ///   }
+        /// }
+        /// 
+        /// if (atom.Container != null) 
+        /// {
+        ///   foreach (IBond bond in atom.Bonds)
+        /// {
+        /// 
+        ///   }
+        /// }
+        /// 
+        /// IAtomContainer mol = ...;
+        /// // guaranteed not throw an exception
+        /// foreach (IBond bond in mol.Atoms[i].Bonds)
+        /// {
+        /// 
+        /// }
+        /// </code>
+        /// </example>
+        /// <exception cref="System.InvalidOperationException">thrown if the bonds are not known</exception>
+        IEnumerable<IBond> Bonds { get; }
 
         /// <summary>
         /// A way for the Smiles parser to indicate that this atom was written with a lower case letter, e.g. 'c' rather than 'C'.

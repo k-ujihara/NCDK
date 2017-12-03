@@ -17,4 +17,4 @@ Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test proje
 COM-wrapper and Excel example are availabe in <https://github.com/kazuyaujihara/ACDK>.
 
 ## Contribute
-The current release is based on cdk-2.0.
+The current release is based on <https://github.com/cdk/cdk/tree/6cf1b9fcffcb75a574f99849b8e48b380f4965d1> snapshot.

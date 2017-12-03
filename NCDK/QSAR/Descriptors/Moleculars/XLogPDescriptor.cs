@@ -102,7 +102,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:xlogP
     // @cdk.keyword XLogP
     // @cdk.keyword descriptor
-    public partial class XLogPDescriptor : IMolecularDescriptor
+    public class XLogPDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private bool salicylFlag = false;
@@ -1932,5 +1932,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             return container;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

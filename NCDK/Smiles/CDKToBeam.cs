@@ -83,7 +83,6 @@ namespace NCDK.Smiles
 
         internal Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices)
         {
-
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
             int u = indices[b.Begin];
@@ -120,7 +119,7 @@ namespace NCDK.Smiles
             // configure stereo-chemistry by encoding the stereo-elements
             if (SmiFlavors.IsSet(flavour, SmiFlavor.Stereo))
             {
-                foreach (IStereoElement se in ac.StereoElements)
+                foreach (var se in ac.StereoElements)
                 {
                     if (SmiFlavors.IsSet(flavour, SmiFlavor.StereoTetrahedral) &&
                         se is ITetrahedralChirality)
@@ -213,9 +212,7 @@ namespace NCDK.Smiles
                 var massNumber = a.MassNumber;
                 if (massNumber != null)
                 {
-                    if (SmiFlavors.IsSet(flavour, SmiFlavor.AtomicMassStrict) ||
-                            !massNumber.Equals(GetMajorMassNumber(element)))
-                        ab.Isotope(massNumber.Value);
+                    ab.Isotope(massNumber.Value);
                 }
             }
 
@@ -329,7 +326,7 @@ namespace NCDK.Smiles
                 indices[ligands[3]], };
 
             gb.CreateTetrahedral(u).LookingFrom(vs[0]).Neighbors(vs[1], vs[2], vs[3])
-                    .Winding(tc.Stereo == TetrahedralStereo.Clockwise ? Configuration.Clockwise : Configuration.AntiClockwise).Build();
+                    .Winding(tc.Stereo == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
         }
 
         /// <summary>
@@ -351,7 +348,7 @@ namespace NCDK.Smiles
                 indices[ligands[3]], };
 
             gb.CreateExtendedTetrahedral(u).LookingFrom(vs[0]).Neighbors(vs[1], vs[2], vs[3])
-                    .Winding(et.Winding == TetrahedralStereo.Clockwise ? Configuration.Clockwise : Configuration.AntiClockwise).Build();
+                    .Winding(et.Winding == TetrahedralStereo.Clockwise ? Beam.Configuration.Clockwise : Beam.Configuration.AntiClockwise).Build();
         }
     }
 }

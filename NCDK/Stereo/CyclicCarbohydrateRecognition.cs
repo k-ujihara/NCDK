@@ -84,12 +84,12 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="projections">the types of projections to recognise</param>
         /// <returns>recognised stereocenters</returns>
-        public IList<IStereoElement> Recognise(ICollection<Projection> projections)
+        public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> Recognise(ICollection<Projection> projections)
         {
             if (!projections.Contains(Projection.Haworth) && !projections.Contains(Projection.Chair))
-                return Array.Empty<IStereoElement>();
+                return Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
-            List<IStereoElement> elements = new List<IStereoElement>();
+            var elements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             RingSearch ringSearch = new RingSearch(container, graph);
             foreach (var isolated in ringSearch.Isolated())

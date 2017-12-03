@@ -1230,7 +1230,7 @@ namespace NCDK.AtomTypes
                 }
                 return null;
             }
-            else if (!connectedBonds.Any())
+            else if (connectedBonds.Count == 0)
             {
                 IAtomType type = GetAtomType("N.sp3");
                 if (IsAcceptable(atom, atomContainer, type, connectedBonds)) return type;
@@ -1265,15 +1265,14 @@ namespace NCDK.AtomTypes
 
                     IList<IBond> heavy = HeavyBonds(connectedBonds);
 
-                    int expHCount = heavy.Count() - connectedBonds.Count;
+                    int expHCount = heavy.Count - connectedBonds.Count;
 
-                    if (heavy.Count() == 2)
+                    if (heavy.Count == 2)
                     {
-
                         if (heavy[0].IsAromatic && heavy[1].IsAromatic)
                         {
-
-                            int hCount = atom.ImplicitHydrogenCount ?? 0 + expHCount;
+                            int hCount = atom.ImplicitHydrogenCount != null ? atom.ImplicitHydrogenCount.Value
+                                + expHCount : expHCount;
                             if (hCount == 0)
                             {
                                 if (maxBondOrder == BondOrder.Single
@@ -1387,7 +1386,7 @@ namespace NCDK.AtomTypes
                 // check the second sphere
                 foreach (var atom2 in container.GetConnectedAtoms(atom1))
                 {
-                    if (atom2.Equals(atom) && container.GetBond(atom1, atom2).IsAromatic
+                    if (!atom2.Equals(atom) && container.GetBond(atom1, atom2).IsAromatic
                             && !"C".Equals(atom2.Symbol))
                     {
                         return false;

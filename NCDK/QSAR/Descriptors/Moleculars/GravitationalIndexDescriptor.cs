@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:gravitationalIndex
     // @cdk.keyword gravitational index
     // @cdk.keyword descriptor
-    public partial class GravitationalIndexDescriptor : IMolecularDescriptor
+    public class GravitationalIndexDescriptor : IMolecularDescriptor
     {
         private struct Pair
         {
@@ -260,6 +260,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(9);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
 

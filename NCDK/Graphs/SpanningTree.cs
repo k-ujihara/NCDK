@@ -264,7 +264,6 @@ namespace NCDK.Graphs
                         IBond ringBond = ring.Bonds[b];
                         if (!fragContainer.Contains(ringBond))
                         {
-                            fragContainer.Bonds.Add(ringBond);
                             for (int atomCount = 0; atomCount < ringBond.Atoms.Count; atomCount++)
                             {
                                 IAtom atom = ringBond.Atoms[atomCount];
@@ -274,6 +273,7 @@ namespace NCDK.Graphs
                                     fragContainer.Atoms.Add(atom);
                                 }
                             }
+                            fragContainer.Bonds.Add(ringBond);
                         }
                     }
                 }

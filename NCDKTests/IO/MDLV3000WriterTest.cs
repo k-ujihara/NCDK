@@ -23,6 +23,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using NCDK.Numerics;
 using NCDK.SGroups;
 using NCDK.Stereo;
 using System.Collections.Generic;
@@ -166,6 +167,16 @@ namespace NCDK.IO
             mol.Atoms[1].ImplicitHydrogenCount = 1;
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 1 2 1 CFG=3\n"));
+        }
+
+        [TestMethod()]
+        public void WriteLeadingZero()
+        {
+            IAtomContainer mol = new AtomContainer();
+            Atom atom = new Atom("C");
+            atom.Point2D = new Vector2(0.5, 1.2);
+            mol.Atoms.Add(atom);
+            Assert.IsTrue(WriteToStr(mol).Contains("0.5 1.2"));
         }
 
         [TestMethod()]
@@ -363,9 +374,9 @@ namespace NCDK.IO
                     res.Contains("M  V30 1 SRU 0 ATOMS=(1 2) XBONDS=(2 1 2) LABEL=n CONNECT=HT BRKXYZ=(9 -2.5742-\n"
                                     + "M  V30  4.207 0 -3.0692 3.3497 0 0 0 0) BRKXYZ=(9 -3.1626 3.3497 0 -3.6576 4.2-\n"
                                     + "M  V30 07 0 0 0 0) BRKTYP=PAREN\n"
-                                    + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 .9542 4-\n"
-                                    + "M  V30 .1874 0 .4592 3.33 0 0 0 0) BRKXYZ=(9 .3658 3.33 0 -.1292 4.1874 0 0 0 -\n"
-                                    + "M  V30 0) BRKTYP=PAREN\n"));
+                                    + "M  V30 2 SRU 0 ATOMS=(1 5) XBONDS=(2 3 4) LABEL=n CONNECT=HT BRKXYZ=(9 0.9542 -\n"
+                                    + "M  V30 4.1874 0 0.4592 3.33 0 0 0 0) BRKXYZ=(9 0.3658 3.33 0 -0.1292 4.1874 0 -\n"
+                                    + "M  V30 0 0 0) BRKTYP=PAREN"));
             }
         }
 
@@ -414,6 +425,42 @@ namespace NCDK.IO
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains("M  V30 8 1 8 9 ATTACH=Any ENDPTS=(5 2 3 4 5 6)\n"));
             }
+        }
+
+        [TestMethod()]
+        public void WriteDimensionField()
+        {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom();
+            atom.Symbol = "C";
+            atom.ImplicitHydrogenCount = 4;
+            atom.Point2D = new Vector2(0.5, 0.5);
+            mol.Atoms.Add(atom);
+            StringWriter sw = new StringWriter();
+            using (MDLV3000Writer mdlw = new MDLV3000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Contains("2D"));
+        }
+
+        [TestMethod()]
+        public void WriteDimensionField3D()
+        {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom();
+            atom.Symbol = "C";
+            atom.ImplicitHydrogenCount = 4;
+            atom.Point3D = new Vector3(0.5, 0.5, 0.1);
+            mol.Atoms.Add(atom);
+            StringWriter sw = new StringWriter();
+            using (MDLV3000Writer mdlw = new MDLV3000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Contains("3D"));
         }
 
         private string WriteToStr(IAtomContainer mol)

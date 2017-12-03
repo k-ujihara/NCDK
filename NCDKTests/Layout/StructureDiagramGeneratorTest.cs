@@ -667,7 +667,7 @@ namespace NCDK.Layout
         /// </summary>
         // @cdk.bug 2842445
         [TestMethod()]
-        [Timeout(5000)]
+        [Timeout(10000)]
         public void TestBug2843445NaNCoords()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
@@ -802,7 +802,6 @@ namespace NCDK.Layout
 
             StructureDiagramGenerator generator = new StructureDiagramGenerator();
             generator.UseIdentityTemplates = true;
-            generator.BondLength = 40;
 
             IAtomContainer mol = sp.ParseSmiles(smiles);
 

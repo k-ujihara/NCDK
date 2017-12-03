@@ -101,6 +101,7 @@ namespace NCDK.Smiles
         /// Generate SMILES with the major isotopes, only omit mass numbers when it
         /// is unset.
         /// </summary>
+        [Obsolete("no longer needed, default CDK behaviour is now to pass through mass numbers if non-null ")]
         AtomicMassStrict = 0x800,
 
         /// <summary>

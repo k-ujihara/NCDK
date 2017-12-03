@@ -29,6 +29,7 @@ using NCDK.AtomTypes;
 using NCDK.Graphs;
 
 using NCDK.Isomorphisms;
+using NCDK.Stereo;
 
 namespace NCDK.Smiles
 {
@@ -2355,7 +2356,7 @@ namespace NCDK.Smiles
                 Assert.IsTrue(stereoElement is ITetrahedralChirality);
                 ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
                 Assert.AreEqual("C", l4Chiral.ChiralAtom.Symbol);
-                if (l4Chiral.ChiralAtom == mol.Atoms[0])
+                if (l4Chiral.ChiralAtom.Equals(mol.Atoms[0]))
                 {
                     var ligands = l4Chiral.Ligands;
                     foreach (var atom in ligands)
@@ -2540,6 +2541,69 @@ namespace NCDK.Smiles
                 if (bond.Order == BondOrder.Unset)
                     Assert.Fail("Unset bond order");
             }
+        }
+
+        [TestMethod()]
+        public void Cisplatin()
+        {
+            IAtomContainer mol = Load("[NH3][Pt@SP1]([NH3])(Cl)Cl");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(SquarePlanar));
+            Assert.AreEqual(1, ((SquarePlanar)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Cisplatin_Z()
+        {
+            IAtomContainer mol = Load("[NH3][Pt@SP3]([NH3])(Cl)Cl");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(SquarePlanar));
+            Assert.AreEqual(3, ((SquarePlanar)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Transplatin()
+        {
+            IAtomContainer mol = Load("[NH3][Pt@SP2]([NH3])(Cl)Cl");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(SquarePlanar));
+            Assert.AreEqual(2, ((SquarePlanar)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Tbpy1()
+        {
+            IAtomContainer mol = Load("S[As@TB1](F)(Cl)(Br)N");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
+            Assert.AreEqual(1, ((TrigonalBipyramidal)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Tbpy2()
+        {
+            IAtomContainer mol = Load("S[As@TB2](F)(Cl)(Br)N");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
+            Assert.AreEqual(2, ((TrigonalBipyramidal)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Oh1()
+        {
+            IAtomContainer mol = Load("C[Co@](F)(Cl)(Br)(I)S");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(Octahedral));
+            Assert.AreEqual(1, ((Octahedral)se).Configure.Order);
+        }
+
+        [TestMethod()]
+        public void Oh8()
+        {
+            IAtomContainer mol = Load("C[Co@OH8](F)(Br)(Cl)(I)S");
+            IStereoElement se = mol.StereoElements.First();
+            Assert.IsInstanceOfType(se, typeof(Octahedral));
+            Assert.AreEqual(8, ((Octahedral)se).Configure.Order);
         }
 
         /// <summary>

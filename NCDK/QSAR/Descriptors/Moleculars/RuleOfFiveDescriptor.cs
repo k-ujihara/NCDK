@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword Lipinski
     // @cdk.keyword rule-of-five
     // @cdk.keyword descriptor
-    public partial class RuleOfFiveDescriptor : IMolecularDescriptor
+    public class RuleOfFiveDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
 
@@ -188,6 +188,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             return true;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }
 

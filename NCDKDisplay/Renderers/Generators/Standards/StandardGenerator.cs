@@ -132,7 +132,7 @@ namespace NCDK.Renderers.Generators.Standards
                 fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
                 glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
                 annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-                sgroupFontScale = new SgroupFontScale();
+                sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes();
 
         /// <summary>
         /// Create a new standard generator that utilises the specified font to display atom symbols.
@@ -167,7 +167,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             ElementGroup annotations = new ElementGroup();
 
-            AtomSymbol[] symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, stroke);
+            AtomSymbol[] symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
             IRenderingElement[] bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
 
             HighlightStyle style = parameters.GetV<HighlightStyle>(typeof(Highlighting));
@@ -284,15 +284,18 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="container">structure representation</param>
         /// <param name="symbolRemap">use alternate symbols (used for Sgroup shortcuts)</param>
         /// <param name="visibility">defines whether an atom symbol is displayed</param>
-        /// <param name="parameters">render model parameters   @return generated atom symbols (can contain null)</param>
+        /// <param name="parameters">render model parameters</param>
+        /// <returns>generated atom symbols (can contain <see langword="null"/>)</returns>
         private AtomSymbol[] GenerateAtomSymbols(IAtomContainer container,
-                                                 IDictionary<IAtom, string> symbolRemap,
-                                                 SymbolVisibility visibility,
-                                                 RendererModel parameters, ElementGroup annotations, double stroke)
+                                                IDictionary<IAtom, string> symbolRemap,
+                                                SymbolVisibility visibility,
+                                                RendererModel parameters, ElementGroup annotations,
+                                                Color foreground,
+                                                double stroke)
         {
             double scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double annDist = parameters.GetV<double>(typeof(AnnotationDistance))
-                             * (parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale);
+                              * (parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale);
             double annScale = (1 / scale) * parameters.GetV<double>(typeof(AnnotationFontScale));
             Color annColor = parameters.GetV<Color>(typeof(AnnotationColor));
             double halfStroke = stroke / 2;
@@ -300,16 +303,29 @@ namespace NCDK.Renderers.Generators.Standards
             AtomSymbol[] symbols = new AtomSymbol[container.Atoms.Count];
             IChemObjectBuilder builder = container.Builder;
 
+            // check if we should annotate attachment point numbers (maxAttach>1)
+            // and queue them all up for processing
+            var attachPoints = new List<IPseudoAtom>();
+            int maxAttach = 0;
+
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                IAtom atom = container.Atoms[i];
+                var atom = container.Atoms[i];
 
                 if (IsHiddenFully(atom))
                     continue;
 
+                if (atom is IPseudoAtom)
+                {
+                    int attachNum = ((IPseudoAtom)atom).AttachPointNum;
+                    if (attachNum > 0)
+                        attachPoints.Add((IPseudoAtom)atom);
+                    if (attachNum > maxAttach)
+                        maxAttach = attachNum;
+                }
 
                 bool remapped = symbolRemap.ContainsKey(atom);
-                var bonds = container.GetConnectedBonds(atom);
+               var bonds = container.GetConnectedBonds(atom);
                 var neighbors = container.GetConnectedAtoms(atom);
                 var visNeighbors = new List<IAtom>();
 
@@ -322,12 +338,12 @@ namespace NCDK.Renderers.Generators.Standards
                         visNeighbors.Add(neighbor);
                 }
 
-                var auxVectors = new List<Vector2>(1);
+   var auxVectors = new List<Vector2>(1);
 
                 // only generate if the symbol is visible
                 if (visibility.Visible(atom, bonds, parameters) || remapped)
                 {
-                    HydrogenPosition hPosition = HydrogenPosition.Position(atom, visNeighbors);
+                     HydrogenPosition hPosition = HydrogenPosition.Position(atom, visNeighbors);
 
                     if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount > 0)
                         auxVectors.Add(hPosition.Vector);
@@ -338,45 +354,46 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                     else
                     {
-                        symbols[i] = atomGenerator.GenerateSymbol(container, atom, hPosition);
+                        symbols[i] = atomGenerator.GenerateSymbol(container, atom, hPosition, parameters);
                     }
 
-                    if (symbols[i] == null)
-                        continue;
-
-                    // defines how the element is aligned on the atom point, when
-                    // aligned to the left, the first character 'e.g. Cl' is used.
-                    if (visNeighbors.Count == 1)
+                    if (symbols[i] != null)
                     {
-                        if (hPosition == HydrogenPosition.Left)
+                        // defines how the element is aligned on the atom point, when
+                        // aligned to the left, the first character 'e.g. Cl' is used.
+                        if (visNeighbors.Count < 4)
                         {
-                            symbols[i] = symbols[i].AlignTo(AtomSymbol.SymbolAlignment.Right);
+                            if (hPosition == HydrogenPosition.Left)
+                            {
+                                symbols[i] = symbols[i].AlignTo(AtomSymbol.SymbolAlignment.Right);
+                            }
+                            else
+                            {
+                                symbols[i] = symbols[i].AlignTo(AtomSymbol.SymbolAlignment.Left);
+                            }
                         }
-                        else
-                        {
-                            symbols[i] = symbols[i].AlignTo(AtomSymbol.SymbolAlignment.Left);
-                        }
+
+                        var p = atom.Point2D;
+
+                        if (p == null) throw new ArgumentException("Atom did not have 2D coordinates");
+
+                        // center and scale the symbol, y-axis scale is inverted because CDK y-axis
+                        // is inverse of Java 2D
+                        symbols[i] = symbols[i].Resize(1 / scale, 1 / -scale).Center(p.Value.X, p.Value.Y);
                     }
-
-                    var p = atom.Point2D;
-
-                    if (p == null) throw new ArgumentException("Atom did not have 2D coordinates");
-
-                    // center and scale the symbol, y-axis scale is inverted because CDK y-axis
-                    // is inverse of Java 2D
-                    symbols[i] = symbols[i].Resize(1 / scale, 1 / -scale).Center(p.Value.X, p.Value.Y);
                 }
 
                 string label = GetAnnotationLabel(atom);
+
                 if (label != null)
                 {
-
                     // to ensure consistent draw distance we need to adjust the annotation distance
                     // depending on whether we are drawing next to an atom symbol or not.
-                    double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
+                     double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
 
-                    Vector2 vector = NewAtomAnnotationVector(atom, bonds, auxVectors);
-                    TextOutline annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist + strokeAdjust, annScale, font, emSize, symbols[i]);
+var vector = NewAtomAnnotationVector(atom, bonds, auxVectors);
+var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
+                                                                                                        + strokeAdjust, annScale, font, emSize, symbols[i]);
 
                     // the AtomSymbol may migrate during bond generation and therefore the annotation
                     // needs to be tied to the symbol. If no symbol is available the annotation is
@@ -392,8 +409,56 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
+            // label attachment points
+            if (maxAttach > 1)
+            {
+                var attachNumOutlines = new List<TextOutline>();
+                double maxRadius = 0;
+
+                foreach (IPseudoAtom atom in attachPoints)
+                {
+                    int attachNum = atom.AttachPointNum;
+
+                    // to ensure consistent draw distance we need to adjust the annotation distance
+                    // depending on whether we are drawing next to an atom symbol or not.
+                     double strokeAdjust = -halfStroke;
+
+   var vector = NewAttachPointAnnotationVector(atom,
+                                                                           container.GetConnectedBonds(atom),
+                                                                           new List<Vector2>());
+
+                    var outline = GenerateAnnotation(atom.Point2D.Value,
+                            attachNum.ToString(),
+                            vector,
+                            1.75 * annDist + strokeAdjust,
+                            annScale,
+                            new Typeface(font.FontFamily, font.Style, WPF.FontWeights.Bold, font.Stretch),
+                            emSize,
+                            null);
+
+                    attachNumOutlines.Add(outline);
+
+                    double w = outline.GetBounds().Width;
+                    double h = outline.GetBounds().Height;
+                    double r = Math.Sqrt(w * w + h * h) / 2;
+                    if (r > maxRadius)
+                        maxRadius = r;
+                }
+
+                foreach (TextOutline outline in attachNumOutlines)
+                {
+                    ElementGroup group = new ElementGroup();
+                    double radius = 2 * stroke + maxRadius;
+                    var shape = new EllipseGeometry(outline.GetCenter(), radius, radius);
+                    var area1 = Geometry.Combine(shape, outline.GetOutline(), GeometryCombineMode.Exclude, Transform.Identity);
+                    group.Add(GeneralPath.ShapeOf(area1, foreground));
+                    annotations.Add(group);
+                }
+            }
+
             return symbols;
         }
+
 
         /// <summary>
         /// Generate an annotation 'label' for an atom (located at 'basePoint'). The label is offset from
@@ -474,7 +539,7 @@ namespace NCDK.Renderers.Generators.Standards
         public IList<IGeneratorParameter> Parameters =>
             new[] {atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
                     hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                    annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale};
+                    annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes };
 
         internal static string GetAnnotationLabel(IChemObject chemObject)
         {
@@ -686,6 +751,27 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
+        static Vector2 NewAttachPointAnnotationVector(IAtom atom, IEnumerable<IBond> bonds, List<Vector2> auxVectors)
+        {
+            if (!bonds.Any())
+                return new Vector2(0, -1);
+            else if (bonds.Count() > 1)
+                return NewAtomAnnotationVector(atom, bonds, auxVectors);
+
+            // only one bond (as expected)
+            var bondVector = VecmathUtil.NewUnitVector(atom, bonds.First());
+            var perpVector = VecmathUtil.NewPerpendicularVector(bondVector);
+
+            // want the annotation below
+            if (perpVector.Y > 0)
+                perpVector = -perpVector;
+            
+            var vector = new Vector2((bondVector.X + perpVector.X) / 2,
+                                           (bondVector.Y + perpVector.Y) / 2);
+            vector = Vector2.Normalize(vector);
+            return vector;
+        }
+
         /// <summary>
         /// A plain bond is a non-stereo sigma bond that is displayed simply as a line.
         /// </summary>
@@ -775,7 +861,7 @@ namespace NCDK.Renderers.Generators.Standards
         public sealed class Visibility : AbstractGeneratorParameter<SymbolVisibility>
         {
             /// <inheritdoc/>
-            public override SymbolVisibility Default { get; } = SelectionVisibility.Disconnected(SymbolVisibility.IUPACRecommendationsWithoutTerminalCarbon);
+            public override SymbolVisibility Default { get; } = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon);
         }
 
         /// <summary>
@@ -928,7 +1014,16 @@ namespace NCDK.Renderers.Generators.Standards
         public sealed class SgroupFontScale : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double?Default => 0.6;
+            public override double? Default => 0.6;
+        }
+
+        /// <summary>
+        /// Whether Major Isotopes e.g. 12C, 16O should be omitted.
+        /// </summary>
+        public sealed class OmitMajorIsotopes : AbstractGeneratorParameter<bool?>
+        {
+            /// <inheritdoc/>
+            public override bool? Default => false;
         }
     }
 }

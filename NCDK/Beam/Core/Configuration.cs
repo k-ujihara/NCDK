@@ -26,116 +26,11 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-
-using System;
-using System.Collections.Generic;
-
-namespace NCDK.Beam
+ 
+ namespace NCDK.Beam
 {
-    /// <summary>
-    /// Enumeration of atom-based relative configurations. Each value defines a
-    /// configuration of a given topology.
-    /// </summary>
-    /// <seealso href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</seealso>
-    // @author John May
-    public sealed class Configuration
+    public partial class Configuration
     {
-        /// <summary>An atoms has Unknown/no configuration. </summary>
-        public static readonly Configuration Unknown = new Configuration(Types.None, "");
-
-        /// <summary>Shorthand for TH1, AL1, DB1, TB1 or OH1 configurations. </summary>
-        public static readonly Configuration AntiClockwise = new Configuration(Types.Implicit, "@");
-
-        /// <summary>Shorthand for TH2, AL2, DB2, TB2 or OH2 configurations. </summary>
-        public static readonly Configuration Clockwise = new Configuration(Types.Implicit, "@@");
-
-        /// <summary>
-        /// Tetrahedral, neighbors proceed anti-clockwise looking from the first
-        /// atom.
-        /// </summary>
-        public static readonly Configuration TH1 = new Configuration(Types.Tetrahedral, "@TH1", AntiClockwise);
-
-        /// <summary>Tetrahedral, neighbors proceed clockwise looking from the first atom. </summary>
-        public static readonly Configuration TH2 = new Configuration(Types.Tetrahedral, "@TH2", Clockwise);
-
-        /// <summary>
-        /// Atom-based double bond configuration, neighbors proceed anti-clockwise in
-        /// a plane. <i>Note - this configuration is currently specific to
-        /// grins.</i>
-        /// </summary>
-        public static readonly Configuration DB1 = new Configuration(Types.DoubleBond, "@DB1", AntiClockwise);
-
-        /// <summary>
-        /// Atom-based double bond configuration, neighbors proceed clockwise in a
-        /// plane.<i>Note - this configuration is currently specific to grins.</i>
-        /// </summary>
-        public static readonly Configuration DB2 = new Configuration(Types.DoubleBond, "@DB2", Clockwise);
-
-        // extended tetrahedral, allene-like = new Configuration(Sp)
-        public static readonly Configuration AL1 = new Configuration(Types.ExtendedTetrahedral, "@AL1", AntiClockwise);
-        public static readonly Configuration AL2 = new Configuration(Types.ExtendedTetrahedral, "@AL2", Clockwise);
-
-        // square planar
-        public static readonly Configuration SP1 = new Configuration(Types.SquarePlanar, "@SP1");
-        public static readonly Configuration SP2 = new Configuration(Types.SquarePlanar, "@SP2");
-        public static readonly Configuration SP3 = new Configuration(Types.SquarePlanar, "@SP3");
-
-        // trigonal bipyramidal
-        public static readonly Configuration TB1 = new Configuration(Types.TrigonalBipyramidal, "@TB1", AntiClockwise);
-        public static readonly Configuration TB2 = new Configuration(Types.TrigonalBipyramidal, "@TB2", Clockwise);
-        public static readonly Configuration TB3 = new Configuration(Types.TrigonalBipyramidal, "@TB3");
-        public static readonly Configuration TB4 = new Configuration(Types.TrigonalBipyramidal, "@TB4");
-        public static readonly Configuration TB5 = new Configuration(Types.TrigonalBipyramidal, "@TB5");
-        public static readonly Configuration TB6 = new Configuration(Types.TrigonalBipyramidal, "@TB6");
-        public static readonly Configuration TB7 = new Configuration(Types.TrigonalBipyramidal, "@TB7");
-        public static readonly Configuration TB8 = new Configuration(Types.TrigonalBipyramidal, "@TB8");
-        public static readonly Configuration TB9 = new Configuration(Types.TrigonalBipyramidal, "@TB9");
-        public static readonly Configuration TB10 = new Configuration(Types.TrigonalBipyramidal, "@TB10");
-        public static readonly Configuration TB11 = new Configuration(Types.TrigonalBipyramidal, "@TB11");
-        public static readonly Configuration TB12 = new Configuration(Types.TrigonalBipyramidal, "@TB12");
-        public static readonly Configuration TB13 = new Configuration(Types.TrigonalBipyramidal, "@TB13");
-        public static readonly Configuration TB14 = new Configuration(Types.TrigonalBipyramidal, "@TB14");
-        public static readonly Configuration TB15 = new Configuration(Types.TrigonalBipyramidal, "@TB15");
-        public static readonly Configuration TB16 = new Configuration(Types.TrigonalBipyramidal, "@TB16");
-        public static readonly Configuration TB17 = new Configuration(Types.TrigonalBipyramidal, "@TB17");
-        public static readonly Configuration TB18 = new Configuration(Types.TrigonalBipyramidal, "@TB18");
-        public static readonly Configuration TB19 = new Configuration(Types.TrigonalBipyramidal, "@TB19");
-        public static readonly Configuration TB20 = new Configuration(Types.TrigonalBipyramidal, "@TB20");
-
-        // octahedral
-        public static readonly Configuration OH1 = new Configuration(Types.Octahedral, "@OH1", AntiClockwise);
-        public static readonly Configuration OH2 = new Configuration(Types.Octahedral, "@OH2", Clockwise);
-        public static readonly Configuration OH3 = new Configuration(Types.Octahedral, "@OH3");
-        public static readonly Configuration OH4 = new Configuration(Types.Octahedral, "@OH4");
-        public static readonly Configuration OH5 = new Configuration(Types.Octahedral, "@OH5");
-        public static readonly Configuration OH6 = new Configuration(Types.Octahedral, "@OH6");
-        public static readonly Configuration OH7 = new Configuration(Types.Octahedral, "@OH7");
-        public static readonly Configuration OH8 = new Configuration(Types.Octahedral, "@OH8");
-        public static readonly Configuration OH9 = new Configuration(Types.Octahedral, "@OH9");
-        public static readonly Configuration OH10 = new Configuration(Types.Octahedral, "@OH10");
-        public static readonly Configuration OH11 = new Configuration(Types.Octahedral, "@OH11");
-        public static readonly Configuration OH12 = new Configuration(Types.Octahedral, "@OH12");
-        public static readonly Configuration OH13 = new Configuration(Types.Octahedral, "@OH13");
-        public static readonly Configuration OH14 = new Configuration(Types.Octahedral, "@OH14");
-        public static readonly Configuration OH15 = new Configuration(Types.Octahedral, "@OH15");
-        public static readonly Configuration OH16 = new Configuration(Types.Octahedral, "@OH16");
-        public static readonly Configuration OH17 = new Configuration(Types.Octahedral, "@OH17");
-        public static readonly Configuration OH18 = new Configuration(Types.Octahedral, "@OH18");
-        public static readonly Configuration OH19 = new Configuration(Types.Octahedral, "@OH19");
-        public static readonly Configuration OH20 = new Configuration(Types.Octahedral, "@OH20");
-        public static readonly Configuration OH21 = new Configuration(Types.Octahedral, "@OH21");
-        public static readonly Configuration OH22 = new Configuration(Types.Octahedral, "@OH22");
-        public static readonly Configuration OH23 = new Configuration(Types.Octahedral, "@OH23");
-        public static readonly Configuration OH24 = new Configuration(Types.Octahedral, "@OH24");
-        public static readonly Configuration OH25 = new Configuration(Types.Octahedral, "@OH25");
-        public static readonly Configuration OH26 = new Configuration(Types.Octahedral, "@OH26");
-        public static readonly Configuration OH27 = new Configuration(Types.Octahedral, "@OH27");
-        public static readonly Configuration OH28 = new Configuration(Types.Octahedral, "@OH28");
-        public static readonly Configuration OH29 = new Configuration(Types.Octahedral, "@OH29");
-        public static readonly Configuration OH30 = new Configuration(Types.Octahedral, "@OH30");
-
-        public static readonly IEnumerable<Configuration> Values = new[] { Unknown }; // TODO:
-
         /// <summary>Type of configuration. </summary>
         private readonly Types type;
 
@@ -172,20 +67,6 @@ namespace NCDK.Beam
             }
         }
 
-        private Configuration(Types type, string symbol, Configuration shorthand)
-        {
-            this.type = type;
-            this.symbol = symbol;
-            this.shorthand = shorthand;
-        }
-
-        private Configuration(Types type, string symbol)
-        {
-            this.type = type;
-            this.symbol = symbol;
-            this.shorthand = this;
-        }
-
         /// <summary>
         /// Access the shorthand for the configuration, if no shorthand is defined
         /// <see cref="Unknown"/> is returned.
@@ -219,6 +100,14 @@ namespace NCDK.Beam
             if (buffer.GetIf('@'))
             {
                 if (buffer.GetIf('@'))
+                {
+                    return Configuration.Clockwise;
+                }
+                else if (buffer.GetIf('1'))
+                {
+                    return Configuration.AntiClockwise;
+                }
+                else if (buffer.GetIf('2'))
                 {
                     return Configuration.Clockwise;
                 }

@@ -52,7 +52,7 @@ namespace NCDK.IO
     public class RGroupQueryWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
-        private static string LSEP = Environment.NewLine;
+        private const string LSEP = "\n";
 
         /// <summary>
         /// Constructs a new writer that can write an <see cref="IRGroupQuery"/>

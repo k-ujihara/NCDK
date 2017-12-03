@@ -155,14 +155,9 @@ namespace NCDK.Layout
             Arrays.Fill(visited, false);
             visited[atomToIndex[left]] = true;
 
-            // XXX: bad but correct layout
             if (ringSearch.Cyclic(atomToIndex[left], atomToIndex[right]))
             {
-                Arrays.Fill(visited, true);
-                foreach (var w in graph[atomToIndex[right]])
-                {
-                    Reflect(w, db);
-                }
+                db.Stereo = BondStereo.EOrZ;
                 return;
             }
 

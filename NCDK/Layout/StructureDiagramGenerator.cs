@@ -30,6 +30,7 @@ using NCDK.Isomorphisms;
 using NCDK.Numerics;
 using NCDK.RingSearches;
 using NCDK.SGroups;
+using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -74,7 +75,7 @@ namespace NCDK.Layout
         /// The bond length used for laying out the molecule. 
         /// The default value is 1.5.
         /// </summary>
-        public double BondLength { get; set; } = DefaultBondLength;
+        public double BondLength => DefaultBondLength;
         private Vector2 firstBondVector;
         private RingPlacer ringPlacer = new RingPlacer();
         private AtomPlacer atomPlacer = new AtomPlacer();
@@ -227,9 +228,13 @@ namespace NCDK.Layout
                         }
                     }
 
+                    bool aggresive = false;
+
                     if (afix.Any())
                     {
-                        foreach (IBond bond in mol.Bonds)
+                        if (aggresive)
+                        {
+                            foreach (IBond bond in mol.Bonds)
                         {
                             if (afix.ContainsKey(bond.Begin) && afix.ContainsKey(bond.End))
                             {
@@ -253,6 +258,36 @@ namespace NCDK.Layout
                                 {
                                     bfix.Add(bond);
                                 }
+                            }
+                        }
+                        }
+                        else
+                        {
+                            foreach (IBond bond in mol.Bonds)
+                            {
+                                if (afix.ContainsKey(bond.Begin) && afix.ContainsKey(bond.End))
+                                {
+                                    // only fix bonds that match their ring membership status
+                                    IAtom srcBeg = afix[bond.Begin];
+                                    IAtom srcEnd = afix[bond.End];
+                                    foreach (IAtomContainer product in reaction.Products)
+                                    {
+                                        IBond srcBond = product.GetBond(srcBeg, srcEnd);
+                                        if (srcBond != null)
+                                        {
+                                            if (srcBond.IsInRing == bond.IsInRing)
+                                                bfix.Add(bond);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            // XXX: can do better
+                            afix.Clear();
+                            foreach (IBond bond in bfix)
+                            {
+                                afix[bond.Begin] = null;
+                                afix[bond.End] = null;
                             }
                         }
                     }
@@ -557,6 +592,7 @@ namespace NCDK.Layout
             RefinePlacement(molecule);
             FinalizeLayout(molecule);
 
+            // stereo must be after refinement (due to flipping!)
             if (!isSubLayout)
                 AssignStereochem(molecule);
         }
@@ -727,6 +763,38 @@ namespace NCDK.Layout
                 // to each other either as bridged ringsystems, fused rings or via
                 // spiro connections.
                 ringSystems = RingPartitioner.PartitionRings(sssr).ToList();
+
+                // set the in-ring db stereo
+                foreach (var se in molecule.StereoElements)
+                {
+                    if (se.Class == StereoElement.Classes.CisTrans)
+                    {
+                        IBond stereoBond = (IBond)se.Focus;
+                        IBond firstCarrier = (IBond)se.ReadOnlyCarriers[0];
+                        IBond secondCarrier = (IBond)se.ReadOnlyCarriers[1];
+                        foreach (IRingSet ringSet in ringSystems)
+                        {
+                            foreach (IAtomContainer ring in ringSet)
+                            {
+                                if (ring.Contains(stereoBond))
+                                {
+                                    var begBonds = ring.GetConnectedBonds(stereoBond.Begin).ToList();
+                                    var endBonds = ring.GetConnectedBonds(stereoBond.End).ToList();
+                                    begBonds.Remove(stereoBond);
+                                    endBonds.Remove(stereoBond);
+                                    // something odd wrong, just skip it
+                                    if (begBonds.Count != 1 || endBonds.Count != 1)
+                                        continue;
+                                    bool flipped = begBonds.Contains(firstCarrier) != endBonds.Contains(secondCarrier);
+                                    StereoElement.Configurations cfg = flipped ? se.Configure.Flip() : se.Configure;
+                                    ring.StereoElements.Add(new DoubleBondStereochemistry(stereoBond,
+                                                                                        new IBond[] { begBonds[0], endBonds[0] },
+                                                                                        cfg));
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else
             {
@@ -1467,9 +1535,9 @@ namespace NCDK.Layout
                 if (IsHydrogen(atom1) || IsHydrogen(atom2)) continue;
                 if (ringAtoms.Contains(atom1) ^ ringAtoms.Contains(atom2))
                 {
-                    ringWithStubs.Bonds.Add(bond);
                     ringWithStubs.Atoms.Add(atom1);
                     ringWithStubs.Atoms.Add(atom2);
+                    ringWithStubs.Bonds.Add(bond);
                 }
             }
 
@@ -1550,11 +1618,13 @@ namespace NCDK.Layout
             IRing first = RingSetManipulator.GetMostComplexRing(rs);
 
             bool macro = IsMacroCycle(first, rs);
+            bool macroDbStereo = macro && first.StereoElements.Any();
             int result = 0;
 
             // Check for an exact match (identity) on the entire ring system
-            // XXX: should avoid if we have db stereo in macrocycle!
-            if (LookupRingSystem(rs, molecule, rs.Count > 1))
+            if (!macroDbStereo)
+            {
+                if (LookupRingSystem(rs, molecule, rs.Count > 1))
             {
                 foreach (var container in rs)
                     container.IsPlaced = true;
@@ -1572,6 +1642,7 @@ namespace NCDK.Layout
                     foreach (var container in core)
                         container.IsPlaced = true;
                 }
+            }
             }
 
             // Place the most complex ring at the origin of the coordinate system
@@ -1682,7 +1753,7 @@ namespace NCDK.Layout
         /// <returns>ring is a macro cycle</returns>
         private bool IsMacroCycle(IRing ring, IChemObjectSet<IRing> rs)
         {
-            if (ring.Atoms.Count < 10)
+            if (ring.Atoms.Count < 8)
                 return false;
             foreach (var bond in ring.Bonds)
             {
@@ -1985,8 +2056,7 @@ namespace NCDK.Layout
         private IAtomContainer PlaceFirstBond(IBond bond, Vector2 bondVector)
         {
             IAtomContainer sharedAtoms = null;
-            try
-            {
+
                 bondVector = Vector2.Normalize(bondVector);
                 Debug.WriteLine($"placeFirstBondOfFirstRing->bondVector.Length: {bondVector.Length()}");
                 bondVector *= BondLength;
@@ -2010,14 +2080,9 @@ namespace NCDK.Layout
                 // or some other system of atoms in an aliphatic chain. In this
                 // case, it's the first bond that we layout by hand.
                 sharedAtoms = atom.Builder.NewAtomContainer();
-                sharedAtoms.Bonds.Add(bond);
                 sharedAtoms.Atoms.Add(bond.Begin);
                 sharedAtoms.Atoms.Add(bond.End);
-            }
-            catch (Exception exc)
-            {
-                Debug.WriteLine(exc);
-            }
+            sharedAtoms.Bonds.Add(bond);
             return sharedAtoms;
         }
 
@@ -2324,6 +2389,18 @@ namespace NCDK.Layout
             }
         }
 
+        private int GetPositionalRingBondPref(IBond bond, IAtomContainer mol)
+        {
+            int begRingBonds = NumRingBonds(mol, bond.Begin);
+            int endRingBonds = NumRingBonds(mol, bond.End);
+            if (begRingBonds == 2 && endRingBonds == 2)
+                return 0;
+            if ((begRingBonds > 2 && endRingBonds == 2) ||
+                (begRingBonds == 2 && endRingBonds > 2))
+                return 1;
+            return 2;
+        }
+
         private void PlacePositionalVariation(IAtomContainer mol)
         {
             var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
@@ -2344,7 +2421,7 @@ namespace NCDK.Layout
 
             foreach (var e in mapping)
             {
-                var bonds = new LinkedHashSet<IBond>();
+                var bonds = new List<IBond>();
 
                 IAtomContainer shared = mol.Builder.NewAtomContainer();
                 foreach (var atom in e.Key)
@@ -2353,11 +2430,27 @@ namespace NCDK.Layout
 
                 foreach (var bond in mol.Bonds)
                 {
-                    if (e.Key.Contains(bond.Begin) && e.Key.Contains(bond.End))
+                    if (e.Key.Contains(bond.Begin) && 
+                        e.Key.Contains(bond.End))
                     {
                         bonds.Add(bond);
                     }
                 }
+
+                bonds.Sort((a, b) =>
+                    {
+                        int atype = GetPositionalRingBondPref(a, mol);
+                        int btype = GetPositionalRingBondPref(b, mol);
+                        if (atype != btype)
+                            return atype.CompareTo(btype);
+                        int aord = a.Order.Numeric;
+                        int bord = b.Order.Numeric;
+                        if (aord > 0 && bord > 0)
+                        {
+                            return aord.CompareTo(bord);
+                        }
+                        return 0;
+                    });
 
                 if (bonds.Count >= e.Value.Count)
                 {
@@ -2368,9 +2461,6 @@ namespace NCDK.Layout
                     {
                         IBond bond = bndIter.Current;
                         IAtom atom = begIter.Current;
-
-                        if (NumRingBonds(mol, bond.Begin) > 2 && NumRingBonds(mol, bond.End) > 2)
-                            continue;
 
                         Vector2 newBegP = bond.Begin.Point2D.Value;
                         Vector2 newEndP = bond.End.Point2D.Value;
@@ -2398,7 +2488,7 @@ namespace NCDK.Layout
                         newBegP -= bndXVec;
                         newEndP -= bndVec;
                         bndXVec = Vector2.Normalize(bndXVec);
-                        bndXVec *= 3 * bndStep;
+                        bndXVec *= 4 * bndStep;
                         newEndP += bndXVec;
 
                         int atomIdx = idxs[atom];

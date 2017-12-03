@@ -139,7 +139,7 @@ namespace NCDK.IO
                     string molname = "mol " + molnumber + " " + mol.GetProperty<string>(CDKPropertyName.Title);
 
                     writer.Write(molname, 0, molname.Length);
-                    writer.WriteLine();
+                    writer.Write('\n');
 
                     // Loop through the atoms and write them out:
 
@@ -184,12 +184,12 @@ namespace NCDK.IO
                         }
                         line = line + " " + ncon.ToString() + " " + abuf;
                         writer.Write(line, 0, line.Length);
-                        writer.WriteLine();
+                        writer.Write('\n');
                         i++;
                     }
                     string buf = "endmol " + molnumber;
                     writer.Write(buf, 0, buf.Length);
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
                 catch (IOException)
                 {

@@ -54,7 +54,7 @@ namespace NCDK.Hash
 		/// The <see cref="Ordinal"/> values of <see cref="BasicAtomEncoder"/>.
 		/// </summary>
 		/// <seealso cref="BasicAtomEncoder"/>
-        public static class O
+        public static partial class O
         {
             public const int AtomicNumber = 0;
             public const int MassNumber = 1;
@@ -98,7 +98,7 @@ namespace NCDK.Hash
 
         public static explicit operator BasicAtomEncoder(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -144,7 +144,7 @@ namespace NCDK.Hash
             FreeRadicals, 
     
         };
-        public static System.Collections.Generic.IEnumerable<BasicAtomEncoder> Values => values;
+        public static BasicAtomEncoder[] Values => values;
 
 
         public static bool operator==(BasicAtomEncoder a, BasicAtomEncoder b)

@@ -16,13 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
+using NCDK.Numerics;
 using NCDK.Stereo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using NCDK.Common.Base;
 
 namespace NCDK
 {
@@ -571,20 +572,28 @@ namespace NCDK
         public virtual void TestSetStereoElements_List()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom atom = container.Builder.NewAtom();
+            IBond bond = container.Builder.NewBond();
+            IAtom a1 = container.Builder.NewAtom();
+            IAtom a2 = container.Builder.NewAtom();
+            IAtom a3 = container.Builder.NewAtom();
+            IAtom a4 = container.Builder.NewAtom();
+            IBond b1 = container.Builder.NewBond();
+            IBond b2 = container.Builder.NewBond();
 
             Assert.IsFalse(container.StereoElements.Count > 0);
 
-            List<IStereoElement> dbElements = new List<IStereoElement>();
-            dbElements.Add(new DoubleBondStereochemistry(null, new IBond[2],
-                    DoubleBondConformation.Together));
+            var dbElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            dbElements.Add(new DoubleBondStereochemistry(bond, new IBond[] { b1, b2 },
+                        DoubleBondConformation.Together));
             container.SetStereoElements(dbElements);
             var first = container.StereoElements.GetEnumerator();
             Assert.IsTrue(first.MoveNext(), "container did not have stereo elements");
             Assert.AreEqual(dbElements[0], first.Current, "expected element to equal set element (double bond)");
             Assert.IsFalse(first.MoveNext(), "container had more then one stereo element");
 
-            List<IStereoElement> tetrahedralElements = new List<IStereoElement>();
-            tetrahedralElements.Add(new TetrahedralChirality(null, new IAtom[4], TetrahedralStereo.Clockwise));
+            var tetrahedralElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            tetrahedralElements.Add(new TetrahedralChirality(atom, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise));
             container.SetStereoElements(tetrahedralElements);
             var second = container.StereoElements.GetEnumerator();
             Assert.IsTrue(second.MoveNext(), "container did not have stereo elements");
@@ -897,7 +906,15 @@ namespace NCDK
         public virtual void TestRemoveAllElements_StereoElements()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
-            container.StereoElements.Add(new TetrahedralChirality(container.Builder.NewAtom(), new IAtom[4], TetrahedralStereo.Clockwise));
+            IChemObjectBuilder builder = container.Builder;
+            IAtom focus = builder.NewAtom();
+            IAtom a1 = builder.NewAtom();
+            IAtom a2 = builder.NewAtom();
+            IAtom a3 = builder.NewAtom();
+            IAtom a4 = builder.NewAtom();
+            container.StereoElements.Add(new TetrahedralChirality(focus,
+                                                                new IAtom[] { a1, a2, a3, a4 },
+                                                                TetrahedralStereo.Clockwise));
 
             int count = 0;
             foreach (var element in container.StereoElements)
@@ -2479,7 +2496,7 @@ namespace NCDK
             carbon3.Id = "c3";
             IAtom carbon4 = container.Builder.NewAtom("C");
             carbon4.Id = "c4";
-            IStereoElement stereoElement = container.Builder.NewTetrahedralChirality(carbon,
+            var stereoElement = container.Builder.NewTetrahedralChirality(carbon,
                             new IAtom[] { carbon1, carbon2, carbon3, carbon4 }, TetrahedralStereo.Clockwise);
             container.StereoElements.Add(stereoElement);
 
@@ -2512,13 +2529,15 @@ namespace NCDK
             IAtomContainer chemObject = (IAtomContainer)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            chemObject.Atoms.Add(chemObject.Builder.NewAtom());
+            IChemObjectBuilder builder = chemObject.Builder;
+            chemObject.Atoms.Add(builder.NewAtom());
             Assert.IsTrue(listener.Changed);
 
             listener.Reset();
             Assert.IsFalse(listener.Changed);
-            chemObject.Bonds.Add(chemObject.Builder.NewBond(
-                    chemObject.Builder.NewAtom(), chemObject.Builder.NewAtom()));
+            chemObject.Atoms.Add(builder.NewAtom());
+            chemObject.Atoms.Add(builder.NewAtom());
+            chemObject.Bonds.Add(builder.NewBond(chemObject.Atoms[0], chemObject.Atoms[1]));
             Assert.IsTrue(listener.Changed);
         }
 

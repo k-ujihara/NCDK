@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Formats;
@@ -88,24 +89,6 @@ namespace NCDK.IO
             Assert.IsTrue(oneAccepted,
                     "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction");
         }
-
-        //private static IChemObject[] acceptableDebugChemObjects = {new DebugChemFile(), new DebugChemModel(),
-        //    new DebugAtomContainer(), new DebugReaction()   };
-
-        //[TestMethod()]
-        //public virtual void TestAcceptsAtLeastOneDebugObject()
-        //{
-        //    bool oneAccepted = false;
-        //    foreach (var object in acceptableDebugChemObjects) {
-        //        if (chemObjectIO.Accepts(object.GetType()))
-        //        {
-        //            oneAccepted = true;
-        //        }
-        //    }
-        //    Assert.IsTrue(
-        //            "At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction",
-        //            oneAccepted);
-        //}
 
         /// <summary>static objects, shared between tests - difficult to locate bugs.</summary>
         [Obsolete]

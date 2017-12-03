@@ -20,10 +20,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
@@ -55,17 +55,17 @@ namespace NCDK.Stereo
         /// passed to the constructor. When IDoubleBondStereoChemistry.Bonds
         /// is invoked the fixed size array is copied to an array of size 2. If
         /// more then 2 bonds are given they would be truncated.
-        ///
-        // @cdk.bug 1273
         /// </summary>
+        // @cdk.bug 1273
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor_TooManyBonds()
         {
-
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-
-            new DoubleBondStereochemistry(builder.NewBond(), new IBond[3], DoubleBondConformation.Opposite);
+            IBond b1 = builder.NewBond();
+            IBond b2 = builder.NewBond();
+            IBond b3 = builder.NewBond();
+            new DoubleBondStereochemistry(builder.NewBond(), new IBond[] { b1, b2, b3 }, DoubleBondConformation.Opposite);
         }
 
         [TestMethod()]
@@ -81,7 +81,6 @@ namespace NCDK.Stereo
         {
             DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.Bonds[1], ligands,
                     DoubleBondConformation.Opposite);
-            Assert.IsNull(stereo.Builder);
             stereo.Builder = Default.ChemObjectBuilder.Instance;
             Assert.AreEqual(Default.ChemObjectBuilder.Instance, stereo.Builder);
         }
@@ -143,121 +142,29 @@ namespace NCDK.Stereo
             Assert.IsFalse(element.Contains(null));
         }
 
-#if false
         [TestMethod()]
-    public void TestMap_Map_Map()  {
+        public void TestMap_Map_Map_EmptyMapping()
+        {
+            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
 
-        IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IAtom c1 = builder.NewAtom("C");
+            IAtom c2 = builder.NewAtom("C");
+            IAtom o3 = builder.NewAtom("O");
+            IAtom o4 = builder.NewAtom("O");
 
-        IAtom c1 = builder.NewAtom("C");
-        IAtom c2 = builder.NewAtom("C");
-        IAtom o3 = builder.NewAtom("O");
-        IAtom o4 = builder.NewAtom("O");
+            IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
+            IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
+            IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
 
-        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
+            // new stereo element
+            IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[] { c1o3, c2o4 },
+                    DoubleBondConformation.Opposite);
 
-        // new stereo element
-        DoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
-                DoubleBondConformation.Opposite);
+            // map the existing element a new element - should through an ArgumentException
+            IDoubleBondStereochemistry mapped = (IDoubleBondStereochemistry)original.Clone(new CDKObjectMap());
 
-        // clone the atoms and place in a map
-        IDictionary<IBond, IBond> mapping = new Dictionary<IBond, IBond>();
-        IBond c1c2clone = (IBond) c1c2.Clone();
-        mapping.Add(c1c2, c1c2clone);
-        IBond c1o3clone = (IBond) c1o3.Clone();
-        mapping.Add(c1o3, c1o3clone);
-        IBond c2o4clone = (IBond) c2o4.Clone();
-        mapping.Add(c2o4, c2o4clone);
-
-        // map the existing element a new element
-        IDoubleBondStereochemistry mapped = original.Map(Collections.EMPTY_MAP, mapping);
-
-        Assert.AssertThat("mapped chiral atom was the same as the original", mapped.StereoBond,
-                Is(Not(SameInstance(original.StereoBond))));
-        Assert.AreEqual(SameInstance(c1c2clone), "mapped chiral atom was not the clone", mapped.StereoBond);
-
-        IBond[] originalBonds = original.Bonds;
-        IBond[] mappedBonds = mapped.Bonds;
-
-        Assert.AssertThat("first bond was te same as the original", mappedBonds[0],
-                Is(Not(SameInstance(originalBonds[0]))));
-        Assert.AreEqual(SameInstance(c1o3clone), "first mapped bond was not the clone", mappedBonds[0]);
-        Assert.AssertThat("second bond was te same as the original", mappedBonds[1],
-                Is(Not(SameInstance(originalBonds[1]))));
-        Assert.AreEqual(SameInstance(c2o4clone), "second mapped bond was not the clone", mappedBonds[1]);
-
-        Assert.AreEqual(original.Stereo, "stereo was not mapped", mapped.Stereo);
-
-    }
-
-    [TestMethod()][ExpectedException(typeof(ArgumentException))]
-    public void TestMap_Null_Map()  {
-
-        IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-
-        IAtom c1 = builder.NewAtom("C");
-        IAtom c2 = builder.NewAtom("C");
-        IAtom o3 = builder.NewAtom("O");
-        IAtom o4 = builder.NewAtom("O");
-
-        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
-
-        // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
-                Conformation.Opposite);
-
-        // map the existing element a new element - should through an ArgumentException
-        IDoubleBondStereochemistry mapped = original.Map(Collections.EMPTY_MAP, null);
-
-    }
-
-    [TestMethod()]
-    public void TestMap_Map_Map_NullElement()  {
-
-        IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-
-        // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(null, new IBond[2], null);
-
-        // map the existing element a new element
-        IDoubleBondStereochemistry mapped = original.Map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
-
-        Assert.IsNull(mapped.StereoBond);
-        Assert.IsNull(mapped.Bonds[0]);
-        Assert.IsNull(mapped.Bonds[1]);
-        Assert.IsNull(mapped.Stereo);
-    }
-
-    [TestMethod()]
-    public void TestMap_Map_Map_EmptyMapping()  
-    {
-        IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-
-        IAtom c1 = builder.NewAtom("C");
-        IAtom c2 = builder.NewAtom("C");
-        IAtom o3 = builder.NewAtom("O");
-        IAtom o4 = builder.NewAtom("O");
-
-        IBond c1c2 = builder.NewBond(c1, c2, BondOrder.Double);
-        IBond c1o3 = builder.NewBond(c1, o3, BondOrder.Single);
-        IBond c2o4 = builder.NewBond(c2, o4, BondOrder.Single);
-
-        // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
-                Conformation.Opposite);
-
-        // map the existing element a new element - should through an ArgumentException
-        IDoubleBondStereochemistry mapped = original.Map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
-
-        Assert.AreEqual(original.GetStereoBond(), mapped.GetStereoBond());
-        Assert.AreEqual(original.Bonds, mapped.Bonds);
-        Assert.IsNotNull(mapped.Stereo);
-    }
-#endif
+            Assert.AreSame(original, mapped);
+        }
 
         [TestMethod()]
         public void TestToString()

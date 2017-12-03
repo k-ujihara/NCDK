@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarprotein
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:aminoAcidsCount
-    public partial class AminoAcidCountDescriptor : IMolecularDescriptor
+    public class AminoAcidCountDescriptor : IMolecularDescriptor
     {
         private IChemObjectSet<IAtomContainer> substructureSet;
 
@@ -147,5 +147,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             return null;
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

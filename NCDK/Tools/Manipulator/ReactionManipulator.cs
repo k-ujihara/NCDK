@@ -427,7 +427,7 @@ namespace NCDK.Tools.Manipulator
             }
 
             // split stereochemistry
-            foreach (IStereoElement se in mol.StereoElements)
+            foreach (var se in mol.StereoElements)
             {
                 IAtom focus = null;
                 if (se is ITetrahedralChirality)

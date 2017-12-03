@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:vAdjMa
-    public partial class VAdjMaDescriptor : IMolecularDescriptor
+    public class VAdjMaDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "VAdjMat" };
 
@@ -113,5 +113,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name"></param>
         /// <returns></returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
-    public partial class WienerNumbersDescriptor : IMolecularDescriptor
+    public class WienerNumbersDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WPATH", "WPOL" };
 
@@ -148,5 +148,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

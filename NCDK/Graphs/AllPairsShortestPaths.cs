@@ -223,7 +223,7 @@ namespace NCDK.Graphs
             public void RemoveProperty(object description) { }
             public void SetProperty(object key, object value) { throw new InvalidOperationException("not supported"); }
 
-            public IList<IStereoElement> StereoElements => Array.Empty<IStereoElement>();
+            public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             public void RemoveElectronContainer(IElectronContainer electronContainer)
             { }
@@ -252,7 +252,10 @@ namespace NCDK.Graphs
             public void RemoveAtom(IAtom atom)
             { }
 
-            public void SetStereoElements(IEnumerable<IStereoElement> elements)
+            public void RemoveAtom(int pos)
+            { }
+
+            public void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
             { throw new InvalidOperationException("not supported"); }
 
             public void OnStateChanged(ChemObjectChangeEventArgs evt)
@@ -268,6 +271,12 @@ namespace NCDK.Graphs
 
             public void SetAtom(int index, IAtom atom)
             { throw new InvalidOperationException("not supported"); }
+
+            public string Title
+            {
+                get { return null; }
+                set { }
+            }
         }
 
         /// <summary>

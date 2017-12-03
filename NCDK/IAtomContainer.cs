@@ -51,7 +51,7 @@ namespace NCDK
         /// <param name="bonds">The array of bonds to be assigned to this AtomContainer</param>
         /// <seealso cref="Bonds"/>
         void SetBonds(IEnumerable<IBond> bonds);
-        
+
         /// <summary>
         /// Set the atom at <paramref name="index"/>, the index must have an existing atom
         /// and therefore be in the range 0 ÅÖ idx &lt; mol.Atoms.Count.
@@ -88,13 +88,13 @@ namespace NCDK
         /// <summary>
         /// A stereo element to this container.
         /// </summary>
-        IList<IStereoElement> StereoElements { get; }
+        IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; }
 
         /// <summary>
         /// Set the stereo elements - this will replace the existing instance with a new instance.
         /// </summary>
         /// <param name="elements"></param>
-        void SetStereoElements(IEnumerable<IStereoElement> elements);
+        void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements);
 
         /// <summary>
         /// One or several of the bonds have <see cref="IBond.IsSingleOrDouble"/> raised (which may indicate aromaticity).
@@ -238,6 +238,24 @@ namespace NCDK
         /// <summary>
         /// Safely remove an atom from the container.
         /// </summary>
+        /// <remarks>
+        /// Removes a single atom from the container updating all internal
+        /// state to be consistent. All bonds connected to the atom will be
+        /// deleted as well as all stereo elements. If multiple atoms/bonds are
+        /// being deleted they should be gathered into a single transaction
+        /// and removed with <see cref="Remove(IAtomContainer)"/>.
+        /// <para>
+        /// If you are removing hydrogens one of the
+        /// utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
+        /// is preferable.
+        /// </para>
+        /// </remarks>
+        /// <param name="pos">the position of the atom to be removed</param>
+        void RemoveAtom(int pos);
+
+        /// <summary>
+        /// Safely remove an atom from the container.
+        /// </summary>
         /// <seealso cref="RemoveAtom(IAtom)"/>
         [Obsolete("Method has be renamed " + nameof(IAtom) + "." + nameof(IList<object>.Remove))]
         void RemoveAtomAndConnectedElectronContainers(IAtom atom);
@@ -336,5 +354,11 @@ namespace NCDK
         /// </summary>
         /// <returns>whether the container is empty</returns>
         bool IsEmpty();
+
+
+        /// <summary>
+        /// The title of the record.
+        /// </summary>
+        string Title { get; set; }
     }
 }

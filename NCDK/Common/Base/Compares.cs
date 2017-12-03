@@ -6,6 +6,11 @@ namespace NCDK.Common.Base
 {
     public static class Compares
     {
+        public static bool DeepEquals(IEnumerable expected, IEnumerable sets)
+        {
+            return AreDeepEqual(expected, sets);
+        }
+
         public static bool AreEqual<T>(ICollection<T> a, ICollection<T> b)
         {
             if (a.Count != b.Count)

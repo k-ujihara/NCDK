@@ -112,16 +112,16 @@ namespace NCDK.IO
                 if (mol.GetProperty<string>(CDKPropertyName.Title) != null)
                 {
                     writer.Write("#        Name: " + mol.GetProperty<string>(CDKPropertyName.Title));
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
                 // FIXME: add other types of meta data
-                writer.WriteLine();
+                writer.Write('\n');
 
                 // @<TRIPOS>MOLECULE benzene 12 12 1 0 0 SMALL NO_CHARGES
                 
                 Debug.WriteLine("Writing molecule block...");
                 writer.Write("@<TRIPOS>MOLECULE");
-                writer.WriteLine();
+                writer.Write('\n');
                 if (mol.Id == null)
                 {
                     writer.Write("CDKMolecule");
@@ -130,13 +130,13 @@ namespace NCDK.IO
                 {
                     writer.Write(mol.Id);
                 }
-                writer.WriteLine();
+                writer.Write('\n');
                 writer.Write(mol.Atoms.Count + " " + mol.Bonds.Count); // that's the minimum amount of info required the format
-                writer.WriteLine();
+                writer.Write('\n');
                 writer.Write("SMALL"); // no biopolymer
-                writer.WriteLine();
+                writer.Write('\n');
                 writer.Write("NO CHARGES"); // other options include Gasteiger charges
-                writer.WriteLine();
+                writer.Write('\n');
 
                 // @<TRIPOS>ATOM 1 C1 1.207 2.091 0.000 C.ar 1 BENZENE 0.000 2 C2
                 // 2.414 1.394 0.000 C.ar 1 BENZENE 0.000 3 C3 2.414 0.000 0.000
@@ -151,7 +151,7 @@ namespace NCDK.IO
                 // write atom block
                 Debug.WriteLine("Writing atom block...");
                 writer.Write("@<TRIPOS>ATOM");
-                writer.WriteLine();
+                writer.Write('\n');
                 for (int i = 0; i < mol.Atoms.Count; i++)
                 {
                     IAtom atom = mol.Atoms[i];
@@ -189,7 +189,7 @@ namespace NCDK.IO
                     {
                         writer.Write(atom.Symbol);
                     }
-                    writer.WriteLine();
+                    writer.Write('\n');
                 }
 
                 // @<TRIPOS>BOND 1 1 2 ar 2 1 6 ar 3 2 3 ar 4 3 4 ar 5 4 5 ar 6 5 6
@@ -198,7 +198,7 @@ namespace NCDK.IO
                 // write bond block
                 Debug.WriteLine("Writing bond block...");
                 writer.Write("@<TRIPOS>BOND");
-                writer.WriteLine();
+                writer.Write('\n');
 
                 int counter = 0;
                 foreach (var bond in mol.Bonds)
@@ -233,7 +233,7 @@ namespace NCDK.IO
 
                     writer.Write((counter + 1) + " " + (mol.Atoms.IndexOf(bond.Begin) + 1) + " "
                             + (mol.Atoms.IndexOf(bond.End) + 1) + " " + sybylBondOrder);
-                    writer.WriteLine();
+                    writer.Write('\n');
                     counter++;
                 }
 

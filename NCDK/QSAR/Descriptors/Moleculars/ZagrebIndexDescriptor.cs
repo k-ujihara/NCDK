@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:zagrebIndex
     // @cdk.keyword Zagreb index
     // @cdk.keyword descriptor
-    public partial class ZagrebIndexDescriptor : IMolecularDescriptor
+    public class ZagrebIndexDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Zagreb" };
 
@@ -96,5 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

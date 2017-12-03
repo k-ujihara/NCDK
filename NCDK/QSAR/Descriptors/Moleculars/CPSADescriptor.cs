@@ -120,7 +120,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:CPSA
-    public partial class CPSADescriptor : IMolecularDescriptor
+    public class CPSADescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1",
             "DPSA-2", "DPSA-3", "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2",
@@ -344,5 +344,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(29);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

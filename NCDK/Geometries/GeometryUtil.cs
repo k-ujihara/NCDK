@@ -30,6 +30,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NCDK.Numerics;
+using System.IO;
+using NCDK.Config;
 
 namespace NCDK.Geometries
 {
@@ -495,12 +497,23 @@ namespace NCDK.Geometries
 
             double totalmass = 0.0;
 
+            Isotopes isotopes;
+            try
+            {
+                isotopes = Isotopes.Instance;
+            }
+            catch (IOException)
+            {
+                throw new ApplicationException("Could not initialize Isotopes");
+            }
+
             foreach (var a in ac.Atoms)
             {
                 double? mass = a.ExactMass;
                 // some sanity checking
                 if (a.Point3D == null) return null;
-                if (mass == null) return null;
+                if (mass == null)
+                   mass = isotopes.GetNaturalMass(a);
 
                 totalmass += mass.Value;
                 xsum += mass.Value * a.Point3D.Value.X;
@@ -926,6 +939,25 @@ namespace NCDK.Geometries
             return true;
         }
 
+        /// <summary>
+        /// Determine if all parts of a reaction have coodinates
+        /// </summary>
+        /// <param name="reaction">a reaction</param>
+        /// <returns>the reaction has coordinates</returns>
+        public static bool Has2DCoordinates(IReaction reaction)
+        {
+            foreach (IAtomContainer mol in reaction.Reactants)
+                if (!Has2DCoordinates(mol))
+                    return false;
+            foreach (IAtomContainer mol in reaction.Products)
+                if (!Has2DCoordinates(mol))
+                    return false;
+            foreach (IAtomContainer mol in reaction.Agents)
+                if (!Has2DCoordinates(mol))
+                    return false;
+            return true;
+        }
+        
         /// <summary>
         /// Determines the coverage of this <see cref="IAtomContainer"/>'s 2D
         /// coordinates. If all atoms are non-null and have 2D coordinates this method will return 

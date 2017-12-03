@@ -11,7 +11,7 @@ namespace NCDK.Smiles
 		/// The <see cref="Ordinal"/> values of <see cref="Radical"/>.
 		/// </summary>
 		/// <seealso cref="Radical"/>
-        public static class O
+        public static partial class O
         {
             public const int Monovalent = 0;
             public const int Divalent = 1;
@@ -55,7 +55,7 @@ namespace NCDK.Smiles
 
         public static explicit operator Radical(int ordinal)
         {
-            if (!(0 <= ordinal || ordinal < values.Length))
+            if (!(0 <= ordinal && ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
             return values[ordinal];
         }
@@ -83,7 +83,7 @@ namespace NCDK.Smiles
             TrivalentQuartet, 
     
         };
-        public static System.Collections.Generic.IEnumerable<Radical> Values => values;
+        public static Radical[] Values => values;
 
         /* Avoid to cause compiling error */
 

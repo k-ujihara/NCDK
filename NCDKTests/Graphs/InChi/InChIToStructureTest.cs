@@ -16,12 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Stereo;
 using NCDK.NInChI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.Graphs.InChI
 {
@@ -130,7 +131,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer container = parser.AtomContainer;
             // test if the created IAtomContainer is done with the Silent module...
             // OK, this is not typical use, but maybe the above generate method should be private
-            Assert.IsTrue(container is Silent.AtomContainer);
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
         }
 
         [TestMethod()]
@@ -139,7 +140,7 @@ namespace NCDK.Graphs.InChI
             InChIToStructure parser = new InChIToStructure("InChI=1S/O", Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(0, container.Atoms[0].ImplicitHydrogenCount);
         }
@@ -150,7 +151,8 @@ namespace NCDK.Graphs.InChI
             InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
+            Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(2, container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(18, container.Atoms[0].MassNumber);
@@ -163,8 +165,8 @@ namespace NCDK.Graphs.InChI
                     Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             IStereoElement se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
@@ -178,8 +180,8 @@ namespace NCDK.Graphs.InChI
                     Default.ChemObjectBuilder.Instance);
             parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             IStereoElement se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
@@ -196,8 +198,8 @@ namespace NCDK.Graphs.InChI
                     Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
 
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             IStereoElement se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
@@ -221,8 +223,8 @@ namespace NCDK.Graphs.InChI
                     Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
 
-            Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
+            Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
             Assert.IsTrue(ses.MoveNext());
             IStereoElement se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
@@ -234,6 +236,16 @@ namespace NCDK.Graphs.InChI
                      element.Peripherals));
             Assert.AreEqual(container.Atoms[4], element.Focus);
             Assert.AreEqual(TetrahedralStereo.Clockwise, element.Winding);
+        }
+
+        [TestMethod()]
+        public void Diazene()
+        {
+            InChIToStructure parse = new InChIToStructure("InChI=1S/H2N2/c1-2/h1-2H/b2-1+",
+                                                          Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = parse.AtomContainer;
+            Assert.AreEqual(4, mol.Atoms.Count);
+            Assert.AreEqual(true, mol.StereoElements.Any());
         }
     }
 }

@@ -17,12 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using NCDK.Common.Collections;
-using NCDK.Stereo;
 
 namespace NCDK.Graphs
 {
@@ -106,26 +103,20 @@ namespace NCDK.Graphs
 
             foreach (var stereo in container.StereoElements)
             {
-                if (stereo is ITetrahedralChirality)
+                IChemObject focus = stereo.Focus;
+                if (focus is IAtom)
                 {
-                    IAtom a = ((ITetrahedralChirality)stereo).ChiralAtom;
-                    if (componentsMap.ContainsKey(a)) componentsMap[a].StereoElements.Add(stereo);
+                    if (componentsMap.ContainsKey((IAtom)focus))
+                        componentsMap[(IAtom)focus].StereoElements.Add(stereo);
                 }
-                else if (stereo is IDoubleBondStereochemistry)
+                else if (focus is IBond)
                 {
-                    IBond bond = ((IDoubleBondStereochemistry)stereo).StereoBond;
-                    if (componentsMap.ContainsKey(bond.Begin) && componentsMap.ContainsKey(bond.End))
-                        componentsMap[bond.Begin].StereoElements.Add(stereo);
-                }
-                else if (stereo is ExtendedTetrahedral)
-                {
-                    IAtom atom = ((ExtendedTetrahedral)stereo).Focus;
-                    if (componentsMap.ContainsKey(atom)) componentsMap[atom].StereoElements.Add(stereo);
+                    if (componentsMap.ContainsKey(((IBond)focus).Begin))
+                        componentsMap[((IBond)focus).Begin].StereoElements.Add(stereo);
                 }
                 else
                 {
-                    Console.Error.WriteLine("New stereochemistry element is not currently partitioned with ConnectivityChecker:"
-                            + stereo.GetType());
+                    throw new InvalidOperationException("New stereo element not using an atom/bond for focus?");
                 }
             }
 

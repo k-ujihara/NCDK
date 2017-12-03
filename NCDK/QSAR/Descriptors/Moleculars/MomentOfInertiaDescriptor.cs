@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    public partial class MomentOfInertiaDescriptor : IMolecularDescriptor
+    public class MomentOfInertiaDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
 
@@ -150,7 +150,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 IAtom currentAtom = clone.Atoms[i];
 
-                double mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass.Value;
+                var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
+                double mass = _mass == null ? factory.GetNaturalMass(currentAtom) : _mass.Value;
 
                 var p = currentAtom.Point3D.Value;
                 xdif = p.X - centerOfMass.X;
@@ -218,5 +219,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <inheritdoc/>
         public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

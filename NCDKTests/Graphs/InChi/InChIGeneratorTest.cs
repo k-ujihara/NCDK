@@ -757,7 +757,7 @@ namespace NCDK.Graphs.InChI
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(
+                var element = new ExtendedTetrahedral(
                     m.Atoms[2],
                     new IAtom[] {
                         m.Atoms[atoms[i][0]],
@@ -796,7 +796,7 @@ namespace NCDK.Graphs.InChI
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(
+                var element = new ExtendedTetrahedral(
                     m.Atoms[2],
                     new IAtom[] {
                         m.Atoms[atoms[i][0]],
@@ -839,7 +839,7 @@ namespace NCDK.Graphs.InChI
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(
+                var element = new ExtendedTetrahedral(
                    m.Atoms[2],
                    new IAtom[] {
                         m.Atoms[atoms[i][0]],
@@ -882,7 +882,7 @@ namespace NCDK.Graphs.InChI
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                IStereoElement element = new ExtendedTetrahedral(
+                var element = new ExtendedTetrahedral(
                    m.Atoms[2],
                    new IAtom[] {
                         m.Atoms[atoms[i][0]],

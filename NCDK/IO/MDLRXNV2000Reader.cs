@@ -163,15 +163,27 @@ namespace NCDK.IO
 
             int reactantCount = 0;
             int productCount = 0;
+            int agentCount = 0;
             try
             {
                 string countsLine = input.ReadLine();
 
                 // this line contains the number of reactants and products
-                var tokens = Strings.Tokenize(countsLine);
-                reactantCount = int.Parse(tokens[0]);
+                var tokenizer = Strings.Tokenize(countsLine).GetEnumerator();
+                tokenizer.MoveNext();
+                reactantCount = int.Parse(tokenizer.Current);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");
-                productCount = int.Parse(tokens[1]);
+                tokenizer.MoveNext();
+                productCount = int.Parse(tokenizer.Current);
+
+                if (tokenizer.MoveNext())
+                {
+                    agentCount = int.Parse(tokenizer.Current);
+                    // ChemAxon extension, technically BIOVIA now support this but
+                    // not documented yet
+                    if (ReaderMode == ChemObjectReaderModes.Strict && agentCount > 0)
+                        throw new CDKException("RXN files uses agent count extension");
+                }
                 Trace.TraceInformation("Expecting " + productCount + " products in file");
             }
             catch (Exception exception)
@@ -196,7 +208,7 @@ namespace NCDK.IO
                     {
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
-                        molFile.Append(Environment.NewLine);
+                        molFile.Append('\n');
                     } while (!molFileLine.Equals("M  END"));
 
                     // read MDL molfile content
@@ -207,6 +219,45 @@ namespace NCDK.IO
 
                     // add reactant
                     reaction.Reactants.Add(reactant);
+                }
+            }
+            catch (CDKException exception)
+            {
+                // rethrow exception from MDLReader
+                throw exception;
+            }
+            catch (Exception exception)
+            {
+                if (exception is IOException | exception is ArgumentException)
+                {
+                    Debug.WriteLine(exception);
+                    throw new CDKException("Error while reading products", exception);
+                }
+                throw;
+            }
+
+            // now read the products
+            try
+            {
+                for (int i = 1; i <= agentCount; i++)
+                {
+                    StringBuilder molFile = new StringBuilder();
+                    input.ReadLine(); // String announceMDLFileLine =
+                    string molFileLine = "";
+                    do
+                    {
+                        molFileLine = input.ReadLine();
+                        molFile.Append(molFileLine);
+                        molFile.Append('\n');
+                    } while (!molFileLine.Equals("M  END"));
+
+                    // read MDL molfile content
+                    MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()));
+                    IAtomContainer product = (IAtomContainer)reader.Read(builder.NewAtomContainer());
+                    reader.Close();
+
+                    // add reactant
+                    reaction.Agents.Add(product);
                 }
             }
             catch (CDKException)
@@ -236,7 +287,7 @@ namespace NCDK.IO
                     {
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
-                        molFile.Append(Environment.NewLine);
+                        molFile.Append('\n');
                     } while (!molFileLine.Equals("M  END"));
 
                     // read MDL molfile content

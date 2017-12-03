@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:aromaticAtomsCount
-    public partial class AromaticAtomsCountDescriptor : IMolecularDescriptor
+    public class AromaticAtomsCountDescriptor : IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "naAromAtom" };
@@ -167,5 +167,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public object GetParameterType(string name) => true;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

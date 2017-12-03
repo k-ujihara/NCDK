@@ -252,7 +252,7 @@ namespace NCDK.Graphs.Invariant
             bool hasPseudo = false;
             foreach (var atom in mol.Atoms)
             {
-                if (atom is PseudoAtom) hasPseudo = true;
+                if (atom is IPseudoAtom) hasPseudo = true;
             }
             Assert.IsTrue(hasPseudo, "The molecule should have one or more pseudo atoms");
 

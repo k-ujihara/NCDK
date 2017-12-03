@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:lengthOverBreadth
-    public partial class LengthOverBreadthDescriptor : IMolecularDescriptor
+    public class LengthOverBreadthDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };
 
@@ -253,5 +253,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -184,7 +184,7 @@ namespace NCDK.IO
                 {
                     molFileLine = ReadLine();
                     molFile.Append(molFileLine);
-                    molFile.Append(Environment.NewLine);
+                    molFile.Append('\n');
                 };
 
                 try
@@ -226,7 +226,7 @@ namespace NCDK.IO
                 {
                     molFileLine = ReadLine();
                     molFile.Append(molFileLine);
-                    molFile.Append(Environment.NewLine);
+                    molFile.Append('\n');
                 };
 
                 try

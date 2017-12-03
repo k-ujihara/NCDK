@@ -60,6 +60,10 @@ namespace NCDK
         /// <returns>the end atom</returns>
         IAtom End { get; }
 
+        int Index { get; }
+
+        IAtomContainer Container { get; }
+
         /// <summary>
         /// Returns the other atom in the bond, the atom is connected to the given atom. This
         /// method is only correct for two-centre bonds, for n-centre bonds the behaviour is undefined

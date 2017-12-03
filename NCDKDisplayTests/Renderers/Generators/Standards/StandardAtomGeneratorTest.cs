@@ -428,7 +428,7 @@ namespace NCDK.Renderers.Generators.Standards
             var mock_container = new Mock<IAtomContainer>(); var container = mock_container.Object;
             var mock_atom = new Mock<IPseudoAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.Label).Returns("R1");
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }
@@ -443,7 +443,10 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(12);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            model.SetV(typeof(StandardGenerator.OmitMajorIsotopes), true);
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(1, shapes.Count);
         }
@@ -457,7 +460,9 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(13);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }
@@ -471,7 +476,7 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns((int?)null);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(1, shapes.Count);
         }
@@ -485,9 +490,11 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(12);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns((int?)null);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
-            Assert.AreEqual(1, shapes.Count);
+            Assert.AreEqual(2, shapes.Count);
         }
 
         [TestMethod()]
@@ -499,9 +506,11 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(12);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns((int?)null);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
-            Assert.AreEqual(1, shapes.Count);
+            Assert.AreEqual(2, shapes.Count);
         }
 
         [TestMethod()]
@@ -514,9 +523,11 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(12);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
-            Assert.AreEqual(1, shapes.Count);
+            Assert.AreEqual(2, shapes.Count);
             Assert.AreEqual("C", atomSymbol.ElementOutline().Text);
         }
 
@@ -530,7 +541,7 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.MassNumber).Returns(12);
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(1, shapes.Count);
             Assert.AreEqual("?", atomSymbol.ElementOutline().Text);
@@ -546,9 +557,11 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom.Setup(n => n.ImplicitHydrogenCount).Returns(0);
             mock_atom.Setup(n => n.FormalCharge).Returns(0);
             mock_container.Setup(n => n.GetConnectedSingleElectrons(atom)).Returns(new[] { new Default.SingleElectron() });
-            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left);
+            RendererModel model = new RendererModel();
+            model.RegisterParameters(new StandardGenerator(new Typeface(new FontFamily("GlobalSanSerif.CompositeFont"), WPF.FontStyles.Normal, WPF.FontWeights.Normal, WPF.FontStretches.Normal), 12));
+            AtomSymbol atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, model);
             var shapes = atomSymbol.GetOutlines();
-            Assert.AreEqual(2, shapes.Count);
+            Assert.AreEqual(3, shapes.Count);
             mock_container.Verify(n => n.GetConnectedSingleElectrons(atom), Times.Once);
         }
     }

@@ -169,10 +169,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(1.6076, ret[0], 0.0001);
             Assert.AreEqual(3.6550, ret[1], 0.0001);
 
-            Assert.AreEqual(3.2503, ret[2], 0.0001); // 3.3337 ?
+            Assert.AreEqual(3.3337, ret[2], 0.0001);
             Assert.AreEqual(1.1410, ret[3], 0.0001);
             Assert.AreEqual(2.1147, ret[4], 0.0001);
-            Assert.AreEqual(1.6522, ret[5], 0.0001); // 1.7148 ?
+            Assert.AreEqual(1.7148, ret[5], 0.0001);
         }
 
         // @cdk.bug 3023326

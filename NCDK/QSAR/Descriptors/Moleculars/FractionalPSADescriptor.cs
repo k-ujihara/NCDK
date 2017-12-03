@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public partial class FractionalPSADescriptor : IMolecularDescriptor
+    public class FractionalPSADescriptor : IMolecularDescriptor
     {
         public FractionalPSADescriptor() { }
 
@@ -128,5 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
         public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
         public object GetParameterType(string name) => null;
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

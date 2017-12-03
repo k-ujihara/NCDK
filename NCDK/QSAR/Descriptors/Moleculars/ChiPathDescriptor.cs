@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
 
+using NCDK.AtomTypes;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPath
     // @cdk.keyword chi path index
     // @cdk.keyword descriptor
-    public partial class ChiPathDescriptor : IMolecularDescriptor
+    public class ChiPathDescriptor : IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -300,5 +300,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             return ChiIndexUtils.GetFragments(atomContainer, queries);
         }
+
+        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

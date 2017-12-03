@@ -123,14 +123,14 @@ namespace NCDK.IO
 
                 string s1 = "" + mol.Atoms.Count;
                 writer.Write(s1, 0, s1.Length);
-                writer.WriteLine();
+                writer.Write('\n');
 
                 string s2 = null; // FIXME: add some interesting comment
                 if (s2 != null)
                 {
                     writer.Write(s2, 0, s2.Length);
                 }
-                writer.WriteLine();
+                writer.Write('\n');
 
                 // Loop through the atoms and write them out:
                 foreach (var a in mol.Atoms)
@@ -154,7 +154,7 @@ namespace NCDK.IO
                     }
 
                     writer.Write(st, 0, st.Length);
-                    writer.WriteLine();
+                    writer.Write('\n');
 
                 }
             }

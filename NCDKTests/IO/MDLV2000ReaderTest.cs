@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Default;
@@ -521,6 +522,23 @@ namespace NCDK.IO
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
 
+            IAtomContainer mol = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
+            reader.Close();
+            Assert.IsNotNull(mol);
+            Assert.AreEqual(5, mol.Atoms.Count);
+
+            bool has3d = GeometryUtil.Has3DCoordinates(mol);
+            Assert.IsTrue(has3d);
+        }
+
+        // @cdk.bug 1732307 
+        [TestMethod()]
+        public void TestZeroZCoordinates3DMarked()
+        {
+            string filename = "NCDK.Data.MDL.nozcoord.sdf";
+            Trace.TraceInformation("Testing: " + filename);
+            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             reader.Close();
             Assert.IsNotNull(mol);
@@ -1446,7 +1464,7 @@ namespace NCDK.IO
         }
 
         // @cdk.bug 1343
-       [TestMethod()]
+        [TestMethod()]
         public void NonNegativeHydrogenCountOnHydrogenRadical()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_29293.mol");
@@ -1500,7 +1518,7 @@ namespace NCDK.IO
             // Printable ASCII characters, excluding whitespace. Note each string contains an atom number
             var expected = new string[]
             {
-                "!\"#$%&'()*+,-./0123456789:;&lt;=&gt;?@[\\]^_`{|}~",
+                "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~",
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
                 "012345678901234567890123456789012345678901234567890"
             };
@@ -1767,6 +1785,33 @@ namespace NCDK.IO
                     new IAtom[] { container.Atoms[0], container.Atoms[2], container.Atoms[3], container.Atoms[4] },
                     ((ITetrahedralChirality)se).Ligands);
                 Assert.IsFalse(siter.MoveNext());
+            }
+        }
+
+        /// <summary>
+        /// When atomic mass is defined as a delta some atoms don't have a reasonable
+        /// default. Most tools will output an 'M  ISO' property, so can be specified
+        /// </summary>
+        /// <exception cref="Exception">expected format error</exception>
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
+        public void SeaborgiumMassDelta()
+        {
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "seaborgium.mol"))
+            {
+                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                IAtomContainer mol = mdlr.Read(new AtomContainer());
+            }
+        }
+
+        [TestMethod()]
+        public void SeaborgiumAbsMass()
+        {
+            using (var ins = ResourceLoader.GetAsStream(GetType(), "seaborgium_abs.mol"))
+            {
+                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                IAtomContainer mol = mdlr.Read(new AtomContainer());
+                Assert.AreEqual(261, mol.Atoms[0].MassNumber);
             }
         }
     }

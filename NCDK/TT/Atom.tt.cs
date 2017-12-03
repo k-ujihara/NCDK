@@ -1,4 +1,4 @@
- 
+
 
 
 // .NET Framework port by Kazuya Ujihara
@@ -27,8 +27,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Config;
-using System;
 using NCDK.Numerics;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace NCDK.Default
@@ -190,6 +191,18 @@ namespace NCDK.Default
             }
         }
 
+		/// <inheritdoc/>
+		public virtual IAtomContainer Container => null;
+
+		/// <inheritdoc/>
+		public virtual int Index => -1;
+
+		/// <inheritdoc/>
+		public virtual IEnumerable<IBond> Bonds 
+		{ 
+			get { throw new NotSupportedException(); } 
+		}
+		
         /// <summary>
         /// The partial charge of this atom.
         /// </summary>
@@ -320,10 +333,10 @@ namespace NCDK.Default
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
             IAtom clone;
-            if (map.AtomMap.TryGetValue(this, out clone))
+            if (map.TryGetValue(this, out clone))
                 return clone;
             clone = (Atom)base.Clone(map);
-            map.AtomMap.Add(this, clone);
+            map.Add(this, clone);
             return clone;
         }
 
@@ -468,6 +481,20 @@ namespace NCDK.Default
 
             return pos == len && len > 0;
         }
+
+		/// <inheritdoc/>
+		public override int GetHashCode() 
+		{
+			return base.GetHashCode();
+		}
+
+		/// <inheritdoc/>
+		public override bool Equals(object obj) 
+		{
+			if (obj is AtomRef)
+				return base.Equals(((AtomRef) obj).Deref());
+			return base.Equals(obj);
+		}
     }
 }
 namespace NCDK.Silent
@@ -629,6 +656,18 @@ namespace NCDK.Silent
             }
         }
 
+		/// <inheritdoc/>
+		public virtual IAtomContainer Container => null;
+
+		/// <inheritdoc/>
+		public virtual int Index => -1;
+
+		/// <inheritdoc/>
+		public virtual IEnumerable<IBond> Bonds 
+		{ 
+			get { throw new NotSupportedException(); } 
+		}
+		
         /// <summary>
         /// The partial charge of this atom.
         /// </summary>
@@ -752,10 +791,10 @@ namespace NCDK.Silent
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
             IAtom clone;
-            if (map.AtomMap.TryGetValue(this, out clone))
+            if (map.TryGetValue(this, out clone))
                 return clone;
             clone = (Atom)base.Clone(map);
-            map.AtomMap.Add(this, clone);
+            map.Add(this, clone);
             return clone;
         }
 
@@ -907,5 +946,19 @@ namespace NCDK.Silent
 
             return pos == len && len > 0;
         }
+
+		/// <inheritdoc/>
+		public override int GetHashCode() 
+		{
+			return base.GetHashCode();
+		}
+
+		/// <inheritdoc/>
+		public override bool Equals(object obj) 
+		{
+			if (obj is AtomRef)
+				return base.Equals(((AtomRef) obj).Deref());
+			return base.Equals(obj);
+		}
     }
 }

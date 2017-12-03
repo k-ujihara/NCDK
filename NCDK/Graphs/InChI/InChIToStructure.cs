@@ -272,7 +272,7 @@ namespace NCDK.Graphs.InChI
                         continue;
                     }
 
-                    IStereoElement stereoElement = null;
+                    IReadOnlyStereoElement<IChemObject, IChemObject> stereoElement = null;
 
                     if (stereo0d.StereoType == INCHI_STEREOTYPE.Tetrahedral)
                     {

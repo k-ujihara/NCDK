@@ -60,7 +60,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             var elements = recogniser.Recognise(new[] { Projection.Fischer });
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
@@ -95,7 +95,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             var elements = recogniser.Recognise(new[] { Projection.Fischer });
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
@@ -128,7 +128,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             var elements = recogniser.Recognise(new[] { Projection.Fischer });
             Assert.AreEqual(1, elements.Count);
             AssertTetrahedralCenter(elements[0],
@@ -171,7 +171,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             var elements = recogniser.Recognise(new[] { Projection.Fischer });
 
             Assert.AreEqual(4, elements.Count);
@@ -561,7 +561,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
         }
 
@@ -603,7 +603,7 @@ namespace NCDK.Stereo
             FischerRecognition recogniser = new FischerRecognition(m,
                                                                    graph,
                                                                    bondMap,
-                                                                   new Stereocenters(m, graph, bondMap));
+                                                                   Stereocenters.Of(m));
             Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
         }
 

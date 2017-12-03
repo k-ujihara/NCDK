@@ -732,7 +732,7 @@ namespace NCDK.IO
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
                 string output = sw.ToString();
-                Assert.IsTrue(output.Contains("M  STY  3   1 SUP   2 SUP   3 SUP" + Environment.NewLine));
+                Assert.IsTrue(output.Contains("M  STY  3   1 SUP   2 SUP   3 SUP" + "\n"));
                 Assert.IsTrue(output.Contains("M  SDS EXP  1   1"));
             }
         }
@@ -775,7 +775,7 @@ namespace NCDK.IO
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
                 string output = sw.ToString();
-                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0" + Environment.NewLine));
+                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0" + "\n"));
             }
         }
 
@@ -788,7 +788,7 @@ namespace NCDK.IO
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
                 string output = sw.ToString();
-                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0" + Environment.NewLine));
+                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0" + "\n"));
             }
         }
 
@@ -804,7 +804,7 @@ namespace NCDK.IO
                 tc.Stereo = tc.Stereo.Invert();
                 mdlw.Write(mol);
                 string output = sw.ToString();
-                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0" + Environment.NewLine));
+                Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0" + "\n"));
             }
         }
 
@@ -840,7 +840,61 @@ namespace NCDK.IO
                 mdlw.SetWriteAromaticBondTypes(true);
                 mdlw.Write(mol);
             }
-            Assert.IsTrue(sw.ToString().Replace(Environment.NewLine, "\n").Contains("  1  2  4  0  0  0  0 \n"));
+            Assert.IsTrue(sw.ToString().Contains("  1  2  4  0  0  0  0 \n"));
+        }
+
+        [TestMethod()]
+        public void WriteDimensionField()
+        {
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom();
+            atom.Symbol = "C";
+            atom.ImplicitHydrogenCount = 4;
+            atom.Point2D = new Vector2(0.5, 0.5);
+            mol.Atoms.Add(atom);
+            StringWriter sw = new StringWriter();
+            using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Contains("2D"));
+        }
+
+        [TestMethod()]
+        public void WriteDimensionField3D()
+        {
+            IAtomContainer mol = builder.NewAtomContainer();
+            IAtom atom = builder.NewAtom();
+            atom.Symbol = "C";
+            atom.ImplicitHydrogenCount = 4;
+            atom.Point3D = new Vector3(0.5, 0.5, 0.1);
+            mol.Atoms.Add(atom);
+            StringWriter sw = new StringWriter();
+            using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Contains("3D"));
+        }
+
+        [TestMethod()]
+        public void WriteMoreThan8Radicals()
+        {
+            IAtomContainer mol = builder.NewAtomContainer();
+            for (int i = 0; i < 20; i++)
+            {
+                IAtom atom = builder.NewAtom();
+                atom.Symbol = "C";
+                mol.Atoms.Add(atom);
+                mol.SingleElectrons.Add(builder.NewSingleElectron(atom));
+            }
+            StringWriter sw = new StringWriter();
+            using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().
+                       Contains("M  RAD  8   9   2  10   2  11   2  12   2  13   2  14   2  15   2  16   2"));
         }
     }
 }

@@ -22,6 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Common.Collections;
+using NCDK.Common.Mathematics;
+using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.RingSearches;
@@ -153,12 +156,28 @@ namespace NCDK.Layout
                 Label(tetrahedralElements[foci[i]]);
             }
 
-            // Extended tetrahedral labels
+            // Rarer types of stereo
             foreach (var se in container.StereoElements)
             {
                 if (se is ExtendedTetrahedral)
                 {
                     Label((ExtendedTetrahedral)se);
+                }
+                else if (se is Atropisomeric)
+                {
+                    Label((Atropisomeric)se);
+                }
+                else if (se is SquarePlanar)
+                {
+                    ModifyAndLabel((SquarePlanar)se);
+                }
+                else if (se is TrigonalBipyramidal)
+                {
+                    ModifyAndLabel((TrigonalBipyramidal)se);
+                }
+                else if (se is Octahedral)
+                {
+                    ModifyAndLabel((Octahedral)se);
                 }
             }
 
@@ -182,6 +201,211 @@ namespace NCDK.Layout
             {
                 return -parent.NAdjacentCentres(i).CompareTo(parent.NAdjacentCentres(j));
             }
+        }
+
+        private void Rotate(Vector2 p, Vector2 pivot, double cos, double sin)
+        {
+            double x = p.X - pivot.X;
+            double y = p.Y - pivot.Y;
+            double nx = x * cos + y * sin;
+            double ny = -x * sin + y * cos;
+            p.X = nx + pivot.X;
+            p.Y = ny + pivot.Y;
+        }
+
+        private Vector2 GetRotated(Vector2 org, Vector2 piviot, double theta)
+        {
+            Vector2 cpy = org;
+            Rotate(cpy, piviot, Math.Cos(theta), Math.Sin(theta));
+            return cpy;
+        }
+
+        // tP=target point
+        private void SnapBondToPosition(IAtom beg, IBond bond, Vector2 tP)
+        {
+            IAtom end = bond.GetOther(beg);
+            Vector2 bP = beg.Point2D.Value;
+            Vector2 eP = end.Point2D.Value;
+            Vector2 curr = new Vector2(eP.X - bP.X, eP.Y - bP.Y);
+            Vector2 dest = new Vector2(tP.X - bP.X, tP.Y - bP.Y);
+            double theta = Math.Atan2(curr.Y, curr.X) - Math.Atan2(dest.Y, dest.X);
+            double sin = Math.Sin(theta);
+            double cos = Math.Cos(theta);
+            bond.IsVisited = true;
+            var queue = new ArrayDeque<IAtom>();
+            queue.Add(end);
+            while (queue.Any())
+            {
+                IAtom atom = queue.Poll();
+                if (!atom.IsVisited)
+                {
+                    Rotate(atom.Point2D.Value, bP, cos, sin);
+                    atom.IsVisited = true;
+                }
+                foreach (IBond b in container.GetConnectedBonds(atom))
+                    if (!b.IsVisited)
+                    {
+                        queue.Add(b.GetOther(atom));
+                        b.IsVisited = true;
+                    }
+            }
+        }
+
+        private void ModifyAndLabel(SquarePlanar se)
+        {
+            var atoms = se.Normalize().Carriers;
+            var bonds = new List<IBond>(4);
+            double blen = 0;
+            foreach (IAtom atom in atoms)
+            {
+                IBond bond = container.GetBond(se.Focus, atom);
+                // can't handled these using this method!
+                if (bond.IsInRing)
+                    return;
+                bonds.Add(bond);
+                blen += GeometryUtil.GetLength2D(bond);
+            }
+            blen /= bonds.Count;
+            IAtom focus = se.Focus;
+            Vector2 fp = focus.Point2D.Value;
+
+            foreach (IAtom atom in container.Atoms)
+                atom.IsVisited = false;
+            foreach (IBond bond in container.Bonds)
+                bond.IsVisited = false;
+            Vector2 ref_ = new Vector2(fp.X, fp.Y + blen);
+            SnapBondToPosition(focus, bonds[0], GetRotated(ref_, fp, Vectors.DegreeToRadian(-60)));
+            SnapBondToPosition(focus, bonds[1], GetRotated(ref_, fp, Vectors.DegreeToRadian(60)));
+            SnapBondToPosition(focus, bonds[2], GetRotated(ref_, fp, Vectors.DegreeToRadian(120)));
+            SnapBondToPosition(focus, bonds[3], GetRotated(ref_, fp, Vectors.DegreeToRadian(-120)));
+            SetBondDisplay(bonds[0], focus, BondStereo.Down);
+            SetBondDisplay(bonds[1], focus, BondStereo.Down);
+            SetBondDisplay(bonds[2], focus, BondStereo.Up);
+            SetBondDisplay(bonds[3], focus, BondStereo.Up);
+        }
+
+        private bool DoMirror(List<IAtom> atoms)
+        {
+            int p = 1;
+            for (int i = 0; i < atoms.Count; i++)
+            {
+                IAtom a = atoms[i];
+                for (int j = i + 1; j < atoms.Count; j++)
+                {
+                    IAtom b = atoms[j];
+                    if (a.AtomicNumber > b.AtomicNumber)
+                        p *= -1;
+                }
+            }
+            return p < 0;
+        }
+
+        private void ModifyAndLabel(TrigonalBipyramidal se)
+        {
+            var atoms = se.Normalize().Carriers.ToList();
+            var bonds = new List<IBond>(4);
+            double blen = 0;
+            foreach (IAtom atom in atoms)
+            {
+                IBond bond = container.GetBond(se.Focus, atom);
+                // can't handled these using this method!
+                if (bond.IsInRing)
+                    return;
+                bonds.Add(bond);
+                blen += GeometryUtil.GetLength2D(bond);
+            }
+            blen /= bonds.Count;
+            IAtom focus = se.Focus;
+            Vector2 fp = focus.Point2D.Value;
+            foreach (IAtom atom in container.Atoms)
+                atom.IsVisited = false;
+            foreach (IBond bond in container.Bonds)
+                bond.IsVisited = false;
+            Vector2 ref_ = new Vector2(fp.X, fp.Y + blen);
+
+            // Optional but have a look at the equatorial ligands
+            // and maybe invert the image based on the permutation
+            // parity of their atomic numbers.
+            bool mirror = DoMirror(atoms.GetRange(1, 3));
+
+            if (mirror)
+            {
+                SnapBondToPosition(focus, bonds[0], GetRotated(ref_, fp, Vectors.DegreeToRadian(0)));
+                SnapBondToPosition(focus, bonds[3], GetRotated(ref_, fp, Vectors.DegreeToRadian(-60)));
+                SnapBondToPosition(focus, bonds[2], GetRotated(ref_, fp, Vectors.DegreeToRadian(90)));
+                SnapBondToPosition(focus, bonds[1], GetRotated(ref_, fp, Vectors.DegreeToRadian(-120)));
+                SnapBondToPosition(focus, bonds[4], GetRotated(ref_, fp, Vectors.DegreeToRadian(180)));
+                SetBondDisplay(bonds[1], focus, BondStereo.Up);
+                SetBondDisplay(bonds[3], focus, BondStereo.Down);
+            }
+            else
+            {
+                SnapBondToPosition(focus, bonds[0], GetRotated(ref_, fp, Vectors.DegreeToRadian(0)));
+                SnapBondToPosition(focus, bonds[1], GetRotated(ref_, fp, Vectors.DegreeToRadian(60)));
+                SnapBondToPosition(focus, bonds[2], GetRotated(ref_, fp, Vectors.DegreeToRadian(-90)));
+                SnapBondToPosition(focus, bonds[3], GetRotated(ref_, fp, Vectors.DegreeToRadian(120)));
+                SnapBondToPosition(focus, bonds[4], GetRotated(ref_, fp, Vectors.DegreeToRadian(180)));
+                SetBondDisplay(bonds[1], focus, BondStereo.Down);
+                SetBondDisplay(bonds[3], focus, BondStereo.Up);
+            }
+        }
+
+        private void ModifyAndLabel(Octahedral oc)
+        {
+            var atoms = oc.Normalize().Carriers;
+            var bonds = new List<IBond>(4);
+
+            double blen = 0;
+            foreach (IAtom atom in atoms)
+            {
+                IBond bond = container.GetBond(oc.Focus, atom);
+                // can't handled these using this method!
+                if (bond.IsInRing)
+                    return;
+                bonds.Add(bond);
+                blen += GeometryUtil.GetLength2D(bond);
+            }
+            blen /= bonds.Count;
+            IAtom focus = oc.Focus;
+            Vector2 fp = focus.Point2D.Value;
+            foreach (IAtom atom in container.Atoms)
+                atom.IsVisited = false;
+            foreach (IBond bond in container.Bonds)
+                bond.IsVisited = false;
+            Vector2 ref_ = new Vector2(fp.X, fp.Y + blen);
+
+            SnapBondToPosition(focus, bonds[0], GetRotated(ref_, fp, Vectors.DegreeToRadian(0)));
+            SnapBondToPosition(focus, bonds[1], GetRotated(ref_, fp, Vectors.DegreeToRadian(60)));
+            SnapBondToPosition(focus, bonds[2], GetRotated(ref_, fp, Vectors.DegreeToRadian(-60)));
+            SnapBondToPosition(focus, bonds[3], GetRotated(ref_, fp, Vectors.DegreeToRadian(-120)));
+            SnapBondToPosition(focus, bonds[4], GetRotated(ref_, fp, Vectors.DegreeToRadian(120)));
+            SnapBondToPosition(focus, bonds[5], GetRotated(ref_, fp, Vectors.DegreeToRadian(180)));
+            SetBondDisplay(bonds[1], focus, BondStereo.Down);
+            SetBondDisplay(bonds[2], focus, BondStereo.Down);
+            SetBondDisplay(bonds[3], focus, BondStereo.Up);
+            SetBondDisplay(bonds[4], focus, BondStereo.Up);
+        }
+
+        private BondStereo Flip(BondStereo disp)
+        {
+            switch (disp.Ordinal)
+            {
+                case BondStereo.O.Up: return BondStereo.UpInverted;
+                case BondStereo.O.UpInverted: return BondStereo.Up;
+                case BondStereo.O.Down: return BondStereo.DownInverted;
+                case BondStereo.O.DownInverted: return BondStereo.Down;
+                case BondStereo.O.UpOrDown: return BondStereo.UpOrDownInverted;
+                case BondStereo.O.UpOrDownInverted: return BondStereo.UpOrDown;
+                default: return disp;
+            }
+        }
+
+        private void SetBondDisplay(IBond bond, IAtom focus, BondStereo display)
+        {
+            if (bond.Begin.Equals(focus))
+                bond.Stereo = display;
+            else
+                bond.Stereo = Flip(display);
         }
 
         /// <summary>
@@ -283,6 +507,106 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Assign non-planar labels (wedge/hatch) to the bonds to
+        /// atropisomers
+        /// </summary>
+        /// <param name="element">a extended tetrahedral element</param>
+        private void Label(Atropisomeric element)
+        {
+            IBond focus = element.Focus;
+            IAtom beg = focus.Begin;
+            IAtom end = focus.End;
+            IAtom[] atoms = element.Carriers.ToArray();
+            IBond[] bonds = new IBond[4];
+
+            int p = 0;
+            switch (element.Configure.Ordinal)
+            {
+                case StereoElement.Configurations.O.Left:
+                    p = +1;
+                    break;
+                case StereoElement.Configurations.O.Right:
+                    p = -1;
+                    break;
+            }
+
+            // some bonds may be null if, this happens when an implicit atom
+            // is present and one or more 'atoms' is a terminal atom
+            bonds[0] = container.GetBond(beg, atoms[0]);
+            bonds[1] = container.GetBond(beg, atoms[1]);
+            bonds[2] = container.GetBond(end, atoms[2]);
+            bonds[3] = container.GetBond(end, atoms[3]);
+
+            // may be back to front?
+            if (bonds[0] == null || bonds[1] == null ||
+                bonds[2] == null || bonds[3] == null)
+                throw new InvalidOperationException("Unexpected configuration ordering, beg/end bonds should be in that order.");
+
+            // find the clockwise ordering (in the plane of the page) by sorting by
+            // polar corodinates
+            int[] rank = new int[4];
+            for (var i = 0; i < 4; i++)
+                rank[i] = i;
+
+            IAtom phantom = beg.Builder.NewAtom();
+            phantom.Point2D = new Vector2((beg.Point2D.Value.X + end.Point2D.Value.X) / 2,
+                                       (beg.Point2D.Value.Y + end.Point2D.Value.Y) / 2);
+            p *= SortClockwise(rank, phantom, atoms, 4);
+
+            // assign all up/down labels to an auxiliary array
+            BondStereo[] labels = new BondStereo[4];
+            for (var i = 0; i < 4; i++)
+            {
+                int v = rank[i];
+                p *= -1;
+                labels[v] = p > 0 ? BondStereo.Up : BondStereo.Down;
+            }
+
+            int[] priority = new int[] { 5, 5, 5, 5 };
+
+            // set the label for the highest priority and available bonds on one side
+            // of the cumulated system, setting both sides doesn't make sense
+            {
+                int i = 0;
+                foreach (int v in new int[] { 0, 1, 2, 3 })
+                {
+                    IBond bond = bonds[v];
+                    if (bond == null) continue;
+                    if (bond.Stereo == BondStereo.None && bond.Order == BondOrder.Single) priority[v] = i++;
+                }
+            }
+
+            // we now check which side was more favourable and assign two labels
+            // to that side only
+            if (priority[0] + priority[1] < priority[2] + priority[3])
+            {
+                if (priority[0] < 5)
+                {
+                    bonds[0].SetAtoms(new IAtom[] { beg, atoms[0] });
+                    bonds[0].Stereo = labels[0];
+                }
+                if (priority[1] < 5)
+                {
+                    bonds[1].SetAtoms(new IAtom[] { beg, atoms[1] });
+                    bonds[1].Stereo = labels[1];
+                }
+            }
+            else
+            {
+                if (priority[2] < 5)
+                {
+                    bonds[2].SetAtoms(new IAtom[] { end, atoms[2] });
+                    bonds[2].Stereo = labels[2];
+                }
+                if (priority[3] < 5)
+                {
+                    bonds[3].SetAtoms(new IAtom[] { end, atoms[3] });
+                    bonds[3].Stereo = labels[3];
+                }
+            }
+        }
+
+        /// <summary>
         /// Assign labels to the bonds of tetrahedral element to correctly represent
         /// its stereo configuration.
         /// </summary>
@@ -304,11 +628,16 @@ namespace NCDK.Layout
             {
                 if (atoms[i] == focus)
                 {
-                    p *= Parity(i); // implicit H, adjust parity
+                    p *= IndexParity(i); // implicit H, adjust parity
                 }
                 else
                 {
                     bonds[n] = container.GetBond(focus, atoms[i]);
+                    if (bonds[n] == null)
+                        throw new ArgumentException("Inconsistent stereo,"
+                                                           + " tetrahedral centre"
+                                                           + " contained atom not"
+                                                           + " stored in molecule");
                     atoms[n] = atoms[i];
                     n++;
                 }
@@ -411,7 +740,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="x">a value</param>
         /// <returns>the parity</returns>
-        private int Parity(int x)
+        private int IndexParity(int x)
         {
             return (x & 0x1) == 1 ? -1 : +1;
         }
@@ -573,7 +902,7 @@ namespace NCDK.Layout
                 }
                 indices[i + 1] = v;
             }
-            return Parity(x);
+            return IndexParity(x);
         }
 
         /// <summary>
@@ -729,10 +1058,10 @@ namespace NCDK.Layout
                 IBond bond = edgeToBond[idx, end];
                 if (bond.Order == BondOrder.Single)
                     btypes += 0x000001;
-            else if (bond.Order == BondOrder.Double)
+                else if (bond.Order == BondOrder.Double)
                     btypes += 0x000100;
-            else // other bond types
-                btypes += 0x010000;
+                else // other bond types
+                    btypes += 0x010000;
             }
             return btypes;
         }
