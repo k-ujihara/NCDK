@@ -369,7 +369,7 @@ namespace NCDK.IO.CML
             IChemFile chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
-            Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("acetic acid", mol.Title);
         }
 
         // @cdk.bug 2142400

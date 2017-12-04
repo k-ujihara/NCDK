@@ -472,9 +472,9 @@ namespace NCDK.LibIO.CML
                 else
                     cmlMolecule.Ref = structure.Id;
 
-            if (structure.GetProperty<string>(CDKPropertyName.Title) != null)
+            if (structure.Title != null)
             {
-                cmlMolecule.Title = structure.GetProperty<string>(CDKPropertyName.Title);
+                cmlMolecule.Title = structure.Title;
             }
             if (structure.GetProperty<string>(CDKPropertyName.InChI) != null)
             {

@@ -503,21 +503,21 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TitleWithTab()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").Title,
                          "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").Title,
                  "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithMultipleSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").Title,
                  "caffeine compound");
         }
 

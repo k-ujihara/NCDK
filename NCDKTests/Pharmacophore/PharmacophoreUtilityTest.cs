@@ -51,12 +51,12 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(4, def1.Atoms.Count);
             Assert.AreEqual(2, def1.Bonds.Count);
             Assert.AreEqual("An imaginary pharmacophore definition", def1.GetProperty<string>("description"));
-            Assert.AreEqual("Imaginary", def1.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("Imaginary", def1.Title);
 
             var def2 = defs[1];
             Assert.AreEqual(3, def2.Atoms.Count);
             Assert.AreEqual(3, def2.Bonds.Count);
-            Assert.IsNull(def2.GetProperty<string>(CDKPropertyName.Title));
+            Assert.IsNull(def2.Title);
 
             string[] ids = { "Aromatic", "Hydroxyl", "BasicAmine" };
             foreach (var atom in def2.Atoms)

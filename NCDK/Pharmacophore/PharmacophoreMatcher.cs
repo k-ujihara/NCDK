@@ -156,7 +156,7 @@ namespace NCDK.Pharmacophore
             if (!CheckQuery(pharmacophoreQuery))
                 throw new CDKException(
                         "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-            string title = atomContainer.GetProperty<string>(CDKPropertyName.Title);
+            string title = atomContainer.Title;
 
             if (initializeTarget)
                 pharmacophoreMolecule = GetPharmacophoreMolecule(atomContainer);
@@ -331,7 +331,7 @@ namespace NCDK.Pharmacophore
             var matched = new HashSet<string>();
             var uniqueAtoms = new LinkedHashSet<PharmacophoreAtom>();
 
-            Debug.WriteLine($"Converting [{input.GetProperty<string>(CDKPropertyName.Title)}] to a pcore molecule");
+            Debug.WriteLine($"Converting [{input.Title}] to a pcore molecule");
 
             // lets loop over each pcore query atom
             foreach (var atom in pharmacophoreQuery.Atoms)

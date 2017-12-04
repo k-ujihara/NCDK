@@ -136,7 +136,7 @@ namespace NCDK.IO
 
                 try
                 {
-                    string molname = "mol " + molnumber + " " + mol.GetProperty<string>(CDKPropertyName.Title);
+                    string molname = "mol " + molnumber + " " + mol.Title;
 
                     writer.Write(molname, 0, molname.Length);
                     writer.Write('\n');

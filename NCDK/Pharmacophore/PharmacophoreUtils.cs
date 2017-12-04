@@ -120,7 +120,7 @@ namespace NCDK.Pharmacophore
                 var description = query.GetProperty<string>("description");
                 if (description != null) pcore.SetAttributeValue("description", description);
 
-                var name = query.GetProperty<string>(CDKPropertyName.Title);
+                var name = query.Title;
                 if (name != null) pcore.SetAttributeValue("name", name);
 
                 // we add the pcore groups for this query as local to the group

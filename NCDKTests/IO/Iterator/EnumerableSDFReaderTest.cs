@@ -95,7 +95,7 @@ namespace NCDK.IO.Iterator
             object obj = etor.Current;
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj is IAtomContainer);
-            Assert.AreEqual("2-methylbenzo-1,4-quinone", ((IAtomContainer)obj).GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("2-methylbenzo-1,4-quinone", ((IAtomContainer)obj).Title);
             Assert.AreEqual(MDLV2000Format.Instance, reader.Format);
             reader.Close();
         }

@@ -1063,7 +1063,7 @@ namespace NCDK.Hash
 
         private static string title(IAtomContainer mol)
         {
-            return (string)mol.GetProperty<string>(CDKPropertyName.Title);
+            return (string)mol.Title;
         }
 
         private static string NonEqMesg(IAtomContainer a, IAtomContainer b)

@@ -218,7 +218,7 @@ namespace NCDK.IO
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
-            Assert.AreEqual("a-pinen.mol", mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("a-pinen.mol", mol.Title);
         }
 
         [TestMethod()]

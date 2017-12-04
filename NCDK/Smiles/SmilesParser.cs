@@ -173,7 +173,7 @@ namespace NCDK.Smiles
                 {
                     reaction.Products.Add(productSet[i]);
                 }
-                reaction.SetProperty(CDKPropertyName.Title, title = productContainer.GetProperty<string>(CDKPropertyName.Title));
+                reaction.SetProperty(CDKPropertyName.Title, title = productContainer.Title);
             }
 
             try
