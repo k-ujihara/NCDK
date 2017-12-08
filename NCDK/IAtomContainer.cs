@@ -53,17 +53,6 @@ namespace NCDK
         void SetBonds(IEnumerable<IBond> bonds);
 
         /// <summary>
-        /// Set the atom at <paramref name="index"/>, the index must have an existing atom
-        /// and therefore be in the range 0 ÅÖ idx &lt; mol.Atoms.Count.
-        /// </summary>
-        /// <param name="index">The index of the atom to be set.</param>
-        /// <param name="atom">The atom to be stored at position <paramref name="index"/></param>
-        /// <exception cref="ArgumentOutOfRangeException">index is out of bounds</exception>
-        /// <exception cref="ArgumentException">the atom could not be set</exception>
-        /// <seealso cref="Atoms"/>
-        void SetAtom(int index, IAtom atom);
-
-        /// <summary>
         /// The atoms in this container.
         /// </summary>
         /// <seealso cref="SetAtoms(IEnumerable{IAtom})"/>
@@ -120,7 +109,6 @@ namespace NCDK
         /// <param name="atom2">The second atom</param>
         /// <returns>The <see cref="IBond"/> that connects between <paramref name="atom1"/> and <paramref name="atom2"/></returns>
         IBond GetBond(IAtom atom1, IAtom atom2);
-
 
         /// <summary>
         /// Returns the atoms connected to the specified atom by

@@ -119,7 +119,7 @@ namespace NCDK.Tools.Manipulator
             int idx = container.Atoms.IndexOf(oldAtom);
             if (idx < 0)
                 return false;
-            container.SetAtom(idx, newAtom);
+            container.Atoms[idx] = newAtom;
             var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {

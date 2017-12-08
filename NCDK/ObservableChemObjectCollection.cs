@@ -35,7 +35,7 @@ namespace NCDK
             list = new List<T>(objects);
         }
 
-        public T this[int index]
+        public virtual T this[int index]
         {
             get { return list[index]; }
             set

@@ -977,7 +977,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void TestSetAtomOutOfRange()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -1005,7 +1005,7 @@ namespace NCDK
             IAtom c2 = container.Builder.NewAtom("C");
             container.Atoms.Add(c1);
             container.Atoms.Add(c2);
-            container.SetAtom(0, c2);
+            container.Atoms[0] = c2;
         }
 
         [TestMethod()]
@@ -1031,7 +1031,7 @@ namespace NCDK
             container.Bonds.Add(b2);
 
             IAtom a4 = container.Builder.NewAtom();
-            container.SetAtom(2, a4);
+            container.Atoms[2] = a4;
             Assert.AreEqual(a4, b2.End);
         }
 
@@ -1062,7 +1062,7 @@ namespace NCDK
             container.SingleElectrons.Add(se);
 
             IAtom a4 = bldr.NewAtom();
-            container.SetAtom(2, a4);
+            container.Atoms[2] = a4;
 
             Assert.AreEqual(a4, se.Atom);
         }
@@ -1100,7 +1100,7 @@ namespace NCDK
                                                                 TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.NewAtom();
-            container.SetAtom(2, aNew);
+            container.Atoms[2] = aNew;
 
             var siter = container.StereoElements.GetEnumerator();
             Assert.IsTrue(siter.MoveNext());
@@ -1141,7 +1141,7 @@ namespace NCDK
                                                                      DoubleBondConformation.Together));
 
             IAtom aNew = bldr.NewAtom();
-            container.SetAtom(2, aNew);
+            container.Atoms[2] = aNew;
 
             Assert.AreEqual(aNew, b2.End);
             Assert.AreEqual(aNew, b3.Begin);
