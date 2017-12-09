@@ -277,7 +277,7 @@ namespace NCDK.Default
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <inheritdoc/>
         public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
@@ -977,7 +977,7 @@ namespace NCDK.Silent
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <inheritdoc/>
         public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)

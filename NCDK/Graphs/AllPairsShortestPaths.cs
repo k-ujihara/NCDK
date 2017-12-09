@@ -223,7 +223,7 @@ namespace NCDK.Graphs
             public void RemoveProperty(object description) { }
             public void SetProperty(object key, object value) { throw new InvalidOperationException("not supported"); }
 
-            public IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+            public ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
             public void RemoveElectronContainer(IElectronContainer electronContainer)
             { }

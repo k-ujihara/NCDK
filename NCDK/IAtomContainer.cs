@@ -77,7 +77,7 @@ namespace NCDK
         /// <summary>
         /// A stereo element to this container.
         /// </summary>
-        IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; }
+        ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; }
 
         /// <summary>
         /// Set the stereo elements - this will replace the existing instance with a new instance.
