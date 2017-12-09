@@ -907,7 +907,9 @@ namespace NCDK.Graphs.InChI
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator generator = inchiFact.GetInChIGenerator(mol, "W0.01");
             Assert.AreEqual(INCHI_RET.ERROR, generator.ReturnStatus);
-            Assert.IsTrue(generator.Log.Contains("Time limit exceeded"));
+            Assert.IsTrue(
+                generator.Log.Contains("Time limit exceeded") ||
+                generator.Log.Contains("Structure normalization timeout"));
         }
 
         /// <summary>
