@@ -337,14 +337,14 @@ namespace NCDK.Smiles
             IsotopeFactory ifac = Isotopes.Instance;
             ifac.ConfigureAtoms(mol1);
 
-            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
+            mol1.StereoElements.Clear(); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
             string smiles1 = sg.Create(mol1);
             Assert.IsNotNull(smiles1);
             Assert.AreEqual("S\\C(\\F)=C(/F)\\S", smiles1);
 
-            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
+            mol1.StereoElements.Clear(); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 
@@ -362,7 +362,7 @@ namespace NCDK.Smiles
             mol1.Atoms[mol1.Atoms.Count - 1].ImplicitHydrogenCount = 0;
             mol1.AddBond(mol1.Atoms[5], mol1.Atoms[7], BondOrder.Single);
 
-            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
+            mol1.StereoElements.Clear(); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
 
@@ -370,7 +370,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(smiles1);
             Assert.AreEqual("S(/C(/F)=C(/F)\\S[H])[H]", smiles1);
 
-            mol1.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>()); // clear existing
+            mol1.StereoElements.Clear(); // clear existing
             mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 

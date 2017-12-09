@@ -583,21 +583,18 @@ namespace NCDK
 
             Assert.IsFalse(container.StereoElements.Count > 0);
 
-            var dbElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-            dbElements.Add(new DoubleBondStereochemistry(bond, new IBond[] { b1, b2 },
-                        DoubleBondConformation.Together));
-            container.SetStereoElements(dbElements);
+            var dbElement = new DoubleBondStereochemistry(bond, new IBond[] { b1, b2 }, DoubleBondConformation.Together);
+            container.SetStereoElements(new[] { dbElement });
             var first = container.StereoElements.GetEnumerator();
             Assert.IsTrue(first.MoveNext(), "container did not have stereo elements");
-            Assert.AreEqual(dbElements[0], first.Current, "expected element to equal set element (double bond)");
+            Assert.AreEqual(dbElement, first.Current, "expected element to equal set element (double bond)");
             Assert.IsFalse(first.MoveNext(), "container had more then one stereo element");
 
-            var tetrahedralElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-            tetrahedralElements.Add(new TetrahedralChirality(atom, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise));
-            container.SetStereoElements(tetrahedralElements);
+            var tetrahedralElement = new TetrahedralChirality(atom, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise);
+            container.SetStereoElements(new[] { tetrahedralElement });
             var second = container.StereoElements.GetEnumerator();
             Assert.IsTrue(second.MoveNext(), "container did not have stereo elements");
-            Assert.AreEqual(tetrahedralElements[0], second.Current, "expected element to equal set element (tetrahedral)");
+            Assert.AreEqual(tetrahedralElement, second.Current, "expected element to equal set element (tetrahedral)");
             Assert.IsFalse(second.MoveNext(), "container had more then one stereo element");
         }
 
@@ -1328,7 +1325,7 @@ namespace NCDK
 
             Assert.AreEqual(3, acetone.Bonds.Count);
 
-            acetone.RemoveAllBonds();
+            acetone.Bonds.Clear();
             Assert.AreEqual(0, acetone.Bonds.Count);
         }
 
@@ -1835,11 +1832,11 @@ namespace NCDK
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(5, acetone.GetElectronContainers().Count());
-            acetone.RemoveElectronContainer(acetone.GetElectronContainers().Skip(3).First());
+            acetone.Remove(acetone.GetElectronContainers().Skip(3).First());
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(4, acetone.GetElectronContainers().Count());
-            acetone.RemoveElectronContainer(acetone.GetElectronContainers().First()); // first bond now
+            acetone.Remove(acetone.GetElectronContainers().First()); // first bond now
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
         }

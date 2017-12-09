@@ -135,7 +135,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (crystal.Contains(electrons))
                 {
-                    crystal.RemoveElectronContainer(electrons);
+                    crystal.Remove(electrons);
                 }
                 return;
             }

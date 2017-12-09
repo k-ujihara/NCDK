@@ -39,29 +39,13 @@ namespace NCDK
         : IChemObject, IChemObjectListener
     {
         /// <summary>
-        /// Sets the array of atoms of this AtomContainer.
-        /// </summary>
-        /// <param name="atoms">The array of atoms to be assigned to this AtomContainer</param>
-        /// <seealso cref="Atoms"/>
-        void SetAtoms(IEnumerable<IAtom> atoms);
-
-        /// <summary>
-        /// Sets the array of bonds of this AtomContainer.
-        /// </summary>
-        /// <param name="bonds">The array of bonds to be assigned to this AtomContainer</param>
-        /// <seealso cref="Bonds"/>
-        void SetBonds(IEnumerable<IBond> bonds);
-
-        /// <summary>
         /// The atoms in this container.
         /// </summary>
-        /// <seealso cref="SetAtoms(IEnumerable{IAtom})"/>
         IList<IAtom> Atoms { get; }
 
         /// <summary>
         /// The bonds in this container.
         /// </summary>
-        /// <seealso cref="SetBonds(IEnumerable{IBond})"/>
         IList<IBond> Bonds { get; }
 
         /// <summary>
@@ -78,12 +62,6 @@ namespace NCDK
         /// A stereo element to this container.
         /// </summary>
         ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements { get; }
-
-        /// <summary>
-        /// Set the stereo elements - this will replace the existing instance with a new instance.
-        /// </summary>
-        /// <param name="elements"></param>
-        void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements);
 
         /// <summary>
         /// One or several of the bonds have <see cref="IBond.IsSingleOrDouble"/> raised (which may indicate aromaticity).
@@ -139,8 +117,7 @@ namespace NCDK
         /// <param name="atom">the atom</param>
         /// <returns>connected lone pairs</returns>
         IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom);
-
-
+        
         /// <summary>
         /// Returns the electron containers (bonds, radicals, and lone pairs )
         /// connected to the specified atom.
@@ -166,7 +143,6 @@ namespace NCDK
         /// <param name="atom">The atom</param>
         /// <returns>The maximum bond order that this atom currently has</returns>
         BondOrder GetMaximumBondOrder(IAtom atom);
-
 
         /// <summary>
         /// Returns the minimum bond order that this atom currently has
@@ -198,10 +174,10 @@ namespace NCDK
         void Remove(IAtomContainer atomContainer);
 
         /// <summary>
-        /// Removes this ElectronContainer from this container.
+        /// Removes <paramref name="electronContainer"/> from this container.
         /// </summary>
-        /// <param name="electronContainer">The electronContainer to be removed</param>
-        void RemoveElectronContainer(IElectronContainer electronContainer);
+        /// <param name="electronContainer">The electron container to be removed</param>
+        void Remove(IElectronContainer electronContainer);
 
         /// <summary>
         /// Safely remove an atom from the container.
@@ -245,7 +221,7 @@ namespace NCDK
         /// Safely remove an atom from the container.
         /// </summary>
         /// <seealso cref="RemoveAtom(IAtom)"/>
-        [Obsolete("Method has be renamed " + nameof(IAtom) + "." + nameof(IList<object>.Remove))]
+        [Obsolete("Method has be renamed " + nameof(RemoveAtom) + ".")]
         void RemoveAtomAndConnectedElectronContainers(IAtom atom);
 
         /// <summary>
@@ -259,46 +235,12 @@ namespace NCDK
         void RemoveAllElectronContainers();
 
         /// <summary>
-        /// Removes all Bonds from this container.
-        /// </summary>
-        void RemoveAllBonds();
-
-        /// <summary>
-        /// Adds a bond to this container.
-        /// </summary>
-        /// <param name="atom1">the first atom</param>
-        /// <param name="atom2">the second atom</param>
-        /// <param name="order">bond order</param>
-        /// <param name="stereo">Stereochemical orientation</param>
-        void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo);
-
-        /// <summary>
-        /// Adds a bond to this container.
-        /// </summary>
-        /// <param name="atom1">the first atom</param>
-        /// <param name="atom2">the second atom</param>
-        /// <param name="order">bond order</param>
-        void AddBond(IAtom atom1, IAtom atom2, BondOrder order);
-
-        /// <summary>
         /// Removes the bond that connects the two given atoms.
         /// </summary>
         /// <param name="atom1">The first atom</param>
         /// <param name="atom2">The second atom</param>
         /// <returns>The bond that connects the two atoms</returns>
         IBond RemoveBond(IAtom atom1, IAtom atom2);
-
-        /// <summary>
-        /// Adds a <see cref="ILonePair"/> to this <see cref="IAtom"/>.
-        /// </summary>
-        /// <param name="atom">The atom to which the <see cref="ILonePair"/> is added</param>
-        void AddLonePairTo(IAtom atom);
-
-        /// <summary>
-        /// Adds a <see cref="ISingleElectron"/> to this <see cref="IAtom"/>.
-        /// </summary>
-        /// <param name="atom">The atom to which the <see cref="ISingleElectron"/> is added</param>
-        void AddSingleElectronTo(IAtom atom);
 
         /// <summary>
         /// <see langword="true"/>, if the <see cref="IAtomContainer"/> contains the given atom object.
@@ -342,8 +284,7 @@ namespace NCDK
         /// </summary>
         /// <returns>whether the container is empty</returns>
         bool IsEmpty();
-
-
+        
         /// <summary>
         /// The title of the record.
         /// </summary>

@@ -104,16 +104,6 @@ namespace NCDK
             Listener?.OnStateChanged(new ChemObjectChangeEventArgs(this));
         }
 
-        internal void RemoveOnly(T item)
-        {
-            list.Remove(item);
-        }
-
-        internal void RemoveOnlyAt(int index)
-        {
-            list.RemoveAt(index);
-        }
-
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

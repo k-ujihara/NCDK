@@ -1285,7 +1285,9 @@ namespace NCDK.Renderers.Generators.Standards
                 IAtom[] atoms = new IAtom[n];
                 for (int i = 0; i < n; i++)
                     atoms[n - i - 1] = container.Atoms[i];
-                container.SetAtoms(atoms);
+                container.Atoms.Clear();
+                foreach (var atom in atoms)
+                    container.Atoms.Add(atom);
             }
         }
 

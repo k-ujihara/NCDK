@@ -116,7 +116,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = reactants[i];
                 if (mol.Contains(electrons))
                 {
-                    mol.RemoveElectronContainer(electrons);
+                    mol.Remove(electrons);
                 }
             }
             var agents = reaction.Reactants;
@@ -125,7 +125,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = agents[i];
                 if (mol.Contains(electrons))
                 {
-                    mol.RemoveElectronContainer(electrons);
+                    mol.Remove(electrons);
                 }
             }
             IChemObjectSet<IAtomContainer> products = reaction.Products;
@@ -134,7 +134,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = products[i];
                 if (mol.Contains(electrons))
                 {
-                    mol.RemoveElectronContainer(electrons);
+                    mol.Remove(electrons);
                 }
             }
         }

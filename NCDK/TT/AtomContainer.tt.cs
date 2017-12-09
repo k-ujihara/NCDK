@@ -188,11 +188,11 @@ namespace NCDK.Default
             IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
-                new ObservableChemObjectCollection_IAtom(this, atoms),
-                CreateObservableChemObjectCollection(bonds, true),
-                CreateObservableChemObjectCollection(lonePairs, true),
-                CreateObservableChemObjectCollection(singleElectrons, true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements)
+                new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
+                CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
+                CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
+                CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
+                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -278,12 +278,6 @@ namespace NCDK.Default
 
         /// <inheritdoc/>
         public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
-
-        /// <inheritdoc/>
-        public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
-		{
-			stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(elements);
-		}
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -467,7 +461,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
+        public virtual void Remove(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
@@ -544,7 +538,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
-            RemoveAllBonds();
+            Bonds.Clear();
             foreach (var e in lonePairs)
                 e.Listeners?.Remove(this);
             foreach (var e in singleElectrons)
@@ -553,34 +547,6 @@ namespace NCDK.Default
             singleElectrons.Clear();
 
              NotifyChanged();         }
-
-        /// <inheritdoc/>
-        public virtual void RemoveAllBonds()
-        {
-            foreach (var e in bonds)
-                e.Listeners?.Remove(this);
-            bonds.Clear();
-             NotifyChanged();         }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            var bond = Builder.NewBond(atom1, atom2, order, stereo);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            IBond bond = Builder.NewBond(atom1, atom2, order);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
 
         /// <inheritdoc/>
         public virtual void AddLonePairTo(IAtom atom)
@@ -706,22 +672,6 @@ namespace NCDK.Default
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
-
-        /// <inheritdoc/>
-        public void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        /// <inheritdoc/>
-        public void SetBonds(IEnumerable<IBond> bonds)
-        {
-            this.bonds.Clear();
-            foreach (var bond in bonds)
-                this.bonds.Add(bond);
-        }
 
         /// <inheritdoc/>
         public virtual bool IsEmpty() => atoms.Count == 0;
@@ -890,11 +840,11 @@ namespace NCDK.Silent
             IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
-                new ObservableChemObjectCollection_IAtom(this, atoms),
-                CreateObservableChemObjectCollection(bonds, true),
-                CreateObservableChemObjectCollection(lonePairs, true),
-                CreateObservableChemObjectCollection(singleElectrons, true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements)
+                new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
+                CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
+                CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
+                CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
+                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -978,12 +928,6 @@ namespace NCDK.Silent
 
         /// <inheritdoc/>
         public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
-
-        /// <inheritdoc/>
-        public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
-		{
-			stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(elements);
-		}
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -1167,7 +1111,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
+        public virtual void Remove(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
@@ -1244,7 +1188,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
-            RemoveAllBonds();
+            Bonds.Clear();
             foreach (var e in lonePairs)
                 e.Listeners?.Remove(this);
             foreach (var e in singleElectrons)
@@ -1253,34 +1197,6 @@ namespace NCDK.Silent
             singleElectrons.Clear();
 
                     }
-
-        /// <inheritdoc/>
-        public virtual void RemoveAllBonds()
-        {
-            foreach (var e in bonds)
-                e.Listeners?.Remove(this);
-            bonds.Clear();
-                    }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            var bond = Builder.NewBond(atom1, atom2, order, stereo);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            IBond bond = Builder.NewBond(atom1, atom2, order);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
 
         /// <inheritdoc/>
         public virtual void AddLonePairTo(IAtom atom)
@@ -1406,22 +1322,6 @@ namespace NCDK.Silent
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
-
-        /// <inheritdoc/>
-        public void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        /// <inheritdoc/>
-        public void SetBonds(IEnumerable<IBond> bonds)
-        {
-            this.bonds.Clear();
-            foreach (var bond in bonds)
-                this.bonds.Add(bond);
-        }
 
         /// <inheritdoc/>
         public virtual bool IsEmpty() => atoms.Count == 0;

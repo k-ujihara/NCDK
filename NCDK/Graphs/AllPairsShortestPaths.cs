@@ -225,7 +225,7 @@ namespace NCDK.Graphs
 
             public ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>();
 
-            public void RemoveElectronContainer(IElectronContainer electronContainer)
+            public void Remove(IElectronContainer electronContainer)
             { }
 
             public IBond RemoveBond(IAtom atom0, IAtom atom1)
@@ -234,9 +234,6 @@ namespace NCDK.Graphs
             }
 
             public void Remove(IAtomContainer atomContainer)
-            { }
-
-            public void RemoveAllBonds()
             { }
 
             public void RemoveAllElectronContainers()
@@ -255,22 +252,10 @@ namespace NCDK.Graphs
             public void RemoveAtom(int pos)
             { }
 
-            public void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
-            { throw new InvalidOperationException("not supported"); }
-
             public void OnStateChanged(ChemObjectChangeEventArgs evt)
             {
                 NotifyChanged();
             }
-
-            public void SetAtoms(IEnumerable<IAtom> atoms)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void SetBonds(IEnumerable<IBond> bonds)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void SetAtom(int index, IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
 
             public string Title
             {
