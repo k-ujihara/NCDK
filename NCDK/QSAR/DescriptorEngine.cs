@@ -287,7 +287,7 @@ namespace NCDK.QSAR
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, the meta-data list is examined to
         /// look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
-        /// found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
+        /// found, the value of the contents attribute add to a list. Since a descriptor may be classed in
         /// multiple ways (geometric and electronic for example), in general, a given descriptor will
         /// have multiple classes associated with it.
         /// </para>
@@ -299,7 +299,7 @@ namespace NCDK.QSAR
         /// </remarks>
         /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors
         ///                   specification reference</param>
-        /// <returns>An array containing the names of the QSAR descriptor classes that this  descriptor was declared
+        /// <returns>An array containing the names of the QSAR descriptor classes that this descriptor was declared
         ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
         public string[] GetDictionaryClass(string identifier)
         {
@@ -348,7 +348,7 @@ namespace NCDK.QSAR
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, the meta-data list is examined to
         /// look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
-        /// found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
+        /// found, the value of the contents attribute add to a list. Since a descriptor may be classed in
         /// multiple ways (geometric and electronic for example), in general, a given descriptor will
         /// have multiple classes associated with it.
         /// </para>
@@ -357,7 +357,7 @@ namespace NCDK.QSAR
         /// </para>
         /// </remarks>
         /// <param name="descriptorSpecification">A DescriptorSpecification object</param>
-        /// <returns>An array containing the names of the QSAR descriptor classes that this  descriptor was declared
+        /// <returns>An array containing the names of the QSAR descriptor classes that this descriptor was declared
         ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
         public string[] GetDictionaryClass(IImplementationSpecification descriptorSpecification)
         {
@@ -546,7 +546,7 @@ namespace NCDK.QSAR
         /// <param name="interfaceName">The name of the interface that classes should implement</param>
         /// <param name="assemblies">A <see cref="IEnumerable{T}"/> of <see cref="Assembly"/>
         /// to examine for descriptor classes. In general this can be set to <see langword="null"/>, in which case
-        /// the  AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
+        /// the AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
         /// situations where the system AppDomain.CurrentDomain is not available or is modified such as in an application
         /// container.</param>
         /// <returns>A list containing the classes implementing the specified interface, <see langword="null"/> if an invalid interface is specified</returns>
@@ -591,7 +591,7 @@ namespace NCDK.QSAR
         /// <param name="namespaceId">The name of the package containing the required descriptor</param>
         /// <param name="assemblies">A <see cref="IEnumerable{T}"/> of <see cref="Assembly"/>
         /// to examine for descriptor classes. In general this can be set to <see langword="null"/>, in which case
-        /// the  AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
+        /// the AppDomain.CurrentDomain.GetAssemblies() is examined for available assemblies. This parameter can be set for
         /// situations where the system AppDomain.CurrentDomain is not available or is modified such as in an application
         /// container.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> of <see cref="string"/> containing the classes in the specified package</returns>

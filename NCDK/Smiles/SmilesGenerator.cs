@@ -173,7 +173,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <example>
         /// <code>
-        /// IAtomContainer  container = ...;
+        /// IAtomContainer container = ...;
         /// SmilesGenerator smilesGen = SmilesGenerator.WithAtomClasses();
         /// smilesGen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
         /// </code>

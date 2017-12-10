@@ -36,7 +36,7 @@ namespace NCDK.IO
         private TextWriter writer;
 
         /// <summary>
-        /// Constructs a new CrystClustWriter class. Output will be stored in the Writer  class given as parameter.
+        /// Constructs a new CrystClustWriter class. Output will be stored in the Writer class given as parameter.
         /// </summary>
         /// <param name="output">Writer to redirect the output to.</param>
         public CrystClustWriter(TextWriter output)

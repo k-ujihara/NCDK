@@ -180,7 +180,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Checks if the timeout has been reached and  exception if so.
+        /// Checks if the timeout has been reached and exception if so.
         /// This is used to prevent this AllRingsFinder to run for ages in certain
         /// rare cases with ring systems of large size or special topology.
         /// </summary>

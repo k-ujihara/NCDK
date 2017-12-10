@@ -37,14 +37,14 @@ namespace NCDK.Smiles
     /// </summary>
     /// <example><code>
     /// IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
-    /// ChemicalGraph      g       = ChemicalGraph.FromSmiles("CCO");
+    /// ChemicalGraph g = ChemicalGraph.FromSmiles("CCO");
     ///
-    /// BeamToCDK          g2c     = new BeamToCDK(builder);
+    /// BeamToCDK g2c = new BeamToCDK(builder);
     ///
     /// // make sure the Beam notation is expanded - this converts organic
     /// // subset atoms with inferred hydrogen counts to atoms with a
     /// // set implicit hydrogen property
-    /// IAtomContainer    ac       = g2c.ToAtomContainer(Functions.Expand(g));
+    /// IAtomContainer ac = g2c.ToAtomContainer(Functions.Expand(g));
     /// </code></example>
     /// <seealso href="http://johnmay.github.io/beam">Beam SMILES Toolkit</seealso >
     // @author John May

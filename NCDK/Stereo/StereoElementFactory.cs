@@ -289,7 +289,7 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Create an extended tetrahedral element for the atom at index <paramref name="v"/>.
-        /// If an extended  tetrahedral element could not be created then null is
+        /// If an extended tetrahedral element could not be created then null is
         /// returned. An element can not be created if, one or more atoms was
         /// missing coordinates, the atom has an unspecified (wavy) bond, the atom
         /// is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not

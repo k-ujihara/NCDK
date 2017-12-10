@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// or <b>explicit hydrogens</b>.
     /// </para>
     /// <para>
-    /// Returns the  following values
+    /// Returns the following values
     /// <list type="bullet">
     /// <item>WPATH - weiner path number</item>
     /// <item>WPOL - weiner polarity number</item>

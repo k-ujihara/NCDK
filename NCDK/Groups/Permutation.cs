@@ -51,7 +51,7 @@ namespace NCDK.Groups
         }
 
         /// <summary>
-        /// Make a permutation from a set of values such that p[i] = x for  the value x at position i.
+        /// Make a permutation from a set of values such that p[i] = x for the value x at position i.
         /// </summary>
         /// <param name="values">the elements of the permutation</param>
         public Permutation(params int[] values)

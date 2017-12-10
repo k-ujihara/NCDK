@@ -56,7 +56,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///    <item>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2</item>
     ///  </list>   
     ///  The CDKRGraph will also contain one edge representing the
-    ///  adjacency between node targetBitSet and C  that is : bonds 1-2 and 2-3 in G1
+    ///  adjacency between node targetBitSet and C that is : bonds 1-2 and 2-3 in G1
     ///  and bonds 2-3 and 3-4 in G2.
     /// </para>
     ///  <para>Once the CDKRGraph has been built from the two compared graphs
@@ -64,32 +64,32 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///  structural search (isomorphism, substructure search, maximal common
     ///  substructure,....).
     /// </para>
-    ///  <para>The  search may be constrained by mandatory elements (e.g. bonds that
+    /// <para>The search may be constrained by mandatory elements (e.g. bonds that
     ///  have to be present in the mapped common substructures).
     /// </para>
-    ///  <para>Performing a query on an CDKRGraph requires simply to set the constrains
-    ///  (if any) and to invoke the parsing method (Parse())
+    /// <para>Performing a query on an CDKRGraph requires simply to set the constrains
+    /// (if any) and to invoke the parsing method (Parse())
     /// </para>
-    ///  <para>The CDKRGraph has been designed to be a generic tool. It may be constructed
-    ///  from any kind of source graphs, thus maxIterator is not restricted to a chemical
-    ///  context.
+    /// <para>The CDKRGraph has been designed to be a generic tool. It may be constructed
+    /// from any kind of source graphs, thus maxIterator is not restricted to a chemical
+    /// context.
     /// </para>
-    ///  <para>The CDKRGraph model is indendant from the CDK model and the link between
-    ///  both model is performed by the RTools class. In this way the CDKRGraph
-    ///  class may be reused in other graph context (conceptual graphs,....)
+    /// <para>The CDKRGraph model is indendant from the CDK model and the link between
+    /// both model is performed by the RTools class. In this way the CDKRGraph
+    /// class may be reused in other graph context (conceptual graphs,....)
     /// </para>
     /// <note type="important">
     /// This implementation of the algorithm has not been
-    ///                      optimized for speed at this stage. It has been
-    ///                      written with the goal to clearly retrace the
-    ///                      principle of the underlined search method. There is
-    ///                      room for optimization in many ways including the
-    ///                      the algorithm itself.
+    /// optimized for speed at this stage. It has been
+    /// written with the goal to clearly retrace the
+    /// principle of the underlined search method. There is
+    /// room for optimization in many ways including the
+    /// the algorithm itself.
     /// </note>
-    ///  <para>This algorithm derives from the algorithm described in
-    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.</para>
+    /// <para>This algorithm derives from the algorithm described in
+    /// <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.</para>
     /// </remarks>
-    // @author      Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
+    // @author Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
     // @cdk.created 2002-07-17
     // @cdk.require java1.4+
     // @cdk.module  smsd
@@ -538,11 +538,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
         }
 
         /// <summary>
-        ///  Test if set sourceBitSet is contained in  set targetBitSet.
+        /// Test if set sourceBitSet is contained in set targetBitSet.
         /// </summary>
         /// <param name="sourceBitSet">a bitSet</param>
         /// <param name="targetBitSet">a bitSet</param>
-        /// <returns>true if  sourceBitSet is contained in  targetBitSet</returns>
+        /// <returns>true if sourceBitSet is contained in targetBitSet</returns>
         private bool IsContainedIn(BitArray sourceBitSet, BitArray targetBitSet)
         {
             bool result = false;

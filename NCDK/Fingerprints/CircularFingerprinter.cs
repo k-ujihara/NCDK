@@ -50,7 +50,7 @@ namespace NCDK.Fingerprints
     ///  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
     ///  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</para>
     ///
-    ///    <para>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
+    ///    <para>The integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
     ///    formula/parameters as used by PNG files, and described in:</para>
     ///
     ///        <see href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</see>

@@ -35,7 +35,7 @@ namespace NCDK.Hash
     /// </summary>
     /// <example><code>
     /// // create a new seed generator
-    /// AtomEncoder       encoder   = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, MASS_NUMBER);
+    /// AtomEncoder encoder   = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, MASS_NUMBER);
     /// AtomHashGenerator generator = new SeedGenerator(encoder);
     ///
     /// // generate six hash codes for each atom of benzene

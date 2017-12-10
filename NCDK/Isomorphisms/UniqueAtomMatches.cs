@@ -34,8 +34,8 @@ namespace NCDK.Isomorphisms
     /// </summary>
     ///
     /// <example><code>
-    ///     Pattern     pattern = Ullmann.FindSubstructure(query);
-    ///     var unique  = FluentIterable.Of(patter.MatchAll(target))
+    ///     Pattern pattern = Ullmann.FindSubstructure(query);
+    ///     var unique = FluentIterable.Of(patter.MatchAll(target))
     ///                                         .Filter(new UniqueAtomMatches())
     ///                                         .ToList();
     /// </code></example>

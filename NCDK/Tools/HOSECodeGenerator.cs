@@ -761,7 +761,7 @@ namespace NCDK.Tools
             public IAtom Atom => atom;
 
             /// <summary>
-            /// A TreeNode is equal to another TreeNode if it  stands for the same atom object.
+            /// A TreeNode is equal to another TreeNode if it stands for the same atom object.
             /// </summary>
             /// <param name="o">The object that we compare this TreeNode to</param>
             /// <returns><see langword="true"/>, if the this <see cref="TreeNode"/>'s atom object equals the one of the other <see cref="TreeNode"/></returns>

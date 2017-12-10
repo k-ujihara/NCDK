@@ -44,26 +44,26 @@ namespace NCDK.Formula
         private IList<IRule> rules;
 
         /// <summary>
-        /// Construct an instance of MolecularFormulaChecker. It must be initialized with the rules to applied.
+        /// Construct an instance of <see cref="MolecularFormulaChecker"/>. It must be initialized with the rules to applied.
         /// </summary>
-        /// <param name="rules">A List with IRule to be applied</param>
+        /// <param name="rules">A <see cref="IList{T}"/> with <see cref="IRule"/> to be applied</param>
         public MolecularFormulaChecker(IList<IRule> rules)
         {
             this.rules = rules;
         }
 
         /// <summary>
-        /// The IRules to be applied to validate the IMolecularFormula.
+        /// The <see cref="IRule"/> to be applied to validate the <see cref="IMolecularFormula"/>.
         /// </summary>
         public IList<IRule> Rules => rules;
 
         /// <summary>
-        /// Validate if a IMolecularFormula is valid. The result more close to 1 means
+        /// Validate if a <see cref="IMolecularFormula"/> is valid. The result more close to 1 means
         /// maximal probability to be valid. Opposite more close to 0 means minimal
-        /// probability to be valid. To know the result in each IRule use
+        /// probability to be valid. To know the result in each <see cref="IRule"/> use
         /// <see cref="IsValid(IMolecularFormula)"/>.
         /// </summary>
-        /// <param name="formula">The IMolecularFormula value</param>
+        /// <param name="formula">The <see cref="IMolecularFormula"/> value</param>
         /// <returns>The percent of the validity</returns>
         /// <seealso cref="IsValid(IMolecularFormula)"/>
         public double IsValidSum(IMolecularFormula formula)
@@ -81,13 +81,13 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// Validate if a IMolecularFormula is valid. The results of each IRule which
-        /// has to be applied is put into IMolecularFormula as properties. To extract
+        /// Validate if a <see cref="IMolecularFormula"/> is valid. The results of each <see cref="IRule"/> which
+        /// has to be applied is put into <see cref="IMolecularFormula"/> as properties. To extract
         /// the result final as the product of rule's result use
         /// <see cref="IsValidSum(IMolecularFormula)"/>.
         /// </summary>
         /// <param name="formula">The IMolecularFormula value</param>
-        /// <returns>formulaWith  The IMolecularFormula with the results for each IRule into properties</returns>
+        /// <returns>The IMolecularFormula with the results for each <see cref="IRule"/> into properties</returns>
         /// <seealso cref="IsValidSum(IMolecularFormula)"/>
         public IMolecularFormula IsValid(IMolecularFormula formula)
         {

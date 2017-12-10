@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// </para>
     /// <para>
     /// The class expects that it will be supplied an object which implements the <see cref="IBioPolymer"/>. Thus ordinary
-    /// AtomContainer objects  will result in an exception.
+    /// AtomContainer objects will result in an exception.
     /// </para>
     /// <para>
     /// The descriptors are returned in the following order (see

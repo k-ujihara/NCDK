@@ -464,7 +464,7 @@ namespace NCDK.Layout
         /// <param name="atoms">All the atoms to draw</param>
         /// <param name="thetaBeg">A start angle (in radians), giving the angle of the most clockwise                  atom which has already been placed</param>
         /// <param name="thetaStep">An angle (in radians) to be added for each atom from                  atomsToDraw</param>
-        /// <param name="center">The center of a ring, or an atom for which the                  partners are to be placed</param>
+        /// <param name="center">The center of a ring, or an atom for which the partners are to be placed</param>
         /// <param name="radius">The radius of the polygon to be populated: bond length or ring radius</param>
         public void PopulatePolygonCorners(IList<IAtom> atoms,
                                         Vector2 center,

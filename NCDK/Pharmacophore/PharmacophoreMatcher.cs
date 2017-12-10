@@ -73,7 +73,7 @@ namespace NCDK.Pharmacophore
     /// <para>Extensions to SMARTS</para>
     /// <para>
     /// The pharmacophore supports some extentions to the SMARTS language that lead
-    /// to flexible pharmacophore definitions  Note that these extensions are specific to
+    /// to flexible pharmacophore definitions.  Note that these extensions are specific to
     /// pharmacophore usage and are not generally provided by the SMARTS parser itself.
     /// </para>
     /// <b>|</b> - this allows one to perform a logical OR between two or more SMARTS patterns. An example might

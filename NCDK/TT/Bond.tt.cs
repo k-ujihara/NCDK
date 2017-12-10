@@ -33,7 +33,7 @@ namespace NCDK.Default
 {
     /// <summary>
     /// Implements the concept of a covalent bond between two or more atoms. A bond is
-    /// considered to be a number of electrons connecting two or more  of atoms.
+    /// considered to be a number of electrons connecting two or more of atoms.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -414,7 +414,7 @@ namespace NCDK.Silent
 {
     /// <summary>
     /// Implements the concept of a covalent bond between two or more atoms. A bond is
-    /// considered to be a number of electrons connecting two or more  of atoms.
+    /// considered to be a number of electrons connecting two or more of atoms.
     /// </summary>
     /// <remarks>
     /// <para>

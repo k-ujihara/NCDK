@@ -64,7 +64,7 @@ namespace NCDK.Isomorphisms
         /// reaction.
         /// 
         /// <blockquote><pre>
-        /// Pattern        pattern = ...; // create pattern
+        /// Pattern pattern = ...; // create pattern
         /// for (IReaction r : rs) {
         ///     if (pattern.matches(r)) {
         ///         // found mapping!

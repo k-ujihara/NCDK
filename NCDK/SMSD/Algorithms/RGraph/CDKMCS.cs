@@ -92,7 +92,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///    The algotihm could be easily enhanced with atom simple atom mapping manager
     ///    to provide an atom level overlap definition that would reveal this case.
     ///    We decided not to penalize the whole procedure because of one single
-    ///    exception query. Furthermore isomorphism may be discarded since  the number of atoms are
+    ///    exception query. Furthermore isomorphism may be discarded since the number of atoms are
     ///    not the same (3 != 4) and in most case this will be already
     ///    screened out by atom fingerprint based filtering.
     ///    It is possible to add atom special treatment for this special query.
@@ -816,7 +816,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         }
 
         /// <summary>
-        ///  Builds  the nodes of the CDKRGraph ( resolution graph ), from
+        ///  Builds the nodes of the CDKRGraph ( resolution graph ), from
         ///  two atom containers (description of the two molecules to compare)
         /// </summary>
         /// <param name="graph">the target CDKRGraph</param>
