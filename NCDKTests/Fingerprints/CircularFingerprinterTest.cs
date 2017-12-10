@@ -209,8 +209,8 @@ namespace NCDK.Fingerprints
                 Trace.TraceInformation("FN=" + basefn + " MOL=" + mol.Atoms.Count + "," + mol.Bonds.Count + " Requires ECFP="
                         + validateECFP.Length + " FCFP=" + validateFCFP.Length);
 
-                ValidateFingerprints("ECFP6", mol, CircularFingerprinter.CLASS_ECFP6, validateECFP);
-                ValidateFingerprints("FCFP6", mol, CircularFingerprinter.CLASS_FCFP6, validateFCFP);
+                ValidateFingerprints("ECFP6", mol, CircularFingerprinter.Classes.ECFP6, validateECFP);
+                ValidateFingerprints("FCFP6", mol, CircularFingerprinter.Classes.FCFP6, validateFCFP);
             }
         }
 
@@ -237,7 +237,7 @@ namespace NCDK.Fingerprints
             return list.ToArray();
         }
 
-        private void ValidateFingerprints(string label, AtomContainer mol, int classType,
+        private void ValidateFingerprints(string label, AtomContainer mol, CircularFingerprinter.Classes classType,
                 CircularFingerprinter.FP[] validate)
         {
             CircularFingerprinter circ = new CircularFingerprinter(classType);
@@ -322,7 +322,7 @@ namespace NCDK.Fingerprints
         {
             IAtomContainer proton = new AtomContainer();
             proton.Atoms.Add(Atom("H", +1, 0));
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
+            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.Classes.FCFP2);
             Assert.AreEqual(circ.GetBitFingerprint(proton).Cardinality, 0);
         }
 
@@ -342,7 +342,7 @@ namespace NCDK.Fingerprints
             pyrazole.AddBond(pyrazole.Atoms[3], pyrazole.Atoms[4], BondOrder.Single);
             pyrazole.AddBond(pyrazole.Atoms[4], pyrazole.Atoms[5], BondOrder.Double);
             pyrazole.AddBond(pyrazole.Atoms[1], pyrazole.Atoms[5], BondOrder.Single);
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
+            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.Classes.FCFP2);
             Assert.IsNotNull(circ.GetBitFingerprint(pyrazole));
         }
 
@@ -362,7 +362,7 @@ namespace NCDK.Fingerprints
             m.AddBond(m.Atoms[1], m.Atoms[3], BondOrder.Single, BondStereo.Down);
             m.AddBond(m.Atoms[1], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
-            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP6);
+            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.Classes.ECFP6);
             Assert.IsNotNull(circ.GetBitFingerprint(m));
         }
 
@@ -385,7 +385,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestVersion()
         {
-            var fpr = new CircularFingerprinter(CircularFingerprinter.CLASS_ECFP4);
+            var fpr = new CircularFingerprinter(CircularFingerprinter.Classes.ECFP4);
             string expected = "CDK-CircularFingerprinter/" + CDK.Version + 
                 " classType=ECFP4 perceiveStereochemistry=false";
             Assert.AreEqual(expected, fpr.GetVersionDescription());

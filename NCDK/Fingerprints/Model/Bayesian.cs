@@ -52,7 +52,7 @@ namespace NCDK.Fingerprints.Model
     ///         J. Biomol. Screen., v.10, pp.682-686 (2005)
     ///         Molec. Divers., v.10, pp.283-299 (2006)</para>
     /// 
-    /// <para>Currently only the CircularFingerprinter fingerprints are supported (i.e. ECFP_n and FCFP_n).</para>
+    /// <para>Currently only the <see cref="CircularFingerprinter"/> fingerprints are supported (i.e. ECFP_n and FCFP_n).</para>
     /// 
     /// <para>Model building is done by selecting the fingerprinting method and folding size, then providing
     /// a series of molecules &amp; responses. Individual model contributions are kept around in order to
@@ -74,40 +74,40 @@ namespace NCDK.Fingerprints.Model
     // @cdk.githash
     public class Bayesian
     {
-        private int classType;
+        private CircularFingerprinter.Classes classType;
         private int folding = 0;
 
-        /// incoming hash codes: actual values, and subsumed values are {#active,#total}
+        // incoming hash codes: actual values, and subsumed values are {#active,#total}
         private int numActive = 0;
         protected IDictionary<int, int[]> inHash = new Dictionary<int, int[]>();
         protected internal List<int[]> training = new List<int[]>();
         protected List<bool> activity = new List<bool>();
 
-        /// built model: contributions for each hash code
+        // built model: contributions for each hash code
         protected internal IDictionary<int, double> contribs = new Dictionary<int, double>();
         protected internal double lowThresh = 0, highThresh = 0;
         protected double range = 0, invRange = 0;                            // cached to speed up scaling calibration
 
-        /// self-validation metrics: can optionally be calculated after a build
+        // self-validation metrics: can optionally be calculated after a build
         protected double[] estimates = null;
         protected double[] rocX = null, rocY = null;                          // between 0..1, and rounded to modest precision
         protected string rocType = null;
         protected double rocAUC = double.NaN;
         protected int trainingSize = 0, trainingActives = 0;                     // this is serialised, while the actual training set is not
 
-        /// optional text attributes (serialisable)
+        // optional text attributes (serialisable)
         private string noteTitle = null, noteOrigin = null;
         private string[] noteComments = null;
 
         private static readonly Regex PTN_HASHLINE = new Regex("^(-?\\d+)=([\\d\\.Ee-]+)", RegexOptions.Compiled);
 
-        /// ----------------- public methods -----------------
+        // ----------------- public methods -----------------
 
         /// <summary>
         /// Instantiate a Bayesian model with no data.
         /// </summary>
         /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
-        public Bayesian(int classType)
+        public Bayesian(CircularFingerprinter.Classes classType)
         {
             this.classType = classType;
         }
@@ -117,7 +117,7 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
         /// <param name="folding">the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding</param>
-        public Bayesian(int classType, int folding)
+        public Bayesian(CircularFingerprinter.Classes classType, int folding)
         {
             this.classType = classType;
             this.folding = folding;
@@ -137,7 +137,7 @@ namespace NCDK.Fingerprints.Model
         /// <summary>
         /// Access to the fingerprint type, one of <see cref="CircularFingerprinter"/>.CLASS_*.
         /// </summary>
-        public int ClassType => classType;
+        public CircularFingerprinter.Classes ClassType => classType;
 
         /// <summary>
         /// Access to the fingerprint folding extent, either 0 (for none) or a power of 2.
@@ -423,14 +423,14 @@ namespace NCDK.Fingerprints.Model
         {
             StringBuilder buff = new StringBuilder();
 
-            string fpname = classType == CircularFingerprinter.CLASS_ECFP0 ? "ECFP0"
-                    : classType == CircularFingerprinter.CLASS_ECFP2 ? "ECFP2"
-                            : classType == CircularFingerprinter.CLASS_ECFP4 ? "ECFP4"
-                                    : classType == CircularFingerprinter.CLASS_ECFP6 ? "ECFP6"
-                                            : classType == CircularFingerprinter.CLASS_FCFP0 ? "FCFP0"
-                                                    : classType == CircularFingerprinter.CLASS_FCFP2 ? "FCFP2"
-                                                            : classType == CircularFingerprinter.CLASS_FCFP4 ? "FCFP4"
-                                                                    : classType == CircularFingerprinter.CLASS_FCFP6 ? "FCFP6"
+            string fpname = classType == CircularFingerprinter.Classes.ECFP0 ? "ECFP0"
+                    : classType == CircularFingerprinter.Classes.ECFP2 ? "ECFP2"
+                            : classType == CircularFingerprinter.Classes.ECFP4 ? "ECFP4"
+                                    : classType == CircularFingerprinter.Classes.ECFP6 ? "ECFP6"
+                                            : classType == CircularFingerprinter.Classes.FCFP0 ? "FCFP0"
+                                                    : classType == CircularFingerprinter.Classes.FCFP2 ? "FCFP2"
+                                                            : classType == CircularFingerprinter.Classes.FCFP4 ? "FCFP4"
+                                                                    : classType == CircularFingerprinter.Classes.FCFP6 ? "FCFP6"
                                                                             : "?";
 
             buff.Append("Bayesian!(" + fpname + "," + folding + "," + lowThresh + "," + highThresh + ")\n");
@@ -501,14 +501,14 @@ namespace NCDK.Fingerprints.Model
             string[] bits = line.Substring(10, line.Length - 11).Split(',');
             if (bits.Length < 4) throw new IOException("Invalid header content");
 
-            int classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.CLASS_ECFP0
-                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.CLASS_ECFP2
-                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.CLASS_ECFP4
-                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.CLASS_ECFP6
-                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.CLASS_FCFP0 : bits[0]
-                                                    .Equals("FCFP2") ? CircularFingerprinter.CLASS_FCFP2 : bits[0]
-                                                    .Equals("FCFP4") ? CircularFingerprinter.CLASS_FCFP4 : bits[0]
-                                                    .Equals("FCFP6") ? CircularFingerprinter.CLASS_FCFP6 : 0;
+            CircularFingerprinter.Classes classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.Classes.ECFP0
+                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.Classes.ECFP2
+                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.Classes.ECFP4
+                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.Classes.ECFP6
+                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.Classes.FCFP0 : bits[0]
+                                                    .Equals("FCFP2") ? CircularFingerprinter.Classes.FCFP2 : bits[0]
+                                                    .Equals("FCFP4") ? CircularFingerprinter.Classes.FCFP4 : bits[0]
+                                                    .Equals("FCFP6") ? CircularFingerprinter.Classes.FCFP6 : 0;
             if (classType == 0) throw new IOException("Unknown fingerprint type: " + bits[0]);
 
             int folding = int.Parse(bits[1]);

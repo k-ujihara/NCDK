@@ -81,18 +81,19 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        /// ------------ constants ------------
-
-        /// identity by literal atom environment
-        public const int CLASS_ECFP0 = 1;
-        public const int CLASS_ECFP2 = 2;
-        public const int CLASS_ECFP4 = 3;
-        public const int CLASS_ECFP6 = 4;
-        /// identity by functional character of the atom
-        public const int CLASS_FCFP0 = 5;
-        public const int CLASS_FCFP2 = 6;
-        public const int CLASS_FCFP4 = 7;
-        public const int CLASS_FCFP6 = 8;
+        public enum Classes
+        {
+            // identity by literal atom environment
+            ECFP0 = 1,
+            ECFP2 = 2,
+            ECFP4 = 3,
+            ECFP6 = 4,
+            // identity by functional character of the atom
+            FCFP0 = 5,
+            FCFP2 = 6,
+            FCFP4 = 7,
+            FCFP6 = 8,
+        }
 
         public sealed class FP
         {
@@ -112,10 +113,13 @@ namespace NCDK.Fingerprints
             public int[] Atoms => atoms;
         }
 
-        /// ------------ private members ------------
-
-        private const int ATOMCLASS_ECFP = 1;
-        private const int ATOMCLASS_FCFP = 2;
+        // ------------ private members ------------
+        
+        enum AtomClasses
+        {
+            ECFP = 1,
+            FCFP = 2,
+        }
 
         private IAtomContainer mol;
         private readonly int length;
@@ -125,7 +129,7 @@ namespace NCDK.Fingerprints
         private int[][] atomGroup;
         private List<FP> fplist = new List<FP>();
 
-        /// summary information about the molecule, for quick access
+        // summary information about the molecule, for quick access
         private bool[] amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
         private int[] hcount;                              // total hydrogen count, including explicit and implicit hydrogens
         private int[][] atomAdj, bondAdj;                    // precalculated adjacencies, including only those qualifying with 'amask'
@@ -135,7 +139,7 @@ namespace NCDK.Fingerprints
         private bool[] atomArom, bondArom;                  // aromaticity precalculated
         private int[][] tetra;                               // tetrahedral rubric, a precursor to chirality
 
-        /// stored information for bio-typing; only defined for FCFP-class fingerprints
+        // stored information for bio-typing; only defined for FCFP-class fingerprints
         private bool[] maskDon, maskAcc, maskPos, maskNeg, maskAro, maskHal; // functional property flags
         private int[] bondSum;                                             // sum of bond orders for each atom (including explicit H's)
         private bool[] hasDouble;                                           // true if an atom has any double bonds
@@ -145,16 +149,17 @@ namespace NCDK.Fingerprints
         private bool[] tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
         // ------------ options -------------------
-        private int classType, atomClass;
+        private Classes classType;
+        private AtomClasses atomClass;
         private bool optPerceiveStereo = false;
 
-        /// ------------ methods ------------
+        // ------------ methods ------------
 
         /// <summary>
         /// Default constructor: uses the ECFP6 type.
         /// </summary>
         public CircularFingerprinter()
-            : this(CLASS_ECFP6)
+            : this(Classes.ECFP6)
         { }
 
         /// <summary>
@@ -162,8 +167,8 @@ namespace NCDK.Fingerprints
         /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
         /// path diameter, and may be 0, 2, 4 or 6.
         /// </summary>
-        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
-        public CircularFingerprinter(int classType)
+        /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
+        public CircularFingerprinter(Classes classType)
             : this(classType, 1024)
         { }
 
@@ -172,12 +177,10 @@ namespace NCDK.Fingerprints
         /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
         /// path diameter, and may be 0, 2, 4 or 6.
         /// </summary>
-        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
+        /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
         /// <param name="len">size of folded (binary) fingerprint</param>
-        public CircularFingerprinter(int classType, int len)
+        public CircularFingerprinter(Classes classType, int len)
         {
-            if (classType < 1 || classType > 8)
-                throw new ArgumentOutOfRangeException("Invalid classType specified: " + classType);
             this.classType = classType;
             this.length = len;
         }
@@ -198,14 +201,14 @@ namespace NCDK.Fingerprints
             string type = null;
             switch (classType)
             {
-                case CLASS_ECFP0: type = "ECFP0"; break;
-                case CLASS_ECFP2: type = "ECFP2"; break;
-                case CLASS_ECFP4: type = "ECFP4"; break;
-                case CLASS_ECFP6: type = "ECFP6"; break;
-                case CLASS_FCFP0: type = "FCFP0"; break;
-                case CLASS_FCFP2: type = "FCFP2"; break;
-                case CLASS_FCFP4: type = "FCFP4"; break;
-                case CLASS_FCFP6: type = "FCFP6"; break;
+                case Classes.ECFP0: type = "ECFP0"; break;
+                case Classes.ECFP2: type = "ECFP2"; break;
+                case Classes.ECFP4: type = "ECFP4"; break;
+                case Classes.ECFP6: type = "ECFP6"; break;
+                case Classes.FCFP0: type = "FCFP0"; break;
+                case Classes.FCFP2: type = "FCFP2"; break;
+                case Classes.FCFP4: type = "FCFP4"; break;
+                case Classes.FCFP6: type = "FCFP6"; break;
                 default:
                     break;
             }
@@ -222,10 +225,10 @@ namespace NCDK.Fingerprints
         {
             this.mol = mol;
             fplist.Clear();
-            atomClass = classType <= CLASS_ECFP6 ? ATOMCLASS_ECFP : ATOMCLASS_FCFP;
+            atomClass = classType <= Classes.ECFP6 ? AtomClasses.ECFP : AtomClasses.FCFP;
 
             ExcavateMolecule();
-            if (atomClass == ATOMCLASS_FCFP) CalculateBioTypes();
+            if (atomClass == AtomClasses.FCFP) CalculateBioTypes();
 
             int na = mol.Atoms.Count;
             identity = new int[na];
@@ -235,17 +238,17 @@ namespace NCDK.Fingerprints
             for (int n = 0; n < na; n++)
                 if (amask[n])
                 {
-                    if (atomClass == ATOMCLASS_ECFP)
+                    if (atomClass == AtomClasses.ECFP)
                         identity[n] = InitialIdentityECFP(n);
                     else
-                        // atomClass==ATOMCLASS_FCFP
+                        // atomClass==ATOMClasses.FCFP
                         identity[n] = InitialIdentityFCFP(n);
                     atomGroup[n] = new int[] { n };
                     fplist.Add(new FP(identity[n], 0, atomGroup[n]));
                 }
 
-            int niter = classType == CLASS_ECFP2 || classType == CLASS_FCFP2 ? 1 : classType == CLASS_ECFP4
-                    || classType == CLASS_FCFP4 ? 2 : classType == CLASS_ECFP6 || classType == CLASS_FCFP6 ? 3 : 0;
+            int niter = classType == Classes.ECFP2 || classType == Classes.FCFP2 ? 1 : classType == Classes.ECFP4
+                    || classType == Classes.FCFP4 ? 2 : classType == Classes.ECFP6 || classType == Classes.FCFP6 ? 3 : 0;
 
             // iterate outward
             for (int iter = 1; iter <= niter; iter++)
