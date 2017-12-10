@@ -217,7 +217,7 @@ namespace NCDK.Fingerprints.Model
             Bayesian model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
-            int[] calcHash = model.training[0];
+            int[] calcHash = model.Training[0];
             bool same = calcHash.Length == refHash.Length;
             if (same) for (int n = 0; n < calcHash.Length; n++)
                     if (calcHash[n] != refHash[n])
@@ -353,7 +353,7 @@ namespace NCDK.Fingerprints.Model
 
                         Bayesian model = new Bayesian(classType, folding);
                         model.AddMolecule(mol, false);
-                        int[] hashes = model.training[0];
+                        int[] hashes = model.Training[0];
 
                         string gotHashes = ArrayStr(hashes);
                         string reqHashes = (string)mol.GetProperties()[fpField];
@@ -384,10 +384,10 @@ namespace NCDK.Fingerprints.Model
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
         private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN)
-        {
+        { 
             RunTest(sdfile, actvField, classType, folding, xval, modelFN, false);
         }
- 
+
         private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN, bool perceiveStereo)
         {
             WriteLine("[" + modelFN + "]");
@@ -424,7 +424,7 @@ namespace NCDK.Fingerprints.Model
                 else
                     model.ValidateLeaveOneOut();
 
-                WriteLine("    Validation: ROC AUC=" + model.ROCAUC);
+                WriteLine("    Validation: ROC AUC=" + model.RocAUC);
 
                 WriteLine("    Parsing reference model");
 
@@ -451,30 +451,30 @@ namespace NCDK.Fingerprints.Model
                     WriteLine("    ///* reference training actives=" + ref_.TrainingActives);
                     failed = true;
                 }
-                if (!model.ROCType.Equals(ref_.ROCType))
+                if (!model.RocType.Equals(ref_.RocType))
                 {
-                    WriteLine("    ///* reference ROC type=" + ref_.ROCType);
+                    WriteLine("    ///* reference ROC type=" + ref_.RocType);
                     failed = true;
                 }
-                if (!DblEqual(model.ROCAUC, ref_.ROCAUC))
+                if (!DblEqual(model.RocAUC, ref_.RocAUC))
                 {
-                    WriteLine("    ///* reference ROC AUC=" + ref_.ROCAUC);
+                    WriteLine("    ///* reference ROC AUC=" + ref_.RocAUC);
                     failed = true;
                 }
-                if (Math.Abs(model.lowThresh - ref_.lowThresh) > 0.00000000000001)
+                if (Math.Abs(model.LowThresh - ref_.LowThresh) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference lowThresh=" + ref_.lowThresh + " different to calculated " + model.lowThresh);
+                    WriteLine("    ///* reference lowThresh=" + ref_.LowThresh + " different to calculated " + model.LowThresh);
                     failed = true;
                 }
-                if (Math.Abs(model.highThresh - ref_.highThresh) > 0.00000000000001)
+                if (Math.Abs(model.HighThresh - ref_.HighThresh) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference highThresh=" + ref_.highThresh + " different to calculated "
-                            + model.highThresh);
+                    WriteLine("    ///* reference highThresh=" + ref_.HighThresh + " different to calculated "
+                            + model.HighThresh);
                     failed = true;
                 }
 
                 // make sure individual hash bit contributions match
-                IDictionary<int, double> mbits = model.contribs, rbits = ref_.contribs;
+                IDictionary<int, double> mbits = model.Contributions, rbits = ref_.Contributions;
                 if (mbits.Count != rbits.Count)
                 {
                     WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
