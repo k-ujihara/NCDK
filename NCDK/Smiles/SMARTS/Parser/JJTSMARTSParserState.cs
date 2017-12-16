@@ -94,7 +94,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             marks.Add(mk);
             mk = sp;
-            n.JJTOpen();
+            n.JjtOpen();
         }
 
 
@@ -109,10 +109,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             while (num-- > 0)
             {
                 Node c = PopNode();
-                c.JJTSetParent(n);
-                n.JJTAddChild(c, num);
+                c.JjtSetParent(n);
+                n.JjtAddChild(c, num);
             }
-            n.JJTClose();
+            n.JjtClose();
             PushNode(n);
             node_created = true;
         }
@@ -133,10 +133,10 @@ namespace NCDK.Smiles.SMARTS.Parser
                 while (a-- > 0)
                 {
                     Node c = PopNode();
-                    c.JJTSetParent(n);
-                    n.JJTAddChild(c, a);
+                    c.JjtSetParent(n);
+                    n.JjtAddChild(c, a);
                 }
-                n.JJTClose();
+                n.JjtClose();
                 PushNode(n);
                 node_created = true;
             }

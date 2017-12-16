@@ -29,23 +29,23 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>Accept the visitor. </summary>
-        public override object JJTAccept(SMARTSParserVisitor visitor, object data)
+        public override object JjtAccept(SMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }
 
         public void InsertLeafChild(Node node)
         {
-            Node firstNode = this.JJTGetChild(0);
+            Node firstNode = this.JjtGetChild(0);
             while (!(firstNode is ASTImplicitHighAndExpression)) {
-                firstNode = firstNode.JJTGetChild(0);
+                firstNode = firstNode.JjtGetChild(0);
             }
             ASTImplicitHighAndExpression insert = new ASTImplicitHighAndExpression(
                     SMARTSParserTreeConstants.JJTIMPLICITHIGHANDEXPRESSION);
-            insert.JJTAddChild(node, 0);
-            insert.JJTAddChild(firstNode.JJTGetChild(0), 1);
-            firstNode.JJTRemoveChild(0);
-            firstNode.JJTAddChild(insert, 0);
+            insert.JjtAddChild(node, 0);
+            insert.JjtAddChild(firstNode.JjtGetChild(0), 1);
+            firstNode.JjtRemoveChild(0);
+            firstNode.JjtAddChild(insert, 0);
         }
     }
 }

@@ -22,18 +22,18 @@ namespace NCDK.Smiles.SMARTS.Parser
             parser = p;
         }
 
-        public void JJTOpen()
+        public void JjtOpen()
         {
         }
 
-        public void JJTClose()
+        public void JjtClose()
         {
         }
 
-        public void JJTSetParent(Node n) { parent = n; }
-        public Node JJTGetParent() { return parent; }
+        public void JjtSetParent(Node n) { parent = n; }
+        public Node JjtGetParent() { return parent; }
 
-        public void JJTAddChild(Node n, int i)
+        public void JjtAddChild(Node n, int i)
         {
             if (children == null)
             {
@@ -48,7 +48,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             children[i] = n;
         }
 
-        public void JJTRemoveChild(int i)
+        public void JjtRemoveChild(int i)
         {
             if (i >= children.Length) return;
             Node[] c = new Node[children.Length - 1];
@@ -60,12 +60,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             children = c;
         }
 
-        public Node JJTGetChild(int i)
+        public Node JjtGetChild(int i)
         {
             return children[i];
         }
 
-        public int JJTGetNumChildren()
+        public int JjtGetNumChildren()
         {
             return (children == null) ? 0 : children.Length;
         }
@@ -74,7 +74,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public object JJTGetValue() { return value; }
 
         /// <summary>Accept the visitor. </summary>
-        public virtual object JJTAccept(SMARTSParserVisitor visitor, object data)
+        public virtual object JjtAccept(SMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }
@@ -86,7 +86,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 for (int i = 0; i < children.Length; ++i)
                 {
-                    children[i].JJTAccept(visitor, data);
+                    children[i].JjtAccept(visitor, data);
                 }
             }
             return data;

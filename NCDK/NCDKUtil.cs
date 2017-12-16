@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    public static class ChemObjectUtil
+    public static class NCDKUtil
     {
         /// <summary>
         /// Adds a bond to this container.
@@ -36,10 +36,7 @@ namespace NCDK
             IBond bond = mol.Builder.NewBond(atom1, atom2, order);
             mol.Bonds.Add(bond);
         }
-    }
 
-    internal static class NCDKUtil
-    {
         /// <summary>
         /// Sets the array of atoms of this AtomContainer.
         /// </summary>

@@ -50,47 +50,47 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTStart node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         public object Visit(ASTReaction node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         public object Visit(ASTGroup node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         public object Visit(ASTSmarts node, object data)
         {
             string local = "";
-            for (int i = 0; i < node.JJTGetNumChildren(); i++)
+            for (int i = 0; i < node.JjtGetNumChildren(); i++)
             {
-                Node child = node.JJTGetChild(i);
+                Node child = node.JjtGetChild(i);
                 if (child is ASTAtom)
                 {
-                    local = (string)child.JJTAccept(this, local);
+                    local = (string)child.JjtAccept(this, local);
                 }
                 else if (child is ASTLowAndBond)
                 {
                     i++;
-                    Node nextChild = node.JJTGetChild(i); // the next child should
+                    Node nextChild = node.JjtGetChild(i); // the next child should
                                                           // be another smarts
-                    string bond = (string)child.JJTAccept(this, local);
+                    string bond = (string)child.JjtAccept(this, local);
                     local = local + bond;
-                    local = (string)nextChild.JJTAccept(this, local);
+                    local = (string)nextChild.JjtAccept(this, local);
                 }
                 else if (child is ASTSmarts)
                 { // implicit single bond
                     if (!"".Equals(local)) local = local + "-";
-                    local = (string)child.JJTAccept(this, local);
+                    local = (string)child.JjtAccept(this, local);
                 }
                 else if (child is ASTExplicitAtom)
                 {
                     if (!"".Equals(local)) local = local + "-";
-                    local = (string)child.JJTAccept(this, local);
+                    local = (string)child.JjtAccept(this, local);
                 }
             }
             return data + local;
@@ -100,35 +100,35 @@ namespace NCDK.Smiles.SMARTS.Parser
         // logical bonds
         public object Visit(ASTLowAndBond node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTOrBond node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTExplicitHighAndBond node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTImplicitHighAndBond node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTNotBond node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         public object Visit(ASTSimpleBond node, object data)
@@ -173,12 +173,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            string left = (string)node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
+            string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -195,12 +195,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTOrExpression node, object data)
         {
-            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            string left = (string)node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
+            string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -218,12 +218,12 @@ namespace NCDK.Smiles.SMARTS.Parser
         // TODO: the precedence needs to be addressed
         public object Visit(ASTExplicitHighAndExpression node, object data)
         {
-            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            string left = (string)node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
+            string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -241,12 +241,12 @@ namespace NCDK.Smiles.SMARTS.Parser
         //  TODO: the precedence needs to be addressed
         public object Visit(ASTImplicitHighAndExpression node, object data)
         {
-            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            string left = (string)node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
+            string right = (string)node.JjtGetChild(1).JjtAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -273,9 +273,9 @@ namespace NCDK.Smiles.SMARTS.Parser
                 Not = false;
             }
             string str = "";
-            for (int i = 0; i < node.JJTGetNumChildren(); i++)
+            for (int i = 0; i < node.JjtGetNumChildren(); i++)
             {
-                str += node.JJTGetChild(i).JJTAccept(this, data);
+                str += node.JjtGetChild(i).JjtAccept(this, data);
             }
             return str;
         }
