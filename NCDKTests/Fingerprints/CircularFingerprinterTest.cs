@@ -25,11 +25,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
+using NCDK.Common.Collections;
 using NCDK.Default;
 using NCDK.IO;
+using NCDK.Numerics;
 using NCDK.Smiles;
 using System;
 using System.Collections;
@@ -37,7 +39,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using NCDK.Common.Base;
 
 namespace NCDK.Fingerprints
 {
@@ -66,9 +67,10 @@ namespace NCDK.Fingerprints
 
             string fnzip = "NCDK.Data.CDD.circular_validation.zip";
             Trace.TraceInformation("Loading source content: " + fnzip);
-            Stream ins = ResourceLoader.GetAsStream(fnzip);
-            Validate(ins);
-            ins.Close();
+            using (Stream ins = ResourceLoader.GetAsStream(fnzip))
+            {
+                Validate(ins);
+            }
 
             Trace.TraceInformation("CircularFingerprinter test: completed without any problems");
         }
@@ -100,15 +102,17 @@ namespace NCDK.Fingerprints
             IAtomContainer mol2 = smipar.ParseSmiles(smiles2);
             IAtomContainer mol3 = mdlr.Read(bldr.NewAtomContainer());
 
-            CircularFingerprinter fpr = new CircularFingerprinter();
+            CircularFingerprinter fpr = new CircularFingerprinter
+            {
 
-            // when stereo-chemistry is perceived we don't have coordinates from the
-            // SMILES and so get a different fingerprint
-            fpr.SetPerceiveStereo(true);
+                // when stereo-chemistry is perceived we don't have coordinates from the
+                // SMILES and so get a different fingerprint
+                PerceiveStereo = true
+            };
             Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol1), fpr.GetFingerprint(mol2)));
             Assert.IsFalse(Compares.AreEqual(fpr.GetFingerprint(mol2), fpr.GetFingerprint(mol3)));
 
-            fpr.SetPerceiveStereo(false);
+            fpr.PerceiveStereo = false;
             Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol1), fpr.GetFingerprint(mol2)));
             Assert.IsTrue(Compares.AreEqual(fpr.GetFingerprint(mol2), fpr.GetFingerprint(mol3)));
         }
@@ -191,17 +195,18 @@ namespace NCDK.Fingerprints
 
             for (int idx = 1; ; idx++)
             {
+if (idx != 78) continue;
                 string basefn = idx.ToString();
                 while (basefn.Length < 6)
                     basefn = "0" + basefn;
-                byte[] molBytes;
-                if (!content.TryGetValue(basefn + ".mol", out molBytes))
+                if (!content.TryGetValue(basefn + ".mol", out byte[] molBytes))
                     break;
 
                 AtomContainer mol = new AtomContainer();
-                MDLV2000Reader mdl = new MDLV2000Reader(new MemoryStream(molBytes));
-                mdl.Read(mol);
-                mdl.Close();
+                using (MDLV2000Reader mdl = new MDLV2000Reader(new MemoryStream(molBytes)))
+                {
+                    mdl.Read(mol);
+                }
 
                 CircularFingerprinter.FP[] validateECFP = ParseValidation(content[basefn + ".ecfp"]);
                 CircularFingerprinter.FP[] validateFCFP = ParseValidation(content[basefn + ".fcfp"]);
@@ -366,19 +371,61 @@ namespace NCDK.Fingerprints
             Assert.IsNotNull(circ.GetBitFingerprint(m));
         }
 
+        [TestMethod()]
+        public void TestNonZZeroPlaner()
+        {
+            IAtomContainer mol = new AtomContainer();
+            Atom[] atoms = new Atom[] {
+                new Atom("C"),
+                new Atom("F"),
+                new Atom("N"),
+                new Atom("O"),
+            };
+            atoms[0].Point3D = new Vector3(0, 0, -10);
+            atoms[1].Point3D = new Vector3(0, 1, -10);
+            atoms[2].Point3D = new Vector3(-1, -1, -10);
+            atoms[3].Point3D = new Vector3(1, -1, -10);
+            mol.SetAtoms(atoms);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
+            mol.Bonds[0].Stereo = BondStereo.Up;
+
+            CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.Classes.ECFP6)
+            {
+                PerceiveStereo = true
+            };
+            IBitFingerprint fp0 = circ.GetBitFingerprint(mol);
+
+            foreach (var atom in atoms)
+            {
+                var v = atom.Point3D.Value;
+                v.Z += 20;
+                atom.Point3D = v;
+            }
+
+            IBitFingerprint fp1 = circ.GetBitFingerprint(mol);
+
+            Assert.AreEqual(fp0, fp1);
+        }
+
         static IAtom Atom(string symbol, int q, int h)
         {
-            IAtom a = new Atom(symbol);
-            a.FormalCharge = q;
-            a.ImplicitHydrogenCount = h;
+            IAtom a = new Atom(symbol)
+            {
+                FormalCharge = q,
+                ImplicitHydrogenCount = h
+            };
             return a;
         }
 
         static IAtom Atom(string symbol, int h, double x, double y)
         {
-            IAtom a = new Atom(symbol);
-            a.Point2D = new Vector2(x, y);
-            a.ImplicitHydrogenCount = h;
+            IAtom a = new Atom(symbol)
+            {
+                Point2D = new Vector2(x, y),
+                ImplicitHydrogenCount = h
+            };
             return a;
         }
 

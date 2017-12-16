@@ -762,7 +762,8 @@ namespace NCDK.Stereo
             /// <returns>the unit vector</returns>
             private Vector2 ToUnitVector(Vector2 from, Vector2 to)
             {
-                if (from == to) return Vector2.Zero;
+                if (from == to)
+                    return Vector2.Zero;
                 Vector2 v2d = new Vector2(to.X - from.X, to.Y - from.Y);
                 return Vector2.Normalize(v2d);
             }

@@ -16,10 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Config.Isotope;
 
+using NCDK.Config.Isotope;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 

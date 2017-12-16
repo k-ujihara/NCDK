@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
@@ -231,7 +232,7 @@ namespace NCDK.Config
 
         /// <summary>
         /// Test reading from a XML config file with content like:
-        /// <pre>
+        /// <![CDATA[
         ///   <atomType id="C">
         ///    <!-- for example in CC-->
         ///    <atom elementType="C" formalCharge="0">
@@ -244,10 +245,9 @@ namespace NCDK.Config
         ///    <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
         ///    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">[CSP]-[0-4][-]?+;[A-Za-z\+\-&amp;&amp;[^=%]]{0,6}[(].*+</scalar>
         ///  </atomType>
-        /// </pre>
-        ///
-        // @ if the atom typ info cannot be loaded
+        /// ]]>
         /// </summary>
+        /// <exception cref="Exception">if the atom typ info cannot be loaded</exception>
         [TestMethod()]
         public virtual void TestGetAtomTypeFromMM2()
         {
@@ -322,10 +322,7 @@ namespace NCDK.Config
 
                 var doc = new XmlDocument();
                 doc.Load(tmpInput.FullName);
-#if ENABLE_NOT_IMPLEMENTED
-                // Used DTD is not included in .NET Framework.
                 doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
-#endif
             }
         }
 

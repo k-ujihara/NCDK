@@ -186,14 +186,14 @@ namespace NCDK.Fingerprints
         }
 
         /// <summary>
-        /// Sets whether stereochemistry should be re-perceived from 2D/3D
+        /// Whether stereochemistry should be re-perceived from 2D/3D
         /// coordinates. By default stereochemistry encoded as <see cref="IStereoElement{TFocus, TCarriers}"/>s
         /// are used.
         /// </summary>
-        /// <param name="val">perceived from 2D</param>
-        public void SetPerceiveStereo(bool val)
+        public bool PerceiveStereo
         {
-            this.optPerceiveStereo = val;
+            get { return this.optPerceiveStereo; }
+            set { this.optPerceiveStereo = value; }
         }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
@@ -1032,9 +1032,9 @@ namespace NCDK.Fingerprints
             if (adjc == 3)
             {
                 adj = AppendInteger(adj, -1);
-                xp[3] = x0;
-                yp[3] = y0;
-                zp[3] = z0;
+                xp[3] = 0;
+                yp[3] = 0;
+                zp[3] = 0;
             }
 
             // make the call on permutational parity

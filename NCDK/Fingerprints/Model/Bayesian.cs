@@ -84,27 +84,40 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         public int Folding { get; private set; } = 0;
 
+        /// <summary>
+        /// Whether stereochemistry should be re-perceived from 2D/3D
+        /// coordinates. By default stereochemistry encoded as <see cref="IStereoElement{TFocus, TCarriers}"/>s
+        /// are used.
+        /// </summary>
+        public bool PerceiveStereo { get; set; }
+
         // incoming hash codes: actual values, and subsumed values are {#active,#total}
         private int numActive = 0;
-        protected IDictionary<int, int[]> InHash { get; } = new Dictionary<int, int[]>();
 
-        private List<int[]> training = new List<int[]>();
+        protected IDictionary<int, int[]> InHash => inHash;
+        private Dictionary<int, int[]> inHash = new Dictionary<int, int[]>();
+
         public IList<int[]> Training => training;
+        private List<int[]> training = new List<int[]>();
 
-        private List<bool> activity = new List<bool>();
         public IList<bool> Activity => activity;
+        private List<bool> activity = new List<bool>();
 
-        // built model: contributions for each hash code
-        private Dictionary<int, double> contribs = new Dictionary<int, double>();
+        /// <summary>
+        /// built model: contributions for each hash code
+        /// </summary>
         public IDictionary<int, double> Contributions => contribs;
+        private Dictionary<int, double> contribs = new Dictionary<int, double>();
 
-        public double LowThresh { get; private set; } = 0;
-        public double HighThresh { get; private set; } = 0;
+        public double LowThreshold { get; private set; } = 0;
+        public double HighThreshold { get; private set; } = 0;
 
         private double range = 0;
         private double invRange = 0;                            // cached to speed up scaling calibration
 
-        // self-validation metrics: can optionally be calculated after a build
+        /// <summary>
+        /// self-validation metrics: can optionally be calculated after a build
+        /// </summary>
         public double[] Estimates { get; private set; } = null;
 
         /// <summary>
@@ -158,7 +171,7 @@ namespace NCDK.Fingerprints.Model
         /// <summary>
         /// Instantiate a Bayesian model with no data.
         /// </summary>
-        /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
+        /// <param name="classType">one of the <see cref="CircularFingerprinter.Classes"/> enum</param>
         /// <param name="folding">the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding</param>
         public Bayesian(CircularFingerprinter.Classes classType, int folding)
         {
@@ -188,6 +201,7 @@ namespace NCDK.Fingerprints.Model
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
             CircularFingerprinter circ = new CircularFingerprinter(ClassType);
+            circ.PerceiveStereo = this.PerceiveStereo;
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints into a sorted set
@@ -213,11 +227,11 @@ namespace NCDK.Fingerprints.Model
             foreach (var h in hashes)
             {
                 int[] stash;
-                if (!InHash.TryGetValue(h, out stash))
+                if (!inHash.TryGetValue(h, out stash))
                     stash = new int[] { 0, 0 };
                 if (active) stash[0]++;
                 stash[1]++;
-                InHash[h] = stash;
+                inHash[h] = stash;
             }
         }
 
@@ -241,9 +255,9 @@ namespace NCDK.Fingerprints.Model
             double invSz = 1.0 / sz;
             double P_AT = numActive * invSz;
 
-            foreach (var hash in InHash.Keys)
+            foreach (var hash in inHash.Keys)
             {
-                int[] AT = InHash[hash];
+                int[] AT = inHash[hash];
                 int A = AT[0], T = AT[1];
                 double Pcorr = (A + 1) / (T * P_AT + 1);
                 double P = Math.Log(Pcorr);
@@ -252,17 +266,17 @@ namespace NCDK.Fingerprints.Model
 
             // note thresholds and ranges, for subsequent use
 
-            LowThresh = double.PositiveInfinity;
-            HighThresh = double.NegativeInfinity;
+            LowThreshold = double.PositiveInfinity;
+            HighThreshold = double.NegativeInfinity;
             foreach (var fp in training)
             {
                 double val = 0;
                 foreach (var hash in fp)
                     val += contribs[hash];
-                LowThresh = Math.Min(LowThresh, val);
-                HighThresh = Math.Max(HighThresh, val);
+                LowThreshold = Math.Min(LowThreshold, val);
+                HighThreshold = Math.Max(HighThreshold, val);
             }
-            range = HighThresh - LowThresh;
+            range = HighThreshold - LowThreshold;
             invRange = range > 0 ? 1 / range : 0;
         }
 
@@ -278,6 +292,7 @@ namespace NCDK.Fingerprints.Model
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
             CircularFingerprinter circ = new CircularFingerprinter(ClassType);
+            circ.PerceiveStereo = this.PerceiveStereo;
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints (eliminating duplicates)
@@ -312,9 +327,9 @@ namespace NCDK.Fingerprints.Model
         public double ScalePredictor(double pred)
         {
             // special case: if there is no differentiation scale, it's either above or below (typically happens only with tiny models)
-            if (range == 0) return pred >= HighThresh ? 1 : 0;
+            if (range == 0) return pred >= HighThreshold ? 1 : 0;
 
-            return (pred - LowThresh) * invRange;
+            return (pred - LowThreshold) * invRange;
         }
 
         /// <summary>
@@ -328,7 +343,7 @@ namespace NCDK.Fingerprints.Model
             Estimates = new double[sz];
             for (int n = 0; n < sz; n++)
                 Estimates[n] = SingleLeaveOneOut(n);
-            CalculateROC();
+            CalculateRoc();
             RocType = "leave-one-out";
         }
 
@@ -404,6 +419,7 @@ namespace NCDK.Fingerprints.Model
             {
                 return noteComments == null ? null : Arrays.CopyOf(noteComments, noteComments.Length);
             }
+
             set
             {
                 if (value != null)
@@ -435,7 +451,7 @@ namespace NCDK.Fingerprints.Model
                                                                     : ClassType == CircularFingerprinter.Classes.FCFP6 ? "FCFP6"
                                                                             : "?";
 
-            buff.Append("Bayesian!(" + fpname + "," + Folding + "," + LowThresh + "," + HighThresh + ")\n");
+            buff.Append("Bayesian!(" + fpname + "," + Folding + "," + LowThreshold + "," + HighThreshold + ")\n");
 
             // primary payload: the bit contributions
             var sorted = new SortedSet<int>();
@@ -524,9 +540,9 @@ namespace NCDK.Fingerprints.Model
                 throw new IOException("Fingerprint folding " + bits[1] + " invalid: must be 0 or power of 2.");
 
             Bayesian model = new Bayesian(classType, folding);
-            model.LowThresh = double.Parse(bits[2]);
-            model.HighThresh = double.Parse(bits[3]);
-            model.range = model.HighThresh - model.LowThresh;
+            model.LowThreshold = double.Parse(bits[2]);
+            model.HighThreshold = double.Parse(bits[3]);
+            model.range = model.HighThreshold - model.LowThreshold;
             model.invRange = model.range > 0 ? 1 / model.range : 0;
 
             while (true)
@@ -627,7 +643,9 @@ namespace NCDK.Fingerprints.Model
 
         /// ----------------- private methods -----------------
 
+        /// <summary>
         /// estimate leave-one-out predictor for a given training entry
+        /// </summary>
         private double SingleLeaveOneOut(int N)
         {
             bool exclActive = activity[N];
@@ -639,10 +657,10 @@ namespace NCDK.Fingerprints.Model
             double P_AT = activeN * invSzN;
 
             double val = 0;
-            foreach (var hash in InHash.Keys)
+            foreach (var hash in inHash.Keys)
             {
                 if (Array.BinarySearch(exclFP, hash) < 0) continue;
-                int[] AT = InHash[hash];
+                int[] AT = inHash[hash];
                 int A = AT[0] - (exclActive ? 1 : 0), T = AT[1] - 1;
 
                 double Pcorr = (A + 1) / (T * P_AT + 1);
@@ -652,7 +670,9 @@ namespace NCDK.Fingerprints.Model
             return val;
         }
 
+        /// <summary>
         /// performs cross-validation, splitting into N different segments
+        /// </summary>
         private void ValidateNfold(int nsegs)
         {
             int sz = training.Count;
@@ -672,11 +692,13 @@ namespace NCDK.Fingerprints.Model
             Estimates = new double[sz];
             for (int n = 0; n < sz; n++)
                 Estimates[order[n]] = EstimatePartial(order, n, segContribs[n % nsegs]);
-            CalculateROC();
+            CalculateRoc();
         }
 
+        /// <summary>
         /// generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
         /// that is not implied by the current skein
+        /// </summary>
         private IDictionary<int, double> BuildPartial(int[] order, int seg, int div)
         {
             int sz = training.Count;
@@ -715,7 +737,9 @@ namespace NCDK.Fingerprints.Model
             return segContribs;
         }
 
+        /// <summary>
         /// using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
+        /// </summary>
         private double EstimatePartial(int[] order, int N, IDictionary<int, double> segContrib)
         {
             double val = 0;
@@ -744,8 +768,10 @@ namespace NCDK.Fingerprints.Model
             }
         }
 
+        /// <summary>
         /// assumes estimates already calculated, fills in the ROC data
-        private void CalculateROC()
+        /// </summary>
+        private void CalculateRoc()
         {
             // sort the available estimates, and take midpoints 
             int sz = training.Count;
@@ -758,14 +784,14 @@ namespace NCDK.Fingerprints.Model
 
             double[] thresholds = new double[sz + 1];
             int tsz = 0;
-            thresholds[tsz++] = LowThresh - 0.01 * range;
+            thresholds[tsz++] = LowThreshold - 0.01 * range;
             for (int n = 0; n < sz - 1; n++)
             {
                 double th1 = Estimates[idx[n]], th2 = Estimates[idx[n + 1]];
                 if (th1 == th2) continue;
                 thresholds[tsz++] = 0.5 * (th1 + th2);
             }
-            thresholds[tsz++] = HighThresh + 0.01 * range;
+            thresholds[tsz++] = HighThreshold + 0.01 * range;
 
             // x = false positives / actual negatives
             // y = true positives / actual positives
@@ -774,7 +800,7 @@ namespace NCDK.Fingerprints.Model
             double[] rocT = new double[tsz];
 
             int posTrue = 0, posFalse = 0, ipos = 0;
-            double invPos = 1.0f / numActive, invNeg = 1.0f / (sz - numActive);
+            double invPos = 1.0 / numActive, invNeg = 1.0 / (sz - numActive);
             int rsz = 0;
             for (int n = 0; n < tsz; n++)
             {
@@ -835,7 +861,9 @@ namespace NCDK.Fingerprints.Model
             RocY = Resize(gy, gsz);
         }
 
+        /// <summary>
         /// rederives the low/high thresholds, using ROC curve data: once the analysis is complete, the midpoint will be the optimum balance 
+        /// </summary> 
         private void CalibrateThresholds(double[] x, double[] y, double[] t)
         {
             int sz = t.Length;
@@ -849,13 +877,15 @@ namespace NCDK.Fingerprints.Model
             for (; idxY > idx + 1; idxY--)
                 if (y[idxY] < 1) break;
             double delta = Math.Min(t[idxX] - midThresh, midThresh - t[idxY]);
-            LowThresh = midThresh - delta;
-            HighThresh = midThresh + delta;
+            LowThreshold = midThresh - delta;
+            HighThreshold = midThresh + delta;
             range = 2 * delta;
             invRange = range > 0 ? 1 / range : 0;
         }
 
+        /// <summary>
         /// convenience functions    
+        /// </summary> 
         private double[] Resize(double[] arr, int sz)
         {
             double[] ret = new double[sz];

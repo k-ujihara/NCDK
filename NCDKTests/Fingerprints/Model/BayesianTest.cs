@@ -241,10 +241,12 @@ namespace NCDK.Fingerprints.Model
             string dummyTitle = "some title", dummyOrigin = "some origin";
             string[] dummyComments = new string[] { "comment1", "comment2" };
 
-            Bayesian model1 = new Bayesian(CircularFingerprinter.Classes.ECFP6);
-            model1.NoteTitle = dummyTitle;
-            model1.NoteOrigin = dummyOrigin;
-            model1.NoteComments = dummyComments;
+            Bayesian model1 = new Bayesian(CircularFingerprinter.Classes.ECFP6)
+            {
+                NoteTitle = dummyTitle,
+                NoteOrigin = dummyOrigin,
+                NoteComments = dummyComments
+            };
 
             Bayesian model2 = null;
             try
@@ -395,26 +397,30 @@ namespace NCDK.Fingerprints.Model
 
             try
             {
-                Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
-                EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
-                Bayesian model = new Bayesian(classType, folding);
+                Bayesian model = new Bayesian(classType, folding)
+                {
+                    PerceiveStereo = perceiveStereo
+                };
 
                 int row = 0, numActives = 0;
-                foreach (var mol in rdr)
+                using (
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(
+                        ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile), Default.ChemObjectBuilder.Instance))
                 {
-                    row++;
+                    foreach (var mol in rdr)
+                    {
+                        row++;
 
-                    string stractv = (string)mol.GetProperties()[actvField];
-                    int active = stractv.Equals("true") ? 1 : stractv.Equals("false") ? 0 : int.Parse(stractv);
-                    if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
+                        string stractv = (string)mol.GetProperties()[actvField];
+                        int active = stractv.Equals("true") ? 1 : stractv.Equals("false") ? 0 : int.Parse(stractv);
+                        if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
 
-                    model.AddMolecule(mol, active == 1);
-                    numActives += active;
+                        model.AddMolecule(mol, active == 1);
+                        numActives += active;
+                    }
                 }
-                ins.Close();
 
-                WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives)
-                        + " inactives");
+                WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives) + " inactives");
 
                 model.Build();
                 if (xval == 3)
@@ -429,52 +435,54 @@ namespace NCDK.Fingerprints.Model
                 WriteLine("    Parsing reference model");
 
                 //FileReader frdr=new FileReader(modelFN);
-                var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN));
-                Bayesian ref_ = Bayesian.Deserialise(mrdr);
-                mrdr.Close();
+                Bayesian reference;
+                using (var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN)))
+                {
+                    reference = Bayesian.Deserialise(mrdr);
+                }
 
                 // start comparing the details...
 
                 bool failed = false;
-                if (model.Folding != ref_.Folding)
+                if (model.Folding != reference.Folding)
                 {
-                    WriteLine("    ///* reference folding size=" + ref_.Folding);
+                    WriteLine("    ** reference folding size=" + reference.Folding);
                     failed = true;
                 }
-                if (model.TrainingSize != ref_.TrainingSize)
+                if (model.TrainingSize != reference.TrainingSize)
                 {
-                    WriteLine("    ///* reference training size=" + ref_.TrainingSize);
+                    WriteLine("    ** reference training size=" + reference.TrainingSize);
                     failed = true;
                 }
-                if (model.TrainingActives != ref_.TrainingActives)
+                if (model.TrainingActives != reference.TrainingActives)
                 {
-                    WriteLine("    ///* reference training actives=" + ref_.TrainingActives);
+                    WriteLine("    ** reference training actives=" + reference.TrainingActives);
                     failed = true;
                 }
-                if (!model.RocType.Equals(ref_.RocType))
+                if (!model.RocType.Equals(reference.RocType))
                 {
-                    WriteLine("    ///* reference ROC type=" + ref_.RocType);
+                    WriteLine("    ** reference ROC type=" + reference.RocType);
                     failed = true;
                 }
-                if (!DblEqual(model.RocAUC, ref_.RocAUC))
+                if (!DblEqual(model.RocAUC, reference.RocAUC))
                 {
-                    WriteLine("    ///* reference ROC AUC=" + ref_.RocAUC);
+                    WriteLine("    ** reference ROC AUC=" + reference.RocAUC);
                     failed = true;
                 }
-                if (Math.Abs(model.LowThresh - ref_.LowThresh) > 0.00000000000001)
+                if (Math.Abs(model.LowThreshold - reference.LowThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference lowThresh=" + ref_.LowThresh + " different to calculated " + model.LowThresh);
+                    WriteLine("    ** reference lowThresh=" + reference.LowThreshold + " different to calculated " + model.LowThreshold);
                     failed = true;
                 }
-                if (Math.Abs(model.HighThresh - ref_.HighThresh) > 0.00000000000001)
+                if (Math.Abs(model.HighThreshold - reference.HighThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference highThresh=" + ref_.HighThresh + " different to calculated "
-                            + model.HighThresh);
+                    WriteLine("    ** reference highThresh=" + reference.HighThreshold + " different to calculated "
+                            + model.HighThreshold);
                     failed = true;
                 }
 
                 // make sure individual hash bit contributions match
-                IDictionary<int, double> mbits = model.Contributions, rbits = ref_.Contributions;
+                IDictionary<int, double> mbits = model.Contributions, rbits = reference.Contributions;
                 if (mbits.Count != rbits.Count)
                 {
                     WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
