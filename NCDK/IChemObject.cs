@@ -65,28 +65,4 @@ namespace NCDK
         /// <summary>Flag is set if <see cref="IChemObject"/> has been visited</summary>
         bool IsVisited { get; set; }
     }
-
-    internal struct ChemObjectFlagBag
-    {
-        public static ChemObjectFlagBag Save(IChemObject source)
-        {
-            var bag = new ChemObjectFlagBag();
-            return bag;
-        }
-
-        public static void Restore(IChemObject dest, ChemObjectFlagBag savedFlags)
-        {
-            dest.IsPlaced = savedFlags.IsPlaced;
-            dest.IsVisited = savedFlags.IsVisited;
-        }
-
-        public static void Transfer(IChemObject src, IChemObject dest)
-        {
-            var fs = Save(src);
-            Restore(src, fs);
-        }
-
-        bool IsPlaced { get; set; }
-        bool IsVisited { get; set; }
-    }
 }

@@ -77,8 +77,7 @@ namespace NCDK.Geometries.Volume
             int totalHCount = 0;
             foreach (var atom in molecule.Atoms)
             {
-                double bondiiVolume;
-                if (!bondiiVolumes.TryGetValue(atom.Symbol, out bondiiVolume))
+                if (!bondiiVolumes.TryGetValue(atom.Symbol, out double bondiiVolume))
                     throw new CDKException("Unsupported element.");
 
                 sum += bondiiVolume;
@@ -94,8 +93,6 @@ namespace NCDK.Geometries.Volume
             }
             sum -= 5.92 * (molecule.Bonds.Count + totalHCount);
 
-            var savedFlags = ChemObjectFlagBag.Save(molecule);
-            //bool[] originalFlags = molecule.GetFlags();
             Aromaticity.CDKLegacy.Apply(molecule);
             IRingSet ringSet = Cycles.FindSSSR(molecule).ToRingSet();
             if (ringSet.Count() > 0)
@@ -113,7 +110,7 @@ namespace NCDK.Geometries.Volume
                         nonAromRingCount++;
                     }
                 }
-                ChemObjectFlagBag.Restore(molecule, savedFlags);
+
                 sum -= 14.7 * aromRingCount;
                 sum -= 3.8 * nonAromRingCount;
             }

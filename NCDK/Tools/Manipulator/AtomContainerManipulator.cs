@@ -580,17 +580,16 @@ namespace NCDK.Tools.Manipulator
         // @cdk.keyword         hydrogens, removal
         public static IAtomContainer RemoveNonChiralHydrogens(IAtomContainer org)
         {
-            IDictionary<IAtom, IAtom> map = new Dictionary<IAtom, IAtom>(); // maps original atoms to clones.
-            IList<IAtom> remove = new List<IAtom>(); // lists removed Hs.
+            var map = new CDKObjectMap(); // maps original atoms to clones.
+            IList<IAtom> orgAtomsToRemove = new List<IAtom>(); // lists removed Hs.
 
             // Clone atoms except those to be removed.
-            IAtomContainer cpy = org.Builder.NewAtomContainer();
+            IAtomContainer cpy = (IAtomContainer)org.Clone(map);
             int count = org.Atoms.Count;
 
-            for (int i = 0; i < count; i++)
+            foreach (var atom in org.Atoms)
             {
                 // Clone/remove this atom?
-                IAtom atom = org.Atoms[i];
                 bool addToRemove = false;
                 if (SuppressibleHydrogen(org, atom))
                 {
@@ -621,9 +620,7 @@ namespace NCDK.Tools.Manipulator
                 }
 
                 if (addToRemove)
-                    remove.Add(atom);
-                else
-                    AddClone(atom, cpy, map);
+                    orgAtomsToRemove.Add(atom);
             }
 
             // rescue any false positives, i.e., hydrogens that are stereo-relevant
@@ -635,10 +632,9 @@ namespace NCDK.Tools.Manipulator
                     ITetrahedralChirality tetChirality = (ITetrahedralChirality)stereoElement;
                     foreach (var atom in tetChirality.Ligands)
                     {
-                        if (atom.Symbol.Equals("H") && remove.Contains(atom))
+                        if (atom.Symbol.Equals("H") && orgAtomsToRemove.Contains(atom))
                         {
-                            remove.Remove(atom);
-                            AddClone(atom, cpy, map);
+                            orgAtomsToRemove.Remove(atom);
                         }
                     }
                 }
@@ -648,52 +644,25 @@ namespace NCDK.Tools.Manipulator
                     IBond stereoBond = dbs.StereoBond;
                     foreach (var neighbor in org.GetConnectedAtoms(stereoBond.Begin))
                     {
-                        if (remove.Remove(neighbor)) AddClone(neighbor, cpy, map);
+                        orgAtomsToRemove.Remove(neighbor);
                     }
                     foreach (var neighbor in org.GetConnectedAtoms(stereoBond.End))
                     {
-                        if (remove.Remove(neighbor)) AddClone(neighbor, cpy, map);
+                        orgAtomsToRemove.Remove(neighbor);
                     }
                 }
             }
 
-            // Clone bonds except those involving removed atoms.
-            count = org.Bonds.Count;
-            for (int i = 0; i < count; i++)
-            {
-                // Check bond.
-                IBond bond = org.Bonds[i];
-                bool removedBond = false;
-                int length = bond.Atoms.Count;
-                for (int k = 0; k < length; k++)
-                {
-                    if (remove.Contains(bond.Atoms[k]))
-                    {
-                        removedBond = true;
-                        break;
-                    }
-                }
-
-                // Clone/remove this bond?
-                if (!removedBond)
-                {
-                    IBond clone = null;
-                    clone = (IBond)org.Bonds[i].Clone();
-                    Trace.Assert(clone != null);
-                    clone.SetAtoms(new[] { map[bond.Begin], map[bond.End] });
-                    cpy.Bonds.Add(clone);
-                }
-            }
+            foreach (var atom in orgAtomsToRemove)
+                cpy.RemoveAtom(map.Get(atom)); // this removes connected bond
 
             // Recompute hydrogen counts of neighbours of removed Hydrogens.
-            foreach (var aRemove in remove)
+            foreach (var atom in orgAtomsToRemove)
             {
                 // Process neighbours.
-                foreach (var iAtom in org.GetConnectedAtoms(aRemove))
+                foreach (var connectedAtom in org.GetConnectedAtoms(atom))
                 {
-
-                    IAtom neighb;
-                    if (!map.TryGetValue(iAtom, out neighb))
+                    if (!map.TryGetValue(connectedAtom, out IAtom neighb))
                         continue; // since for the case of H2, neight H has a heavy atom neighbor
                     neighb.ImplicitHydrogenCount = (neighb.ImplicitHydrogenCount ?? 0) + 1;
                 }
@@ -702,18 +671,8 @@ namespace NCDK.Tools.Manipulator
             {
                 if (atom.ImplicitHydrogenCount == null) atom.ImplicitHydrogenCount = 0;
             }
-            cpy.AddProperties(org.GetProperties());
-            ChemObjectFlagBag.Transfer(org, cpy);
 
-            return (cpy);
-        }
-
-        private static void AddClone(IAtom atom, IAtomContainer mol, IDictionary<IAtom, IAtom> map)
-        {
-            IAtom clonedAtom = null;
-            clonedAtom = (IAtom)atom.Clone();
-            mol.Atoms.Add(clonedAtom);
-            map.Add(atom, clonedAtom);
+            return cpy;
         }
 
         /// <summary>
