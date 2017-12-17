@@ -17,14 +17,15 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.IO;
 using System.Linq;
-using NCDK.Numerics;
 using System.Text;
 
 namespace NCDK.IO
@@ -41,7 +42,7 @@ namespace NCDK.IO
     {
         public static string F_SERIAL_FORMAT(int serial) => serial.ToString().PadLeft(5);
         public static string F_ATOM_NAME_FORMAT(string atomName) => atomName.PadRight(5);
-        public static string F_POSITION_FORMAT(double f) => f.ToString("F3").PadLeft(12);
+        public static string F_POSITION_FORMAT(double f) => f.ToString("F3").PadLeft(8);
         public static string F_RESIDUE_FORMAT(string residue) => residue;
 
         private BooleanIOSetting writeAsHET;
