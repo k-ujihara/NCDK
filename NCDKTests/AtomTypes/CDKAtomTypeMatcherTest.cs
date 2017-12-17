@@ -6848,10 +6848,10 @@ namespace NCDK.AtomTypes
             Assert.AreEqual(pyrrole.Atoms[0].Hybridization.Name, "Planar3");
         }
 
-        [ClassCleanup()]
-        public static void TestTestedAtomTypes()
-        {
-            CountTestedAtomTypes(testedAtomTypes, factory);
-        }
+        //[ClassCleanup()]
+        //public static void TestTestedAtomTypes()
+        //{
+        //    CountTestedAtomTypes(testedAtomTypes, factory);
+        //}
     }
 }

@@ -980,10 +980,10 @@ namespace NCDK.AtomTypes
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
         }
 
-        [ClassCleanup()]
-        public static void TestTestedAtomTypes()
-        {
-            CountTestedAtomTypes(testedAtomTypes, factory);
-        }
+        //[ClassCleanup()]
+        //public static void TestTestedAtomTypes()
+        //{
+        //    CountTestedAtomTypes(testedAtomTypes, factory);
+        //}
     }
 }

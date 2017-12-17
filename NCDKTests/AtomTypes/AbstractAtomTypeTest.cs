@@ -194,55 +194,55 @@ namespace NCDK.AtomTypes
             }
         }
 
-        public static void CountTestedAtomTypes(IDictionary<string, int> testedAtomTypesMap, AtomTypeFactory factory)
-        {
-            ICollection<string> testedAtomTypes = new HashSet<string>();
-            foreach (var key in testedAtomTypesMap.Keys)
-                testedAtomTypes.Add(key);
+        //public static void CountTestedAtomTypes(IDictionary<string, int> testedAtomTypesMap, AtomTypeFactory factory)
+        //{
+        //    ICollection<string> testedAtomTypes = new HashSet<string>();
+        //    foreach (var key in testedAtomTypesMap.Keys)
+        //        testedAtomTypes.Add(key);
 
-            ICollection<string> definedTypes = new HashSet<string>();
-            var expectedTypesArray = factory.GetAllAtomTypes();
-            foreach (var ee in expectedTypesArray)
-            {
-                definedTypes.Add(ee.AtomTypeName);
-            }
+        //    ICollection<string> definedTypes = new HashSet<string>();
+        //    var expectedTypesArray = factory.GetAllAtomTypes();
+        //    foreach (var ee in expectedTypesArray)
+        //    {
+        //        definedTypes.Add(ee.AtomTypeName);
+        //    }
 
-            if (Compares.AreOrderLessDeepEqual(definedTypes, testedAtomTypes))
-            {
-                // all is fine
-            }
-            else if (definedTypes.Count > testedAtomTypes.Count)
-            {
-                // more atom types defined than tested
-                int expectedTypeCount = definedTypes.Count;
-                foreach (var e in testedAtomTypes)
-                    definedTypes.Remove(e);
-                string errorMessage = "Atom types defined but not tested:";
-                foreach (var notTestedType in definedTypes)
-                {
-                    errorMessage += " " + notTestedType;
-                }
-                if (expectedTypeCount != testedAtomTypes.Count)
-                {
-                    Assert.Fail(errorMessage);
-                }
-            }
-            else
-            { // testedAtomTypes.Count > definedTypes.Count
-              // more atom types tested than defined
-                int testedTypeCount = testedAtomTypes.Count;
-                foreach (var e in definedTypes)
-                    testedAtomTypes.Remove(e);
-                string errorMessage = "Atom types tested but not defined:";
-                foreach (var notDefined in testedAtomTypes)
-                {
-                    errorMessage += " " + notDefined;
-                }
-                if (testedTypeCount != testedAtomTypes.Count)
-                {
-                    Assert.Fail(errorMessage);
-                }
-            }
-        }
+        //    if (Compares.AreOrderLessDeepEqual(definedTypes, testedAtomTypes))
+        //    {
+        //        // all is fine
+        //    }
+        //    else if (definedTypes.Count > testedAtomTypes.Count)
+        //    {
+        //        // more atom types defined than tested
+        //        int expectedTypeCount = definedTypes.Count;
+        //        foreach (var e in testedAtomTypes)
+        //            definedTypes.Remove(e);
+        //        string errorMessage = "Atom types defined but not tested:";
+        //        foreach (var notTestedType in definedTypes)
+        //        {
+        //            errorMessage += " " + notTestedType;
+        //        }
+        //        if (expectedTypeCount != testedAtomTypes.Count)
+        //        {
+        //            Assert.Fail(errorMessage);
+        //        }
+        //    }
+        //    else
+        //    { // testedAtomTypes.Count > definedTypes.Count
+        //      // more atom types tested than defined
+        //        int testedTypeCount = testedAtomTypes.Count;
+        //        foreach (var e in definedTypes)
+        //            testedAtomTypes.Remove(e);
+        //        string errorMessage = "Atom types tested but not defined:";
+        //        foreach (var notDefined in testedAtomTypes)
+        //        {
+        //            errorMessage += " " + notDefined;
+        //        }
+        //        if (testedTypeCount != testedAtomTypes.Count)
+        //        {
+        //            Assert.Fail(errorMessage);
+        //        }
+        //    }
+        //}
     }
 }

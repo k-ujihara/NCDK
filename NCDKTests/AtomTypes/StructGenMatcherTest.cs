@@ -782,32 +782,32 @@ namespace NCDK.AtomTypes
 
         }
 
-        /// <summary>
-        /// The test seems to be run by JUnit in order in which they found
-        /// in the source. Ugly, but @AfterClass does not work because that
-        /// methods does cannot assert anything.
-        ///
-        /// ...not anymore. Bad idea to do have such a test in the first place
-        /// but we can hack it by sorting by test name (see fix method order
-        /// annotation).
-        /// </summary>
-        [ClassCleanup()]
-        public static void UTestCountTestedAtomTypes()
-        {
-            AtomTypeFactory factory = AtomTypeFactory.GetInstance(
-                    "NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
+        ///// <summary>
+        ///// The test seems to be run by JUnit in order in which they found
+        ///// in the source. Ugly, but @AfterClass does not work because that
+        ///// methods does cannot assert anything.
+        /////
+        ///// ...not anymore. Bad idea to do have such a test in the first place
+        ///// but we can hack it by sorting by test name (see fix method order
+        ///// annotation).
+        ///// </summary>
+        //[ClassCleanup()]
+        //public static void UTestCountTestedAtomTypes()
+        //{
+        //    AtomTypeFactory factory = AtomTypeFactory.GetInstance(
+        //            "NCDK.Config.Data.structgen_atomtypes.xml", Silent.ChemObjectBuilder.Instance);
 
-            var expectedTypes = factory.GetAllAtomTypes().ToList();
-            if (expectedTypes.Count != testedAtomTypes.Count)
-            {
-                string errorMessage = "Atom types not tested:";
-                foreach (var expectedType in expectedTypes)
-                {
-                    if (!testedAtomTypes.ContainsKey(expectedType.AtomTypeName))
-                        errorMessage += " " + expectedType.AtomTypeName;
-                }
-                Assert.AreEqual(factory.GetAllAtomTypes().Count(), testedAtomTypes.Count, errorMessage);
-            }
-        }
+        //    var expectedTypes = factory.GetAllAtomTypes().ToList();
+        //    if (expectedTypes.Count != testedAtomTypes.Count)
+        //    {
+        //        string errorMessage = "Atom types not tested:";
+        //        foreach (var expectedType in expectedTypes)
+        //        {
+        //            if (!testedAtomTypes.ContainsKey(expectedType.AtomTypeName))
+        //                errorMessage += " " + expectedType.AtomTypeName;
+        //        }
+        //        Assert.AreEqual(factory.GetAllAtomTypes().Count(), testedAtomTypes.Count, errorMessage);
+        //    }
+        //}
     }
 }
