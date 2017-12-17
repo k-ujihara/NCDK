@@ -173,7 +173,7 @@ namespace NCDK.Smiles
                 {
                     reaction.Products.Add(productSet[i]);
                 }
-                reaction.SetProperty(CDKPropertyName.Title, title = productContainer.GetProperty<string>(CDKPropertyName.Title));
+                reaction.SetProperty(CDKPropertyName.Title, title = productContainer.Title);
             }
 
             try
@@ -429,7 +429,7 @@ namespace NCDK.Smiles
         /// Transfers the CXSMILES state onto the CDK atom/molecule data-structures.
         /// </summary>
         /// <param name="bldr">chem-object builder</param>
-        /// <param name="atoms">atoms parsed from the molecule or reaction. Reaction molecules are list  left to right.</param>
+        /// <param name="atoms">atoms parsed from the molecule or reaction. Reaction molecules are list left to right.</param>
         /// <param name="atomToMol">look-up of atoms to molecules when connectivity/sgroups need modification</param>
         /// <param name="cxstate">the CXSMILES state to read from</param>
         private void AssignCxSmilesInfo(IChemObjectBuilder bldr,

@@ -136,21 +136,21 @@ namespace NCDK.Geometries
         ///     points X1, X2... are returned
         /// The cases (see individual routines, which use idealised geometry by default):
         /// (0) zero ligands of refAtom. The resultant points are randomly oriented:
-        ///    (i) 1 points  required; +x,0,0
+        ///    (i) 1 points: required; +x,0,0
         ///    (ii) 2 points: use +x,0,0 and -x,0,0
         ///    (iii) 3 points: equilateral triangle in xy plane
         ///    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x
         /// (1a) 1 Ligand(B) of refAtom which itself has a ligand (J)
-        ///    (i) 1 points  required; vector along AB vector
+        ///    (i) 1 points: required; vector along AB vector
         ///    (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
         ///    (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J
         /// (1b) 1 Ligand(B) of refAtom which has no other ligands. A random J is
         /// generated and (1a) applied
         /// (2) 2 Ligands(B, C) of refAtom A
-        ///    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is linear, no points
+        ///    (i) 1 points: required; vector in ABC plane bisecting AB, AC. If ABC is linear, no points
         ///    (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i
         /// (3) 3 Ligands(B, C, D) of refAtom A
-        ///    (i) 1 points  required; if A, B, C, D coplanar, no points.
+        ///    (i) 1 points: required; if A, B, C, D coplanar, no points.
         ///       else vector is resultant of BA, CA, DA
         /// fails if atom itself has no coordinates or &gt;4 ligands
         /// </remarks>
@@ -226,13 +226,14 @@ namespace NCDK.Geometries
         /// <summary>
         /// Calculates substituent points.
         /// Calculate substituent points for
-        ///
+        /// </summary>
+        /// <remarks>
         /// (0) zero ligands of aPoint. The resultant points are randomly oriented:
-        ///    (i) 1 points  required; +x,0,0
+        ///    (i) 1 points: required; +x,0,0
         ///    (ii) 2 points: use +x,0,0 and -x,0,0
         ///    (iii) 3 points: equilateral triangle in xy plane
         ///    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
-        /// </summary>
+        /// </remarks>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="nwanted">number of points to calculate (1-4)</param>
         /// <param name="length">from aPoint</param>
@@ -270,13 +271,14 @@ namespace NCDK.Geometries
         /// <summary>
         /// Calculate new Point(s) X in a B-A system to form B-A-X.
         /// Use C as reference for * staggering about the B-A bond
-        ///
+        /// </summary>
+        /// <remarks>
         /// (1a) 1 Ligand(B) of refAtom (A) which itself has a ligand (C)
-        ///    (i) 1 points  required; vector along AB vector
+        ///    (i) 1 points: required; vector along AB vector
         ///    (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
         ///    (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C
         /// If C is null, a random non-colinear C is generated
-        /// </summary>
+        /// </remarks>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="bPoint">first ligand of A</param>
         /// <param name="cPoint">second ligand of A</param>
@@ -326,12 +328,13 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Calculate new Point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
-        ///
+        /// </summary>
+        /// <remarks>
         /// (2) 2 Ligands(B, C) of refAtom A
-        ///    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
+        ///    (i) 1 points: required; vector in ABC plane bisecting AB, AC. If ABC is
         ///        linear, no points
         ///    (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
-        /// </summary>
+        /// </remarks>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="bPoint">first ligand of A</param>
         /// <param name="cPoint">second ligand of A</param>
@@ -371,11 +374,12 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
-        ///
-        /// (3) 3 Ligands(B, C, D) of refAtom A
-        ///    (i) 1 points  required; if A, B, C, D coplanar, no points.
-        ///       else vector is resultant of BA, CA, DA
         /// </summary>
+        /// <remarks>
+        /// (3) 3 Ligands(B, C, D) of refAtom A
+        ///    (i) 1 points: required; if A, B, C, D coplanar, no points.
+        ///       else vector is resultant of BA, CA, DA
+        /// </remarks>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="bPoint">first ligand of A</param>
         /// <param name="cPoint">second ligand of A</param>

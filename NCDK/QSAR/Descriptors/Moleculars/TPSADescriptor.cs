@@ -312,7 +312,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
-        /// Gets the parameterNames attribute of the  TPSADescriptor object.
+        /// Gets the parameterNames attribute of the TPSADescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
         public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };

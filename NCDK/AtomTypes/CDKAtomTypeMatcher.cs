@@ -87,8 +87,7 @@ namespace NCDK.AtomTypes
             {
                 foreach (var atom in bond.Atoms)
                 {
-                    IList<IBond> atomBonds;
-                    if (!connectedBonds.TryGetValue(atom, out atomBonds))
+                    if (!connectedBonds.TryGetValue(atom, out IList<IBond> atomBonds))
                     {
                         atomBonds = new List<IBond>();
                         connectedBonds.Add(atom, atomBonds);
@@ -1808,7 +1807,7 @@ namespace NCDK.AtomTypes
                     IAtomType type = GetAtomType("S.anyl");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds)) return type;
                 }
-                else if (doubleBondedOxygens == 1)
+                else if (doubleBondedOxygens == 1 && countAttachedDoubleBonds == 1)
                 {
                     IAtomType type = GetAtomType("S.sp3d1");
                     if (IsAcceptable(atom, atomContainer, type, connectedBonds)) return type;

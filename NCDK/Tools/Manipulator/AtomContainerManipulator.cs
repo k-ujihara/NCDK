@@ -119,7 +119,7 @@ namespace NCDK.Tools.Manipulator
             int idx = container.Atoms.IndexOf(oldAtom);
             if (idx < 0)
                 return false;
-            container.SetAtom(idx, newAtom);
+            container.Atoms[idx] = newAtom;
             var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {
@@ -627,7 +627,7 @@ namespace NCDK.Tools.Manipulator
             }
 
             // rescue any false positives, i.e., hydrogens that are stereo-relevant
-            // the use of IStereoElement is not fully integrated yet to describe stereo information
+            // the use of IReadOnlyStereoElement<IChemObject, IChemObject> is not fully integrated yet to describe stereo information
             foreach (var stereoElement in org.StereoElements)
             {
                 if (stereoElement is ITetrahedralChirality)

@@ -319,7 +319,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="placedRingAtom">placedRingAtom</param>
         /// <param name="ringSet">ring system which placedRingAtom is part of</param>
         /// <param name="centerPlacedMolecule">the geometric center of the already placed molecule</param>
-        /// <param name="atomB">placed neighbour atom of  placedRingAtom</param>
+        /// <param name="atomB">placed neighbour atom of placedRingAtom</param>
         private void LayoutRingSystem(Vector3 originalCoord, IAtom placedRingAtom, IRingSet ringSet,
                 Vector3 centerPlacedMolecule, IAtom atomB, AtomPlacer3D ap3d)
         {

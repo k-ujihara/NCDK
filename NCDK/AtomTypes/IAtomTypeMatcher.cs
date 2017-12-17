@@ -45,7 +45,7 @@ namespace NCDK.AtomTypes
         /// </summary>
         /// <param name="container">AtomContainer for which atom types are perceived</param>
         /// <returns>The matching AtomType</returns>      
-        /// <exception cref="CDKException"> when something went wrong with going through  the AtomType's</exception>        
+        /// <exception cref="CDKException"> when something went wrong with going through the AtomType's</exception>        
         IAtomType[] FindMatchingAtomTypes(IAtomContainer container);
     }
 }

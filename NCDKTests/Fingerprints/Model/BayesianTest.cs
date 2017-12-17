@@ -106,36 +106,36 @@ namespace NCDK.Fingerprints.Model
         // temporary: standalone test public static void Main(string[] argv) {new
         // BayesianTest().Run();} public void Run() {
         // WriteLine("Beginning Bayesian model test..."); try {
-        // CheckFP(REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,0,REF_ECFP6_0);
+        // CheckFP(REF_MOLECULE,CircularFingerprinter.Classes.ECFP6,0,REF_ECFP6_0);
         // checkFP
-        // (REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,1024,REF_ECFP6_1024);
+        // (REF_MOLECULE,CircularFingerprinter.Classes.ECFP6,1024,REF_ECFP6_1024);
         // CheckTextFields(); ConfirmPredictions("Tiny.sdf",8,8,0,0);
         // ConfirmPredictions("Small.sdf",6,12,0,6);
         // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/0",CircularFingerprinter.CLASS_ECFP6,0);
+        // ,"ECFP6/0",CircularFingerprinter.Classes.ECFP6,0);
         // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/1024",CircularFingerprinter.CLASS_ECFP6,1024);
+        // ,"ECFP6/1024",CircularFingerprinter.Classes.ECFP6,1024);
         // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/32768",CircularFingerprinter.CLASS_ECFP6,32768);
+        // ,"ECFP6/32768",CircularFingerprinter.Classes.ECFP6,32768);
         // CompareFolding("FoldedProbes.sdf"
-        // ,"FCFP6/0",CircularFingerprinter.CLASS_FCFP6,0);
+        // ,"FCFP6/0",CircularFingerprinter.Classes.FCFP6,0);
         // RunTest("Binders.sdf","active"
-        // ,CircularFingerprinter.CLASS_ECFP6,1024,0,"Binders-ECFP6-1024-loo.bayesian"
+        // ,CircularFingerprinter.Classes.ECFP6,1024,0,"Binders-ECFP6-1024-loo.bayesian"
         // );
-        // RunTest("Binders.sdf","active",CircularFingerprinter.CLASS_ECFP6,32768,
+        // RunTest("Binders.sdf","active",CircularFingerprinter.Classes.ECFP6,32768,
         // 5,"Binders-ECFP6-32768-xv5.bayesian");
         // RunTest("Binders.sdf","active",CircularFingerprinter
-        // .CLASS_FCFP6,0,0,"Binders-FCFP6-0-loo.bayesian");
+        // .Classes.FCFP6,0,0,"Binders-FCFP6-0-loo.bayesian");
         // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.CLASS_ECFP6,
+        // ,CircularFingerprinter.Classes.ECFP6,
         // 1024,0,"MLProbes-ECFP6-1024-loo.bayesian");
         // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.CLASS_ECFP6,
+        // ,CircularFingerprinter.Classes.ECFP6,
         // 32768,5,"MLProbes-ECFP6-32768-xv5.bayesian");
         // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.CLASS_FCFP6,0,0,"MLProbes-FCFP6-0-loo.bayesian");
+        // ,CircularFingerprinter.Classes.FCFP6,0,0,"MLProbes-FCFP6-0-loo.bayesian");
         // runTest
-        // ("MLProbes.sdf","Lipinski score",CircularFingerprinter.CLASS_FCFP6,
+        // ("MLProbes.sdf","Lipinski score",CircularFingerprinter.Classes.FCFP6,
         // 256,3,"MLProbes-FCFP6-256-xv3.bayesian"); } catch (CDKException ex) {
         // WriteLine("** Test failed **"); Console.Out.WriteLine(ex.StackTrace); return; }
         // WriteLine("Model test complete."); }
@@ -145,8 +145,8 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: verifying circular fingerprints for a single molecule");
 
-            CheckFP(REF_MOLECULE, CircularFingerprinter.CLASS_ECFP6, 0, REF_ECFP6_0);
-            CheckFP(REF_MOLECULE, CircularFingerprinter.CLASS_ECFP6, 1024, REF_ECFP6_1024);
+            CheckFP(REF_MOLECULE, CircularFingerprinter.Classes.ECFP6, 0, REF_ECFP6_0);
+            CheckFP(REF_MOLECULE, CircularFingerprinter.Classes.ECFP6, 1024, REF_ECFP6_1024);
         }
 
         [TestMethod()]
@@ -171,10 +171,10 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: comparing folded fingerprints to reference set");
 
-            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.CLASS_ECFP6, 0);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinter.CLASS_ECFP6, 1024);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinter.CLASS_ECFP6, 32768);
-            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinter.CLASS_FCFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.Classes.ECFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinter.Classes.ECFP6, 1024);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinter.Classes.ECFP6, 32768);
+            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinter.Classes.FCFP6, 0);
         }
 
         [TestMethod()]
@@ -183,10 +183,10 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian");
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
-                "Binders-ECFP6-32768-xv5.bayesian");
-            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian");
+            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.ECFP6, 32768, 5,
+                "Binders-ECFP6-32768-xv5.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
         }
 
         [TestMethod()]
@@ -195,29 +195,29 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 1024, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.ECFP6, 1024, 0,
                 "MLProbes-ECFP6-1024-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.ECFP6, 32768, 5,
                 "MLProbes-ECFP6-32768-xv5.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 0, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.FCFP6, 0, 0,
                 "MLProbes-FCFP6-0-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 256, 3,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.FCFP6, 256, 3,
                 "MLProbes-FCFP6-256-xv3.bayesian");
         }
 
         // ----------------- private methods -----------------
 
         // make sure that for a single molecule, the way that the hashes are created & folded is consistent with a reference
-        private void CheckFP(string molstr, int classType, int folding, int[] refHash)
+        private void CheckFP(string molstr, CircularFingerprinter.Classes classType, int folding, int[] refHash)
         {
-            string strType = classType == CircularFingerprinter.CLASS_ECFP6 ? "ECFP6" : "FCFP6";
+            string strType = classType == CircularFingerprinter.Classes.ECFP6 ? "ECFP6" : "FCFP6";
             WriteLine("Comparing hash codes for " + strType + "/folding=" + folding);
 
             IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), Default.ChemObjectBuilder.Instance).First();
             Bayesian model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
-            int[] calcHash = model.training[0];
+            int[] calcHash = model.Training[0];
             bool same = calcHash.Length == refHash.Length;
             if (same) for (int n = 0; n < calcHash.Length; n++)
                     if (calcHash[n] != refHash[n])
@@ -241,10 +241,12 @@ namespace NCDK.Fingerprints.Model
             string dummyTitle = "some title", dummyOrigin = "some origin";
             string[] dummyComments = new string[] { "comment1", "comment2" };
 
-            Bayesian model1 = new Bayesian(CircularFingerprinter.CLASS_ECFP6);
-            model1.NoteTitle = dummyTitle;
-            model1.NoteOrigin = dummyOrigin;
-            model1.NoteComments = dummyComments;
+            Bayesian model1 = new Bayesian(CircularFingerprinter.Classes.ECFP6)
+            {
+                NoteTitle = dummyTitle,
+                NoteOrigin = dummyOrigin,
+                NoteComments = dummyComments
+            };
 
             Bayesian model2 = null;
             try
@@ -274,7 +276,7 @@ namespace NCDK.Fingerprints.Model
 
             List<IAtomContainer> molecules = new List<IAtomContainer>();
             List<bool> activities = new List<bool>();
-            Bayesian model = new Bayesian(CircularFingerprinter.CLASS_ECFP6, 1024);
+            Bayesian model = new Bayesian(CircularFingerprinter.Classes.ECFP6, 1024);
 
             try
             {
@@ -335,7 +337,7 @@ namespace NCDK.Fingerprints.Model
         }
 
         // compares a series of molecules for folding fingerprints being literally identical
-        private void CompareFolding(string sdfile, string fpField, int classType, int folding)
+        private void CompareFolding(string sdfile, string fpField, CircularFingerprinter.Classes classType, int folding)
         {
             WriteLine("[" + sdfile + "] calculation of: " + fpField);
 
@@ -353,7 +355,7 @@ namespace NCDK.Fingerprints.Model
 
                         Bayesian model = new Bayesian(classType, folding);
                         model.AddMolecule(mol, false);
-                        int[] hashes = model.training[0];
+                        int[] hashes = model.Training[0];
 
                         string gotHashes = ArrayStr(hashes);
                         string reqHashes = (string)mol.GetProperties()[fpField];
@@ -383,33 +385,42 @@ namespace NCDK.Fingerprints.Model
 
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
-        private void RunTest(string sdfile, string actvField, int classType, int folding, int xval, string modelFN)
+        private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN)
+        { 
+            RunTest(sdfile, actvField, classType, folding, xval, modelFN, false);
+        }
+
+        private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN, bool perceiveStereo)
         {
             WriteLine("[" + modelFN + "]");
             WriteLine("    Loading " + sdfile);
 
             try
             {
-                Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
-                EnumerableSDFReader rdr = new EnumerableSDFReader(ins, Default.ChemObjectBuilder.Instance);
-                Bayesian model = new Bayesian(classType, folding);
+                Bayesian model = new Bayesian(classType, folding)
+                {
+                    PerceiveStereo = perceiveStereo
+                };
 
                 int row = 0, numActives = 0;
-                foreach (var mol in rdr)
+                using (
+                    EnumerableSDFReader rdr = new EnumerableSDFReader(
+                        ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile), Default.ChemObjectBuilder.Instance))
                 {
-                    row++;
+                    foreach (var mol in rdr)
+                    {
+                        row++;
 
-                    string stractv = (string)mol.GetProperties()[actvField];
-                    int active = stractv.Equals("true") ? 1 : stractv.Equals("false") ? 0 : int.Parse(stractv);
-                    if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
+                        string stractv = (string)mol.GetProperties()[actvField];
+                        int active = stractv.Equals("true") ? 1 : stractv.Equals("false") ? 0 : int.Parse(stractv);
+                        if (active != 0 && active != 1) throw new CDKException("Activity field not found or invalid");
 
-                    model.AddMolecule(mol, active == 1);
-                    numActives += active;
+                        model.AddMolecule(mol, active == 1);
+                        numActives += active;
+                    }
                 }
-                ins.Close();
 
-                WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives)
-                        + " inactives");
+                WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives) + " inactives");
 
                 model.Build();
                 if (xval == 3)
@@ -419,57 +430,59 @@ namespace NCDK.Fingerprints.Model
                 else
                     model.ValidateLeaveOneOut();
 
-                WriteLine("    Validation: ROC AUC=" + model.ROCAUC);
+                WriteLine("    Validation: ROC AUC=" + model.RocAUC);
 
                 WriteLine("    Parsing reference model");
 
                 //FileReader frdr=new FileReader(modelFN);
-                var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN));
-                Bayesian ref_ = Bayesian.Deserialise(mrdr);
-                mrdr.Close();
+                Bayesian reference;
+                using (var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN)))
+                {
+                    reference = Bayesian.Deserialise(mrdr);
+                }
 
                 // start comparing the details...
 
                 bool failed = false;
-                if (model.Folding != ref_.Folding)
+                if (model.Folding != reference.Folding)
                 {
-                    WriteLine("    ///* reference folding size=" + ref_.Folding);
+                    WriteLine("    ** reference folding size=" + reference.Folding);
                     failed = true;
                 }
-                if (model.TrainingSize != ref_.TrainingSize)
+                if (model.TrainingSize != reference.TrainingSize)
                 {
-                    WriteLine("    ///* reference training size=" + ref_.TrainingSize);
+                    WriteLine("    ** reference training size=" + reference.TrainingSize);
                     failed = true;
                 }
-                if (model.TrainingActives != ref_.TrainingActives)
+                if (model.TrainingActives != reference.TrainingActives)
                 {
-                    WriteLine("    ///* reference training actives=" + ref_.TrainingActives);
+                    WriteLine("    ** reference training actives=" + reference.TrainingActives);
                     failed = true;
                 }
-                if (!model.ROCType.Equals(ref_.ROCType))
+                if (!model.RocType.Equals(reference.RocType))
                 {
-                    WriteLine("    ///* reference ROC type=" + ref_.ROCType);
+                    WriteLine("    ** reference ROC type=" + reference.RocType);
                     failed = true;
                 }
-                if (!DblEqual(model.ROCAUC, ref_.ROCAUC))
+                if (!DblEqual(model.RocAUC, reference.RocAUC))
                 {
-                    WriteLine("    ///* reference ROC AUC=" + ref_.ROCAUC);
+                    WriteLine("    ** reference ROC AUC=" + reference.RocAUC);
                     failed = true;
                 }
-                if (Math.Abs(model.lowThresh - ref_.lowThresh) > 0.00000000000001)
+                if (Math.Abs(model.LowThreshold - reference.LowThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference lowThresh=" + ref_.lowThresh + " different to calculated " + model.lowThresh);
+                    WriteLine("    ** reference lowThresh=" + reference.LowThreshold + " different to calculated " + model.LowThreshold);
                     failed = true;
                 }
-                if (Math.Abs(model.highThresh - ref_.highThresh) > 0.00000000000001)
+                if (Math.Abs(model.HighThreshold - reference.HighThreshold) > 0.00000000000001)
                 {
-                    WriteLine("    ///* reference highThresh=" + ref_.highThresh + " different to calculated "
-                            + model.highThresh);
+                    WriteLine("    ** reference highThresh=" + reference.HighThreshold + " different to calculated "
+                            + model.HighThreshold);
                     failed = true;
                 }
 
                 // make sure individual hash bit contributions match
-                IDictionary<int, double> mbits = model.contribs, rbits = ref_.contribs;
+                IDictionary<int, double> mbits = model.Contributions, rbits = reference.Contributions;
                 if (mbits.Count != rbits.Count)
                 {
                     WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);

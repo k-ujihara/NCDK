@@ -56,15 +56,15 @@ namespace NCDK.SMARTS
     /// </remarks>
     /// <example>
     /// <code>
-    /// IChemObjectBuilder      bldr      = SilentChemObjectBuilder.getInstance();
-    /// SmilesParser            smipar    = new SmilesParser(bldr);
+    /// IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+    /// SmilesParser smipar = new SmilesParser(bldr);
     /// 
-    /// IAtomContainer          mol       = smipar.parseSmiles("[nH]1ccc2c1cccc2");
+    /// IAtomContainer mol = smipar.parseSmiles("[nH]1ccc2c1cccc2");
     /// SmartsFragmentExtractor subsmarts = new SmartsFragmentExtractor(mol);
     /// 
     /// // smarts=[nH1v3X3+0][cH1v4X3+0][cH1v4X3+0][cH0v4X3+0]
     /// // hits  =1
-    /// String             smarts    = mol.generate(new int[]{0,1,3,4});
+    /// String smarts = mol.generate(new int[]{0,1,3,4});
     /// 
     /// subsmarts.setMode(MODE_JCOMPOUNDMAPPER);
     /// // smarts=n(ccc(a)a)a

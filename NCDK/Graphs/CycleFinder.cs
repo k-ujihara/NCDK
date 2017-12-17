@@ -52,7 +52,7 @@ namespace NCDK.Graphs
         /// <param name="molecule">a molecule, can be disconnected.</param>
         /// <param name="length">maximum length cycle to find (set to molecule.Atoms.Count for all)</param>
         /// <returns>an instance for querying the cycles (rings) in the molecule</returns>
-        /// <exception cref="IntractableException">if problem could not be solved within some  predefined bounds.</exception>
+        /// <exception cref="IntractableException">if problem could not be solved within some predefined bounds.</exception>
         Cycles Find(IAtomContainer molecule, int length);
 
         /// <summary>

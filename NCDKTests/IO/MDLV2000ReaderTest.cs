@@ -218,7 +218,7 @@ namespace NCDK.IO
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
-            Assert.AreEqual("a-pinen.mol", mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("a-pinen.mol", mol.Title);
         }
 
         [TestMethod()]
@@ -1755,9 +1755,9 @@ namespace NCDK.IO
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 var selements = container.StereoElements;
-                IEnumerator<IStereoElement> siter = selements.GetEnumerator();
+                var siter = selements.GetEnumerator();
                 Assert.IsTrue(siter.MoveNext());
-                IStereoElement se = siter.Current;
+                var se = siter.Current;
                 Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
                 Assert.AreEqual(TetrahedralStereo.Clockwise, ((ITetrahedralChirality)se).Stereo);
                 AssertAreEqual(
@@ -1776,9 +1776,9 @@ namespace NCDK.IO
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 var selements = container.StereoElements;
-                IEnumerator<IStereoElement> siter = selements.GetEnumerator();
+                var siter = selements.GetEnumerator();
                 Assert.IsTrue(siter.MoveNext());
-                IStereoElement se = siter.Current;
+                var se = siter.Current;
                 Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
                 Assert.AreEqual(TetrahedralStereo.AntiClockwise, ((ITetrahedralChirality)se).Stereo);
                 AssertAreEqual(

@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> atoms,
             List<int> bondsInCycloex)
         {
-            ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r     WITH Partial CHARGES:
+            ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r WITH Partial CHARGES:
             if (atoms.Any())
             {
                 //Variables

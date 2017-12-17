@@ -272,16 +272,18 @@ namespace NCDK.Beam
         /// <remarks>
         /// Implicit Valence Explicit Example
         /// <pre>
-        /// @ 4       @TH1     O[C@H](N)C or O[C@]([H])(N)C
-        /// @@ 4       @TH2     O[C@@H](N)C or O[C@@]([H])(N)C
-        /// @ 3       @TH1     C[S@](N)=O
-        /// @@ 3       @TH2     C[S@@](N)=O
-        /// @ 2       @AL1     OC=[C@]=CO
-        /// @ 2       @AL2     OC=[C@@]=CO
-        /// @ 5       @TB1     S[As@](F)(Cl)(Br)C=O
-        /// @@ 5       @TB2     S[As@@](F)(Cl)(Br)C=O
-        /// @ 5       @OH1     S[Co@@](F)(Cl)(Br)(I)C=O
-        /// @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S
+        /// <list type="table">
+        /// <item><term>@ 4</term><term>@TH1</term><term>@TH1</term></item>
+        /// <item><term>@@ 4</term><term>@TH2</term><term>@TH2</term></item>
+        /// <item><term>@ 3</term><term>@TH1</term><term>@TH1</term></item>
+        /// <item><term>@@ 3</term><term>@TH2</term><term>@TH2</term></item>
+        /// <item><term>@ 2</term><term>@AL1</term><term>@AL1</term></item>
+        /// <item><term>@ 2</term><term>@AL2</term><term>@AL2</term></item>
+        /// <item><term>@ 5</term><term>@TB1</term><term>@TB1</term></item>
+        /// <item><term>@@ 5</term><term>@TB2</term><term>@TB2</term></item>
+        /// <item><term>@ 5</term><term>@OH1</term><term>@OH1</term></item>
+        /// <item><term>@@ 5</term><term>@OH2</term><term>@OH2</term></item>
+        /// </list>
         /// </pre>
         /// </remarks>
         /// <param name="g">chemical graph</param>

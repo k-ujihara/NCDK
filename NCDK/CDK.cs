@@ -27,7 +27,7 @@ namespace NCDK
     /// </summary>
     // @cdk.module core
     // @cdk.githash
-    public class CDK
+    public static class CDK
     {
         /// <summary>
         /// Returns the version of this CDK library.

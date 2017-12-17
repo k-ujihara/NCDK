@@ -250,7 +250,7 @@ namespace NCDK.Geometries
         /// Positive angles are anticlockwise looking down the axis towards the origin. Assume right hand
         /// coordinate system.</remarks>
         /// <param name="atom">The atom to rotate</param>
-        /// <param name="p1">The  first point of the line segment</param>
+        /// <param name="p1">The first point of the line segment</param>
         /// <param name="p2">The second point of the line segment</param>
         /// <param name="angle">The angle to rotate by (in degrees)</param>
         public static void Rotate(IAtom atom, Vector3 p1, Vector3 p2, double angle)

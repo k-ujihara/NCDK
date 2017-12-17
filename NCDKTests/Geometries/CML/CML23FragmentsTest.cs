@@ -135,7 +135,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(5, mol.Atoms.Count);
             IAtom atom = mol.Atoms[0];
             Assert.AreEqual("C", atom.Symbol);
-            IStereoElement stereo = mol.StereoElements.First();
+            var stereo = mol.StereoElements.First();
             Assert.IsTrue(stereo is TetrahedralChirality);
             Assert.AreEqual(((TetrahedralChirality)stereo).ChiralAtom.Id, "a1");
             var ligandAtoms = ((TetrahedralChirality)stereo).Ligands;
@@ -369,7 +369,7 @@ namespace NCDK.IO.CML
             IChemFile chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
-            Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("acetic acid", mol.Title);
         }
 
         // @cdk.bug 2142400

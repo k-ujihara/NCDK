@@ -236,6 +236,24 @@ namespace NCDK.Smiles.SMARTS
             Assert.IsTrue(ptrn.Matches(Smi("[C@@]1(O[C@@]([C@@]([C@]([C@]1(C)O)(C)O)(O)C)(O)C)(O)C")));
         }
 
+        [TestMethod()]
+        public void HasIsotope()
+        {
+            var ptrn = SmartsPattern.Create("[!0]");
+            Assert.IsFalse(ptrn.Matches(Smi("C")));
+            Assert.IsTrue(ptrn.Matches(Smi("[12C]")));
+            Assert.IsTrue(ptrn.Matches(Smi("[13C]")));
+        }
+
+        [TestMethod()]
+        public void hIsotope()
+        {
+            var ptrn = SmartsPattern.Create("[2#1,3#1]");
+            Assert.IsFalse(ptrn.Matches(Smi("[H][H]")));
+            Assert.IsTrue(ptrn.Matches(Smi("[2H]")));
+            Assert.IsTrue(ptrn.Matches(Smi("[3H]")));
+        }
+
         IAtomContainer Smi(string smi)
         {
             return new SmilesParser(bldr).ParseSmiles(smi);

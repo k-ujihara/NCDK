@@ -1274,7 +1274,7 @@ namespace NCDK.Layout
             var elements = StereoElementFactory.Using2DCoordinates(mol).CreateAll();
             int numCis = 0;
             int numTrans = 0;
-            foreach (IStereoElement se in elements)
+            foreach (var se in elements)
             {
                 if (se is IDoubleBondStereochemistry)
                 {

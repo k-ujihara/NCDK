@@ -607,7 +607,7 @@ namespace NCDK.Stereo
             Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
         }
 
-        static void AssertTetrahedralCenter(IStereoElement element,
+        static void AssertTetrahedralCenter(IReadOnlyStereoElement<IChemObject, IChemObject> element,
                                             IAtom focus,
                                             TetrahedralStereo winding,
                                             params IAtom[] neighbors)

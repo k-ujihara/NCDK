@@ -51,7 +51,7 @@ namespace NCDK.RingSearches
     /// bonds that are returned for each molecules.
     /// </para>
     /// <para>
-    /// <img alt="isolated and fused cycle systems" src="http://i56.photobucket.com/albums/g187/johnymay/isolated-and-fused-cycles-01_zpse0311377.png"/>
+    /// <img alt="isolated and fused cycle systems" src="http://cdk.github.io/cdk/img/isolated-and-fused-cycles-01_zpse0311377.PNG"/>
     /// </para>
     /// <list type="bullet">
     /// <item>Two separate isolated cycles</item> <item>Two

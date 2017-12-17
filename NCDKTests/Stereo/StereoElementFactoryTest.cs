@@ -512,7 +512,7 @@ namespace NCDK.Stereo
                 IAtomContainer ac = mdl.Read(new AtomContainer());
 
                 // MDL reader currently adds stereo automatically
-                IStereoElement[] ses = ac.StereoElements.ToArray();
+                var ses = ac.StereoElements.ToArray();
 
                 Assert.AreEqual(1, ses.Length);
                 Assert.IsNotNull(ses[0]);

@@ -439,7 +439,7 @@ namespace NCDK.Graphs
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetNPathsTo_IAtom"]/*' />
         /// </example>
-        /// <param name="end">the <paramref name="end"/> vertex to which the number of paths will be  returned</param>
+        /// <param name="end">the <paramref name="end"/> vertex to which the number of paths will be returned</param>
         /// <returns>the number of paths to the end vertex</returns>
         public int GetNPathsTo(IAtom end)
         {

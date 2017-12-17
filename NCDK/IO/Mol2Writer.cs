@@ -109,9 +109,9 @@ namespace NCDK.IO
             try
             {
                 Debug.WriteLine("Writing header...");
-                if (mol.GetProperty<string>(CDKPropertyName.Title) != null)
+                if (mol.Title != null)
                 {
-                    writer.Write("#        Name: " + mol.GetProperty<string>(CDKPropertyName.Title));
+                    writer.Write("#        Name: " + mol.Title);
                     writer.Write('\n');
                 }
                 // FIXME: add other types of meta data

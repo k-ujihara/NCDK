@@ -33,7 +33,7 @@ using System.Collections.Generic;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// Convert a chemical graph with explicit  single or aromatic edge labels to one with implicit edge labels.
+    /// Convert a chemical graph with explicit single or aromatic edge labels to one with implicit edge labels.
     /// </summary>
     // @author John May
     internal sealed class ExplicitToImplicit

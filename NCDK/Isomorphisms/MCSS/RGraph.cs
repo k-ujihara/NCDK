@@ -59,7 +59,7 @@ namespace NCDK.Isomorphisms.MCSS
     /// </para>
     /// <para>
     /// The RGraph will also contain one edge representing the
-    /// adjacency between node B and C  that is : bonds 1-2 and 2-3 in G1
+    /// adjacency between node B and C that is : bonds 1-2 and 2-3 in G1
     /// and bonds 2-3 and 3-4 in G2.
     /// </para>
     /// <para>
@@ -69,7 +69,7 @@ namespace NCDK.Isomorphisms.MCSS
     /// substructure,....).
     /// </para>
     /// <para>
-    /// The  search may be constrained by mandatory elements (e.g. bonds that
+    /// The search may be constrained by mandatory elements (e.g. bonds that
     /// have to be present in the mapped common substructures).
     /// </para>
     /// <para>
@@ -579,11 +579,11 @@ namespace NCDK.Isomorphisms.MCSS
         }
 
         /// <summary>
-        ///  Test if set A is contained in  set B.
+        /// Test if set A is contained in set B.
         /// </summary>
         /// <param name="A">a bitSet</param>
         /// <param name="B">a bitSet</param>
-        /// <returns>true if  A is contained in  B</returns>
+        /// <returns>true if A is contained in B</returns>
         private bool IsContainedIn(BitArray A, BitArray B)
         {
             bool result = false;

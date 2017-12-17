@@ -35,7 +35,7 @@ namespace NCDK
             list = new List<T>(objects);
         }
 
-        public T this[int index]
+        public virtual T this[int index]
         {
             get { return list[index]; }
             set
@@ -102,16 +102,6 @@ namespace NCDK
             list.RemoveAt(index);
             old?.Listeners?.Remove(Listener);
             Listener?.OnStateChanged(new ChemObjectChangeEventArgs(this));
-        }
-
-        internal void RemoveOnly(T item)
-        {
-            list.Remove(item);
-        }
-
-        internal void RemoveOnlyAt(int index)
-        {
-            list.RemoveAt(index);
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

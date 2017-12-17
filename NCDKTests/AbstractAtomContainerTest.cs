@@ -416,7 +416,7 @@ namespace NCDK
 
             Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
 
-            IStereoElement element = elements.First();
+            var element = elements.First();
 
             Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
             Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
@@ -480,7 +480,7 @@ namespace NCDK
 
             Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
 
-            IStereoElement element = elements.First();
+            var element = elements.First();
 
             Assert.IsInstanceOfType(dbStereo, element.GetType(), "cloned element was incorrect class");
             Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
@@ -547,7 +547,7 @@ namespace NCDK
 
             Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
 
-            IStereoElement element = elements.First();
+            var element = elements.First();
 
             Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
             Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
@@ -583,21 +583,18 @@ namespace NCDK
 
             Assert.IsFalse(container.StereoElements.Count > 0);
 
-            var dbElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-            dbElements.Add(new DoubleBondStereochemistry(bond, new IBond[] { b1, b2 },
-                        DoubleBondConformation.Together));
-            container.SetStereoElements(dbElements);
+            var dbElement = new DoubleBondStereochemistry(bond, new IBond[] { b1, b2 }, DoubleBondConformation.Together);
+            container.SetStereoElements(new[] { dbElement });
             var first = container.StereoElements.GetEnumerator();
             Assert.IsTrue(first.MoveNext(), "container did not have stereo elements");
-            Assert.AreEqual(dbElements[0], first.Current, "expected element to equal set element (double bond)");
+            Assert.AreEqual(dbElement, first.Current, "expected element to equal set element (double bond)");
             Assert.IsFalse(first.MoveNext(), "container had more then one stereo element");
 
-            var tetrahedralElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-            tetrahedralElements.Add(new TetrahedralChirality(atom, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise));
-            container.SetStereoElements(tetrahedralElements);
+            var tetrahedralElement = new TetrahedralChirality(atom, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise);
+            container.SetStereoElements(new[] { tetrahedralElement });
             var second = container.StereoElements.GetEnumerator();
             Assert.IsTrue(second.MoveNext(), "container did not have stereo elements");
-            Assert.AreEqual(tetrahedralElements[0], second.Current, "expected element to equal set element (tetrahedral)");
+            Assert.AreEqual(tetrahedralElement, second.Current, "expected element to equal set element (tetrahedral)");
             Assert.IsFalse(second.MoveNext(), "container had more then one stereo element");
         }
 
@@ -927,7 +924,7 @@ namespace NCDK
 
             container.RemoveAllElements();
 
-            foreach (IStereoElement element in container.StereoElements)
+            foreach (IReadOnlyStereoElement<IChemObject, IChemObject> element in container.StereoElements)
             {
                 count++;
             }
@@ -977,7 +974,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void TestSetAtomOutOfRange()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
@@ -1005,7 +1002,7 @@ namespace NCDK
             IAtom c2 = container.Builder.NewAtom("C");
             container.Atoms.Add(c1);
             container.Atoms.Add(c2);
-            container.SetAtom(0, c2);
+            container.Atoms[0] = c2;
         }
 
         [TestMethod()]
@@ -1031,7 +1028,7 @@ namespace NCDK
             container.Bonds.Add(b2);
 
             IAtom a4 = container.Builder.NewAtom();
-            container.SetAtom(2, a4);
+            container.Atoms[2] = a4;
             Assert.AreEqual(a4, b2.End);
         }
 
@@ -1062,7 +1059,7 @@ namespace NCDK
             container.SingleElectrons.Add(se);
 
             IAtom a4 = bldr.NewAtom();
-            container.SetAtom(2, a4);
+            container.Atoms[2] = a4;
 
             Assert.AreEqual(a4, se.Atom);
         }
@@ -1100,11 +1097,11 @@ namespace NCDK
                                                                 TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.NewAtom();
-            container.SetAtom(2, aNew);
+            container.Atoms[2] = aNew;
 
             var siter = container.StereoElements.GetEnumerator();
             Assert.IsTrue(siter.MoveNext());
-            IStereoElement se = siter.Current;
+            var se = siter.Current;
             Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
             ITetrahedralChirality tc = (ITetrahedralChirality)se;
             Assert.AreEqual(a1, tc.ChiralAtom);
@@ -1141,14 +1138,14 @@ namespace NCDK
                                                                      DoubleBondConformation.Together));
 
             IAtom aNew = bldr.NewAtom();
-            container.SetAtom(2, aNew);
+            container.Atoms[2] = aNew;
 
             Assert.AreEqual(aNew, b2.End);
             Assert.AreEqual(aNew, b3.Begin);
 
             var siter = container.StereoElements.GetEnumerator();
             Assert.IsTrue(siter.MoveNext());
-            IStereoElement se = siter.Current;
+            var se = siter.Current;
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
             IDoubleBondStereochemistry tc = (IDoubleBondStereochemistry)se;
             Assert.AreEqual(b2, tc.StereoBond);
@@ -1328,7 +1325,7 @@ namespace NCDK
 
             Assert.AreEqual(3, acetone.Bonds.Count);
 
-            acetone.RemoveAllBonds();
+            acetone.Bonds.Clear();
             Assert.AreEqual(0, acetone.Bonds.Count);
         }
 
@@ -1835,11 +1832,11 @@ namespace NCDK
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(5, acetone.GetElectronContainers().Count());
-            acetone.RemoveElectronContainer(acetone.GetElectronContainers().Skip(3).First());
+            acetone.Remove(acetone.GetElectronContainers().Skip(3).First());
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(4, acetone.GetElectronContainers().Count());
-            acetone.RemoveElectronContainer(acetone.GetElectronContainers().First()); // first bond now
+            acetone.Remove(acetone.GetElectronContainers().First()); // first bond now
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
         }
@@ -2500,9 +2497,9 @@ namespace NCDK
                             new IAtom[] { carbon1, carbon2, carbon3, carbon4 }, TetrahedralStereo.Clockwise);
             container.StereoElements.Add(stereoElement);
 
-            IEnumerator<IStereoElement> stereoElements = container.StereoElements.GetEnumerator();
+            var stereoElements = container.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
-            IStereoElement element = stereoElements.Current;
+            var element = stereoElements.Current;
             Assert.IsNotNull(element);
             Assert.IsTrue(element is ITetrahedralChirality);
             Assert.AreEqual(carbon, ((ITetrahedralChirality)element).ChiralAtom);

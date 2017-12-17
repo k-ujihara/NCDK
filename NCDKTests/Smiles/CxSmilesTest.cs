@@ -41,7 +41,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(3, reaction.Reactants.Count);
             Assert.AreEqual(1, reaction.Agents.Count);
             Assert.AreEqual(1, reaction.Products.Count);
-            Assert.AreEqual("", (string)reaction.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", reaction.GetProperty<string>(CDKPropertyName.Title));
         }
 
         // grouping is invalid as we group 4 in two separate fragments
@@ -52,7 +52,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(6, reaction.Reactants.Count);
             Assert.AreEqual(1, reaction.Agents.Count);
             Assert.AreEqual(1, reaction.Products.Count);
-            Assert.AreEqual("", (string)reaction.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", reaction.GetProperty<string>(CDKPropertyName.Title));
         }
 
         [TestMethod()]
@@ -62,14 +62,14 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, reaction.Reactants.Count);
             Assert.AreEqual(2, reaction.Agents.Count);
             Assert.AreEqual(1, reaction.Products.Count);
-            Assert.AreEqual("", (string)reaction.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", reaction.GetProperty<string>(CDKPropertyName.Title));
         }
 
         [TestMethod()]
         public void EmptyCXSMILES()
         {
             IReaction reaction = smipar.ParseReactionSmiles("CC1=NC2=C(O)C=CC=C2C=C1.CC(Cl)=O>[Al+3].[Cl-].[Cl-].[Cl-].[O-][N+](=O)C1=CC=CC=C1>CC(=O)C1=C2C=CC(C)=NC2=C(O)C=C1 ||");
-            Assert.AreEqual("", (string)reaction.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", reaction.GetProperty<string>(CDKPropertyName.Title));
         }
 
         [TestMethod()]
@@ -79,7 +79,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, reaction.Reactants.Count);
             Assert.AreEqual(1, reaction.Agents.Count);
             Assert.AreEqual(2, reaction.Products.Count);
-            Assert.AreEqual("", (string)reaction.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", reaction.GetProperty<string>(CDKPropertyName.Title));
         }
 
         [TestMethod()]
@@ -87,7 +87,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |<benzene>|");
             Assert.IsNotNull(mol);
-            Assert.AreEqual("|<benzene>|", (string)mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("|<benzene>|", (string)mol.Title);
         }
 
         [TestMethod()]
@@ -95,7 +95,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |");
             Assert.IsNotNull(mol);
-            Assert.AreEqual("|", (string)mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("|", (string)mol.Title);
         }
 
         [TestMethod()]
@@ -103,7 +103,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |c:1,3,4| benzene");
             Assert.IsNotNull(mol);
-            Assert.AreEqual("benzene", (string)mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("benzene", (string)mol.Title);
         }
 
         [TestMethod()]
@@ -159,7 +159,7 @@ namespace NCDK.Smiles
             // attach-points
             Assert.IsInstanceOfType(mol.Atoms[9], typeof(IPseudoAtom));
             Assert.AreEqual(1, ((IPseudoAtom)mol.Atoms[9]).AttachPointNum);
-            Assert.AreEqual("", (string)mol.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("", (string)mol.Title);
         }
 
         [TestMethod()]

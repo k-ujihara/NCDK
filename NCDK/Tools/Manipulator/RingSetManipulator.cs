@@ -87,7 +87,7 @@ namespace NCDK.Tools.Manipulator
         /// Return the total number of bonds over all the rings in the colllection.
         ///
         /// <param name="set">The collection of rings</param>
-        /// <returns>The total number of  bonds</returns>
+        /// <returns>The total number of bonds</returns>
         /// </summary>
         public static int GetBondCount(IRingSet set)
         {

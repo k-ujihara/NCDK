@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     internal class ChiIndexUtils
     {
         /// <summary>
-        /// Gets the fragments from a target  matching a set of query fragments.
+        /// Gets the fragments from a target matching a set of query fragments.
         /// <para>
         /// This method returns a list of lists. Each list contains the atoms of the target <see cref="IAtomContainer"/>
         /// that arise in the mapping of bonds in the target molecule to the bonds in the query fragment.

@@ -50,7 +50,7 @@ namespace NCDK.Hash
     /// <example>
     /// Usage
     /// <code>
-    /// SeedGenerator     seeding   = ...
+    /// SeedGenerator seeding   = ...
     /// AtomHashGenerator generator = new BasicAtomHashGenerator(seeding, new Xorshift(), 32);
     ///
     /// IAtomContainer benzene = MoleculeFactory.Benzene();

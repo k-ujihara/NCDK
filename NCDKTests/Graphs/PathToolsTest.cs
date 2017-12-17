@@ -275,7 +275,8 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void TestBreadthFirstSearch_IAtomContainer_List_IAtomContainer() {
+        public virtual void TestBreadthFirstSearch_IAtomContainer_List_IAtomContainer()
+        {
             IAtomContainer atomContainer;
             IAtom start;
             atomContainer = sp.ParseSmiles("CCCC");

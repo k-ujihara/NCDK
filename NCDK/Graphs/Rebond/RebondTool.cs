@@ -60,7 +60,7 @@ namespace NCDK.Graphs.Rebond
         /// </summary>
         public void Rebond(IAtomContainer container)
         {
-            container.RemoveAllBonds();
+            container.Bonds.Clear();
             maxCovalentRadius = 0.0;
             // construct a new binary space partition tree
             bspt = new Bspt<ITupleAtom>(3);

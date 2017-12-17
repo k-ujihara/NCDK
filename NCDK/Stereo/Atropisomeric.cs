@@ -27,12 +27,15 @@ using System.Linq;
 namespace NCDK.Stereo
 {
     /// <summary>
-    /// Restricted axial rotation around Aryl-Aryl bonds. The atropisomer is
+    /// Restricted axial rotation around Aryl-Aryl bonds.
+    /// </summary>
+    /// <remarks>
+    /// The atropisomer is
     /// stored in a similar manner to <see cref="ExtendedTetrahedral"/> (and
     /// <see cref="TetrahedralChirality"/>) except instead of storing the central atom
     /// we store the sigma bond around which the rotation is restricted and the
     /// four carriers are connect to either end atom of the 'focus' bond.
-    /// <br>
+    /// <para>
     /// <pre>
     ///      a     b'
     ///     /       \
@@ -43,11 +46,13 @@ namespace NCDK.Stereo
     /// Ar: Aryl (carriers connected to either end of 'f')
     /// a,a',b,b': ortho substituted on the Aryl
     /// </pre>
-    /// <br>
-    /// Typical examples include <a href="https://en.wikipedia.org/wiki/BINOL">
-    /// BiNOL</a>, and <see href="https://en.wikipedia.org/wiki/BINAP">BiNAP</see>.
-    /// </summary>
-    /// <seealso cref=""/>
+    /// </para>
+    /// <para>
+    /// Typical examples include <see href="https://en.wikipedia.org/wiki/BINOL">
+    /// BiNOL</see>, and <see href="https://en.wikipedia.org/wiki/BINAP">BiNAP</see>.
+    /// </para>
+    /// </remarks>
+    /// <seealso href="http://opensmiles.org/opensmiles.html#_octahedral_centers">Octahedral Centers, OpenSMILES</seealso>
     public class Atropisomeric
             : AbstractStereo<IBond, IAtom>
     {

@@ -35,7 +35,7 @@ namespace <#= ns.NS #>
 {
     /// <summary>
     /// Implements the concept of a covalent bond between two or more atoms. A bond is
-    /// considered to be a number of electrons connecting two or more  of atoms.
+    /// considered to be a number of electrons connecting two or more of atoms.
     /// </summary>
     /// <remarks>
     /// <para>

@@ -289,7 +289,7 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Create an extended tetrahedral element for the atom at index <paramref name="v"/>.
-        /// If an extended  tetrahedral element could not be created then null is
+        /// If an extended tetrahedral element could not be created then null is
         /// returned. An element can not be created if, one or more atoms was
         /// missing coordinates, the atom has an unspecified (wavy) bond, the atom
         /// is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not
@@ -762,7 +762,8 @@ namespace NCDK.Stereo
             /// <returns>the unit vector</returns>
             private Vector2 ToUnitVector(Vector2 from, Vector2 to)
             {
-                if (from == to) return Vector2.Zero;
+                if (from == to)
+                    return Vector2.Zero;
                 Vector2 v2d = new Vector2(to.X - from.X, to.Y - from.Y);
                 return Vector2.Normalize(v2d);
             }

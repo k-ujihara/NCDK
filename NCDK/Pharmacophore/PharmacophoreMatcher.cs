@@ -73,7 +73,7 @@ namespace NCDK.Pharmacophore
     /// <para>Extensions to SMARTS</para>
     /// <para>
     /// The pharmacophore supports some extentions to the SMARTS language that lead
-    /// to flexible pharmacophore definitions  Note that these extensions are specific to
+    /// to flexible pharmacophore definitions.  Note that these extensions are specific to
     /// pharmacophore usage and are not generally provided by the SMARTS parser itself.
     /// </para>
     /// <b>|</b> - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
@@ -156,7 +156,7 @@ namespace NCDK.Pharmacophore
             if (!CheckQuery(pharmacophoreQuery))
                 throw new CDKException(
                         "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-            string title = atomContainer.GetProperty<string>(CDKPropertyName.Title);
+            string title = atomContainer.Title;
 
             if (initializeTarget)
                 pharmacophoreMolecule = GetPharmacophoreMolecule(atomContainer);
@@ -331,7 +331,7 @@ namespace NCDK.Pharmacophore
             var matched = new HashSet<string>();
             var uniqueAtoms = new LinkedHashSet<PharmacophoreAtom>();
 
-            Debug.WriteLine($"Converting [{input.GetProperty<string>(CDKPropertyName.Title)}] to a pcore molecule");
+            Debug.WriteLine($"Converting [{input.Title}] to a pcore molecule");
 
             // lets loop over each pcore query atom
             foreach (var atom in pharmacophoreQuery.Atoms)

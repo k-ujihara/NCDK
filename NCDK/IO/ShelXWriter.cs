@@ -103,7 +103,7 @@ namespace NCDK.IO
 
         private void WriteCrystal(ICrystal crystal)
         {
-            var title = crystal.GetProperty<string>(CDKPropertyName.Title);
+            var title = crystal.Title;
             if (title != null && title.Trim().Length > 0)
             {
                 Writeln("TITL " + title.ToString().Trim());

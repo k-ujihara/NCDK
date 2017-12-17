@@ -11,13 +11,13 @@
                 IAtomContainer container = someMolecule;
                 StereoElementFactory stereo = StereoElementFactory.Using2DCoordinates(container).InterpretProjections(Projection.Haworth);
 
-                // set the elements replacing any existing elements (recommended)
+                // set the elements replacing any existing elements 
                 container.SetStereoElements(stereo.CreateAll());
 
-                // adding elements individually is no recommended as the AtomContainer
-                // does not check for duplicate or contradicting elements
+                // adding elements individually is also possible but existing elements are 
+                // are not removed 
                 foreach (var element in stereo.CreateAll())
-                    container.StereoElements.Add(element); // bad, there may already be elements
+                    container.StereoElements.Add(element);
                 #endregion
             }
             {

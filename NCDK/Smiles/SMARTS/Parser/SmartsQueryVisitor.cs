@@ -86,13 +86,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder);
             ringIdAtom.Atom = atom;
             IQueryBond bond;
-            if (node.JJTGetNumChildren() == 0)
+            if (node.JjtGetNumChildren() == 0)
             { // implicit bond
                 bond = null;
             }
             else
             {
-                bond = (IQueryBond)node.JJTGetChild(0).JJTAccept(this, data);
+                bond = (IQueryBond)node.JjtGetChild(0).JjtAccept(this, data);
             }
             ringIdAtom.RingBond = bond;
             return ringIdAtom;
@@ -100,8 +100,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTAtom node, object data)
         {
-            IQueryAtom atom = (IQueryAtom)node.JJTGetChild(0).JJTAccept(this, data);
-            for (int i = 1; i < node.JJTGetNumChildren(); i++)
+            IQueryAtom atom = (IQueryAtom)node.JjtGetChild(0).JjtAccept(this, data);
+            for (int i = 1; i < node.JjtGetNumChildren(); i++)
             { // if there are ring identifiers
                 throw new InvalidOperationException();
             }
@@ -110,7 +110,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         private void HandleRingClosure(IQueryAtom atom, ASTRingIdentifier ringIdentifier)
         {
-            RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.JJTAccept(this, atom);
+            RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.JjtAccept(this, atom);
 
             // if there is already a RingIdentifierAtom, create a bond between
             // them and add the bond to the query
@@ -183,19 +183,19 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTStart node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            return node.JjtGetChild(0).JjtAccept(this, data);
         }
 
         public object Visit(ASTReaction node, object data)
         {
             IAtomContainer query = new QueryAtomContainer(builder);
-            for (int grpIdx = 0; grpIdx < node.JJTGetNumChildren(); grpIdx++)
+            for (int grpIdx = 0; grpIdx < node.JjtGetNumChildren(); grpIdx++)
             {
 
                 int rollback = query.Atoms.Count;
 
-                ASTGroup group = (ASTGroup)node.JJTGetChild(grpIdx);
-                group.JJTAccept(this, query);
+                ASTGroup group = (ASTGroup)node.JjtGetChild(grpIdx);
+                group.JjtAccept(this, query);
 
                 // fill in the roles for newly create atoms
                 if (group.GetRole() != ASTGroup.ROLE_ANY)
@@ -254,13 +254,13 @@ namespace NCDK.Smiles.SMARTS.Parser
                     if (id > maxId) maxId = id;
             }
 
-            for (int i = 0; i < node.JJTGetNumChildren(); i++)
+            for (int i = 0; i < node.JjtGetNumChildren(); i++)
             {
-                ASTSmarts smarts = (ASTSmarts)node.JJTGetChild(i);
+                ASTSmarts smarts = (ASTSmarts)node.JjtGetChild(i);
                 ringAtoms = new RingIdentifierAtom[10];
                 query = new QueryAtomContainer(builder);
 
-                smarts.JJTAccept(this, null);
+                smarts.JjtAccept(this, null);
 
                 // update component info
                 if (components.Length > 0 || smarts.ComponentId > 0)
@@ -333,8 +333,8 @@ namespace NCDK.Smiles.SMARTS.Parser
             SMARTSAtom atom = null;
             SMARTSBond bond = null;
 
-            ASTAtom first = (ASTAtom)node.JJTGetChild(0);
-            atom = (SMARTSAtom)first.JJTAccept(this, null);
+            ASTAtom first = (ASTAtom)node.JjtGetChild(0);
+            atom = (SMARTSAtom)first.JjtAccept(this, null);
             if (data != null)
             { // this is a sub smarts
                 bond = (SMARTSBond)((object[])data)[1];
@@ -366,16 +366,16 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
 
             // now process the rest of the bonds/atoms
-            for (int i = 1; i < node.JJTGetNumChildren(); i++)
+            for (int i = 1; i < node.JjtGetNumChildren(); i++)
             {
-                Node child = node.JJTGetChild(i);
+                Node child = node.JjtGetChild(i);
                 if (child is ASTLowAndBond)
                 {
-                    bond = (SMARTSBond)child.JJTAccept(this, data);
+                    bond = (SMARTSBond)child.JjtAccept(this, data);
                 }
                 else if (child is ASTAtom)
                 {
-                    SMARTSAtom newAtom = (SMARTSAtom)child.JJTAccept(this, null);
+                    SMARTSAtom newAtom = (SMARTSAtom)child.JjtAccept(this, null);
                     if (bond == null)
                     { // since no bond was specified it could be aromatic or single
                         bond = new AromaticOrSingleQueryBond(builder);
@@ -400,7 +400,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
                 else if (child is ASTSmarts)
                 { // another smarts
-                    child.JJTAccept(this, new object[] { atom, bond });
+                    child.JjtAccept(this, new object[] { atom, bond });
                     bond = null;
                 }
                 else if (child is ASTRingIdentifier)
@@ -418,7 +418,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTNotBond node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
                 LogicalOperatorBond bond = new LogicalOperatorBond(builder);
@@ -434,60 +434,60 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTImplicitHighAndBond node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTLowAndBond node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTOrBond node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "or";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTExplicitHighAndBond node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
         }
@@ -547,7 +547,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
             recursiveVisitor.query = new QueryAtomContainer(builder);
             recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
-            return new RecursiveSmartsAtom((IQueryAtomContainer)node.JJTGetChild(0).JJTAccept(recursiveVisitor, null));
+            return new RecursiveSmartsAtom((IQueryAtomContainer)node.JjtGetChild(0).JjtAccept(recursiveVisitor, null));
         }
 
         public ASTStart GetRoot(Node node)
@@ -556,7 +556,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return (ASTStart)node;
             }
-            return GetRoot(node.JJTGetParent());
+            return GetRoot(node.JjtGetParent());
         }
 
         public object Visit(ASTElement node, object data)
@@ -679,10 +679,10 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            IAtom expr = (IAtom)node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() > 1)
+            IAtom expr = (IAtom)node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() > 1)
             {
-                IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
+                IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
                 expr = LogicalOperatorAtom.And((IQueryAtom)expr, right);
             }
             if (node.GetMapIdx() > 0)
@@ -692,18 +692,18 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTOrExpression node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.Or((IQueryAtom)left, right);
         }
 
         public object Visit(ASTNotExpression node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
                 return LogicalOperatorAtom.Not((IQueryAtom)left);
@@ -713,23 +713,23 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTExplicitHighAndExpression node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 
         public object Visit(ASTImplicitHighAndExpression node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            object left = node.JjtGetChild(0).JjtAccept(this, data);
+            if (node.JjtGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JjtGetChild(1).JjtAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 

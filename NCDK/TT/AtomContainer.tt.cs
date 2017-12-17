@@ -46,13 +46,102 @@ namespace NCDK.Default
     // @author steinbeck
     // @cdk.created 2000-10-02 
     [Serializable]
-    public class AtomContainer
+    public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
+        internal class ObservableChemObjectCollection_IAtom
+            : ObservableChemObjectCollection<IAtom>
+        {
+            AtomContainer parent;
+
+            public ObservableChemObjectCollection_IAtom(AtomContainer parent, IEnumerable<IAtom> atoms)
+                : base(parent, atoms)
+            {
+                this.parent = parent;
+				AllowDuplicate = false;
+            }
+
+            public override IAtom this[int index]
+            {
+                get => base[index];
+                set
+                {
+                    if (index >= base.Count)
+                        throw new IndexOutOfRangeException("No atom at index: " + index);
+                    int aidx = base.IndexOf(value);
+                    if (aidx >= 0)
+                        throw new ArgumentException("Atom already in container at index: " + index, nameof(value));
+                    IAtom oldAtom = base[index];
+                    base[index] = value;
+
+		 
+                    value.Listeners.Add(parent);
+                    oldAtom.Listeners.Remove(parent);
+		 
+
+                    // replace in electron containers
+                    foreach (var bond in parent.bonds)
+                    {
+                        for (int i = 0; i < bond.Atoms.Count; i++)
+                        {
+                            if (oldAtom.Equals(bond.Atoms[i]))
+                            {
+                                bond.Atoms[i] = value;
+                            }
+                        }
+                    }
+                    foreach (var ec in parent.singleElectrons)
+                    {
+                        if (oldAtom.Equals(ec.Atom))
+                            ec.Atom = value;
+                    }
+                    foreach (var lp in parent.lonePairs)
+                    {
+                        if (oldAtom.Equals(lp.Atom))
+                            lp.Atom = value;
+                    }
+
+                    // update stereo
+                    CDKObjectMap map = null;
+                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
+                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
+
+                    foreach (var se in parent.stereoElements)
+                    {
+                        if (se.Contains(oldAtom))
+                        {
+                            if (oldStereo == null)
+                            {
+                                oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                map = new CDKObjectMap();
+                                foreach (var a in this)
+                                    map.Add(a, a);
+                                map.Set(oldAtom, value);
+                            }
+                            oldStereo.Add(se);
+                            newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
+                        }
+                    }
+                    if (oldStereo != null)
+                    {
+                        foreach (var stereo in oldStereo)
+                            parent.stereoElements.Remove(stereo);
+                        foreach (var stereo in newStereo)
+                            parent.stereoElements.Add(stereo);
+                    }
+
+		 
+                    parent.NotifyChanged();
+		 
+                }
+            }
+        }
+
         /// <summary>
         /// Atoms contained by this object.
         /// </summary>
-        internal ObservableChemObjectCollection<IAtom> atoms;
+        internal ObservableChemObjectCollection_IAtom atoms;
 
         /// <summary>
         /// Bonds contained by this object.
@@ -78,7 +167,7 @@ namespace NCDK.Default
         internal bool isSingleOrDouble;
 
         private void Init(
-            ObservableChemObjectCollection<IAtom> atoms,
+            ObservableChemObjectCollection_IAtom atoms,
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
@@ -99,11 +188,11 @@ namespace NCDK.Default
             IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
-                CreateObservableChemObjectCollection(atoms, false),
-                CreateObservableChemObjectCollection(bonds, true),
-                CreateObservableChemObjectCollection(lonePairs, true),
-                CreateObservableChemObjectCollection(singleElectrons, true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements)
+                new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
+                CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
+                CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
+                CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
+                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -188,13 +277,7 @@ namespace NCDK.Default
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
-
-        /// <inheritdoc/>
-        public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
-		{
-			stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(elements);
-		}
+        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -378,7 +461,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
+        public virtual void Remove(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
@@ -455,7 +538,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
-            RemoveAllBonds();
+            Bonds.Clear();
             foreach (var e in lonePairs)
                 e.Listeners?.Remove(this);
             foreach (var e in singleElectrons)
@@ -464,34 +547,6 @@ namespace NCDK.Default
             singleElectrons.Clear();
 
              NotifyChanged();         }
-
-        /// <inheritdoc/>
-        public virtual void RemoveAllBonds()
-        {
-            foreach (var e in bonds)
-                e.Listeners?.Remove(this);
-            bonds.Clear();
-             NotifyChanged();         }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            var bond = Builder.NewBond(atom1, atom2, order, stereo);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            IBond bond = Builder.NewBond(atom1, atom2, order);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
 
         /// <inheritdoc/>
         public virtual void AddLonePairTo(IAtom atom)
@@ -598,7 +653,7 @@ namespace NCDK.Default
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
-            clone.atoms = CreateObservableChemObjectCollection(atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)), false);
+            clone.atoms = new ObservableChemObjectCollection_IAtom(this, atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)));
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
@@ -617,89 +672,6 @@ namespace NCDK.Default
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
-
-        /// <inheritdoc/>
-        public void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        /// <inheritdoc/>
-        public void SetBonds(IEnumerable<IBond> bonds)
-        {
-            this.bonds.Clear();
-            foreach (var bond in bonds)
-                this.bonds.Add(bond);
-        }
-
-		public void SetAtom(int idx, IAtom atom)
-        {
-            if (idx >= atoms.Count)
-                throw new IndexOutOfRangeException("No atom at index: " + idx);
-            int aidx = atoms.IndexOf(atom);
-            if (aidx >= 0)
-                throw new ArgumentException("Atom already in container at index: " + idx, nameof(atom));
-            IAtom oldAtom = atoms[idx];
-            atoms[idx] = atom;
-		 
-            atom.Listeners.Add(this);
-            oldAtom.Listeners.Remove(this);
-		
-            // replace in electron containers
-            foreach (var bond in bonds)
-            {
-                for (int i = 0; i < bond.Atoms.Count; i++)
-                {
-                    if (oldAtom.Equals(bond.Atoms[i]))
-                    {
-                        bond.Atoms[i] = atom;
-                    }
-                }
-            }
-            foreach (var ec in singleElectrons)
-            {
-                if (oldAtom.Equals(ec.Atom))
-                    ec.Atom = atom; 
-            }
-            foreach (var lp in lonePairs)
-            {
-                if (oldAtom.Equals(lp.Atom))
-                    lp.Atom = atom;
-            }
-
-            // update stereo
-            CDKObjectMap map = null;
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
-
-            foreach (var se in stereoElements)
-            {
-                if (se.Contains(oldAtom))
-                {
-                    if (oldStereo == null)
-                    {
-                        oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                        newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                        map = new CDKObjectMap();
-                        foreach (var a in atoms)
-                            map.Add(a, a);
-                        map.Set(oldAtom, atom);
-                    }
-                    oldStereo.Add(se);
-                    newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
-                }
-            }
-            if (oldStereo != null)
-            {
-                foreach (var stereo in oldStereo)
-                    stereoElements.Remove(stereo);
-                foreach (var stereo in newStereo)
-                    stereoElements.Add(stereo);
-            }
-
-             NotifyChanged();         }
 
         /// <inheritdoc/>
         public virtual bool IsEmpty() => atoms.Count == 0;
@@ -731,13 +703,97 @@ namespace NCDK.Silent
     // @author steinbeck
     // @cdk.created 2000-10-02 
     [Serializable]
-    public class AtomContainer
+    public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
+        internal class ObservableChemObjectCollection_IAtom
+            : ObservableChemObjectCollection<IAtom>
+        {
+            AtomContainer parent;
+
+            public ObservableChemObjectCollection_IAtom(AtomContainer parent, IEnumerable<IAtom> atoms)
+                : base(parent, atoms)
+            {
+                this.parent = parent;
+				AllowDuplicate = false;
+            }
+
+            public override IAtom this[int index]
+            {
+                get => base[index];
+                set
+                {
+                    if (index >= base.Count)
+                        throw new IndexOutOfRangeException("No atom at index: " + index);
+                    int aidx = base.IndexOf(value);
+                    if (aidx >= 0)
+                        throw new ArgumentException("Atom already in container at index: " + index, nameof(value));
+                    IAtom oldAtom = base[index];
+                    base[index] = value;
+
+		 
+
+                    // replace in electron containers
+                    foreach (var bond in parent.bonds)
+                    {
+                        for (int i = 0; i < bond.Atoms.Count; i++)
+                        {
+                            if (oldAtom.Equals(bond.Atoms[i]))
+                            {
+                                bond.Atoms[i] = value;
+                            }
+                        }
+                    }
+                    foreach (var ec in parent.singleElectrons)
+                    {
+                        if (oldAtom.Equals(ec.Atom))
+                            ec.Atom = value;
+                    }
+                    foreach (var lp in parent.lonePairs)
+                    {
+                        if (oldAtom.Equals(lp.Atom))
+                            lp.Atom = value;
+                    }
+
+                    // update stereo
+                    CDKObjectMap map = null;
+                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
+                    List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
+
+                    foreach (var se in parent.stereoElements)
+                    {
+                        if (se.Contains(oldAtom))
+                        {
+                            if (oldStereo == null)
+                            {
+                                oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
+                                map = new CDKObjectMap();
+                                foreach (var a in this)
+                                    map.Add(a, a);
+                                map.Set(oldAtom, value);
+                            }
+                            oldStereo.Add(se);
+                            newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
+                        }
+                    }
+                    if (oldStereo != null)
+                    {
+                        foreach (var stereo in oldStereo)
+                            parent.stereoElements.Remove(stereo);
+                        foreach (var stereo in newStereo)
+                            parent.stereoElements.Add(stereo);
+                    }
+
+		 
+                }
+            }
+        }
+
         /// <summary>
         /// Atoms contained by this object.
         /// </summary>
-        internal ObservableChemObjectCollection<IAtom> atoms;
+        internal ObservableChemObjectCollection_IAtom atoms;
 
         /// <summary>
         /// Bonds contained by this object.
@@ -763,7 +819,7 @@ namespace NCDK.Silent
         internal bool isSingleOrDouble;
 
         private void Init(
-            ObservableChemObjectCollection<IAtom> atoms,
+            ObservableChemObjectCollection_IAtom atoms,
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
@@ -784,11 +840,11 @@ namespace NCDK.Silent
             IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             Init(
-                CreateObservableChemObjectCollection(atoms, false),
-                CreateObservableChemObjectCollection(bonds, true),
-                CreateObservableChemObjectCollection(lonePairs, true),
-                CreateObservableChemObjectCollection(singleElectrons, true),
-                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements)
+                new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
+                CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
+                CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
+                CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
+                new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IReadOnlyStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -871,13 +927,7 @@ namespace NCDK.Silent
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual IList<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
-
-        /// <inheritdoc/>
-        public virtual void SetStereoElements(IEnumerable<IReadOnlyStereoElement<IChemObject, IChemObject>> elements)
-		{
-			stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(elements);
-		}
+        public virtual ICollection<IReadOnlyStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -1061,7 +1111,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
+        public virtual void Remove(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
@@ -1138,7 +1188,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
-            RemoveAllBonds();
+            Bonds.Clear();
             foreach (var e in lonePairs)
                 e.Listeners?.Remove(this);
             foreach (var e in singleElectrons)
@@ -1147,34 +1197,6 @@ namespace NCDK.Silent
             singleElectrons.Clear();
 
                     }
-
-        /// <inheritdoc/>
-        public virtual void RemoveAllBonds()
-        {
-            foreach (var e in bonds)
-                e.Listeners?.Remove(this);
-            bonds.Clear();
-                    }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            var bond = Builder.NewBond(atom1, atom2, order, stereo);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
-        {
-            if (!(Contains(atom1) && Contains(atom2)))
-                throw new InvalidOperationException();
-            IBond bond = Builder.NewBond(atom1, atom2, order);
-            Bonds.Add(bond);
-            // no OnStateChanged
-        }
 
         /// <inheritdoc/>
         public virtual void AddLonePairTo(IAtom atom)
@@ -1281,7 +1303,7 @@ namespace NCDK.Silent
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
-            clone.atoms = CreateObservableChemObjectCollection(atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)), false);
+            clone.atoms = new ObservableChemObjectCollection_IAtom(this, atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)));
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
@@ -1299,86 +1321,6 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
-                    }
-
-        /// <inheritdoc/>
-        public void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        /// <inheritdoc/>
-        public void SetBonds(IEnumerable<IBond> bonds)
-        {
-            this.bonds.Clear();
-            foreach (var bond in bonds)
-                this.bonds.Add(bond);
-        }
-
-		public void SetAtom(int idx, IAtom atom)
-        {
-            if (idx >= atoms.Count)
-                throw new IndexOutOfRangeException("No atom at index: " + idx);
-            int aidx = atoms.IndexOf(atom);
-            if (aidx >= 0)
-                throw new ArgumentException("Atom already in container at index: " + idx, nameof(atom));
-            IAtom oldAtom = atoms[idx];
-            atoms[idx] = atom;
-		
-            // replace in electron containers
-            foreach (var bond in bonds)
-            {
-                for (int i = 0; i < bond.Atoms.Count; i++)
-                {
-                    if (oldAtom.Equals(bond.Atoms[i]))
-                    {
-                        bond.Atoms[i] = atom;
-                    }
-                }
-            }
-            foreach (var ec in singleElectrons)
-            {
-                if (oldAtom.Equals(ec.Atom))
-                    ec.Atom = atom; 
-            }
-            foreach (var lp in lonePairs)
-            {
-                if (oldAtom.Equals(lp.Atom))
-                    lp.Atom = atom;
-            }
-
-            // update stereo
-            CDKObjectMap map = null;
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> oldStereo = null;
-            List<IReadOnlyStereoElement<IChemObject, IChemObject>> newStereo = null;
-
-            foreach (var se in stereoElements)
-            {
-                if (se.Contains(oldAtom))
-                {
-                    if (oldStereo == null)
-                    {
-                        oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                        newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
-                        map = new CDKObjectMap();
-                        foreach (var a in atoms)
-                            map.Add(a, a);
-                        map.Set(oldAtom, atom);
-                    }
-                    oldStereo.Add(se);
-                    newStereo.Add((IReadOnlyStereoElement<IChemObject, IChemObject>)se.Clone(map));
-                }
-            }
-            if (oldStereo != null)
-            {
-                foreach (var stereo in oldStereo)
-                    stereoElements.Remove(stereo);
-                foreach (var stereo in newStereo)
-                    stereoElements.Add(stereo);
-            }
-
                     }
 
         /// <inheritdoc/>

@@ -345,7 +345,7 @@ namespace NCDK.Isomorphisms
             return conformation == DoubleBondConformation.Together ? 1 : -1;
         }
 
-        // could be moved into the IStereoElement to allow faster introspection
+        // could be moved into the StereoElement to allow faster introspection
         private enum StereoType
         {
             Unset = 0,

@@ -46,7 +46,7 @@ namespace NCDK.Stereo
     /// The configuration can be normalized to the lowest order (1) using the
     /// <see cref="Normalize()"/> function.
     /// </remarks>
-    /// <seealso cref=""/>
+    /// <seealso href="http://opensmiles.org/opensmiles.html#_octahedral_centers">Octahedral Centers, OpenSMILES</seealso>
     /// <seealso cref="Octahedral"/>
     /// <seealso cref="SquarePlanar"/>
     public sealed class TrigonalBipyramidal : AbstractStereo<IAtom, IAtom>

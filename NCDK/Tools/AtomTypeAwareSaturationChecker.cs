@@ -276,7 +276,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="bond1">The first bond</param>
         /// <param name="bond2">The other bond</param>
-        /// <returns>True if any of  the atoms in <paramref name="bond1"/> also are in <paramref name="bond2"/></returns>
+        /// <returns>True if any of the atoms in <paramref name="bond1"/> also are in <paramref name="bond2"/></returns>
         private bool IsConnected(IBond bond1, IBond bond2)
         {
             foreach (var atom in bond1.Atoms)

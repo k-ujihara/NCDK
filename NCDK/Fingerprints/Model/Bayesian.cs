@@ -52,7 +52,7 @@ namespace NCDK.Fingerprints.Model
     ///         J. Biomol. Screen., v.10, pp.682-686 (2005)
     ///         Molec. Divers., v.10, pp.283-299 (2006)</para>
     /// 
-    /// <para>Currently only the CircularFingerprinter fingerprints are supported (i.e. ECFP_n and FCFP_n).</para>
+    /// <para>Currently only the <see cref="CircularFingerprinter"/> fingerprints are supported (i.e. ECFP_n and FCFP_n).</para>
     /// 
     /// <para>Model building is done by selecting the fingerprinting method and folding size, then providing
     /// a series of molecules &amp; responses. Individual model contributions are kept around in order to
@@ -74,53 +74,109 @@ namespace NCDK.Fingerprints.Model
     // @cdk.githash
     public class Bayesian
     {
-        private int classType;
-        private int folding = 0;
+        /// <summary>
+        /// Access to the fingerprint type, one of <see cref="CircularFingerprinter.Classes"/>.
+        /// </summary>
+        public CircularFingerprinter.Classes ClassType { get; private set; }
 
-        /// incoming hash codes: actual values, and subsumed values are {#active,#total}
+        /// <summary>
+        /// Access to the fingerprint folding extent, either 0 (for none) or a power of 2.
+        /// </summary>
+        public int Folding { get; private set; } = 0;
+
+        /// <summary>
+        /// Whether stereochemistry should be re-perceived from 2D/3D
+        /// coordinates. By default stereochemistry encoded as <see cref="IStereoElement{TFocus, TCarriers}"/>s
+        /// are used.
+        /// </summary>
+        public bool PerceiveStereo { get; set; }
+
+        // incoming hash codes: actual values, and subsumed values are {#active,#total}
         private int numActive = 0;
-        protected IDictionary<int, int[]> inHash = new Dictionary<int, int[]>();
-        protected internal List<int[]> training = new List<int[]>();
-        protected List<bool> activity = new List<bool>();
 
+        protected IDictionary<int, int[]> InHash => inHash;
+        private Dictionary<int, int[]> inHash = new Dictionary<int, int[]>();
+
+        public IList<int[]> Training => training;
+        private List<int[]> training = new List<int[]>();
+
+        public IList<bool> Activity => activity;
+        private List<bool> activity = new List<bool>();
+
+        /// <summary>
         /// built model: contributions for each hash code
-        protected internal IDictionary<int, double> contribs = new Dictionary<int, double>();
-        protected internal double lowThresh = 0, highThresh = 0;
-        protected double range = 0, invRange = 0;                            // cached to speed up scaling calibration
+        /// </summary>
+        public IDictionary<int, double> Contributions => contribs;
+        private Dictionary<int, double> contribs = new Dictionary<int, double>();
 
+        public double LowThreshold { get; private set; } = 0;
+        public double HighThreshold { get; private set; } = 0;
+
+        private double range = 0;
+        private double invRange = 0;                            // cached to speed up scaling calibration
+
+        /// <summary>
         /// self-validation metrics: can optionally be calculated after a build
-        protected double[] estimates = null;
-        protected double[] rocX = null, rocY = null;                          // between 0..1, and rounded to modest precision
-        protected string rocType = null;
-        protected double rocAUC = double.NaN;
-        protected int trainingSize = 0, trainingActives = 0;                     // this is serialised, while the actual training set is not
+        /// </summary>
+        public double[] Estimates { get; private set; } = null;
 
-        /// optional text attributes (serialisable)
+        /// <summary>
+        /// X-values that can be used to plot the ROC-curve.
+        /// </summary>
+        public double[] RocX { get; private set; } = null;
+
+        /// <summary>
+        /// Y-values that can be used to plot the ROC-curve.
+        /// </summary>
+        public double[] RocY { get; private set; } = null;                          // between 0..1, and rounded to modest precision
+
+        /// <summary>
+        /// a string description of the method used to create the ROC curve (e.g. "leave-one-out" or "five-fold").
+        /// </summary>
+        public string RocType { get; private set; } = null;
+
+        /// <summary>
+        /// the integral of the area-under-the-curve of the receiver-operator-characteristic. A value of 1
+        /// means perfect recall, 0.5 is pretty much random.
+        /// </summary>
+        public double RocAUC { get; private set; } = double.NaN;
+
+        /// <summary>
+        /// the size of the training set, i.e. the total number of molecules used to create the model.
+        /// </summary>
+        public int TrainingSize { get; private set; } = 0;
+
+        /// <summary>
+        /// the number of actives in the training set that was used to create the model.
+        /// </summary>
+        public int TrainingActives { get; private set; } = 0;                     // this is serialised, while the actual training set is not
+
+        // optional text attributes (serialisable)
         private string noteTitle = null, noteOrigin = null;
         private string[] noteComments = null;
 
         private static readonly Regex PTN_HASHLINE = new Regex("^(-?\\d+)=([\\d\\.Ee-]+)", RegexOptions.Compiled);
 
-        /// ----------------- public methods -----------------
+        // ----------------- public methods -----------------
 
         /// <summary>
         /// Instantiate a Bayesian model with no data.
         /// </summary>
         /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
-        public Bayesian(int classType)
+        public Bayesian(CircularFingerprinter.Classes classType)
         {
-            this.classType = classType;
+            this.ClassType = classType;
         }
 
         /// <summary>
         /// Instantiate a Bayesian model with no data.
         /// </summary>
-        /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
+        /// <param name="classType">one of the <see cref="CircularFingerprinter.Classes"/> enum</param>
         /// <param name="folding">the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding</param>
-        public Bayesian(int classType, int folding)
+        public Bayesian(CircularFingerprinter.Classes classType, int folding)
         {
-            this.classType = classType;
-            this.folding = folding;
+            this.ClassType = classType;
+            this.Folding = folding;
 
             // make sure the folding is valid
             bool bad = false;
@@ -135,16 +191,6 @@ namespace NCDK.Fingerprints.Model
         }
 
         /// <summary>
-        /// Access to the fingerprint type, one of <see cref="CircularFingerprinter"/>.CLASS_*.
-        /// </summary>
-        public int ClassType => classType;
-
-        /// <summary>
-        /// Access to the fingerprint folding extent, either 0 (for none) or a power of 2.
-        /// </summary>
-        public int Folding => folding;
-
-        /// <summary>
         /// Appends a new row to the model source data, which consists of a molecule and whether or not it
         /// is considered active.
         /// </summary>
@@ -154,16 +200,17 @@ namespace NCDK.Fingerprints.Model
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
-            CircularFingerprinter circ = new CircularFingerprinter(classType);
+            CircularFingerprinter circ = new CircularFingerprinter(ClassType);
+            circ.PerceiveStereo = this.PerceiveStereo;
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints into a sorted set
-            int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
+            int AND_BITS = Folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
             var hashset = new SortedSet<int>();
             for (int n = circ.FPCount - 1; n >= 0; n--)
             {
                 int code = circ.GetFP(n).HashCode;
-                if (folding > 0) code &= AND_BITS;
+                if (Folding > 0) code &= AND_BITS;
                 hashset.Add(code);
             }
 
@@ -195,8 +242,8 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         public void Build()
         {
-            trainingSize = training.Count; // for posterity
-            trainingActives = numActive;
+            TrainingSize = training.Count; // for posterity
+            TrainingActives = numActive;
 
             contribs.Clear();
 
@@ -219,17 +266,17 @@ namespace NCDK.Fingerprints.Model
 
             // note thresholds and ranges, for subsequent use
 
-            lowThresh = double.PositiveInfinity;
-            highThresh = double.NegativeInfinity;
+            LowThreshold = double.PositiveInfinity;
+            HighThreshold = double.NegativeInfinity;
             foreach (var fp in training)
             {
                 double val = 0;
                 foreach (var hash in fp)
                     val += contribs[hash];
-                lowThresh = Math.Min(lowThresh, val);
-                highThresh = Math.Max(highThresh, val);
+                LowThreshold = Math.Min(LowThreshold, val);
+                HighThreshold = Math.Max(HighThreshold, val);
             }
-            range = highThresh - lowThresh;
+            range = HighThreshold - LowThreshold;
             invRange = range > 0 ? 1 / range : 0;
         }
 
@@ -244,16 +291,17 @@ namespace NCDK.Fingerprints.Model
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
-            CircularFingerprinter circ = new CircularFingerprinter(classType);
+            CircularFingerprinter circ = new CircularFingerprinter(ClassType);
+            circ.PerceiveStereo = this.PerceiveStereo;
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints (eliminating duplicates)
-            int AND_BITS = folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
+            int AND_BITS = Folding - 1; // e.g. 1024/0x400 -> 1023/0x3FF: chop off higher order bits
             ICollection<int> hashset = new HashSet<int>();
             for (int n = circ.FPCount - 1; n >= 0; n--)
             {
                 int code = circ.GetFP(n).HashCode;
-                if (folding > 0) code &= AND_BITS;
+                if (Folding > 0) code &= AND_BITS;
                 hashset.Add(code);
             }
 
@@ -279,9 +327,9 @@ namespace NCDK.Fingerprints.Model
         public double ScalePredictor(double pred)
         {
             // special case: if there is no differentiation scale, it's either above or below (typically happens only with tiny models)
-            if (range == 0) return pred >= highThresh ? 1 : 0;
+            if (range == 0) return pred >= HighThreshold ? 1 : 0;
 
-            return (pred - lowThresh) * invRange;
+            return (pred - LowThreshold) * invRange;
         }
 
         /// <summary>
@@ -292,11 +340,11 @@ namespace NCDK.Fingerprints.Model
         public void ValidateLeaveOneOut()
         {
             int sz = training.Count;
-            estimates = new double[sz];
+            Estimates = new double[sz];
             for (int n = 0; n < sz; n++)
-                estimates[n] = SingleLeaveOneOut(n);
-            CalculateROC();
-            rocType = "leave-one-out";
+                Estimates[n] = SingleLeaveOneOut(n);
+            CalculateRoc();
+            RocType = "leave-one-out";
         }
 
         /// <summary>
@@ -306,7 +354,7 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         public void ValidateFiveFold()
         {
-            rocType = "five-fold";
+            RocType = "five-fold";
             ValidateNfold(5);
         }
 
@@ -317,7 +365,7 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         public void ValidateThreeFold()
         {
-            rocType = "three-fold";
+            RocType = "three-fold";
             ValidateNfold(3);
         }
 
@@ -329,37 +377,6 @@ namespace NCDK.Fingerprints.Model
             training.Clear();
             activity.Clear();
         }
-
-        /// <summary>
-        /// the size of the training set, i.e. the total number of molecules used to create the model.
-        /// </summary>
-        public int TrainingSize => trainingSize;
-
-        /// <summary>
-        /// the number of actives in the training set that was used to create the model.
-        /// </summary>
-        public int TrainingActives => trainingActives;
-
-        /// <summary>
-        /// the integral of the area-under-the-curve of the receiver-operator-characteristic. A value of 1
-        /// means perfect recall, 0.5 is pretty much random.
-        /// </summary>
-        public double ROCAUC => rocAUC;
-
-        /// <summary>
-        /// a string description of the method used to create the ROC curve (e.g. "leave-one-out" or "five-fold").
-        /// </summary>
-        public string ROCType => rocType;
-
-        /// <summary>
-        /// X-values that can be used to plot the ROC-curve.
-        /// </summary>
-        public double[] RocX => rocX;
-
-        /// <summary>
-        /// Y-values that can be used to plot the ROC-curve.
-        /// </summary>
-        public double[] RocY => rocY;
 
         /// <summary>
         /// the optional title used to describe the model.
@@ -402,6 +419,7 @@ namespace NCDK.Fingerprints.Model
             {
                 return noteComments == null ? null : Arrays.CopyOf(noteComments, noteComments.Length);
             }
+
             set
             {
                 if (value != null)
@@ -423,17 +441,17 @@ namespace NCDK.Fingerprints.Model
         {
             StringBuilder buff = new StringBuilder();
 
-            string fpname = classType == CircularFingerprinter.CLASS_ECFP0 ? "ECFP0"
-                    : classType == CircularFingerprinter.CLASS_ECFP2 ? "ECFP2"
-                            : classType == CircularFingerprinter.CLASS_ECFP4 ? "ECFP4"
-                                    : classType == CircularFingerprinter.CLASS_ECFP6 ? "ECFP6"
-                                            : classType == CircularFingerprinter.CLASS_FCFP0 ? "FCFP0"
-                                                    : classType == CircularFingerprinter.CLASS_FCFP2 ? "FCFP2"
-                                                            : classType == CircularFingerprinter.CLASS_FCFP4 ? "FCFP4"
-                                                                    : classType == CircularFingerprinter.CLASS_FCFP6 ? "FCFP6"
+            string fpname = ClassType == CircularFingerprinter.Classes.ECFP0 ? "ECFP0"
+                    : ClassType == CircularFingerprinter.Classes.ECFP2 ? "ECFP2"
+                            : ClassType == CircularFingerprinter.Classes.ECFP4 ? "ECFP4"
+                                    : ClassType == CircularFingerprinter.Classes.ECFP6 ? "ECFP6"
+                                            : ClassType == CircularFingerprinter.Classes.FCFP0 ? "FCFP0"
+                                                    : ClassType == CircularFingerprinter.Classes.FCFP2 ? "FCFP2"
+                                                            : ClassType == CircularFingerprinter.Classes.FCFP4 ? "FCFP4"
+                                                                    : ClassType == CircularFingerprinter.Classes.FCFP6 ? "FCFP6"
                                                                             : "?";
 
-            buff.Append("Bayesian!(" + fpname + "," + folding + "," + lowThresh + "," + highThresh + ")\n");
+            buff.Append("Bayesian!(" + fpname + "," + Folding + "," + LowThreshold + "," + HighThreshold + ")\n");
 
             // primary payload: the bit contributions
             var sorted = new SortedSet<int>();
@@ -446,21 +464,21 @@ namespace NCDK.Fingerprints.Model
             }
 
             // other information
-            buff.Append("training:size=").Append(trainingSize).Append('\n');
-            buff.Append("training:actives=").Append(trainingActives).Append('\n');
+            buff.Append("training:size=").Append(TrainingSize).Append('\n');
+            buff.Append("training:actives=").Append(TrainingActives).Append('\n');
 
-            if (!double.IsNaN(rocAUC)) buff.Append("roc:auc=").Append(rocAUC).Append('\n');
-            if (rocType != null) buff.Append("roc:type=").Append(rocType).Append('\n');
-            if (rocX != null && rocY != null)
+            if (!double.IsNaN(RocAUC)) buff.Append("roc:auc=").Append(RocAUC).Append('\n');
+            if (RocType != null) buff.Append("roc:type=").Append(RocType).Append('\n');
+            if (RocX != null && RocY != null)
             {
                 buff.Append("roc:x=");
-                for (int n = 0; n < rocX.Length; n++)
-                    buff.Append((n == 0 ? "" : ",") + rocX[n]);
+                for (int n = 0; n < RocX.Length; n++)
+                    buff.Append((n == 0 ? "" : ",") + RocX[n]);
                 buff.Append('\n');
 
                 buff.Append("roc:y=");
-                for (int n = 0; n < rocY.Length; n++)
-                    buff.Append((n == 0 ? "" : ",") + rocY[n]);
+                for (int n = 0; n < RocY.Length; n++)
+                    buff.Append((n == 0 ? "" : ",") + RocY[n]);
                 buff.Append('\n');
             }
 
@@ -501,14 +519,14 @@ namespace NCDK.Fingerprints.Model
             string[] bits = line.Substring(10, line.Length - 11).Split(',');
             if (bits.Length < 4) throw new IOException("Invalid header content");
 
-            int classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.CLASS_ECFP0
-                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.CLASS_ECFP2
-                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.CLASS_ECFP4
-                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.CLASS_ECFP6
-                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.CLASS_FCFP0 : bits[0]
-                                                    .Equals("FCFP2") ? CircularFingerprinter.CLASS_FCFP2 : bits[0]
-                                                    .Equals("FCFP4") ? CircularFingerprinter.CLASS_FCFP4 : bits[0]
-                                                    .Equals("FCFP6") ? CircularFingerprinter.CLASS_FCFP6 : 0;
+            CircularFingerprinter.Classes classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.Classes.ECFP0
+                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.Classes.ECFP2
+                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.Classes.ECFP4
+                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.Classes.ECFP6
+                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.Classes.FCFP0 : bits[0]
+                                                    .Equals("FCFP2") ? CircularFingerprinter.Classes.FCFP2 : bits[0]
+                                                    .Equals("FCFP4") ? CircularFingerprinter.Classes.FCFP4 : bits[0]
+                                                    .Equals("FCFP6") ? CircularFingerprinter.Classes.FCFP6 : 0;
             if (classType == 0) throw new IOException("Unknown fingerprint type: " + bits[0]);
 
             int folding = int.Parse(bits[1]);
@@ -522,9 +540,9 @@ namespace NCDK.Fingerprints.Model
                 throw new IOException("Fingerprint folding " + bits[1] + " invalid: must be 0 or power of 2.");
 
             Bayesian model = new Bayesian(classType, folding);
-            model.lowThresh = double.Parse(bits[2]);
-            model.highThresh = double.Parse(bits[3]);
-            model.range = model.highThresh - model.lowThresh;
+            model.LowThreshold = double.Parse(bits[2]);
+            model.HighThreshold = double.Parse(bits[3]);
+            model.range = model.HighThreshold - model.LowThreshold;
             model.invRange = model.range > 0 ? 1 / model.range : 0;
 
             while (true)
@@ -544,7 +562,7 @@ namespace NCDK.Fingerprints.Model
                 {
                     try
                     {
-                        model.trainingSize = int.Parse(line.Substring(14));
+                        model.TrainingSize = int.Parse(line.Substring(14));
                     }
                     catch (FormatException)
                     {
@@ -555,7 +573,7 @@ namespace NCDK.Fingerprints.Model
                 {
                     try
                     {
-                        model.trainingActives = int.Parse(line.Substring(17));
+                        model.TrainingActives = int.Parse(line.Substring(17));
                     }
                     catch (FormatException)
                     {
@@ -566,7 +584,7 @@ namespace NCDK.Fingerprints.Model
                 {
                     try
                     {
-                        model.rocAUC = double.Parse(line.Substring(8));
+                        model.RocAUC = double.Parse(line.Substring(8));
                     }
                     catch (FormatException)
                     {
@@ -574,16 +592,16 @@ namespace NCDK.Fingerprints.Model
                     }
                 }
                 else if (line.StartsWith("roc:type="))
-                    model.rocType = line.Substring(9);
+                    model.RocType = line.Substring(9);
                 else if (line.StartsWith("roc:x="))
                 {
                     string[] nums = line.Substring(6).Split(',');
-                    model.rocX = new double[nums.Length];
+                    model.RocX = new double[nums.Length];
                     for (int n = 0; n < nums.Length; n++)
                     {
                         try
                         {
-                            model.rocX[n] = double.Parse(nums[n]);
+                            model.RocX[n] = double.Parse(nums[n]);
                         }
                         catch (FormatException)
                         {
@@ -594,12 +612,12 @@ namespace NCDK.Fingerprints.Model
                 else if (line.StartsWith("roc:y="))
                 {
                     string[] nums = line.Substring(6).Split(',');
-                    model.rocY = new double[nums.Length];
+                    model.RocY = new double[nums.Length];
                     for (int n = 0; n < nums.Length; n++)
                     {
                         try
                         {
-                            model.rocY[n] = double.Parse(nums[n]);
+                            model.RocY[n] = double.Parse(nums[n]);
                         }
                         catch (FormatException)
                         {
@@ -625,7 +643,9 @@ namespace NCDK.Fingerprints.Model
 
         /// ----------------- private methods -----------------
 
+        /// <summary>
         /// estimate leave-one-out predictor for a given training entry
+        /// </summary>
         private double SingleLeaveOneOut(int N)
         {
             bool exclActive = activity[N];
@@ -650,7 +670,9 @@ namespace NCDK.Fingerprints.Model
             return val;
         }
 
+        /// <summary>
         /// performs cross-validation, splitting into N different segments
+        /// </summary>
         private void ValidateNfold(int nsegs)
         {
             int sz = training.Count;
@@ -667,14 +689,16 @@ namespace NCDK.Fingerprints.Model
                 segContribs[n] = BuildPartial(order, n, nsegs);
 
             // use the separate models to estimate the cases that were not covered
-            estimates = new double[sz];
+            Estimates = new double[sz];
             for (int n = 0; n < sz; n++)
-                estimates[order[n]] = EstimatePartial(order, n, segContribs[n % nsegs]);
-            CalculateROC();
+                Estimates[order[n]] = EstimatePartial(order, n, segContribs[n % nsegs]);
+            CalculateRoc();
         }
 
+        /// <summary>
         /// generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
         /// that is not implied by the current skein
+        /// </summary>
         private IDictionary<int, double> BuildPartial(int[] order, int seg, int div)
         {
             int sz = training.Count;
@@ -713,7 +737,9 @@ namespace NCDK.Fingerprints.Model
             return segContribs;
         }
 
+        /// <summary>
         /// using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
+        /// </summary>
         private double EstimatePartial(int[] order, int N, IDictionary<int, double> segContrib)
         {
             double val = 0;
@@ -737,13 +763,15 @@ namespace NCDK.Fingerprints.Model
 
             public int Compare(int i1, int i2)
             {
-                double v1 = parent.estimates[i1], v2 = parent.estimates[i2];
+                double v1 = parent.Estimates[i1], v2 = parent.Estimates[i2];
                 return v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
             }
         }
 
+        /// <summary>
         /// assumes estimates already calculated, fills in the ROC data
-        private void CalculateROC()
+        /// </summary>
+        private void CalculateRoc()
         {
             // sort the available estimates, and take midpoints 
             int sz = training.Count;
@@ -756,30 +784,30 @@ namespace NCDK.Fingerprints.Model
 
             double[] thresholds = new double[sz + 1];
             int tsz = 0;
-            thresholds[tsz++] = lowThresh - 0.01 * range;
+            thresholds[tsz++] = LowThreshold - 0.01 * range;
             for (int n = 0; n < sz - 1; n++)
             {
-                double th1 = estimates[idx[n]], th2 = estimates[idx[n + 1]];
+                double th1 = Estimates[idx[n]], th2 = Estimates[idx[n + 1]];
                 if (th1 == th2) continue;
                 thresholds[tsz++] = 0.5 * (th1 + th2);
             }
-            thresholds[tsz++] = highThresh + 0.01 * range;
+            thresholds[tsz++] = HighThreshold + 0.01 * range;
 
             // x = false positives / actual negatives
             // y = true positives / actual positives
-            rocX = new double[tsz];
-            rocY = new double[tsz];
+            RocX = new double[tsz];
+            RocY = new double[tsz];
             double[] rocT = new double[tsz];
 
             int posTrue = 0, posFalse = 0, ipos = 0;
-            double invPos = 1.0f / numActive, invNeg = 1.0f / (sz - numActive);
+            double invPos = 1.0 / numActive, invNeg = 1.0 / (sz - numActive);
             int rsz = 0;
             for (int n = 0; n < tsz; n++)
             {
                 double th = thresholds[n];
                 for (; ipos < sz; ipos++)
                 {
-                    if (th < estimates[idx[ipos]]) break;
+                    if (th < Estimates[idx[ipos]]) break;
                     if (activity[idx[ipos]])
                         posTrue++;
                     else
@@ -787,26 +815,26 @@ namespace NCDK.Fingerprints.Model
                 }
                 var x = posFalse * invNeg;
                 var y = posTrue * invPos;
-                if (rsz > 0 && x == rocX[rsz - 1] && y == rocY[rsz - 1]) continue;
+                if (rsz > 0 && x == RocX[rsz - 1] && y == RocY[rsz - 1]) continue;
 
-                rocX[rsz] = 1 - x;
-                rocY[rsz] = 1 - y;
+                RocX[rsz] = 1 - x;
+                RocY[rsz] = 1 - y;
                 rocT[rsz] = th;
                 rsz++;
             }
 
-            rocX = Reverse(Resize(rocX, rsz));
-            rocY = Reverse(Resize(rocY, rsz));
+            RocX = Reverse(Resize(RocX, rsz));
+            RocY = Reverse(Resize(RocY, rsz));
             rocT = Reverse(Resize(rocT, rsz));
 
-            CalibrateThresholds(rocX, rocY, rocT);
+            CalibrateThresholds(RocX, RocY, rocT);
 
             // calculate area-under-curve
-            rocAUC = 0;
+            RocAUC = 0;
             for (int n = 0; n < rsz - 1; n++)
             {
-                double w = rocX[n + 1] - rocX[n], h = 0.5 * (rocY[n] + rocY[n + 1]);
-                rocAUC += w * h;
+                double w = RocX[n + 1] - RocX[n], h = 0.5 * (RocY[n] + RocY[n + 1]);
+                RocAUC += w * h;
             }
 
             // collapse the {x,y} coords: no sensible reason to have huge number of points
@@ -814,26 +842,28 @@ namespace NCDK.Fingerprints.Model
             var DSQ = DIST * DIST;
             var gx = new double[rsz];
             var gy = new double[rsz];
-            gx[0] = rocX[0];
-            gy[0] = rocY[0];
+            gx[0] = RocX[0];
+            gy[0] = RocY[0];
             int gsz = 1;
             for (int i = 1; i < rsz - 1; i++)
             {
-                var dx = rocX[i] - gx[gsz - 1];
-                var dy = rocY[i] - gy[gsz - 1];
+                var dx = RocX[i] - gx[gsz - 1];
+                var dy = RocY[i] - gy[gsz - 1];
                 if (dx * dx + dy * dy < DSQ) continue;
-                gx[gsz] = rocX[i];
-                gy[gsz] = rocY[i];
+                gx[gsz] = RocX[i];
+                gy[gsz] = RocY[i];
                 gsz++;
             }
-            gx[gsz] = rocX[rsz - 1];
-            gy[gsz] = rocY[rsz - 1];
+            gx[gsz] = RocX[rsz - 1];
+            gy[gsz] = RocY[rsz - 1];
             gsz++;
-            rocX = Resize(gx, gsz);
-            rocY = Resize(gy, gsz);
+            RocX = Resize(gx, gsz);
+            RocY = Resize(gy, gsz);
         }
 
+        /// <summary>
         /// rederives the low/high thresholds, using ROC curve data: once the analysis is complete, the midpoint will be the optimum balance 
+        /// </summary> 
         private void CalibrateThresholds(double[] x, double[] y, double[] t)
         {
             int sz = t.Length;
@@ -847,13 +877,15 @@ namespace NCDK.Fingerprints.Model
             for (; idxY > idx + 1; idxY--)
                 if (y[idxY] < 1) break;
             double delta = Math.Min(t[idxX] - midThresh, midThresh - t[idxY]);
-            lowThresh = midThresh - delta;
-            highThresh = midThresh + delta;
+            LowThreshold = midThresh - delta;
+            HighThreshold = midThresh + delta;
             range = 2 * delta;
             invRange = range > 0 ? 1 / range : 0;
         }
 
+        /// <summary>
         /// convenience functions    
+        /// </summary> 
         private double[] Resize(double[] arr, int sz)
         {
             double[] ret = new double[sz];

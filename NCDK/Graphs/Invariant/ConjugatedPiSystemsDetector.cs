@@ -149,7 +149,7 @@ namespace NCDK.Graphs.Invariant
                 else if (ac.GetConnectedLonePairs(currentAtom).Any()
                     /* && (currentAtom.Symbol.Equals("N") */)
                 {
-                    check = 0; //// DETECTION of  lone pair
+                    check = 0; //// DETECTION of lone pair
                 }
                 else
                 {

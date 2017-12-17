@@ -150,7 +150,7 @@ namespace NCDK.Fragments
 
             // need to keep the side chains somewhere
             IAtomContainer clone = RemoveSideChains(atomContainer);
-            clone.SetStereoElements(new List<IReadOnlyStereoElement<IChemObject, IChemObject>>());
+            clone.StereoElements.Clear();
 
             IAtomContainer currentFramework; // needed for recursion
             currentFramework = (IAtomContainer)clone.Clone();

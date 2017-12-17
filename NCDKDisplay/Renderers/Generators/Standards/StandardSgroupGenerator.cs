@@ -56,6 +56,7 @@ namespace NCDK.Renderers.Generators.Standards
         private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke, Typeface font, double emSize, Color foreground)
         {
             this.font = font;
+            this.emSize = emSize;
             this.scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
             this.stroke = stroke;
             double length = parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale;

@@ -113,7 +113,7 @@ namespace NCDK.IO
         /// <exception cref="IOException">low-level IO error</exception>
         private void WriteHeader(IAtomContainer mol)
         {
-            string title = mol.GetProperty<string>(CDKPropertyName.Title);
+            string title = mol.Title;
             if (title != null)
                 writer.WriteDirect(title.Substring(0, Math.Min(80, title.Length)));
             writer.WriteDirect('\n');

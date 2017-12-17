@@ -102,7 +102,7 @@ namespace NCDK.Graphs
         /// <param name="container">the molecule</param>
         /// <returns>adjacency list representation stored as an {@literal int[][]}.</returns>
         /// <exception cref="ArgumentNullException">the container was null</exception>
-        /// <exception cref="ArgumentException">a bond was found which contained atoms                                  not in the molecule</exception>
+        /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjListSubgraph(IAtomContainer container, ISet<IBond> include)
         {
             if (container == null) throw new ArgumentNullException("atom container was null");

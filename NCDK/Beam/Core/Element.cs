@@ -87,10 +87,10 @@ namespace NCDK.Beam
     /// To access the symbol of an already created element. Use <see cref="Element.Symbol"/>.
     /// 
     /// <code>
-    /// IAtom    a = ...;
+    /// IAtom a = ...;
     /// Element e = a.Element;
     /// 
-    /// string  symbol = e.Symbol;
+    /// string symbol = e.Symbol;
     /// </code>
     /// </example>
     /// <seealso href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms, OpenSMILES Specification</seealso>
@@ -520,25 +520,48 @@ namespace NCDK.Beam
         /// valence aromatic elements.
         ///
         /// <para>
-        ///     c1c[nH]cn1    the aromatic subset nitrogen is bonded to two aromatic
-        ///                   nitrogen bond Order sum of 3 (6 electrons) there are
-        ///                   no implicit hydrogens
-        ///
-        ///     c1cc2ccccn2c1 the nitrogen has three aromatic bond 4.5 bond Order
-        ///                   (9 electrons) - as we only check the lowest valence
-        ///                   (3 - 4.5) &lt; 0 so there are 0 implicit hydrogens
-        ///
-        ///     c1ccpcc1      the phosphorus has 2 aromatic bond (bond Order sum 3)
-        ///                   and the lowest valence is '3' - there are no implicit
-        ///                   hydrogens
-        ///
-        ///     oc1ccscc1     the sulphur has two aromatic bonds (bond Order sum 3)
-        ///                   the lowest valence is '2' - 3 > 2 so there are no
-        ///                   implicit hydrogens
-        ///
-        ///     oc1ccscc1     the oxygen has a single aromatic bond, the default
-        ///                   valence of oxygen in the specification is '2' there
-        ///                   are no hydrogens (2 - 1.5 = 0.5).
+        /// <list type="table">
+        /// <item>
+        /// <term>c1c[nH]cn1</term>
+        /// <term>
+        /// the aromatic subset nitrogen is bonded to two aromatic
+        /// nitrogen bond Order sum of 3 (6 electrons) there are
+        /// no implicit hydrogens
+        /// </term>
+        /// </item>
+        /// <item>
+        /// <term>c1cc2ccccn2c1</term>
+        /// <term>
+        /// the nitrogen has three aromatic bond 4.5 bond Order
+        /// (9 electrons) - as we only check the lowest valence
+        /// (3 - 4.5) &lt; 0 so there are 0 implicit hydrogens
+        /// </term>
+        /// </item>
+        /// <item>
+        /// <term>c1ccpcc1</term>
+        /// <term>
+        /// the phosphorus has 2 aromatic bond (bond Order sum 3)
+        /// and the lowest valence is '3' - there are no implicit
+        /// hydrogens
+        /// </term>
+        /// </item>
+        /// <item>
+        /// <term>oc1ccscc1</term>
+        /// <term>
+        /// the sulphur has two aromatic bonds (bond Order sum 3)
+        /// the lowest valence is '2' - 3 &gt; 2 so there are no
+        /// implicit hydrogens
+        /// </term>
+        /// </item>
+        /// <item>
+        /// <term>oc1ccscc1</term>
+        /// <term>
+        /// the oxygen has a single aromatic bond, the default
+        /// valence of oxygen in the specification is '2' there
+        /// are no hydrogens (2 - 1.5 = 0.5).
+        /// </term>
+        /// </item>
+        /// </list>                  
         /// </para>
         /// </remarks>
         /// <param name="bondElectronSum">the sum of the bonded electrons</param>

@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </note>
     /// <para>TODO: what should sub return if have missing fragment?
     /// Just report sum for other fragments? Or report as -9999 and
-    /// then do not use descriptor if have this  value for any
+    /// then do not use descriptor if have this value for any
     /// chemicals in cluster?</para>
     /// 
     /// <para>

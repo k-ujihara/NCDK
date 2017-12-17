@@ -34,8 +34,8 @@ namespace NCDK.Isomorphisms
     /// edges. This class is intended for use with <see cref="Pattern"/>.
     /// </summary>
     /// <example><code>
-    ///     Pattern     pattern = Ullmann.FindSubstructure(query);
-    ///     var unique  = FluentIterable.Of(patter.MatchAll(target))
+    ///     Pattern pattern = Ullmann.FindSubstructure(query);
+    ///     var unique = FluentIterable.Of(patter.MatchAll(target))
     ///                                         .Filter(new UniqueBondMatches())
     ///                                         .ToList();
     /// </code></example>

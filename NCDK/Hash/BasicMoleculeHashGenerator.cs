@@ -32,11 +32,11 @@ namespace NCDK.Hash
     /// generate a single hash code for the molecule.
     /// </summary>
     /// <example><code>
-    /// AtomHashGenerator     atomGenerator = ...;
+    /// AtomHashGenerator atomGenerator = ...;
     /// MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
     ///
     /// IAtomContainer benzene  = MoleculeFactory.MakeBenzene();
-    /// long           hashCode = generator.Generate(benzene);
+    /// long hashCode = generator.Generate(benzene);
     /// </code></example>
     /// <seealso cref="IAtomHashGenerator"/>
     /// <seealso cref="BasicAtomHashGenerator"/>

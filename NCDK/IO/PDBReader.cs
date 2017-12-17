@@ -323,7 +323,7 @@ namespace NCDK.IO
                                                 {
                                                     // Get rid of all potentially created bonds.
                                                     Trace.TraceInformation("Bonds could not be created using the RebondTool when PDB file was read.");
-                                                    oBP.RemoveAllBonds();
+                                                    oBP.Bonds.Clear();
                                                 }
                                             }
                                             catch (Exception exception)

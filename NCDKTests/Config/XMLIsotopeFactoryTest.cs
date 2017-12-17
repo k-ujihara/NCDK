@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
@@ -234,9 +235,7 @@ namespace NCDK.Config
 
             var doc = new XmlDocument();
             doc.Load(tmpInput.FullName);
-#if ENABLE_NOT_IMPLEMENTED
-                doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
-#endif
+            doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
         }
 
         [TestMethod()]

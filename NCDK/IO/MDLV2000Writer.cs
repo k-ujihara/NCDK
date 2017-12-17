@@ -239,13 +239,13 @@ namespace NCDK.IO
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(file))
             {
                 bigPile.Add(container);
-                if (container.GetProperty<string>(CDKPropertyName.Title) != null)
+                if (container.Title != null)
                 {
-                    if (bigPile.GetProperty<string>(CDKPropertyName.Title) != null)
+                    if (bigPile.Title != null)
                         bigPile.SetProperty(CDKPropertyName.Title,
-                                            bigPile.GetProperty<string>(CDKPropertyName.Title) + "; " + container.GetProperty<string>(CDKPropertyName.Title));
+                                            bigPile.Title + "; " + container.Title);
                     else
-                        bigPile.SetProperty(CDKPropertyName.Title, container.GetProperty<string>(CDKPropertyName.Title));
+                        bigPile.SetProperty(CDKPropertyName.Title, container.Title);
                 }
                 if (container.GetProperty<string>(CDKPropertyName.Remark) != null)
                 {
@@ -271,7 +271,7 @@ namespace NCDK.IO
             IDictionary<int, string> aliases = null;
             // write header block
             // lines get shortened to 80 chars, that's in the spec
-            string title = container.GetProperty<string>(CDKPropertyName.Title);
+            string title = container.Title;
             if (title == null) title = "";
             if (title.Length > 80) title = title.Substring(0, 80);
             writer.Write(title);

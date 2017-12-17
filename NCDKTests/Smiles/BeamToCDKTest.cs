@@ -266,7 +266,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("CC[C@@](C)(O)[H]");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
 
@@ -286,7 +286,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("CC[C@](C)(O)[H]");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(ITetrahedralChirality));
 
@@ -306,7 +306,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("O[C@]12CCCC[C@@]1(O)CCCC2");
 
-            IStereoElement[] ses = ac.StereoElements.ToArray();
+            var ses = ac.StereoElements.ToArray();
 
             Assert.AreEqual(2, ses.Length);
             Assert.IsInstanceOfType(ses[0], typeof(ITetrahedralChirality));
@@ -347,7 +347,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("F/C=C/F");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
 
@@ -367,7 +367,7 @@ namespace NCDK.Smiles
 
             IAtomContainer ac = Convert("F/C=C\\F");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
 
@@ -386,7 +386,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("F/C([H])=C(\\[H])F");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
 
@@ -406,7 +406,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer ac = Convert("FC(\\[H])=C([H])/F");
 
-            IStereoElement se = ac.StereoElements.First();
+            var se = ac.StereoElements.First();
 
             Assert.IsInstanceOfType(se, typeof(IDoubleBondStereochemistry));
 
@@ -472,9 +472,9 @@ namespace NCDK.Smiles
         public void ExtendedTetrahedral_ccw()
         {
             IAtomContainer ac = Convert("CC=[C@]=CC");
-            IEnumerator<IStereoElement> elements = ac.StereoElements.GetEnumerator();
+            var elements = ac.StereoElements.GetEnumerator();
             Assert.IsTrue(elements.MoveNext());
-            IStereoElement element = elements.Current;
+            var element = elements.Current;
             Assert.IsInstanceOfType(element, typeof(ExtendedTetrahedral));
             ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral)element;
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, extendedTetrahedral.Winding);
@@ -488,9 +488,9 @@ namespace NCDK.Smiles
         public void ExtendedTetrahedral_cw()
         {
             IAtomContainer ac = Convert("CC=[C@@]=CC");
-            IEnumerator<IStereoElement> elements = ac.StereoElements.GetEnumerator();
+            var elements = ac.StereoElements.GetEnumerator();
             Assert.IsTrue(elements.MoveNext());
-            IStereoElement element = elements.Current;
+            var element = elements.Current;
             Assert.IsInstanceOfType(element, typeof(ExtendedTetrahedral));
             ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral)element;
             Assert.AreEqual(TetrahedralStereo.Clockwise, extendedTetrahedral.Winding);
@@ -503,21 +503,21 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TitleWithTab()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").Title,
                          "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").Title,
                  "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithMultipleSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").GetProperty<string>(CDKPropertyName.Title),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").Title,
                  "caffeine compound");
         }
 

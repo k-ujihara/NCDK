@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </item>
     /// <item>
     /// <term>RPSA</term>
-    /// <term>TPSA / total molecular  surface area
+    /// <term>TPSA / total molecular surface area
     /// </term>
     /// </item>
     /// </list>

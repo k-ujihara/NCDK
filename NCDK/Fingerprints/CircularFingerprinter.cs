@@ -50,7 +50,7 @@ namespace NCDK.Fingerprints
     ///  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
     ///  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</para>
     ///
-    ///    <para>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
+    ///    <para>The integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
     ///    formula/parameters as used by PNG files, and described in:</para>
     ///
     ///        <see href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</see>
@@ -81,18 +81,19 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        /// ------------ constants ------------
-
-        /// identity by literal atom environment
-        public const int CLASS_ECFP0 = 1;
-        public const int CLASS_ECFP2 = 2;
-        public const int CLASS_ECFP4 = 3;
-        public const int CLASS_ECFP6 = 4;
-        /// identity by functional character of the atom
-        public const int CLASS_FCFP0 = 5;
-        public const int CLASS_FCFP2 = 6;
-        public const int CLASS_FCFP4 = 7;
-        public const int CLASS_FCFP6 = 8;
+        public enum Classes
+        {
+            // identity by literal atom environment
+            ECFP0 = 1,
+            ECFP2 = 2,
+            ECFP4 = 3,
+            ECFP6 = 4,
+            // identity by functional character of the atom
+            FCFP0 = 5,
+            FCFP2 = 6,
+            FCFP4 = 7,
+            FCFP6 = 8,
+        }
 
         public sealed class FP
         {
@@ -112,12 +113,14 @@ namespace NCDK.Fingerprints
             public int[] Atoms => atoms;
         }
 
-        /// ------------ private members ------------
+        // ------------ private members ------------
+        
+        enum AtomClasses
+        {
+            ECFP = 1,
+            FCFP = 2,
+        }
 
-        private const int ATOMCLASS_ECFP = 1;
-        private const int ATOMCLASS_FCFP = 2;
-
-        private int classType, atomClass;
         private IAtomContainer mol;
         private readonly int length;
 
@@ -126,7 +129,7 @@ namespace NCDK.Fingerprints
         private int[][] atomGroup;
         private List<FP> fplist = new List<FP>();
 
-        /// summary information about the molecule, for quick access
+        // summary information about the molecule, for quick access
         private bool[] amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
         private int[] hcount;                              // total hydrogen count, including explicit and implicit hydrogens
         private int[][] atomAdj, bondAdj;                    // precalculated adjacencies, including only those qualifying with 'amask'
@@ -136,7 +139,7 @@ namespace NCDK.Fingerprints
         private bool[] atomArom, bondArom;                  // aromaticity precalculated
         private int[][] tetra;                               // tetrahedral rubric, a precursor to chirality
 
-        /// stored information for bio-typing; only defined for FCFP-class fingerprints
+        // stored information for bio-typing; only defined for FCFP-class fingerprints
         private bool[] maskDon, maskAcc, maskPos, maskNeg, maskAro, maskHal; // functional property flags
         private int[] bondSum;                                             // sum of bond orders for each atom (including explicit H's)
         private bool[] hasDouble;                                           // true if an atom has any double bonds
@@ -145,13 +148,18 @@ namespace NCDK.Fingerprints
         private bool[] lonePair;                                            // true if the atom is N,O,S with octet valence and at least one lone pair
         private bool[] tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
-        /// ------------ methods ------------
+        // ------------ options -------------------
+        private Classes classType;
+        private AtomClasses atomClass;
+        private bool optPerceiveStereo = false;
+
+        // ------------ methods ------------
 
         /// <summary>
         /// Default constructor: uses the ECFP6 type.
         /// </summary>
         public CircularFingerprinter()
-            : this(CLASS_ECFP6)
+            : this(Classes.ECFP6)
         { }
 
         /// <summary>
@@ -159,8 +167,8 @@ namespace NCDK.Fingerprints
         /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
         /// path diameter, and may be 0, 2, 4 or 6.
         /// </summary>
-        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
-        public CircularFingerprinter(int classType)
+        /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
+        public CircularFingerprinter(Classes classType)
             : this(classType, 1024)
         { }
 
@@ -169,14 +177,23 @@ namespace NCDK.Fingerprints
         /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
         /// path diameter, and may be 0, 2, 4 or 6.
         /// </summary>
-        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
+        /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
         /// <param name="len">size of folded (binary) fingerprint</param>
-        public CircularFingerprinter(int classType, int len)
+        public CircularFingerprinter(Classes classType, int len)
         {
-            if (classType < 1 || classType > 8)
-                throw new ArgumentOutOfRangeException("Invalid classType specified: " + classType);
             this.classType = classType;
             this.length = len;
+        }
+
+        /// <summary>
+        /// Whether stereochemistry should be re-perceived from 2D/3D
+        /// coordinates. By default stereochemistry encoded as <see cref="IStereoElement{TFocus, TCarriers}"/>s
+        /// are used.
+        /// </summary>
+        public bool PerceiveStereo
+        {
+            get { return this.optPerceiveStereo; }
+            set { this.optPerceiveStereo = value; }
         }
 
         protected override IEnumerable<KeyValuePair<string, string>> GetParameters()
@@ -184,18 +201,19 @@ namespace NCDK.Fingerprints
             string type = null;
             switch (classType)
             {
-                case CLASS_ECFP0: type = "ECFP0"; break;
-                case CLASS_ECFP2: type = "ECFP2"; break;
-                case CLASS_ECFP4: type = "ECFP4"; break;
-                case CLASS_ECFP6: type = "ECFP6"; break;
-                case CLASS_FCFP0: type = "FCFP0"; break;
-                case CLASS_FCFP2: type = "FCFP2"; break;
-                case CLASS_FCFP4: type = "FCFP4"; break;
-                case CLASS_FCFP6: type = "FCFP6"; break;
+                case Classes.ECFP0: type = "ECFP0"; break;
+                case Classes.ECFP2: type = "ECFP2"; break;
+                case Classes.ECFP4: type = "ECFP4"; break;
+                case Classes.ECFP6: type = "ECFP6"; break;
+                case Classes.FCFP0: type = "FCFP0"; break;
+                case Classes.FCFP2: type = "FCFP2"; break;
+                case Classes.FCFP4: type = "FCFP4"; break;
+                case Classes.FCFP6: type = "FCFP6"; break;
                 default:
                     break;
             }
             yield return new KeyValuePair<string, string>("classType", type);
+            yield return new KeyValuePair<string, string>("perceiveStereochemistry", optPerceiveStereo.ToString().ToLower()); // True/False to true/false
             yield break;
         }
 
@@ -207,10 +225,10 @@ namespace NCDK.Fingerprints
         {
             this.mol = mol;
             fplist.Clear();
-            atomClass = classType <= CLASS_ECFP6 ? ATOMCLASS_ECFP : ATOMCLASS_FCFP;
+            atomClass = classType <= Classes.ECFP6 ? AtomClasses.ECFP : AtomClasses.FCFP;
 
             ExcavateMolecule();
-            if (atomClass == ATOMCLASS_FCFP) CalculateBioTypes();
+            if (atomClass == AtomClasses.FCFP) CalculateBioTypes();
 
             int na = mol.Atoms.Count;
             identity = new int[na];
@@ -220,17 +238,17 @@ namespace NCDK.Fingerprints
             for (int n = 0; n < na; n++)
                 if (amask[n])
                 {
-                    if (atomClass == ATOMCLASS_ECFP)
+                    if (atomClass == AtomClasses.ECFP)
                         identity[n] = InitialIdentityECFP(n);
                     else
-                        // atomClass==ATOMCLASS_FCFP
+                        // atomClass==ATOMClasses.FCFP
                         identity[n] = InitialIdentityFCFP(n);
                     atomGroup[n] = new int[] { n };
                     fplist.Add(new FP(identity[n], 0, atomGroup[n]));
                 }
 
-            int niter = classType == CLASS_ECFP2 || classType == CLASS_FCFP2 ? 1 : classType == CLASS_ECFP4
-                    || classType == CLASS_FCFP4 ? 2 : classType == CLASS_ECFP6 || classType == CLASS_FCFP6 ? 3 : 0;
+            int niter = classType == Classes.ECFP2 || classType == Classes.FCFP2 ? 1 : classType == Classes.ECFP4
+                    || classType == Classes.FCFP4 ? 2 : classType == Classes.ECFP6 || classType == Classes.FCFP6 ? 3 : 0;
 
             // iterate outward
             for (int iter = 1; iter <= niter; iter++)
@@ -622,8 +640,15 @@ namespace NCDK.Fingerprints
             DetectStrictAromaticity();
 
             tetra = new int[na][];
-            for (int n = 0; n < na; n++)
-                tetra[n] = RubricTetrahedral(n);
+            if (optPerceiveStereo)
+            {
+                for (int n = 0; n < na; n++)
+                    tetra[n] = RubricTetrahedral(n);
+            }
+            else
+            {
+                RubricTetrahedralsCdk();
+            }
         }
 
         /// assign a ring block ID to each atom (0=not in ring)
@@ -871,6 +896,44 @@ namespace NCDK.Fingerprints
             }
         }
 
+        // tetrahedral 'rubric': for any sp3 atom that has stereo defined
+        // in the CDK's object model.
+        private void RubricTetrahedralsCdk()
+        {
+            foreach (var se in mol.StereoElements)
+            {
+                if (se.Class == StereoElement.Classes.Tetrahedral)
+                {
+                    var th = (IStereoElement<IAtom, IAtom>)se;
+                    IAtom focus = th.Focus;
+                    var carriers = th.Carriers;
+                    int[] adj = new int[4];
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (focus.Equals(carriers[i]))
+                            adj[i] = -1; // impl H
+                        else
+                            adj[i] = mol.Atoms.IndexOf(carriers[i]);
+                    }
+                    switch (th.Configure.Ordinal)
+                    {
+                        case StereoElement.Configurations.O.Left:
+                            int i = adj[2];
+                            adj[2] = adj[3];
+                            adj[3] = i;
+                            tetra[mol.Atoms.IndexOf(focus)] = adj;
+                            break;
+                        case StereoElement.Configurations.O.Right:
+                            tetra[mol.Atoms.IndexOf(focus)] = adj;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         /// tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
         /// build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
         /// 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
@@ -969,15 +1032,9 @@ namespace NCDK.Fingerprints
             if (adjc == 3)
             {
                 adj = AppendInteger(adj, -1);
-                xp[3] = -(xp[0] + xp[1] + xp[2]);
-                yp[3] = -(yp[0] + yp[1] + yp[2]);
-                zp[3] = -(zp[0] + zp[1] + zp[2]);
-                var dsq = xp[3] * xp[3] + yp[3] * yp[3] + zp[3] * zp[3];
-                if (dsq < 0.01f * 0.01f) return null;
-                var inv = 1.0 / Math.Sqrt(dsq);
-                xp[3] *= inv;
-                yp[3] *= inv;
-                zp[3] *= inv;
+                xp[3] = 0;
+                yp[3] = 0;
+                zp[3] = 0;
             }
 
             // make the call on permutational parity

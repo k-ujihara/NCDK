@@ -145,5 +145,16 @@ namespace NCDK.Isomorphisms
                 Assert.Fail(exception.Message);
             }
         }
+
+        [TestMethod()]
+        public void TestUnspecifiedIsotope()
+        {
+            IAtom aexpr = Smiles.SMARTS.Parser.SMARTSParser.Parse("[!0]", Silent.ChemObjectBuilder.Instance).Atoms[0];
+            Assert.IsInstanceOfType(aexpr, typeof(Matchers.SMARTS.LogicalOperatorAtom));
+            Assert.AreEqual("not", ((Matchers.SMARTS.LogicalOperatorAtom)aexpr).Operator);
+            IQueryAtom subexpr = ((Matchers.SMARTS.LogicalOperatorAtom)aexpr).Left;
+            Assert.IsInstanceOfType(subexpr, typeof(Matchers.SMARTS.MassAtom));
+            Assert.AreEqual(0, subexpr.MassNumber);
+        }
     }
 }
