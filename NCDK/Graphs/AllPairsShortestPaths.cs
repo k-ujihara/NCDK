@@ -257,6 +257,12 @@ namespace NCDK.Graphs
                 NotifyChanged();
             }
 
+            public void SetAtoms(IEnumerable<IAtom> atoms)
+            { throw new InvalidOperationException("not supported"); }
+
+            public void SetBonds(IEnumerable<IBond> bonds)
+            { throw new InvalidOperationException("not supported"); }
+
             public string Title
             {
                 get { return null; }

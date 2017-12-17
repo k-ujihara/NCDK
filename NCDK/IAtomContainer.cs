@@ -39,13 +39,29 @@ namespace NCDK
         : IChemObject, IChemObjectListener
     {
         /// <summary>
+        /// Sets the array of atoms of this AtomContainer.
+        /// </summary>
+        /// <param name="atoms">The array of atoms to be assigned to this AtomContainer</param>
+        /// <seealso cref="Atoms"/>
+        void SetAtoms(IEnumerable<IAtom> atoms);
+
+        /// <summary>
+        /// Sets the array of bonds of this AtomContainer.
+        /// </summary>
+        /// <param name="bonds">The array of bonds to be assigned to this AtomContainer</param>
+        /// <seealso cref="Bonds"/>
+        void SetBonds(IEnumerable<IBond> bonds);
+
+        /// <summary>
         /// The atoms in this container.
         /// </summary>
+        /// <seealso cref="SetAtoms(IEnumerable{IAtom})"/>
         IList<IAtom> Atoms { get; }
 
         /// <summary>
         /// The bonds in this container.
         /// </summary>
+        /// <seealso cref="SetBonds(IEnumerable{IBond})"/>
         IList<IBond> Bonds { get; }
 
         /// <summary>

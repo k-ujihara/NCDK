@@ -548,28 +548,6 @@ namespace NCDK.Default
 
              NotifyChanged();         }
 
-        /// <inheritdoc/>
-        public virtual void AddLonePairTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewLonePair(atom);
-            e.Listeners?.Add(this);
-            LonePairs.Add(e);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddSingleElectronTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewSingleElectron(atom);
-            e.Listeners?.Add(this);
-            SingleElectrons.Add(e);
-            // no OnStateChanged
-        }
-
         /// <summary>
         /// Removes the bond that connects the two given atoms.
         /// </summary>
@@ -672,6 +650,20 @@ namespace NCDK.Default
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
+
+        /// <inheritdoc/>
+        public void SetAtoms(IEnumerable<IAtom> atoms)
+        {
+            this.atoms.Clear();
+			this.atoms.AddRange(atoms);
+        }
+
+        /// <inheritdoc/>
+        public void SetBonds(IEnumerable<IBond> bonds)
+        {
+            this.bonds.Clear();
+			this.bonds.AddRange(bonds);
+        }
 
         /// <inheritdoc/>
         public virtual bool IsEmpty() => atoms.Count == 0;
@@ -1198,28 +1190,6 @@ namespace NCDK.Silent
 
                     }
 
-        /// <inheritdoc/>
-        public virtual void AddLonePairTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewLonePair(atom);
-            e.Listeners?.Add(this);
-            LonePairs.Add(e);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddSingleElectronTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewSingleElectron(atom);
-            e.Listeners?.Add(this);
-            SingleElectrons.Add(e);
-            // no OnStateChanged
-        }
-
         /// <summary>
         /// Removes the bond that connects the two given atoms.
         /// </summary>
@@ -1322,6 +1292,20 @@ namespace NCDK.Silent
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
+
+        /// <inheritdoc/>
+        public void SetAtoms(IEnumerable<IAtom> atoms)
+        {
+            this.atoms.Clear();
+			this.atoms.AddRange(atoms);
+        }
+
+        /// <inheritdoc/>
+        public void SetBonds(IEnumerable<IBond> bonds)
+        {
+            this.bonds.Clear();
+			this.bonds.AddRange(bonds);
+        }
 
         /// <inheritdoc/>
         public virtual bool IsEmpty() => atoms.Count == 0;

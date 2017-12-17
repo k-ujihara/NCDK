@@ -60,6 +60,18 @@ namespace NCDK
             Insert(list.Count, item);
         }
 
+        private void AddOnly(T item)
+        {
+            InsertOnly(list.Count, item);
+        }
+
+        public void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+                AddOnly(item);
+            Listener?.OnStateChanged(new ChemObjectChangeEventArgs(this));
+        }
+
         public void Clear()
         {
             if (Listener != null)
@@ -76,13 +88,18 @@ namespace NCDK
 
         public void Insert(int index, T item)
         {
+            InsertOnly(index, item);
+            Listener?.OnStateChanged(new ChemObjectChangeEventArgs(this));
+        }
+
+        private void InsertOnly(int index, T item)
+        {
             if (!AllowDuplicate)
                 if (list.Contains(item))
                     return;
             if (Listener != null)
                 item?.Listeners?.Add(Listener);
             list.Insert(index, item);
-            Listener?.OnStateChanged(new ChemObjectChangeEventArgs(this));
         }
 
         public bool Remove(T item)

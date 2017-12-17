@@ -561,28 +561,6 @@ var thisListener = ns.IsSilent ? "null" : "this";
             <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
         }
 
-        /// <inheritdoc/>
-        public virtual void AddLonePairTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewLonePair(atom);
-            e.Listeners?.Add(this);
-            LonePairs.Add(e);
-            // no OnStateChanged
-        }
-
-        /// <inheritdoc/>
-        public virtual void AddSingleElectronTo(IAtom atom)
-        {
-            if (!Contains(atom))
-                throw new InvalidOperationException();
-            var e = Builder.NewSingleElectron(atom);
-            e.Listeners?.Add(this);
-            SingleElectrons.Add(e);
-            // no OnStateChanged
-        }
-
         /// <summary>
         /// Removes the bond that connects the two given atoms.
         /// </summary>
@@ -685,6 +663,20 @@ var thisListener = ns.IsSilent ? "null" : "this";
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
             <# if (!ns.IsSilent) { #> NotifyChanged(evt); <# } #>
+        }
+
+        /// <inheritdoc/>
+        public void SetAtoms(IEnumerable<IAtom> atoms)
+        {
+            this.atoms.Clear();
+			this.atoms.AddRange(atoms);
+        }
+
+        /// <inheritdoc/>
+        public void SetBonds(IEnumerable<IBond> bonds)
+        {
+            this.bonds.Clear();
+			this.bonds.AddRange(bonds);
         }
 
         /// <inheritdoc/>
