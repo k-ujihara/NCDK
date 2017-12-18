@@ -246,6 +246,10 @@ namespace NCDK.IO
                                         writer.Write('\n');
                                         writer.Write('\n');
                                     }
+                                    else
+                                    {
+                                        Trace.TraceInformation("Skipped property " + propKey + " because only primitive and string properties can be written by SDFWriter");
+                                    }
                                 }
                             }
                         }

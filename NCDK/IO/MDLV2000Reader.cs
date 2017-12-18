@@ -1423,13 +1423,32 @@ namespace NCDK.IO
             {
                 HandleError("Bad coordinate format specified, expected 4 decimal places: " + line.Substring(offset));
                 int start = offset;
-                int end = offset;
-                while (line[start] == ' ')
+                while (line[start] == ' ' && start < offset + 9)
                     start++;
-                end = start;
-                while (line[end] != ' ')
-                    end++;
-                return double.Parse(line.Substring(start, end - start));
+
+                int dot = -1;
+                int end = start;
+                for (char c = line[end]; c != ' ' && end < offset + 9; c = line[end], end++)
+                {
+                    if (c == '.')
+                        dot = end;
+                }
+                if (start == end)
+                {
+                    return 0.0;
+                }
+                else if (dot != -1)
+                {
+                    int sign = Sign(line[start]);
+                    if (sign < 0) start++;
+                    int integral = ReadUInt(line, start, dot - start - 1);
+                    int fraction = ReadUInt(line, dot, end - dot);
+                    return sign * (integral * 10000L + fraction) / 10000d;
+                }
+                else
+                {
+                    return double.Parse(line.Substring(start, end - start));
+                }
             }
             else
             {

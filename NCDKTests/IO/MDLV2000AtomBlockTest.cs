@@ -23,6 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace NCDK.IO
@@ -310,16 +311,49 @@ namespace NCDK.IO
         {
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
             reader.ReaderMode = ChemObjectReaderModes.Relaxed;
-            Assert.IsTrue(System.Math.Abs(reader.ReadMDLCoordinate("  -2.00120    7.8089", 0) - (-2.00120)) < 0.1);
+            Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("  -2.00120    7.8089", 0) - (-2.00120)) < 0.1);
         }
 
-        [TestMethod()] 
-        [ExpectedException(typeof(CDKException), AllowDerivedTypes =true)]
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
         public void ReadOldJmolCoordsFailOnStrictRead()
         {
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
             reader.ReaderMode = ChemObjectReaderModes.Strict;
             reader.ReadMDLCoordinate("  -2.00120    7.8089", 0);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
+        public void ReadMDLCoordinates_wrong_decimal_position_strict()
+        {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
+            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   7.8089 ", 10) - 7.8089) < 0.1);
+        }
+
+        [TestMethod()]
+        public void ReadMDLCoordinates_wrong_decimal_position_relaxed()
+        {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
+            reader.ReaderMode = ChemObjectReaderModes.Relaxed;
+            Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   7.8089 ", 10) - 7.8089) < 0.1);
+        }
+
+        [TestMethod()]
+        public void ReadMDLCoordinates_no_value_relaxed()
+        {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
+            reader.ReaderMode = ChemObjectReaderModes.Relaxed;
+            Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012          ", 10) - 0) < 0.1);
+        }
+
+        [TestMethod()]
+        public void ReadMDLCoordinates_no_decimal_relaxed()
+        {
+            MDLV2000Reader reader = new MDLV2000Reader(new StringReader(""));
+            reader.ReaderMode = ChemObjectReaderModes.Relaxed;
+            Assert.IsTrue(Math.Abs(reader.ReadMDLCoordinate("   -2.0012   708089 ", 10) - 708089) < 0.1);
         }
     }
 }
