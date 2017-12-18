@@ -115,7 +115,7 @@ namespace NCDK.Default
                                 oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
                                 newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
                                 map = new CDKObjectMap();
-                                foreach (var a in this)
+                                foreach (var a in list)
                                     map.Add(a, a);
                                 map.Set(oldAtom, value);
                             }
@@ -161,7 +161,7 @@ namespace NCDK.Default
         /// <summary>
         /// Stereo elements contained by this object.
         /// </summary>
-        internal IList<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
+        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
 
         internal bool isAromatic;
         internal bool isSingleOrDouble;
@@ -171,7 +171,7 @@ namespace NCDK.Default
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            IList<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             this.atoms = atoms;
             this.bonds = bonds;
@@ -199,8 +199,10 @@ namespace NCDK.Default
         private ObservableChemObjectCollection<T> CreateObservableChemObjectCollection<T>(IEnumerable<T> objs, bool allowDup) where T : IChemObject
         {
  
-            var list = new ObservableChemObjectCollection<T>(this, objs);
-            list.AllowDuplicate = allowDup;
+            var list = new ObservableChemObjectCollection<T>(this, objs)
+            {
+                AllowDuplicate = allowDup
+            };
             return list;
         }
 
@@ -427,20 +429,17 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void AddElectronContainer(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
             {
                 Bonds.Add(bond);
                 return;
             }
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
-            { 
+            if (electronContainer is ILonePair lonePair)
+            {
                 LonePairs.Add(lonePair);
                 return;
             }
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
             {
                 SingleElectrons.Add(singleElectron);
                 return;
@@ -463,20 +462,17 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void Remove(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
             {
                 Bonds.Remove(bond);
                 return;
             }
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
+            if (electronContainer is ILonePair lonePair)
             {
                 LonePairs.Remove(lonePair);
                 return;
             }
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
             {
                 SingleElectrons.Remove(singleElectron);
                 return;
@@ -577,14 +573,11 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual bool Contains(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
                 return Contains(bond);
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
+            if (electronContainer is ILonePair lonePair)
                 return Contains(lonePair);
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
                 return Contains(singleElectron);
             return false;
         }
@@ -761,7 +754,7 @@ namespace NCDK.Silent
                                 oldStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
                                 newStereo = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
                                 map = new CDKObjectMap();
-                                foreach (var a in this)
+                                foreach (var a in list)
                                     map.Add(a, a);
                                 map.Set(oldAtom, value);
                             }
@@ -805,7 +798,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Stereo elements contained by this object.
         /// </summary>
-        internal IList<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
+        internal List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements;
 
         internal bool isAromatic;
         internal bool isSingleOrDouble;
@@ -815,7 +808,7 @@ namespace NCDK.Silent
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            IList<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IReadOnlyStereoElement<IChemObject, IChemObject>> stereoElements)
         {
             this.atoms = atoms;
             this.bonds = bonds;
@@ -843,8 +836,10 @@ namespace NCDK.Silent
         private ObservableChemObjectCollection<T> CreateObservableChemObjectCollection<T>(IEnumerable<T> objs, bool allowDup) where T : IChemObject
         {
  
-            var list = new ObservableChemObjectCollection<T>(null, objs);
-            list.AllowDuplicate = allowDup;
+            var list = new ObservableChemObjectCollection<T>(null, objs)
+            {
+                AllowDuplicate = allowDup
+            };
             return list;
         }
 
@@ -1069,20 +1064,17 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void AddElectronContainer(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
             {
                 Bonds.Add(bond);
                 return;
             }
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
-            { 
+            if (electronContainer is ILonePair lonePair)
+            {
                 LonePairs.Add(lonePair);
                 return;
             }
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
             {
                 SingleElectrons.Add(singleElectron);
                 return;
@@ -1105,20 +1097,17 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void Remove(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
             {
                 Bonds.Remove(bond);
                 return;
             }
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
+            if (electronContainer is ILonePair lonePair)
             {
                 LonePairs.Remove(lonePair);
                 return;
             }
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
             {
                 SingleElectrons.Remove(singleElectron);
                 return;
@@ -1219,14 +1208,11 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual bool Contains(IElectronContainer electronContainer)
         {
-            var bond = electronContainer as IBond;
-            if (bond != null)
+            if (electronContainer is IBond bond)
                 return Contains(bond);
-            var lonePair = electronContainer as ILonePair;
-            if (lonePair != null)
+            if (electronContainer is ILonePair lonePair)
                 return Contains(lonePair);
-            var singleElectron = electronContainer as ISingleElectron;
-            if (singleElectron != null)
+            if (electronContainer is ISingleElectron singleElectron)
                 return Contains(singleElectron);
             return false;
         }

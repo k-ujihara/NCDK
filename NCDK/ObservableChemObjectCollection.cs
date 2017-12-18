@@ -10,9 +10,9 @@ namespace NCDK
     [Serializable]
     internal class ObservableChemObjectCollection<T>
         : IList<T>
-        where T : IChemObject
+        where T : INotify
     {
-        List<T> list;
+        internal List<T> list;
 
         protected IChemObjectListener Listener { get; private set; }
         public bool AllowDuplicate { get; set; } = true;

@@ -29,7 +29,7 @@ namespace NCDK
     // @cdk.githash
     // @cdk.module    interfaces
     public partial interface IChemObject
-        : ICDKObject
+        : ICDKObject, INotify
     {
         /// <summary>
         /// Deep comparator of <see cref="IChemObject"/>.  
@@ -37,22 +37,6 @@ namespace NCDK
         /// <param name="obj">Object to compare with.</param>
         /// <returns><see langword="true"/> if all properties of this object equals to <paramref name="obj"/>.</returns>
         bool Compare(object obj);
-
-        /// <summary>
-        /// <see cref="IChemObjectListener"/>s of this <see cref="IChemObject"/>.
-        /// </summary>
-        ICollection<IChemObjectListener> Listeners { get; }
-
-        /// <summary>
-        /// The flag that indicates whether notification messages are sent around.
-        /// </summary>
-        bool Notification { get; set; }
-
-        /// <summary>
-        /// This should be triggered by an method that changes the content of an object
-        /// to that the registered listeners can react to it.
-        /// </summary>
-        void NotifyChanged();
         
         /// <summary>
         /// Identifier (ID) of this object.

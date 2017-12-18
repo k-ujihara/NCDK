@@ -166,6 +166,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Elements.tt</DependentUpon>
     </Compile>
+    <Compile Include="INotify.cs" />
     <Compile Include="IO\Iterator\DefaultEnumerableChemObjectReader.cs" />
     <Compile Include="IO\Iterator\EnumerableMDLConformerReader.cs" />
     <Compile Include="IO\Iterator\EnumerablePCCompoundXMLReader.cs" />
@@ -520,6 +521,9 @@
       <DependentUpon>Association.tt</DependentUpon>
     </Compile>
     <Compile Include="ResourceLoader.cs" />
+    <None Include="TT\AtomContainer2.cs" />
+    <None Include="TT\AtomContainer2_Atom.cs" />
+    <None Include="TT\AtomContainer2_Bond.cs" />
     <Compile Include="TT\ChemObject.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
