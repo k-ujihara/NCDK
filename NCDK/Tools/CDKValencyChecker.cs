@@ -71,7 +71,7 @@ namespace NCDK.Tools
 
             if (type.FormalNeighbourCount == null)
                 throw new CDKException(
-                        "Atom tfindAndConfigureAtomTypesForAllAtomsype is too general; cannot decide the number of implicit hydrogen to add for: "
+                        "Atom type  is too general; cannot decide the number of implicit hydrogen to add for: "
                                 + atom.AtomTypeName);
 
             if (type.GetProperty<object>(CDKPropertyName.PiBondCount) == null)
