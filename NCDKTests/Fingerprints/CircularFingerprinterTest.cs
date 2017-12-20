@@ -195,7 +195,6 @@ namespace NCDK.Fingerprints
 
             for (int idx = 1; ; idx++)
             {
-if (idx != 78) continue;
                 string basefn = idx.ToString();
                 while (basefn.Length < 6)
                     basefn = "0" + basefn;
