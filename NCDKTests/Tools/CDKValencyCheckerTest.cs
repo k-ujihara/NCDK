@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Default;
@@ -65,8 +66,10 @@ namespace NCDK.Tools
 
             // test methane with implicit hydrogen
             mol = new AtomContainer();
-            c = new Atom("C");
-            c.ImplicitHydrogenCount = 4;
+            c = new Atom("C")
+            {
+                ImplicitHydrogenCount = 4
+            };
             mol.Atoms.Add(c);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             Assert.IsTrue(checker.IsSaturated(mol));
@@ -97,8 +100,10 @@ namespace NCDK.Tools
 
             // test methane with implicit hydrogen
             mol = new AtomContainer();
-            c = new Atom("C");
-            c.ImplicitHydrogenCount = 4;
+            c = new Atom("C")
+            {
+                ImplicitHydrogenCount = 4
+            };
             mol.Atoms.Add(c);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             foreach (var atom in mol.Atoms)
@@ -133,8 +138,10 @@ namespace NCDK.Tools
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
             Atom h3 = new Atom("H");
-            Atom o = new Atom("O");
-            o.FormalCharge = -1;
+            Atom o = new Atom("O")
+            {
+                FormalCharge = -1
+            };
             mol.Atoms.Add(c);
             mol.Atoms.Add(h1);
             mol.Atoms.Add(h2);
@@ -219,8 +226,10 @@ namespace NCDK.Tools
             // test H+
             IAtomContainer mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
-            Atom hydrogen = new Atom("H");
-            hydrogen.FormalCharge = +1;
+            Atom hydrogen = new Atom("H")
+            {
+                FormalCharge = +1
+            };
             mol.Atoms.Add(hydrogen);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             Assert.IsTrue(checker.IsSaturated(mol));
@@ -254,12 +263,16 @@ namespace NCDK.Tools
             // test ethane with explicit hydrogen
             IAtomContainer mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 2;
-            c1.Hybridization = Hybridization.SP2;
-            Atom c2 = new Atom("C");
-            c2.Hybridization = Hybridization.SP2;
-            c2.ImplicitHydrogenCount = 2;
+            Atom c1 = new Atom("C")
+            {
+                ImplicitHydrogenCount = 2,
+                Hybridization = Hybridization.SP2
+            };
+            Atom c2 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 2
+            };
             mol.Atoms.Add(c1);
             mol.Atoms.Add(c2);
             IBond bond = new Bond(c1, c2, BondOrder.Single);
@@ -269,20 +282,18 @@ namespace NCDK.Tools
 
             // sanity check
             bond.Order = BondOrder.Double;
-            mol.Bonds.Add(bond);
             FindAndConfigureAtomTypesForAllAtoms(mol);
-            Assert.IsFalse(checker.IsSaturated(mol));
+            Assert.IsTrue(checker.IsSaturated(mol));
         }
 
         private void FindAndConfigureAtomTypesForAllAtoms(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
-            IEnumerator<IAtom> atoms = container.Atoms.GetEnumerator();
-            while (atoms.MoveNext())
+            foreach (var atom in container.Atoms)
             {
-                IAtom atom = atoms.Current;
                 IAtomType type = matcher.FindMatchingAtomType(container, atom);
-                if (type != null) AtomTypeManipulator.Configure(atom, type);
+                if (type != null)
+                    AtomTypeManipulator.Configure(atom, type);
             }
         }
     }
