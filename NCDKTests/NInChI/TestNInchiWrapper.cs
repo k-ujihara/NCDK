@@ -1379,7 +1379,7 @@ namespace NCDK.NInChI
         /// <summary>
         /// Tests radical state is correctly read from InChI.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         // Test fails due to problem with InChI library
         public void TestGetMethylRadicalFromInchi()
         {
@@ -1752,7 +1752,7 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_KEY.INVALID_INCHI, output.ReturnStatus);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         // InChI library does very little checking of input,
         // many invalid InChIs will produce InChI keys...
         public void TestGetInchiKeyInputInvalidInchi1()
@@ -2066,7 +2066,7 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_STATUS.INCHI_VALID_STANDARD, ret);
         }
 
-        //@Ignore     // TODO -- this seems to be an InChI bug
+        [TestMethod(), Ignore()]     // TODO -- this seems to be an InChI bug
         public void TestCheckInchiValidStdStrict()
         {
             string inchi = "InChI=1S/C4H6/c1-3-4-2/h3-4H,1-2H2";

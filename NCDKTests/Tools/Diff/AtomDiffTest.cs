@@ -60,8 +60,7 @@ namespace NCDK.Tools.Diff
             Assert.IsNotNull(difference);
         }
 
-        //@Ignore("unit test did not test AtomDiff but rather the ability of AtomContainer"
-        //        + "to be serialized. This is already tested in each respective domain module")
+        [TestMethod(), Ignore()] // unit test did not test AtomDiff but rather the ability of AtomContainer to be serialized. This is already tested in each respective domain module
         public void TestDiffFromSerialized()
         {
             //        IAtom atom = new Atom("C");

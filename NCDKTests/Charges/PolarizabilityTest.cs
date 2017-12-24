@@ -67,7 +67,7 @@ namespace NCDK.Charges
         /// <summary>
         ///  A unit test for JUnit
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt()
         {

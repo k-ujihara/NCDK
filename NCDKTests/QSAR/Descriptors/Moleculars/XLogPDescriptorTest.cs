@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SetDescriptor(typeof(XLogPDescriptor));
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void Testno688()
         {
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(4.62, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void Testno937()
         {

@@ -338,7 +338,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IDescriptorResult v1 = Descriptor.Calculate(disconnected).Value;
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         private static int TestMethod()
         {

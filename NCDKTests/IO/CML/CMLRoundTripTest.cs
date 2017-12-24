@@ -233,7 +233,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(null, roundTrippedAtom.ImplicitHydrogenCount);
         }
 
-        //@Ignore("Have to figure out how to store partial charges in CML2")
+        [TestMethod(), Ignore()] // Have to figure out how to store partial charges in CML2
         public void TestAtomPartialCharge()
         {
             IAtomContainer mol = new AtomContainer();
@@ -249,7 +249,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.Charge.Value, roundTrippedAtom.Charge.Value, 0.0001);
         }
 
-        //@Ignore("Have to figure out how to store atom parity in CML2")
+        [TestMethod(), Ignore()] // Have to figure out how to store atom parity in CML2
         public void TestAtomStereoParity()
         {
             IAtomContainer mol = new AtomContainer();
@@ -282,7 +282,7 @@ namespace NCDK.IO.CML {
         /// <summary>
         // @cdk.bug 1014344
         /// </summary>
-        //@Ignore("Functionality not yet implemented - exact mass can not be written/read")
+        [TestMethod(), Ignore()] // Functionality not yet implemented - exact mass can not be written/read
         public void TestIsotope_ExactMass()
         {
             IAtomContainer mol = new AtomContainer();
@@ -301,7 +301,7 @@ namespace NCDK.IO.CML {
         /// <summary>
         // @cdk.bug 1014344
         /// </summary>
-        //@Ignore("Functionality not yet implemented - natural abundance can not be written/read")
+        [TestMethod(), Ignore()] // Functionality not yet implemented - natural abundance can not be written/read
         public void TestIsotope_Abundance()
         {
             IAtomContainer mol = new AtomContainer();

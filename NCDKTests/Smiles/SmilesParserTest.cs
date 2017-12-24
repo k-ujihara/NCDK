@@ -481,7 +481,7 @@ namespace NCDK.Smiles
         /// given is invalid: the negative has an implied zero hydrogen count,
         /// making it have an unfilled valency.
         /// </summary>
-        //@Ignore        [TestMethod()]
+        [TestMethod(), Ignore()]
         [Timeout(1000)]
         public void TestAromaticSmilesWithCharge()
         {

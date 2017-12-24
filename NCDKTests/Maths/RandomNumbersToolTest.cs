@@ -133,7 +133,7 @@ namespace NCDK.Maths
             Assert.IsTrue(random == 0 || random == 1 || random == 2 || random == 3 || random == 4 || random == 5);
         }
 
-        //@Ignore("Test based on random probability - random failures")
+        [TestMethod(), Ignore()] // Test based on random probability - random failures
         public void TestFlipCoin()
         {
             int ntry = 1000000;
@@ -151,7 +151,7 @@ namespace NCDK.Maths
             Assert.AreEqual(0.5, (double)nfalse / ntry, 0.01);
         }
 
-        //@Ignore("Test based on random probability - random failures")
+        [TestMethod(), Ignore()] // Test based on random probability - random failures
         public void TestGaussianFloat()
         {
             float dev = (float)1.0;
@@ -175,7 +175,7 @@ namespace NCDK.Maths
             Assert.IsTrue(sd >= (dev - epsilon) && sd <= (dev + epsilon), "Estimated SD does not match to 2 decimal places");
         }
 
-        //@Ignore("Test based on random probability - random failures")
+        [TestMethod(), Ignore()] // Test based on random probability - random failures
         public void TestGaussianDouble()
         {
             double dev = 2.0;
@@ -198,7 +198,7 @@ namespace NCDK.Maths
             Assert.IsTrue(sd >= (dev - epsilon) && sd <= (dev + epsilon), "Estimated SD does not match to 2 decimal places");
         }
 
-        //@Ignore("Test based on random probability - random failures")
+        [TestMethod(), Ignore()] // Test based on random probability - random failures
         public void TestExponentialDouble()
         {
             double mean = 1.0f;

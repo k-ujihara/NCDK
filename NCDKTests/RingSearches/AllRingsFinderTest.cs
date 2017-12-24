@@ -94,7 +94,7 @@ namespace NCDK.RingSearches
             arf.FindAllRings(molecule);
         }
 
-        //@Ignore("timeout not longer used")
+        [TestMethod(), Ignore()] // timeout not longer used
         public void TestSetTimeout_long()
         {
             AllRingsFinder arf = new AllRingsFinder();
@@ -103,7 +103,7 @@ namespace NCDK.RingSearches
             arf.FindAllRings(molecule);
         }
 
-        //@Ignore("timeout not longer used")
+        [TestMethod(), Ignore()] // timeout not longer used
         public void TestCheckTimeout()
         {
             AllRingsFinder arf = new AllRingsFinder();
@@ -111,7 +111,7 @@ namespace NCDK.RingSearches
             arf.CheckTimeout();
         }
 
-        //@Ignore("timeout not longer used")
+        [TestMethod(), Ignore()] // timeout not longer used
         public void TestGetTimeout()
         {
             AllRingsFinder arf = new AllRingsFinder();

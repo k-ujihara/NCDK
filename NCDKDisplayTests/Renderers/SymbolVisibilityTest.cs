@@ -148,7 +148,7 @@ namespace NCDK.Renderers
         }
 
         // produces an NaN internally
-        //@Ignore("Multiple Group Sgroup rendering can have zero length C-C bonds (e.g. overlaid coords), we don't want to show the symbols")
+        [TestMethod(), Ignore()] // Multiple Group Sgroup rendering can have zero length C-C bonds (e.g. overlaid coords), we don't want to show the symbols
         public void IupacCarbonCornerCase()
         {
             IAtom a1 = new Atom("C");

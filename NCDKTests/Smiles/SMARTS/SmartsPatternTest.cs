@@ -174,7 +174,7 @@ namespace NCDK.Smiles.SMARTS
             Assert.AreEqual(0, SmartsPattern.Create("[C:1]>>[C:1]", null).MatchAll(Rsmi("C>>C")).Count());
         }
 
-        //@Ignore("Not supported yet")
+        [TestMethod(), Ignore()] // Not supported yet
         public void OptionalMapping()
         {
             Assert.AreEqual(2, SmartsPattern.Create("[C:?1]>>[C:?1]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());

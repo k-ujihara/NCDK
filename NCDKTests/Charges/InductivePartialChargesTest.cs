@@ -180,7 +180,7 @@ namespace NCDK.Charges
             Assert.AreEqual(3.20, eneg[4], 0.01, "Error in O electronegativity");
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestGetAtomicSoftness()
         {

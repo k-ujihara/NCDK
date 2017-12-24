@@ -33,7 +33,7 @@ namespace NCDK.Charges
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for pOC atom types.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         public void TestCharges_pOC()
         {
             Assert.Fail("Not tested yet");
@@ -43,7 +43,7 @@ namespace NCDK.Charges
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for pOP atom types.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         public void TestCharges_pOP()
         {
             Assert.Fail("Not tested yet");
@@ -53,7 +53,7 @@ namespace NCDK.Charges
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for pOS atom types.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         public void TestCharges_pOS()
         {
             Assert.Fail("Not tested yet");
@@ -63,7 +63,7 @@ namespace NCDK.Charges
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for p_p atom types.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         public void TestCharges_p_p()
         {
             Assert.Fail("Not tested yet");
@@ -73,7 +73,7 @@ namespace NCDK.Charges
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for p_n atom types.
         /// </summary>
-        //@Ignore
+        [TestMethod(), Ignore()]
         public void TestCharges_p_n()
         {
             Assert.Fail("Not tested yet");

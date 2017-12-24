@@ -389,7 +389,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  A unit test for JUnit. This molecule breaks with PETRA as well.
         /// </summary>
         //  @cdk.bug   1959099
-        //@Ignore("Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.")
+        [TestMethod(), Ignore()] // Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.
         public void TestPartialPiChargeDescriptoCharge_3()
         {
             double[] testResult = { -0.0379, -0.0032, 0.0, -0.0078, 0.0, 0.0488, 0.0, 0.0 };

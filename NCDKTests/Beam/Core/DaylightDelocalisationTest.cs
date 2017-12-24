@@ -155,7 +155,7 @@ namespace NCDK.Beam
             Assert_AreEqual(d.aromatic, new bool[] { false, true, true, true, true, false, true, true });
         }
 
-        /*@Ignore*/
+        [TestMethod(), Ignore()]
         public void Test()
         {
             Graph g = Graph.FromSmiles("[CH2]=[C]1[CH]=[CH][N](=[CH2])=[CH]1");
@@ -172,7 +172,7 @@ namespace NCDK.Beam
         }
 
         // http://www.eyesopen.com/docs/toolkits/current/html/OEChem_TK-python/_images/OEAssignAromaticFlags_Table.png
-        /* ignore [TestMethod()]*/
+        [TestMethod(), Ignore()]
         public void Openeye_comparison_5()
         {
             Graph g = Graph.FromSmiles("[NH]1[C]2=[CH][CH]=[C]1[CH]=[C]3[CH]=[CH][C]([CH]=[C]4[NH][C]([CH]=[CH]4)=[CH][C]5=[N][C]([CH]=[CH]5)=[CH]2)=[N]3");
@@ -759,7 +759,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Daylight Examples <seealso cref="http://www.daylight.com/dayhtml_tutorials/languages/smiles/smiles_examples.html"/>
         /// </summary>
-        //@Ignore("need to kekulize") 
+        [TestMethod(), Ignore()] // need to kekulize 
         public void DaylightExamples()
         {
             Test("CCc1nn(C)c2c(=O)[nH]c(nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4", "CCc1nn(C)c2c(=O)[nH]c(nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4");

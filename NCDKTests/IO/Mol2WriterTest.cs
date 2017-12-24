@@ -51,7 +51,7 @@ namespace NCDK.IO
         }
 
         // @cdk.bug 2675188
-        //@Ignore("moved to SMILES2Mol2WriterTest")
+        [TestMethod(), Ignore()] // moved to SMILES2Mol2WriterTest
         public void TestWriter1()
         {
             IAtomContainer molecule = new Mock<IAtomContainer>().Object;
@@ -64,7 +64,7 @@ namespace NCDK.IO
             Assert.IsTrue(swriter.ToString().IndexOf("1 2 1 1") > 0);
         }
 
-        //@Ignore("moved to SMILES2Mol2WriterTest")
+        [TestMethod(), Ignore()] // moved to SMILES2Mol2WriterTest
         public void TestWriter2()
         {
             IAtomContainer molecule = new Mock<IAtomContainer>().Object;
@@ -82,7 +82,7 @@ namespace NCDK.IO
             Assert.IsTrue(swriter.ToString().IndexOf("8 8 7 2") > 0);
         }
 
-        //@Ignore("moved to SMILES2Mol2WriterTest")
+        [TestMethod(), Ignore()] // moved to SMILES2Mol2WriterTest
         public void TestWriterForAmide()
         {
             IAtomContainer molecule = new Mock<IAtomContainer>().Object;

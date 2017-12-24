@@ -132,7 +132,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// Test of getAllAtomMapping method, of class MCSPlusHandler.
         /// </summary>
         //[TestMethod()]
-        //@Ignore("Failing but not going to be fixed")
+        [TestMethod(), Ignore()] // Failing but not going to be fixed
         public void TestGetAllAtomMapping()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -156,7 +156,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// Test of getAllMapping method, of class MCSPlusHandler.
         /// </summary>
         //[TestMethod()]
-        //@Ignore("Failing but not going to be fixed")
+        [TestMethod(), Ignore()] // Failing but not going to be fixed
         public void TestGetAllMapping()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);

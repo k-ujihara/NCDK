@@ -41,7 +41,7 @@ namespace NCDK.Renderers.Generators.Standards
             // values?
         }
 
-        //@Ignore("Font bounds vary between systems")
+        [TestMethod(), Ignore()] // Font bounds vary between systems
         public void UntransformedBounds()
         {
             TextOutline clOutline = new TextOutline("Cl", font, emSize);
@@ -78,7 +78,7 @@ namespace NCDK.Renderers.Generators.Standards
             Assert.AreEqual(oBounds.Height, tBounds.Height, 0.01);
         }
 
-        //@Ignore("Font bounds vary between systems")
+        [TestMethod(), Ignore()]  // Font bounds vary between systems
         public void UntransformedCenter()
         {
             TextOutline clOutline = new TextOutline("Cl", font, emSize);

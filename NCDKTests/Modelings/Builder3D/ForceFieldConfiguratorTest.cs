@@ -108,7 +108,7 @@ namespace NCDK.Modelings.Builder3D
 
         // @cdk.bug  #3515122:  N atom type instead of NC=O
         //[TestMethod()]
-        //@Ignore("Old atom typing method - see new Mmff class")
+        [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea()
         {
             string husmi = "NC(=O)NO";
@@ -157,7 +157,7 @@ namespace NCDK.Modelings.Builder3D
 
         // @cdk.bug : bad atom types
         //[TestMethod()]
-        //@Ignore("Old atom typing method - see new Mmff class")
+        [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_test4_hydroxyurea()
         {
             string smiles = "C(=O)(NO)N";
@@ -190,7 +190,7 @@ namespace NCDK.Modelings.Builder3D
 
         // @cdk.bug #3523240
         //[TestMethod()]
-        //@Ignore("Old atom typing method - see new Mmff class")
+        [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug()
         {
             string smiles = "CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O";
@@ -207,7 +207,7 @@ namespace NCDK.Modelings.Builder3D
 
         // @cdk.bug #3524734
         //[TestMethod()]
-        //@Ignore("Old atom typing method - see new Mmff class")
+        [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug_no2()
         {
             string smiles = "CC[N+](=O)[O-]";
@@ -239,7 +239,7 @@ namespace NCDK.Modelings.Builder3D
 
         // @cdk.bug #3525144
         //[TestMethod()]
-        //@Ignore("Old atom typing method - see new Mmff class")
+        [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug_nitrogenatomType()
         {
             string smiles = "CNC(=O)N(C)N=O";

@@ -60,7 +60,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIIsotope_NaturalAbundance()
         {
@@ -74,7 +74,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore("exact mass not currently supported in CML implmenetation")
+        [TestMethod(), Ignore()] // exact mass not currently supported in CML implmenetation
         //[TestMethod()]
         public void TestIIsotope_ExactMass()
         {
@@ -101,7 +101,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_Name()
         {
@@ -115,7 +115,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_MaxBondOrder()
         {
@@ -129,7 +129,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_BondOrderSum()
         {
@@ -156,7 +156,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_FormalNeighborCount()
         {
@@ -170,7 +170,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_Hybridization()
         {
@@ -184,7 +184,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_CovalentRadius()
         {
@@ -198,7 +198,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtomType_Valency()
         {
@@ -292,7 +292,7 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, difference.Length, "Found non-zero diff: " + difference);
         }
 
-        //@Ignore
+        [TestMethod(), Ignore()]
         //[TestMethod()]
         public void TestIAtom_StereoParity()
         {

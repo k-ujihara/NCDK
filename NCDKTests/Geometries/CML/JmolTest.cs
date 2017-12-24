@@ -84,7 +84,7 @@ namespace NCDK.IO.CML
         /// Special CML characteristics:
         /// - Jmol Animation
         /// </summary>
-        //@Ignore("It is broken, but not used, AFAIK")
+        [TestMethod(), Ignore()] // It is broken, but not used, AFAIK
         public void TestAnimation()
         {
             string filename = "NCDK.Data.CML.SN1_reaction.cml";

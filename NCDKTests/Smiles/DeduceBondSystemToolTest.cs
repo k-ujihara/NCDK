@@ -127,7 +127,7 @@ namespace NCDK.Smiles
 
 
         // @cdk.bug 3506770
-        //@Ignore("This is an example structure where this class fails")
+        [TestMethod(), Ignore()] // This is an example structure where this class fails
         public void TestLargeBioclipseUseCase()
         {
             string smiles = "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@@H]6COc7cc(OC)ccc7[C@H]56";
@@ -178,7 +178,7 @@ namespace NCDK.Smiles
         }
 
         // @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
-        //@Ignore("previouls disabled 'xtest'")
+        [TestMethod(), Ignore()] // previouls disabled 'xtest'
         public void XtestQuinone()
         {
             IAtomContainer enol = new AtomContainer();

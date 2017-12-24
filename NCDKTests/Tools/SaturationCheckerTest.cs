@@ -25,8 +25,8 @@ namespace NCDK.Tools
     // @author     steinbeck
     // @cdk.created    2003-02-20
     [TestClass()]
-    //@Ignore("Limitations actually cause failing tests")
-    public class SaturationCheckerTest : CDKTestCase
+    public class SaturationCheckerTest
+        : CDKTestCase
     {
         SaturationChecker satcheck = new SaturationChecker();
 

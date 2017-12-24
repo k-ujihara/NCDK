@@ -36,7 +36,7 @@ namespace NCDK.IO.CML
     [TestClass()]
     public class CML25FragmentsTest : CDKTestCase
     {
-        //@Ignore("Functionality not yet implemented")
+        [TestMethod(), Ignore()] // Functionality not yet implemented
         public void TestIsotopeRef()
         {
             string cmlString = "<cml>" + "  <isotopeList>" + "    <isotope id='H1' number='1' elementType='H'>"

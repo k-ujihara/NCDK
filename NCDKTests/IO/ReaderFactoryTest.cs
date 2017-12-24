@@ -101,7 +101,7 @@ namespace NCDK.IO
             ExpectReader("NCDK.Data.MDL.molV3000.mol", MDLV3000Format.Instance, -1, -1);
         }
 
-        //@Ignore("test moved to cdk-test-pdb/PDBReaderFactoryTest")
+        [TestMethod(), Ignore()] // test moved to cdk-test-pdb/PDBReaderFactoryTest
         public void TestPDB()
         {
             ExpectReader("NCDK.Data.PDB.coffeine.pdb", PDBFormat.Instance, -1, -1);

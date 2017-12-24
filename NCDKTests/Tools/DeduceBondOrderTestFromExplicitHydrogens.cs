@@ -347,7 +347,7 @@ namespace NCDK.Tools
         /// <summary>
         /// Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
         /// </summary>
-        //@Ignore("previously disabled 'xtest'")
+        [TestMethod(), Ignore()] // previously disabled 'xtest'
         public void XtestPyridine()
         {
             IAtomContainer enol = new AtomContainer();

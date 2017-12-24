@@ -517,7 +517,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         }
 
-        //@Ignore("This feature was removed - essential rings aren't useful really")
+        [TestMethod(), Ignore()] // This feature was removed - essential rings aren't useful really
         public void TestPropertyR2_essentialRings()
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[R2]");
@@ -527,7 +527,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        //@Ignore("This feature is pending but will be the combinded in an 'OpenSMARTS'" + " configuration which uses the relevant rings.")
+        [TestMethod(), Ignore()] // This feature is pending but will be the combinded in an 'OpenSMARTS'" + " configuration which uses the relevant rings.
         public void TestPropertyR2_relevantRings()
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[R2]");

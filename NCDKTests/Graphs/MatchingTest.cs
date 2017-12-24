@@ -38,7 +38,7 @@ namespace NCDK.Graphs
         private static IChemObjectBuilder Builder { get; } = Silent.ChemObjectBuilder.Instance;
         private SmilesParser smipar = new SmilesParser(Builder);
 
-        //@Ignore("no operation performed")
+        [TestMethod(), Ignore()] // no operation performed
         public void Nop() { }
 
         [TestMethod()]
