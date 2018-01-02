@@ -31,7 +31,7 @@ namespace NCDK.SGroups
     /// <summary>
     /// Representation of an Sgroup bracket.
     /// </summary>
-    public class SgroupBracket
+    public class SGroupBracket
     {
         private Vector2 p1, p2;
 
@@ -42,7 +42,7 @@ namespace NCDK.SGroups
         /// <param name="y1">first y coord</param>
         /// <param name="x2">second x coord</param>
         /// <param name="y2">second y coord</param>
-        public SgroupBracket(double x1, double y1, double x2, double y2)
+        public SGroupBracket(double x1, double y1, double x2, double y2)
         {
             this.p1 = new Vector2(x1, y1);
             this.p2 = new Vector2(x2, y2);

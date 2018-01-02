@@ -483,13 +483,13 @@ namespace NCDK.Tautomers
                         {
                             IAtom other = bond.GetOther(removedAtom);
                             int decValence = 0;
-                            switch (bond.Order.Numeric)
+                            switch (bond.Order.Numeric())
                             {
                                 case 1:
                                 case 2:
                                 case 3:
                                 case 4:
-                                    decValence = bond.Order.Numeric;
+                                    decValence = bond.Order.Numeric();
                                     break;
                                 default:
                                     break;
@@ -767,13 +767,13 @@ namespace NCDK.Tautomers
             {
                 if (bond.Contains(atom))
                 {
-                    switch (bond.Order.Numeric)
+                    switch (bond.Order.Numeric())
                     {
                         case 1:
                         case 2:
                         case 3:
                         case 4:
-                            connectivity += bond.Order.Numeric;
+                            connectivity += bond.Order.Numeric();
                             break;
                         default:
                             connectivity += 10;

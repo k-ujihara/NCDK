@@ -32,17 +32,28 @@ namespace NCDK.Smiles
     /// Light-weight intermediate data-structure for transferring information CDK to/from
     /// CXSMILES.
     /// </summary>
-    internal sealed partial class CxSmilesState
+    internal sealed class CxSmilesState
     {
         public IDictionary<int, string> atomLabels = null;
         public IDictionary<int, string> atomValues = null;
         public IList<double[]> AtomCoords { get; set; } = null;
         public IList<List<int>> fragGroups = null;
-        public IDictionary<int, Radical> atomRads = null;
+        public IDictionary<int, Radicals> atomRads = null;
         public IDictionary<int, IList<int>> positionVar = null;
         public IList<PolymerSgroup> sgroups = null;
         public IList<DataSgroup> dataSgroups = null;
         public bool coordFlag = false;
+
+        public enum Radicals
+        {
+            Monovalent,
+            Divalent,
+            DivalentSinglet,
+            DivalentTriplet,
+            Trivalent,
+            TrivalentDoublet,
+            TrivalentQuartet,
+        }
 
         public sealed class DataSgroup
         {

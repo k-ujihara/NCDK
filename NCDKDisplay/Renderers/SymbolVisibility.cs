@@ -152,7 +152,7 @@ namespace NCDK.Renderers
                 if (valence == null) return true;
                 foreach (var bond in bonds)
                 {
-                    valence += bond.Order.Numeric;
+                    valence += bond.Order.Numeric();
                 }
                 return valence == 4;
             }
@@ -162,7 +162,7 @@ namespace NCDK.Renderers
             /// </summary>
             /// <param name="atom">an atom</param>
             /// <param name="bonds">bonds connected to the atom</param>
-            /// <returns>whether the atom has parallele bonds</returns>
+            /// <returns>whether the atom has parallel bonds</returns>
             private static bool HasParallelBonds(IAtom atom, IList<IBond> bonds)
             {
                 if (bonds.Count != 2) return false;

@@ -195,11 +195,11 @@ namespace NCDK.Layout
         /// <returns>together = -1, opposite = +1</returns>
         private static int Parity(IDoubleBondStereochemistry element)
         {
-            switch (element.Stereo.Ordinal)
+            switch (element.Stereo)
             {
-                case DoubleBondConformation.O.Together:
+                case DoubleBondConformation.Together:
                     return -1;
-                case DoubleBondConformation.O.Opposite:
+                case DoubleBondConformation.Opposite:
                     return +1;
                 default:
                     return 0;

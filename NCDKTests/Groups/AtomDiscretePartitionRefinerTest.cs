@@ -174,7 +174,7 @@ namespace NCDK.Groups
             AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
             refiner.Refine(ac);
             IBond bond = ac.GetBond(ac.Atoms[1], ac.Atoms[2]);
-            int orderN = bond.Order.Numeric;
+            int orderN = bond.Order.Numeric();
             Assert.AreEqual(orderN, refiner.GetConnectivity(1, 2));
         }
 

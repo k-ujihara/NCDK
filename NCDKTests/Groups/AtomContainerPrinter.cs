@@ -111,17 +111,17 @@ namespace NCDK.Groups
 
         private static char BondOrderToChar(BondOrder order)
         {
-            switch (order.Ordinal)
+            switch (order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     return '1';
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     return '2';
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     return '3';
-                case BondOrder.O.Quadruple:
+                case BondOrder.Quadruple:
                     return '4';
-                case BondOrder.O.Unset:
+                case BondOrder.Unset:
                     return '?';
                 default:
                     return '?';

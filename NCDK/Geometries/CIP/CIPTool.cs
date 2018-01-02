@@ -91,9 +91,8 @@ namespace NCDK.Geometries.CIP
         {
             foreach (var stereoElement in container.StereoElements)
             {
-                if (stereoElement is ITetrahedralChirality)
+                if (stereoElement is ITetrahedralChirality tc)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)stereoElement;
                     tc.ChiralAtom.SetProperty(CDKPropertyName.CIP_Descriptor, GetCIPChirality(container, tc).ToString());
                 }
                 else if (stereoElement is IDoubleBondStereochemistry)
@@ -368,7 +367,7 @@ namespace NCDK.Geometries.CIP
         /// <returns>int reflecting the duplication number</returns>
         private static int GetDuplication(BondOrder order)
         {
-            return order.Numeric;
+            return order.Numeric();
         }
     }
 }

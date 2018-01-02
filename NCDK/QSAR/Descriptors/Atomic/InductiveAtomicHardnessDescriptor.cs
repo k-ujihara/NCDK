@@ -85,7 +85,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from
         ///  the class tools.HydrogenAdder, and 3D coordinates.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>a double with polarizability of the heavy atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)

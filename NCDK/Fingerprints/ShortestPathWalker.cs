@@ -190,7 +190,7 @@ namespace NCDK.Fingerprints
             }
             else
             {
-                switch (bond.Order.Numeric)
+                switch (bond.Order.Numeric())
                 {
                     case 1:
                         return '1';

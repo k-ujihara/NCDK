@@ -1,7 +1,4 @@
-﻿// .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2017  Kazuya Ujihara
-
-
+﻿
 
 
 /*
@@ -54,7 +51,7 @@ namespace NCDK.Hash
 		/// The <see cref="Ordinal"/> values of <see cref="BasicAtomEncoder"/>.
 		/// </summary>
 		/// <seealso cref="BasicAtomEncoder"/>
-        public static partial class O
+        internal static partial class O
         {
             public const int AtomicNumber = 0;
             public const int MassNumber = 1;

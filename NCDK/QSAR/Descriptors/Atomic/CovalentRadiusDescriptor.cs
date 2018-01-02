@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  This method calculates the Covalent radius of an atom.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which the descriptor is to be calculated</param>
         /// <returns>The Covalent radius of the atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer container)

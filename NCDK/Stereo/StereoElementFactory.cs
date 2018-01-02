@@ -464,12 +464,12 @@ namespace NCDK.Stereo
 
             private static bool IsWedged(IBond bond)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.Up:
-                    case BondStereo.O.Down:
-                    case BondStereo.O.UpInverted:
-                    case BondStereo.O.DownInverted:
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
                         return true;
                     default:
                         return false;
@@ -696,11 +696,11 @@ namespace NCDK.Stereo
             /// <returns>the bond has unspecified stereochemistry</returns>
             private bool IsUnspecified(IBond bond)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.UpOrDown:
-                    case BondStereo.O.UpOrDownInverted:
-                    case BondStereo.O.EOrZ:
+                    case BondStereo.UpOrDown:
+                    case BondStereo.UpOrDownInverted:
+                    case BondStereo.EOrZ:
                         return true;
                     default:
                         return false;
@@ -825,15 +825,15 @@ namespace NCDK.Stereo
             /// <returns>the elevation of the connected atom, +1 above, -1 below, 0 planar</returns>
             private int ElevationOf(IAtom focus, IBond bond)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.Up:
+                    case BondStereo.Up:
                         return bond.Begin == focus ? +1 : 0;
-                    case BondStereo.O.UpInverted:
+                    case BondStereo.UpInverted:
                         return bond.End == focus ? +1 : 0;
-                    case BondStereo.O.Down:
+                    case BondStereo.Down:
                         return bond.Begin == focus ? -1 : 0;
-                    case BondStereo.O.DownInverted:
+                    case BondStereo.DownInverted:
                         return bond.End == focus ? -1 : 0;
                     default:
                         return 0;

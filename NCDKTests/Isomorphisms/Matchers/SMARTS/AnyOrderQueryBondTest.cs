@@ -43,7 +43,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         {
             AnyOrderQueryBond matcher = new AnyOrderQueryBond(new Mock<IChemObjectBuilder>().Object);
             IBond testBond = new Bond();
-            foreach (var order in BondOrder.Values)
+            foreach (var order in BondOrderTools.Values)
             {
                 testBond.Order = order;
                 Assert.IsTrue(matcher.Matches(testBond));

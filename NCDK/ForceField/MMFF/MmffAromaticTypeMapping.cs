@@ -421,7 +421,7 @@ namespace NCDK.ForceField.MMFF
                 foreach (var w in graph[v])
                 {
                     IBond bond = bonds[v, w];
-                    val += bond.Order.Numeric;
+                    val += bond.Order.Numeric();
                     if (bond.Order == BondOrder.Double)
                     {
                         dbs[v] = dbs[v] == -1 ? w : -2;

@@ -152,7 +152,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        valence += bond.Order.Numeric;
+                        valence += bond.Order.Numeric();
                     }
                 }
                 if (valence < 0)
@@ -566,16 +566,16 @@ namespace NCDK.IO
                     // storing positional variation
                     if ("ANY".Equals(attach))
                     {
-                        Sgroup sgroup = new Sgroup();
-                        sgroup.Type = SgroupType.ExtMulticenter;
+                        SGroup sgroup = new SGroup();
+                        sgroup.Type = SGroupTypes.ExtMulticenter;
                         sgroup.Atoms.Add(bond.Begin); // could be other end?
                         sgroup.Bonds.Add(bond);
                         foreach (var endpt in endpts)
                             sgroup.Atoms.Add(endpt);
 
-                        IList<Sgroup> sgroups = readData.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                        IList<SGroup> sgroups = readData.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
                         if (sgroups == null)
-                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<Sgroup>(4));
+                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<SGroup>(4));
                         sgroups.Add(sgroup);
                     }
 

@@ -278,10 +278,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                     IBond bond = bondMap[v, w];
                     BondOrder order = bond.Order;
 
-                    if (order.IsUnset)
+                    if (order.IsUnset())
                         throw new NullReferenceException("Bond order was not set.");
 
-                    valence += order.Numeric;
+                    valence += order.Numeric();
 
                     degree++;
 

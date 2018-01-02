@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  This method calculate the number of bonds on the shortest path between two atoms.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
         public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)

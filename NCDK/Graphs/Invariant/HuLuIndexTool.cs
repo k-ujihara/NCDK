@@ -164,7 +164,7 @@ namespace NCDK.Graphs.Invariant
                     {
                         int min = Math.Min(apspMatrix[i][headAtomPosition], apspMatrix[i][endAtomPosition]);
                         BondOrder order = bond.Order;
-                        interLayerBondSum[min] += order == BondOrder.Unset ? 0 : order.Numeric;
+                        interLayerBondSum[min] += order.IsUnset() ? 0 : order.Numeric();
                     }
                 }
 

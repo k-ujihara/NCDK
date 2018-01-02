@@ -96,7 +96,7 @@ namespace NCDK.QSAR
         /// <para>
         /// Many descriptors return multiple values. In general it is useful for the
         /// descriptor to indicate the names for each value. When a descriptor creates
-        /// a <see cref="DescriptorValue"/> object, it should supply an array of names equal
+        /// a <see cref="IDescriptorValue"/> object, it should supply an array of names equal
         /// in length to the number of descriptor calculated.
         /// </para>
         /// <para>
@@ -110,7 +110,7 @@ namespace NCDK.QSAR
         /// the return array will have a single element
         /// </para>
         /// <para>
-        /// In case a descriptor creates a <see cref="DescriptorValue"/> object with no names, this
+        /// In case a descriptor creates a <see cref="IDescriptorValue"/> object with no names, this
         /// method will generate a set of names based on the <see cref="DescriptorSpecification"/> object
         /// supplied at instantiation.
         /// </para>

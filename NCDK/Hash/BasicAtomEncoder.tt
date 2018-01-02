@@ -1,7 +1,4 @@
-﻿// .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2017  Kazuya Ujihara
-
-<#@ include file="..\..\Config.ttinclude" #>
+﻿<#@ include file="..\..\Config.ttinclude" #>
 
 /*
  * Copyright (c) 2013 John May <jwmay@users.sf.net>

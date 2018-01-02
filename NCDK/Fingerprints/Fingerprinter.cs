@@ -563,13 +563,13 @@ namespace NCDK.Fingerprints
         {
             if (bond.IsAromatic)
                 return ":";
-            switch (bond.Order.Ordinal)
+            switch (bond.Order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     return "-";
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     return "=";
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     return "#";
                 default:
                     return "";

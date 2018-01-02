@@ -65,7 +65,7 @@ namespace NCDK.Renderers.Fonts
 
             for (int i = 0; i < 20; i++)
             {
-                // WPF's Typeface does not contain size infomation. 
+                // WPF's Typeface does not contain size information. 
                 this.RegisterFontSizeMapping(scale, size);
                 size += 1;
                 scale += 0.1;

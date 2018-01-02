@@ -74,10 +74,10 @@ namespace NCDK.Smiles
         public void Radicals()
         {
             CxSmilesState state = new CxSmilesState();
-            state.atomRads = new Dictionary<int, CxSmilesState.Radical>();
-            state.atomRads[2] = CxSmilesState.Radical.Monovalent;
-            state.atomRads[6] = CxSmilesState.Radical.Monovalent;
-            state.atomRads[4] = CxSmilesState.Radical.Divalent;
+            state.atomRads = new Dictionary<int, CxSmilesState.Radicals>();
+            state.atomRads[2] = CxSmilesState.Radicals.Monovalent;
+            state.atomRads[6] = CxSmilesState.Radicals.Monovalent;
+            state.atomRads[4] = CxSmilesState.Radicals.Divalent;
             Assert.AreEqual(" |^1:1,5,^2:3|", CxSmilesGenerator.Generate(state, SmiFlavor.CxSmiles, new int[0], new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
         }
 

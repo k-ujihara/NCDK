@@ -1,6 +1,6 @@
 ﻿<#
 /*
- * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ * Copyright (C) 2017-2018  Kazuya Ujihara <ujihara.kazuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -104,7 +104,7 @@
 		/// The <see cref="Ordinal"/> values of <see cref="<#= name #>"/>.
 		/// </summary>
 		/// <seealso cref="<#= name #>"/>
-        public static partial class O
+        <#= isStruct ? "public" : "internal" #> static partial class O
         {
 <#+ 
         for (var i = 0; i < entities.Length; i++) 
@@ -192,7 +192,7 @@ foreach (var s in entities)
         public static <#= name #>[] Values => values;
 
 <#+
-         if (isStruct) 
+        if (isStruct) 
         {    
 #>
         /* Avoid to cause compiling error */

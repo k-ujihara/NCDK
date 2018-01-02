@@ -355,10 +355,9 @@ namespace NCDK.IO
                         }
                         break;
                 }
-                if (container.Atoms[f] is IPseudoAtom)
+                //according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
+                if (container.Atoms[f] is IPseudoAtom pseudoAtom)
                 {
-                    //according to http://www.google.co.uk/url?sa=t&ct=res&cd=2&url=http%3A%2F%2Fwww.mdl.com%2Fdownloads%2Fpublic%2Fctfile%2Fctfile.pdf&ei=MsJjSMbjAoyq1gbmj7zCDQ&usg=AFQjCNGaJSvH4wYy4FTXIaQ5f7hjoTdBAw&sig2=eSfruNOSsdMFdlrn7nhdAw an R group is written as R#
-                    IPseudoAtom pseudoAtom = (IPseudoAtom)container.Atoms[f];
                     string label = pseudoAtom.Label;
                     if (label == null) // set to empty string if null
                         label = "";
@@ -411,8 +410,7 @@ namespace NCDK.IO
                     line += FormatMDLString(container.Atoms[f].Symbol, 3);
                 }
 
-                ITetrahedralChirality tc;
-                if (!atomstereo.TryGetValue(atom, out tc))
+                if (!atomstereo.TryGetValue(atom, out ITetrahedralChirality tc))
                 {
                     line += " 0  0  0  0  0";
                 }
@@ -549,9 +547,8 @@ namespace NCDK.IO
                             Trace.TraceWarning("Skipping atom-atom mapping, invalid value: " + atomAtomMapping);
                         }
                     }
-                    else if (atomAtomMapping is int)
+                    else if (atomAtomMapping is int value)
                     {
-                        int value = (int)atomAtomMapping;
                         line += FormatMDLInt(value, 3);
                     }
                     else
@@ -580,7 +577,7 @@ namespace NCDK.IO
                     if (bond.Stereo == BondStereo.UpInverted || bond.Stereo == BondStereo.DownInverted
                         || bond.Stereo == BondStereo.UpOrDownInverted)
                     {
-                        // turn around atom coding to correct for inv stereo
+                        // turn around atom coding to correct for inversed stereo
                         line = FormatMDLInt(atomindex[bond.End] + 1, 3);
                         line += FormatMDLInt(atomindex[bond.Begin] + 1, 3);
                     }
@@ -624,21 +621,21 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        switch (bond.Order.Ordinal)
+                        switch (bond.Order)
                         {
-                            case BondOrder.O.Single:
-                            case BondOrder.O.Double:
-                            case BondOrder.O.Triple:
+                            case BondOrder.Single:
+                            case BondOrder.Double:
+                            case BondOrder.Triple:
                                 if (WriteAromaticBondTypes.IsSet && bond.IsAromatic)
                                     bondType = 4;
                                 else
-                                    bondType = bond.Order.Numeric;
+                                    bondType = bond.Order.Numeric();
                                 break;
-                            case BondOrder.O.Unset:
+                            case BondOrder.Unset:
                                 if (bond.IsAromatic)
                                 {
                                     if (!WriteAromaticBondTypes.IsSet)
-                                        throw new CDKException("Bond at idx " + container.Bonds.IndexOf(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                        throw new CDKException($"Bond at index {container.Bonds.IndexOf(bond)} was an unspecific aromatic bond which should only be used for queries in Molfiles. These can be written if desired by enabling the option '{nameof(WriteAromaticBondTypes)}'.");
                                     bondType = 4;
                                 }
                                 break;
@@ -646,25 +643,25 @@ namespace NCDK.IO
                     }
 
                     if (bondType == 0)
-                        throw new CDKException("Bond at idx=" + container.Bonds.IndexOf(bond) + " is not supported by Molfile, bond=" + bond.Order);
+                        throw new CDKException($"Bond at index={container.Bonds.IndexOf(bond)} is not supported by Molfile, bond={bond.Order}");
 
                     line += FormatMDLInt(bondType, 3);
                     line += "  ";
-                    switch (bond.Stereo.Ordinal)
+                    switch (bond.Stereo)
                     {
-                        case BondStereo.O.Up:
-                        case BondStereo.O.UpInverted:
+                        case BondStereo.Up:
+                        case BondStereo.UpInverted:
                             line += "1";
                             break;
-                        case BondStereo.O.Down:
-                        case BondStereo.O.DownInverted:
+                        case BondStereo.Down:
+                        case BondStereo.DownInverted:
                             line += "6";
                             break;
-                        case BondStereo.O.UpOrDown:
-                        case BondStereo.O.UpOrDownInverted:
+                        case BondStereo.UpOrDown:
+                        case BondStereo.UpOrDownInverted:
                             line += "4";
                             break;
-                        case BondStereo.O.EOrZ:
+                        case BondStereo.EOrZ:
                             line += "3";
                             break;
                         default:
@@ -833,17 +830,17 @@ namespace NCDK.IO
 
         private void WriteSgroups(IAtomContainer container, TextWriter writer, IDictionary<IAtom, int> atomidxs)
         {
-            IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
             // going to modify
-            sgroups = new List<Sgroup>(sgroups);
+            sgroups = new List<SGroup>(sgroups);
 
             // remove non-ctab Sgroups 
             {
-                var removes = new List<Sgroup>();
-                foreach (var e in sgroups.Where(n => n.Type == SgroupType.ExtMulticenter))
+                var removes = new List<SGroup>();
+                foreach (var e in sgroups.Where(n => n.Type == SGroupTypes.ExtMulticenter))
                     removes.Add(e);
                 foreach (var e in removes)
                     sgroups.Remove(e);
@@ -859,7 +856,7 @@ namespace NCDK.IO
                     writer.Write(' ');
                     writer.Write(FormatMDLInt(1 + sgroups.IndexOf(sgroup), 3));
                     writer.Write(' ');
-                    writer.Write(sgroup.Type.Key);
+                    writer.Write(sgroup.Type.Key());
                 }
                 writer.Write('\n');
             }
@@ -867,7 +864,7 @@ namespace NCDK.IO
             // Sgroup output is non-compact for now - but valid
             for (int id = 1; id <= sgroups.Count; id++)
             {
-                Sgroup sgroup = sgroups[id - 1];
+                SGroup sgroup = sgroups[id - 1];
 
                 // Sgroup Atom List
                 foreach (var atoms in Wrap(sgroup.Atoms, 15))
@@ -912,20 +909,20 @@ namespace NCDK.IO
                     writer.Write('\n');
                 }
 
-                ICollection<SgroupKeys> attributeKeys = sgroup.AttributeKeys;
+                ICollection<SGroupKeys> attributeKeys = sgroup.AttributeKeys;
                 // TODO order and aggregate attribute keys
                 foreach (var key in attributeKeys)
                 {
                     switch (key)
                     {
-                        case SgroupKeys.CtabSubScript:
+                        case SGroupKeys.CtabSubScript:
                             writer.Write("M  SMT ");
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabExpansion:
+                        case SGroupKeys.CtabExpansion:
                             bool expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                             {
@@ -936,8 +933,8 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabBracket:
-                            IEnumerable<SgroupBracket> brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
+                        case SGroupKeys.CtabBracket:
+                            IEnumerable<SGroupBracket> brackets = (IEnumerable<SGroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
                                 writer.Write("M  SDI ");
@@ -950,7 +947,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabBracketStyle:
+                        case SGroupKeys.CtabBracketStyle:
                             writer.Write("M  SBT");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -959,7 +956,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt((int)sgroup.GetValue(key), 3));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabConnectivity:
+                        case SGroupKeys.CtabConnectivity:
                             writer.Write("M  SCN");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -968,7 +965,7 @@ namespace NCDK.IO
                             writer.Write(((string)sgroup.GetValue(key)).ToUpperInvariant());
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabSubType:
+                        case SGroupKeys.CtabSubType:
                             writer.Write("M  SST");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -977,7 +974,7 @@ namespace NCDK.IO
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabParentAtomList:
+                        case SGroupKeys.CtabParentAtomList:
                             IEnumerable<IAtom> parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
                             foreach (var atoms in Wrap(parentAtomList.ToList(), 15))
                             {
@@ -992,7 +989,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabComponentNumber:
+                        case SGroupKeys.CtabComponentNumber:
                             int compNumber = (int)sgroup.GetValue(key);
                             writer.Write("M  SNC");
                             writer.Write(FormatMDLInt(1, 3));
@@ -1059,7 +1056,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="i">The int to be formated</param>
         /// <param name="l">Length of the string</param>
-        /// <returns>The string to be written into the connectiontable</returns>
+        /// <returns>The string to be written into the connection table</returns>
         protected internal static string FormatMDLInt(int i, int l)
         {
             string s = i.ToString(CultureInfo.InvariantCulture);
@@ -1067,11 +1064,11 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Formats a float to fit into the connectiontable and changes it
+        /// Formats a float to fit into the connection table and changes it
         /// to a string.
         /// </summary>
         /// <param name="fl">The float to be formated</param>
-        /// <returns>The string to be written into the connectiontable</returns>
+        /// <returns>The string to be written into the connection table</returns>
         protected static string FormatMDLFloat(double fl)
         {
             string s;
@@ -1083,11 +1080,11 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Formats a string to fit into the connectiontable.
+        /// Formats a string to fit into the connection table.
         /// </summary>
         /// <param name="s">The string to be formated</param>
         /// <param name="le">The length of the string</param>
-        /// <returns>The string to be written in the connectiontable</returns>
+        /// <returns>The string to be written in the connection table</returns>
         protected static string FormatMDLString(string s, int le)
         {
             return (s + new string(' ', le)).Substring(0, le);

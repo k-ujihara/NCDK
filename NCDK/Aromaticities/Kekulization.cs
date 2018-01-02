@@ -100,7 +100,7 @@ namespace NCDK.Aromaticities
                 IBond bond = bonds[v, w];
 
                 // sanity check, something wrong if this happens
-                if (bond.Order.Numeric > 1)
+                if (bond.Order.Numeric() > 1)
                     throw new CDKException("Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
 
                 bond.Order = BondOrder.Double;
@@ -145,7 +145,7 @@ namespace NCDK.Aromaticities
                     {
                         nPiBonds++;
                     }
-                    else if (order.Numeric > 2)
+                    else if (order.Numeric() > 2)
                     {
                         goto continue_ATOMS;
                     }

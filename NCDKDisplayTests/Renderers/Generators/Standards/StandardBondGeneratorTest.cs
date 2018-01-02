@@ -85,7 +85,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneDoubleBondCount()
         {
-            Assert.AreEqual(3, RingBondOffsetComparator.nDoubleBonds(TestMoleculeFactory.MakeBenzene()));
+            Assert.AreEqual(3, RingBondOffsetComparator.CountNumberOfDoubleBonds(TestMoleculeFactory.MakeBenzene()));
         }
 
         [TestMethod()]

@@ -343,8 +343,10 @@ namespace NCDK.Tools
                     }
                     else
                     {
-                        tempNode = new TreeNode(this, atom.Symbol, new TreeNode(this, root.Symbol, null, root, (double)0, 0,
-                                (long)0), atom, bond.Order.Numeric, atomContainer.GetConnectedBonds(atom).Count(), 0);
+                        tempNode = new TreeNode(
+                            this, atom.Symbol, 
+                            new TreeNode(this, root.Symbol, null, root, (double)0, 0, (long)0), atom, 
+                            bond.Order.Numeric(), atomContainer.GetConnectedBonds(atom).Count(), 0);
                     }
 
                     sphereNodes.Add(tempNode);
@@ -409,8 +411,10 @@ namespace NCDK.Tools
                                 }
                                 else
                                 {
-                                    nextSphereNodes.Add(new TreeNode(this, toNode.Symbol, treeNode, toNode, bond.Order
-                                            .Numeric, atomContainer.GetConnectedBonds(toNode).Count(), treeNode.score));
+                                    nextSphereNodes.Add(
+                                        new TreeNode(
+                                            this, toNode.Symbol, treeNode, toNode, bond.Order.Numeric(),
+                                            atomContainer.GetConnectedBonds(toNode).Count(), treeNode.score));
                                 }
                             }
                         }

@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Substances
         /// Calculates the descriptor value for the given <see cref="ISubstance"/>.
         /// </summary>
         /// <param name="substance">An <see cref="ISubstance"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="DescriptorValue"/> that contain the calculated value as well as specification details</returns>
+        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
         IDescriptorValue Calculate(ISubstance substance);
 
         /// <inheritdoc/>

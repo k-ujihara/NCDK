@@ -334,15 +334,15 @@ namespace NCDK.Hash.Stereo
         internal static int Elevation(IBond bond)
         {
             BondStereo stereo = bond.Stereo;
-            switch (stereo.Ordinal)
+            switch (stereo)
             {
-                case BondStereo.O.None:
+                case BondStereo.None:
                     return 0;
-                case BondStereo.O.Up:
-                case BondStereo.O.DownInverted:
+                case BondStereo.Up:
+                case BondStereo.DownInverted:
                     return +1;
-                case BondStereo.O.Down:
-                case BondStereo.O.UpInverted:
+                case BondStereo.Down:
+                case BondStereo.UpInverted:
                     return -1;
                 default:
                     return 0;

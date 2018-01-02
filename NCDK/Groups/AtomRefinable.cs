@@ -246,7 +246,7 @@ namespace NCDK.Groups
                     {
                         IBond bond = atomContainer.GetBond(atom, connected);
                         bool isArom = bond.IsAromatic;
-                        int orderNumber = (isArom) ? 5 : bond.Order.Numeric;
+                        int orderNumber = isArom ? 5 : bond.Order.Numeric();
                         bondOrders[atomIndex][i] = orderNumber;
 
                         // TODO

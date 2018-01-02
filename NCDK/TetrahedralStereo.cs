@@ -57,7 +57,7 @@ namespace NCDK
             return value;
         }
 
-        public static StereoElement.Configurations ToConfigure(this TetrahedralStereo value)
+        public static StereoElement.Configurations ToConfiguration(this TetrahedralStereo value)
         {
             switch (value)
             {

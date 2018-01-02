@@ -69,7 +69,7 @@ namespace NCDK.Templates
                     info[counter][0] = counter;
                     info[counter][1] = acid.Atoms.IndexOf(bond.Begin);
                     info[counter][2] = acid.Atoms.IndexOf(bond.End);
-                    info[counter][3] = bond.Order.Numeric;
+                    info[counter][3] = bond.Order.Numeric();
                     counter++;
                 }
             }

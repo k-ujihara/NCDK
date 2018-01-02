@@ -21,10 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using static NCDK.Renderers.Generators.Standards.HydrogenPosition;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 
 namespace NCDK.Renderers.Generators.Standards
@@ -35,8 +37,37 @@ namespace NCDK.Renderers.Generators.Standards
     /// method decides the position based on the atom and neighbouring atom coordinates.
     /// </summary>
     // @author John May
-    public partial struct HydrogenPosition
+    public enum HydrogenPosition
     {
+         Right,
+         Left,
+         Above,
+         Below,
+    }
+
+    public static class HydrogenPositionTools
+    {
+        private static readonly HydrogenPosition[] values = new[]
+        {
+             Right,
+             Left,
+             Above,
+             Below,
+        };
+
+        internal static HydrogenPosition[] Values => values;
+
+        private static readonly string[] names = new string[]
+        {
+            "Right",
+            "Left",
+            "Above",
+            "Below",
+        };
+
+        public static string Name(this HydrogenPosition value)
+            => names[(int)value];
+
         /// <summary>
         /// When a single atom is displayed in isolation the position defaults to the
         /// right unless the element is listed here. This allows us to correctly
@@ -69,12 +100,12 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         private const double Tau = Math.PI + Math.PI;
 
-        public static HydrogenPosition ValueOf(string str)
+        public static HydrogenPosition Parse(string str)
         {
             var f = Array.FindIndex(names, n => n == str);
             if (f < 0)
                 throw new ArgumentException();
-            return values[f];
+            return (HydrogenPosition)f;
         }
 
         internal struct C
@@ -111,7 +142,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// The directional vector for this hydrogen position.
         /// </summary>
-        public Vector2 Vector => V[this.Ordinal].Vector;
+        public static Vector2 Vector(this HydrogenPosition value)
+            => V[(int)value].Vector;
 
         /// <summary>
         /// Determine an appropriate position for the hydrogen label of an atom with
@@ -162,10 +194,10 @@ namespace NCDK.Renderers.Generators.Standards
                 double before = extents[i];
                 double after = extents[(i + 1) % extents.Length];
 
-                foreach (var position in Values)
+                foreach (var position in values)
                 {
                     // adjust the extents such that this position is '0'
-                    double bias = Tau - V[position.Ordinal].Direction;
+                    double bias = Tau - V[(int)position].Direction;
                     double afterBias = after + bias;
                     double beforeBias = before + bias;
 
@@ -186,8 +218,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // for each position keep the one with the smallest extent this is
                     // the most space available without another bond getting in the way
-                    OffsetExtent offsetExtent;
-                    if (!extentMap.TryGetValue(position, out offsetExtent) || totalExtent < offsetExtent.Extent)
+                    if (!extentMap.TryGetValue(position, out OffsetExtent offsetExtent) || totalExtent < offsetExtent.Extent)
                     {
                         extentMap[position] = new OffsetExtent(totalExtent, offset);
                     }

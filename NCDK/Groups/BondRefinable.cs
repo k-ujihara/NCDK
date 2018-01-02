@@ -117,7 +117,7 @@ namespace NCDK.Groups
                 else
                 {
                     bool isArom = bond.IsAromatic;
-                    int orderNumber = (isArom) ? 5 : bond.Order.Numeric;
+                    int orderNumber = isArom ? 5 : bond.Order.Numeric();
                     boS = orderNumber.ToString();
                 }
                 string bondString;
@@ -178,7 +178,7 @@ namespace NCDK.Groups
                 else
                 {
                     bool isArom = bond.IsAromatic;
-                    int orderNumber = (isArom) ? 5 : bond.Order.Numeric;
+                    int orderNumber = isArom ? 5 : bond.Order.Numeric();
                     boS = orderNumber.ToString();
                 }
                 string bondString;

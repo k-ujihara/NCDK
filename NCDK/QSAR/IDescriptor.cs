@@ -32,7 +32,7 @@ namespace NCDK.QSAR
     /// <para><b>Calculated results</b></para>
     /// <para>The results calculated by the descriptor can have various types, which
     /// extend the <see cref="IDescriptorResult"/>, and is embedded in a
-    /// <see cref="DescriptorValue"/>. Currently, there are five result types:
+    /// <see cref="IDescriptorValue"/>. Currently, there are five result types:
     /// <list type="bullet">
     ///   <item><see cref="Result{Bool}"/></item>
     ///   <item><see cref="Result{Double}"/> </item>
@@ -79,7 +79,7 @@ namespace NCDK.QSAR
     /// of <see cref="Parameters"/>, the current parameter values are
     /// returned.</para>
     /// </remarks>
-    /// <seealso cref="DescriptorValue"/>
+    /// <seealso cref="IDescriptorValue"/>
     /// <seealso cref="IDescriptorResult"/>
     // @cdk.module qsar
     // @cdk.githash

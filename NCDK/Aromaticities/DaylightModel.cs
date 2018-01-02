@@ -136,8 +136,8 @@ namespace NCDK.Aromaticities
                  || order == BondOrder.Triple
                  || order == BondOrder.Quadruple)
                 {
-                    bondOrderSum[u] += order.Numeric;
-                    bondOrderSum[v] += order.Numeric;
+                    bondOrderSum[u] += order.Numeric();
+                    bondOrderSum[v] += order.Numeric();
                 }
             }
 

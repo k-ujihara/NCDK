@@ -37,7 +37,7 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class ExtendedAtomGenerator : BasicAtomGenerator
     {
-        /// <summary>bool that indicates if implicit hydrogens should be depicted.</summary>
+        /// <summary>Indicates implicit hydrogens should be depicted.</summary>
         public class ShowImplicitHydrogens : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>
@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Generators
 
         private IGeneratorParameter<bool?> showImplicitHydrogens = new ShowImplicitHydrogens();
 
-        /// <summary> bool that indicates if atom type names should be given instead
+        /// <summary>Indicates atom type names should be given instead
         /// of element symbols. </summary>
         public class ShowAtomTypeNames : AbstractGeneratorParameter<bool?>
         {
@@ -166,7 +166,7 @@ namespace NCDK.Renderers.Generators
         private Deque<Position> GetUnusedPositions(IAtomContainer container, IAtom atom)
         {
             Deque<Position> unused = new Deque<Position>();
-            foreach (var p in Position.Values)
+            foreach (var p in PositionTools.Values)
             {
                 unused.Push(p);
             }

@@ -343,10 +343,10 @@ namespace NCDK.Renderers.Generators.Standards
                 // only generate if the symbol is visible
                 if (visibility.Visible(atom, bonds, parameters) || remapped)
                 {
-                     HydrogenPosition hPosition = HydrogenPosition.Position(atom, visNeighbors);
+                     HydrogenPosition hPosition = HydrogenPositionTools.Position(atom, visNeighbors);
 
                     if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount > 0)
-                        auxVectors.Add(hPosition.Vector);
+                        auxVectors.Add(hPosition.Vector());
 
                     if (remapped)
                     {

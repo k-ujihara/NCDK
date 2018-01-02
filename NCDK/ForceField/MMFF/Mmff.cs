@@ -189,7 +189,7 @@ namespace NCDK.ForceField.MMFF
                         continue;
 
                     IBond bond = edgeMap[v, w];
-                    int bondCls = mmffParamSet.GetBondCls(thisType, otherType, bond.Order.Numeric, bond.GetProperty(MMFF_AROM, false));
+                    int bondCls = mmffParamSet.GetBondCls(thisType, otherType, bond.Order.Numeric(), bond.GetProperty(MMFF_AROM, false));
                     var bci = mmffParamSet.GetBondChargeIncrement(bondCls, thisType, otherType);
                     if (bci != null)
                     {

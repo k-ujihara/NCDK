@@ -24,9 +24,9 @@
 namespace NCDK.SGroups
 {
     /// <summary>
-    /// Keys for indexing common Sgroup attributes. 
+    /// Keys for indexing common SGroup attributes. 
     /// </summary>
-    public enum SgroupKeys
+    public enum SGroupKeys
     {
         CtabType,
         CtabSubType,

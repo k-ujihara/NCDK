@@ -19,6 +19,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using static NCDK.Renderers.Elements.TextGroupElement.Position;
 
 namespace NCDK.Renderers.Elements
 {
@@ -29,8 +30,21 @@ namespace NCDK.Renderers.Elements
     /// </summary>
     // @cdk.module renderbasic
     // @cdk.githash
-    public partial class TextGroupElement : TextElement
+    public class TextGroupElement : TextElement
     {
+        /// <summary>
+        /// Compass-point positions for text element annotation children.
+        /// </summary>
+        public enum Position
+        {
+            NW, SW, SE, NE, S, N, W, E,
+        }
+
+        public static class PositionTools
+        {
+            public static Position[] Values { get; } = new[] { NW, SW, SE, NE, S, N, W, E,};
+        }
+
         /// <summary>
         /// A string of text that should be shown around the parent.
         /// </summary>

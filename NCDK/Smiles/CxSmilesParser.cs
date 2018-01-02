@@ -22,7 +22,7 @@
  */
 using System.Collections.Generic;
 using static NCDK.Smiles.CxSmilesState;
-using static NCDK.Smiles.CxSmilesState.Radical;
+using static NCDK.Smiles.CxSmilesState.Radicals;
 
 namespace NCDK.Smiles
 {
@@ -386,8 +386,8 @@ namespace NCDK.Smiles
         private static bool ProcessRadicals(CharIter iter, CxSmilesState state)
         {
             if (state.atomRads == null)
-                state.atomRads = new SortedDictionary<int, Radical>();
-            CxSmilesState.Radical rad;
+                state.atomRads = new SortedDictionary<int, Radicals>();
+            CxSmilesState.Radicals rad;
             switch (iter.Next())
             {
                 case '1':

@@ -215,27 +215,33 @@ namespace NCDK.IO
 
         private void InitIOSettings()
         {
-            List<string> basisOptions = new List<string>();
-            basisOptions.Add("6-31g");
-            basisOptions.Add("6-31g*");
-            basisOptions.Add("6-31g(d)");
-            basisOptions.Add("6-311g");
-            basisOptions.Add("6-311+g**");
+            var basisOptions = new List<string>
+            {
+                "6-31g",
+                "6-31g*",
+                "6-31g(d)",
+                "6-311g",
+                "6-311+g**"
+            };
             basis = new OptionIOSetting("Basis", IOSetting.Importance.Medium, "Which basis set do you want to use?",
                     basisOptions, "6-31g");
 
-            List<string> methodOptions = new List<string>();
-            methodOptions.Add("rb3lyp");
-            methodOptions.Add("b3lyp");
-            methodOptions.Add("rhf");
+            var methodOptions = new List<string>
+            {
+                "rb3lyp",
+                "b3lyp",
+                "rhf"
+            };
             method = new OptionIOSetting("Method", IOSetting.Importance.Medium, "Which method do you want to use?",
                     methodOptions, "b3lyp");
 
-            List<string> commandOptions = new List<string>();
-            commandOptions.Add("energy calculation");
-            commandOptions.Add("geometry optimization");
-            commandOptions.Add("IR frequency calculation");
-            commandOptions.Add("IR frequency calculation (with Raman)");
+            var commandOptions = new List<string>
+            {
+                "energy calculation",
+                "geometry optimization",
+                "IR frequency calculation",
+                "IR frequency calculation (with Raman)"
+            };
             command = IOSettings.Add(new OptionIOSetting("Command", IOSetting.Importance.High,
                     "What kind of job do you want to perform?", commandOptions, "energy calculation"));
 

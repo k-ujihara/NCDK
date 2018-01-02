@@ -112,13 +112,13 @@ namespace NCDK.AtomTypes
             {
                 Assert.IsFalse(connectionCount > matched.FormalNeighbourCount, "Number of neighbors is too high");
             }
-            if (!matched.MaxBondOrder.IsUnset)
+            if (!matched.MaxBondOrder.IsUnset())
             {
                 BondOrder expectedMax = matched.MaxBondOrder;
                 foreach (var bond in connections)
                 {
                     BondOrder order = bond.Order;
-                    if (!order.IsUnset)
+                    if (!order.IsUnset())
                     {
                         if (BondManipulator.IsHigherOrder(order, expectedMax))
                         {

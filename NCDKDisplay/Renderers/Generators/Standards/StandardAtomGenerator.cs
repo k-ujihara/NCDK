@@ -409,15 +409,15 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var elementBounds = element.GetBounds();
             var hydrogenBounds = hydrogen.GetBounds();
-            switch (position.Ordinal)
+            switch (position)
             {
-                case HydrogenPosition.O.Above:
+                case HydrogenPosition.Above:
                     return hydrogen.Translate(0, (elementBounds.Top - padding) - hydrogenBounds.Bottom);
-                case HydrogenPosition.O.Right:
+                case HydrogenPosition.Right:
                     return hydrogen.Translate((elementBounds.Right + padding) - hydrogenBounds.Left, 0);
-                case HydrogenPosition.O.Below:
+                case HydrogenPosition.Below:
                     return hydrogen.Translate(0, (elementBounds.Bottom + padding) - hydrogenBounds.Top);
-                case HydrogenPosition.O.Left:
+                case HydrogenPosition.Left:
                     return hydrogen.Translate((elementBounds.Left - padding) - hydrogenBounds.Right, 0);
             }
             return hydrogen; // never reached

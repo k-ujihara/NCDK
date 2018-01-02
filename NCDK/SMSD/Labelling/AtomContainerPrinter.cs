@@ -60,7 +60,7 @@ namespace NCDK.SMSD.Labelling
                 int a1N = atomContainer.Atoms.IndexOf(a1);
                 string a0S = a0.Symbol;
                 string a1S = a1.Symbol;
-                int o = bond.Order.Numeric;
+                int o = bond.Order.Numeric();
                 if (a0N < a1N)
                 {
                     edges.Add(new Edge(a0N, a1N, o, a0S, a1S));

@@ -78,7 +78,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
             {
                 int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Begin);
                 int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].End);
-                int order = query.Bonds[atomIndex].Order.Numeric;
+                int order = query.Bonds[atomIndex].Order.Numeric();
 
                 //            Console.Out.WriteLine(AtomI + "= , =" + AtomJ );
                 for (int unMappedAtomIndex = 0; unMappedAtomIndex < unmappedNumA; unMappedAtomIndex++)
@@ -121,9 +121,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
                 int indexI = query.Atoms.IndexOf(query.Bonds[atomIndex].Begin);
                 int indexJ = query.Atoms.IndexOf(query.Bonds[atomIndex].End);
                 int order = 0;
-                if (!query.Bonds[atomIndex].Order.IsUnset)
+                if (!query.Bonds[atomIndex].Order.IsUnset())
                 {
-                    order = query.Bonds[atomIndex].Order.Numeric;
+                    order = query.Bonds[atomIndex].Order.Numeric();
                 }
 
                 //            Console.Out.WriteLine(AtomI + "= , =" + AtomJ );

@@ -231,7 +231,7 @@ namespace NCDK.Default
         {
             if (order == BondOrder.Unset)
                 return;
-            this.ElectronCount = order.Numeric * 2;
+            this.ElectronCount = order.Numeric() * 2;
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace NCDK.Silent
         {
             if (order == BondOrder.Unset)
                 return;
-            this.ElectronCount = order.Numeric * 2;
+            this.ElectronCount = order.Numeric() * 2;
         }
 
         /// <summary>

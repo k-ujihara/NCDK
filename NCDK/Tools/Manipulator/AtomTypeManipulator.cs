@@ -117,7 +117,7 @@ namespace NCDK.Tools.Manipulator
                 atom.Symbol = atomType.Symbol;
             if (atom.AtomTypeName == null && atomType.AtomTypeName != null)
                 atom.AtomTypeName = atomType.AtomTypeName;
-            if (atom.MaxBondOrder.IsUnset && !atomType.MaxBondOrder.IsUnset)
+            if (atom.MaxBondOrder.IsUnset() && !atomType.MaxBondOrder.IsUnset())
                 atom.MaxBondOrder = atomType.MaxBondOrder;
             if (atom.BondOrderSum == null && atomType.BondOrderSum != null)
                 atom.BondOrderSum = atomType.BondOrderSum;

@@ -560,30 +560,30 @@ namespace NCDK.Renderers.Visitors
             {
                 WPF::Point p;
 
-                switch (child.position.Ordinal)
+                switch (child.position)
                 {
-                    case TextGroupElement.Position.O.NE:
+                    case TextGroupElement.Position.NE:
                         p = new WPF::Point(coord2.X, coord1.Y);
                         break;
-                    case TextGroupElement.Position.O.N:
+                    case TextGroupElement.Position.N:
                         p = new WPF::Point(coord1.X, coord1.Y);
                         break;
-                    case TextGroupElement.Position.O.NW:
+                    case TextGroupElement.Position.NW:
                         p = new WPF::Point(coord1.X - o.Width, coord1.Y);
                         break;
-                    case TextGroupElement.Position.O.W:
+                    case TextGroupElement.Position.W:
                         p = new WPF::Point(coord1.X - o.Width, coord.Y);
                         break;
-                    case TextGroupElement.Position.O.SW:
+                    case TextGroupElement.Position.SW:
                         p = new WPF::Point(coord1.X - o.Width, coord1.Y + o.Height);
                         break;
-                    case TextGroupElement.Position.O.S:
+                    case TextGroupElement.Position.S:
                         p = new WPF::Point(coord1.X, coord2.Y + o.Height);
                         break;
-                    case TextGroupElement.Position.O.SE:
+                    case TextGroupElement.Position.SE:
                         p = new WPF::Point(coord2.X, coord2.Y + o.Height);
                         break;
-                    case TextGroupElement.Position.O.E:
+                    case TextGroupElement.Position.E:
                         p = new WPF::Point(coord2.X, coord.Y);
                         break;
                     default:

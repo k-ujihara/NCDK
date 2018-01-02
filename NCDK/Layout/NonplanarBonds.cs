@@ -107,12 +107,12 @@ namespace NCDK.Layout
             // that so it's safe to clear them
             foreach (var bond in container.Bonds)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.Up:
-                    case BondStereo.O.UpInverted:
-                    case BondStereo.O.Down:
-                    case BondStereo.O.DownInverted:
+                    case BondStereo.Up:
+                    case BondStereo.UpInverted:
+                    case BondStereo.Down:
+                    case BondStereo.DownInverted:
                         bond.Stereo = BondStereo.None;
                         break;
                 }
@@ -388,14 +388,14 @@ namespace NCDK.Layout
 
         private BondStereo Flip(BondStereo disp)
         {
-            switch (disp.Ordinal)
+            switch (disp)
             {
-                case BondStereo.O.Up: return BondStereo.UpInverted;
-                case BondStereo.O.UpInverted: return BondStereo.Up;
-                case BondStereo.O.Down: return BondStereo.DownInverted;
-                case BondStereo.O.DownInverted: return BondStereo.Down;
-                case BondStereo.O.UpOrDown: return BondStereo.UpOrDownInverted;
-                case BondStereo.O.UpOrDownInverted: return BondStereo.UpOrDown;
+                case BondStereo.Up: return BondStereo.UpInverted;
+                case BondStereo.UpInverted: return BondStereo.Up;
+                case BondStereo.Down: return BondStereo.DownInverted;
+                case BondStereo.DownInverted: return BondStereo.Down;
+                case BondStereo.UpOrDown: return BondStereo.UpOrDownInverted;
+                case BondStereo.UpOrDownInverted: return BondStereo.UpOrDown;
                 default: return disp;
             }
         }
@@ -1218,7 +1218,7 @@ namespace NCDK.Layout
             {
                 IBond adjBond = edgeToBond[v, neighbor];
                 // non single bonds
-                if (adjBond.Order.Numeric > 1)
+                if (adjBond.Order.Numeric() > 1)
                 {
                     if (allowedDoubleBond != adjBond)
                     {

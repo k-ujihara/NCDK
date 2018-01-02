@@ -937,7 +937,7 @@ namespace NCDK.Layout
 
             foreach (var bond in bonds)
             {
-                switch (bond.Order.Numeric)
+                switch (bond.Order.Numeric())
                 {
                     case 1:
                         numSgl++;

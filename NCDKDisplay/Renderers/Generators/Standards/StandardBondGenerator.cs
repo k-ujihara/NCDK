@@ -175,15 +175,15 @@ namespace NCDK.Renderers.Generators.Standards
 
             IRenderingElement elem;
 
-            switch (order.Ordinal)
+            switch (order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     elem = GenerateSingleBond(bond, atom1, atom2);
                     break;
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     elem = GenerateDoubleBond(bond);
                     break;
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     elem = GenerateTripleBond(bond, atom1, atom2);
                     break;
                 default:
@@ -196,16 +196,20 @@ namespace NCDK.Renderers.Generators.Standards
             // number, typically within a circle
             if (IsAttachPoint(atom1))
             {
-                ElementGroup elemGrp = new ElementGroup();
-                elemGrp.Add(elem);
-                elemGrp.Add(GenerateAttachPoint(atom1, bond));
+                ElementGroup elemGrp = new ElementGroup
+                {
+                    elem,
+                    GenerateAttachPoint(atom1, bond)
+                };
                 elem = elemGrp;
             }
             if (IsAttachPoint(atom2))
             {
-                ElementGroup elemGrp = new ElementGroup();
-                elemGrp.Add(elem);
-                elemGrp.Add(GenerateAttachPoint(atom2, bond));
+                ElementGroup elemGrp = new ElementGroup
+                {
+                    elem,
+                    GenerateAttachPoint(atom2, bond)
+                };
                 elem = elemGrp;
             }
 
@@ -234,20 +238,20 @@ namespace NCDK.Renderers.Generators.Standards
             string label = StandardGenerator.GetAnnotationLabel(bond);
             if (label != null) AddAnnotation(from, to, label);
 
-            switch (stereo.Ordinal)
+            switch (stereo)
             {
-                case BondStereo.O.None:
+                case BondStereo.None:
                     return GeneratePlainSingleBond(from, to);
-                case BondStereo.O.Down:
+                case BondStereo.Down:
                     return GenerateHashedWedgeBond(from, to, toBonds);
-                case BondStereo.O.DownInverted:
+                case BondStereo.DownInverted:
                     return GenerateHashedWedgeBond(to, from, fromBonds);
-                case BondStereo.O.Up:
+                case BondStereo.Up:
                     return GenerateBoldWedgeBond(from, to, toBonds);
-                case BondStereo.O.UpInverted:
+                case BondStereo.UpInverted:
                     return GenerateBoldWedgeBond(to, from, fromBonds);
-                case BondStereo.O.UpOrDown:
-                case BondStereo.O.UpOrDownInverted: // up/down is undirected
+                case BondStereo.UpOrDown:
+                case BondStereo.UpOrDownInverted: // up/down is undirected
                     return GenerateWavyBond(to, from);
                 default:
                     Trace.TraceWarning("Unknown single bond stereochemistry ", stereo, " is not displayed");
@@ -645,11 +649,11 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else if (SpecialOffsetBondNextToWedge(atom1, atom1Bonds) && !HasDisplayedSymbol(atom1))
             {
-                return GenerateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
+                return GenerateOffsetDoubleBond(bond, atom1, atom2, SelectPlainSingleBond(atom1Bonds), atom2Bonds);
             }
             else if (SpecialOffsetBondNextToWedge(atom2, atom2Bonds) && !HasDisplayedSymbol(atom2))
             {
-                return GenerateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
+                return GenerateOffsetDoubleBond(bond, atom2, atom1, SelectPlainSingleBond(atom2Bonds), atom1Bonds);
             }
             else
             {
@@ -680,7 +684,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="bonds">list of bonds</param>
         /// <returns>a plain bond</returns>
         /// <seealso cref="IsPlainBond(IBond)"/>
-        private IBond selectPlainSingleBond(List<IBond> bonds)
+        private IBond SelectPlainSingleBond(List<IBond> bonds)
         {
             foreach (var bond in bonds)
             {
@@ -709,15 +713,15 @@ namespace NCDK.Renderers.Generators.Standards
         private bool AtWideEndOfWedge(IAtom atom, IBond bond)
         {
             if (bond.Stereo == BondStereo.None) return false;
-            switch (bond.Stereo.Ordinal)
+            switch (bond.Stereo)
             {
-                case BondStereo.O.Up:
+                case BondStereo.Up:
                     return bond.End == atom;
-                case BondStereo.O.UpInverted:
+                case BondStereo.UpInverted:
                     return bond.Begin == atom;
-                case BondStereo.O.Down:
+                case BondStereo.Down:
                     return bond.End == atom;
-                case BondStereo.O.DownInverted:
+                case BondStereo.DownInverted:
                     return bond.Begin == atom;
                 default:
                     return false;
@@ -805,11 +809,12 @@ namespace NCDK.Renderers.Generators.Standards
             if (atom1Offset > halfBondLength || atom1Offset < 0) atom1Offset = 0;
             if (atom2Offset > halfBondLength || atom2Offset < 0) atom2Offset = 0;
 
-            ElementGroup group = new ElementGroup();
-
-            group.Add(NewLineElement(atom1Point, atom2BackOffPoint));
-            group.Add(NewLineElement(Sum(Sum(atom1Point, Scale(perpendicular, separation)), Scale(unit, atom1Offset)),
-                    Sum(Sum(atom2BackOffPoint, Scale(perpendicular, separation)), Scale(unit, -atom2Offset))));
+            ElementGroup group = new ElementGroup
+            {
+                NewLineElement(atom1Point, atom2BackOffPoint),
+                NewLineElement(Sum(Sum(atom1Point, Scale(perpendicular, separation)), Scale(unit, atom1Offset)),
+                    Sum(Sum(atom2BackOffPoint, Scale(perpendicular, separation)), Scale(unit, -atom2Offset)))
+            };
 
             // add annotation label on the opposite side
             string label = StandardGenerator.GetAnnotationLabel(bond);
@@ -924,9 +929,11 @@ namespace NCDK.Renderers.Generators.Standards
             Vector2 line2Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular2, halfSeparation));
 
             // swap end points to generate a cross
-            ElementGroup group = new ElementGroup();
-            group.Add(NewLineElement(line1Atom1Point, line2Atom2Point));
-            group.Add(NewLineElement(line2Atom1Point, line1Atom2Point));
+            ElementGroup group = new ElementGroup
+            {
+                NewLineElement(line1Atom1Point, line2Atom2Point),
+                NewLineElement(line2Atom1Point, line1Atom2Point)
+            };
             return group;
         }
 
@@ -1340,7 +1347,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (sizeCmp != 0) return sizeCmp;
 
                 // now order by number of double bonds
-                int piBondCmp = Ints.Compare(nDoubleBonds(containerA), nDoubleBonds(containerB));
+                int piBondCmp = Ints.Compare(CountNumberOfDoubleBonds(containerA), CountNumberOfDoubleBonds(containerB));
                 if (piBondCmp != 0) return -piBondCmp;
 
                 // order by element frequencies, all carbon rings are preferred
@@ -1376,11 +1383,10 @@ namespace NCDK.Renderers.Generators.Standards
 
             /// <summary>
             /// Count the number of double bonds in a container.
-            ///
+            /// </summary>
             /// <param name="container">structure representation</param>
             /// <returns>number of double bonds</returns>
-            /// </summary>
-            internal static int nDoubleBonds(IAtomContainer container)
+            internal static int CountNumberOfDoubleBonds(IAtomContainer container)
             {
                 int count = 0;
                 foreach (var bond in container.Bonds)

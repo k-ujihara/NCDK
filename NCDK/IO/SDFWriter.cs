@@ -278,11 +278,11 @@ namespace NCDK.IO
             if (container.Bonds.Count > 999)
                 return true;
             // check for positional variation, this can be output in base V3000 and not V2000
-            var sgroups = container.GetProperty<IEnumerable<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetProperty<IEnumerable<SGroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups != null)
             {
-                foreach (Sgroup sgroup in sgroups)
-                    if (sgroup.GetType() == SgroupType.ExtMulticenter)
+                foreach (SGroup sgroup in sgroups)
+                    if (sgroup.Type == SGroupTypes.ExtMulticenter)
                         return true;
             }
             return false;

@@ -1,6 +1,4 @@
-﻿<#@ include file="..\Config.ttinclude" #>
-
-/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
+﻿/* Copyright (C) 2012  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,35 +21,44 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Reflection;
+using static NCDK.DoubleBondConformation;
+
 namespace NCDK
 {
     /// <summary>
     /// Enumeration that defines the two possible values for this stereochemistry type.
     /// </summary>
-<# 
-    GenerateEnumBody(
-        "DoubleBondConformation", 
-            new[]
-        {
-            "Unset",
-            "Together:Z-form",
-            "Opposite:E-form",
-        },
-        true
-    ); 
-#>
+    [Obfuscation(ApplyToMembers = true, Exclude = true)]
+    public enum DoubleBondConformation
     {
-        public bool IsUnset => this.Ordinal == 0;
+        Unset = 0,
+
+        /// <summary>Z-form</summary>
+        Together,
+        
+		/// <summary>E-form</summary>
+        Opposite,
+    }
+
+    public static class DoubleBondConformationTools
+    {
+        public static bool IsUnset(this DoubleBondConformation value)
+        {
+            return value == Unset;
+        }
 
         /// <summary>
-        /// Invert this conformation, Together.Invert() = Opposite, Opposite.Invert() = Together.
+        /// Invert this conformation.
+        /// <see cref="Together"/>.Invert() = <see cref="Opposite"/>, <see cref="Opposite"/>.Invert() = <see cref="Together"/>.
         /// </summary>
         /// <returns>the inverse conformation</returns>
-        public DoubleBondConformation Invert() => Ordinal == O.Together ? Opposite : Together;
+        public static DoubleBondConformation Invert(this DoubleBondConformation value)
+            => value == Together ? Opposite : Together;
 
-         public static DoubleBondConformation ToConformation(StereoElement.Configurations configure)
+        public static DoubleBondConformation ToConformation(this StereoElement.Configurations configure)
         {
-            switch (configure.Ordinal)
+            switch (configure)
             {
                 case StereoElement.Configurations.Together:
                     return Together;
@@ -62,13 +69,13 @@ namespace NCDK
             }
         }
 
-        public static StereoElement.Configurations ToConfig(DoubleBondConformation conformation)
+        public static StereoElement.Configurations ToConfiguration(this DoubleBondConformation conformation)
         {
-            switch (conformation.Ordinal)
+            switch (conformation)
             {
-                case DoubleBondConformation.O.Together:
+                case DoubleBondConformation.Together:
                     return StereoElement.Configurations.Together;
-                case DoubleBondConformation.O.Opposite:
+                case DoubleBondConformation.Opposite:
                     return StereoElement.Configurations.Opposite;
                 default:
                     throw new System.ArgumentException("Cannot map enum to config: " + conformation);

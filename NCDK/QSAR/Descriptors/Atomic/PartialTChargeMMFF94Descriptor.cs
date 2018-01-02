@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// MMFF94 method. It is needed to call the addExplicitHydrogensToSatisfyValency
         /// method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="org">AtomContainer</param>
         /// <returns>partial charge of parameter atom</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer org)

@@ -117,7 +117,7 @@ namespace NCDK.SMSD.Algorithms.Single
                             foreach (var bond in bonds)
                             {
                                 BondOrder order = bond.Order;
-                                totalOrder += order.Numeric + be.GetEnergies(bond);
+                                totalOrder += order.Numeric() + be.GetEnergies(bond);
                             }
                             if (targetAtom.FormalCharge != sourceAtom.FormalCharge)
                             {
@@ -155,7 +155,7 @@ namespace NCDK.SMSD.Algorithms.Single
                             foreach (var bond in bonds)
                             {
                                 BondOrder order = bond.Order;
-                                totalOrder += order.Numeric + be.GetEnergies(bond);
+                                totalOrder += order.Numeric() + be.GetEnergies(bond);
                             }
                             if (targetAtom.FormalCharge != sourceAtom.FormalCharge)
                             {
@@ -194,7 +194,7 @@ namespace NCDK.SMSD.Algorithms.Single
                             foreach (var bond in bonds)
                             {
                                 BondOrder order = bond.Order;
-                                totalOrder += order.Numeric + be.GetEnergies(bond);
+                                totalOrder += order.Numeric() + be.GetEnergies(bond);
                             }
                             if (sourceAtoms.FormalCharge != targetAtom.FormalCharge)
                             {

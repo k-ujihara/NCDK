@@ -90,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>true if the proton is bonded to a conjugated system</returns>
         public DescriptorValue<Result<bool>> Calculate(IAtom atom, IAtomContainer atomContainer)

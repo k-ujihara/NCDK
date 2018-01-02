@@ -63,7 +63,7 @@ namespace NCDK.IO
                 int u = atomToIndex[bond.Begin];
                 int v = atomToIndex[bond.End];
 
-                int bondOrder = bond.Order.Numeric;
+                int bondOrder = bond.Order.Numeric();
 
                 valences[u] += bondOrder;
                 valences[v] += bondOrder;

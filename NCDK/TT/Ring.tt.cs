@@ -109,7 +109,7 @@ namespace NCDK.Default
         /// The sum of all bond orders in the ring.
         /// </summary>
         public int BondOrderSum
-            => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
+            => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
         public override string ToString()
         {
@@ -208,7 +208,7 @@ namespace NCDK.Silent
         /// The sum of all bond orders in the ring.
         /// </summary>
         public int BondOrderSum
-            => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
+            => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
         public override string ToString()
         {

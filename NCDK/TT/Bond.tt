@@ -243,7 +243,7 @@ namespace <#= ns.NS #>
         {
             if (order == BondOrder.Unset)
                 return;
-            this.ElectronCount = order.Numeric * 2;
+            this.ElectronCount = order.Numeric() * 2;
         }
 
         /// <summary>

@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  The method calculates the Effective Atom Polarizability of a given atom
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency method from the class tools.HydrogenAdder.
         /// </summary>
-        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
+        /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="IDescriptorValue"/> is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>return the effective polarizability</returns>
         public DescriptorValue<Result<double>> Calculate(IAtom atom, IAtomContainer ac)

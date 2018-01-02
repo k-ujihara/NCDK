@@ -129,8 +129,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Returns the specific type of the DescriptorResult object.
         /// <para>
         /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
+        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
+        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>

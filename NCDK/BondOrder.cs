@@ -1,6 +1,4 @@
-﻿<#@ include file="..\Config.ttinclude" #>
-
-/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+﻿/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -19,34 +17,47 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+using System.Reflection;
+using static NCDK.BondOrder;
+
 namespace NCDK
 {
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
-    [System.Serializable]
-<# 
-    GenerateEnumBody(
-        "BondOrder", 
-		new[]
-        {
-            "Unset",
-            "Single",
-            "Double",
-            "Triple",
-            "Quadruple",
-            "Quintuple",
-            "Sextuple",
-        },
-        true
-    ); 
-#>
+	[Obfuscation(ApplyToMembers = true, Exclude = true)]
+    public enum BondOrder
     {
+        Unset = 0,
+        Single = 1,
+        Double = 2,
+        Triple = 3,
+        Quadruple = 4,
+        Quintuple = 5,
+        Sextuple = 6,
+    }
+
+	public static class BondOrderTools
+    {
+        internal static IReadOnlyList<BondOrder> Values { get; } = new[]
+        {
+            Unset,
+            Single,
+            Double,
+            Triple,
+            Quadruple,
+            Quintuple,
+            Sextuple,
+        };
+
         /// <summary>
         /// A numeric value for the number of bonded electron pairs.
         /// </summary>
-        public int Numeric => (int)Ordinal;
+        public static int Numeric(this BondOrder value)
+			=> (int)value;
 
-        public bool IsUnset => this.Ordinal == 0;
+        public static bool IsUnset(this BondOrder value)
+            => value == Unset;
     }
 }

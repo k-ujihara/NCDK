@@ -88,7 +88,7 @@ namespace NCDK.Tools
             int typeMaxBondOrder = piBondCount + 1;
             int typeBondOrderSum = formalNeighborCount + piBondCount;
 
-            if (bondOrderSum + hcount == typeBondOrderSum && maxBondOrder.Numeric <= typeMaxBondOrder)
+            if (bondOrderSum + hcount == typeBondOrderSum && maxBondOrder.Numeric() <= typeMaxBondOrder)
             {
                 return true;
             }

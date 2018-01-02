@@ -127,10 +127,10 @@ namespace NCDK.IO
             {
                 IAtomContainer container = reader.Read(new AtomContainer());
                 Assert.AreEqual(8, container.Bonds.Count);
-                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                var sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
-                Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);
+                Assert.AreEqual(SGroupTypes.ExtMulticenter, sgroups[0].Type);
             }
         }
 

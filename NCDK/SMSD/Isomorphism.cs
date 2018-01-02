@@ -235,24 +235,24 @@ namespace NCDK.SMSD
 
         private void ChooseAlgorithm(int rBondCount, int pBondCount)
         {
-            switch (algorithmType.Ordinal)
+            switch (algorithmType)
             {
-                case Algorithm.O.CDKMCS:
+                case Algorithm.CDKMCS:
                     CDKMCSAlgorithm();
                     break;
-                case Algorithm.O.Default:
+                case Algorithm.Default:
                     DefaultMCSAlgorithm();
                     break;
-                case Algorithm.O.MCSPlus:
+                case Algorithm.MCSPlus:
                     MCSPlusAlgorithm();
                     break;
-                case Algorithm.O.SubStructure:
+                case Algorithm.SubStructure:
                     SubStructureAlgorithm(rBondCount, pBondCount);
                     break;
-                case Algorithm.O.VFLibMCS:
+                case Algorithm.VFLibMCS:
                     VFLibMCSAlgorithm();
                     break;
-                case Algorithm.O.TurboSubStructure:
+                case Algorithm.TurboSubStructure:
                     TurboSubStructureAlgorithm(rBondCount, pBondCount);
                     break;
                 default:
@@ -707,7 +707,7 @@ namespace NCDK.SMSD
         {
             get
             {
-                return queryMol == null ? rMol.Molecule : queryMol;
+                return queryMol ?? rMol.Molecule;
             }
         }
 
@@ -715,7 +715,7 @@ namespace NCDK.SMSD
         {
             get
             {
-                return pAC == null ? pMol.Molecule : pAC;
+                return pAC ?? pMol.Molecule;
             }
         }
 

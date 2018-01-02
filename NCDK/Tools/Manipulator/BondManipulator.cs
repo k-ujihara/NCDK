@@ -156,9 +156,10 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="DestroyBondOrder(BondOrder)"/>
         public static BondOrder CreateBondOrder(double bondOrder)
         {
-            foreach (var order in BondOrder.Values)
+            foreach (var order in BondOrderTools.Values)
             {
-                if (order.Numeric == bondOrder) return order;
+                if (order.Numeric() == bondOrder)
+                    return order;
             }
             return BondOrder.Unset;
         }
@@ -175,7 +176,7 @@ namespace NCDK.Tools.Manipulator
         [Obsolete("use BondOrder.Numeric instead")]
         public static double DestroyBondOrder(BondOrder bondOrder)
         {
-            return bondOrder.Numeric;
+            return bondOrder.Numeric();
         }
 
         /// <summary>
@@ -258,9 +259,9 @@ namespace NCDK.Tools.Manipulator
             foreach (var bond in bonds)
             {
                 BondOrder order = bond.Order;
-                if (!order.IsUnset)
+                if (!order.IsUnset())
                 {
-                    sum += order.Numeric;
+                    sum += order.Numeric();
                 }
             }
             return sum;

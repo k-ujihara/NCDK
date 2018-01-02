@@ -147,12 +147,12 @@ namespace NCDK.Geometries
                 }
             }
             // scale Sgroup brackets
-            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
+            if (atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                IList<SGroup> sgroups = atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+                    IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)
@@ -200,12 +200,12 @@ namespace NCDK.Geometries
                 }
             }
             // translate Sgroup brackets
-            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
+            if (atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+                IList<SGroup> sgroups = atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+                    IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)

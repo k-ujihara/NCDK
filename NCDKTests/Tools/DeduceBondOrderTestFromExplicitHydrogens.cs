@@ -281,18 +281,18 @@ namespace NCDK.Tools
             dboTool.Saturate(enol);
 
             // now check whether it did the right thing
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond1
-                    .Order.Numeric + bond6.Order.Numeric); // around atom1
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond1
-                    .Order.Numeric + bond2.Order.Numeric); // around atom2
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond2
-                    .Order.Numeric + bond3.Order.Numeric); // around atom3
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond3
-                    .Order.Numeric + bond4.Order.Numeric); // around atom4
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond4
-                    .Order.Numeric + bond5.Order.Numeric); // around atom5
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond5
-                    .Order.Numeric + bond6.Order.Numeric); // around atom6
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond1
+                    .Order.Numeric() + bond6.Order.Numeric()); // around atom1
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond1
+                    .Order.Numeric() + bond2.Order.Numeric()); // around atom2
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond2
+                    .Order.Numeric() + bond3.Order.Numeric()); // around atom3
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond3
+                    .Order.Numeric() + bond4.Order.Numeric()); // around atom4
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond4
+                    .Order.Numeric() + bond5.Order.Numeric()); // around atom5
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), bond5
+                    .Order.Numeric() + bond6.Order.Numeric()); // around atom6
         }
 
         /// <summary>
@@ -390,18 +390,24 @@ namespace NCDK.Tools
             dboTool.Saturate(enol);
 
             // now check whether it did the right thing
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond1
-                    .Order.Numeric + bond6.Order.Numeric); // around atom1
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond1
-                    .Order.Numeric + bond2.Order.Numeric); // around atom2
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond2
-                    .Order.Numeric + bond3.Order.Numeric); // around atom3
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond3
-                    .Order.Numeric + bond4.Order.Numeric); // around atom4
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond4
-                    .Order.Numeric + bond5.Order.Numeric); // around atom5
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, bond5
-                    .Order.Numeric + bond6.Order.Numeric); // around atom6
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), 
+                bond1.Order.Numeric() + bond6.Order.Numeric()); // around atom1
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), 
+                bond1.Order.Numeric() + bond2.Order.Numeric()); // around atom2
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), 
+                bond2.Order.Numeric() + bond3.Order.Numeric()); // around atom3
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), 
+                bond3.Order.Numeric() + bond4.Order.Numeric()); // around atom4
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(),
+                bond4.Order.Numeric() + bond5.Order.Numeric()); // around atom5
+            Assert.AreEqual(
+                BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), 
+                bond5.Order.Numeric() + bond6.Order.Numeric()); // around atom6
         }
 
         private void AddHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens)

@@ -131,7 +131,7 @@ namespace NCDK.QSAR
         /// <remarks>
         /// <para>
         /// The results for a given descriptor as well as associated parameters and
-        /// specifications are used to create a <see cref="DescriptorValue"/>
+        /// specifications are used to create a <see cref="IDescriptorValue"/>
         /// object which is then added to the molecule as a property keyed
         /// on the <see cref="DescriptorSpecification"/> object for that descriptor</para>
         /// </remarks>
@@ -459,7 +459,7 @@ namespace NCDK.QSAR
         /// Returns the DescriptorSpecification objects for all available descriptors.
         /// </summary>
         /// <returns>A <see cref="IList{T}"/> of <see cref="DescriptorSpecification"/> objects. These are the keys
-        ///         with which the <see cref="DescriptorValue"/> objects can be obtained from a
+        ///         with which the <see cref="IDescriptorValue"/> objects can be obtained from a
         ///         molecules property list</returns>
         public IList<IImplementationSpecification> GetDescriptorSpecifications()
         {

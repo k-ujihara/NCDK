@@ -698,7 +698,7 @@ namespace NCDK.AtomTypes
             BondOrder max = BondOrder.Single;
             foreach (var bond in connectedBonds)
             {
-                if (bond.Order.Numeric > max.Numeric)
+                if (bond.Order.Numeric() > max.Numeric())
                     max = bond.Order;
             }
             return max;
@@ -3542,12 +3542,12 @@ namespace NCDK.AtomTypes
 
             // confirm correct bond orders
             BondOrder typeOrder = type.MaxBondOrder;
-            if (!typeOrder.IsUnset)
+            if (!typeOrder.IsUnset())
             {
                 foreach (var bond in connectedBonds)
                 {
                     BondOrder order = bond.Order;
-                    if (!order.IsUnset)
+                    if (!order.IsUnset())
                     {
                         if (BondManipulator.IsHigherOrder(order, typeOrder)) return false;
                     }

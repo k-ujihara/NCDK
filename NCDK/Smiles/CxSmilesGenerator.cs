@@ -258,7 +258,7 @@ namespace NCDK.Smiles
             if (SmiFlavors.IsSet(opts, SmiFlavor.CxRadical) &&
                 state.atomRads != null && state.atomRads.Any())
             {
-                var radinv = new SortedDictionary<CxSmilesState.Radical, List<int>>();
+                var radinv = new SortedDictionary<CxSmilesState.Radicals, List<int>>();
                 foreach (var e in state.atomRads)
                 {
                     List<int> idxs;
@@ -270,7 +270,7 @@ namespace NCDK.Smiles
                 {
                     if (sb.Length > 2) sb.Append(',');
                     sb.Append('^');
-                    sb.Append(e.Key.Ordinal + 1);
+                    sb.Append((int)e.Key + 1);
                     sb.Append(':');
                     e.Value.Sort(comp);
                     AppendIntegers(ordering, ',', sb, e.Value);

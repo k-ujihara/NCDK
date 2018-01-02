@@ -747,7 +747,7 @@ namespace NCDK.LibIO.CML
                 //            scalar.SetDataType("xsd:float");
                 scalar.DictRef = "cdk:bondOrder";
                 scalar.Title = "order";
-                scalar.SetValue(cdkBond.Order.Numeric);
+                scalar.SetValue(cdkBond.Order.Numeric());
                 cmlBond.Add(scalar);
             }
             if (cdkBond.IsAromatic)

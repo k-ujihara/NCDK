@@ -73,7 +73,7 @@ namespace NCDK.IO
             mol.Atoms[0].MassNumber = 2;
             mol.Atoms[1].ImplicitHydrogenCount = 3;
             string res = WriteToStr(mol);
-            // H is pushed to back for compatability
+            // H is pushed to back for compatibility
             Assert.IsTrue(res.Contains("M  V30 2 H 0 0 0 0 MASS=2\n"));
             Assert.IsTrue(res.Contains("M  V30 1 C 0 0 0 0\n"));
         }
@@ -173,8 +173,10 @@ namespace NCDK.IO
         public void WriteLeadingZero()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.Point2D = new Vector2(0.5, 1.2);
+            Atom atom = new Atom("C")
+            {
+                Point2D = new Vector2(0.5, 1.2)
+            };
             mol.Atoms.Add(atom);
             Assert.IsTrue(WriteToStr(mol).Contains("0.5 1.2"));
         }
@@ -314,15 +316,15 @@ namespace NCDK.IO
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.Atoms[2].ImplicitHydrogenCount = 0;
             mol.Atoms[3].ImplicitHydrogenCount = 1;
-            var sgroups = new List<Sgroup>();
-            Sgroup sgroup = new Sgroup();
+            var sgroups = new List<SGroup>();
+            SGroup sgroup = new SGroup();
             sgroup.Atoms.Add(mol.Atoms[1]);
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[2]);
-            sgroup.Type = SgroupType.CtabStructureRepeatUnit;
+            sgroup.Type = SGroupTypes.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HH");
+            sgroup.PutValue(SGroupKeys.CtabConnectivity, "HH");
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
             string res = WriteToStr(mol);
@@ -346,14 +348,14 @@ namespace NCDK.IO
                 mol.Atoms[1 + i].ImplicitHydrogenCount = 2;
             mol.Atoms[mol.Atoms.Count - 1].ImplicitHydrogenCount = 1;
 
-            var sgroups = new List<Sgroup>();
-            Sgroup sgroup = new Sgroup();
+            var sgroups = new List<SGroup>();
+            SGroup sgroup = new SGroup();
             for (int i = 0; i < repeatAtoms; i++)
                 sgroup.Atoms.Add(mol.Atoms[i + 1]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[mol.Bonds.Count - 1]);
-            sgroup.PutValue(SgroupKeys.CtabParentAtomList, new[] { mol.Atoms[1] });
-            sgroup.Type = SgroupType.CtabMultipleGroup;
+            sgroup.PutValue(SGroupKeys.CtabParentAtomList, new[] { mol.Atoms[1] });
+            sgroup.Type = SGroupTypes.CtabMultipleGroup;
             sgroup.Subscript = repeatAtoms.ToString();
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);

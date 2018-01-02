@@ -409,7 +409,7 @@ namespace NCDK.SMARTS
                     IAtom nbr = bond.GetOther(atom);
                     if (nbr.AtomicNumber != null && nbr.AtomicNumber == 1)
                         hcount++;
-                    int bord = bond.Order != BondOrder.Unset ? bond.Order.Numeric : 0;
+                    int bord = bond.Order.IsUnset() ? 0 : bond.Order.Numeric();
                     if (bord == 0)
                         throw new ArgumentException("Molecule had unsupported zero-order or unset bonds!");
                     valence += bord;
@@ -455,9 +455,9 @@ namespace NCDK.SMARTS
 
             bool bArom = bond.IsAromatic;
             bool aArom = mol.Atoms[beg].IsAromatic && mol.Atoms[end].IsAromatic;
-            switch (bond.Order.Ordinal)
+            switch (bond.Order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     if (bArom)
                     {
                         return aArom ? "" : ":";
@@ -466,9 +466,9 @@ namespace NCDK.SMARTS
                     {
                         return aArom ? "-" : "";
                     }
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     return bArom ? "" : "=";
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     return "#";
                 default:
                     throw new ArgumentException("Unsupported bond type: " + bond.Order);

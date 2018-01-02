@@ -1,5 +1,3 @@
-<#@ include file="..\..\Config.ttinclude" #>
-
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
@@ -24,26 +22,43 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System.Reflection;
+using static NCDK.Stereo.Projection;
+
 namespace NCDK.Stereo
 {
     /// <summary>
     /// Stereochemistry projection types. 
     /// </summary>
     // @author John May
-<# 
-    GenerateEnumBody(
-        "Projection", 
-            new[]
-        {
-            "Unset",
-            "Fischer:Fischer projections are used for linear chain-form carbohydrates. They are drawn vertically with all atoms at right angles around stereocenters.",
-            "Haworth:Haworth projection are used to depict ring-form carbohydrates. The ring may be of size 5, 6, or 7 (rarer). Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.",
-            "Chair:Projection of the low energy conformation (chair) of a cyclohexane. Used for carbohydrates.",
-        },
-        true
-    ); 
-#>
+    [Obfuscation(ApplyToMembers = true, Exclude = true)]
+    public enum Projection
     {
-        public bool IsUnset => this.Ordinal == 0;
+        Unset = 0,
+
+        /// <summary>
+        /// Fischer projections are used for linear chain-form carbohydrates. 
+        /// They are drawn vertically with all atoms at right angles around stereocenters.
+        /// </summary>
+		Fischer,
+
+        /// <summary>
+        /// Haworth projection are used to depict ring-form carbohydrates. 
+        /// The ring may be of size 5, 6, or 7 (rarer). 
+        /// Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.
+        /// </summary>
+        Haworth,
+
+        /// <summary>
+        /// Projection of the low energy conformation (chair) of a cyclohexane. 
+        /// Used for carbohydrates.
+        /// </summary>
+        Chair,
+    }
+
+    public static class ProjectionTools
+    {
+        public static bool IsUnset(this Projection value)
+            => value == Unset;
     }
 }

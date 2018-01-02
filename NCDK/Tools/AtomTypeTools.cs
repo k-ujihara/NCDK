@@ -160,7 +160,7 @@ namespace NCDK.Tools
                 foreach (var bond in molecule.GetConnectedBonds(atom))
                 {
                     if (!bonds.Contains(bond))
-                        removed += bond.Order.Numeric;
+                        removed += bond.Order.Numeric();
                 }
                 hCount[i] = atom.ImplicitHydrogenCount;
                 atom.ImplicitHydrogenCount = (hCount[i] == null ? removed : hCount[i] + removed);

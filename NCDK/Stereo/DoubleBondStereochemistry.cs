@@ -42,7 +42,7 @@ namespace NCDK.Stereo
         /// <c>ligandBonds[0]</c>, <c>stereoBonds</c>, and <c>ligandBonds[1]</c>.
         /// </summary>
         public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo) 
-            : this(stereoBond, ligandBonds, DoubleBondConformation.ToConfig(stereo))
+            : this(stereoBond, ligandBonds, stereo.ToConfiguration())
         {
         }
 
@@ -58,7 +58,7 @@ namespace NCDK.Stereo
 
         public virtual IReadOnlyList<IBond> Bonds => new ReadOnlyCollection<IBond>(new List<IBond>(Carriers));
         public virtual IBond StereoBond => Focus;
-        public virtual DoubleBondConformation Stereo => DoubleBondConformation.ToConformation(Configure);
+        public virtual DoubleBondConformation Stereo => Configure.ToConformation();
 
         protected override IStereoElement<IBond, IBond> Create(IBond focus, IList<IBond> carriers, StereoElement stereo)
         {

@@ -38,7 +38,7 @@ namespace NCDK.Stereo
         : AbstractStereo<IAtom, IAtom>, ITetrahedralChirality
     {
         public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligands, TetrahedralStereo stereo)
-            : this(chiralAtom, ligands, stereo.ToConfigure())
+            : this(chiralAtom, ligands, stereo.ToConfiguration())
         {
         }
 
@@ -68,7 +68,7 @@ namespace NCDK.Stereo
         public virtual TetrahedralStereo Stereo
         {
             get { return Configure.ToStereo(); }
-            set { Configure = value.ToConfigure(); }
+            set { Configure = value.ToConfiguration(); }
         }
 
         protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IList<IAtom> carriers, StereoElement stereo)

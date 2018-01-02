@@ -45,7 +45,7 @@ namespace NCDK.Signatures
             {
                 IAtom aa = bond.Begin;
                 IAtom ab = bond.End;
-                int o = bond.Order.Numeric;
+                int o = bond.Order.Numeric();
                 int x = mol.Atoms.IndexOf(aa);
                 int y = mol.Atoms.IndexOf(ab);
                 if (x < y)

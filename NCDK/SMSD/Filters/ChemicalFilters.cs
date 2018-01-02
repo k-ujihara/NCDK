@@ -914,7 +914,7 @@ namespace NCDK.SMSD.Filters
         ///              and 0 for any other bond type.</returns>
         public static int ConvertBondOrder(IBond bond)
         {
-            return bond.Order.Numeric;
+            return bond.Order.Numeric();
         }
 
         /// <summary>
@@ -923,21 +923,21 @@ namespace NCDK.SMSD.Filters
         public static int ConvertBondStereo(IBond bond)
         {
             int value = 0;
-            switch (bond.Stereo.Ordinal)
+            switch (bond.Stereo)
             {
-                case BondStereo.O.Up:
-                case BondStereo.O.UpInverted:
+                case BondStereo.Up:
+                case BondStereo.UpInverted:
                     value = 1;
                     break;
-                case BondStereo.O.Down:
-                case BondStereo.O.DownInverted:
+                case BondStereo.Down:
+                case BondStereo.DownInverted:
                     value = 6;
                     break;
-                case BondStereo.O.UpOrDown:
-                case BondStereo.O.UpOrDownInverted:
+                case BondStereo.UpOrDown:
+                case BondStereo.UpOrDownInverted:
                     value = 4;
                     break;
-                case BondStereo.O.EOrZ:
+                case BondStereo.EOrZ:
                     value = 3;
                     break;
                 default:

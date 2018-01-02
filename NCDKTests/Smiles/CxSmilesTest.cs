@@ -126,9 +126,9 @@ namespace NCDK.Smiles
         public void PositionalVariation()
         {
             IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |m:1:2.3.4.5.6.7|");
-            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            IList<SGroup> sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             Assert.AreEqual(1, sgroups.Count);
-            Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);
+            Assert.AreEqual(SGroupTypes.ExtMulticenter, sgroups[0].Type);
             Assert.AreEqual(7, sgroups[0].Atoms.Count);
             Assert.AreEqual(1, sgroups[0].Bonds.Count);
         }
@@ -137,11 +137,11 @@ namespace NCDK.Smiles
         public void StructuralRepeatUnit()
         {
             IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |Sg:n:8:m:ht|");
-            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            IList<SGroup> sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             Assert.AreEqual(1, sgroups.Count);
-            Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroups[0].Type);
+            Assert.AreEqual(SGroupTypes.CtabStructureRepeatUnit, sgroups[0].Type);
             Assert.AreEqual("m", sgroups[0].Subscript);
-            Assert.AreEqual("ht", sgroups[0].GetValue(SgroupKeys.CtabConnectivity));
+            Assert.AreEqual("ht", sgroups[0].GetValue(SGroupKeys.CtabConnectivity));
             Assert.AreEqual(1, sgroups[0].Atoms.Count);
             Assert.AreEqual(2, sgroups[0].Bonds.Count);
         }
@@ -150,7 +150,7 @@ namespace NCDK.Smiles
         public void MarkushFragment()
         {
             IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |m:1:2.3.4.5.6.7,Sg:n:8:m:ht,$R';;;;;;;;;_AP1$|");
-            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            IList<SGroup> sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             // P-var and F-var
             Assert.AreEqual(2, sgroups.Count);
             // atom-labels
@@ -212,7 +212,7 @@ namespace NCDK.Smiles
         public void TrailingAtomLabelSemiColonAndAtomValues()
         {
             IAtomContainer mol = smipar.ParseSmiles("[H]C1=C([H])N2C(=O)C(=C([O-])[N+](CC3=CN=C(Cl)S3)=C2C(C)=C1[H])C1=CC(*)=CC=C1.** |$;;;;;;;;;;;;;;;;;;;;;;;;;;R;;;;RA;$,$_AV:;;;;;;;;;;;;;;;;;;;;;;;;2;;;4;5;6;;$,c:1,18,22,29,31,t:7,12,14,26,m:31:29.28.27.25.24.23|");
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             Assert.IsInstanceOfType(mol.Atoms[26], typeof(IPseudoAtom));
             Assert.IsInstanceOfType(mol.Atoms[30], typeof(IPseudoAtom));
             Assert.AreEqual("R", ((IPseudoAtom)mol.Atoms[26]).Label);

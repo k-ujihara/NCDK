@@ -650,7 +650,7 @@ namespace NCDK.IO
         {
             IAtomContainer mol = TestMoleculeFactory.MakeEthylPropylPhenantren();
 
-            Sgroup sgroup = new Sgroup();
+            SGroup sgroup = new SGroup();
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
             mol.SetProperty(CDKPropertyName.CtabSgroups,

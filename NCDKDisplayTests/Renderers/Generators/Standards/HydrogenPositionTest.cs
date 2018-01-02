@@ -38,49 +38,49 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void CardinalDirectionForNorthIsBelow()
         {
-            Assert.AreEqual(Below, HydrogenPosition.UsingCardinalDirection(new Vector2(0, 1)));
+            Assert.AreEqual(Below, HydrogenPositionTools.UsingCardinalDirection(new Vector2(0, 1)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForNorthEastIsLeft()
         {
-            Assert.AreEqual(Left, HydrogenPosition.UsingCardinalDirection(new Vector2(1, 1)));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingCardinalDirection(new Vector2(1, 1)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForEastIsLeft()
         {
-            Assert.AreEqual(Left, HydrogenPosition.UsingCardinalDirection(new Vector2(1, 0)));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingCardinalDirection(new Vector2(1, 0)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForSouthEastIsLeft()
         {
-            Assert.AreEqual(Left, HydrogenPosition.UsingCardinalDirection(new Vector2(1, -1)));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingCardinalDirection(new Vector2(1, -1)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForSouthIsAbove()
         {
-            Assert.AreEqual(Above, HydrogenPosition.UsingCardinalDirection(new Vector2(0, -1)));
+            Assert.AreEqual(Above, HydrogenPositionTools.UsingCardinalDirection(new Vector2(0, -1)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForSouthWestIsRight()
         {
-            Assert.AreEqual(Right, HydrogenPosition.UsingCardinalDirection(new Vector2(-1, -1)));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingCardinalDirection(new Vector2(-1, -1)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForWestIsRight()
         {
-            Assert.AreEqual(Right, HydrogenPosition.UsingCardinalDirection(new Vector2(-1, 0)));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingCardinalDirection(new Vector2(-1, 0)));
         }
 
         [TestMethod()]
         public void CardinalDirectionForNorthWestIsRight()
         {
-            Assert.AreEqual(Right, HydrogenPosition.UsingCardinalDirection(new Vector2(-1, 0)));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingCardinalDirection(new Vector2(-1, 0)));
         }
 
         [TestMethod()]
@@ -88,7 +88,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var mock_atom = new Mock<IAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.AtomicNumber).Returns(8);
-            Assert.AreEqual(Left, HydrogenPosition.UsingDefaultPlacement(atom));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingDefaultPlacement(atom));
         }
 
         [TestMethod()]
@@ -96,7 +96,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var mock_atom = new Mock<IAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.AtomicNumber).Returns(16);
-            Assert.AreEqual(Left, HydrogenPosition.UsingDefaultPlacement(atom));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingDefaultPlacement(atom));
         }
 
         [TestMethod()]
@@ -104,7 +104,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var mock_atom = new Mock<IAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.AtomicNumber).Returns(7);
-            Assert.AreEqual(Right, HydrogenPosition.UsingDefaultPlacement(atom));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingDefaultPlacement(atom));
         }
 
         [TestMethod()]
@@ -112,7 +112,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var mock_atom = new Mock<IAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.AtomicNumber).Returns(6);
-            Assert.AreEqual(Right, HydrogenPosition.UsingDefaultPlacement(atom));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingDefaultPlacement(atom));
         }
 
         [TestMethod()]
@@ -122,7 +122,7 @@ namespace NCDK.Renderers.Generators.Standards
             var mock_atom2 = new Mock<IAtom>(); var atom2 = mock_atom2.Object;
             mock_atom1.Setup(n => n.Point2D).Returns(new Vector2(0, 0));
             mock_atom2.Setup(n => n.Point2D).Returns(new Vector2(-1, 0));
-            Assert.AreEqual(Right, HydrogenPosition.Position(atom1, new[] { atom2 }));
+            Assert.AreEqual(Right, HydrogenPositionTools.Position(atom1, new[] { atom2 }));
         }
 
         [TestMethod()]
@@ -132,7 +132,7 @@ namespace NCDK.Renderers.Generators.Standards
             var mock_atom2 = new Mock<IAtom>(); var atom2 = mock_atom2.Object;
             mock_atom1.Setup(n => n.Point2D).Returns(new Vector2(0, 0));
             mock_atom2.Setup(n => n.Point2D).Returns(new Vector2(1, 0));
-            Assert.AreEqual(Left, HydrogenPosition.Position(atom1, new[] { atom2 }));
+            Assert.AreEqual(Left, HydrogenPositionTools.Position(atom1, new[] { atom2 }));
         }
 
         [TestMethod()]
@@ -144,7 +144,7 @@ namespace NCDK.Renderers.Generators.Standards
             mock_atom1.Setup(n => n.Point2D).Returns(new Vector2(0, 0));
             mock_atom2.Setup(n => n.Point2D).Returns(new Vector2(1, 1));
             mock_atom3.Setup(n => n.Point2D).Returns(new Vector2(1, -1));
-            Assert.AreEqual(Left, HydrogenPosition.Position(atom1, new[] { atom2, atom3 }));
+            Assert.AreEqual(Left, HydrogenPositionTools.Position(atom1, new[] { atom2, atom3 }));
         }
 
         [TestMethod()]
@@ -152,7 +152,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var mock_atom = new Mock<IAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.AtomicNumber).Returns(8);
-            Assert.AreEqual(Left, HydrogenPosition.Position(atom, Array.Empty<IAtom>()));
+            Assert.AreEqual(Left, HydrogenPositionTools.Position(atom, Array.Empty<IAtom>()));
         }
 
         [TestMethod()]
@@ -160,13 +160,13 @@ namespace NCDK.Renderers.Generators.Standards
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new HydrogenPosition[] { Right, Left, Above, Below }, 
-                HydrogenPosition.Values));
+                HydrogenPositionTools.Values));
         }
 
         [TestMethod()]
         public void ValueOf()
         {
-            Assert.AreEqual(HydrogenPosition.Above, HydrogenPosition.ValueOf("Above"));
+            Assert.AreEqual(HydrogenPosition.Above, HydrogenPositionTools.Parse("Above"));
         }
 
         [TestMethod()]
@@ -179,7 +179,7 @@ namespace NCDK.Renderers.Generators.Standards
                 new Vector2(Math.Cos(theta), Math.Sin(theta)),
                 new Vector2(Math.Cos(-theta), Math.Sin(-theta)),
             };
-            Assert.AreEqual(Right, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
 
         [TestMethod()]
@@ -188,11 +188,11 @@ namespace NCDK.Renderers.Generators.Standards
             double theta = Vectors.DegreeToRadian(120);
             var vectors = new[]
             {
-new Vector2(1, 0),
+                new Vector2(1, 0),
                 new Vector2(Math.Cos(theta), Math.Sin(theta)),
                 new Vector2(Math.Cos(-theta), Math.Sin(-theta)),
             };
-            Assert.AreEqual(Left, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Left, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
 
         [TestMethod()]
@@ -206,7 +206,7 @@ new Vector2(1, 0),
                 new Vector2(Math.Cos(theta1), Math.Sin(theta1)),
                 new Vector2(Math.Cos(theta2), Math.Sin(theta2)),
             };
-            Assert.AreEqual(Below, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Below, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
 
         [TestMethod()]
@@ -220,7 +220,7 @@ new Vector2(1, 0),
                 new Vector2(Math.Cos(theta1), Math.Sin(theta1)),
                 new Vector2(Math.Cos(theta2), Math.Sin(theta2)),
             };
-            Assert.AreEqual(Above, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Above, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
 
         [TestMethod()]
@@ -231,7 +231,7 @@ new Vector2(1, 0),
             {
                 new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1)
             };
-            Assert.AreEqual(Right, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Right, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
 
         [TestMethod()]
@@ -245,7 +245,7 @@ new Vector2(1, 0),
                 new Vector2(Math.Cos(Vectors.DegreeToRadian(150)), Math.Sin(Vectors.DegreeToRadian(150))),
                 new Vector2(Math.Cos(Vectors.DegreeToRadian(-150)), Math.Sin(Vectors.DegreeToRadian(-150)))
             };
-            Assert.AreEqual(Above, HydrogenPosition.UsingAngularExtent(vectors));
+            Assert.AreEqual(Above, HydrogenPositionTools.UsingAngularExtent(vectors));
         }
     }
 }

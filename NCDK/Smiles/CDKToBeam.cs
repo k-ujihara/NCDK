@@ -259,18 +259,19 @@ namespace NCDK.Smiles
                 return Bond.Aromatic;
             }
 
-            if (b.Order.IsUnset) throw new CDKException("A bond had undefined order, possible query bond?");
+            if (b.Order.IsUnset())
+                throw new CDKException("A bond had undefined order, possible query bond?");
 
             BondOrder order = b.Order;
-            switch (order.Ordinal)
+            switch (order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     return Bond.Single;
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     return Bond.Double;
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     return Bond.Triple;
-                case BondOrder.O.Quadruple:
+                case BondOrder.Quadruple:
                     return Bond.Quadruple;
                 default:
                     throw new CDKException("Unsupported bond order: " + order);

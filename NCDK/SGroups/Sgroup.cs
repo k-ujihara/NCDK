@@ -31,7 +31,7 @@ namespace NCDK.SGroups
     /// <remarks>
     /// The class uses a key-value store for Sgroup attributes simplifying both input and output.
     /// </remarks>
-    public class Sgroup
+    public class SGroup
     {
         /// <summary>
         /// the atoms of this substructure group.
@@ -41,59 +41,59 @@ namespace NCDK.SGroups
         /// <summary>
         /// Access the bonds that belong to this substructure group.
         /// For data Sgroups, the bonds are the containment bonds,
-        /// for all other <see cref="Sgroup"/> types, they are crossing bonds.
+        /// for all other <see cref="SGroup"/> types, they are crossing bonds.
         /// </summary>
         public ISet<IBond> Bonds { get; private set; }
 
         /// <summary>
         /// the parents of this Sgroup.
         /// </summary>
-        public ISet<Sgroup> Parents { get; private set; }
+        public ISet<SGroup> Parents { get; private set; }
 
-        private readonly IDictionary<SgroupKeys, object> attributes = new SortedDictionary<SgroupKeys, object>();
+        private readonly IDictionary<SGroupKeys, object> attributes = new SortedDictionary<SGroupKeys, object>();
 
         /// <summary>
         /// Create a new generic Sgroup.
         /// </summary>
-        public Sgroup()
+        public SGroup()
         {
             Atoms = new HashSet<IAtom>();
             Bonds = new HashSet<IBond>();
-            Parents = new HashSet<Sgroup>();
-            Type = SgroupType.CtabGeneric;
+            Parents = new HashSet<SGroup>();
+            Type = SGroupTypes.CtabGeneric;
         }
 
         /// <summary>
         /// Copy constructor.
         /// </summary>
         /// <param name="org">original Sgroup instance</param>
-        Sgroup(Sgroup org)
+        SGroup(SGroup org)
         {
             Atoms = new HashSet<IAtom>(org.Atoms);
             Bonds = new HashSet<IBond>(org.Bonds);
-            Parents = new HashSet<Sgroup>(org.Parents);
-            this.attributes = new Dictionary<SgroupKeys, object>(org.attributes);
+            Parents = new HashSet<SGroup>(org.Parents);
+            this.attributes = new Dictionary<SGroupKeys, object>(org.attributes);
         }
 
         /// <summary>
         /// Access all the attribute keys of this Sgroup.
         /// </summary>
         /// <returns>attribute keys</returns>
-        public ICollection<SgroupKeys> AttributeKeys => attributes.Keys;
+        public ICollection<SGroupKeys> AttributeKeys => attributes.Keys;
 
         /// <summary>
         /// The type of the Sgroup.
         /// </summary>
-        public SgroupType Type
+        public SGroupTypes Type
         {
             set
             {
-                PutValue(SgroupKeys.CtabType, value);
+                PutValue(SGroupKeys.CtabType, value);
             }
 
             get
             {
-                return (SgroupType)GetValue(SgroupKeys.CtabType);
+                return (SGroupTypes)GetValue(SGroupKeys.CtabType);
             }
         }
 
@@ -119,7 +119,7 @@ namespace NCDK.SGroups
         /// Add a parent Sgroup.
         /// </summary>
         /// <param name="parent">parent sgroup</param>
-        public void AddParent(Sgroup parent)
+        public void AddParent(SGroup parent)
         {
             Parents.Add(parent);
         }
@@ -128,7 +128,7 @@ namespace NCDK.SGroups
         /// Remove the specified parent associations from this Sgroup.
         /// </summary>
         /// <param name="parents">parent associations</param>
-        public void RemoveParents(IEnumerable<Sgroup> parents)
+        public void RemoveParents(IEnumerable<SGroup> parents)
         {
             foreach (var p in parents)
                 Parents.Remove(p);
@@ -139,7 +139,7 @@ namespace NCDK.SGroups
         /// </summary>
         /// <param name="key">attribute key</param>
         /// <param name="val">attribute value</param>
-        public void PutValue(SgroupKeys key, object val)
+        public void PutValue(SGroupKeys key, object val)
         {
             attributes[key] = val;
         }
@@ -148,10 +148,9 @@ namespace NCDK.SGroups
         /// Access an attribute for the Sgroup.
         /// </summary>
         /// <param name="key">attribute key</param>
-        public object GetValue(SgroupKeys key)
+        public object GetValue(SGroupKeys key)
         {
-            object o;
-            if (!attributes.TryGetValue(key, out o))
+            if (!attributes.TryGetValue(key, out object o))
                 return null;
             return o;
         }
@@ -162,21 +161,21 @@ namespace NCDK.SGroups
         /// <returns>subscript value (or null if not present)</returns>
         public string Subscript
         {
-            get { return (string)GetValue(SgroupKeys.CtabSubScript); }
-            set { PutValue(SgroupKeys.CtabSubScript, value); }
+            get { return (string)GetValue(SGroupKeys.CtabSubScript); }
+            set { PutValue(SGroupKeys.CtabSubScript, value); }
         }
 
         /// <summary>
         /// Add a bracket for this Sgroup.
         /// </summary>
         /// <param name="bracket">sgroup bracket</param>
-        public void AddBracket(SgroupBracket bracket)
+        public void AddBracket(SGroupBracket bracket)
         {
-            IList<SgroupBracket> brackets = (IList<SgroupBracket>)GetValue(SgroupKeys.CtabBracket);
+            IList<SGroupBracket> brackets = (IList<SGroupBracket>)GetValue(SGroupKeys.CtabBracket);
             if (brackets == null)
             {
-                brackets = new List<SgroupBracket>(2);
-                PutValue(SgroupKeys.CtabBracket, brackets);
+                brackets = new List<SGroupBracket>(2);
+                PutValue(SGroupKeys.CtabBracket, brackets);
             }
             brackets.Add(bracket);
         }
@@ -187,7 +186,7 @@ namespace NCDK.SGroups
         /// </summary>
         /// <typeparam name="T">return type</typeparam>
         /// <returns>downcast instance</returns>
-        public T Downcast<T>() where T : Sgroup
+        public T Downcast<T>() where T : SGroup
         {
             // ToDo - Implement
             return (T)this;

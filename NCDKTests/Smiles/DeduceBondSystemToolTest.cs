@@ -349,24 +349,24 @@ namespace NCDK.Smiles
             Assert.IsTrue(dbst.IsOK(enol));
 
             // now check whether it did the right thing
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[0].Order.Numeric
-                    + enol.Bonds[5].Order.Numeric); // around atom1
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[0].Order.Numeric
-                    + enol.Bonds[1].Order.Numeric); // around atom2
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[1].Order.Numeric
-                    + enol.Bonds[2].Order.Numeric); // around atom3
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[2].Order.Numeric
-                    + enol.Bonds[3].Order.Numeric); // around atom4
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[3].Order.Numeric
-                    + enol.Bonds[4].Order.Numeric); // around atom5
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[4].Order.Numeric
-                    + enol.Bonds[5].Order.Numeric); // around atom6
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[0].Order.Numeric()
+                    + enol.Bonds[5].Order.Numeric()); // around atom1
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[0].Order.Numeric()
+                    + enol.Bonds[1].Order.Numeric()); // around atom2
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[1].Order.Numeric()
+                    + enol.Bonds[2].Order.Numeric()); // around atom3
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[2].Order.Numeric()
+                    + enol.Bonds[3].Order.Numeric()); // around atom4
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[3].Order.Numeric()
+                    + enol.Bonds[4].Order.Numeric()); // around atom5
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[4].Order.Numeric()
+                    + enol.Bonds[5].Order.Numeric()); // around atom6
         }
 
         // @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
@@ -420,24 +420,24 @@ namespace NCDK.Smiles
             Assert.IsTrue(dbst.IsOK(enol));
 
             // now check whether it did the right thing
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[0].Order.Numeric
-                    + enol.Bonds[5].Order.Numeric); // around atom1
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[0].Order.Numeric
-                    + enol.Bonds[1].Order.Numeric); // around atom2
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[1].Order.Numeric
-                    + enol.Bonds[2].Order.Numeric); // around atom3
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[2].Order.Numeric
-                    + enol.Bonds[3].Order.Numeric); // around atom4
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[3].Order.Numeric
-                    + enol.Bonds[4].Order.Numeric); // around atom5
-            Assert.AreEqual(BondOrder.Single.Numeric + BondOrder.Double.Numeric, enol
-                    .Bonds[4].Order.Numeric
-                    + enol.Bonds[5].Order.Numeric); // around atom6
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[0].Order.Numeric()
+                    + enol.Bonds[5].Order.Numeric()); // around atom1
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[0].Order.Numeric()
+                    + enol.Bonds[1].Order.Numeric()); // around atom2
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[1].Order.Numeric()
+                    + enol.Bonds[2].Order.Numeric()); // around atom3
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[2].Order.Numeric()
+                    + enol.Bonds[3].Order.Numeric()); // around atom4
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[3].Order.Numeric()
+                    + enol.Bonds[4].Order.Numeric()); // around atom5
+            Assert.AreEqual(BondOrder.Single.Numeric() + BondOrder.Double.Numeric(), enol
+                    .Bonds[4].Order.Numeric()
+                    + enol.Bonds[5].Order.Numeric()); // around atom6
         }
     }
 }

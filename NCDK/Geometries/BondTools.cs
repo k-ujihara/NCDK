@@ -342,14 +342,14 @@ namespace NCDK.Geometries
             int down = 0;
             foreach (var bond in bonds)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.None:
+                    case BondStereo.None:
                         break;
-                    case BondStereo.O.Up:
+                    case BondStereo.Up:
                         up++;
                         break;
-                    case BondStereo.O.Down:
+                    case BondStereo.Down:
                         down++;
                         break;
                 }
@@ -405,14 +405,14 @@ namespace NCDK.Geometries
             int down = 0;
             foreach (var bond in bonds)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.None:
+                    case BondStereo.None:
                         break;
-                    case BondStereo.O.Up:
+                    case BondStereo.Up:
                         up++;
                         break;
-                    case BondStereo.O.Down:
+                    case BondStereo.Down:
                         down++;
                         break;
                 }
@@ -561,14 +561,14 @@ namespace NCDK.Geometries
             int down = 0;
             foreach (var bond in bonds)
             {
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.None:
+                    case BondStereo.None:
                         break;
-                    case BondStereo.O.Up:
+                    case BondStereo.Up:
                         up++;
                         break;
-                    case BondStereo.O.Down:
+                    case BondStereo.Down:
                         down++;
                         break;
                 }

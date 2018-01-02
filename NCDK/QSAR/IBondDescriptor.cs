@@ -30,7 +30,7 @@ namespace NCDK.QSAR
         /// </summary>
         /// <param name="bond">A <see cref="IBond"/> for which this descriptor should be calculated</param>
         /// <param name="atomContainer">The molecule containing the bond</param>
-        /// <returns>An object of <see cref="DescriptorValue"/> that contain the calculated value as well as specification details</returns>
+        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
         IDescriptorValue Calculate(IBond bond, IAtomContainer atomContainer);
     }
 }

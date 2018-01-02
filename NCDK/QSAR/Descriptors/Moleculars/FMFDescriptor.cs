@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the FMF descriptor value for the given <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="DescriptorValue"/> that contains the
+        /// <returns>An object of <see cref="IDescriptorValue"/> that contains the
         ///         calculated FMF descriptor value as well as specification details</returns>
         public DescriptorValue<Result<double>> Calculate(IAtomContainer container)
         {
@@ -92,8 +92,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The FMF descriptor is a single, double value.
         /// 
         /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
+        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
+        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// <para>
         /// Additionally, the length indicated by the result type must match the actual

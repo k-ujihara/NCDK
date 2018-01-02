@@ -80,7 +80,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                 int indexI = target.Atoms.IndexOf(target.Bonds[atomIndex].Begin);
                 int indexJ = target.Atoms.IndexOf(target.Bonds[atomIndex].End);
-                int order = target.Bonds[atomIndex].Order.Numeric;
+                int order = target.Bonds[atomIndex].Order.Numeric();
 
                 for (int b = 0; b < unmappedNumB; b++)
                 {

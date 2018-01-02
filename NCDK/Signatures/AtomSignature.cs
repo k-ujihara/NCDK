@@ -178,16 +178,16 @@ namespace NCDK.Signatures
                 {
                     return "p";
                 }
-                switch (bond.Order.Ordinal)
+                switch (bond.Order)
                 {
                     //                case Single: return "-";
-                    case BondOrder.O.Single:
+                    case BondOrder.Single:
                         return "";
-                    case BondOrder.O.Double:
+                    case BondOrder.Double:
                         return "=";
-                    case BondOrder.O.Triple:
+                    case BondOrder.Triple:
                         return "#";
-                    case BondOrder.O.Quadruple:
+                    case BondOrder.Quadruple:
                         return "$";
                     default:
                         return "";

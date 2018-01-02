@@ -340,13 +340,13 @@ namespace NCDK.Default
         {
             return bonds.Where(bond => bond.Contains(atom))
                 .Select(bond => bond.Order)
-                .Where(order => !order.IsUnset);
+                .Where(order => !order.IsUnset());
         }
 
         /// <inheritdoc/>
         public virtual double GetBondOrderSum(IAtom atom)
         {
-            return GetBondOrders(atom).Select(order => order.Numeric).Sum();
+            return GetBondOrders(atom).Select(order => order.Numeric()).Sum();
         }
 
         /// <inheritdoc/>
@@ -357,7 +357,7 @@ namespace NCDK.Default
 			{
 				if (!bond.Contains(atom))
 					continue;
-				if (max == BondOrder.Unset || bond.Order.Numeric > max.Numeric) 
+				if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
 				{
 					max = bond.Order;
 				}
@@ -383,7 +383,7 @@ namespace NCDK.Default
 			{
 				if (!bond.Contains(atom))
 					continue;
-				if (min == BondOrder.Unset || bond.Order.Numeric < min.Numeric) 
+				if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
 				{
 					min = bond.Order;
 				}
@@ -975,13 +975,13 @@ namespace NCDK.Silent
         {
             return bonds.Where(bond => bond.Contains(atom))
                 .Select(bond => bond.Order)
-                .Where(order => !order.IsUnset);
+                .Where(order => !order.IsUnset());
         }
 
         /// <inheritdoc/>
         public virtual double GetBondOrderSum(IAtom atom)
         {
-            return GetBondOrders(atom).Select(order => order.Numeric).Sum();
+            return GetBondOrders(atom).Select(order => order.Numeric()).Sum();
         }
 
         /// <inheritdoc/>
@@ -992,7 +992,7 @@ namespace NCDK.Silent
 			{
 				if (!bond.Contains(atom))
 					continue;
-				if (max == BondOrder.Unset || bond.Order.Numeric > max.Numeric) 
+				if (max == BondOrder.Unset || bond.Order.Numeric() > max.Numeric()) 
 				{
 					max = bond.Order;
 				}
@@ -1018,7 +1018,7 @@ namespace NCDK.Silent
 			{
 				if (!bond.Contains(atom))
 					continue;
-				if (min == BondOrder.Unset || bond.Order.Numeric < min.Numeric) 
+				if (min == BondOrder.Unset || bond.Order.Numeric() < min.Numeric()) 
 				{
 					min = bond.Order;
 				}

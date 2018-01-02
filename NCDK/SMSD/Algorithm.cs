@@ -1,5 +1,3 @@
-<#@ include file="..\..\Config.ttinclude" #>
-
 /* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -22,59 +20,72 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+
+using System.Reflection;
 
 namespace NCDK.SMSD
 {
-   /// <summary>
+    /// <summary>
     /// This class represents various algorithm type supported by SMSD.
-    /// Presently SMSD supports 5 different kinds of algorithms:
-    /// <ol>
-    /// <item>0: default</item>
-    /// <item>1: MCSPlus</item>
-    /// <item>2: VFLibMCS</item>
-    /// <item>3: CDKMCS</item>
-    /// <item>4: SubStructure</item>
-    /// <item>5: TurboSubStructure</item>
-    /// </ol>
     /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-<# 
-    GenerateEnumBody(
-        "Algorithm", 
-            new[]
-        {
-            "Default:Default SMSD algorithm.",
-            "MCSPlus:MCS Plus algorithm.",
-            "VFLibMCS:VF Lib based MCS algorithm.",
-            "CDKMCS:CDK UIT MCS.",
-            "SubStructure:Substructure search will return all maps.",
-            "TurboSubStructure:Substructure search will return first map.",
-        },
-        true
-    ); 
-#>
+    [Obfuscation(ApplyToMembers = true, Exclude = true)]
+    public enum Algorithm
     {
-        private static string[] descriptions = new[] 
+        /// <summary>
+        /// Default SMSD algorithm.
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// MCS Plus algorithm.
+        /// </summary>
+        MCSPlus = 1,
+
+        /// <summary>
+        /// VF Lib based MCS algorithm.
+        /// </summary>
+        VFLibMCS = 2,
+
+        /// <summary>
+        /// CDK UIT MCS.
+        /// </summary>
+        CDKMCS = 3,
+
+        /// <summary>
+        /// Substructure search will return all maps.
+        /// </summary>
+        SubStructure = 4,
+
+        /// <summary>
+        /// Substructure search will return first map.
+        /// </summary>
+        TurboSubStructure = 5,
+    }
+
+    public static class AlgorithmTools
+    {
+        private static readonly string[] descriptions = new[]
         {
             "Default SMSD algorithm",
             "MCS Plus algorithm",
             "VF Lib based MCS algorithm",
             "CDK UIT MCS",
             "Substructure search",
-            "Turbo Mode- Substructure search",
+            "Turbo Mode: Substructure search",
         };
 
-        /// <summary>
-        /// type of algorithm.
-        /// </summary>
-        public int Type => Ordinal;
+        ///// <summary>
+        ///// type of algorithm.
+        ///// </summary>
+        //public int Type => Ordinal;
 
         /// <summary>
         /// short description of the algorithm.
         /// </summary>
-        public string Description => descriptions[Ordinal];
+        public static string Description(this Algorithm value)
+            => descriptions[(int)value];
     }
 }

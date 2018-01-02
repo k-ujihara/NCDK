@@ -362,7 +362,7 @@ namespace NCDK.Graphs.InChI
                     }
 
                     // unspecified not stored
-                    if (conformation.IsUnset) continue;
+                    if (conformation.IsUnset()) continue;
 
                     molecule.StereoElements.Add(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.GetBond(x, a),
                             molecule.GetBond(b, y)}, conformation));

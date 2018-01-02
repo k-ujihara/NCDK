@@ -216,17 +216,17 @@ namespace NCDK.Hash.Stereo
             foreach (var bond in bonds)
             {
                 BondStereo stereo = bond.Stereo;
-                switch (stereo.Ordinal)
+                switch (stereo)
                 {
                     // query bonds... no configuration possible
-                    case BondStereo.O.EOrZ:
-                    case BondStereo.O.UpOrDown:
-                    case BondStereo.O.UpOrDownInverted:
+                    case BondStereo.EOrZ:
+                    case BondStereo.UpOrDown:
+                    case BondStereo.UpOrDownInverted:
                         return -1;
-                    case BondStereo.O.Up:
-                    case BondStereo.O.Down:
-                    case BondStereo.O.UpInverted:
-                    case BondStereo.O.DownInverted:
+                    case BondStereo.Up:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
+                    case BondStereo.DownInverted:
                         count++;
                         break;
                     default:
@@ -249,14 +249,14 @@ namespace NCDK.Hash.Stereo
             foreach (var bond in bonds)
             {
                 int elevation = 0;
-                switch (bond.Stereo.Ordinal)
+                switch (bond.Stereo)
                 {
-                    case BondStereo.O.Up:
-                    case BondStereo.O.DownInverted:
+                    case BondStereo.Up:
+                    case BondStereo.DownInverted:
                         elevation = +1;
                         break;
-                    case BondStereo.O.Down:
-                    case BondStereo.O.UpInverted:
+                    case BondStereo.Down:
+                    case BondStereo.UpInverted:
                         elevation = -1;
                         break;
                     default:

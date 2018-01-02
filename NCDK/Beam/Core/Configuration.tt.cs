@@ -44,7 +44,7 @@ namespace NCDK.Beam
 		/// The <see cref="Ordinal"/> values of <see cref="Configuration"/>.
 		/// </summary>
 		/// <seealso cref="Configuration"/>
-        public static partial class O
+        internal static partial class O
         {
             public const int Unknown = 0;
             public const int AntiClockwise = 1;

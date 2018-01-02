@@ -130,8 +130,8 @@ namespace NCDK.SMSD.Algorithms.Matchers
         /// </summary>
         private bool IsBondTypeMatch(IBond targetBond)
         {
-            int reactantBondType = queryBond.Order.Numeric;
-            int productBondType = targetBond.Order.Numeric;
+            int reactantBondType = queryBond.Order.Numeric();
+            int productBondType = targetBond.Order.Numeric();
             if ((queryBond.IsAromatic == targetBond.IsAromatic)
                     && (reactantBondType == productBondType))
             {

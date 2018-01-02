@@ -55,7 +55,7 @@ namespace NCDK.Default
             get
             {
                 if (listeners == null)
-                    listeners = new HashSet<IChemObjectListener>();
+                    listeners = new HashSet<IChemObjectListener>(); 
                 return listeners;
             }
         }

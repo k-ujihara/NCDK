@@ -192,8 +192,7 @@ namespace NCDK.Renderers.Generators
                 return overrideColor.Value;
             }
 
-            Color color;
-            if (!model.Get<IDictionary<IChemObject, Color>>(typeof(ColorHash)).TryGetValue(bond, out color))
+            if (!model.Get<IDictionary<IChemObject, Color>>(typeof(ColorHash)).TryGetValue(bond, out Color color))
             {
                 color = model.GetV<Color>(typeof(DefaultBondColor));
             }
@@ -299,16 +298,16 @@ namespace NCDK.Renderers.Generators
             else
             {
                 ElementGroup group = new ElementGroup();
-                switch (type.Ordinal)
+                switch (type)
                 {
-                    case BondOrder.O.Double:
+                    case BondOrder.Double:
                         CreateLines(point1, point2, bondWidth, bondDistance, color, group);
                         break;
-                    case BondOrder.O.Triple:
+                    case BondOrder.Triple:
                         CreateLines(point1, point2, bondWidth, bondDistance * 2, color, group);
                         group.Add(new LineElement(ToPoint(point1), ToPoint(point2), bondWidth, color));
                         break;
-                    case BondOrder.O.Quadruple:
+                    case BondOrder.Quadruple:
                         CreateLines(point1, point2, bondWidth, bondDistance, color, group);
                         CreateLines(point1, point2, bondWidth, bondDistance * 4, color, group);
                         break;
@@ -359,9 +358,11 @@ namespace NCDK.Renderers.Generators
             }
             else if (IsDouble(bond))
             {
-                ElementGroup pair = new ElementGroup();
-                pair.Add(GenerateBondElement(bond, BondOrder.Single, model));
-                pair.Add(GenerateInnerElement(bond, ring, model));
+                ElementGroup pair = new ElementGroup
+                {
+                    GenerateBondElement(bond, BondOrder.Single, model),
+                    GenerateInnerElement(bond, ring, model)
+                };
                 return pair;
             }
             else

@@ -405,15 +405,15 @@ namespace NCDK.LibIO.DotNetRDF
         /// <returns>the matching <see cref="INode"/>.</returns>
         public INode Order2Resource(BondOrder order)
         {
-            switch (order.Ordinal)
+            switch (order)
             {
-                case BondOrder.O.Single:
+                case BondOrder.Single:
                     return R_SINGLEBOND;
-                case BondOrder.O.Double:
+                case BondOrder.Double:
                     return R_DOUBLEBOND;
-                case BondOrder.O.Triple:
+                case BondOrder.Triple:
                     return R_TRIPLEBOND;
-                case BondOrder.O.Quadruple:
+                case BondOrder.Quadruple:
                     return R_QUADRUPLEBOND;
                 default:
                     return null;

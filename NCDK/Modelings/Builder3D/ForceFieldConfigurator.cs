@@ -280,7 +280,7 @@ namespace NCDK.Modelings.Builder3D
                     atom.IsInRing = false;
                     isInHeteroRing = false;
                 }
-                atom.SetProperty("MAX_BOND_ORDER", molecule.GetMaximumBondOrder(atom).Numeric);
+                atom.SetProperty("MAX_BOND_ORDER", molecule.GetMaximumBondOrder(atom).Numeric());
 
                 try
                 {

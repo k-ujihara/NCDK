@@ -233,21 +233,25 @@ namespace NCDK.IO
                                         oStrand = oBP.GetStrand(strandName);
                                         if (oStrand == null)
                                         {
-                                            oStrand = new PDBStrand();
-                                            oStrand.StrandName = strandName;
-                                            oStrand.Id = chain.ToString();
+                                            oStrand = new PDBStrand
+                                            {
+                                                StrandName = strandName,
+                                                Id = chain.ToString()
+                                            };
                                         }
 
                                         // search for an existing monomer or create a new one.
                                         oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString());
                                         if (oMonomer == null)
                                         {
-                                            PDBMonomer monomer = new PDBMonomer();
-                                            monomer.MonomerName = cResidue.ToString();
-                                            monomer.MonomerType = oAtom.ResName;
-                                            monomer.ChainID = oAtom.ChainID;
-                                            monomer.ICode = oAtom.ICode;
-                                            monomer.ResSeq = oAtom.ResSeq;
+                                            PDBMonomer monomer = new PDBMonomer
+                                            {
+                                                MonomerName = cResidue.ToString(),
+                                                MonomerType = oAtom.ResName,
+                                                ChainID = oAtom.ChainID,
+                                                ICode = oAtom.ICode,
+                                                ResSeq = oAtom.ResSeq
+                                            };
                                             oMonomer = monomer;
                                         }
 
@@ -301,8 +305,10 @@ namespace NCDK.IO
                                     #region
                                     // start new strand
                                     chain++;
-                                    oStrand = new PDBStrand();
-                                    oStrand.StrandName = chain.ToString();
+                                    oStrand = new PDBStrand
+                                    {
+                                        StrandName = chain.ToString()
+                                    };
                                     Debug.WriteLine("Added new STRAND");
                                     #endregion
                                 }
@@ -463,14 +469,16 @@ namespace NCDK.IO
                                     //                        HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
                                     //                                  1         2         3         4         5         6         7
                                     //                        01234567890123456789012345678901234567890123456789012345678901234567890123456789
-                                    PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.Helix;
-                                    structure.StartChainID = cRead[19];
-                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim());
-                                    structure.StartInsertionCode = cRead[25];
-                                    structure.EndChainID = cRead[31];
-                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim());
-                                    structure.EndInsertionCode = cRead[37];
+                                    PDBStructure structure = new PDBStructure
+                                    {
+                                        StructureType = PDBStructure.Helix,
+                                        StartChainID = cRead[19],
+                                        StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim()),
+                                        StartInsertionCode = cRead[25],
+                                        EndChainID = cRead[31],
+                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim()),
+                                        EndInsertionCode = cRead[37]
+                                    };
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -478,14 +486,16 @@ namespace NCDK.IO
                             case "SHEET ":
                                 {
                                     #region
-                                    PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.Sheet;
-                                    structure.StartChainID = cRead[21];
-                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim());
-                                    structure.StartInsertionCode = cRead[26];
-                                    structure.EndChainID = cRead[32];
-                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim());
-                                    structure.EndInsertionCode = cRead[37];
+                                    PDBStructure structure = new PDBStructure
+                                    {
+                                        StructureType = PDBStructure.Sheet,
+                                        StartChainID = cRead[21],
+                                        StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim()),
+                                        StartInsertionCode = cRead[26],
+                                        EndChainID = cRead[32],
+                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim()),
+                                        EndInsertionCode = cRead[37]
+                                    };
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -493,14 +503,16 @@ namespace NCDK.IO
                             case "TURN  ":
                                 {
                                     #region
-                                    PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.Turn;
-                                    structure.StartChainID = cRead[19];
-                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim());
-                                    structure.StartInsertionCode = cRead[24];
-                                    structure.EndChainID = cRead[30];
-                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim());
-                                    structure.EndInsertionCode = cRead[35];
+                                    PDBStructure structure = new PDBStructure
+                                    {
+                                        StructureType = PDBStructure.Turn,
+                                        StartChainID = cRead[19],
+                                        StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim()),
+                                        StartInsertionCode = cRead[24],
+                                        EndChainID = cRead[30],
+                                        EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim()),
+                                        EndInsertionCode = cRead[35]
+                                    };
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -547,11 +559,9 @@ namespace NCDK.IO
 
         private void AddBond(IAtomContainer molecule, int bondAtomNo, int bondedAtomNo)
         {
-            IAtom firstAtom;
-            IAtom secondAtom;
-            if (!atomNumberMap.TryGetValue(bondAtomNo, out firstAtom))
+            if (!atomNumberMap.TryGetValue(bondAtomNo, out IAtom firstAtom))
                 Trace.TraceError("Could not find bond start atom in map with serial id: ", bondAtomNo);
-            if (!atomNumberMap.TryGetValue(bondedAtomNo, out secondAtom))
+            if (!atomNumberMap.TryGetValue(bondedAtomNo, out IAtom secondAtom))
                 Trace.TraceError("Could not find bond target atom in map with serial id: ", bondAtomNo);
             IBond bond = firstAtom.Builder.NewBond(firstAtom, secondAtom, BondOrder.Single);
             for (int i = 0; i < bondsFromConnectRecords.Count; i++)

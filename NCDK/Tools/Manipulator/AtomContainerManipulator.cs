@@ -120,17 +120,17 @@ namespace NCDK.Tools.Manipulator
             if (idx < 0)
                 return false;
             container.Atoms[idx] = newAtom;
-            var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var sgrougs = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {
                 bool updated = false;
-                List<Sgroup> replaced = new List<Sgroup>();
-                foreach (Sgroup org in sgrougs)
+                List<SGroup> replaced = new List<SGroup>();
+                foreach (SGroup org in sgrougs)
                 {
                     if (org.Atoms.Contains(oldAtom))
                     {
                         updated = true;
-                        Sgroup cpy = new Sgroup();
+                        SGroup cpy = new SGroup();
                         foreach (IAtom atom in org.Atoms)
                         {
                             if (!oldAtom.Equals(atom))
@@ -140,9 +140,9 @@ namespace NCDK.Tools.Manipulator
                         }
                         foreach (IBond bond in org.Bonds)
                             cpy.Bonds.Add(bond);
-                        foreach (Sgroup parent in org.Parents)
+                        foreach (SGroup parent in org.Parents)
                             cpy.AddParent(parent);
-                        foreach (SgroupKeys key in org.AttributeKeys)
+                        foreach (SGroupKeys key in org.AttributeKeys)
                             cpy.PutValue(key, org.GetValue(key));
                         replaced.Add(cpy);
                     }
@@ -154,7 +154,7 @@ namespace NCDK.Tools.Manipulator
                 if (updated)
                 {
                     container.SetProperty(CDKPropertyName.CtabSgroups,
-                        new ReadOnlyCollection<Sgroup>(replaced));
+                        new ReadOnlyCollection<SGroup>(replaced));
                 }
             }
 
@@ -1315,9 +1315,9 @@ namespace NCDK.Tools.Manipulator
             foreach (var bond in container.Bonds)
             {
                 BondOrder order = bond.Order;
-                if (!order.IsUnset)
+                if (!order.IsUnset())
                 {
-                    sum += order.Numeric;
+                    sum += order.Numeric();
                 }
             }
             return sum;
@@ -1446,9 +1446,9 @@ namespace NCDK.Tools.Manipulator
             foreach (var bond in container.GetConnectedBonds(atom))
             {
                 BondOrder order = bond.Order;
-                if (!order.IsUnset)
+                if (!order.IsUnset())
                 {
-                    count += order.Numeric;
+                    count += order.Numeric();
                 }
             }
             return count;

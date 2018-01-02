@@ -32,14 +32,14 @@ namespace NCDK.QSAR
         /// Calculates the descriptor value for the given IAtomContainer.
         /// </summary>
         /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
-        /// <returns>An object of <see cref="DescriptorValue"/> that contain the calculated value as well as specification details</returns>
+        /// <returns>An object of <see cref="IDescriptorValue"/> that contain the calculated value as well as specification details</returns>
         IDescriptorValue Calculate(IAtomContainer container);
 
         /// <summary>
         /// Returns the specific type of the <see cref="IDescriptorResult"/> object.
         /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
+        /// be obtained from the <see cref="IDescriptorValue"/> object. Note that the same result
+        /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// <para>
         /// Additionally, the length indicated by the result type must match the actual
@@ -50,7 +50,7 @@ namespace NCDK.QSAR
         /// </summary>
         /// <value>
         /// an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        /// the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
+        /// the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object
         /// </value>
         IDescriptorResult DescriptorResultType { get; }
     }

@@ -261,12 +261,12 @@ namespace NCDK.Stereo
                     if (GetAtomicNumber(container.Atoms[w]) == 1 &&
                         container.Atoms[w].MassNumber == null)
                         h++;
-                    switch (bondMap[i, w].Order.Ordinal)
+                    switch (bondMap[i, w].Order)
                     {
-                        case BondOrder.O.Single:
+                        case BondOrder.Single:
                             v++;
                             break;
-                        case BondOrder.O.Double:
+                        case BondOrder.Double:
                             v += 2;
                             piNeighbor = w;
                             break;
