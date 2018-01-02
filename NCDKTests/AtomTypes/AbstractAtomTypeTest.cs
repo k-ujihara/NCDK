@@ -98,7 +98,7 @@ namespace NCDK.AtomTypes
                 return;
             }
 
-            if (!atom.Hybridization.IsUnset && !matched.Hybridization.IsUnset)
+            if (!atom.Hybridization.IsUnset() && !matched.Hybridization.IsUnset())
             {
                 Assert.AreEqual(atom.Hybridization, matched.Hybridization, "Hybridization does not match");
             }

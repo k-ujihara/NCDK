@@ -147,7 +147,7 @@ namespace NCDK.Hash
             IAtomEncoder encoder = BasicAtomEncoder.OrbitalHybridization;
 
             m_atom.SetupGet(n => n.Hybridization).Returns(Hybridization.SP2);
-            Assert.AreEqual((int)Hybridization.SP2.Ordinal, encoder.Encode(atom, container));
+            Assert.AreEqual(Hybridization.SP2, encoder.Encode(atom, container));
 
             m_atom.Verify(n => n.Hybridization, Times.Exactly(1));
             //VerifyNoMoreInteractions(atom, container);

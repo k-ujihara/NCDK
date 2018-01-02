@@ -306,18 +306,18 @@ namespace NCDK.Tools
                 {
                     Debug.WriteLine("This type matches: ", type);
                     int formalNeighbourCount = type.FormalNeighbourCount.Value;
-                    switch (type.Hybridization.Ordinal)
+                    switch (type.Hybridization)
                     {
-                        case Hybridization.O.Unset:
+                        case Hybridization.Unset:
                             missingHydrogens = (int)(type.BondOrderSum - bondOrderSum);
                             break;
-                        case Hybridization.O.SP3:
+                        case Hybridization.SP3:
                             missingHydrogens = formalNeighbourCount - neighbourCount;
                             break;
-                        case Hybridization.O.SP2:
+                        case Hybridization.SP2:
                             missingHydrogens = formalNeighbourCount - neighbourCount;
                             break;
-                        case Hybridization.O.SP1:
+                        case Hybridization.SP1:
                             missingHydrogens = formalNeighbourCount - neighbourCount;
                             break;
                         default:

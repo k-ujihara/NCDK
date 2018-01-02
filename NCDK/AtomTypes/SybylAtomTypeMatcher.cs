@@ -72,7 +72,7 @@ namespace NCDK.AtomTypes
             foreach (var atom in atomContainer.Atoms)
             {
                 IAtomType type = cdkMatcher.FindMatchingAtomType(atomContainer, atom);
-                atom.AtomTypeName = type == null ? null : type.AtomTypeName;
+                atom.AtomTypeName = type?.AtomTypeName;
                 atom.Hybridization = type == null ? Hybridization.Unset : type.Hybridization;
             }
             Aromaticity.CDKLegacy.Apply(atomContainer);

@@ -178,7 +178,7 @@ namespace NCDK.AtomTypes
                     Console.Out.WriteLine("Symbol does not match: " + results.tested + " in file " + filename);
                     Console.Out.WriteLine("Found: " + atom.Symbol + ", expected: " + matched.Symbol);
                 }
-                else if (!atom.Hybridization.IsUnset
+                else if (!atom.Hybridization.IsUnset()
                       && atom.Hybridization != matched.Hybridization)
                 {
                     results.failed++;

@@ -275,11 +275,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Hybridization.tt.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Hybridization.tt</DependentUpon>
-    </Compile>
     <Compile Include="LibIO\CML\CMLLabel.cs" />
     <Compile Include="LibIO\CML\CMLAtomArray.cs" />
     <Compile Include="LibIO\CML\CMLCrystal.cs" />
@@ -897,10 +892,7 @@
     <Compile Include="Graphs\AllCycles.cs" />
     <Compile Include="Graphs\CycleFinder.cs" />
     <Compile Include="Graphs\Cycles.cs" />
-    <Content Include="Hybridization.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Hybridization.tt.cs</LastGenOutput>
-    </Content>
+    <Compile Include="Hybridization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reactions\Types\AdductionProtonPBReaction.cs" />
     <Compile Include="Reactions\Types\AdductionSodiumLPReaction.cs" />

@@ -165,7 +165,7 @@ namespace NCDK
             atom.Hybridization = hybridization;
             Assert.AreEqual(hybridization, atom.Hybridization);
             atom.Hybridization = Hybridization.Unset;
-            Assert.IsTrue(atom.Hybridization.IsUnset);
+            Assert.IsTrue(atom.Hybridization.IsUnset());
         }
 
         [TestMethod()]

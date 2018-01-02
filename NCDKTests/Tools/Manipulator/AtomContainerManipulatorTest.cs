@@ -736,14 +736,14 @@ namespace NCDK.Tools.Manipulator
             foreach (var atom in container.Atoms)
             {
                 Assert.IsTrue(atom.AtomTypeName != null);
-                Assert.IsTrue(!atom.Hybridization.IsUnset);
+                Assert.IsTrue(!atom.Hybridization.IsUnset());
             }
 
             AtomContainerManipulator.ClearAtomConfigurations(container);
             foreach (var atom in container.Atoms)
             {
                 Assert.IsTrue(atom.AtomTypeName == null);
-                Assert.IsTrue(atom.Hybridization.IsUnset);
+                Assert.IsTrue(atom.Hybridization.IsUnset());
             }
         }
 

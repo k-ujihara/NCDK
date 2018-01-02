@@ -76,7 +76,7 @@ namespace NCDK.Config.AtomType
                     {
                         var aa = elm.Attribute(XName_rdf_resource)?.Value;
                         var hybridization = aa.Substring(aa.IndexOf('#') + 1);
-                        anAtomType.Hybridization = Hybridization.GetInstance(hybridization);
+                        anAtomType.Hybridization = HybridizationTools.ToHybridization(hybridization);
                     }
                     else if (elm.Name == XName_formalCharge)
                         anAtomType.FormalCharge = int.Parse(elm.Value);

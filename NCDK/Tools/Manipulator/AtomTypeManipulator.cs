@@ -127,7 +127,7 @@ namespace NCDK.Tools.Manipulator
                 atom.Valency = atomType.Valency;
             if (atom.FormalCharge == null && atomType.FormalCharge != null)
                 atom.FormalCharge = atomType.FormalCharge;
-            if (atom.Hybridization.IsUnset && !atomType.Hybridization.IsUnset)
+            if (atom.Hybridization.IsUnset() && !atomType.Hybridization.IsUnset())
                 atom.Hybridization = atomType.Hybridization;
             if (atom.FormalNeighbourCount == null
                     && atomType.FormalNeighbourCount != null)

@@ -778,7 +778,7 @@ namespace NCDK.Smiles
                     for (int j = 0; j <= r.Atoms.Count - 1; j++)
                     {
                         //Debug.WriteLine(j+"\t"+r.GetAtomAt(j).Symbol+"\t"+r.GetAtomAt(j).Hybridization);
-                        if (r.Atoms[j].Hybridization.IsUnset
+                        if (r.Atoms[j].Hybridization.IsUnset()
                                 || !(r.Atoms[j].Hybridization == Hybridization.SP2 || 
                                       r.Atoms[j].Hybridization == Hybridization.Planar3))
                         {
@@ -836,7 +836,7 @@ namespace NCDK.Smiles
                 {
                     // Debug.WriteLine(j+"\t"+r.GetAtomAt(j).Symbol+"\t"+r.GetAtomAt(j).Hybridization);
 
-                    if (r.Atoms[j].Hybridization.IsUnset || 
+                    if (r.Atoms[j].Hybridization.IsUnset() || 
                         r.Atoms[j].Hybridization != Hybridization.SP2)
                     {
                         NonSP2Count++;

@@ -763,9 +763,9 @@ namespace NCDK.AtomTypes
             return (atom.FormalCharge != null && atom.FormalCharge != 0);
         }
 
-        private bool HasHybridization(IAtom atom)
+        private static bool HasHybridization(IAtom atom)
         {
-            return !atom.Hybridization.IsUnset;
+            return !atom.Hybridization.IsUnset();
         }
 
         private IAtomType PerceiveOxygens(IAtomContainer atomContainer, IAtom atom,

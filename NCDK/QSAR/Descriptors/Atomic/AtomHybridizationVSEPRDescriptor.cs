@@ -95,12 +95,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "hybr" };
 
         /// <summary>
-        ///  This method calculates the hybridization of an atom.
+        /// This method calculates the hybridization of an atom.
         /// </summary>
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The hybridization</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<Hybridization>> Calculate(IAtom atom, IAtomContainer container)
         {
             IAtomType atomType;
             try
@@ -109,23 +109,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             catch (CDKException)
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
             if (atomType == null)
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Atom type was null"));
             }
-            if (atomType.Hybridization == Hybridization.Unset)
+            if (atomType.Hybridization.IsUnset())
             {
-                return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), // does that work??
+                return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), // does that work??
                         DescriptorNames, new CDKException("Hybridization was null"));
             }
-            int hybridizationCDK = atomType.Hybridization.Ordinal;
 
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(
-                    hybridizationCDK), DescriptorNames);
+            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(
+                    atomType.Hybridization), DescriptorNames);
         }
 
         /// <summary>

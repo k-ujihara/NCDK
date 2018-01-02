@@ -82,7 +82,7 @@ namespace NCDK.Hash
             listOnEncode[O.OrbitalHybridization] = (atom, container) =>
                 {
                     var hybridization = atom.Hybridization;
-                    return !hybridization.IsUnset ? hybridization.Ordinal : 32451301;
+                    return !hybridization.IsUnset() ? (int)hybridization : 32451301;
                 };
             listOnEncode[O.FreeRadicals] = (atom, container) => container.GetConnectedSingleElectrons(atom).Count();
         }

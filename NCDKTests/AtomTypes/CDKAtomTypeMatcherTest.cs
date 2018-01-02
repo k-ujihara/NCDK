@@ -6786,7 +6786,7 @@ namespace NCDK.AtomTypes
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(pyrrole);
 
-            Assert.AreEqual("Planar3", pyrrole.Atoms[0].Hybridization.Name);
+            Assert.AreEqual(Hybridization.Planar3, pyrrole.Atoms[0].Hybridization);
         }
 
         // @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H
@@ -6845,7 +6845,7 @@ namespace NCDK.AtomTypes
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(pyrrole);
 
-            Assert.AreEqual(pyrrole.Atoms[0].Hybridization.Name, "Planar3");
+            Assert.AreEqual(Hybridization.Planar3, pyrrole.Atoms[0].Hybridization);
         }
 
         //[ClassCleanup()]

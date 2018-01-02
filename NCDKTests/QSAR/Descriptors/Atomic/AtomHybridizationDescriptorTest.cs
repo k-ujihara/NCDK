@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Hybridization.SP3};
             for (int i = 0; i < expectedStates.Length; i++)
             {
-                Assert.AreEqual(expectedStates[i].Ordinal, ((Result<int>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
+                Assert.AreEqual(expectedStates[i], ((Result<Hybridization>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
             }
         }
 

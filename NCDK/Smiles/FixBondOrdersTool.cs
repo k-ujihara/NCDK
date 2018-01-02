@@ -280,7 +280,7 @@ namespace NCDK.Smiles
                     foreach (var a in rs[i].Atoms)
                     {
                         Hybridization h = a.Hybridization;
-                        if (h.IsUnset || !(h == Hybridization.SP2 || h == Hybridization.Planar3))
+                        if (h.IsUnset() || !(h == Hybridization.SP2 || h == Hybridization.Planar3))
                         {
                             rToRemove.Add(i);
                             break;

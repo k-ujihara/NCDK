@@ -64,7 +64,9 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns></returns>
         public override string ToString()
         {
-            return name + ":" + (first.IsUnset ? "NA" : first.ToString()) + "/" + (second.IsUnset ? "NA" : second.ToString());
+            var p1 = first.IsUnset() ? "NA" : first.ToString();
+            var p2 = second.IsUnset() ? "NA" : second.ToString();
+            return $"{name}:{p1}/{p2}";
         }
     }
 }

@@ -43,7 +43,7 @@ namespace NCDK.Fingerprints
         {
             if (string.Equals(o1.Symbol, o2.Symbol, StringComparison.OrdinalIgnoreCase))
             {
-                return o1.Hybridization.Ordinal.CompareTo(o2.Hybridization.Ordinal);
+                return o1.Hybridization.CompareTo(o2.Hybridization);
             }
             return 10 * string.Compare(o1.Symbol, o2.Symbol, StringComparison.OrdinalIgnoreCase);
         }

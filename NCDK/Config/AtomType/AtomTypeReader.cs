@@ -121,7 +121,7 @@ namespace NCDK.Config.AtomType
                                         atomType.FormalCharge = (int)double.Parse(value);
                                         break;
                                     case "cdk:hybridization":
-                                        atomType.Hybridization = Hybridization.GetInstance(value);
+                                        atomType.Hybridization = HybridizationTools.ToHybridization(value);
                                         break;
                                     case "cdk:DA":
                                         switch (value)

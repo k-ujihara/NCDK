@@ -96,13 +96,13 @@ namespace NCDK.Aromaticities
 
                 // atom has been assigned an atom type but we don't know the hybrid state,
                 // typically for atom type 'X' (unknown)
-                switch (hyb.Ordinal)
+                switch (hyb)
                 {
-                    case Hybridization.O.SP2:
-                    case Hybridization.O.Planar3:
+                    case Hybridization.SP2:
+                    case Hybridization.Planar3:
                         electrons[i] = ElectronsForAtomType(atom);
                         break;
-                    case Hybridization.O.SP3:
+                    case Hybridization.SP3:
                         electrons[i] = LonePairCount(atom) > 0 ? 2 : -1;
                         break;
                 }

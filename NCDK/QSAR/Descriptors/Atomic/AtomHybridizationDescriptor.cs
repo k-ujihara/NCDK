@@ -59,9 +59,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "aHyb" };
 
-        private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
+        private DescriptorValue<Result<Hybridization>> GetDummyDescriptorValue(Exception e)
         {
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, new Result<int>(0), DescriptorNames, e);
+            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, new Result<Hybridization>(Hybridization.Unset), DescriptorNames, e);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="atom">The <see cref="IAtom"/> for which the <see cref="DescriptorValue"/> is requested</param>
         /// <param name="container">Parameter is the atom container.</param>
         /// <returns>The hybridization</returns>
-        public DescriptorValue<Result<int>> Calculate(IAtom atom, IAtomContainer container)
+        public DescriptorValue<Result<Hybridization>> Calculate(IAtom atom, IAtomContainer container)
         {
             IAtomType matched = null;
             try
@@ -88,8 +88,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
                         + ") " + atom.Symbol));
             }
             Hybridization atomHybridization = matched.Hybridization;
-            Result<int> result = new Result<int>(atomHybridization.Ordinal);
-            return new DescriptorValue<Result<int>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
+            var result = new Result<Hybridization>(atomHybridization);
+            return new DescriptorValue<Result<Hybridization>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
         /// <summary>
