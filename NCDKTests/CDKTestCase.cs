@@ -23,6 +23,8 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using NCDK.Numerics;
 using System.Collections.Generic;
+using System.IO;
+using System;
 
 namespace NCDK
 {
@@ -273,6 +275,23 @@ namespace NCDK
             Assert.IsNotNull(fullString, "Expected a non-null string to test contains against.");
             Assert.IsNotNull(subString, "Expected a non-null substring in contains test.");
             Assert.IsTrue(fullString.Contains(subString), $"Expected the full string '{fullString}' to contain '{subString}'.");
+        }
+
+        protected static string CopyFileToTmp(string prefix, string suffix, Stream ins, string toReplace, string replaceWith)
+        {
+            var tmpFile = Path.Combine(Path.GetTempPath(), prefix ?? "" + Guid.NewGuid().ToString() + suffix ?? "");
+            string all;
+            using (var rs = new StreamReader(ins))
+            {
+                all = rs.ReadToEnd();
+                if (toReplace != null && replaceWith != null)
+                    all = all.Replace(toReplace, replaceWith);
+            }
+            using (var ws = new StreamWriter(tmpFile))
+            {
+                ws.Write(all);
+            }
+            return tmpFile;
         }
     }
 }

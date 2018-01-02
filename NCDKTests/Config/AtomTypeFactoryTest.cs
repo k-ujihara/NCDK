@@ -33,14 +33,15 @@ namespace NCDK.Config
     /// </summary>
     //  @cdk.module test-core
     [TestClass()]
-    public class AtomTypeFactoryTest : CDKTestCase
+    public class AtomTypeFactoryTest 
+        : CDKTestCase
     {
         static AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
         private const string JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
         private static IList<FileInfo> tmpFiles = new List<FileInfo>();
-        private static FileInfo tmpCMLSchema;
+        private static string tmpCMLSchema;
 
         [ClassInitialize()]
         public static void Initialize(TestContext context)
@@ -222,8 +223,10 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestConfigure_IAtom()
         {
-            IAtom atom = new Atom();
-            atom.AtomTypeName = "C.ar";
+            IAtom atom = new Atom
+            {
+                AtomTypeName = "C.ar"
+            };
             AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.mol2_atomtypes.xml", new ChemObject().Builder);
             IAtomType atomType = factory.Configure(atom);
             Assert.IsNotNull(atomType);
@@ -247,7 +250,7 @@ namespace NCDK.Config
         ///  </atomType>
         /// ]]>
         /// </summary>
-        /// <exception cref="Exception">if the atom typ info cannot be loaded</exception>
+        /// <exception cref="Exception">if the atom type info cannot be loaded</exception>
         [TestMethod()]
         public virtual void TestGetAtomTypeFromMM2()
         {
@@ -275,7 +278,7 @@ namespace NCDK.Config
         [TestMethod()]
         public virtual void TestCanReadCMLSchema()
         {
-            using (var cmlSchema = new FileStream(tmpCMLSchema.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var cmlSchema = new FileStream(tmpCMLSchema, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 var schemaDoc = XDocument.Load(cmlSchema);
                 Assert.IsNotNull(schemaDoc.Root);
@@ -318,29 +321,12 @@ namespace NCDK.Config
         {
             using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, atomTypeList))
             {
-                var tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema.FullName).AbsolutePath);
+                var tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema).AbsolutePath);
 
                 var doc = new XmlDocument();
-                doc.Load(tmpInput.FullName);
+                doc.Load(tmpInput);
                 doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
             }
-        }
-
-        private static FileInfo CopyFileToTmp(string prefix, string suffix, Stream ins, string toReplace, string replaceWith)
-        {
-            var tmpFile = new FileInfo(Path.Combine(Path.GetTempPath(), prefix ?? "" + Guid.NewGuid().ToString() + suffix ?? ""));
-            string all;
-            using (var rs = new StreamReader(ins))
-            {
-                all = rs.ReadToEnd();
-                if (toReplace != null && replaceWith != null)
-                    all = all.Replace(toReplace, replaceWith);
-            }
-            using (var ws = new StreamWriter(tmpFile.FullName))
-            {
-                ws.Write(all);
-            }
-            return tmpFile;
         }
     }
 }

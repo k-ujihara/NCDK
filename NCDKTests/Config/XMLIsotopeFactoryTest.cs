@@ -34,7 +34,8 @@ namespace NCDK.Config
     /// </summary>
     // @cdk.module test-extra
     [TestClass()]
-    public class XMLIsotopeFactoryTest : CDKTestCase
+    public class XMLIsotopeFactoryTest 
+        : CDKTestCase
     {
         bool standAlone = false;
         readonly static AtomTypeFactory atf = AtomTypeFactory.GetInstance(new ChemObject().Builder);
@@ -42,7 +43,7 @@ namespace NCDK.Config
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
         private static IList<FileInfo> tmpFiles = new List<FileInfo>();
-        private static FileInfo tmpCMLSchema;
+        private static string tmpCMLSchema;
 
         [ClassInitialize()]
         public static void Initialize(TestContext context)
@@ -229,42 +230,29 @@ namespace NCDK.Config
 
         private void AssertValidCML(string atomTypeList, string shortcut)
         {
-            var ins = ResourceLoader.GetAsStream(atomTypeList);
-            FileInfo tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema.FullName).AbsolutePath);
-            Assert.IsNotNull(ins, "Could not find the atom type list CML source");
+            using (var ins = ResourceLoader.GetAsStream(atomTypeList))
+            {
+                var tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema).AbsolutePath);
+                Assert.IsNotNull(ins, "Could not find the atom type list CML source");
 
-            var doc = new XmlDocument();
-            doc.Load(tmpInput.FullName);
-            doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
+                var doc = new XmlDocument();
+                doc.Load(tmpInput);
+                doc.Validate((sender, e) => Assert.Fail($"{shortcut} is not valid on line {e.Exception.LinePosition}: {e.Message}"));
+            }
         }
 
         [TestMethod()]
         public void TestCanReadCMLSchema()
         {
-            var cmlSchema = new FileStream(tmpCMLSchema.FullName, FileMode.Open);
-            Assert.IsNotNull(cmlSchema, "Could not find the CML schema");
-
-            // make sure the schema is read
-            var schemaDoc = XDocument.Load(cmlSchema);
-            Assert.IsNotNull(schemaDoc.Root);
-            Assert.AreEqual(((XNamespace)"http://www.w3.org/2001/XMLSchema") + "schema", schemaDoc.Root.Name);
-        }
-
-        private static FileInfo CopyFileToTmp(string prefix, string suffix, Stream ins, string toReplace, string replaceWith)
-        {
-            var tmpFile = new FileInfo(Path.Combine(Path.GetTempPath(), prefix ?? "" + Guid.NewGuid().ToString() + suffix ?? ""));
-            string all;
-            using (var rs = new StreamReader(ins))
+            using (var cmlSchema = new FileStream(tmpCMLSchema, FileMode.Open))
             {
-                all = rs.ReadToEnd();
-                if (toReplace != null && replaceWith != null)
-                    all = all.Replace(toReplace, replaceWith);
+                Assert.IsNotNull(cmlSchema, "Could not find the CML schema");
+
+                // make sure the schema is read
+                var schemaDoc = XDocument.Load(cmlSchema);
+                Assert.IsNotNull(schemaDoc.Root);
+                Assert.AreEqual(((XNamespace)"http://www.w3.org/2001/XMLSchema") + "schema", schemaDoc.Root.Name);
             }
-            using (var ws = new StreamWriter(tmpFile.FullName))
-            {
-                ws.Write(all);
-            }
-            return tmpFile;
         }
 
         [TestMethod()]
