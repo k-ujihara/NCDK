@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mdl.Close();
 
             FractionalPSADescriptor fpsa = new FractionalPSADescriptor();
-            DescriptorValue results = fpsa.Calculate(mol);
+            var results = fpsa.Calculate(mol);
 
             // note: test currently assumes that just one Descriptor is calculated
             var names = results.Names;

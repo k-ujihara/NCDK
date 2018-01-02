@@ -53,8 +53,7 @@ namespace NCDK.IO.CML
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
             IMolecularDescriptor descriptor = new WeightDescriptor();
 
-            DescriptorValue originalValue = null;
-            originalValue = descriptor.Calculate(molecule);
+            var originalValue = descriptor.Calculate(molecule);
             molecule.SetProperty(originalValue.Specification, originalValue);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, molecule);
 
@@ -71,8 +70,8 @@ namespace NCDK.IO.CML
 
             var value = roundTrippedMol.GetProperty<object>(spec);
             Assert.IsNotNull(value);
-            Assert.IsTrue(value is DescriptorValue);
-            DescriptorValue descriptorResult = (DescriptorValue)value;
+            Assert.IsTrue(value is IDescriptorValue);
+            var descriptorResult = (IDescriptorValue)value;
             Assert.AreEqual(originalValue.Value.ToString(), descriptorResult.Value.ToString());
         }
 
@@ -85,7 +84,7 @@ namespace NCDK.IO.CML
 
             CMLWriter cmlWriter = new CMLWriter(writer);
             cmlWriter.RegisterCustomizer(new QSARCustomizer());
-            DescriptorValue value = descriptor.Calculate(molecule);
+            var value = descriptor.Calculate(molecule);
             molecule.SetProperty(value.Specification, value);
 
             cmlWriter.Write(molecule);

@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            DescriptorValue value = Descriptor.Calculate(mol);
+            var value = Descriptor.Calculate(mol);
             ArrayResult<int> result = (ArrayResult<int>)value.Value;
 
             Assert.AreEqual(79, result.Length);
@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            DescriptorValue value = Descriptor.Calculate(mol);
+            var value = Descriptor.Calculate(mol);
             ArrayResult<int> result = (ArrayResult<int>)value.Value;
 
             Assert.AreEqual(79, result.Length);
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            DescriptorValue value = Descriptor.Calculate(mol);
+            var value = Descriptor.Calculate(mol);
             ArrayResult<int> result = (ArrayResult<int>)value.Value;
 
             Assert.AreEqual(79, result.Length);

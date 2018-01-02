@@ -284,7 +284,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container)
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container)
             => Calculate(container);
 
         /// <inheritdoc/>

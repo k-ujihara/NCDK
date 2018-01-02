@@ -2367,7 +2367,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public IReadOnlyList<string> DescriptorNames => STRINGS;
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }// end class
 }
 

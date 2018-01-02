@@ -27,7 +27,9 @@ namespace NCDK.QSAR.Descriptors
     /// <typeparam name="T"></typeparam>
     // @cdk.module test-qsar
     [TestClass()]
-    public abstract class DescriptorTest<T> : CDKTestCase where T : IDescriptor
+    public abstract class DescriptorTest<T> 
+        : CDKTestCase 
+        where T : IDescriptor
     {
         protected virtual T Descriptor { get; set; }
 
@@ -43,18 +45,18 @@ namespace NCDK.QSAR.Descriptors
         }
 
         /// <summary>
-        /// Makes sure that the extending class has set the super.descriptor.
-        /// Each extending class should have this bit of code (JUnit3 formalism):
-        /// <pre>
-        /// [TestMethod()] public void SetUp() {
-        ///   // Pass a Class, not an Object!
+        /// Makes sure that the extending class has set the <see cref="Descriptor"/>.
+        /// Each extending class should have this bit of code:
+        /// <code>
+        /// public void TestClassName() {
+        ///   // Pass a Type, not an Object!
         ///   SetDescriptor(typeof(SomeDescriptor));
         /// }
-        ///
-        /// <p>The unit tests in the extending class may use this instance, but
+        /// </code>
+        /// <para>
+        /// The unit tests in the extending class may use this instance, but
         /// are not required.
-        ///
-        /// </pre>
+        /// </para>
         /// </summary>
         [TestMethod()]
         public void TestHasSetSuperDotDescriptor()
@@ -64,8 +66,6 @@ namespace NCDK.QSAR.Descriptors
 
         /// <summary>
         /// Checks if the parameterization is consistent.
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestGetParameterNames()
@@ -79,9 +79,7 @@ namespace NCDK.QSAR.Descriptors
             }
         }
 
-        /// <summary>
         // @cdk.bug 1862137
-        /// </summary>
         [TestMethod()]
         public void TestGetParameters()
         {
@@ -99,9 +97,7 @@ namespace NCDK.QSAR.Descriptors
             }
         }
 
-        /// <summary>
         // @cdk.bug 1862137
-        /// </summary>
         [TestMethod()]
         public void TestGetParameterType_String()
         {

@@ -141,6 +141,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>A 1-element string array, with the value "FMF"</returns>
         public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "FMF" };
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

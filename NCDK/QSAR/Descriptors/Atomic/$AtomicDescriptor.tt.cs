@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class StabilizationPlusChargeDescriptor
@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class SigmaElectronegativityDescriptor
@@ -164,7 +164,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class RDFProtonDescriptor_GSR
@@ -216,7 +216,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class RDFProtonDescriptor_GHR_topol
@@ -268,7 +268,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class RDFProtonDescriptor_GHR
@@ -320,7 +320,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class RDFProtonDescriptor_GDR
@@ -372,7 +372,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class RDFProtonDescriptor_G3R
@@ -424,7 +424,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class ProtonTotalPartialChargeDescriptor
@@ -476,7 +476,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class ProtonAffinityHOSEDescriptor
@@ -528,7 +528,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PiElectronegativityDescriptor
@@ -580,7 +580,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PeriodicTablePositionDescriptor
@@ -632,7 +632,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PartialTChargePEOEDescriptor
@@ -684,7 +684,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PartialTChargeMMFF94Descriptor
@@ -736,7 +736,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PartialSigmaChargeDescriptor
@@ -788,7 +788,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class PartialPiChargeDescriptor
@@ -840,7 +840,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class IsProtonInConjugatedPiSystemDescriptor
@@ -892,7 +892,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class IsProtonInAromaticSystemDescriptor
@@ -944,7 +944,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class IPAtomicHOSEDescriptor
@@ -996,7 +996,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class InductiveAtomicSoftnessDescriptor
@@ -1048,7 +1048,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class InductiveAtomicHardnessDescriptor
@@ -1100,7 +1100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class EffectiveAtomPolarizabilityDescriptor
@@ -1152,7 +1152,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class DistanceToAtomDescriptor
@@ -1204,7 +1204,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class CovalentRadiusDescriptor
@@ -1256,7 +1256,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class BondsToAtomDescriptor
@@ -1308,7 +1308,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class AtomValenceDescriptor
@@ -1360,7 +1360,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class AtomHybridizationVSEPRDescriptor
@@ -1412,7 +1412,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class AtomHybridizationDescriptor
@@ -1464,7 +1464,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 	public partial class AtomDegreeDescriptor
@@ -1516,7 +1516,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 }

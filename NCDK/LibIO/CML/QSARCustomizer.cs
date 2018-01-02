@@ -119,7 +119,7 @@ namespace NCDK.LibIO.CML
                 if (key is DescriptorSpecification)
                 {
                     DescriptorSpecification specs = (DescriptorSpecification)key;
-                    DescriptorValue value = (DescriptorValue)props[key];
+                    var value = (IDescriptorValue)props[key];
                     IDescriptorResult result = value.Value;
                     if (propList == null)
                     {

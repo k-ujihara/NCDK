@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCCC");
-            DescriptorValue value = Descriptor.Calculate(mol);
+            var value = Descriptor.Calculate(mol);
             Assert.IsNotNull(value.Exception, "The Exception should be non-null since we don't have 3D coords");
         }
 

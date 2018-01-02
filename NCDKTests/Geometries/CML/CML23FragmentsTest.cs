@@ -504,8 +504,8 @@ namespace NCDK.IO.CML
             Assert.AreEqual(implementationVendor, spec.ImplementationVendor);
 
             Assert.IsNotNull(mol.GetProperty<object>(key));
-            Assert.IsTrue(mol.GetProperty<DescriptorValue>(key) is DescriptorValue);
-            DescriptorValue value = mol.GetProperty<DescriptorValue>(key);
+            Assert.IsTrue(mol.GetProperty<IDescriptorValue>(key) is IDescriptorValue);
+            var value = mol.GetProperty<IDescriptorValue>(key);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
             Assert.IsTrue(result is Result<double>);

@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = null;
-            DescriptorValue value = null;
+            IDescriptorValue value = null;
             ArrayResult<double> result = null;
 
             mol = sp.ParseSmiles("CCCC");

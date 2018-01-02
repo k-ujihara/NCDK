@@ -24,6 +24,7 @@
  */
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
+using System;
 using System.Xml.Linq;
 
 namespace NCDK.IO.CML
@@ -125,10 +126,11 @@ namespace NCDK.IO.CML
                 DescriptorSpecification descriptorSpecification = new DescriptorSpecification(
                         currentDescriptorAlgorithmSpecification, currentDescriptorImplementationTitel,
                         currentDescriptorImplementationIdentifier, currentDescriptorImplementationVendor);
-                CurrentMolecule.SetProperty(descriptorSpecification, new DescriptorValue(descriptorSpecification,
-                        new string[0], new object[0],
-                        currentDescriptorDataIsArray ? NewDescriptorResultArray(currentDescriptorResult)
-                                : NewDescriptorResult(currentDescriptorResult), new string[0]));
+                CurrentMolecule.SetProperty(descriptorSpecification,
+                    NewDescriptorValue(
+                        descriptorSpecification,
+                        currentDescriptorDataIsArray,
+                        currentDescriptorResult));
             }
             else if (xpath.EndsWith("property", "scalar"))
             {
@@ -141,44 +143,62 @@ namespace NCDK.IO.CML
             }
         }
 
-        private IDescriptorResult NewDescriptorResult(string descriptorValue)
+        private IDescriptorValue NewDescriptorValue(DescriptorSpecification specification, bool isArray, string descriptorValue)
         {
-            IDescriptorResult result = null;
-            if ("xsd:double".Equals(currentDescriptorDataType))
+            if (isArray)
             {
-                result = new Result<double>(double.Parse(descriptorValue));
-            }
-            else if ("xsd:integer".Equals(currentDescriptorDataType))
-            {
-                result = new Result<int>(int.Parse(descriptorValue));
-            }
-            else if ("xsd:boolean".Equals(currentDescriptorDataType))
-            {
-                result = new Result<bool>(bool.Parse(descriptorValue));
-            }
-            return result;
-        }
-
-        private IArrayResult NewDescriptorResultArray(string descriptorValue)
-        {
-            IArrayResult result = null;
-            if ("xsd:double".Equals(currentDescriptorDataType))
-            {
-                result = new ArrayResult<double>();
-                foreach (var token in descriptorValue.Split(' '))
+                switch (currentDescriptorDataType)
                 {
-                    ((ArrayResult<double>)result).Add(double.Parse(token));
+                    case "xsd:double":
+                        {
+                            var result = new ArrayResult<double>();
+                            foreach (var token in descriptorValue.Split(' '))
+                                result.Add(double.Parse(token));
+                            return new DescriptorValue<ArrayResult<double>>(
+                                specification,
+                                Array.Empty<string>(), Array.Empty<object>(),
+                                result, Array.Empty<string>());
+                        }
+                    case "xsd:integer":
+                        {
+                            var result = new ArrayResult<int>();
+                            foreach (var token in descriptorValue.Split(' '))
+                                result.Add(int.Parse(token));
+                            return new DescriptorValue<ArrayResult<int>>(
+                                specification,
+                                Array.Empty<string>(), Array.Empty<object>(),
+                                result, Array.Empty<string>());
+                        }
+                    default:
+                        return null;
                 }
             }
-            else if ("xsd:integer".Equals(currentDescriptorDataType))
+            else
             {
-                result = new ArrayResult<int>();
-                foreach (var token in descriptorValue.Split(' '))
+                switch (currentDescriptorDataType)
                 {
-                    ((ArrayResult<int>)result).Add(int.Parse(token));
+                    case "xsd:double":
+                        return new DescriptorValue<Result<double>>(
+                            specification,
+                            Array.Empty<string>(), Array.Empty<object>(),
+                            new Result<double>(double.Parse(descriptorValue)),
+                            Array.Empty<string>());
+                    case "xsd:integer":
+                        return new DescriptorValue<Result<int>>(
+                            specification,
+                            Array.Empty<string>(), Array.Empty<object>(),
+                            new Result<int>(int.Parse(descriptorValue)),
+                            Array.Empty<string>());
+                    case "xsd:boolean":
+                        return new DescriptorValue<Result<bool>>(
+                            specification,
+                            Array.Empty<string>(), Array.Empty<object>(),
+                            new Result<bool>(bool.Parse(descriptorValue)),
+                            Array.Empty<string>());
+                    default:
+                        return null;
                 }
             }
-            return result;
         }
     }
 }

@@ -149,7 +149,7 @@ namespace NCDK.QSAR
                 IDescriptor descriptor = descriptors[i];
                 if (descriptor is IMolecularDescriptor)
                 {
-                    DescriptorValue value = ((IMolecularDescriptor)descriptor).Calculate(molecule);
+                    var value = ((IMolecularDescriptor)descriptor).Calculate(molecule);
                     if (value.Exception == null)
                         molecule.SetProperty(speclist[i], value);
                     else
@@ -163,7 +163,7 @@ namespace NCDK.QSAR
                 {
                     foreach (var atom in molecule.Atoms)
                     {
-                        DescriptorValue value = ((IAtomicDescriptor)descriptor).Calculate(atom, molecule);
+                        var value = ((IAtomicDescriptor)descriptor).Calculate(atom, molecule);
                         if (value.Exception == null)
                             atom.SetProperty(speclist[i], value);
                         else
@@ -178,7 +178,7 @@ namespace NCDK.QSAR
                 {
                     foreach (var bond in molecule.Bonds)
                     {
-                        DescriptorValue value = ((IBondDescriptor)descriptor).Calculate(bond, molecule);
+                        var value = ((IBondDescriptor)descriptor).Calculate(bond, molecule);
                         if (value.Exception == null)
                             bond.SetProperty(speclist[i], value);
                         else

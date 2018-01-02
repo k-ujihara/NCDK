@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+        IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
 	}
 	public partial class BondPartialTChargeDescriptor
@@ -114,7 +114,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+        IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
 	}
 	public partial class BondPartialSigmaChargeDescriptor
@@ -167,7 +167,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+        IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
 	}
 	public partial class BondPartialPiChargeDescriptor
@@ -220,7 +220,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+        IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
 	}
 	public partial class AtomicNumberDifferenceDescriptor
@@ -273,7 +273,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             cachedDescriptorValues[bond] = doubleResult;
         }
 
-        DescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
+        IDescriptorValue IBondDescriptor.Calculate(IBond bond, IAtomContainer atomContainer)
             => Calculate(bond, atomContainer);
 	}
 }

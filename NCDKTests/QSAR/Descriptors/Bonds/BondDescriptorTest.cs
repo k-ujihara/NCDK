@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
 
-            DescriptorValue v = null;
+            IDescriptorValue v = null;
             try
             {
                 v = descriptor.Calculate(mol.Bonds[0], mol);
@@ -77,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
 
-            DescriptorValue v = descriptor.Calculate(mol.Bonds[0], mol);
+            var v = descriptor.Calculate(mol.Bonds[0], mol);
             Assert.IsNotNull(v);
             var names = v.Names;
             Assert.IsNotNull(names, "The descriptor must return labels using the Names method.");
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             IAtomContainer mol = SomeoneBringMeSomeWater();
 
             var names1 = descriptor.DescriptorNames;
-            DescriptorValue v = descriptor.Calculate(mol.Bonds[1], mol);
+            var v = descriptor.Calculate(mol.Bonds[1], mol);
             var names2 = v.Names;
 
             Assert.AreEqual(names1.Count, names2.Count);

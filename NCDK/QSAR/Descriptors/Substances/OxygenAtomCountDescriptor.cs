@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Substances
             );
         }
 
-        DescriptorValue ISubstanceDescriptor.Calculate(ISubstance substance)
+        IDescriptorValue ISubstanceDescriptor.Calculate(ISubstance substance)
             => Calculate(substance);
 
         /// <inheritdoc/>

@@ -22,12 +22,25 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR
 {
-    public class DescriptorValue
+    public interface IDescriptorValue
+    {
+        DescriptorSpecification Specification { get; }
+        object[] Parameters { get; }
+        IReadOnlyList<string> ParameterNames { get; }
+        IReadOnlyList<string> Names { get; }
+        IDescriptorResult Value { get; }
+        Exception Exception { get; }
+    }
+
+    [Serializable]
+    public class DescriptorValue<TDescriptorResult>
+        : IDescriptorValue
+        where TDescriptorResult : IDescriptorResult
     {
         private DescriptorSpecification specification;
         private IReadOnlyList<string> parameterNames;
         private object[] parameterSettings;
-        private IDescriptorResult value;
+        private TDescriptorResult value;
         private IReadOnlyList<string> descriptorNames;
         private Exception exception;
 
@@ -43,7 +56,7 @@ namespace NCDK.QSAR
         /// <param name="value">The actual values</param>
         /// <param name="descriptorNames">The names of the values</param>
         public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
-                IDescriptorResult value, IReadOnlyList<string> descriptorNames)
+                TDescriptorResult value, IReadOnlyList<string> descriptorNames)
             : this(specification, parameterNames, parameterSettings, value, descriptorNames, null)
         { }
 
@@ -60,7 +73,7 @@ namespace NCDK.QSAR
         /// <param name="descriptorNames">The names of the values</param>
         /// <param name="exception">The exception object that should have been caught if an error occurred during descriptor calculation</param>
         public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
-                IDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
+                TDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
         {
             this.specification = specification;
             this.parameterNames = parameterNames;
@@ -72,8 +85,8 @@ namespace NCDK.QSAR
 
         public DescriptorSpecification Specification => this.specification;
         public object[] Parameters => this.parameterSettings;
-        public IReadOnlyList<string> ParameterNames => this.parameterNames;
-        public IDescriptorResult Value => this.value;
+        public IReadOnlyList<string> ParameterNames => this.parameterNames;        
+        public TDescriptorResult Value => this.value;
         public Exception Exception => exception;
 
         /// <summary>
@@ -129,29 +142,8 @@ namespace NCDK.QSAR
                 return descriptorNames;
             }
         }
-    }
 
-    /// <summary>
-    /// Class that is used to store descriptor values as <see cref="IChemObject"/> properties.
-    /// </summary>
-    // @cdk.module standard
-    // @cdk.githash
-    [Serializable]
-    public class DescriptorValue<TDescriptorResult>
-        : DescriptorValue
-        where TDescriptorResult : IDescriptorResult
-    {
-        /// <inheritdoc/>
-        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
-                TDescriptorResult value, IReadOnlyList<string> descriptorNames)
-            : this(specification, parameterNames, parameterSettings, value, descriptorNames, null)
-        { }
 
-        /// <inheritdoc/>
-        public DescriptorValue(DescriptorSpecification specification, IReadOnlyList<string> parameterNames, object[] parameterSettings,
-                TDescriptorResult value, IReadOnlyList<string> descriptorNames, Exception exception)
-            : base(specification, parameterNames, parameterSettings, value, descriptorNames, exception)
-        {
-        }
+        IDescriptorResult IDescriptorValue.Value => (IDescriptorResult)this.Value;
     }
 }

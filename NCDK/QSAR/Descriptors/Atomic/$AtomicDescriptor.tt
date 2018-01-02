@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             cachedDescriptorValues[atom] = value;
         }
 
-		DescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
+		IDescriptorValue IAtomicDescriptor.Calculate(IAtom atom, IAtomContainer container)
             => Calculate(atom, container);
 	}
 <#

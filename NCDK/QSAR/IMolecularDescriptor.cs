@@ -33,7 +33,7 @@ namespace NCDK.QSAR
         /// </summary>
         /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor should be calculated</param>
         /// <returns>An object of <see cref="DescriptorValue"/> that contain the calculated value as well as specification details</returns>
-        DescriptorValue Calculate(IAtomContainer container);
+        IDescriptorValue Calculate(IAtomContainer container);
 
         /// <summary>
         /// Returns the specific type of the <see cref="IDescriptorResult"/> object.

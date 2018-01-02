@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             object[] parameters = new object[] { 2, 2, true };
             Descriptor.Parameters = parameters;
-            DescriptorValue descriptorValue = Descriptor.Calculate(ac);
+            var descriptorValue = Descriptor.Calculate(ac);
 
             ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
             Assert.IsNotNull(retval);
@@ -101,7 +101,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             object[] parameters = new object[] { 0, 25, true };
             Descriptor.Parameters = parameters;
-            DescriptorValue descriptorValue = Descriptor.Calculate(ac);
+            var descriptorValue = Descriptor.Calculate(ac);
 
             ArrayResult<double> retval = (ArrayResult<double>)descriptorValue.Value;
             int nheavy = 20;

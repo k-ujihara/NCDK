@@ -108,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C1CCCC1CCC2CCCNC2");
             AddExplicitHydrogens(mol);
-            DescriptorValue dv = Descriptor.Calculate(mol);
+            var dv = Descriptor.Calculate(mol);
             Assert.IsNotNull(dv);
         }
     }

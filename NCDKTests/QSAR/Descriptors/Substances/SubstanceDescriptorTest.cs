@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Substances
         public void TestCalculate_Empty()
         {
             ISubstance material = new Substance();
-            DescriptorValue value = descriptor.Calculate(material);
+            var value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Substances
         [TestMethod()]
         public void TestCalculate_Null()
         {
-            DescriptorValue value = descriptor.Calculate(null);
+            var value = descriptor.Calculate(null);
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);

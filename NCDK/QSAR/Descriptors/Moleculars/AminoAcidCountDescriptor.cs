@@ -148,6 +148,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return null;
         }
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

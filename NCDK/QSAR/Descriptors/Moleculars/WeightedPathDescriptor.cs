@@ -221,6 +221,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return pathWts;
         }
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

@@ -59,7 +59,7 @@ namespace NCDK.QSAR
             List<string> descNames = new List<string>();
             foreach (var spec in specs)
             {
-                DescriptorValue value = (DescriptorValue)ac.GetProperty<DescriptorValue>(spec);
+                var value = ac.GetProperty<IDescriptorValue>(spec);
                 if (value == null) Assert.Fail(spec.ImplementationTitle + " was not calculated.");
                 ncalc++;
                 var names = value.Names;

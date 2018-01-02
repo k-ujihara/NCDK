@@ -208,6 +208,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 throw new ArgumentException("No parameter for name", nameof(name));
         }
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

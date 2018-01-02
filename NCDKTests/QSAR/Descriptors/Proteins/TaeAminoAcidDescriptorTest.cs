@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         public void TestTaeAminoAcidDescriptor()
         {
             IBioPolymer pepseq = ProteinBuilderTool.CreateProtein("ACDEFGH", Silent.ChemObjectBuilder.Instance);
-            DescriptorValue result = descriptor.Calculate(pepseq);
+            var result = descriptor.Calculate(pepseq);
 
             ArrayResult<double> dar = (ArrayResult<double>)result.Value;
             Assert.AreEqual(147, dar.Length);

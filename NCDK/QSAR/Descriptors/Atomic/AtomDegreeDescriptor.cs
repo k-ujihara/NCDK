@@ -93,5 +93,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
         public object GetParameterType(string name) => null;
+
+        
     }
 }

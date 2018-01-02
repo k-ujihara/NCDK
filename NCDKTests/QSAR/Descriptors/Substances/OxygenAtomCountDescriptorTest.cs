@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Substances
                     "ZnO", Default.ChemObjectBuilder.Instance
                 )
             );
-            DescriptorValue value = descriptor.Calculate(material);
+            var value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);
@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Substances
                     "Fe3O4", Default.ChemObjectBuilder.Instance
                 )
             );
-            DescriptorValue value = descriptor.Calculate(material);
+            var value = descriptor.Calculate(material);
             Assert.IsNotNull(value);
             IDescriptorResult result = value.Value;
             Assert.IsNotNull(result);

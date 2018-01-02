@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
-        public virtual DescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
+        public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
         {
             return (Calculate(atom, varAtomContainerSet, null));
         }
@@ -498,7 +498,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
-        public virtual DescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
+        public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
         {
             return (Calculate(atom, varAtomContainerSet, null));
         }
@@ -942,7 +942,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
-        public virtual DescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
+        public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
         {
             return (Calculate(atom, varAtomContainerSet, null));
         }
@@ -1386,7 +1386,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
-        public virtual DescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
+        public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
         {
             return (Calculate(atom, varAtomContainerSet, null));
         }
@@ -1830,7 +1830,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
-        public virtual DescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
+        public virtual IDescriptorValue Calculate(IAtom atom, IAtomContainer varAtomContainerSet)
         {
             return (Calculate(atom, varAtomContainerSet, null));
         }

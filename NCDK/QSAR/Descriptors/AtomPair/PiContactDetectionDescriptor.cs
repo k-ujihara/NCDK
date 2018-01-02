@@ -215,7 +215,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
             return null;
         }
 
-        DescriptorValue IAtomPairDescriptor.Calculate(IAtom atom, IAtom atom2, IAtomContainer container)
+        IDescriptorValue IAtomPairDescriptor.Calculate(IAtom atom, IAtom atom2, IAtomContainer container)
             => Calculate(atom, atom2, container);
     }
 }

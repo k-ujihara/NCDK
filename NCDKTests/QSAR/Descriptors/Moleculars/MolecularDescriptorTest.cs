@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 Assert.Fail("Error in generating the test molecule");
             }
 
-            DescriptorValue v = null;
+            IDescriptorValue v = null;
             try
             {
                 v = Descriptor.Calculate(mol);
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
 
-            DescriptorValue v = Descriptor.Calculate(mol);
+            var v = Descriptor.Calculate(mol);
             Assert.IsNotNull(v);
             var names = v.Names;
             Assert.IsNotNull(names, "The descriptor must return labels using the Names method.");
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
 
             var names1 = Descriptor.DescriptorNames;
-            DescriptorValue v = Descriptor.Calculate(mol);
+            var v = Descriptor.Calculate(mol);
             var names2 = v.Names;
 
             Assert.AreEqual(names1.Count, names2.Count);
@@ -139,7 +139,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.IsNotNull(result, "The DescriptorResultType must not be null.");
 
             IAtomContainer mol = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
-            DescriptorValue v = Descriptor.Calculate(mol);
+            var v = Descriptor.Calculate(mol);
 
             Assert.IsTrue(
                     result.GetType().FullName.Contains(v.Value.GetType().FullName),

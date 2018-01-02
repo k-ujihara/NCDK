@@ -68,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public IReadOnlyList<string> DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
             return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(double.NaN), DescriptorNames, e);
         }
@@ -122,6 +122,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The parameterType of the given parameter.</returns>
         public object GetParameterType(string name) => null;
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

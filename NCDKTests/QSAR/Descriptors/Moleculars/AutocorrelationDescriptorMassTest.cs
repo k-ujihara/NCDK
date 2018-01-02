@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
-            DescriptorValue count = new AutocorrelationDescriptorMass().Calculate(container);
+            var count = new AutocorrelationDescriptorMass().Calculate(container);
             Assert.AreEqual(5, count.Value.Length);
             Assert.IsTrue(count.Value is ArrayResult<double>);
             ArrayResult<double> result = (ArrayResult<double>)count.Value;

@@ -41,9 +41,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C#CC=CC"); //
             AddExplicitHydrogens(mol);
-            var expectedStates = new Hybridization[]{Hybridization.SP1,
-                Hybridization.SP1, Hybridization.SP2, Hybridization.SP2,
-                Hybridization.SP3};
+            var expectedStates = new Hybridization[]
+            {
+                Hybridization.SP1,
+                Hybridization.SP1,
+                Hybridization.SP2,
+                Hybridization.SP2,
+                Hybridization.SP3
+            };
             for (int i = 0; i < expectedStates.Length; i++)
             {
                 Assert.AreEqual(expectedStates[i], ((Result<Hybridization>)descriptor.Calculate(mol.Atoms[i], mol).Value).Value);
@@ -68,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
                 foreach (var atom in mol.Atoms)
                 {
-                    var dummy = ((Result<int>)descriptor.Calculate(atom, mol).Value).Value;
+                    var dummy = ((Result<Hybridization>)descriptor.Calculate(atom, mol).Value).Value;
                 }
             }
         }

@@ -97,6 +97,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The parameterType value</returns>
         public object GetParameterType(string name) => null;
 
-        DescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
+        IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }
 }

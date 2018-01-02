@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 {
                     hNumber++;
                     //secondly perform calculation on it.
-                    DescriptorValue dv = descriptor.Calculate(mol.Atoms[i], mol);
+                    var dv = descriptor.Calculate(mol.Atoms[i], mol);
                     IDescriptorResult result = dv.Value;
                     //                Console.Out.WriteLine("array: " + result.ToString());
                     Assert.IsNotNull(result);
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("O");
             mol.Atoms.Add(atom);
-            DescriptorValue dv = descriptor.Calculate(atom, mol);
+            var dv = descriptor.Calculate(atom, mol);
             IDescriptorResult result = dv.Value;
             Assert.IsNotNull(result);
             Assert.IsTrue(result is ArrayResult<double>);
