@@ -916,15 +916,15 @@ namespace NCDK.Fingerprints
                         else
                             adj[i] = mol.Atoms.IndexOf(carriers[i]);
                     }
-                    switch (th.Configure.Ordinal)
+                    switch (th.Configure)
                     {
-                        case StereoElement.Configurations.O.Left:
+                        case StereoElement.Configurations.Left:
                             int i = adj[2];
                             adj[2] = adj[3];
                             adj[3] = i;
                             tetra[mol.Atoms.IndexOf(focus)] = adj;
                             break;
-                        case StereoElement.Configurations.O.Right:
+                        case StereoElement.Configurations.Right:
                             tetra[mol.Atoms.IndexOf(focus)] = adj;
                             break;
                         default:

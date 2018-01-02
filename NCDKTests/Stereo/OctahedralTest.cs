@@ -40,7 +40,7 @@ namespace NCDK.Stereo
             IAtomContainer mol = smipar.ParseSmiles("C[Co@OH8](F)(Br)(Cl)(I)S");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
-            Assert.AreEqual(8, se.Configure.Order);
+            Assert.AreEqual(8, se.Configure.Order());
             Octahedral oh = (Octahedral)se;
             Octahedral ohNorm = oh.Normalize();
             Assert.IsTrue(Compares.AreDeepEqual(

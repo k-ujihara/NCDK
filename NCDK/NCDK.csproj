@@ -574,19 +574,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Algorithm.tt</DependentUpon>
     </Compile>
-    <Content Include="TetrahedralStereo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
+    <Compile Include="TetrahedralStereo.cs">
       <LastGenOutput>TetrahedralStereo.tt.cs</LastGenOutput>
-    </Content>
+    </Compile>
     <Compile Include="Stereo\Projection.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Projection.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TetrahedralStereo.tt.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TetrahedralStereo.tt</DependentUpon>
     </Compile>
     <Compile Include="TT\AminoAcid.tt.cs">
       <AutoGen>True</AutoGen>

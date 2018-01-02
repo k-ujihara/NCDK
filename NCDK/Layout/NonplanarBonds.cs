@@ -520,12 +520,12 @@ namespace NCDK.Layout
             IBond[] bonds = new IBond[4];
 
             int p = 0;
-            switch (element.Configure.Ordinal)
+            switch (element.Configure)
             {
-                case StereoElement.Configurations.O.Left:
+                case StereoElement.Configurations.Left:
                     p = +1;
                     break;
-                case StereoElement.Configurations.O.Right:
+                case StereoElement.Configurations.Right:
                     p = -1;
                     break;
             }
@@ -753,11 +753,11 @@ namespace NCDK.Layout
         /// <returns>the parity</returns>
         private int Parity(TetrahedralStereo stereo)
         {
-            switch (stereo.Ordinal)
+            switch (stereo)
             {
-                case TetrahedralStereo.O.Clockwise:
+                case TetrahedralStereo.Clockwise:
                     return -1;
-                case TetrahedralStereo.O.AntiClockwise:
+                case TetrahedralStereo.AntiClockwise:
                     return +1;
                 default:
                     return 0;

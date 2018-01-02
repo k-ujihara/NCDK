@@ -123,13 +123,13 @@ namespace NCDK.Stereo
         public TrigonalBipyramidal(IAtom focus, IAtom[] carriers, int order)
                 : base(focus, carriers, new StereoElement(StereoElement.Classes.TrigonalBipyramidal, order))
         {
-            if (Configure.Order < 0 || Configure.Order > 20)
+            if (Configure.Order() < 0 || Configure.Order() > 20)
                 throw new ArgumentOutOfRangeException("Invalid configuration order,"
                                                    + "should be between 1-20");
         }
 
         public TrigonalBipyramidal(IAtom focus, IAtom[] carriers, StereoElement stereo)
-            : this(focus, carriers, stereo.Configure.Order)
+            : this(focus, carriers, stereo.Configure.Order())
         { }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace NCDK.Stereo
         /// <returns>the normalized configuration</returns>
         public TrigonalBipyramidal Normalize()
         {
-            int cfg = Configure.Order;
+            int cfg = Configure.Order();
             if (cfg == 1)
                 return this;
             IAtom[] carriers = InvApply(Carriers.ToArray(),

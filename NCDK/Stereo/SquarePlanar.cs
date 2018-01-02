@@ -96,13 +96,13 @@ namespace NCDK.Stereo
         public SquarePlanar(IAtom focus, IAtom[] carriers, int order)
                 : base(focus, carriers, new StereoElement(StereoElement.Classes.SquarePlanar, order))
         {
-            if (Configure.Order < 0 || Configure.Order > 3)
+            if (Configure.Order() < 0 || Configure.Order() > 3)
                 throw new ArgumentOutOfRangeException("Invalid configuration order,"
                                                    + "should be between 1-3");
         }
 
         public SquarePlanar(IAtom focus, IAtom[] carriers, StereoElement stereo)
-            : this(focus, carriers, stereo.Configure.Order)
+            : this(focus, carriers, stereo.Configure.Order())
         {
         }
 
@@ -114,7 +114,7 @@ namespace NCDK.Stereo
         /// <returns>the normalized configuration</returns>
         public SquarePlanar Normalize()
         {
-            int cfg = Configure.Order;
+            int cfg = Configure.Order();
             if (cfg == 1)
                 return this;
             IAtom[] carriers = InvApply(Carriers.ToArray(),

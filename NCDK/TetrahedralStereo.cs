@@ -1,6 +1,4 @@
-﻿<#@ include file="..\Config.ttinclude" #>
-
-/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
+﻿/* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,60 +21,62 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using static NCDK.TetrahedralStereo;
+
 namespace NCDK
 {
     /// <summary>
     /// Enumeration that defines the two possible chiralities for this stereochemistry type.
     /// </summary>
-<# 
-    GenerateEnumBody(
-        "TetrahedralStereo", 
-            new[]
-        {
-            "Unset",
-            "Clockwise",
-            "AntiClockwise",
-        },
-        true
-    ); 
-#>
+    public enum TetrahedralStereo
     {
-        public bool IsUnset => this.Ordinal == 0;
+        Unset = 0,
+        Clockwise,
+        AntiClockwise,
+    }
+
+    public static class TetrahedralStereoTools
+    {
+        public static bool IsUnset(this TetrahedralStereo value)
+            => value == Unset;
 
         /// <summary>
-        /// Invert this conformation,
-        /// Invert(clockwise) = anti_clockwise, Invert(anti_clockwise) = clockwise.
+        /// Get inverted conformation,
         /// </summary>
-        /// <returns> the inverse conformation</returns>
-        public TetrahedralStereo Invert()
+        /// <remarks>
+        /// <see cref="Invert(TetrahedralStereo)"/> of <see cref="Clockwise"/> == <see cref="AntiClockwise"/>
+        /// <see cref="Invert(TetrahedralStereo)"/> of <see cref="AntiClockwise"/> == <see cref="Clockwise"/>
+        /// </remarks>
+        /// <returns>The inverse conformation</returns>
+        public static TetrahedralStereo Invert(this TetrahedralStereo value)
         {
-            if (this == Clockwise)
+            if (value == Clockwise)
                 return AntiClockwise;
-            if (this == AntiClockwise)
+            if (value == AntiClockwise)
                 return Clockwise;
-            return this;
+            return value;
         }
 
-        public static StereoElement.Configurations ToConfigure(TetrahedralStereo stereo)
+        public static StereoElement.Configurations ToConfigure(this TetrahedralStereo value)
         {
-            switch (stereo.Ordinal)
+            switch (value)
             {
-                case TetrahedralStereo.O.AntiClockwise:
+                case AntiClockwise:
                     return StereoElement.Configurations.Left;
-                case TetrahedralStereo.O.Clockwise:
+                case Clockwise:
                     return StereoElement.Configurations.Right;
                 default:
-                    throw new System.ArgumentException("Unknown enum value: " + stereo);
+                    throw new System.ArgumentException("Unknown enum value: " + value);
             }
         }
 
-        public static TetrahedralStereo ToStereo(StereoElement.Configurations configure)
+        public static TetrahedralStereo ToStereo(this StereoElement.Configurations configure)
         {
-            switch (configure.Ordinal)
+            switch (configure)
             {
-                case StereoElement.Configurations.O.Left:
+                case StereoElement.Configurations.Left:
                     return AntiClockwise;
-                case StereoElement.Configurations.O.Right:
+                case StereoElement.Configurations.Right:
                     return Clockwise;
                 default:
                     throw new System.ArgumentException("Cannot map to enum value: " + configure);
@@ -84,4 +84,3 @@ namespace NCDK
         }
     }
 }
-

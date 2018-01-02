@@ -40,7 +40,7 @@ namespace NCDK.Stereo
             IAtomContainer mol = smipar.ParseSmiles("C[As@TB3](Cl)(Cl)(C)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
-            Assert.AreEqual(3, se.Configure.Order);
+            Assert.AreEqual(3, se.Configure.Order());
             TrigonalBipyramidal tb = (TrigonalBipyramidal)se;
             TrigonalBipyramidal tbNorm = tb.Normalize();
             Assert.IsTrue(Compares.AreDeepEqual(

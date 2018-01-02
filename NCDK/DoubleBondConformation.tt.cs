@@ -177,11 +177,11 @@ namespace NCDK
 
          public static DoubleBondConformation ToConformation(StereoElement.Configurations configure)
         {
-            switch (configure.Ordinal)
+            switch (configure)
             {
-                case StereoElement.Configurations.O.Together:
+                case StereoElement.Configurations.Together:
                     return Together;
-                case StereoElement.Configurations.O.Opposite:
+                case StereoElement.Configurations.Opposite:
                     return Opposite;
                 default:
                     throw new System.ArgumentException("Cannot map config to enum: " + configure);

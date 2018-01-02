@@ -89,7 +89,7 @@ namespace NCDK.Stereo
         /// <param name="peripherals">atoms attached to the terminal atoms</param>
         /// <param name="winding">the configuration</param>
         public ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, TetrahedralStereo winding)
-            : this(focus, peripherals, TetrahedralStereo.ToConfigure(winding))
+            : this(focus, peripherals, winding.ToConfigure())
         {
         }
 
@@ -114,7 +114,7 @@ namespace NCDK.Stereo
         /// The winding of the peripherals, when viewed from the first atom.
         /// </summary>
         /// <returns>winding configuration</returns>
-        public TetrahedralStereo Winding => TetrahedralStereo.ToStereo(Configure);
+        public TetrahedralStereo Winding => Configure.ToStereo();
 
         /// <summary>
         /// Helper method to locate two terminal atoms in a container for a given

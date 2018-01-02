@@ -40,7 +40,7 @@ namespace NCDK.Stereo
             IAtomContainer mol = smipar.ParseSmiles("Cl[Pt@SP3](Cl)([NH3])[NH3]");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
-            Assert.AreEqual(3, se.Configure.Order);
+            Assert.AreEqual(3, se.Configure.Order());
             SquarePlanar sp = (SquarePlanar)se;
             SquarePlanar spNorm = sp.Normalize();
             Assert.IsTrue(Compares.AreDeepEqual(

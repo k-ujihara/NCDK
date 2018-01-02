@@ -2549,7 +2549,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("[NH3][Pt@SP1]([NH3])(Cl)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
-            Assert.AreEqual(1, ((SquarePlanar)se).Configure.Order);
+            Assert.AreEqual(1, ((SquarePlanar)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2558,7 +2558,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("[NH3][Pt@SP3]([NH3])(Cl)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
-            Assert.AreEqual(3, ((SquarePlanar)se).Configure.Order);
+            Assert.AreEqual(3, ((SquarePlanar)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2567,7 +2567,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("[NH3][Pt@SP2]([NH3])(Cl)Cl");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(SquarePlanar));
-            Assert.AreEqual(2, ((SquarePlanar)se).Configure.Order);
+            Assert.AreEqual(2, ((SquarePlanar)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2576,7 +2576,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("S[As@TB1](F)(Cl)(Br)N");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
-            Assert.AreEqual(1, ((TrigonalBipyramidal)se).Configure.Order);
+            Assert.AreEqual(1, ((TrigonalBipyramidal)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2585,7 +2585,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("S[As@TB2](F)(Cl)(Br)N");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(TrigonalBipyramidal));
-            Assert.AreEqual(2, ((TrigonalBipyramidal)se).Configure.Order);
+            Assert.AreEqual(2, ((TrigonalBipyramidal)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2594,7 +2594,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("C[Co@](F)(Cl)(Br)(I)S");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
-            Assert.AreEqual(1, ((Octahedral)se).Configure.Order);
+            Assert.AreEqual(1, ((Octahedral)se).Configure.Order());
         }
 
         [TestMethod()]
@@ -2603,7 +2603,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = Load("C[Co@OH8](F)(Br)(Cl)(I)S");
             var se = mol.StereoElements.First();
             Assert.IsInstanceOfType(se, typeof(Octahedral));
-            Assert.AreEqual(8, ((Octahedral)se).Configure.Order);
+            Assert.AreEqual(8, ((Octahedral)se).Configure.Order());
         }
 
         /// <summary>

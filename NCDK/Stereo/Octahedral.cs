@@ -286,7 +286,7 @@ namespace NCDK.Stereo
         }
 
         public Octahedral(IAtom focus, IAtom[] carriers, StereoElement stereo)
-            : this(focus, carriers, stereo.Configure.Order)
+            : this(focus, carriers, stereo.Configure.Order())
         { }
 
         /// <summary>

@@ -301,12 +301,12 @@ namespace NCDK.IO
                 ITetrahedralChirality stereo;
                 if (atomToStereo.TryGetValue(atom, out stereo))
                 {
-                    switch (GetLocalParity(idxs, stereo).Ordinal)
+                    switch (GetLocalParity(idxs, stereo))
                     {
-                        case TetrahedralStereo.O.Clockwise:
+                        case TetrahedralStereo.Clockwise:
                             writer.Write(" CFG=1");
                             break;
-                        case TetrahedralStereo.O.AntiClockwise:
+                        case TetrahedralStereo.AntiClockwise:
                             writer.Write(" CFG=2");
                             break;
                         default:
