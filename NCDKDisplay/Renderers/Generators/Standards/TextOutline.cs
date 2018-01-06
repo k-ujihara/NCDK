@@ -69,7 +69,7 @@ namespace NCDK.Renderers.Generators.Standards
                   text,
                   new FormattedText(
                       text,
-                      CultureInfo.CurrentCulture,
+                      CultureInfo.InvariantCulture,
                       FlowDirection.LeftToRight,
                       font, emSize, new SolidColorBrush()))
         { }
@@ -80,7 +80,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="text">the text to create an outline of</param>
         /// <param name="glyphs">the glyphs for the provided outlined</param>
         public TextOutline(string text, FormattedText glyphs)
-            : this(text, glyphs, glyphs.BuildGeometry(new Point()), WPF.Media.Transform.Identity)
+            : this(text, glyphs, glyphs.BuildGeometry(new Point(0, 0)), WPF.Media.Transform.Identity)
         { }
 
         /// <summary>
@@ -210,7 +210,11 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>new text outline</returns>
         public TextOutline Transform(Transform nextTransform)
         {
-            return new TextOutline(text, glyphs, outline, new MatrixTransform(transform.Value * nextTransform.Value));
+            return new TextOutline(
+                text, 
+                glyphs, 
+                outline, 
+                new MatrixTransform(transform.Value * nextTransform.Value));
         }
 
         /// <summary>
@@ -223,11 +227,8 @@ namespace NCDK.Renderers.Generators.Standards
         public TextOutline Resize(double scaleX, double scaleY)
         {
             var center = GetCenter();
-
             var t = Matrix.Identity;
-            t.Translate(-center.X, -center.Y);
-            t.Scale(scaleX, scaleY);
-            t.Translate(center.X, center.Y);
+            t.ScaleAtPrepend(scaleX, scaleY, center.X, center.Y);
             return Transform(new MatrixTransform(t));
         }
 

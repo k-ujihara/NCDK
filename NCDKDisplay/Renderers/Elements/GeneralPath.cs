@@ -108,7 +108,7 @@ namespace NCDK.Renderers.Elements
         {
             PathGeometry pathIt = shape is PathGeometry ?
                 (PathGeometry)shape :
-                shape.GetFlattenedPathGeometry(0.01, ToleranceType.Absolute);
+                shape.GetFlattenedPathGeometry(0.01, ToleranceType.Relative);
             var elements = ToPathElements(pathIt);
             return new GeneralPath(elements, color, pathIt.FillRule, 0, true);
         }

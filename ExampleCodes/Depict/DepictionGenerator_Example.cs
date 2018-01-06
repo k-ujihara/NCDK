@@ -17,7 +17,7 @@ namespace NCDK.Depict
             {
                 IAtomContainer mol = null;
                 #region 2
-                new DepictionGenerator().Depict(mol).WriteTo("mo.png");
+                new DepictionGenerator().Depict(mol).WriteTo("mol.png");
                 #endregion
             }
             {
@@ -25,20 +25,20 @@ namespace NCDK.Depict
                 #region 3
                 Depiction depiction = new DepictionGenerator().Depict(mol);
                  
-                 // quick use, format determined by name by path
-                 depiction.WriteTo("mol.png");
-                 depiction.WriteTo("mol.svg");
-                 depiction.WriteTo("mol.pdf");
-                 depiction.WriteTo("mol.jpg");
+                // quick use, format determined by name by path
+                depiction.WriteTo("mol.png");
+                depiction.WriteTo("mol.svg");
+                depiction.WriteTo("mol.pdf");
+                depiction.WriteTo("mol.jpg");
                  
-                 // manually specify the format
-                 depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
+                // manually specify the format
+                depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
 
                 // convert to a Java buffered image
-                RenderTargetBitmap img = depiction.ToImg();
-                 
-                 // get the SVG XML string
-                 string svg = depiction.ToSvgStr();
+                RenderTargetBitmap img = depiction.ToBitmap();
+
+                // get the SVG XML string
+                string svg = depiction.ToSvgString();
                 #endregion
             }
         }

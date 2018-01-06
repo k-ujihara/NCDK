@@ -19,7 +19,7 @@
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -130,7 +130,7 @@ namespace NCDK.IO
                 }
                 else if ("BEGIN SGROUP".Equals(command))
                 {
-                    ReadSGroup(readData);
+                    ReadSgroup(readData);
                 }
                 else
                 {
@@ -566,16 +566,16 @@ namespace NCDK.IO
                     // storing positional variation
                     if ("ANY".Equals(attach))
                     {
-                        SGroup sgroup = new SGroup();
-                        sgroup.Type = SGroupTypes.ExtMulticenter;
+                        Sgroup sgroup = new Sgroup();
+                        sgroup.Type = SgroupTypes.ExtMulticenter;
                         sgroup.Atoms.Add(bond.Begin); // could be other end?
                         sgroup.Bonds.Add(bond);
                         foreach (var endpt in endpts)
                             sgroup.Atoms.Add(endpt);
 
-                        IList<SGroup> sgroups = readData.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                        IList<Sgroup> sgroups = readData.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                         if (sgroups == null)
-                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<SGroup>(4));
+                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<Sgroup>(4));
                         sgroups.Add(sgroup);
                     }
 
@@ -587,7 +587,7 @@ namespace NCDK.IO
         /// <summary>
         /// Reads labels.
         /// </summary>
-        public void ReadSGroup(IAtomContainer readData)
+        public void ReadSgroup(IAtomContainer readData)
         {
             bool foundEND = false;
             while (!foundEND)

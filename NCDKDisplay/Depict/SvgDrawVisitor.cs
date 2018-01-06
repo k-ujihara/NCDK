@@ -536,8 +536,10 @@ namespace NCDK.Depict
                 defaultsWritten = true;
             }
 
-            Deque<IRenderingElement> queue = new ArrayDeque<IRenderingElement>();
-            queue.Add(root);
+            Deque<IRenderingElement> queue = new ArrayDeque<IRenderingElement>
+            {
+                root
+            };
             while (queue.Any())
             {
                 IRenderingElement elem = queue.Poll();
@@ -615,8 +617,7 @@ namespace NCDK.Depict
 
             public void Add(T obj)
             {
-                Counter counter = map[obj];
-                if (counter == null)
+                if (!map.TryGetValue(obj, out Counter counter))
                 {
                     map[obj] = new Counter();
                 }

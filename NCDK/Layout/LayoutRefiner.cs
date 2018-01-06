@@ -21,15 +21,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
 using NCDK.Graphs;
-using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 using NCDK.Numerics;
+using NCDK.Tools.Manipulator;
 using System;
-using NCDK.Common.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Layout
 {
@@ -306,8 +306,8 @@ namespace NCDK.Layout
         /// <summary>
         /// Check if any of the bonds adjacent to <paramref name="u"/>, <paramref name="v"/> (not bonded) are crossing.
         /// </summary>
-        /// <param name="u">an atom (idx)</param>
-        /// <param name="v">another atom (idx)</param>
+        /// <param name="u">an atom (index)</param>
+        /// <param name="v">another atom (index)</param>
         /// <returns>there are crossing bonds</returns>
         private bool HaveCrossingBonds(int u, int v)
         {
@@ -340,7 +340,6 @@ namespace NCDK.Layout
             // don't need to test again
             var tried = new HashSet<IBond>();
 
-            Pair:
             foreach (var pair in pairs)
             {
                 foreach (var bond in pair.bndAt)
@@ -637,8 +636,7 @@ namespace NCDK.Layout
                     if (bfix.Contains(bond)) continue;
 
                     // has this bond already been tested as part of another pair
-                    AtomPair first;
-                    if (!firstVisit.TryGetValue(bond, out first))
+                    if (!firstVisit.TryGetValue(bond, out AtomPair first))
                         firstVisit[bond] = first = pair;
                     if (first != pair)
                         continue;
@@ -699,12 +697,12 @@ namespace NCDK.Layout
         /// <summary>
         /// Stretch all bonds in the shortest path between a pair of atoms in an
         /// attempt to resolve the overlap. The stretch that produces the minimum
-        /// congestion is stored in the provided stack and coords with the congestion
+        /// congestion is stored in the provided stack and coordinates with the congestion
         /// score returned.
         /// </summary>
         /// <param name="pair">congested atom pair</param>
         /// <param name="stack">best result vertices</param>
-        /// <param name="coords">best result coords</param>
+        /// <param name="coords">best result coordinates</param>
         /// <param name="firstVisit">visit map to avoid repeating work</param>
         /// <returns>congestion score of best result</returns>
         private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords, IDictionary<IBond, AtomPair> firstVisit)
@@ -722,8 +720,7 @@ namespace NCDK.Layout
                 if (bfix.Contains(bond)) continue;
 
                 // has this bond already been tested as part of another pair
-                AtomPair first;
-                if (!firstVisit.TryGetValue(bond, out first))
+                if (!firstVisit.TryGetValue(bond, out AtomPair first))
                     firstVisit[bond] = first = pair;
                 if (first != pair)
                     continue;
@@ -856,7 +853,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Backup the coordinates of atoms (idxs) in the stack to the provided
+        /// Backup the coordinates of atoms (indexes) in the stack to the provided
         /// destination.
         /// </summary>
         /// <param name="dest">destination</param>
@@ -871,7 +868,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Restore the coordinates of atoms (idxs) in the stack to the provided
+        /// Restore the coordinates of atoms (indexes) in the stack to the provided
         /// source.
         /// </summary>
         /// <param name="stack">atom indexes to backup</param>
@@ -918,8 +915,8 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="ap">point to reflect</param>
         /// <param name="baseOfSource">base of the refection source</param>
-        /// <param name="a">a reflection coef</param>
-        /// <param name="b">b reflection coef</param>
+        /// <param name="a">a reflection coefficient</param>
+        /// <param name="b">b reflection coefficient</param>
         private static void Reflect(IAtom ap, Vector2 baseOfSource, double a, double b)
         {
             double x = a * (ap.Point2D.Value.X - baseOfSource.X) + b * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.X;
@@ -1113,7 +1110,7 @@ namespace NCDK.Layout
                 this.snd = snd;
                 this.seqAt = seqAt;
                 this.bndAt = bndAt;
-                this.bndAtCode = bndCode(bndAt);
+                this.bndAtCode = BondCode(bndAt);
             }
 
             public override bool Equals(object o)
@@ -1138,7 +1135,7 @@ namespace NCDK.Layout
             /// </summary>
             /// <param name="enumBonds">bonds to encode</param>
             /// <returns>the bond code</returns>
-            static int bndCode(IEnumerable<IBond> enumBonds)
+            static int BondCode(IEnumerable<IBond> enumBonds)
             {
                 var bonds = enumBonds.ToList();
                 int code = bonds.Count & 0x1;

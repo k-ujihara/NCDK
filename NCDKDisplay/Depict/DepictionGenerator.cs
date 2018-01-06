@@ -172,16 +172,17 @@ namespace NCDK.Depict
         /// system font.
         /// </summary>
         public DepictionGenerator()
-            : this(new Typeface(
-                WPF.SystemFonts.MessageFontFamily,
-                WPF.SystemFonts.MessageFontStyle,
-                WPF.SystemFonts.MessageFontWeight,
-                new WPF.FontStretch()),
+            : this(
+                  new Typeface(
+                      WPF.SystemFonts.MessageFontFamily,
+                      WPF.SystemFonts.MessageFontStyle,
+                      WPF.SystemFonts.MessageFontWeight,
+                      new WPF.FontStretch()),
                   WPF.SystemFonts.MessageFontSize)
         {
-            SetParam(typeof(BasicSceneGenerator.BondLength), 26.1d);
-            SetParam(typeof(StandardGenerator.HashSpacing), 26 / 8d);
-            SetParam(typeof(StandardGenerator.WaveSpacing), 26 / 8d);
+            SetParam(typeof(BasicSceneGenerator.BondLength), (double?)26.1d);
+            SetParam(typeof(StandardGenerator.HashSpacing), (double?)(26 / 8d));
+            SetParam(typeof(StandardGenerator.WaveSpacing), (double?)(26 / 8d));
         }
 
         /// <summary>
@@ -208,8 +209,8 @@ namespace NCDK.Depict
 
             // default margin and separation is automatic
             // since it depends on raster (px) vs vector (mm)
-            SetParam(typeof(BasicSceneGenerator.Margin), AUTOMATIC);
-            SetParam(typeof(RendererModel.Padding), AUTOMATIC);
+            SetParam(typeof(BasicSceneGenerator.Margin), (double?)AUTOMATIC);
+            SetParam(typeof(RendererModel.Padding), (double?)AUTOMATIC);
         }
 
         /// <summary>
@@ -228,16 +229,16 @@ namespace NCDK.Depict
             foreach (var e in org.highlight)
                 this.highlight[e.Key] = e.Value;
             this.gens.AddRange(org.gens);
-            foreach (var e in parameters)
+            foreach (var e in org.parameters)
                 this.parameters[e.Key] = e.Value;
             this.alignMappedReactions = org.alignMappedReactions;
         }
 
         private U GetParameterValue<U>(Type key)
         {
-            IGeneratorParameter<U> param = (IGeneratorParameter<U>)parameters[key];
-            if (param == null)
+            if (!parameters.TryGetValue(key, out IGeneratorParameter parama))
                 throw new ArgumentException($"No parameter registered: {key} {Common.Primitives.Strings.ToJavaString(parameters.Keys)}");
+            var param = (IGeneratorParameter<U>)parama;
             return param.Value;
         }
 
@@ -294,11 +295,11 @@ namespace NCDK.Depict
         /// <param name="mols">molecules</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        // @see #Depict(Iterable, int, int)
+        /// <seealso cref="Depict(IEnumerable{IAtomContainer}, int, int)"/>
         public Depiction Depict(IEnumerable<IAtomContainer> mols)
         {
-            int nMols = mols.Count();
-            var grid = Dimensions.DetermineGrid(nMols);
+            var molList = mols.ToList();
+            var grid = Dimensions.DetermineGrid(molList.Count());
             return Depict(mols, grid.Height, grid.Width);
         }
 
@@ -314,7 +315,7 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">a depiction could not be generated</exception>
         public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol)
         {
-            List<LayoutBackup> layoutBackups = new List<LayoutBackup>();
+            var layoutBackups = new List<LayoutBackup>();
             int molId = 0;
             foreach (var mol in mols)
             {
@@ -333,7 +334,7 @@ namespace NCDK.Depict
 
             // setup the model scale
             List<IAtomContainer> molList = mols.ToList();
-            DepictionGenerator copy = this.WithParam(typeof(BasicSceneGenerator.Scale), CaclModelScale(molList));
+            DepictionGenerator copy = this.WithParam(typeof(BasicSceneGenerator.Scale), (double?)CaclModelScale(molList));
 
             // generate bound rendering elements
             RendererModel model = copy.GetModel();
@@ -469,7 +470,7 @@ namespace NCDK.Depict
 
             // setup the model scale based on bond length
             double scale = this.CaclModelScale(rxn);
-            DepictionGenerator copy = this.WithParam(typeof(BasicSceneGenerator.Scale), scale);
+            DepictionGenerator copy = this.WithParam(typeof(BasicSceneGenerator.Scale), (double?)scale);
             RendererModel model = copy.GetModel();
 
             // reactant/product/agent element generation, we number the reactants, then products then agents
@@ -764,7 +765,7 @@ namespace NCDK.Depict
         /// <seealso cref="BackgroundColor"/>
         public DepictionGenerator WithBackgroundColor(Color color)
         {
-            return WithParam(typeof(BackgroundColor), color);
+            return WithParam(typeof(BackgroundColor), (Color?)color);
         }
 
         /// <summary>
@@ -790,7 +791,7 @@ namespace NCDK.Depict
         /// <seealso cref="StandardGenerator.HighlightStyle"/>
         public DepictionGenerator WithOuterGlowHighlight(double width)
         {
-            return WithParam(typeof(StandardGenerator.Highlighting), StandardGenerator.HighlightStyle.OuterGlow).WithParam(typeof(StandardGenerator.OuterGlowWidth), width);
+            return WithParam(typeof(StandardGenerator.Highlighting), (StandardGenerator.HighlightStyle?)StandardGenerator.HighlightStyle.OuterGlow).WithParam(typeof(StandardGenerator.OuterGlowWidth), (double?)width);
         }
 
         /// <summary>
@@ -811,8 +812,10 @@ namespace NCDK.Depict
         {
             if (annotateAtomMap || annotateAtomVal)
                 throw new ArgumentException("Can not annotated atom numbers, atom values or maps are already annotated");
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.annotateAtomNum = true;
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                annotateAtomNum = true
+            };
             return copy;
         }
 
@@ -833,8 +836,10 @@ namespace NCDK.Depict
         {
             if (annotateAtomNum || annotateAtomMap)
                 throw new InvalidOperationException("Can not annotated atom values, atom numbers or maps are already annotated");
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.annotateAtomVal = true;
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                annotateAtomVal = true
+            };
             return copy;
         }
 
@@ -857,8 +862,10 @@ namespace NCDK.Depict
         {
             if (annotateAtomNum)
                 throw new InvalidOperationException("Can not annotated atom maps, atom numbers or values are already annotated");
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.annotateAtomMap = true;
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                annotateAtomMap = true
+            };
             return copy;
         }
 
@@ -888,9 +895,11 @@ namespace NCDK.Depict
         /// <seealso cref="WithAtomMapHighlight()"/>
         public DepictionGenerator WithAtomMapHighlight(Color[] colors)
         {
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.highlightAtomMap = true;
-            copy.atomMapColors = (Color[])colors.Clone();
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                highlightAtomMap = true,
+                atomMapColors = (Color[])colors.Clone()
+            };
             return copy;
         }
 
@@ -904,19 +913,19 @@ namespace NCDK.Depict
         /// <seealso cref="BasicSceneGenerator.ShowMoleculeTitle"/>
         public DepictionGenerator WithMolTitle()
         {
-            return WithParam(typeof(BasicSceneGenerator.ShowMoleculeTitle), true);
+            return WithParam(typeof(BasicSceneGenerator.ShowMoleculeTitle), (bool?)true);
         }
 
         /// <summary>
         /// Display a reaction title with the depiction. The title
-        /// is specified by setting the {@link org.openscience.cdk.CDKConstants#TITLE}
+        /// is specified by setting the <see cref="CDKPropertyName.Title"/>
         /// property on the <see cref="IReaction"/> instance.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="BasicSceneGenerator.ShowReactionTitle"/>
         public DepictionGenerator WithRxnTitle()
         {
-            return WithParam(typeof(BasicSceneGenerator.ShowReactionTitle), true);
+            return WithParam(typeof(BasicSceneGenerator.ShowReactionTitle), (bool?)true);
         }
 
         /// <summary>
@@ -927,8 +936,10 @@ namespace NCDK.Depict
         /// <returns>new generator for method chaining</returns>
         public DepictionGenerator WithMappedRxnAlign(bool val)
         {
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.alignMappedReactions = val;
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                alignMappedReactions = val
+            };
             return copy;
         }
 
@@ -940,7 +951,7 @@ namespace NCDK.Depict
         /// <seealso cref="StandardGenerator.AnnotationColor"/>
         public DepictionGenerator WithAnnotationColor(Color color)
         {
-            return WithParam(typeof(StandardGenerator.AnnotationColor), color);
+            return WithParam(typeof(StandardGenerator.AnnotationColor), (Color?)color);
         }
 
         /// <summary>
@@ -951,7 +962,7 @@ namespace NCDK.Depict
         /// <seealso cref="StandardGenerator.AnnotationFontScale"/>
         public DepictionGenerator WithAnnotationScale(double scale)
         {
-            return WithParam(typeof(StandardGenerator.AnnotationFontScale), scale);
+            return WithParam(typeof(StandardGenerator.AnnotationFontScale), (double?)scale);
         }
 
         /// <summary>
@@ -962,7 +973,7 @@ namespace NCDK.Depict
         /// <seealso cref="RendererModel.TitleColor"/>
         public DepictionGenerator WithTitleColor(Color color)
         {
-            return WithParam(typeof(RendererModel.TitleColor), color);
+            return WithParam(typeof(RendererModel.TitleColor), (Color?)color);
         }
 
         /// <summary>
@@ -973,7 +984,7 @@ namespace NCDK.Depict
         /// <seealso cref="RendererModel.TitleFontScale"/>
         public DepictionGenerator WithTitleScale(double scale)
         {
-            return WithParam(typeof(RendererModel.TitleFontScale), scale);
+            return WithParam(typeof(RendererModel.TitleFontScale), (double?)scale);
         }
 
         /// <summary>
@@ -1036,8 +1047,10 @@ namespace NCDK.Depict
         {
             if (w < 0 && h >= 0 || h < 0 && w >= 0)
                 throw new ArgumentException("Width and height must either both be automatic or both specified");
-            DepictionGenerator copy = new DepictionGenerator(this);
-            copy.dimensions = w == AUTOMATIC ? Dimensions.AUTOMATIC : new Dimensions(w, h);
+            DepictionGenerator copy = new DepictionGenerator(this)
+            {
+                dimensions = w == AUTOMATIC ? Dimensions.AUTOMATIC : new Dimensions(w, h)
+            };
             return copy;
         }
 
@@ -1050,7 +1063,7 @@ namespace NCDK.Depict
         /// <seealso cref="BasicSceneGenerator.Margin"/>
         public DepictionGenerator WithMargin(double m)
         {
-            return WithParam(typeof(BasicSceneGenerator.Margin), m);
+            return WithParam(typeof(BasicSceneGenerator.Margin), (double?)m);
         }
 
         /// <summary>
@@ -1063,7 +1076,7 @@ namespace NCDK.Depict
         /// <seealso cref="RendererModel.Padding"/>
         public DepictionGenerator WithPadding(double p)
         {
-            return WithParam(typeof(RendererModel.Padding), p);
+            return WithParam(typeof(RendererModel.Padding), (double?)p);
         }
 
         /// <summary>
@@ -1081,7 +1094,7 @@ namespace NCDK.Depict
         /// <seealso cref="BasicSceneGenerator.ZoomFactor"/>
         public DepictionGenerator WithZoom(double zoom)
         {
-            return WithParam(typeof(BasicSceneGenerator.ZoomFactor), zoom);
+            return WithParam(typeof(BasicSceneGenerator.ZoomFactor), (double?)zoom);
         }
 
         /// <summary>
@@ -1093,7 +1106,7 @@ namespace NCDK.Depict
         /// <seealso cref="BasicSceneGenerator.FitToScreen"/>
         public DepictionGenerator WithFillToFit()
         {
-            return WithParam(typeof(BasicSceneGenerator.FitToScreen), true);
+            return WithParam(typeof(BasicSceneGenerator.FitToScreen), (bool?)true);
         }
 
         /// <summary>

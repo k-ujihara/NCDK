@@ -83,11 +83,14 @@ namespace NCDK.Smiles.SMARTS.Parser
         public object Visit(ASTRingIdentifier node, object data)
         {
             IQueryAtom atom = (IQueryAtom)data;
-            RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder);
-            ringIdAtom.Atom = atom;
+            RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder)
+            {
+                Atom = atom
+            };
             IQueryBond bond;
             if (node.JjtGetNumChildren() == 0)
-            { // implicit bond
+            { 
+                // implicit bond
                 bond = null;
             }
             else
@@ -102,7 +105,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             IQueryAtom atom = (IQueryAtom)node.JjtGetChild(0).JjtAccept(this, data);
             for (int i = 1; i < node.JjtGetNumChildren(); i++)
-            { // if there are ring identifiers
+            {
+                // if there are ring identifiers
                 throw new InvalidOperationException();
             }
             return atom;
@@ -355,13 +359,15 @@ namespace NCDK.Smiles.SMARTS.Parser
                 query.Bonds.Add(bond);
                 bond = null;
             }
-            // first ATOM in expresion
+            // first ATOM in expression
             query.Atoms.Add(atom);
 
             if (BitArrays.GetValue(tetrahedral, query.Atoms.Count - 1))
             {
-                List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(atom));
-                localNeighbors.Add(atom);
+                List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(atom))
+                {
+                    atom
+                };
                 neighbors[atom] = localNeighbors;
             }
 
@@ -390,8 +396,10 @@ namespace NCDK.Smiles.SMARTS.Parser
                     }
                     if (BitArrays.GetValue(tetrahedral, query.Atoms.Count - 1))
                     {
-                        List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(newAtom));
-                        localNeighbors.Add(newAtom);
+                        List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(newAtom))
+                        {
+                            newAtom
+                        };
                         neighbors[newAtom] = localNeighbors;
                     }
 
@@ -421,9 +429,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             object left = node.JjtGetChild(0).JjtAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
-                LogicalOperatorBond bond = new LogicalOperatorBond(builder);
-                bond.Operator = "not";
-                bond.Left = (IQueryBond)left;
+                LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+                {
+                    Operator = "not",
+                    Left = (IQueryBond)left
+                };
                 return bond;
             }
             else
@@ -439,9 +449,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder);
-            bond.Operator = "and";
-            bond.Left = (IQueryBond)left;
+            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            {
+                Operator = "and",
+                Left = (IQueryBond)left
+            };
             IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
@@ -454,9 +466,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder);
-            bond.Operator = "and";
-            bond.Left = (IQueryBond)left;
+            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            {
+                Operator = "and",
+                Left = (IQueryBond)left
+            };
             IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
@@ -469,9 +483,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder);
-            bond.Operator = "or";
-            bond.Left = (IQueryBond)left;
+            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            {
+                Operator = "or",
+                Left = (IQueryBond)left
+            };
             IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
@@ -484,9 +500,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder);
-            bond.Operator = "and";
-            bond.Left = (IQueryBond)left;
+            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            {
+                Operator = "and",
+                Left = (IQueryBond)left
+            };
             IQueryBond right = (IQueryBond)node.JjtGetChild(1).JjtAccept(this, data);
             bond.Right = right;
             return bond;
@@ -536,7 +554,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     stereoBonds.Add(bond);
                     break;
                 default:
-                    Trace.TraceError("Un parsed bond: " + node.ToString());
+                    Trace.TraceError("Unparsed bond: " + node.ToString());
                     break;
             }
             return bond;
@@ -544,9 +562,11 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTRecursiveSmartsExpression node, object data)
         {
-            SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
-            recursiveVisitor.query = new QueryAtomContainer(builder);
-            recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
+            SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder)
+            {
+                query = new QueryAtomContainer(builder),
+                ringAtoms = new RingIdentifierAtom[10]
+            };
             return new RecursiveSmartsAtom((IQueryAtomContainer)node.JjtGetChild(0).JjtAccept(recursiveVisitor, null));
         }
 
@@ -670,9 +690,11 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTChirality node, object data)
         {
-            ChiralityAtom atom = new ChiralityAtom(builder);
-            atom.IsClockwise = node.IsClockwise;
-            atom.IsUnspecified = node.IsUnspecified;
+            ChiralityAtom atom = new ChiralityAtom(builder)
+            {
+                IsClockwise = node.IsClockwise,
+                IsUnspecified = node.IsUnspecified
+            };
             BitArrays.SetValue(tetrahedral, query.Atoms.Count, true);
             return atom;
         }
@@ -757,21 +779,27 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
             else if ("H".Equals(symbol))
             {
-                atom = new HydrogenAtom(builder);
-                atom.Symbol = symbol.ToUpperInvariant();
-                atom.MassNumber = 1;
+                atom = new HydrogenAtom(builder)
+                {
+                    Symbol = symbol.ToUpperInvariant(),
+                    MassNumber = 1
+                };
             }
             else if ("D".Equals(symbol))
             {
-                atom = new HydrogenAtom(builder);
-                atom.Symbol = symbol.ToUpperInvariant();
-                atom.MassNumber = 2;
+                atom = new HydrogenAtom(builder)
+                {
+                    Symbol = symbol.ToUpperInvariant(),
+                    MassNumber = 2
+                };
             }
             else if ("T".Equals(symbol))
             {
-                atom = new HydrogenAtom(builder);
-                atom.Symbol = symbol.ToUpperInvariant();
-                atom.MassNumber = 3;
+                atom = new HydrogenAtom(builder)
+                {
+                    Symbol = symbol.ToUpperInvariant(),
+                    MassNumber = 3
+                };
             }
             else
             {

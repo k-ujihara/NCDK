@@ -30,7 +30,7 @@ namespace NCDK.Renderers.Elements
     {
         static WedgeLineElementTest()
         {
-            IRenderingElement element = new WedgeLineElement(new Point(0, 0), new Point(1, 1), 1.0, WedgeLineElement.TYPE.Dashed, WedgeLineElement.Direction.toFirst, System.Windows.Media.Colors.Orange);
+            IRenderingElement element = new WedgeLineElement(new Point(0, 0), new Point(1, 1), 1.0, WedgeLineElement.Types.Dashed, WedgeLineElement.Direction.toFirst, System.Windows.Media.Colors.Orange);
             SetRenderingElement(element);
         }
 
@@ -38,7 +38,7 @@ namespace NCDK.Renderers.Elements
         public void TestConstructor_LineElement()
         {
             IRenderingElement element = new WedgeLineElement(new LineElement(new Point(0, 0), new Point(1, 1), 1.0, System.Windows.Media.Colors.Red),
-                    WedgeLineElement.TYPE.Dashed, WedgeLineElement.Direction.toFirst, System.Windows.Media.Colors.Orange);
+                    WedgeLineElement.Types.Dashed, WedgeLineElement.Direction.toFirst, System.Windows.Media.Colors.Orange);
             Assert.IsNotNull(element);
         }
     }

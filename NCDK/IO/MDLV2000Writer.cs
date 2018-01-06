@@ -26,7 +26,7 @@ using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -830,17 +830,17 @@ namespace NCDK.IO
 
         private void WriteSgroups(IAtomContainer container, TextWriter writer, IDictionary<IAtom, int> atomidxs)
         {
-            IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
             // going to modify
-            sgroups = new List<SGroup>(sgroups);
+            sgroups = new List<Sgroup>(sgroups);
 
             // remove non-ctab Sgroups 
             {
-                var removes = new List<SGroup>();
-                foreach (var e in sgroups.Where(n => n.Type == SGroupTypes.ExtMulticenter))
+                var removes = new List<Sgroup>();
+                foreach (var e in sgroups.Where(n => n.Type == SgroupTypes.ExtMulticenter))
                     removes.Add(e);
                 foreach (var e in removes)
                     sgroups.Remove(e);
@@ -848,7 +848,7 @@ namespace NCDK.IO
 
             foreach (var wrapSgroups in Wrap(sgroups, 8))
             {
-                // Declare the SGroup type
+                // Declare the Sgroup type
                 writer.Write("M  STY");
                 writer.Write(FormatMDLInt(wrapSgroups.Count, 3));
                 foreach (var sgroup in wrapSgroups)
@@ -864,7 +864,7 @@ namespace NCDK.IO
             // Sgroup output is non-compact for now - but valid
             for (int id = 1; id <= sgroups.Count; id++)
             {
-                SGroup sgroup = sgroups[id - 1];
+                Sgroup sgroup = sgroups[id - 1];
 
                 // Sgroup Atom List
                 foreach (var atoms in Wrap(sgroup.Atoms, 15))
@@ -909,20 +909,20 @@ namespace NCDK.IO
                     writer.Write('\n');
                 }
 
-                ICollection<SGroupKeys> attributeKeys = sgroup.AttributeKeys;
+                ICollection<SgroupKeys> attributeKeys = sgroup.AttributeKeys;
                 // TODO order and aggregate attribute keys
                 foreach (var key in attributeKeys)
                 {
                     switch (key)
                     {
-                        case SGroupKeys.CtabSubScript:
+                        case SgroupKeys.CtabSubScript:
                             writer.Write("M  SMT ");
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SGroupKeys.CtabExpansion:
+                        case SgroupKeys.CtabExpansion:
                             bool expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                             {
@@ -933,8 +933,8 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SGroupKeys.CtabBracket:
-                            IEnumerable<SGroupBracket> brackets = (IEnumerable<SGroupBracket>)sgroup.GetValue(key);
+                        case SgroupKeys.CtabBracket:
+                            IEnumerable<SgroupBracket> brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
                                 writer.Write("M  SDI ");
@@ -947,7 +947,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SGroupKeys.CtabBracketStyle:
+                        case SgroupKeys.CtabBracketStyle:
                             writer.Write("M  SBT");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -956,7 +956,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt((int)sgroup.GetValue(key), 3));
                             writer.Write('\n');
                             break;
-                        case SGroupKeys.CtabConnectivity:
+                        case SgroupKeys.CtabConnectivity:
                             writer.Write("M  SCN");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -965,7 +965,7 @@ namespace NCDK.IO
                             writer.Write(((string)sgroup.GetValue(key)).ToUpperInvariant());
                             writer.Write('\n');
                             break;
-                        case SGroupKeys.CtabSubType:
+                        case SgroupKeys.CtabSubType:
                             writer.Write("M  SST");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -974,7 +974,7 @@ namespace NCDK.IO
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SGroupKeys.CtabParentAtomList:
+                        case SgroupKeys.CtabParentAtomList:
                             IEnumerable<IAtom> parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
                             foreach (var atoms in Wrap(parentAtomList.ToList(), 15))
                             {
@@ -989,7 +989,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SGroupKeys.CtabComponentNumber:
+                        case SgroupKeys.CtabComponentNumber:
                             int compNumber = (int)sgroup.GetValue(key);
                             writer.Write("M  SNC");
                             writer.Write(FormatMDLInt(1, 3));

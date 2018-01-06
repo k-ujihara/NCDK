@@ -25,7 +25,7 @@ using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Listener;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Templates;
 using System;
 using System.Collections.Generic;
@@ -650,7 +650,7 @@ namespace NCDK.IO
         {
             IAtomContainer mol = TestMoleculeFactory.MakeEthylPropylPhenantren();
 
-            SGroup sgroup = new SGroup();
+            Sgroup sgroup = new Sgroup();
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
             mol.SetProperty(CDKPropertyName.CtabSgroups,

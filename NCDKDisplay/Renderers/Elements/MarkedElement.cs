@@ -62,9 +62,9 @@ namespace NCDK.Renderers.Elements
         public string Id { get; private set; }
 
         /// <summary>
-        /// Add a cls to the element.
+        /// Add a <paramref name="cls"/> to the element.
         /// </summary>
-        /// <param name="cls">a cls</param>
+        /// <param name="cls">a class</param>
         private void AggClass(string cls)
         {
             if (cls != null)
@@ -122,7 +122,7 @@ namespace NCDK.Renderers.Elements
         }
 
         /// <summary>
-        /// Markup a molecule with the class 'mol' and optionally the ids/classes
+        /// Markup a molecule with the class <paramref name="mol"/> and optionally the ids/classes
         /// from it's properties.
         /// </summary>
         /// <param name="elem">rendering element</param>

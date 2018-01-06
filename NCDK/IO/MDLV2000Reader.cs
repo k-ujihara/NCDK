@@ -29,7 +29,7 @@ using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Numerics;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
 using System;
@@ -856,12 +856,12 @@ namespace NCDK.IO
             // already had atoms present before reading the file
             int offset = container.Atoms.Count - nAtoms;
 
-            IDictionary<int, SGroup> sgroups = new SortedDictionary<int, SGroup>();
+            IDictionary<int, Sgroup> sgroups = new SortedDictionary<int, Sgroup>();
 
             while ((line = input.ReadLine()) != null)
             {
                 int index, count, lnOffset;
-                SGroup sgroup;
+                Sgroup sgroup;
                 int length = line.Length;
                 PropertyKey key = PropertyKey.Of(line);
 
@@ -1040,11 +1040,11 @@ namespace NCDK.IO
                         if (ReaderMode == ChemObjectReaderModes.Strict && sgroups.ContainsKey(index))
                             HandleError("STY line must appear before any other line that supplies Sgroup information");
 
-                        sgroup = new SGroup();
+                        sgroup = new Sgroup();
                         sgroups[index] = sgroup;
 
-                        SGroupTypes type = SgroupTypeTools.Parse(Strings.Substring(line, lnOffset + 4, 3));
-                        if (type != SGroupTypes.Nil)
+                        SgroupTypes type = SgroupTypeTools.Parse(Strings.Substring(line, lnOffset + 4, 3));
+                        if (type != SgroupTypes.Nil)
                             sgroup.Type = type;
                     }
                 }
@@ -1058,7 +1058,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroup.Type != SGroupTypes.CtabCopolymer)
+                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroup.Type != SgroupTypes.CtabCopolymer)
                             HandleError("SST (Sgroup Subtype) specified for a non co-polymer group");
 
                         string sst = Strings.Substring(line, st + 4, 3);
@@ -1066,7 +1066,7 @@ namespace NCDK.IO
                         if (ReaderMode == ChemObjectReaderModes.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
                             HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
 
-                        sgroup.PutValue(SGroupKeys.CtabSubType, sst);
+                        sgroup.PutValue(SgroupKeys.CtabSubType, sst);
                     }
                 }
                 else if (key == PropertyKey.M_SAL)
@@ -1125,7 +1125,7 @@ namespace NCDK.IO
                         string con = Strings.Substring(line, st + 4, 3).Trim();
                         if (ReaderMode == ChemObjectReaderModes.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
                             HandleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
-                        sgroup.PutValue(SGroupKeys.CtabConnectivity,
+                        sgroup.PutValue(SgroupKeys.CtabConnectivity,
                                         con);
                     }
                 }
@@ -1138,7 +1138,7 @@ namespace NCDK.IO
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
                     count = ReadMolfileInt(line, 10);
                     Trace.Assert(count == 4); // fixed?
-                    sgroup.AddBracket(new SGroupBracket(ReadMDLCoordinate(line, 13),
+                    sgroup.AddBracket(new SgroupBracket(ReadMDLCoordinate(line, 13),
                                                         ReadMDLCoordinate(line, 23),
                                                         ReadMDLCoordinate(line, 33),
                                                         ReadMDLCoordinate(line, 43)));
@@ -1151,7 +1151,7 @@ namespace NCDK.IO
                     // (For multiple groups, m... is the text representation of the multiple group multiplier.
                     //  For abbreviation Sgroups, m... is the text of the abbreviation Sgroup label.)
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
-                    sgroup.PutValue(SGroupKeys.CtabSubScript,
+                    sgroup.PutValue(SgroupKeys.CtabSubScript,
                                     Strings.Substring(line, 11).Trim());
                 }
                 else if (key == PropertyKey.M_SBT)
@@ -1168,7 +1168,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SGroupKeys.CtabBracketStyle,
+                        sgroup.PutValue(SgroupKeys.CtabBracketStyle,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1183,7 +1183,7 @@ namespace NCDK.IO
                         for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                         {
                             sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, st));
-                            sgroup.PutValue(SGroupKeys.CtabExpansion, true);
+                            sgroup.PutValue(SgroupKeys.CtabExpansion, true);
                         }
                     }
                     else if (ReaderMode == ChemObjectReaderModes.Strict)
@@ -1203,10 +1203,10 @@ namespace NCDK.IO
                     //       Sgroup Atom List M SAL entry.
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
                     count = ReadMolfileInt(line, 10);
-                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SGroupKeys.CtabParentAtomList);
+                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
                     if (parentAtomList == null)
                     {
-                        sgroup.PutValue(SGroupKeys.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                        sgroup.PutValue(SgroupKeys.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
                     }
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                     {
@@ -1225,7 +1225,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SGroupKeys.CtabComponentNumber,
+                        sgroup.PutValue(SgroupKeys.CtabComponentNumber,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1253,18 +1253,18 @@ namespace NCDK.IO
             if (sgroups.Any())
             {
                 // load Sgroups into molecule, first we downcast
-                List<SGroup> sgroupOrgList = new List<SGroup>(sgroups.Values);
-                List<SGroup> sgroupCpyList = new List<SGroup>(sgroupOrgList.Count);
+                List<Sgroup> sgroupOrgList = new List<Sgroup>(sgroups.Values);
+                List<Sgroup> sgroupCpyList = new List<Sgroup>(sgroupOrgList.Count);
                 for (int i = 0; i < sgroupOrgList.Count; i++)
                 {
-                    SGroup cpy = sgroupOrgList[i].Downcast<SGroup>();
+                    Sgroup cpy = sgroupOrgList[i].Downcast<Sgroup>();
                     sgroupCpyList.Add(cpy);
                 }
                 // update replaced parents
                 for (int i = 0; i < sgroupOrgList.Count; i++)
                 {
-                    SGroup newSgroup = sgroupCpyList[i];
-                    ICollection<SGroup> oldParents = new HashSet<SGroup>(newSgroup.Parents);
+                    Sgroup newSgroup = sgroupCpyList[i];
+                    ICollection<Sgroup> oldParents = new HashSet<Sgroup>(newSgroup.Parents);
                     newSgroup.RemoveParents(oldParents);
                     foreach (var parent in oldParents)
                     {
@@ -1275,13 +1275,13 @@ namespace NCDK.IO
             }
         }
 
-        private SGroup EnsureSgroup(IDictionary<int, SGroup> map, int idx)
+        private Sgroup EnsureSgroup(IDictionary<int, Sgroup> map, int idx)
         {
-            if (!map.TryGetValue(idx, out SGroup sgroup))
+            if (!map.TryGetValue(idx, out Sgroup sgroup))
             {
                 if (ReaderMode == ChemObjectReaderModes.Strict)
-                    HandleError($"{nameof(SGroup)} must first be defined by a STY property");
-                map[idx] = (sgroup = new SGroup());
+                    HandleError($"{nameof(Sgroup)} must first be defined by a STY property");
+                map[idx] = (sgroup = new Sgroup());
             }
             return sgroup;
         }

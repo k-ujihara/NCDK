@@ -21,17 +21,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Mathematics;
-using System;
-using System.Collections.Generic;
 using NCDK.Numerics;
 
-namespace NCDK.SGroups
+namespace NCDK.Sgroups
 {
     /// <summary>
     /// Representation of an Sgroup bracket.
     /// </summary>
-    public class SGroupBracket
+    public class SgroupBracket
     {
         private Vector2 p1, p2;
 
@@ -42,7 +39,7 @@ namespace NCDK.SGroups
         /// <param name="y1">first y coord</param>
         /// <param name="x2">second x coord</param>
         /// <param name="y2">second y coord</param>
-        public SGroupBracket(double x1, double y1, double x2, double y2)
+        public SgroupBracket(double x1, double y1, double x2, double y2)
         {
             this.p1 = new Vector2(x1, y1);
             this.p2 = new Vector2(x2, y2);

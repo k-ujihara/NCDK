@@ -32,7 +32,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// If the bond is dashed ,wedged, or "up_or_down", i.e., not defined.
         /// </summary>
-        public enum TYPE
+        public enum Types
         {
             Dashed, Wedged, Indiff
         }
@@ -40,7 +40,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// The type of the bond (dashed, wedged, not defined).
         /// </summary>
-        public readonly TYPE type;
+        public readonly Types type;
 
         /// <summary>
         /// The direction indicates which way the wedge gets thicker.
@@ -66,7 +66,7 @@ namespace NCDK.Renderers.Elements
         /// <param name="type">the bond is dashed ,wedged, or "up_or_down", i.e., not defined.</param>
         /// <param name="direction">the direction of the thickness</param>
         /// <param name="color">the color of the wedge</param>
-        public WedgeLineElement(Point firstPoint, Point secondPoint, double width, TYPE type, Direction direction, Color color)
+        public WedgeLineElement(Point firstPoint, Point secondPoint, double width, Types type, Direction direction, Color color)
             : base(firstPoint, secondPoint, width, color)
         {
             this.type = type;
@@ -80,7 +80,7 @@ namespace NCDK.Renderers.Elements
         /// <param name="type">if the bond is dashed ,wedged, or "up_or_down", i.e., not defined</param>
         /// <param name="direction">the direction of the thickness</param>
         /// <param name="color">the color of the wedge</param>
-        public WedgeLineElement(LineElement element, TYPE type, Direction direction, Color color)
+        public WedgeLineElement(LineElement element, Types type, Direction direction, Color color)
             : this(direction == Direction.toFirst ? element.secondPoint : element.firstPoint,
                 direction == Direction.toFirst ? element.firstPoint : element.secondPoint,
                 element.width, type, direction, color)

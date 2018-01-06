@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.IO;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections;

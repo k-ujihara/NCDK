@@ -41,6 +41,9 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>NCDK.MolViewer.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -64,9 +67,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Preferences.xaml.cs">
-      <DependentUpon>Preferences.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Renderers\AtomContainerRenderer.cs" />
     <Compile Include="Renderers\BoundsCalculator.cs" />
     <Compile Include="Renderers\IRenderer.cs" />
@@ -74,10 +74,6 @@
     <Compile Include="Renderers\RenderingParameters.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MolWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Preferences.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

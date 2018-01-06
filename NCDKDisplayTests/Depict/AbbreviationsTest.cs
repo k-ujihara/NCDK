@@ -22,7 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Smiles;
 
 namespace NCDK.Depict
@@ -160,11 +160,11 @@ namespace NCDK.Depict
             Abbreviations factory = new Abbreviations();
             factory.Add("*CCC Bu");
             IAtomContainer mol = Smi("c1ccccc1CCC");
-            SGroup sgroup = new SGroup();
+            Sgroup sgroup = new Sgroup();
             sgroup.Atoms.Add(mol.Atoms[6]);
             sgroup.Atoms.Add(mol.Atoms[7]);
             sgroup.Atoms.Add(mol.Atoms[8]);
-            sgroup.Type = SGroupTypes.CtabAbbreviation;
+            sgroup.Type = SgroupTypes.CtabAbbreviation;
             sgroup.Subscript = "n-Bu";
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
             var sgroups = factory.Generate(mol);

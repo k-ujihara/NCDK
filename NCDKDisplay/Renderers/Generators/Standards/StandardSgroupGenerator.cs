@@ -26,7 +26,7 @@ using NCDK.Common.Mathematics;
 using NCDK.Geometries;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -84,16 +84,16 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="symbolRemap">a map that will hold symbol remapping</param>
         public static void PrepareDisplayShortcuts(IAtomContainer container, IDictionary<IAtom, string> symbolRemap)
         {
-            var sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null || !sgroups.Any())
                 return;
 
             // select abbreviations that should be contracted
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type == SGroupTypes.CtabAbbreviation)
+                if (sgroup.Type == SgroupTypes.CtabAbbreviation)
                 {
-                    bool? expansion = (bool?)sgroup.GetValue(SGroupKeys.CtabExpansion);
+                    bool? expansion = (bool?)sgroup.GetValue(SgroupKeys.CtabExpansion);
                     // abbreviation is displayed as expanded
                     if (expansion ?? false)
                         continue;
@@ -105,11 +105,11 @@ namespace NCDK.Renderers.Generators.Standards
                     if (CheckAbbreviationHighlight(container, sgroup))
                         ContractAbbreviation(container, symbolRemap, sgroup);
                 }
-                else if (sgroup.Type == SGroupTypes.CtabMultipleGroup)
+                else if (sgroup.Type == SgroupTypes.CtabMultipleGroup)
                 {
                     HideMultipleParts(container, sgroup);
                 }
-                else if (sgroup.Type == SGroupTypes.ExtMulticenter)
+                else if (sgroup.Type == SgroupTypes.ExtMulticenter)
                 {
                     var atoms = sgroup.Atoms;
                     // should only be one bond
@@ -138,9 +138,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="container">molecule</param>
         /// <param name="sgroup">abbreviation Sgroup</param>
         /// <returns>the abbreviation can be contracted</returns>
-        private static bool CheckAbbreviationHighlight(IAtomContainer container, SGroup sgroup)
+        private static bool CheckAbbreviationHighlight(IAtomContainer container, Sgroup sgroup)
         {
-            Debug.Assert(sgroup.Type == SGroupTypes.CtabAbbreviation);
+            Debug.Assert(sgroup.Type == SgroupTypes.CtabAbbreviation);
 
             var sgroupAtoms = sgroup.Atoms;
             int atomHighlight = 0;
@@ -199,11 +199,11 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="container">molecule</param>
         /// <param name="sgroup">multiple group display shortcut</param>
-        private static void HideMultipleParts(IAtomContainer container, SGroup sgroup)
+        private static void HideMultipleParts(IAtomContainer container, Sgroup sgroup)
         {
             var crossing = sgroup.Bonds;
             var atoms = sgroup.Atoms;
-            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SGroupKeys.CtabParentAtomList);
+            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
 
             foreach (var bond in container.Bonds)
             {
@@ -230,7 +230,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="container">molecule</param>
         /// <param name="sgroup">abbreviation group display shortcut</param>
-        private static void ContractAbbreviation(IAtomContainer container, IDictionary<IAtom, string> symbolRemap, SGroup sgroup)
+        private static void ContractAbbreviation(IAtomContainer container, IDictionary<IAtom, string> symbolRemap, Sgroup sgroup)
         {
             var crossing = sgroup.Bonds;
             var atoms = sgroup.Atoms;
@@ -271,7 +271,7 @@ namespace NCDK.Renderers.Generators.Standards
         IRenderingElement GenerateSgroups(IAtomContainer container, AtomSymbol[] symbols)
         {
             ElementGroup result = new ElementGroup();
-            var sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
 
             if (sgroups == null || !sgroups.Any())
                 return result;
@@ -287,28 +287,28 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 switch (sgroup.Type)
                 {
-                    case SGroupTypes.CtabAbbreviation:
+                    case SgroupTypes.CtabAbbreviation:
                         result.Add(GenerateAbbreviationSgroup(container, sgroup));
                         break;
-                    case SGroupTypes.CtabMultipleGroup:
+                    case SgroupTypes.CtabMultipleGroup:
                         result.Add(GenerateMultipleSgroup(sgroup));
                         break;
-                    case SGroupTypes.CtabAnyPolymer:
-                    case SGroupTypes.CtabMonomer:
-                    case SGroupTypes.CtabCrossLink:
-                    case SGroupTypes.CtabCopolymer:
-                    case SGroupTypes.CtabStructureRepeatUnit:
-                    case SGroupTypes.CtabMer:
-                    case SGroupTypes.CtabGraft:
-                    case SGroupTypes.CtabModified:
+                    case SgroupTypes.CtabAnyPolymer:
+                    case SgroupTypes.CtabMonomer:
+                    case SgroupTypes.CtabCrossLink:
+                    case SgroupTypes.CtabCopolymer:
+                    case SgroupTypes.CtabStructureRepeatUnit:
+                    case SgroupTypes.CtabMer:
+                    case SgroupTypes.CtabGraft:
+                    case SgroupTypes.CtabModified:
                         result.Add(GeneratePolymerSgroup(sgroup, symbolMap));
                         break;
-                    case SGroupTypes.CtabComponent:
-                    case SGroupTypes.CtabMixture:
-                    case SGroupTypes.CtabFormulation:
+                    case SgroupTypes.CtabComponent:
+                    case SgroupTypes.CtabMixture:
+                    case SgroupTypes.CtabFormulation:
                         result.Add(GenerateMixtureSgroup(sgroup));
                         break;
-                    case SGroupTypes.CtabGeneric:
+                    case SgroupTypes.CtabGeneric:
                         // not strictly a polymer but okay to draw as one
                         result.Add(GeneratePolymerSgroup(sgroup, null));
                         break;
@@ -318,16 +318,16 @@ namespace NCDK.Renderers.Generators.Standards
             return result;
         }
 
-        private IRenderingElement GenerateMultipleSgroup(SGroup sgroup)
+        private IRenderingElement GenerateMultipleSgroup(Sgroup sgroup)
         {
             // just draw the brackets - multiplied group parts have already been hidden in prep phase
-            var brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
                 return GenerateSgroupBrackets(sgroup,
                                               brackets,
                                               Dictionaries.Empty<IAtom, AtomSymbol>(),
-                                              (string)sgroup.GetValue(SGroupKeys.CtabSubScript),
+                                              (string)sgroup.GetValue(SgroupKeys.CtabSubScript),
                                               null);
             }
             else
@@ -336,7 +336,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
-        private IRenderingElement GenerateAbbreviationSgroup(IAtomContainer mol, SGroup sgroup)
+        private IRenderingElement GenerateAbbreviationSgroup(IAtomContainer mol, Sgroup sgroup)
         {
             string label = sgroup.Subscript;
             // already handled by symbol remapping
@@ -393,23 +393,23 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="sgroup">the Sgroup</param>
         /// <returns>the rendered elements (empty if no brackets defined)</returns>
-        private IRenderingElement GeneratePolymerSgroup(SGroup sgroup, IDictionary<IAtom, AtomSymbol> symbolMap)
+        private IRenderingElement GeneratePolymerSgroup(Sgroup sgroup, IDictionary<IAtom, AtomSymbol> symbolMap)
         {
             // draw the brackets
-            var brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
 
-                SGroupTypes type = sgroup.Type;
+                SgroupTypes type = sgroup.Type;
 
-                var subscript = (string)sgroup.GetValue(SGroupKeys.CtabSubScript);
-                var connectivity = (string)sgroup.GetValue(SGroupKeys.CtabConnectivity);
+                var subscript = (string)sgroup.GetValue(SgroupKeys.CtabSubScript);
+                var connectivity = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
 
                 switch (type)
                 {
-                    case SGroupTypes.CtabCopolymer:
+                    case SgroupTypes.CtabCopolymer:
                         subscript = "co";
-                        string subtype = (string)sgroup.GetValue(SGroupKeys.CtabSubType);
+                        string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
                         if ("RAN".Equals(subtype))
                             subscript = "ran";
                         else if ("BLK".Equals(subtype))
@@ -417,25 +417,25 @@ namespace NCDK.Renderers.Generators.Standards
                         else if ("ALT".Equals(subtype))
                             subscript = "alt";
                         break;
-                    case SGroupTypes.CtabCrossLink:
+                    case SgroupTypes.CtabCrossLink:
                         subscript = "xl";
                         break;
-                    case SGroupTypes.CtabAnyPolymer:
+                    case SgroupTypes.CtabAnyPolymer:
                         subscript = "any";
                         break;
-                    case SGroupTypes.CtabGraft:
+                    case SgroupTypes.CtabGraft:
                         subscript = "grf";
                         break;
-                    case SGroupTypes.CtabMer:
+                    case SgroupTypes.CtabMer:
                         subscript = "mer";
                         break;
-                    case SGroupTypes.CtabMonomer:
+                    case SgroupTypes.CtabMonomer:
                         subscript = "mon";
                         break;
-                    case SGroupTypes.CtabModified:
+                    case SgroupTypes.CtabModified:
                         subscript = "mod";
                         break;
-                    case SGroupTypes.CtabStructureRepeatUnit:
+                    case SgroupTypes.CtabStructureRepeatUnit:
                         if (subscript == null)
                             subscript = "n";
                         if (connectivity == null)
@@ -461,29 +461,29 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
-        private IRenderingElement GenerateMixtureSgroup(SGroup sgroup)
+        private IRenderingElement GenerateMixtureSgroup(Sgroup sgroup)
         {
             // draw the brackets
             // TODO - mixtures normally have attached Sgroup data
             // TODO - e.g. COMPONENT_FRACTION, ACTIVITY_TYPE, WEIGHT_PERCENT
-            var brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
-                SGroupTypes type = sgroup.Type;
+                SgroupTypes type = sgroup.Type;
                 string subscript = "?";
                 switch (type)
                 {
-                    case SGroupTypes.CtabComponent:
-                        var compNum = (int?)sgroup.GetValue(SGroupKeys.CtabComponentNumber);
+                    case SgroupTypes.CtabComponent:
+                        var compNum = (int?)sgroup.GetValue(SgroupKeys.CtabComponentNumber);
                         if (compNum != null)
                             subscript = "c" + compNum.ToString();
                         else
                             subscript = "c";
                         break;
-                    case SGroupTypes.CtabMixture:
+                    case SgroupTypes.CtabMixture:
                         subscript = "mix";
                         break;
-                    case SGroupTypes.CtabFormulation:
+                    case SgroupTypes.CtabFormulation:
                         subscript = "f";
                         break;
                 }
@@ -517,14 +517,14 @@ namespace NCDK.Renderers.Generators.Standards
             return true;
         }
 
-        private IRenderingElement GenerateSgroupBrackets(SGroup sgroup,
-                                                         IList<SGroupBracket> brackets,
+        private IRenderingElement GenerateSgroupBrackets(Sgroup sgroup,
+                                                         IList<SgroupBracket> brackets,
                                                          IDictionary<IAtom, AtomSymbol> symbols,
                                                          string subscriptSuffix,
                                                          string superscriptSuffix)
         {
             // brackets are square by default (style:0)
-            var style = (int?)sgroup.GetValue(SGroupKeys.CtabBracketStyle);
+            var style = (int?)sgroup.GetValue(SgroupKeys.CtabBracketStyle);
             bool round = style != null && style == 1;
             ElementGroup result = new ElementGroup();
 
@@ -537,7 +537,7 @@ namespace NCDK.Renderers.Generators.Standards
             // to more than two brackets
 
             // first we need to pair the brackets with the bonds
-            var pairs = crossingBonds.Count == brackets.Count ? BracketBondPairs(brackets, crossingBonds) : Dictionaries.Empty<SGroupBracket, IBond>();
+            var pairs = crossingBonds.Count == brackets.Count ? BracketBondPairs(brackets, crossingBonds) : Dictionaries.Empty<SgroupBracket, IBond>();
 
             // override bracket layout around single atoms to bring them in closer
             if (atoms.Count == 1)
@@ -629,7 +629,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else if (pairs.Any())
             {
-                SGroupBracket suffixBracket = null;
+                SgroupBracket suffixBracket = null;
                 Vector2? suffixBracketPerp = null;
 
                 foreach (var e in pairs)
@@ -886,9 +886,9 @@ namespace NCDK.Renderers.Generators.Standards
             return GeneralPath.OutlineOf(path, stroke, foreground);
         }
 
-        private static IDictionary<SGroupBracket, IBond> BracketBondPairs(ICollection<SGroupBracket> brackets, ICollection<IBond> bonds)
+        private static IDictionary<SgroupBracket, IBond> BracketBondPairs(ICollection<SgroupBracket> brackets, ICollection<IBond> bonds)
         {
-            var pairs = new Dictionary<SGroupBracket, IBond>();
+            var pairs = new Dictionary<SgroupBracket, IBond>();
 
             foreach (var bracket in brackets)
             {
@@ -905,12 +905,12 @@ namespace NCDK.Renderers.Generators.Standards
                     {
                         // more than one... not good
                         if (crossingBond != null)
-                            return new Dictionary<SGroupBracket, IBond>();
+                            return new Dictionary<SgroupBracket, IBond>();
                         crossingBond = bond;
                     }
                 }
                 if (crossingBond == null)
-                    return new Dictionary<SGroupBracket, IBond>();
+                    return new Dictionary<SgroupBracket, IBond>();
                 pairs[bracket] = crossingBond;
             }
 

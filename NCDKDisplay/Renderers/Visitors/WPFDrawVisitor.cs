@@ -128,8 +128,7 @@ namespace NCDK.Renderers.Visitors
 
             int key = (int)(width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
 
-            Pen pen;
-            if (strokeCache && StrokeMap.TryGetValue(key, out pen))
+            if (strokeCache && StrokeMap.TryGetValue(key, out Pen pen))
             {
                 // do nothing
             }
@@ -222,9 +221,8 @@ namespace NCDK.Renderers.Visitors
 
             var brush = new SolidColorBrush(wedge.color);
 
-            if (wedge.type == WedgeLineElement.TYPE.Dashed)
+            if (wedge.type == WedgeLineElement.Types.Dashed)
             {
-                #region this.DrawDashedWedge(vertexA, vertexB, vertexC);
                 var pen = new Pen(brush, 1);
 
                 // calculate the distances between lines
@@ -251,30 +249,30 @@ namespace NCDK.Renderers.Visitors
                         displacement += gapFactor;
                     }
                 }
-                #endregion
             }
-            else if (wedge.type == WedgeLineElement.TYPE.Wedged)
+            else if (wedge.type == WedgeLineElement.Types.Wedged)
             {
-                #region this.DrawFilledWedge(brush, vertexA, vertexB, vertexC);
                 var pointB = this.TransformPoint(ToPoint(vertexB));
                 var pointC = this.TransformPoint(ToPoint(vertexC));
                 var pointA = this.TransformPoint(ToPoint(vertexA));
 
-                var figure = new PathFigure();
-                figure.StartPoint = pointB;
+                var figure = new PathFigure
+                {
+                    StartPoint = pointB
+                };
                 figure.Segments.Add(new LineSegment(pointC, false));
                 figure.Segments.Add(new LineSegment(pointA, false));
                 var g = new PathGeometry(new[] { figure });
                 this.graphics.DrawGeometry(brush, null, g);
-                #endregion
             }
-            else if (wedge.type == WedgeLineElement.TYPE.Indiff)
+            else if (wedge.type == WedgeLineElement.Types.Indiff)
             {
-                #region  this.DrawIndiffWedge(vertexA, vertexB, vertexC);
-                var pen = new Pen(brush, 1);
-                pen.StartLineCap = PenLineCap.Round;
-                pen.LineJoin = PenLineJoin.Round;
-                pen.EndLineCap = PenLineCap.Round;
+                var pen = new Pen(brush, 1)
+                {
+                    StartLineCap = PenLineCap.Round,
+                    LineJoin = PenLineJoin.Round,
+                    EndLineCap = PenLineCap.Round
+                };
 
                 // calculate the distances between lines
                 double distance = Vector2.Distance(vertexB, vertexA);
@@ -301,7 +299,7 @@ namespace NCDK.Renderers.Visitors
                     }
                     flip = !flip;
                     var p2T = this.TransformPoint(ToPoint(point2));
-                this.graphics.DrawLine(pen, p1T, p2T);
+                    this.graphics.DrawLine(pen, p1T, p2T);
                     if (distance * (displacement + gapFactor) >= distance)
                     {
                         break;
@@ -312,7 +310,6 @@ namespace NCDK.Renderers.Visitors
                         displacement += gapFactor;
                     }
                 }
-                #endregion
             }
         }
 
@@ -426,7 +423,6 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(RectangleElement rectangle)
         {
-            //this.graphics.SetColor(rectangle.color);
             var width = ScaleX(rectangle.width);
             var height = ScaleY(rectangle.height);
             var p = Transform(rectangle.coord);
@@ -456,8 +452,10 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(GeneralPath path)
         {
-            PathGeometry g = new PathGeometry();
-            g.FillRule = path.winding;
+            PathGeometry g = new PathGeometry
+            {
+                FillRule = path.winding
+            };
 
             PathFigure pf = null;
             foreach (var element in path.elements)
@@ -468,8 +466,10 @@ namespace NCDK.Renderers.Visitors
                     case PathType.MoveTo:
                         if (pf != null)
                             g.Figures.Add(pf);
-                        pf = new PathFigure();
-                        pf.StartPoint = Transform(pp[0]);
+                        pf = new PathFigure
+                        {
+                            StartPoint = Transform(pp[0])
+                        };
                         break;
                     case PathType.LineTo:
                         var ls = new LineSegment(Transform(pp[0]), true);
@@ -490,13 +490,25 @@ namespace NCDK.Renderers.Visitors
                         break;
                 }
             }
+            if (pf != null)
+            {
+                g.Figures.Add(pf);
+                pf = null;
+            }
 
-            this.graphics.DrawGeometry(
-                path.fill ? new SolidColorBrush(path.color) : null,
-                new Pen(new SolidColorBrush(path.color), path.stroke),
-                g);
+            if (path.fill)
+            {
+                this.graphics.DrawGeometry(
+                    new SolidColorBrush(path.color),
+                    null,
+                    g);
+            }
+            else
+            {
+                var pen = new Pen(new SolidColorBrush(path.color), path.stroke * transform.Value.M11);
+                this.graphics.DrawGeometry(null, pen, g);
+            }
         }
-
 
         private void Visit(ArrowElement line)
         {

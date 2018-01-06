@@ -147,8 +147,7 @@ namespace NCDK.IO
         {
             if (format != null)
             {
-                Type clazz = null;
-                if (formatToTypeMap.TryGetValue(format, out clazz))
+                if (formatToTypeMap.TryGetValue(format, out Type clazz))
                     return clazz;
 
                 string readerClassName = format.ReaderClassName;

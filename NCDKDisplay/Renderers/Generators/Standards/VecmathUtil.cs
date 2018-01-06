@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Mathematics;
 using NCDK.Numerics;
 using System;
@@ -46,14 +47,14 @@ namespace NCDK.Renderers.Generators.Standards
         public static Point ToPoint(Vector2 point) => new Point(point.X, point.Y);
 
         /// <summary>
-        /// Convert a WPF point point to a <see cref="NCDK.Numerics.Vector2"/>.
+        /// Convert a WPF point to a <see cref="NCDK.Numerics.Vector2"/>.
         /// </summary>
         /// <param name="vector">WPF point</param>
         /// <returns><see cref="NCDK.Numerics.Vector2"/> point</returns>
         public static Vector2 ToVector(Point vector) => new Vector2(vector.X, vector.Y);
 
         /// <summary>
-        /// Convert a WPF point point to a <see cref="NCDK.Numerics.Vector2"/>.
+        /// Convert a WPF point to a <see cref="NCDK.Numerics.Vector2"/>.
         /// </summary>
         /// <param name="vector">WPF point</param>
         /// <returns><see cref="NCDK.Numerics.Vector2"/> point</returns>

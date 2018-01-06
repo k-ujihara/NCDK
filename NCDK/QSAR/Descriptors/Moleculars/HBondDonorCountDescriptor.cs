@@ -118,7 +118,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             //IAtom[] atoms = ac.GetAtoms();
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
-        atomloop:
+        
+            //atomloop:
             for (int atomIndex = 0; atomIndex < ac.Atoms.Count; atomIndex++)
             {
                 IAtom atom = (IAtom)ac.Atoms[atomIndex];

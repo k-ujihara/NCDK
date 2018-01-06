@@ -32,7 +32,7 @@ namespace NCDK.Renderers.Elements
         public readonly int atomMassNumber;
 
         /// <summary>
-        /// Constructs a new {@link TextElement} displaying the atom's mass number information.
+        /// Constructs a new <see cref="TextElement"/> displaying the atom's mass number information.
         /// </summary>
         /// <param name="coord">screen coordinate of where the text is displayed</param>
         /// <param name="symbol">the element symbol of the atom</param>

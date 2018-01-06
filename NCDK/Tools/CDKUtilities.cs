@@ -235,7 +235,7 @@ namespace NCDK.Tools
             {
                 m.Atoms[i].IsAromatic = false;
 
-                jloop: for (int j = 0; j <= rs.Count - 1; j++)
+                for (int j = 0; j <= rs.Count - 1; j++)
                 {
                     //Debug.WriteLine(i+"\t"+j);
                     IRing r = (IRing)rs[j];

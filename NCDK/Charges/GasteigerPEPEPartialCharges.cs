@@ -108,11 +108,15 @@ namespace NCDK.Charges
             StructureResonanceGenerator gR1 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
             var reactionList1 = gR1.Reactions;
             var paramList1 = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList1.Add(param);
-            HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction();
-            reactionHCPB.ParameterList = paramList1;
+            HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction
+            {
+                ParameterList = paramList1
+            };
             reactionList1.Add(new SharingAnionReaction());
             foreach (var reaction in reactionList1)
             {
@@ -120,12 +124,16 @@ namespace NCDK.Charges
             }
             gR1.Reactions = reactionList1;
 
-            StructureResonanceGenerator gR2 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
-            gR2.MaximalStructures = MaxResonanceStructures;
+            StructureResonanceGenerator gR2 = new StructureResonanceGenerator
+            {
+                MaximalStructures = MaxResonanceStructures
+            }; // according G. should be integrated the breaking bonding
             var reactionList2 = gR2.Reactions;
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction paramA = new SetReactionCenter();
-            paramA.IsSetParameter = true;
+            IParameterReaction paramA = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(paramA);
             reactionList2.Add(new HeterolyticCleavagePBReaction());
             reactionList2.Add(new SharingAnionReaction());
@@ -462,7 +470,7 @@ namespace NCDK.Charges
             bool found = false; /* control obtained containers */
             var setOfReactants = ac.Builder.NewAtomContainerSet();
             /* search of reactive center. */
-            output: for (int i = 0; i < ac.Bonds.Count; i++)
+            for (int i = 0; i < ac.Bonds.Count; i++)
             {
                 if (ac.Bonds[i].Order != BondOrder.Single)
                 {
@@ -496,8 +504,10 @@ namespace NCDK.Charges
             setOfReactants.Add(ac);
 
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
@@ -514,8 +524,10 @@ namespace NCDK.Charges
                 }
                 setOfM2.Add(mol);
                 List<IParameterReaction> paramList2 = new List<IParameterReaction>();
-                IParameterReaction param2 = new SetReactionCenter();
-                param2.IsSetParameter = false;
+                IParameterReaction param2 = new SetReactionCenter
+                {
+                    IsSetParameter = false
+                };
                 paramList2.Add(param);
                 type.ParameterList = paramList2;
                 IReactionSet setOfReactions2 = type.Initiate(setOfM2, null);

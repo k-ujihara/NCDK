@@ -256,11 +256,12 @@ namespace NCDK.Renderers.Generators.Standards
             // Annotations are added to the front layer.
             frontLayer.Add(annotations);
 
-            ElementGroup group = new ElementGroup();
-
-            group.Add(backLayer);
-            group.Add(middleLayer);
-            group.Add(frontLayer);
+            ElementGroup group = new ElementGroup
+            {
+                backLayer,
+                middleLayer,
+                frontLayer
+            };
 
             return MarkedElement.MarkupMol(group, container);
         }
@@ -330,7 +331,7 @@ namespace NCDK.Renderers.Generators.Standards
                 var visNeighbors = new List<IAtom>();
 
                 // if a symbol is remapped we only want to consider
-                // visible neighbors in the alignment calc, otherwise
+                // visible neighbors in the alignment calculation, otherwise
                 // we include all neighbors
                 foreach (var neighbor in neighbors)
                 {
@@ -338,7 +339,7 @@ namespace NCDK.Renderers.Generators.Standards
                         visNeighbors.Add(neighbor);
                 }
 
-   var auxVectors = new List<Vector2>(1);
+                var auxVectors = new List<Vector2>(1);
 
                 // only generate if the symbol is visible
                 if (visibility.Visible(atom, bonds, parameters) || remapped)
@@ -375,10 +376,9 @@ namespace NCDK.Renderers.Generators.Standards
 
                         var p = atom.Point2D;
 
-                        if (p == null) throw new ArgumentException("Atom did not have 2D coordinates");
+                        if (p == null)
+                            throw new ArgumentException("Atom did not have 2D coordinates");
 
-                        // center and scale the symbol, y-axis scale is inverted because CDK y-axis
-                        // is inverse of Java 2D
                         symbols[i] = symbols[i].Resize(1 / scale, 1 / -scale).Center(p.Value.X, p.Value.Y);
                     }
                 }
@@ -391,9 +391,8 @@ namespace NCDK.Renderers.Generators.Standards
                     // depending on whether we are drawing next to an atom symbol or not.
                      double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
 
-var vector = NewAtomAnnotationVector(atom, bonds, auxVectors);
-var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
-                                                                                                        + strokeAdjust, annScale, font, emSize, symbols[i]);
+                    var vector = NewAtomAnnotationVector(atom, bonds, auxVectors);
+                    var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist + strokeAdjust, annScale, font, emSize, symbols[i]);
 
                     // the AtomSymbol may migrate during bond generation and therefore the annotation
                     // needs to be tied to the symbol. If no symbol is available the annotation is
@@ -587,9 +586,8 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         /// <returns>recolored rendering element</returns>
         private static IRenderingElement Recolor(IRenderingElement element, Color color)
         {
-            if (element is ElementGroup)
+            if (element is ElementGroup orgGroup)
             {
-                ElementGroup orgGroup = (ElementGroup)element;
                 ElementGroup newGroup = new ElementGroup();
                 foreach (var child in orgGroup)
                 {
@@ -597,9 +595,8 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
                 }
                 return newGroup;
             }
-            else if (element is LineElement)
+            else if (element is LineElement lineElement)
             {
-                LineElement lineElement = (LineElement)element;
                 return new LineElement(lineElement.firstPoint, lineElement.secondPoint, lineElement.width, color);
             }
             else if (element is GeneralPath)
@@ -620,34 +617,29 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         /// <returns>generated outer glow</returns>
         internal static IRenderingElement OuterGlow(IRenderingElement element, Color color, double glowWidth, double stroke)
         {
-            if (element is ElementGroup)
+            switch (element)
             {
-                ElementGroup orgGroup = (ElementGroup)element;
-                ElementGroup newGroup = new ElementGroup();
-                foreach (var child in orgGroup)
-                {
-                    newGroup.Add(OuterGlow(child, color, glowWidth, stroke));
-                }
-                return newGroup;
+                case ElementGroup orgGroup:
+                    ElementGroup newGroup = new ElementGroup();
+                    foreach (var child in orgGroup)
+                    {
+                        newGroup.Add(OuterGlow(child, color, glowWidth, stroke));
+                    }
+                    return newGroup;
+                case LineElement lineElement:
+                    return new LineElement(lineElement.firstPoint, lineElement.secondPoint, stroke + (2 * (glowWidth * stroke)), color);
+                case GeneralPath org:
+                    if (org.fill)
+                    {
+                        return org.Outline(2 * (glowWidth * stroke)).Recolor(color);
+                    }
+                    else
+                    {
+                        return org.Outline(stroke + (2 * (glowWidth * stroke))).Recolor(color);
+                    }
+                default:
+                    throw new ArgumentException($"Cannot generate glow for rendering element,{element.GetType()}");
             }
-            else if (element is LineElement)
-            {
-                LineElement lineElement = (LineElement)element;
-                return new LineElement(lineElement.firstPoint, lineElement.secondPoint, stroke + (2 * (glowWidth * stroke)), color);
-            }
-            else if (element is GeneralPath)
-            {
-                GeneralPath org = (GeneralPath)element;
-                if (org.fill)
-                {
-                    return org.Outline(2 * (glowWidth * stroke)).Recolor(color);
-                }
-                else
-                {
-                    return org.Outline(stroke + (2 * (glowWidth * stroke))).Recolor(color);
-                }
-            }
-            throw new ArgumentException($"Cannot generate glow for rendering element,{element.GetType()}");
         }
 
         /// <summary>
@@ -815,7 +807,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         }
 
         /// <summary>
-        /// Hide the specified chemobj, if an atom still use the bounds of its
+        /// Hide the specified <paramref name="chemobj"/>, if an atom still use the bounds of its
         /// symbol.
         /// </summary>
         /// <param name="chemobj">a chem obj (atom or bond) to hide</param>
@@ -825,7 +817,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         }
 
         /// <summary>
-        /// Hide the specified chemobj and don't use the bounds of its symbol.
+        /// Hide the specified <paramref name="chemobj"/> and don't use the bounds of its symbol.
         /// </summary>
         /// <param name="chemobj">a chem obj (atom or bond) to hide</param>
         internal static void HideFully(IChemObject chemobj)
@@ -834,7 +826,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         }
 
         /// <summary>
-        /// Unhide the specified chemobj.
+        /// Unhide the specified <paramref name="chemobj"/>.
         /// </summary>
         /// <param name="chemobj">a chem obj (atom or bond) to unhide</param>
         internal static void Unhide(IChemObject chemobj)
@@ -854,9 +846,9 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         }
 
         /// <summary>
-        /// Defines which atoms have their symbol displayed. The default option is {@link
-        /// SymbolVisibility#IUPACRecommendationsWithoutTerminalCarbon} wrapped with {@link
-        /// SelectionVisibility#Disconnected(SymbolVisibility)}.
+        /// Defines which atoms have their symbol displayed. The default option is 
+        /// <see cref="SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon"/> wrapped with 
+        /// <see cref="SelectionVisibility.Disconnected(SymbolVisibility)"/>.
         /// </summary>
         public sealed class Visibility : AbstractGeneratorParameter<SymbolVisibility>
         {
@@ -876,7 +868,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
 
         /// <summary>
         /// Defines the ratio of the separation between lines in double bonds as a percentage of length
-        /// ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18).
+        /// (<see cref="BasicSceneGenerator.bondLength"/>). The default value is 18% (0.18).
         /// </summary>
         public sealed class BondSeparation : AbstractGeneratorParameter<double?>
         {
@@ -905,7 +897,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
 
         /// <summary>
         /// The preferred spacing between lines in hashed bonds. The number of hashed sections displayed
-        /// is then {@link BasicSceneGenerator.BondLength} / spacing. The default value is 5.
+        /// is then <see cref="BasicSceneGenerator.BondLength"/> / spacing. The default value is 5.
         /// </summary>
         public sealed class HashSpacing : AbstractGeneratorParameter<double?>
         {
@@ -962,7 +954,7 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
 
         /// <summary>
         /// Parameter defines the style of highlight used to emphasis atoms and bonds. The default option
-        /// is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
+        /// is to color the atom and bond symbols (<see cref="HighlightStyle.Colored"/>).
         /// </summary>
         public sealed class Highlighting : AbstractGeneratorParameter<HighlightStyle?>
         {
@@ -971,8 +963,8 @@ var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist
         }
 
         /// <summary>
-        /// The color of the atom numbers. The the parameter value is null, the color of the symbol
-        /// {@link AtomColor} is used. The default color is red to distinguish from normal atom symbols.
+        /// The color of the atom numbers. The parameter value is null, the color of the symbol
+        /// <see cref="AtomColor"/> is used. The default color is red to distinguish from normal atom symbols.
         /// </summary>
         public sealed class AnnotationColor : AbstractGeneratorParameter<Color?>
         {

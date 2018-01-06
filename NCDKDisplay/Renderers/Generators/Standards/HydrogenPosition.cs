@@ -33,7 +33,7 @@ namespace NCDK.Renderers.Generators.Standards
 {
     /// <summary>
     /// Enumeration of hydrogen label position for 2D depictions. The best placement of the
-    /// label can depend on a variety of factors. Currently, the {@link #Position(IAtom, List)}
+    /// label can depend on a variety of factors. Currently, the <see cref="HydrogenPositionTools.Position(IAtom, IList{IAtom})"/>
     /// method decides the position based on the atom and neighbouring atom coordinates.
     /// </summary>
     // @author John May

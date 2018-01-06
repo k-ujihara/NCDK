@@ -23,7 +23,7 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -147,12 +147,12 @@ namespace NCDK.Geometries
                 }
             }
             // scale Sgroup brackets
-            if (atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups) != null)
+            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<SGroup> sgroups = atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)
@@ -200,12 +200,12 @@ namespace NCDK.Geometries
                 }
             }
             // translate Sgroup brackets
-            if (atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups) != null)
+            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<SGroup> sgroups = atomCon.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
-                    IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     if (brackets != null)
                     {
                         foreach (var bracket in brackets)
@@ -257,11 +257,12 @@ namespace NCDK.Geometries
         {
             double costheta, sintheta;
 
-            Vector3 r = new Vector3();
-
-            r.X = p2.X - p1.X;
-            r.Y = p2.Y - p1.Y;
-            r.Z = p2.Z - p1.Z;
+            Vector3 r = new Vector3
+            {
+                X = p2.X - p1.X,
+                Y = p2.Y - p1.Y,
+                Z = p2.Z - p1.Z
+            };
             r = Vector3.Normalize(r);
 
             angle = angle * Math.PI / 180.0;
@@ -1449,10 +1450,12 @@ namespace NCDK.Geometries
 
         private static double GetAngle(IAtom atom1, IAtom atom2, IAtom atom3)
         {
-            Vector3 centerAtom = new Vector3();
-            centerAtom.X = atom1.Point3D.Value.X;
-            centerAtom.Y = atom1.Point3D.Value.Y;
-            centerAtom.Z = atom1.Point3D.Value.Z;
+            Vector3 centerAtom = new Vector3
+            {
+                X = atom1.Point3D.Value.X,
+                Y = atom1.Point3D.Value.Y,
+                Z = atom1.Point3D.Value.Z
+            };
             Vector3 firstAtom = new Vector3();
             Vector3 secondAtom = new Vector3();
 

@@ -22,22 +22,14 @@
 
 using Microsoft.Win32;
 using NCDK.Default;
-using NCDK.Geometries;
+using NCDK.Depict;
 using NCDK.IO;
 using NCDK.Layout;
-using NCDK.Renderers;
-using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitors;
 using NCDK.Smiles;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace NCDK.MolViewer
 {
@@ -45,17 +37,14 @@ namespace NCDK.MolViewer
     {
         private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
-
-        public RendererModel Model { get; private set; }
-        private IGenerator<IAtomContainer> molgen;
-        private WPFFontManager fontManager = new WPFFontManager();
-        private IAtomContainer mol = null;
-        private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-
-        private static FormatFactory formatFactory = new FormatFactory();
+        private static DepictionGenerator generator = new DepictionGenerator();
+        private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static ReaderFactory readerFactory = new ReaderFactory();
 
-        class MolWindowListener : Events.ICDKChangeListener
+        private IAtomContainer mol = null;
+
+        class MolWindowListener 
+            : Events.ICDKChangeListener
         {
             MolWindow parent;
             public MolWindowListener(MolWindow parent)
@@ -72,21 +61,6 @@ namespace NCDK.MolViewer
         public MolWindow()
         {
             InitializeComponent();
-
-            sdg.UseIdentityTemplates = false;
-            Model = new RendererModel();
-            molgen = new BasicGenerator();
-            Model.RegisterParameters(molgen);
-            Model.Listeners.Add(new MolWindowListener(this));
-        }
-
-        public static IAtomContainer Layout(StructureDiagramGenerator structureGenerator, IAtomContainer mol)
-        {
-            structureGenerator.Molecule = mol;
-            structureGenerator.GenerateCoordinates();
-            mol = structureGenerator.Molecule;
-
-            return mol;
         }
 
         private void MenuItem_PasteAsInchi_Click(object sender, RoutedEventArgs e)
@@ -112,8 +86,6 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            mol = Layout(sdg, mol);
-
             this.mol = mol;
             Render();
         }
@@ -136,49 +108,8 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            mol = Layout(sdg, mol);
-
             this.mol = mol;
             Render();
-        }
-
-        private void menuItem_SaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            if (mol == null)
-                return;
-
-            SaveFileDialog fileDialog = new SaveFileDialog();
-            fileDialog.FilterIndex = 1;
-            fileDialog.Filter = "PNG file (*.png)|*.png|All Files (*.*)|*.*";
-            bool? result = fileDialog.ShowDialog();
-            if (result != true)
-                return;
-
-            // the renderer needs to have a toolkit-specific font manager
-            var renderer = Utils.BuildStdRenderer();
-            var r = NCDK.MolViewer.Renderers.AtomContainerRenderer.CalculateBounds(mol);
-            var drawArea = new Rect(0, 0, r.Width, r.Height);
-
-            // the call to 'setup' only needs to be done on the first paint
-            renderer.Setup(mol, drawArea);
-
-            DrawingVisual drawingVisual = new DrawingVisual();
-            using (DrawingContext g2d = drawingVisual.RenderOpen())
-            {
-                g2d.DrawRectangle(Brushes.White, null, drawArea);
-                renderer.PaintMolecule(mol, new WPFDrawVisitor(g2d), drawArea, true);
-                g2d.DrawRectangle(null, new Pen(Brushes.Black, 1), drawArea);
-            }
-
-            var bmp = new RenderTargetBitmap((int)drawArea.Width, (int)drawArea.Height, 72, 72, PixelFormats.Pbgra32);
-            bmp.Render(drawingVisual);
-
-            var encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(bmp));
-            using (var stream = new FileStream(fileDialog.FileName, FileMode.Create, FileAccess.Write))
-            {
-                encoder.Save(stream);
-            }
         }
 
         public void Render()
@@ -186,39 +117,27 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            var rendeingrElement = molgen.Generate(mol, Model);
-            DrawingGroup dGroup = new DrawingGroup();
-            using (DrawingContext g2d = dGroup.Open())
-            {
-                DrawRendeingrElement(g2d, rendeingrElement);
-            }
-            ImageSource dImageSource = new DrawingImage(dGroup);
-            image.Source = dImageSource;
+            DepictionGenerator myGenerator = generator.WithZoom(1.6);
+            Depiction depiction = myGenerator.Depict(mol);
+            var img = depiction.ToBitmap();
+            image.Source = img;
         }
 
-        private void DrawRendeingrElement(DrawingContext g2d, NCDK.Renderers.Elements.IRenderingElement rendeingrElement)
-        {
-            var v = new WPFDrawVisitor(g2d);
-            v.SetTransform(new ScaleTransform(1, 1));
-            v.SetFontManager(fontManager);
-            v.SetRendererModel(Model);
-            v.Visit(rendeingrElement);
-        }
-
-        private void menuItem_Open_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
             IAtomContainer mol = null;
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.Filter = "MDL Molfile (*.mol)|*.mol|All Files (*.*)|*.*";
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    FilterIndex = 1,
+                    Filter = "MDL Molfile (*.mol)|*.mol|All Files (*.*)|*.*"
+                };
                 bool? result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
                     var fn = openFileDialog.FileName;
-                    using (var srm = new FileStream(fn, FileMode.Open))
-                    using (var reader = readerFactory.CreateReader(srm))
+                    using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
                     {
                         mol = reader.Read(new AtomContainer());
                     }
@@ -232,24 +151,44 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            if (!GeometryUtil.Has2DCoordinates(mol))
-                mol = Layout(sdg, mol);
-
             this.mol = mol;
             Render();
         }
 
-        private void clean_structure_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (mol != null)
-                mol = Layout(sdg, mol);
-            Render();
+            if (mol == null)
+                return;
+
+            SaveFileDialog fileDialog = new SaveFileDialog
+            {
+                FilterIndex = 1,
+                Filter = 
+                    "PNG file (*.png)|*.png|" + 
+                    "JPEG file (*.jpg)|*.jpg;*.jpeg|" +
+                    "GIF file (*.gif)|*.gif|" +
+                    "SVG file (*.svg)|*.svg|" +
+                    "All Files (*.*)|*.*"
+            };
+
+            if (fileDialog.ShowDialog() != true)
+                return;
+
+            DepictionGenerator myGenerator = generator.WithZoom(1.6);
+            Depiction depiction = myGenerator.Depict(mol);
+            depiction.WriteTo(fileDialog.FileName);
         }
 
-        private void OptionsItem_Click(object sender, RoutedEventArgs e)
+        private void Clean_structure_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new PreferenceWindow(this);
-            dialog.Show();
+            if (this.mol != null)
+            {
+                var mol = (IAtomContainer)this.mol.Clone();
+                sdg.Molecule = mol;
+                sdg.GenerateCoordinates(mol);
+                this.mol = mol;
+                Render();
+            }
         }
     }
 }

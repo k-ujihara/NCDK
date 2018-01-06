@@ -24,7 +24,7 @@ using NCDK.Beam;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -414,9 +414,9 @@ namespace NCDK.Smiles
         }
 
         // utility method that safely collects the Sgroup from a molecule
-        private void SafeAddSgroups(List<SGroup> sgroups, IAtomContainer mol)
+        private void SafeAddSgroups(List<Sgroup> sgroups, IAtomContainer mol)
         {
-            IList<SGroup> molSgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            IList<Sgroup> molSgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (molSgroups != null)
                 foreach (var g in molSgroups)
                     sgroups.Add(g);
@@ -438,7 +438,7 @@ namespace NCDK.Smiles
             IAtomContainer agentPart = reaction.Builder.NewAtomContainer();
             IAtomContainer productPart = reaction.Builder.NewAtomContainer();
 
-            List<SGroup> sgroups = new List<SGroup>();
+            List<Sgroup> sgroups = new List<Sgroup>();
 
             foreach (IAtomContainer reactant in reactants)
             {
@@ -653,7 +653,7 @@ namespace NCDK.Smiles
         private static int EnsureNotNull(int? x)
         {
             if (x == null)
-                throw new InvalidOperationException("Inconsistent CXSMILES state! Check the SGroups.");
+                throw new InvalidOperationException("Inconsistent CXSMILES state! Check the Sgroups.");
             return x.Value;
         }
 
@@ -755,35 +755,35 @@ namespace NCDK.Smiles
                 }
             }
 
-            IList<SGroup> sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups != null)
             {
                 state.sgroups = new List<CxSmilesState.PolymerSgroup>();
                 state.positionVar = new Dictionary<int, IList<int>>();
-                foreach (SGroup sgroup in sgroups)
+                foreach (Sgroup sgroup in sgroups)
                 {
                     switch (sgroup.Type)
                     {
                         // polymer SRU
-                        case SGroupTypes.CtabStructureRepeatUnit:
-                        case SGroupTypes.CtabMonomer:
-                        case SGroupTypes.CtabMer:
-                        case SGroupTypes.CtabCopolymer:
-                        case SGroupTypes.CtabCrossLink:
-                        case SGroupTypes.CtabModified:
-                        case SGroupTypes.CtabMixture:
-                        case SGroupTypes.CtabFormulation:
-                        case SGroupTypes.CtabAnyPolymer:
-                        case SGroupTypes.CtabGeneric:
-                        case SGroupTypes.CtabComponent:
-                        case SGroupTypes.CtabGraft:
-                            string supscript = (string)sgroup.GetValue(SGroupKeys.CtabConnectivity);
+                        case SgroupTypes.CtabStructureRepeatUnit:
+                        case SgroupTypes.CtabMonomer:
+                        case SgroupTypes.CtabMer:
+                        case SgroupTypes.CtabCopolymer:
+                        case SgroupTypes.CtabCrossLink:
+                        case SgroupTypes.CtabModified:
+                        case SgroupTypes.CtabMixture:
+                        case SgroupTypes.CtabFormulation:
+                        case SgroupTypes.CtabAnyPolymer:
+                        case SgroupTypes.CtabGeneric:
+                        case SgroupTypes.CtabComponent:
+                        case SgroupTypes.CtabGraft:
+                            string supscript = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
                             state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
                                                                               ToAtomIdxs(sgroup.Atoms, atomidx),
                                                                               sgroup.Subscript,
                                                                               supscript));
                             break;
-                        case SGroupTypes.ExtMulticenter:
+                        case SgroupTypes.ExtMulticenter:
                             IAtom beg = null;
                             List<IAtom> ends = new List<IAtom>();
                             ISet<IBond> bonds = sgroup.Bonds;
@@ -806,11 +806,11 @@ namespace NCDK.Smiles
                             state.positionVar[EnsureNotNull(atomidx[beg])] =
                                                   ToAtomIdxs(ends, atomidx);
                             break;
-                        case SGroupTypes.CtabAbbreviation:
-                        case SGroupTypes.CtabMultipleGroup:
+                        case SgroupTypes.CtabAbbreviation:
+                        case SgroupTypes.CtabMultipleGroup:
                             // display shortcuts are not output
                             break;
-                        case SGroupTypes.CtabData:
+                        case SgroupTypes.CtabData:
                             // can be generated but currently ignored
                             break;
                         default:
@@ -822,18 +822,18 @@ namespace NCDK.Smiles
             return state;
         }
 
-        private static string GetSgroupPolymerKey(SGroup sgroup)
+        private static string GetSgroupPolymerKey(Sgroup sgroup)
         {
             switch (sgroup.Type)
             {
-                case SGroupTypes.CtabStructureRepeatUnit:
+                case SgroupTypes.CtabStructureRepeatUnit:
                     return "n";
-                case SGroupTypes.CtabMonomer:
+                case SgroupTypes.CtabMonomer:
                     return "mon";
-                case SGroupTypes.CtabMer:
+                case SgroupTypes.CtabMer:
                     return "mer";
-                case SGroupTypes.CtabCopolymer:
-                    string subtype = (string)sgroup.GetValue(SGroupKeys.CtabSubType);
+                case SgroupTypes.CtabCopolymer:
+                    string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
                     if (subtype == null)
                         return "co";
                     switch (subtype)
@@ -845,22 +845,22 @@ namespace NCDK.Smiles
                         case "BLO":
                             return "blk";
                     }
-                    goto case SGroupTypes.CtabCrossLink;
-                case SGroupTypes.CtabCrossLink:
+                    goto case SgroupTypes.CtabCrossLink;
+                case SgroupTypes.CtabCrossLink:
                     return "xl";
-                case SGroupTypes.CtabModified:
+                case SgroupTypes.CtabModified:
                     return "mod";
-                case SGroupTypes.CtabMixture:
+                case SgroupTypes.CtabMixture:
                     return "mix";
-                case SGroupTypes.CtabFormulation:
+                case SgroupTypes.CtabFormulation:
                     return "f";
-                case SGroupTypes.CtabAnyPolymer:
+                case SgroupTypes.CtabAnyPolymer:
                     return "any";
-                case SGroupTypes.CtabGeneric:
+                case SgroupTypes.CtabGeneric:
                     return "gen";
-                case SGroupTypes.CtabComponent:
+                case SgroupTypes.CtabComponent:
                     return "c";
-                case SGroupTypes.CtabGraft:
+                case SgroupTypes.CtabGraft:
                     return "grf";
                 default:
                     throw new ArgumentException();

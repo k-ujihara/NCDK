@@ -33,7 +33,7 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Generators.Standards
 {
     /// <summary>
-    /// Generates {@link AtomSymbol} instances with positioned adjuncts.
+    /// Generates <see cref="AtomSymbol"/> instances with positioned adjuncts.
     /// </summary>
     /// <remarks>
     /// Note the generator is purposefully not an <see cref="IGenerator{T}"/> and is intended as part be called from the StandardGenerator.
@@ -42,7 +42,7 @@ namespace NCDK.Renderers.Generators.Standards
     internal sealed class StandardAtomGenerator
     {
         /// <summary>
-        /// Default options for spacing and sizing adjuncts, could be configruable parameters.
+        /// Default options for spacing and sizing adjuncts, could be configurable parameters.
         /// </summary>
         private const double DefaultAdjunctSpacingRatio = 0.15d;
         private const double DefaultSubscriptSize = 0.6d;
@@ -105,9 +105,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>atom symbol</returns>
         public AtomSymbol GenerateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position, RendererModel model)
         {
-            if (atom is IPseudoAtom)
+            if (atom is IPseudoAtom pAtom)
             {
-                IPseudoAtom pAtom = (IPseudoAtom)atom;
                 if (pAtom.AttachPointNum <= 0)
                     return GeneratePseudoSymbol(AccessPseudoLabel(pAtom, "?"), position);
                 else

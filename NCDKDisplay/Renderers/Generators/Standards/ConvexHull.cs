@@ -79,8 +79,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the convex hull</returns>
         public static ConvexHull OfShapes(IEnumerable<Geometry> shapes)
         {
-            var combined = new GeometryGroup();
-            combined.Children = new GeometryCollection(shapes);
+            var combined = new GeometryGroup
+            {
+                Children = new GeometryCollection(shapes)
+            };
             return new ConvexHull(ShapeOf(GrahamScan(PointsOf(combined))));
         }
 
@@ -101,7 +103,7 @@ namespace NCDK.Renderers.Generators.Standards
         public ConvexHull Transform(Transform transform)
         {
             var g = hull.Clone();
-            g.Transform = transform;
+            g.Transform = new MatrixTransform(g.Transform.Value * transform.Value);
             return new ConvexHull(g);
         }
 
@@ -136,37 +138,30 @@ namespace NCDK.Renderers.Generators.Standards
                 newPoints.Add(figure.StartPoint);
                 foreach (var seg in figure.Segments)
                 {
-                    if (seg is ArcSegment)
+                    switch (seg)
                     {
-                        var s = (ArcSegment)seg;
-                        newPoints.Add(s.Point);
-                    }
-                    else if (seg is BezierSegment)
-                    {
-                        var s = (BezierSegment)seg;
-                        newPoints.Add(s.Point1);
-                        newPoints.Add(s.Point2);
-                        newPoints.Add(s.Point3);
-                    }
-                    else if (seg is LineSegment)
-                    {
-                        var s = (LineSegment)seg;
-                        newPoints.Add(s.Point);
-                    }
-                    else if (seg is PolyBezierSegment)
-                    {
-                        var s = (PolyBezierSegment)seg;
-                        newPoints.AddRange(s.Points);
-                    }
-                    else if (seg is PolyLineSegment)
-                    {
-                        var s = (PolyLineSegment)seg;
-                        newPoints.AddRange(s.Points);
-                    }
-                    else if (seg is PolyQuadraticBezierSegment)
-                    {
-                        var s = (PolyQuadraticBezierSegment)seg;
-                        newPoints.AddRange(s.Points);
+                        case ArcSegment s:
+                            newPoints.Add(s.Point);
+                            break;
+                        case BezierSegment s:
+                            newPoints.Add(s.Point1);
+                            newPoints.Add(s.Point2);
+                            newPoints.Add(s.Point3);
+                            break;
+                        case LineSegment s:
+                            newPoints.Add(s.Point);
+                            break;
+                        case PolyBezierSegment s:
+                            newPoints.AddRange(s.Points);
+                            break;
+                        case PolyLineSegment s:
+                            newPoints.AddRange(s.Points);
+                            break;
+                        case PolyQuadraticBezierSegment s:
+                            newPoints.AddRange(s.Points);
+                            break;
+                        default:
+                            break;
                     }
                 }
                 if (newPoints.Count > 2 && newPoints.Last().Equals(figure.StartPoint))

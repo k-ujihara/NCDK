@@ -29,7 +29,7 @@ using NCDK.Default;
 using NCDK.Geometries;
 using NCDK.IO.Listener;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -1607,11 +1607,11 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                var sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
-                SGroup sgroup = sgroups[0];
-                Assert.AreEqual(SGroupTypes.CtabAbbreviation, sgroup.Type);
+                Sgroup sgroup = sgroups[0];
+                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Cs2CO3", sgroup.Subscript);
                 Assert.AreEqual(6, sgroup.Atoms.Count);
             }
@@ -1624,16 +1624,16 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
-                SGroup sgroup = sgroups[0];
-                Assert.AreEqual(SGroupTypes.CtabStructureRepeatUnit, sgroup.Type);
+                Sgroup sgroup = sgroups[0];
+                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
                 Assert.AreEqual("n", sgroup.Subscript);
-                Assert.AreEqual("HT", (string)sgroup.GetValue(SGroupKeys.CtabConnectivity));
+                Assert.AreEqual("HT", (string)sgroup.GetValue(SgroupKeys.CtabConnectivity));
                 Assert.AreEqual(10, sgroup.Atoms.Count);
                 Assert.AreEqual(2, sgroup.Bonds.Count);
-                IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+                IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                 Assert.AreEqual(2, brackets.Count);
                 // M  SDI   1  4    2.2579   -0.8756    1.7735   -1.6600
                 Assert.AreEqual(2.2579, brackets[0].FirstPoint.X, 0.001);
@@ -1656,22 +1656,22 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
-                SGroup sgroup = sgroups[0];
-                Assert.AreEqual(SGroupTypes.CtabComponent, sgroup.Type);
+                Sgroup sgroup = sgroups[0];
+                Assert.AreEqual(SgroupTypes.CtabComponent, sgroup.Type);
                 Assert.AreEqual(1, sgroup.Parents.Count);
                 Assert.IsTrue(sgroup.Parents.Contains(sgroups[2]));
                 // second sgroup
                 sgroup = sgroups[1];
-                Assert.AreEqual(SGroupTypes.CtabComponent, sgroup.Type);
+                Assert.AreEqual(SgroupTypes.CtabComponent, sgroup.Type);
                 Assert.AreEqual(1, sgroup.Parents.Count);
                 Assert.IsTrue(sgroup.Parents.Contains(sgroups[2]));
                 // third sgroup
                 sgroup = sgroups[2];
-                Assert.AreEqual(SGroupTypes.CtabMixture, sgroup.Type);
+                Assert.AreEqual(SgroupTypes.CtabMixture, sgroup.Type);
                 Assert.AreEqual(0, sgroup.Parents.Count);
             }
         }
@@ -1683,24 +1683,24 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
-                SGroup sgroup = sgroups[0];
-                Assert.AreEqual(SGroupTypes.CtabAbbreviation, sgroup.Type);
+                Sgroup sgroup = sgroups[0];
+                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SGroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
                 // second sgroup
                 sgroup = sgroups[1];
-                Assert.AreEqual(SGroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SGroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
                 // third sgroup
                 sgroup = sgroups[2];
-                Assert.AreEqual(SGroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SGroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
             }
         }
 
@@ -1735,15 +1735,15 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<SGroup> sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(2, sgroups.Count);
-                SGroup sgroup = sgroups[0];
-                Assert.AreEqual(SGroupTypes.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SGroupKeys.CtabBracketStyle));
+                Sgroup sgroup = sgroups[0];
+                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
                 sgroup = sgroups[1];
-                Assert.AreEqual(SGroupTypes.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SGroupKeys.CtabBracketStyle));
+                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
             }
         }
 

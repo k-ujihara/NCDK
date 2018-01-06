@@ -129,7 +129,7 @@ namespace NCDK.SMSD.Tools
                 foreach (var atom in mol.Atoms)
                 {
                     atom.IsAromatic = false;
-                    jloop: foreach (var ring in ringSet)
+                    foreach (var ring in ringSet)
                     {
                         if (!ring.IsAromatic)
                             continue;

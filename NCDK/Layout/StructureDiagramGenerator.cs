@@ -29,7 +29,7 @@ using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Numerics;
 using NCDK.RingSearches;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Stereo;
 using NCDK.Tools.Manipulator;
 using System;
@@ -1313,7 +1313,7 @@ namespace NCDK.Layout
         /// <summary>
         /// Select ions from a charged fragment. Ions not in charge separated
         /// bonds are favoured but select if needed. If an atom has lost or
-        /// gained more than one electron it is added mutliple times to the
+        /// gained more than one electron it is added multiple times to the
         /// output list
         /// </summary>
         /// <param name="frag">charged fragment</param>
@@ -1325,7 +1325,6 @@ namespace NCDK.Layout
             Trace.Assert(Math.Sign(fragChg) == sign);
             var atoms = new List<IAtom>();
 
-            FIRST_PASS:
             foreach (var atom in frag.Atoms)
             {
                 if (fragChg == 0)
@@ -1502,12 +1501,12 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Using a fast identity template library, lookup the the ring system and assign coordinates.
+        /// Using a fast identity template library, lookup the ring system and assign coordinates.
         /// The method indicates whether a match was found and coordinates were assigned.
         /// </summary>
         /// <param name="rs">the ring set</param>
         /// <param name="molecule">the rest of the compound</param>
-        /// <param name="anon">check for anonmised templates</param>
+        /// <param name="anon">check for anonymised templates</param>
         /// <returns>coordinates were assigned</returns>
         private bool LookupRingSystem(IRingSet rs, IAtomContainer molecule, bool anon)
         {
@@ -1879,7 +1878,7 @@ namespace NCDK.Layout
                 Debug.WriteLine("...bond found.");
 
                 // Get the chain and the ring atom that are connected to where we
-                // are comming from. Both are connected by nextRingAttachmentBond.
+                // are coming from. Both are connected by nextRingAttachmentBond.
                 IAtom ringAttachmentAtom = GetRingAtom(nextRingAttachmentBond);
                 IAtom chainAttachmentAtom = GetOtherBondAtom(ringAttachmentAtom, nextRingAttachmentBond);
 
@@ -2073,7 +2072,7 @@ namespace NCDK.Layout
                 atom.Point2D = point;
                 atom.IsPlaced = true;
 
-                // The new ring is layed out relativ to some shared atoms that have
+                // The new ring is laid out relative to some shared atoms that have
                 // already been placed. Usually this is another ring, that has
                 // already been draw and to which the new ring is somehow connected,
                 // or some other system of atoms in an aliphatic chain. In this
@@ -2192,13 +2191,13 @@ namespace NCDK.Layout
         /// <param name="mol">molecule to place the multiple groups of</param>
         private void PlaceMultipleGroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
-            var multipleGroups = new List<SGroup>();
+            var multipleGroups = new List<Sgroup>();
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type == SGroupTypes.CtabMultipleGroup)
+                if (sgroup.Type == SgroupTypes.CtabMultipleGroup)
                     multipleGroups.Add(sgroup);
             }
             if (multipleGroups.Count == 0)
@@ -2218,7 +2217,7 @@ namespace NCDK.Layout
                 // extract substructure
                 IAtomContainer substructure = mol.Builder.NewAtomContainer();
                 var visit = new HashSet<IAtom>();
-                var patoms = (ICollection<IAtom>)sgroup.GetValue(SGroupKeys.CtabParentAtomList);
+                var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
                 if (patoms == null)
                     continue;
                 foreach (var atom in patoms)
@@ -2404,7 +2403,7 @@ namespace NCDK.Layout
 
         private void PlacePositionalVariation(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
@@ -2575,12 +2574,12 @@ namespace NCDK.Layout
             }
         }
 
-        private static IMultiDictionary<ISet<IAtom>, IAtom> AggregateMulticenterSgroups(IList<SGroup> sgroups)
+        private static IMultiDictionary<ISet<IAtom>, IAtom> AggregateMulticenterSgroups(IList<Sgroup> sgroups)
         {
             var mapping = new MultiDictionary<ISet<IAtom>, IAtom>();
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type != SGroupTypes.ExtMulticenter)
+                if (sgroup.Type != SgroupTypes.ExtMulticenter)
                     continue;
 
                 IAtom beg = null;
@@ -2624,11 +2623,11 @@ namespace NCDK.Layout
         /// <param name="mol">molecule</param>
         private void PlaceSgroupBrackets(IAtomContainer mol)
         {
-            IList<SGroup> sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null) return;
 
             // index all crossing bonds
-            var bondMap = new MultiDictionary<IBond, SGroup>();
+            var bondMap = new MultiDictionary<IBond, Sgroup>();
             var counter = new Dictionary<IBond, int>();
             foreach (var sgroup in sgroups)
             {
@@ -2640,9 +2639,9 @@ namespace NCDK.Layout
                     counter[bond] = 0;
                 }
             }
-            sgroups = new List<SGroup>(sgroups);
+            sgroups = new List<Sgroup>(sgroups);
             // place child sgroups first
-            ((List<SGroup>)sgroups).Sort((o1, o2) =>
+            ((List<Sgroup>)sgroups).Sort((o1, o2) =>
             {
                 if (o1.Parents.Any() != o2.Parents.Any())
                 {
@@ -2662,7 +2661,7 @@ namespace NCDK.Layout
                 var xbonds = sgroup.Bonds;
 
                 // clear all the existing brackets
-                sgroup.PutValue(SGroupKeys.CtabBracket, null);
+                sgroup.PutValue(SgroupKeys.CtabBracket, null);
 
                 // assign brackets to crossing bonds
                 if (xbonds.Count >= 2)
@@ -2693,9 +2692,9 @@ namespace NCDK.Layout
                         tmp.Atoms.Add(atom);
                     double[] minmax = GeometryUtil.GetMinMax(tmp);
                     double padding = 0.7 * BondLength;
-                    sgroup.AddBracket(new SGroupBracket(minmax[0] - padding, minmax[1] - padding,
+                    sgroup.AddBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
                                                         minmax[0] - padding, minmax[3] + padding));
-                    sgroup.AddBracket(new SGroupBracket(minmax[2] + padding, minmax[1] - padding,
+                    sgroup.AddBracket(new SgroupBracket(minmax[2] + padding, minmax[1] - padding,
                                                         minmax[2] + padding, minmax[3] + padding));
                 }
             }
@@ -2716,7 +2715,7 @@ namespace NCDK.Layout
         /// <param name="counter">count how many brackets this group has already</param>
         /// <param name="vert">vertical align bonds</param>
         /// <returns>the new bracket</returns>
-        private SGroupBracket NewCrossingBracket(IBond bond, IMultiDictionary<IBond, SGroup> bonds, IDictionary<IBond, int> counter, bool vert)
+        private SgroupBracket NewCrossingBracket(IBond bond, IMultiDictionary<IBond, Sgroup> bonds, IDictionary<IBond, int> counter, bool vert)
         {
             IAtom beg = bond.Begin;
             IAtom end = bond.End;
@@ -2728,7 +2727,7 @@ namespace NCDK.Layout
             bndCrossVec = Vector2.Normalize(bndCrossVec);
             bndCrossVec *= (0.9 * BondLength) / 2;
 
-            var sgroups = new List<SGroup>(bonds[bond]);
+            var sgroups = new List<Sgroup>(bonds[bond]);
 
             // bond in sgroup, place it in the middle of the bond
             if (sgroups.Count == 1)
@@ -2760,12 +2759,12 @@ namespace NCDK.Layout
             // vertical bracket
             if (vert)
             {
-                return new SGroupBracket(begXy.X + lenOffset.X, begXy.Y + lenOffset.Y + bndCrossVec.Length(),
+                return new SgroupBracket(begXy.X + lenOffset.X, begXy.Y + lenOffset.Y + bndCrossVec.Length(),
                                          begXy.X + lenOffset.X, begXy.Y + lenOffset.Y - bndCrossVec.Length());
             }
             else
             {
-                return new SGroupBracket(begXy.X + lenOffset.X + bndCrossVec.X, begXy.Y + lenOffset.Y + bndCrossVec.Y,
+                return new SgroupBracket(begXy.X + lenOffset.X + bndCrossVec.X, begXy.Y + lenOffset.Y + bndCrossVec.Y,
                                          begXy.X + lenOffset.X - bndCrossVec.X, begXy.Y + lenOffset.Y - bndCrossVec.Y);
             }
         }
@@ -2775,24 +2774,24 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="sgroup">the Sgroup</param>
         /// <returns>brackets need to be placed</returns>
-        private static bool HasBrackets(SGroup sgroup)
+        private static bool HasBrackets(Sgroup sgroup)
         {
             switch (sgroup.Type)
             {
-                case SGroupTypes.CtabStructureRepeatUnit:
-                case SGroupTypes.CtabAnyPolymer:
-                case SGroupTypes.CtabCrossLink:
-                case SGroupTypes.CtabComponent:
-                case SGroupTypes.CtabMixture:
-                case SGroupTypes.CtabFormulation:
-                case SGroupTypes.CtabGraft:
-                case SGroupTypes.CtabModified:
-                case SGroupTypes.CtabMonomer:
-                case SGroupTypes.CtabCopolymer:
-                case SGroupTypes.CtabMultipleGroup:
+                case SgroupTypes.CtabStructureRepeatUnit:
+                case SgroupTypes.CtabAnyPolymer:
+                case SgroupTypes.CtabCrossLink:
+                case SgroupTypes.CtabComponent:
+                case SgroupTypes.CtabMixture:
+                case SgroupTypes.CtabFormulation:
+                case SgroupTypes.CtabGraft:
+                case SgroupTypes.CtabModified:
+                case SgroupTypes.CtabMonomer:
+                case SgroupTypes.CtabCopolymer:
+                case SgroupTypes.CtabMultipleGroup:
                     return true;
-                case SGroupTypes.CtabGeneric:
-                    IList<SGroupBracket> brackets = (IList<SGroupBracket>)sgroup.GetValue(SGroupKeys.CtabBracket);
+                case SgroupTypes.CtabGeneric:
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
                     return brackets != null && brackets.Count != 0;
                 default:
                     return false;

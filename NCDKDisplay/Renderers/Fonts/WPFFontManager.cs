@@ -88,7 +88,7 @@ namespace NCDK.Renderers.Fonts
                 int size = this.GetFontSizeForZoom(zoom);
                 if (size != -1)
                 {
-                    this.Size = GetFontSizeForZoom(Zoom);
+                    this.Size = size;
                 }
             }
         }

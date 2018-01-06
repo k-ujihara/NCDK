@@ -376,12 +376,14 @@ namespace NCDK.Modelings.Builder3D
                 }
                 else
                 {
-                    data = new List<double>();
-                    data.Add(va1);
-                    data.Add(va2);
-                    data.Add(va3);
-                    data.Add(va4);
-                    data.Add(va5);
+                    data = new List<double>
+                    {
+                        va1,
+                        va2,
+                        va3,
+                        va4,
+                        va5
+                    };
                     Debug.WriteLine("data = " + data);
                 }
                 parameterSet[key] = data;
@@ -545,7 +547,7 @@ namespace NCDK.Modelings.Builder3D
                     }
                     else if (s.StartsWith("data") & nt == 10)
                     {
-                        readatmmffvdw: while (true)
+                        while (true)
                         {
                             svdW = rvdW.ReadLine();
                             if (svdW == null)

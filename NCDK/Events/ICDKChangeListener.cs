@@ -21,10 +21,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 namespace NCDK.Events
 {
     /// <summary>
-    /// A ChangeListener for the CDK, to be independent from the Swing package.
+    /// A change listener.
     /// </summary>
     // @cdk.module  interfaces
     // @cdk.githash
@@ -32,8 +33,8 @@ namespace NCDK.Events
     {
         /// <summary>
         /// Invoked when the target of the listener has changed its state.
-        /// </summary>The EventObject
-        /// <param name="evt"></param>
+        /// </summary>
+        /// <param name="evt">The event object</param>
         void StateChanged(ChemObjectChangeEventArgs evt);
     }
 }

@@ -36,7 +36,7 @@ namespace NCDK
         public object Source { get; private set; }
 
         /// <summary>
-        /// Constructs a ChemObjectChangeEvent with a reference
+        /// Constructs a <see cref="ChemObjectChangeEventArgs"/> with a reference
         /// to the object where it originated.
         /// </summary>
         /// <param name="source">The reference to the object where this change event originated</param>

@@ -41,19 +41,6 @@
     <NoWarn>0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Analysis|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Analysis\</OutputPath>
-    <DefineConstants>DEBUG;CODE_ANALYSIS;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-    <NoWarn>0164,0612,0618,0672,3021</NoWarn>
-    <RegisterForComInterop>false</RegisterForComInterop>
-  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -347,8 +334,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
     </Content>
-    <Compile Include="SGroups\SGroupKeys.cs" />
-    <Compile Include="SGroups\SGroupTypes.cs" />
+    <Compile Include="Sgroups\SgroupKeys.cs" />
+    <Compile Include="Sgroups\SgroupTypes.cs" />
     <Compile Include="NCDKUtil.cs" />
     <Compile Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt.cs">
       <AutoGen>True</AutoGen>
@@ -1661,8 +1648,8 @@
     <Compile Include="Reactions\Types\Parameters\SetReactionCenter.cs" />
     <Compile Include="RingSearches\AllRingsFinder.cs" />
     <Compile Include="RingSearches\RingPartitioner.cs" />
-    <Compile Include="SGroups\SGroup.cs" />
-    <Compile Include="SGroups\SGroupBracket.cs" />
+    <Compile Include="Sgroups\Sgroup.cs" />
+    <Compile Include="Sgroups\SgroupBracket.cs" />
     <Compile Include="Smiles\BeamToCDK.cs" />
     <Compile Include="Smiles\CDKToBeam.cs" />
     <Compile Include="Smiles\CxSmilesParser.cs" />

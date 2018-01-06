@@ -89,10 +89,11 @@ namespace NCDK.Aromaticities
             if (!matching.Perfect(graph, available))
                 throw new CDKException("Cannot assign Kekulé structure without randomly creating radicals.");
 
-            // propegate bond order information from the matching
+            // propagate bond order information from the matching
             foreach (var bond in ac.Bonds)
             {
-                if (bond.Order == BondOrder.Unset && bond.IsAromatic) bond.Order = BondOrder.Single;
+                if (bond.Order == BondOrder.Unset && bond.IsAromatic)
+                    bond.Order = BondOrder.Single;
             }
             for (int v = BitArrays.NextSetBit(available, 0); v >= 0; v = BitArrays.NextSetBit(available, v + 1))
             {
@@ -121,7 +122,6 @@ namespace NCDK.Aromaticities
             BitArray available = new BitArray(atoms.Length);
 
             // for all atoms, select those that require a double-bond
-        ATOMS:
             for (int i = 0; i < atoms.Length; i++)
             {
                 IAtom atom = atoms[i];

@@ -221,7 +221,6 @@ namespace NCDK
         /// </summary>
         public const string CtabSgroups = "cdk:CtabSgroups";
 
-
         /// <summary>
         /// Property for reaction objects where the conditions of reactions can be placed.
         /// </summary>

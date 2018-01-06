@@ -163,8 +163,7 @@ namespace NCDK.Renderers
 
         public IGeneratorParameter GetParameter(Type param)
         {
-            IGeneratorParameter ret;
-            if (renderingParameters.TryGetValue(param.FullName, out ret))
+            if (renderingParameters.TryGetValue(param.FullName, out IGeneratorParameter ret))
                 return ret;
 
             // the parameter was not registered yet, so we throw an exception to
@@ -187,8 +186,7 @@ namespace NCDK.Renderers
                 throw new InvalidOperationException();
 #endif
 
-            IGeneratorParameter ret;
-            if (renderingParameters.TryGetValue(param.FullName, out ret))
+            if (renderingParameters.TryGetValue(param.FullName, out IGeneratorParameter ret))
             {
                 return ((IGeneratorParameter<T>)ret).Default;
             }
@@ -396,8 +394,7 @@ namespace NCDK.Renderers
         /// <returns>The toolTipText value.</returns>
         public string GetToolTipText(IAtom atom)
         {
-            string text;
-            if (toolTipTextMap.TryGetValue(atom, out text))
+            if (toolTipTextMap.TryGetValue(atom, out string text))
                 return text;
             return null;
         }

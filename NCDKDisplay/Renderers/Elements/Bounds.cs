@@ -75,8 +75,8 @@ namespace NCDK.Renderers.Elements
         /// An empty bounding box.
         /// </summary>
         public Bounds()
-            : this(+double.MaxValue, +double.MaxValue,
-                 -double.MaxValue, -double.MaxValue)
+            : this(double.MaxValue, double.MaxValue,
+                   double.MinValue, double.MinValue)
         { }
 
         /// <summary>
@@ -153,42 +153,38 @@ namespace NCDK.Renderers.Elements
             while (stack.Any())
             {
                 var element = stack.Poll();
-                if (element is Bounds)
+                switch (element)
                 {
-                    Add((Bounds)element);
-                }
-                else if (element is GeneralPath)
-                {
-                    Add((GeneralPath)element);
-                }
-                else if (element is LineElement)
-                {
-                    LineElement lineElem = (LineElement)element;
-                    var vec = lineElem.secondPoint - lineElem.firstPoint;
-                    var ortho = new WPF::Vector(-vec.Y, vec.X);
-                    ortho.Normalize();
-                    vec.Normalize();
-                    ortho *= lineElem.width / 2;  // stroke width
-                    vec *= lineElem.width / 2;    // stroke rounded also makes line longer
-                    Add(lineElem.firstPoint - vec + ortho);
-                    Add(lineElem.firstPoint + vec + ortho);
-                    Add(lineElem.firstPoint - vec - ortho);
-                    Add(lineElem.firstPoint + vec - ortho);
-                }
-                else if (element is ElementGroup)
-                {
-                    foreach (var child in (ElementGroup)element)
-                        stack.Add(child);
-                }
-                else if (element is MarkedElement)
-                {
-                    stack.Add(((MarkedElement)element).Element());
-                }
-                else
-                {
-                    // ignored from bounds calculation, we don't really
-                    // care but log we skipped it
-                    Trace.TraceWarning($"{element.GetType()} not included in bounds calculation");
+                    case Bounds e:
+                        Add(e);
+                        break;
+                    case GeneralPath e:
+                        Add(e);
+                        break;
+                    case LineElement lineElem:
+                        var vec = lineElem.secondPoint - lineElem.firstPoint;
+                        var ortho = new WPF::Vector(-vec.Y, vec.X);
+                        ortho.Normalize();
+                        vec.Normalize();
+                        ortho *= lineElem.width / 2;  // stroke width
+                        vec *= lineElem.width / 2;    // stroke rounded also makes line longer
+                        Add(lineElem.firstPoint - vec + ortho);
+                        Add(lineElem.secondPoint + vec + ortho);
+                        Add(lineElem.firstPoint - vec - ortho);
+                        Add(lineElem.secondPoint + vec - ortho);
+                        break;
+                    case ElementGroup elementGroup:
+                        foreach (var child in elementGroup)
+                            stack.Add(child);
+                        break;
+                    case MarkedElement e:
+                        stack.Add(e.Element());
+                        break;
+                    default:
+                        // ignored from bounds calculation, we don't really
+                        // care but log we skipped it
+                        Trace.TraceWarning($"{element.GetType()} not included in bounds calculation");
+                        break;
                 }
             }
         }

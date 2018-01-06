@@ -22,7 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -127,10 +127,10 @@ namespace NCDK.IO
             {
                 IAtomContainer container = reader.Read(new AtomContainer());
                 Assert.AreEqual(8, container.Bonds.Count);
-                var sgroups = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
-                Assert.AreEqual(SGroupTypes.ExtMulticenter, sgroups[0].Type);
+                Assert.AreEqual(SgroupTypes.ExtMulticenter, sgroups[0].Type);
             }
         }
 

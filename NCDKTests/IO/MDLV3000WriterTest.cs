@@ -24,7 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Numerics;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Stereo;
 using System.Collections.Generic;
 using System.IO;
@@ -316,15 +316,15 @@ namespace NCDK.IO
             mol.Atoms[1].ImplicitHydrogenCount = 2;
             mol.Atoms[2].ImplicitHydrogenCount = 0;
             mol.Atoms[3].ImplicitHydrogenCount = 1;
-            var sgroups = new List<SGroup>();
-            SGroup sgroup = new SGroup();
+            var sgroups = new List<Sgroup>();
+            Sgroup sgroup = new Sgroup();
             sgroup.Atoms.Add(mol.Atoms[1]);
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[2]);
-            sgroup.Type = SGroupTypes.CtabStructureRepeatUnit;
+            sgroup.Type = SgroupTypes.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SGroupKeys.CtabConnectivity, "HH");
+            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HH");
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
             string res = WriteToStr(mol);
@@ -348,14 +348,14 @@ namespace NCDK.IO
                 mol.Atoms[1 + i].ImplicitHydrogenCount = 2;
             mol.Atoms[mol.Atoms.Count - 1].ImplicitHydrogenCount = 1;
 
-            var sgroups = new List<SGroup>();
-            SGroup sgroup = new SGroup();
+            var sgroups = new List<Sgroup>();
+            Sgroup sgroup = new Sgroup();
             for (int i = 0; i < repeatAtoms; i++)
                 sgroup.Atoms.Add(mol.Atoms[i + 1]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[mol.Bonds.Count - 1]);
-            sgroup.PutValue(SGroupKeys.CtabParentAtomList, new[] { mol.Atoms[1] });
-            sgroup.Type = SGroupTypes.CtabMultipleGroup;
+            sgroup.PutValue(SgroupKeys.CtabParentAtomList, new[] { mol.Atoms[1] });
+            sgroup.Type = SgroupTypes.CtabMultipleGroup;
             sgroup.Subscript = repeatAtoms.ToString();
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);

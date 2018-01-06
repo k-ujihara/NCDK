@@ -39,7 +39,7 @@ namespace NCDK.Renderers
     ///
     /// <para>The terminology 'model space' and 'screen space' refer to the coordinate
     /// systems for the model and the drawing, respectively. So the 2D points for
-    /// atoms in the model might be 1 unit apart (roughly representing Ångstrom,
+    /// atoms in the model might be 1 unit apart (roughly representing Ångström,
     /// perhaps) but the circles in the diagram that represent those atoms might be
     /// 10 pixels apart on screen. Therefore screen space will be 10 times model
     /// space for this example.</para>
@@ -489,7 +489,7 @@ namespace NCDK.Renderers
 
         /// <summary>
         /// Given a rendering element, traverse the elements compute required bounds
-        /// to full display all elements. The method searches for {@link Bounds}
+        /// to full display all elements. The method searches for <see cref="Bounds"/>
         /// elements which act to specify the required bounds when adjunct labels
         /// are considered.
         /// </summary>

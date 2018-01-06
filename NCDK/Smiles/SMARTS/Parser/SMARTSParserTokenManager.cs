@@ -1038,7 +1038,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             int beginColumn;
             int endColumn;
             string im = jjstrLiteralImages[jjmatchedKind];
-            curTokenImage = (im == null) ? input_stream.GetImage() : im;
+            curTokenImage = im ?? input_stream.GetImage();
             beginLine = input_stream.GetBeginLine();
             beginColumn = input_stream.GetBeginColumn();
             endLine = input_stream.GetEndLine();
@@ -1066,7 +1066,6 @@ namespace NCDK.Smiles.SMARTS.Parser
             Token matchedToken;
             int curPos = 0;
 
-            EOFLoop:
             for (;;)
             {
                 try

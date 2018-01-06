@@ -119,8 +119,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>a new AtomSymbol instance including the annotation adjunct</returns>
         public AtomSymbol AddAnnotation(TextOutline annotation)
         {
-            List<TextOutline> newAnnotations = new List<TextOutline>(annotationAdjuncts);
-            newAnnotations.Add(annotation);
+            List<TextOutline> newAnnotations = new List<TextOutline>(annotationAdjuncts)
+            {
+                annotation
+            };
             return new AtomSymbol(element, adjuncts, newAnnotations, alignment, hull);
         }
 
@@ -169,8 +171,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>shapes</returns>
         public List<Geometry> GetOutlines()
         {
-            var shapes = new List<Geometry>();
-            shapes.Add(element.GetOutline());
+            var shapes = new List<Geometry>
+            {
+                element.GetOutline()
+            };
             foreach (var adjunct in adjuncts)
                 shapes.Add(adjunct.GetOutline());
             return shapes;
@@ -223,9 +227,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var center = element.GetCenter();
             var transform = Matrix.Identity;
-            transform.Translate(-center.X, -center.Y);
-            transform.Scale(scaleX, scaleY);
-            transform.Translate(center.X, center.Y);
+            transform.ScaleAtPrepend(scaleX, scaleY, center.X, center.Y);
             return Transform(new MatrixTransform(transform));
         }
 

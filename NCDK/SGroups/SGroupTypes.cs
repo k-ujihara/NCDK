@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace NCDK.SGroups
+namespace NCDK.Sgroups
 {
     /// <summary>
     /// Enumeration of Ctab Sgroup types.
@@ -36,7 +36,7 @@ namespace NCDK.SGroups
     /// </list>
     /// </remarks>
     [Obfuscation(ApplyToMembers = true, Exclude = true)]
-    public enum SGroupTypes
+    public enum SgroupTypes
     {
         Nil = 0,
 
@@ -150,24 +150,24 @@ namespace NCDK.SGroups
 			"N/A",
 		};
 
-        private static readonly Dictionary<string, SGroupTypes> map;
+        private static readonly Dictionary<string, SgroupTypes> map;
 
         static SgroupTypeTools()
         {
-            map = new Dictionary<string, SGroupTypes>();
+            map = new Dictionary<string, SgroupTypes>();
 			for (int i = 0; i < ctabKeys.Length; i++)
             {
-                map.Add(ctabKeys[i], (SGroupTypes)i);
+                map.Add(ctabKeys[i], (SgroupTypes)i);
             }
         }
 
-        public static string Key(this SGroupTypes value)
+        public static string Key(this SgroupTypes value)
 			=> ctabKeys[(int)value];
 
-        public static SGroupTypes Parse(string str)
+        public static SgroupTypes Parse(string str)
         {
-            if (!map.TryGetValue(str, out SGroupTypes o))
-                return SGroupTypes.CtabGeneric;
+            if (!map.TryGetValue(str, out SgroupTypes o))
+                return SgroupTypes.CtabGeneric;
             return o;
         }
     }

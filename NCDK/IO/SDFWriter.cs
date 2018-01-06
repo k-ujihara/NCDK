@@ -22,7 +22,7 @@
  */
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
@@ -278,11 +278,11 @@ namespace NCDK.IO
             if (container.Bonds.Count > 999)
                 return true;
             // check for positional variation, this can be output in base V3000 and not V2000
-            var sgroups = container.GetProperty<IEnumerable<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = container.GetProperty<IEnumerable<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups != null)
             {
-                foreach (SGroup sgroup in sgroups)
-                    if (sgroup.Type == SGroupTypes.ExtMulticenter)
+                foreach (Sgroup sgroup in sgroups)
+                    if (sgroup.Type == SgroupTypes.ExtMulticenter)
                         return true;
             }
             return false;

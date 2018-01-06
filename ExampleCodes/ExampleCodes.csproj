@@ -62,6 +62,7 @@
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\Elements_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />
+    <Compile Include="Depict\Depiction_Example.cs" />
     <Compile Include="Depict\SvgDrawVisitor_Example.cs" />
     <Compile Include="Depict\DepictionGenerator_Example.cs" />
     <Compile Include="Fingerprints\FingerprinterTool_Example.cs" />

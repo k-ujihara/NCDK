@@ -137,7 +137,6 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, int massNumber)
         {
-            IIsotope ret = null;
             int elem = Elements.OfString(symbol).AtomicNumber;
             var isotopes = this.isotopes[elem];
             if (isotopes == null)

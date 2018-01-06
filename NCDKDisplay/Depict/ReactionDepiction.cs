@@ -213,14 +213,14 @@ namespace NCDK.Depict
             }
         }
 
-        public override RenderTargetBitmap ToImg()
+        public override RenderTargetBitmap ToBitmap()
         {
 
             // format margins and padding for raster images
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor));
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-            double padding = GetPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // work out the required space of the main and side components separately
             // will draw these in two passes (main then side) hence want different offsets for each
@@ -359,7 +359,7 @@ namespace NCDK.Depict
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
 
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
-            double padding = GetPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
@@ -369,9 +369,9 @@ namespace NCDK.Depict
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
             {
-                zoom *= MM_TO_POINT;
-                margin *= MM_TO_POINT;
-                padding *= MM_TO_POINT;
+                zoom *= M_MMToPoint;
+                margin *= M_MMToPoint;
+                padding *= M_MMToPoint;
             }
 
             // work out the required space of the main and side components separately
@@ -551,7 +551,7 @@ namespace NCDK.Depict
 
             // PDF and PS are in point to we need to account for that
             if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(MM_TO_POINT);
+                targetDim = targetDim.Scale(M_MMToPoint);
 
             double resize = Math.Min(targetDim.w / required.w,
                                      targetDim.h / required.h);
@@ -592,7 +592,7 @@ namespace NCDK.Depict
             {
                 // we want all vector graphics dims in MM
                 if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(MM_TO_POINT);
+                    return dimensions.Scale(M_MMToPoint);
                 else
                     return dimensions;
             }

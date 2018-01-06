@@ -23,7 +23,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 

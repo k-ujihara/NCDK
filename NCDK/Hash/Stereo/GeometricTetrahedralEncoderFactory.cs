@@ -61,7 +61,6 @@ namespace NCDK.Hash.Stereo
             var encoders = new List<IStereoEncoder>();
             IDictionary<IAtom, int> elevation = new Dictionary<IAtom, int>(10);
 
-        ATOMS:
             for (int i = 0; i < n; i++)
             {
                 int degree = graph[i].Length;

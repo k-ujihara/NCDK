@@ -39,7 +39,8 @@ namespace NCDK.Depict
     /// Internal - depicts a set of molecules aligned in a grid. This class
     /// also handles the degenerate case of a single molecule as a 1x1 grid.
     /// </summary>
-    sealed class MolGridDepiction : Depiction
+    sealed class MolGridDepiction 
+        : Depiction
     {
         private readonly RendererModel model;
         private readonly Dimensions dimensions;
@@ -89,11 +90,11 @@ namespace NCDK.Depict
             this.nRow = nRow;
         }
 
-        public override RenderTargetBitmap ToImg()
+        public override RenderTargetBitmap ToBitmap()
         {
             // format margins and padding for raster images
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
-            double padding = GetPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor));
 
@@ -106,9 +107,6 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, required, null);
             double fitting = CalcFitting(margin, padding, required, null);
 
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)Math.Ceiling(total.w), (int)Math.Ceiling(total.h), 96, 96, PixelFormats.Pbgra32);
-
             // we use the AWT for vector graphics if though we're raster because
             // fractional strokes can be figured out by interpolation, without
             // when we shrink diagrams bonds can look too bold/chubby
@@ -117,8 +115,8 @@ namespace NCDK.Depict
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
-                visitor.SetTransform(new ScaleTransform(1, -1));
-                visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
+                visitor.SetTransform(new ScaleTransform(1, 1));
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
 
                 // compound the zoom, fitting and scaling into a single value
                 double rescale = zoom * fitting * scale;
@@ -137,7 +135,7 @@ namespace NCDK.Depict
                     if (bounds.IsEmpty())
                         continue;
 
-                    // calc the 'view' bounds:
+                    // calculate the 'view' bounds:
                     //  amount of padding depends on which row or column we are in.
                     //  the width/height of this col/row can be determined by the next offset
                     double x = xBase + col * padding + rescale * xOffset[col];
@@ -147,10 +145,12 @@ namespace NCDK.Depict
 
                     Draw(visitor, zoom, bounds, new Rect(x, y, w, h));
                 }
-
-                img.Render(dv);
-                return img;
             }
+
+            // create the image for rendering
+            var img = new RenderTargetBitmap((int)Math.Ceiling(total.w), (int)Math.Ceiling(total.h), 96, 96, PixelFormats.Pbgra32);
+            img.Render(dv);
+            return img;
         }
 
         private double CalcFitting(double margin, double padding, Dimensions required, string fmt)
@@ -161,7 +161,7 @@ namespace NCDK.Depict
 
             // PDF and PS are in point to we need to account for that
             if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(MM_TO_POINT);
+                targetDim = targetDim.Scale(M_MMToPoint);
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                              .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
@@ -183,7 +183,7 @@ namespace NCDK.Depict
             {
                 // we want all vector graphics dims in MM
                 if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(MM_TO_POINT);
+                    return dimensions.Scale(M_MMToPoint);
                 else
                     return dimensions;
             }
@@ -193,7 +193,7 @@ namespace NCDK.Depict
         {
             // format margins and padding for raster images
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
-            double padding = GetPaddingValue(DEFAULT_PADDING_FACTOR * margin);
+            double padding = GetPaddingValue(DefaultPaddingFactor * margin);
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
 
             // All vector graphics will be written in mm not px to we need to
@@ -204,9 +204,9 @@ namespace NCDK.Depict
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
             {
-                zoom *= MM_TO_POINT;
-                margin *= MM_TO_POINT;
-                padding *= MM_TO_POINT;
+                zoom *= M_MMToPoint;
+                margin *= M_MMToPoint;
+                padding *= M_MMToPoint;
             }
 
             // row and col offsets for alignment
@@ -248,7 +248,7 @@ namespace NCDK.Depict
                 int row = i / nCol;
                 int col = i % nCol;
 
-                // calc the 'view' bounds:
+                // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
                 double x = xBase + col * padding + rescale * xOffset[col];

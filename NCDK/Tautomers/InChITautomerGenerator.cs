@@ -440,7 +440,7 @@ namespace NCDK.Tautomers
             bool atomRemoved = false;
             while (atomsToRemove)
             {
-                ATOMS: foreach (var atom in skeleton.Atoms)
+                foreach (var atom in skeleton.Atoms)
                 {
                     atomRemoved = false;
                     int position = int.Parse(atom.Id);
@@ -474,7 +474,7 @@ namespace NCDK.Tautomers
             bool bondRemoved = false;
             while (bondsToRemove)
             {
-                BONDS: foreach (var bond in skeleton.Bonds)
+                foreach (var bond in skeleton.Bonds)
                 {
                     bondRemoved = false;
                     foreach (var removedAtom in removedAtoms)
@@ -720,7 +720,7 @@ namespace NCDK.Tautomers
                     if (dblBondsAdded == doubleBondMax)
                     {
                         bool validDoubleBondConfig = true;
-                        CHECK: foreach (var atom in container.Atoms)
+                        foreach (var atom in container.Atoms)
                         {
                             if (atom.Valency.Value != atom.ImplicitHydrogenCount + GetConnectivity(atom, container))
                             {

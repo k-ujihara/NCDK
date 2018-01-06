@@ -26,7 +26,7 @@ using NCDK.AtomTypes;
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.RingSearches;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
@@ -120,17 +120,17 @@ namespace NCDK.Tools.Manipulator
             if (idx < 0)
                 return false;
             container.Atoms[idx] = newAtom;
-            var sgrougs = container.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {
                 bool updated = false;
-                List<SGroup> replaced = new List<SGroup>();
-                foreach (SGroup org in sgrougs)
+                List<Sgroup> replaced = new List<Sgroup>();
+                foreach (Sgroup org in sgrougs)
                 {
                     if (org.Atoms.Contains(oldAtom))
                     {
                         updated = true;
-                        SGroup cpy = new SGroup();
+                        Sgroup cpy = new Sgroup();
                         foreach (IAtom atom in org.Atoms)
                         {
                             if (!oldAtom.Equals(atom))
@@ -140,9 +140,9 @@ namespace NCDK.Tools.Manipulator
                         }
                         foreach (IBond bond in org.Bonds)
                             cpy.Bonds.Add(bond);
-                        foreach (SGroup parent in org.Parents)
+                        foreach (Sgroup parent in org.Parents)
                             cpy.AddParent(parent);
-                        foreach (SGroupKeys key in org.AttributeKeys)
+                        foreach (SgroupKeys key in org.AttributeKeys)
                             cpy.PutValue(key, org.GetValue(key));
                         replaced.Add(cpy);
                     }
@@ -154,7 +154,7 @@ namespace NCDK.Tools.Manipulator
                 if (updated)
                 {
                     container.SetProperty(CDKPropertyName.CtabSgroups,
-                        new ReadOnlyCollection<SGroup>(replaced));
+                        new ReadOnlyCollection<Sgroup>(replaced));
                 }
             }
 

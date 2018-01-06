@@ -21,12 +21,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-namespace NCDK.SGroups
+namespace NCDK.Sgroups
 {
     /// <summary>
-    /// Keys for indexing common SGroup attributes. 
+    /// Keys for indexing common Sgroup attributes. 
     /// </summary>
-    public enum SGroupKeys
+    public enum SgroupKeys
     {
         CtabType,
         CtabSubType,

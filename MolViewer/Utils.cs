@@ -10,12 +10,14 @@ namespace NCDK.MolViewer
         public static AtomContainerRenderer BuildStdRenderer()
         {
             List<IGenerator<IAtomContainer>> generators =
-                new List<IGenerator<IAtomContainer>>();
-            //generators.Add(new BasicBondGenerator());
-            generators.Add(new RingGenerator());
-            //generators.Add(new BasicAtomGenerator());
-            generators.Add(new ExtendedAtomGenerator());
-            generators.Add(new BasicSceneGenerator());
+                new List<IGenerator<IAtomContainer>>
+                {
+                    //generators.Add(new BasicBondGenerator());
+                    new RingGenerator(),
+                    //generators.Add(new BasicAtomGenerator());
+                    new ExtendedAtomGenerator(),
+                    new BasicSceneGenerator()
+                };
             AtomContainerRenderer atr = new AtomContainerRenderer(generators, new WPFFontManager());
             atr.GetRenderer2DModel().SetFitToScreen(true);
             //atr.GetRenderer2DModel().SetZoomFactor(1);

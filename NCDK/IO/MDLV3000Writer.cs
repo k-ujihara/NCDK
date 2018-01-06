@@ -25,7 +25,7 @@ using NCDK.Common.Primitives;
 using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.IO.Formats;
-using NCDK.SGroups;
+using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -350,13 +350,13 @@ namespace NCDK.IO
                 return;
 
             // collect multicenter Sgroups before output
-            var sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
-            var multicenterSgroups = new Dictionary<IBond, SGroup>();
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            var multicenterSgroups = new Dictionary<IBond, Sgroup>();
             if (sgroups != null)
             {
                 foreach (var sgroup in sgroups)
                 {
-                    if (sgroup.Type != SGroupTypes.ExtMulticenter)
+                    if (sgroup.Type != SgroupTypes.ExtMulticenter)
                         continue;
                     foreach (var bond in sgroup.Bonds)
                         multicenterSgroups[bond] = sgroup;
@@ -422,7 +422,7 @@ namespace NCDK.IO
                         break;
                 }
 
-                if (multicenterSgroups.TryGetValue(bond, out SGroup sgroup))
+                if (multicenterSgroups.TryGetValue(bond, out Sgroup sgroup))
                 {
                     var atoms = new List<IAtom>(sgroup.Atoms);
                     atoms.Remove(bond.Begin);
@@ -476,18 +476,18 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="mol">molecule</param>
         /// <returns>the sgroups</returns>
-        private IList<SGroup> GetSgroups(IAtomContainer mol)
+        private IList<Sgroup> GetSgroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<SGroup>>(CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
-                sgroups = Array.Empty<SGroup>();
+                sgroups = Array.Empty<Sgroup>();
             return sgroups;
         }
 
         private static readonly SgroupComparator aSgroupComparator = new SgroupComparator();
-        private class SgroupComparator : IComparer<SGroup>
+        private class SgroupComparator : IComparer<Sgroup>
         {
-            public int Compare(SGroup o1, SGroup o2)
+            public int Compare(Sgroup o1, Sgroup o2)
             {
                 // empty parents come first
                 int cmp = -(o1.Parents.Count == 0).CompareTo(o2.Parents.Count == 0);
@@ -521,15 +521,15 @@ namespace NCDK.IO
         /// <param name="idxs">index map for looking up atom and bond indexes</param>
         /// <exception cref="IOException">low-level IO error</exception>
         /// <exception cref="CDKException">unsupported format feature or invalid state</exception>
-        private void WriteSgroupBlock(IEnumerable<SGroup> sgroups, IDictionary<IChemObject, int> idxs)
+        private void WriteSgroupBlock(IEnumerable<Sgroup> sgroups, IDictionary<IChemObject, int> idxs)
         {
             // Short of building a full dependency graph we write the parents
             // first, this sort is good for three levels of nesting. Not perfect
             // but really tools should be able to handle output of order parents
             // when reading (we do).
-            var a_sgroups = new List<SGroup>(
+            var a_sgroups = new List<Sgroup>(
                 sgroups
-                .Where(g => g.Type != SGroupTypes.ExtMulticenter)    // remove non-ctab Sgroups
+                .Where(g => g.Type != SgroupTypes.ExtMulticenter)    // remove non-ctab Sgroups
                 .OrderBy(g => g, aSgroupComparator));
             // going to reorder but keep the originals untouched
             // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
@@ -541,7 +541,7 @@ namespace NCDK.IO
             int sgroupIdx = 0;
             foreach (var sgroup in a_sgroups)
             {
-                SGroupTypes type = sgroup.Type;
+                SgroupTypes type = sgroup.Type;
                 writer.Write(++sgroupIdx).Write(' ').Write(type.Key()).Write(" 0");
 
                 if (sgroup.Atoms.Any())
@@ -553,7 +553,7 @@ namespace NCDK.IO
 
                 if (sgroup.Bonds.Any())
                 {
-                    if (type == SGroupTypes.CtabData)
+                    if (type == SgroupTypes.CtabData)
                     {
                         writer.Write(" CBONDS=("); // containment bonds
                     }
@@ -567,7 +567,7 @@ namespace NCDK.IO
 
                 if (sgroup.Parents.Any())
                 {
-                    ICollection<SGroup> parents = sgroup.Parents;
+                    ICollection<Sgroup> parents = sgroup.Parents;
                     if (parents.Count > 1)
                         throw new CDKException("Cannot write Sgroup with multiple parents");
                     writer.Write(" PARENT=").Write(1 + a_sgroups.IndexOf(parents.First()));
@@ -577,41 +577,41 @@ namespace NCDK.IO
                 {
                     switch (key)
                     {
-                        case SGroupKeys.CtabSubType:
+                        case SgroupKeys.CtabSubType:
                             writer.Write(" SUBTYPE=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SGroupKeys.CtabConnectivity:
+                        case SgroupKeys.CtabConnectivity:
                             writer.Write(" CONNECT=").Write(sgroup.GetValue(key).ToString().ToUpperInvariant());
                             break;
-                        case SGroupKeys.CtabSubScript:
-                            if (type == SGroupTypes.CtabMultipleGroup)
+                        case SgroupKeys.CtabSubScript:
+                            if (type == SgroupTypes.CtabMultipleGroup)
                                 writer.Write(" MULT=").Write(sgroup.GetValue(key).ToString());
                             else
                                 writer.Write(" LABEL=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SGroupKeys.CtabBracketStyle:
+                        case SgroupKeys.CtabBracketStyle:
                             var btype = (int)sgroup.GetValue(key);
                             if (btype.Equals(1))
                                 writer.Write(" BRKTYP=PAREN");
                             break;
-                        case SGroupKeys.CtabParentAtomList:
+                        case SgroupKeys.CtabParentAtomList:
                             var parentAtoms = (IEnumerable<IChemObject>)sgroup.GetValue(key);
                             writer.Write(" PATOMS=(")
                                                           .Write(parentAtoms, idxs)
                                                           .Write(')');
                             break;
-                        case SGroupKeys.CtabComponentNumber:
+                        case SgroupKeys.CtabComponentNumber:
                             var number = (int)sgroup.GetValue(key);
                             if (number > 0)
                                 writer.Write(" COMPNO=").Write(number);
                             break;
-                        case SGroupKeys.CtabExpansion:
+                        case SgroupKeys.CtabExpansion:
                             var expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                                 writer.Write(" ESTATE=E");
                             break;
-                        case SGroupKeys.CtabBracket:
-                            var brackets = (IEnumerable<SGroupBracket>)sgroup.GetValue(key);
+                        case SgroupKeys.CtabBracket:
+                            var brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
                                 writer.Write(" BRKXYZ=(");
@@ -642,11 +642,11 @@ namespace NCDK.IO
         {
             WriteHeader(mol);
 
-            var sgroups = (IEnumerable<SGroup>)GetSgroups(mol);
+            var sgroups = (IEnumerable<Sgroup>)GetSgroups(mol);
 
             int numSgroups = 0;
             foreach (var sgroup in sgroups)
-                if (sgroup.Type != SGroupTypes.ExtMulticenter)
+                if (sgroup.Type != SgroupTypes.ExtMulticenter)
                     numSgroups++;
 
             writer.Write("BEGIN CTAB\n");

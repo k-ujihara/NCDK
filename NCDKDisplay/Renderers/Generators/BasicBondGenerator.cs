@@ -18,6 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Numerics;
@@ -405,11 +406,11 @@ namespace NCDK.Renderers.Generators
         private IRenderingElement GenerateStereoElement(IBond bond, RendererModel model)
         {
             BondStereo stereo = bond.Stereo;
-            WedgeLineElement.TYPE type = WedgeLineElement.TYPE.Wedged;
+            WedgeLineElement.Types type = WedgeLineElement.Types.Wedged;
             Direction dir = Direction.toSecond;
-            if (stereo == BondStereo.Down || stereo == BondStereo.DownInverted) type = WedgeLineElement.TYPE.Dashed;
+            if (stereo == BondStereo.Down || stereo == BondStereo.DownInverted) type = WedgeLineElement.Types.Dashed;
             if (stereo == BondStereo.UpOrDown || stereo == BondStereo.UpOrDownInverted)
-                type = WedgeLineElement.TYPE.Indiff;
+                type = WedgeLineElement.Types.Indiff;
             if (stereo == BondStereo.DownInverted || stereo == BondStereo.UpInverted
                     || stereo == BondStereo.UpOrDownInverted) dir = Direction.toFirst;
 
@@ -441,7 +442,7 @@ namespace NCDK.Renderers.Generators
         /// Check to see if a bond is a stereo bond.
         /// </summary>
         /// <param name="bond">the bond to check</param>
-        /// <returns>true if the bond has stero information</returns>
+        /// <returns>true if the bond has stereo information</returns>
         private bool IsStereoBond(IBond bond)
         {
             return bond.Stereo != BondStereo.None && bond.Stereo != BondStereo.None

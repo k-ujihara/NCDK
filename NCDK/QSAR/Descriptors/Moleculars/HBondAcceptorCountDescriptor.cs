@@ -94,9 +94,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "The Chemistry Development Kit");
 
         /// <summary>
-        /// The parameters attribute of the HBondAcceptorCountDescriptor object.
+        /// The parameters attribute of the <see cref="HBondAcceptorCountDescriptor"/> object.
         /// </summary>
-        /// <value>a bool true means that aromaticity has to be checked</value>
+        /// <value>a <see langword="true"/> means that aromaticity has to be checked</value>
         /// <exception cref="CDKException"></exception>
         public object[] Parameters
         {
@@ -104,13 +104,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 if (value.Length != 1)
                 {
-                    throw new CDKException("HBondAcceptorCountDescriptor expects a single parameter");
+                    throw new CDKException($"{nameof(HBondAcceptorCountDescriptor)} expects a single parameter");
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The parameter must be of type bool");
+                    throw new CDKException($"The parameter must be of type {nameof(Boolean)}");
                 }
-                // ok, all should be fine
+                // OK, all should be fine
                 checkAromaticity = (bool)value[0];
             }
             get
@@ -154,7 +154,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             //IAtom[] atoms = ac.GetAtoms();
             // labelled for loop to allow for labelled continue statements within the loop
-        atomloop:
             foreach (var atom in ac.Atoms)
             {
                 // looking for suitable nitrogen atoms

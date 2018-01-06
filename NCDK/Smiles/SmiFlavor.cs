@@ -143,13 +143,13 @@ namespace NCDK.Smiles
         CxRadical = 0x020000,
 
         /// <summary>
-        /// Output multi-center bonds, positional variation is specified with <see cref="SGroups.SGroup"/>s
-        /// of the type <see cref="SGroups.SGroupTypes.ExtMulticenter"/>.
+        /// Output multi-center bonds, positional variation is specified with <see cref="Sgroups.Sgroup"/>s
+        /// of the type <see cref="Sgroups.SgroupTypes.ExtMulticenter"/>.
         /// </summary>
         CxMulticenter = 0x040000,
 
         /// <summary>
-        /// Output polymer repeat units is specified with <see cref="SGroups.SGroup"/>s.
+        /// Output polymer repeat units is specified with <see cref="Sgroups.Sgroup"/>s.
         /// </summary>
         CxPolymer = 0x080000,
 

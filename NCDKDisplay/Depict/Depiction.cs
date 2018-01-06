@@ -42,13 +42,13 @@ namespace NCDK.Depict
         /// <summary>
         /// For converting MM coordinates to PS Point (1/72 inch)
         /// </summary>
-        protected const double MM_TO_POINT = 2.83464566751;
+        internal const double M_MMToPoint = 2.83464566751;
 
         /// <summary>
         /// When no fixed padding value is specified we use margin
         /// multiplied by this value.
         /// </summary>
-        protected const double DEFAULT_PADDING_FACTOR = 2;
+        protected const double DefaultPaddingFactor = 2;
 
         /// <summary>
         /// Structured Vector Graphics (SVG) format key.
@@ -99,13 +99,13 @@ namespace NCDK.Depict
         /// Render the depiction to a WPF.
         /// </summary>
         /// <returns>WPF Bitmap</returns>
-        public abstract RenderTargetBitmap ToImg();
+        public abstract RenderTargetBitmap ToBitmap();
 
         /// <summary>
         /// Render the image to an SVG image.
         /// </summary>
         /// <returns>svg XML content</returns>
-        public string ToSvgStr()
+        public string ToSvgString()
         {
             return ToVecStr(SVG_FMT);
         }
@@ -114,7 +114,7 @@ namespace NCDK.Depict
         /// Render the image to an EPS format string.
         /// </summary>
         /// <returns>eps content</returns>
-        public string ToEpsStr()
+        public string ToEpsString()
         {
             return ToVecStr(PS_FMT);
         }
@@ -123,7 +123,7 @@ namespace NCDK.Depict
         /// Render the image to an PDF format string.
         /// </summary>
         /// <returns>pdf content</returns>
-        public string ToPdfStr()
+        public string ToPdfString()
         {
             return ToVecStr(PDF_FMT);
         }
@@ -170,26 +170,28 @@ namespace NCDK.Depict
         /// <returns>supported formats</returns>
         public virtual IList<string> ListFormats()
         {
-            var formats = new List<string>();
-            formats.Add(SVG_FMT);
-            formats.Add(SVG_FMT.ToUpperInvariant());
-            formats.Add(PS_FMT);
-            formats.Add(PS_FMT.ToUpperInvariant());
-            formats.Add(PDF_FMT);
-            formats.Add(PDF_FMT.ToUpperInvariant());
+            var formats = new List<string>
+            {
+                SVG_FMT,
+                SVG_FMT.ToUpperInvariant(),
+                PS_FMT,
+                PS_FMT.ToUpperInvariant(),
+                PDF_FMT,
+                PDF_FMT.ToUpperInvariant(),
 
-            formats.Add("bmp");
-            formats.Add("bmp".ToUpperInvariant());
-            formats.Add(GIF_FMT);
-            formats.Add(GIF_FMT.ToUpperInvariant());
-            formats.Add(JPG_FMT);
-            formats.Add(JPG_FMT.ToUpperInvariant());
-            formats.Add(PNG_FMT);
-            formats.Add(PNG_FMT.ToUpperInvariant());
-            formats.Add("tif");
-            formats.Add("tif".ToUpperInvariant());
-            formats.Add("wmp");
-            formats.Add("wmp".ToUpperInvariant());
+                "bmp",
+                "bmp".ToUpperInvariant(),
+                GIF_FMT,
+                GIF_FMT.ToUpperInvariant(),
+                JPG_FMT,
+                JPG_FMT.ToUpperInvariant(),
+                PNG_FMT,
+                PNG_FMT.ToUpperInvariant(),
+                "tif",
+                "tif".ToUpperInvariant(),
+                "wmp",
+                "wmp".ToUpperInvariant()
+            };
             return formats;
         }
 
@@ -206,28 +208,45 @@ namespace NCDK.Depict
             {
                 case SVG_FMT:
                     {
-                        var bytes = Encoding.UTF8.GetBytes(ToSvgStr());
+                        var bytes = Encoding.UTF8.GetBytes(ToSvgString());
                         output.Write(bytes, 0, bytes.Length);
                     }
                     break;
                 case PS_FMT:
                     {
-                        var bytes = Encoding.UTF8.GetBytes(ToEpsStr());
+                        var bytes = Encoding.UTF8.GetBytes(ToEpsString());
                         output.Write(bytes, 0, bytes.Length);
                     }
                     break;
                 case PDF_FMT:
                     {
-                        var bytes = Encoding.UTF8.GetBytes(ToPdfStr());
+                        var bytes = Encoding.UTF8.GetBytes(ToPdfString());
                         output.Write(bytes, 0, bytes.Length);
                     }
                     break;
+                case PNG_FMT:
+                case JPG_FMT:
+                case GIF_FMT:
+                    BitmapEncoder enc = null;
+                    switch (fmt.ToLowerInvariant())
+                    {
+                        case PNG_FMT:
+                            enc = new PngBitmapEncoder();
+                            break;
+                        case JPG_FMT:
+                            enc = new JpegBitmapEncoder();
+                            break;
+                        case GIF_FMT:
+                            enc = new GifBitmapEncoder();
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                    var rtb = ToBitmap();
+                    enc.Frames.Add(BitmapFrame.Create(rtb));
+                    enc.Save(output);
+                    break;
                 default:
-                    //{
-                    //    var bytes = Encoding.UTF8.GetBytes(ToImg());
-                    //    ImageIO.Write(ToImg(), fmt, out);
-                    //}
-                    //break;
                     throw new NotImplementedException();
             }
         }
@@ -257,15 +276,15 @@ namespace NCDK.Depict
         /// <seealso cref="ListFormats"/>
         public void WriteTo(string path)
         {
-            int i = path.LastIndexOf(DOT);
-            if (i < 0 || i + 1 == path.Length)
+            string ext = Path.GetExtension(path);
+            if (!ext.StartsWith("."))
                 throw new IOException("Cannot find suffix in provided path: " + path);
-            string fmt = path.Substring(i + 1);
+            string fmt = ext.Substring(1);
             WriteTo(fmt, path);
         }
 
         /// <summary>
-        /// Utility for resolving paths on unix systems that contain tilda for
+        /// Utility for resolving paths on Unix systems that contain tilda for
         /// the home directory.
         /// </summary>
         /// <param name="path">the file system path</param>
@@ -279,10 +298,11 @@ namespace NCDK.Depict
 
         /// <summary>
         /// Ensures a suffix on a file output if the path doesn't
-        /// currently end with it. For example calling
-        /// {@code WriteTo(SVG_FMT, "~/chemical")} would create a file
-        /// {@code ~/chemical.svg}.
+        /// currently end with it.
         /// </summary>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.Depiction_Example.cs+EnsureSuffix"]/*' />
+        /// </example>
         /// <param name="path">the file system path</param>
         /// <param name="suffix">the format suffix</param>
         /// <returns>path with correct suffix</returns>
@@ -305,18 +325,20 @@ namespace NCDK.Depict
             double modelScale = zoom * model.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double zoomToFit = Math.Min(viewBounds.Width / (bounds.Width * modelScale), viewBounds.Height / (bounds.Height * modelScale));
             Matrix transform = Matrix.Identity;
-            transform.Translate(viewBounds.GetCenterX(), viewBounds.GetCenterY());
-            transform.Scale(modelScale, -modelScale);
+            transform.TranslatePrepend(viewBounds.GetCenterX(), viewBounds.GetCenterY());
+            transform.ScalePrepend(modelScale, -modelScale);
 
             // default is shrink only unless specified
             if (model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)) || zoomToFit < 1)
-                transform.Scale(zoomToFit, zoomToFit);
+                transform.ScalePrepend(zoomToFit, zoomToFit);
 
-            transform.Translate(-(bounds.minX + bounds.maxX) / 2, -(bounds.minY + bounds.maxY) / 2);
+            transform.TranslatePrepend(-(bounds.minX + bounds.maxX) / 2, -(bounds.minY + bounds.maxY) / 2);
 
             // not always needed
-            var fontManager = new WPFFontManager();
-            fontManager.Zoom = zoomToFit;
+            var fontManager = new WPFFontManager
+            {
+                Zoom = zoomToFit
+            };
 
             visitor.SetRendererModel(model);
             visitor.SetFontManager(fontManager);

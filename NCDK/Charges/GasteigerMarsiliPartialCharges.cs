@@ -83,7 +83,7 @@ namespace NCDK.Charges
             double[] q_old = new double[ac.Atoms.Count];
             for (int i = 0; i < q_old.Length; i++)
                 q_old[0] = 20.0;
-            output: for (int i = 0; i < MaxGasteigerIterations; i++)
+            for (int i = 0; i < MaxGasteigerIterations; i++)
             {
                 alpha *= MaxGasteigerDamp;
                 bool isDifferent = false;
