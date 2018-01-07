@@ -35,7 +35,8 @@ namespace NCDK.Renderers.Elements
             element = renderingElement;
         }
 
-        public class MockVisitor : IRenderingVisitor
+        public class MockVisitor
+            : IRenderingVisitor
         {
             internal bool isVisited = false;
 
@@ -44,10 +45,7 @@ namespace NCDK.Renderers.Elements
                 isVisited = true;
             }
 
-            public void SetTransform(Transform transform)
-            {
-                // TODO Auto-generated method stub
-            }
+            public Transform Transform { get => Transform.Identity; set { } }
         }
 
         [TestMethod()]

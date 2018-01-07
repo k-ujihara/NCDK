@@ -23,6 +23,7 @@
  */
 using NCDK.Renderers.Elements.Path;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Media;
 
 namespace NCDK.Renderers.Elements
@@ -128,52 +129,61 @@ namespace NCDK.Renderers.Elements
 
         private static List<Path.PathElement> ToPathElements(PathGeometry pathIt)
         {
+            var trans = pathIt.Transform ?? Transform.Identity;
             var elements = new List<Path.PathElement>();
             foreach (var figure in pathIt.Figures)
             {
-                elements.Add(new MoveTo(figure.StartPoint));
+                elements.Add(new MoveTo(trans.Transform(figure.StartPoint)));
                 foreach (var seg in figure.Segments)
                 {
-                    if (seg is LineSegment)
+                    switch (seg)
                     {
-                        var s = (LineSegment)seg;
-                        elements.Add(new LineTo(s.Point));
-                    }
-                    else if (seg is QuadraticBezierSegment)
-                    {
-                        var s = (QuadraticBezierSegment)seg;
-                        elements.Add(new QuadTo(s.Point1, s.Point2));
-                    }
-                    else if (seg is BezierSegment)
-                    {
-                        var s = (BezierSegment)seg;
-                        elements.Add(new CubicTo(s.Point1, s.Point2, s.Point3));
-                    }
-                    else if (seg is PolyLineSegment)
-                    {
-                        var s = (PolyLineSegment)seg;
-                        foreach (var p in s.Points)
-                            elements.Add(new LineTo(p));
-                    }
-                    else if (seg is ArcSegment)
-                    {
-                        var s = (ArcSegment)seg;
-                        elements.Add(new ArcTo(s.Point, s.Size, s.RotationAngle, s.IsLargeArc, s.SweepDirection));  // TODO handle ArcSegment
-                    }
-                    else if (seg is PolyBezierSegment)
-                    {
-                        var s = (PolyBezierSegment)seg;
-                        foreach (var p in s.Points)
-                            elements.Add(new LineTo(p));  // TODO handle PolyBezierSegment
-                    }
-                    else if (seg is PolyQuadraticBezierSegment)
-                    {
-                        var s = (PolyQuadraticBezierSegment)seg;
-                        foreach (var p in s.Points)
-                            elements.Add(new LineTo(p));  // TODO handle PolyQuadraticBezierSegment
+                        case LineSegment s:
+                            elements.Add(new LineTo(trans.Transform(s.Point)));
+                            break;
+                        case QuadraticBezierSegment s:
+                            elements.Add(new QuadTo(trans.Transform(s.Point1), trans.Transform(s.Point2)));
+                            break;
+                        case BezierSegment s:
+                            elements.Add(new CubicTo(trans.Transform(s.Point1), trans.Transform(s.Point2), trans.Transform(s.Point3)));
+                            break;
+                        case PolyLineSegment s:
+                            {
+                                foreach (var p in s.Points)
+                                    elements.Add(new LineTo(trans.Transform(p)));
+                            }
+                            break;
+                        case ArcSegment s:
+                            {
+                                if (s.RotationAngle != 0)
+                                    throw new System.NotImplementedException();
+                                var p = trans.Transform(s.Point);
+                                var t = trans.Value;
+                                t.OffsetX = 0;
+                                t.OffsetY = 0;
+                                var a = new System.Windows.Point(s.Size.Width, s.Size.Height);
+                                a = t.Transform(a);
+                                var aa = new ArcTo(p, new System.Windows.Size(a.X, a.Y), 0, s.IsLargeArc, s.SweepDirection);
+                                elements.Add(aa);
+                            }
+                            break;
+                        case PolyBezierSegment s:
+                            throw new System.NotImplementedException();
+                            //foreach (var p in s.Points)
+                            //    elements.Add(new LineTo(p));  // TODO handle PolyBezierSegment
+                            //break;
+                        case PolyQuadraticBezierSegment s:
+                            throw new System.NotImplementedException();
+                            //foreach (var p in s.Points)
+                            //    elements.Add(new LineTo(p));  // TODO handle PolyQuadraticBezierSegment
+                            //break;
+                        default:
+                            Trace.TraceWarning($"'{seg}' is ignored in {nameof(ToPathElements)}");
+                            break;
                     }
                 }
-                elements.Add(new Close());
+                if (figure.IsClosed)
+                    elements.Add(new Close());
             }
             return elements;
         }

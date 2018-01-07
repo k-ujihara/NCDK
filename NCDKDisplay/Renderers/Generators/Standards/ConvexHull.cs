@@ -134,8 +134,10 @@ namespace NCDK.Renderers.Generators.Standards
             var path = shape.GetFlattenedPathGeometry();
             foreach (var figure in path.Figures)
             {
-                var newPoints = new List<Point>();
-                newPoints.Add(figure.StartPoint);
+                var newPoints = new List<Point>
+                {
+                    figure.StartPoint
+                };
                 foreach (var seg in figure.Segments)
                 {
                     switch (seg)

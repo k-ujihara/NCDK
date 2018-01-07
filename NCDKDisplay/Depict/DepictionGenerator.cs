@@ -174,11 +174,11 @@ namespace NCDK.Depict
         public DepictionGenerator()
             : this(
                   new Typeface(
-                      WPF.SystemFonts.MessageFontFamily,
-                      WPF.SystemFonts.MessageFontStyle,
-                      WPF.SystemFonts.MessageFontWeight,
-                      new WPF.FontStretch()),
-                  WPF.SystemFonts.MessageFontSize)
+                      new FontFamily("Arial"),
+                      WPF.FontStyles.Normal,
+                      WPF.FontWeights.Normal,
+                      WPF.FontStretches.Normal),
+                  10)
         {
             SetParam(typeof(BasicSceneGenerator.BondLength), (double?)26.1d);
             SetParam(typeof(StandardGenerator.HashSpacing), (double?)(26 / 8d));

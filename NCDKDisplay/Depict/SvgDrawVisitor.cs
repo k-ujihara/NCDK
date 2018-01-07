@@ -53,7 +53,8 @@ namespace NCDK.Depict
         private int indentLvl = 0;
         private Transform transform = null;
         private RendererModel model = null;
-        private static string FormatDecimal(double v) => v.ToString("F1");
+        private static string FormatDecimal(double v)
+            => ((float)v).ToString();//NCDK.Common.Primitives.Strings.JavaFormat(v, 2, false);
 
         private bool defaultsWritten = false;
         private Color? defaultStroke = null;
@@ -78,9 +79,9 @@ namespace NCDK.Depict
               .Append(" version='1.2'")
               .Append(" xmlns='http://www.w3.org/2000/svg'")
               .Append(" xmlns:xlink='http://www.w3.org/1999/xlink'")
-              .Append(" width='").Append(ToStr(w)).Append("mm'")
-              .Append(" height='").Append(ToStr(h)).Append("mm'")
-              .Append(" viewBox='0 0 ").Append(ToStr(w)).Append(" ").Append(ToStr(h)).Append("'")
+              .Append(" width='").Append(ToString(w)).Append("mm'")
+              .Append(" height='").Append(ToString(h)).Append("mm'")
+              .Append(" viewBox='0 0 ").Append(ToString(w)).Append(" ").Append(ToString(h)).Append("'")
               .Append(">\n");
             indentLvl += 2;
             AppendIdent();
@@ -113,7 +114,7 @@ namespace NCDK.Depict
             }
         }
 
-        private string ToStr(double num)
+        private string ToString(double num)
         {
             return FormatDecimal(num);
         }
@@ -190,7 +191,7 @@ namespace NCDK.Depict
             }
         }
 
-        string ToStr(Color col)
+        string ToString(Color col)
         {
             if (col.A == 255)
             {
@@ -268,7 +269,7 @@ namespace NCDK.Depict
                 defaultStroke = strokeFreq.GetMostFrequent();
                 var strokeWidth = strokeWidthFreq.GetMostFrequent();
                 if (strokeWidth != null)
-                    defaultStrokeWidth = ToStr(strokeWidth.Value);
+                    defaultStrokeWidth = ToString(strokeWidth.Value);
             }
         }
 
@@ -301,11 +302,11 @@ namespace NCDK.Depict
                             // horizontal and vertical lines can be even more compact
                             if (Math.Abs(d.X) < 0.01)
                             {
-                                sb.Append("v").Append(ToStr(d.Y));
+                                sb.Append("v").Append(ToString(d.Y));
                             }
                             else if ((Math.Abs(d.Y) < 0.01))
                             {
-                                sb.Append("h").Append(ToStr(d.X));
+                                sb.Append("h").Append(ToString(d.X));
                             }
                             else
                             {
@@ -371,13 +372,13 @@ namespace NCDK.Depict
             {
                 sb.Append(" stroke='none'");
                 if (defaultFill == null || !defaultFill.Equals(elem.color))
-                    sb.Append(" fill='").Append(ToStr(elem.color)).Append("'");
+                    sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToStr(elem.color)).Append("'");
-                sb.Append(" stroke-width='").Append(ToStr(Scaled(elem.stroke))).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
+                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.stroke))).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -395,14 +396,14 @@ namespace NCDK.Depict
             sb.Append("<line");
             if (id != null) sb.Append(" id='").Append(id).Append("'");
             if (cls != null) sb.Append(" class='").Append(cls).Append("'");
-            sb.Append(" x1='").Append(ToStr(points[0].X)).Append("'")
-              .Append(" y1='").Append(ToStr(points[0].Y)).Append("'")
-              .Append(" x2='").Append(ToStr(points[1].X)).Append("'")
-              .Append(" y2='").Append(ToStr(points[1].Y)).Append("'");
+            sb.Append(" x1='").Append(ToString(points[0].X)).Append("'")
+              .Append(" y1='").Append(ToString(points[0].Y)).Append("'")
+              .Append(" x2='").Append(ToString(points[1].X)).Append("'")
+              .Append(" y2='").Append(ToString(points[1].Y)).Append("'");
             if (defaultStroke == null || !defaultStroke.Equals(elem.color))
-                sb.Append(" stroke='").Append(ToStr(elem.color)).Append("'");
-            if (defaultStroke == null || !defaultStrokeWidth.Equals(ToStr(Scaled(elem.width))))
-                sb.Append(" stroke-width='").Append(ToStr(Scaled(elem.width))).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
+            if (defaultStroke == null || !defaultStrokeWidth.Equals(ToString(Scaled(elem.width))))
+                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.width))).Append("'");
             sb.Append("/>\n");
         }
 
@@ -463,19 +464,19 @@ namespace NCDK.Depict
             var points = new Point[] { elem.coord };
             TransformPoints(points);
             sb.Append("<rect");
-            sb.Append(" x='").Append(ToStr(points[0].X)).Append("'");
-            sb.Append(" y='").Append(ToStr(points[0].Y - elem.height)).Append("'");
-            sb.Append(" width='").Append(ToStr(Scaled(elem.width))).Append("'");
-            sb.Append(" height='").Append(ToStr(Scaled(elem.height))).Append("'");
+            sb.Append(" x='").Append(ToString(points[0].X)).Append("'");
+            sb.Append(" y='").Append(ToString(points[0].Y - elem.height)).Append("'");
+            sb.Append(" width='").Append(ToString(Scaled(elem.width))).Append("'");
+            sb.Append(" height='").Append(ToString(Scaled(elem.height))).Append("'");
             if (elem.filled)
             {
-                sb.Append(" fill='").Append(ToStr(elem.color)).Append("'");
+                sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
                 sb.Append(" stroke='none'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToStr(elem.color)).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -486,19 +487,19 @@ namespace NCDK.Depict
             var points = new Point[] { elem.coord };
             TransformPoints(points);
             sb.Append("<ellipse");
-            sb.Append(" cx='").Append(ToStr(points[0].X)).Append("'");
-            sb.Append(" cy='").Append(ToStr(points[0].Y)).Append("'");
-            sb.Append(" rx='").Append(ToStr(Scaled(elem.radius))).Append("'");
-            sb.Append(" ry='").Append(ToStr(Scaled(elem.radius))).Append("'");
+            sb.Append(" cx='").Append(ToString(points[0].X)).Append("'");
+            sb.Append(" cy='").Append(ToString(points[0].Y)).Append("'");
+            sb.Append(" rx='").Append(ToString(Scaled(elem.radius))).Append("'");
+            sb.Append(" ry='").Append(ToString(Scaled(elem.radius))).Append("'");
             if (elem.fill)
             {
-                sb.Append(" fill='").Append(ToStr(elem.color)).Append("'");
+                sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
                 sb.Append(" stroke='none'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToStr(elem.color)).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -509,9 +510,9 @@ namespace NCDK.Depict
             Point[] points = new Point[] { elem.coord };
             TransformPoints(points);
             sb.Append("<text ");
-            sb.Append(" x='").Append(ToStr(points[0].X)).Append("'");
-            sb.Append(" y='").Append(ToStr(points[0].Y)).Append("'");
-            sb.Append(" fill='").Append(ToStr(elem.color)).Append("'");
+            sb.Append(" x='").Append(ToString(points[0].X)).Append("'");
+            sb.Append(" y='").Append(ToString(points[0].Y)).Append("'");
+            sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
             sb.Append(" text-anchor='middle'");
             // TODO need font manager for scaling...
             sb.Append(">");
@@ -528,11 +529,11 @@ namespace NCDK.Depict
                   .Append(" stroke-linecap='round'")
                   .Append(" stroke-linejoin='round'");
                 if (defaultStroke != null)
-                    sb.Append(" stroke='").Append(ToStr(defaultStroke.Value)).Append("'");
+                    sb.Append(" stroke='").Append(ToString(defaultStroke.Value)).Append("'");
                 if (defaultStrokeWidth != null)
                     sb.Append(" stroke-width='").Append(defaultStrokeWidth).Append("'");
                 if (defaultFill != null)
-                    sb.Append(" fill='").Append(ToStr(defaultFill.Value)).Append("'");
+                    sb.Append(" fill='").Append(ToString(defaultFill.Value)).Append("'");
                 sb.Append(">\n");
                 indentLvl += 2;
                 defaultsWritten = true;

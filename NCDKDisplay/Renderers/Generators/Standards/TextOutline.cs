@@ -79,7 +79,9 @@ namespace NCDK.Renderers.Generators.Standards
         { }
 
         private TextOutline(string text, Typeface font, double emSize, Transform transform)
-            : this(text, font, emSize, CreateFormattedText(text, font, emSize), transform)
+            : this(text, font, emSize,
+                  CreateFormattedText(text, font, emSize),
+                  transform)
         { }
         
         /// <summary>
@@ -88,8 +90,17 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="text">the text to create an outline of</param>
         /// <param name="glyphs">the glyphs for the provided outlined</param>
         private TextOutline(string text, Typeface font, double emSize, FormattedText glyphs, Transform transform)
-            : this(text, font, emSize, glyphs, glyphs.BuildGeometry(new Point(0, 0)), transform)
+            : this(text, font, emSize, glyphs,
+                  WPFUtil.ToPathGeometry(text, font, emSize),
+                  transform)
         { }
+
+        static GeometryGroup A(Geometry g)
+        {
+            var a = new GeometryGroup();
+            a.Children.Add(g);
+            return a;
+        }
 
         /// <summary>
         /// Internal constructor, requires all attributes.
@@ -104,6 +115,8 @@ namespace NCDK.Renderers.Generators.Standards
             this.font = font;
             this.emSize = emSize;
             this.glyphs = glyphs;
+            if (outline.Transform == null)
+                outline.Transform = System.Windows.Media.Transform.Identity;
             this.outline = outline;
             this.transform = transform;
         }

@@ -17,6 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using System.Globalization;
@@ -35,7 +36,7 @@ namespace NCDK.Renderers.Visitors
     public abstract class AbstractWPFDrawVisitor : IDrawVisitor
     {
         /// <summary>
-        /// This is initially null, and must be set in the <see cref="SetTransform(Transform)"/> method!
+        /// This is initially null, and must be set <see cref="Transform"/> property!
         /// </summary>
         protected Transform transform = null;
 
@@ -94,7 +95,7 @@ namespace NCDK.Renderers.Visitors
         }
 
         /// <summary>
-        /// Obtain the exact bounding box of the {@code text} in the provided
+        /// Obtain the exact bounding box of the <paramref name="text"/> in the provided
         /// graphics environment.
         /// </summary>
         /// <param name="text">the text to obtain the bounds of</param>

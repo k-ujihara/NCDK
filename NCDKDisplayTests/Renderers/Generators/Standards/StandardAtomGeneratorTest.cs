@@ -327,7 +327,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void radical()
+        public void Radical()
         {
             Assert.AreEqual("•", StandardAtomGenerator.ChargeAdjunctText(0, 1));
         }
@@ -345,7 +345,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void radicalAndAnion()
+        public void RadicalAndAnion()
         {
             Assert.AreEqual("(•)−", StandardAtomGenerator.ChargeAdjunctText(-1, 1));
         }

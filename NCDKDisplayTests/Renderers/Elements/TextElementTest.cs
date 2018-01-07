@@ -46,10 +46,7 @@ namespace NCDK.Renderers.Elements
                 isVisited = true;
             }
 
-            public void SetTransform(Transform transform)
-            {
-                // TODO Auto-generated method stub
-            }
+            public Transform Transform { get => Transform.Identity; set { } }
         }
 
         [TestMethod()]

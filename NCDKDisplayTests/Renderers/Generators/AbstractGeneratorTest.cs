@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
@@ -60,8 +61,10 @@ namespace NCDK.Renderers.Generators
         {
             if (model != null) return; // things are already set up
             model = new RendererModel();
-            elementUtil = new ElementUtility();
-            elementUtil.SetTransform(this.GetTransform());
+            elementUtil = new ElementUtility
+            {
+                Transform = this.GetTransform()
+            };
             sceneGenerator = new BasicSceneGenerator();
             model.RegisterParameters(sceneGenerator);
         }
@@ -150,21 +153,27 @@ namespace NCDK.Renderers.Generators
             double counter = 0;
             foreach (var element in elements)
             {
-                if (element is OvalElement)
+                switch (element)
                 {
-                    OvalElement o = (OvalElement)element;
-                    center.X += o.coord.X;
-                    center.Y += o.coord.Y;
-                    counter++;
-                }
-                else if (element is LineElement)
-                {
-                    LineElement l = (LineElement)element;
-                    center.X += l.firstPoint.X;
-                    center.X += l.secondPoint.X;
-                    center.Y += l.firstPoint.Y;
-                    center.Y += l.secondPoint.Y;
-                    counter += 2;
+                    case OvalElement o:
+                        {
+                            center.X += o.coord.X;
+                            center.Y += o.coord.Y;
+                            counter++;
+                        }
+                        break;
+                    case LineElement e:
+                        {
+                            LineElement l = e;
+                            center.X += l.firstPoint.X;
+                            center.X += l.secondPoint.X;
+                            center.Y += l.firstPoint.Y;
+                            center.Y += l.secondPoint.Y;
+                            counter += 2;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
             if (counter > 0)

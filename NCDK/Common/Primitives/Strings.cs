@@ -45,7 +45,7 @@ namespace NCDK.Common.Primitives
         public static string JavaFormat(double value, int numberOfDecimalPlaces, bool isZeroLeading)
         {
             if (numberOfDecimalPlaces < 0)
-                throw new ArgumentException("Invalid arguemnt", nameof(numberOfDecimalPlaces));
+                throw new ArgumentException("Invalid argument", nameof(numberOfDecimalPlaces));
             var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString()));
             if (!isZeroLeading)
             {

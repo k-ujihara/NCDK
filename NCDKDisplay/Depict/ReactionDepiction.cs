@@ -215,7 +215,6 @@ namespace NCDK.Depict
 
         public override RenderTargetBitmap ToBitmap()
         {
-
             // format margins and padding for raster images
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor));

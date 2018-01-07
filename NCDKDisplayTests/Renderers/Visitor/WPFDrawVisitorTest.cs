@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
@@ -43,8 +44,10 @@ namespace NCDK.Renderers.Visitors
         {
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext g2d = drawingVisual.RenderOpen();
-            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            visitor.SetFontManager(new WPFFontManager());
+            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d)
+            {
+                FontManager = new WPFFontManager()
+            };
             // at least we now know it did not crash...
             Assert.IsNotNull(visitor);
         }
@@ -54,8 +57,10 @@ namespace NCDK.Renderers.Visitors
         {
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext g2d = drawingVisual.RenderOpen();
-            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            visitor.SetRendererModel(new RendererModel());
+            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d)
+            {
+                RendererModel = new RendererModel()
+            };
             // at least we now know it did not crash...
             Assert.IsNotNull(visitor);
         }
@@ -67,8 +72,8 @@ namespace NCDK.Renderers.Visitors
             DrawingContext g2d = drawingVisual.RenderOpen();
             WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
             RendererModel model = new RendererModel();
-            visitor.SetRendererModel(model);
-            Assert.AreEqual(model, visitor.GetRendererModel());
+            visitor.RendererModel = model;
+            Assert.AreEqual(model, visitor.RendererModel);
         }
 
         [TestMethod()]
@@ -85,9 +90,11 @@ namespace NCDK.Renderers.Visitors
         {
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext g2d = drawingVisual.RenderOpen();
-            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            visitor.SetFontManager(new WPFFontManager());
-            visitor.SetTransform(Transform.Identity);
+            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d)
+            {
+                FontManager = new WPFFontManager(),
+                Transform = Transform.Identity
+            };
             visitor.Visit(new TextElement(new WPF.Point(2, 3), "Foo", WPF::Media.Colors.Black));
             // at least we now know it did not crash...
             Assert.IsNotNull(visitor);
@@ -99,7 +106,7 @@ namespace NCDK.Renderers.Visitors
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext g2d = drawingVisual.RenderOpen();
             WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            Assert.AreEqual(g2d, visitor.GetGraphics());
+            Assert.AreEqual(g2d, visitor.Graphics);
         }
     }
 }

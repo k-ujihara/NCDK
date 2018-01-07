@@ -17,8 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System.Drawing;
-using System.Windows;
 using System.Windows.Media;
+using WPF = System.Windows;
 
 namespace NCDK.Renderers.Elements
 {
@@ -30,7 +30,7 @@ namespace NCDK.Renderers.Elements
     public class RectangleElement : IRenderingElement
     {
         /// <summary>The base point of the rectangle. </summary>
-        public readonly Point coord;
+        public readonly WPF.Point coord;
 
         /// <summary>The width of the rectangle. </summary>
         public readonly double width;
@@ -42,7 +42,7 @@ namespace NCDK.Renderers.Elements
         public readonly bool filled;
 
         /// <summary>The color of the rectangle. </summary>
-        public readonly Color color;
+        public readonly WPF.Media.Color color;
 
         /// <summary>
         /// Make a rectangle from two opposite corners (x1, y1) and (x2, y2).
@@ -50,11 +50,11 @@ namespace NCDK.Renderers.Elements
         /// <param name="coord1">the coordinate of the first point</param>
         /// <param name="coord2">the coordinate of the second point</param>
         /// <param name="color">the color of the rectangle</param>
-        public RectangleElement(Point coord1, Point coord2, Color color)
+        public RectangleElement(WPF.Point coord1, WPF.Point coord2, WPF.Media.Color color)
             : this(coord1, coord2.X - coord1.X, coord2.Y - coord1.Y, false, color)
         { }
 
-        public RectangleElement(Rect rect, Color color)
+        public RectangleElement(WPF.Rect rect, WPF.Media.Color color)
             : this(rect.TopLeft, rect.BottomRight, color)
         { }
 
@@ -66,7 +66,7 @@ namespace NCDK.Renderers.Elements
         /// <param name="height">height of the rectangle</param>
         /// <param name="filled">if true, the rectangle is drawn as filled</param>
         /// <param name="color">the color of the rectangle</param>
-        public RectangleElement(Point coord, double width, double height, bool filled, Color color)
+        public RectangleElement(WPF.Point coord, double width, double height, bool filled, WPF.Media.Color color)
         {
             this.coord = coord;
             this.width = width;

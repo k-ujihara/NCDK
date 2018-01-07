@@ -34,7 +34,8 @@ namespace NCDK.Renderers
     /// </summary>
     // @author     maclean
     // @cdk.module test-renderbasic
-    public class ElementUtility : IDrawVisitor
+    public class ElementUtility 
+        : IDrawVisitor
     {
         private List<IRenderingElement> elements = new List<IRenderingElement>();
         private Transform transform;
@@ -46,9 +47,10 @@ namespace NCDK.Renderers
             return this.elements.Count;
         }
 
-        public void SetTransform(Transform transform)
+        public Transform Transform
         {
-            this.transform = transform;
+            get => this.transform;
+            set => this.transform = value;
         }
 
         public void Visit(IRenderingElement element)
@@ -93,12 +95,12 @@ namespace NCDK.Renderers
             return transform.Transform(p);
         }
 
-        public void SetFontManager(IFontManager fontManager)
-        { }
+        public IFontManager FontManager { get => null; set { } }
 
-        public void SetRendererModel(RendererModel rendererModel)
+        public RendererModel RendererModel
         {
-            this.model = rendererModel;
+            get => this.model;
+            set => this.model = value;
         }
 
         public RendererModel GetModel()
@@ -128,37 +130,31 @@ namespace NCDK.Renderers
 
         public string ToString(IRenderingElement element)
         {
-            if (element is LineElement)
+            switch (element)
             {
-                LineElement e = (LineElement)element;
-                string p1 = ToString(e.firstPoint);
-                string p2 = ToString(e.secondPoint);
-                string p1T = ToString(TransformPoint(e.firstPoint));
-                string p2T = ToString(TransformPoint(e.secondPoint));
-                string lineFormat = "Line [%s, %s] -> [%s, %s]\n";
-                return string.Format(lineFormat, p1, p2, p1T, p2T);
-            }
-            else if (element is OvalElement)
-            {
-                OvalElement e = (OvalElement)element;
-                double r = e.radius;
-                string c = ToString(e.coord.X, e.coord.Y, r);
-                string p1 = ToString(TransformPoint(new Point(e.coord.X - r, e.coord.Y - r)));
-                string p2 = ToString(TransformPoint(new Point(e.coord.X + r, e.coord.Y + r)));
-                return string.Format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
-            }
-            else if (element is AtomSymbolElement)
-            {
-                AtomSymbolElement e = (AtomSymbolElement)element;
-                return string.Format("AtomSymbol [%s]\n", e.text);
-            }
-            else if (element is ElementGroup)
-            {
-                return "Element Group\n";
-            }
-            else
-            {
-                return "Unknown element\n";
+                case LineElement e:
+                    {
+                        string p1 = ToString(e.firstPoint);
+                        string p2 = ToString(e.secondPoint);
+                        string p1T = ToString(TransformPoint(e.firstPoint));
+                        string p2T = ToString(TransformPoint(e.secondPoint));
+                        string lineFormat = "Line [%s, %s] -> [%s, %s]\n";
+                        return string.Format(lineFormat, p1, p2, p1T, p2T);
+                    }
+                case OvalElement e:
+                    {
+                        double r = e.radius;
+                        string c = ToString(e.coord.X, e.coord.Y, r);
+                        string p1 = ToString(TransformPoint(new Point(e.coord.X - r, e.coord.Y - r)));
+                        string p2 = ToString(TransformPoint(new Point(e.coord.X + r, e.coord.Y + r)));
+                        return string.Format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
+                    }
+                case AtomSymbolElement e:
+                    return string.Format("AtomSymbol [%s]\n", e.text);
+                case ElementGroup e:
+                    return "Element Group\n";
+                default:
+                    return "Unknown element\n";
             }
         }
 

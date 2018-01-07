@@ -185,8 +185,7 @@ namespace NCDK.Config
         public static Elements OfString(string str)
         {
             if (str == null) return Unknown;
-            Elements e;
-            if (!symbolMap.TryGetValue(str.ToLowerInvariant(), out e))
+            if (!symbolMap.TryGetValue(str.ToLowerInvariant(), out Elements e))
                 e = Unknown;
             return e;
         }

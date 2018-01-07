@@ -179,8 +179,7 @@ namespace NCDK.Default
         public Atom(IElement element)
             : base(element)
         {
-            IAtom a = element as IAtom;
-            if (a != null)
+            if (element is IAtom a)
             {
                 this.point2D = a.Point2D;
                 this.point3D = a.Point3D;
@@ -332,8 +331,7 @@ namespace NCDK.Default
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
-            IAtom clone;
-            if (map.TryGetValue(this, out clone))
+            if (map.TryGetValue(this, out IAtom clone))
                 return clone;
             clone = (Atom)base.Clone(map);
             map.Add(this, clone);
@@ -644,8 +642,7 @@ namespace NCDK.Silent
         public Atom(IElement element)
             : base(element)
         {
-            IAtom a = element as IAtom;
-            if (a != null)
+            if (element is IAtom a)
             {
                 this.point2D = a.Point2D;
                 this.point3D = a.Point3D;
@@ -790,8 +787,7 @@ namespace NCDK.Silent
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
-            IAtom clone;
-            if (map.TryGetValue(this, out clone))
+            if (map.TryGetValue(this, out IAtom clone))
                 return clone;
             clone = (Atom)base.Clone(map);
             map.Add(this, clone);

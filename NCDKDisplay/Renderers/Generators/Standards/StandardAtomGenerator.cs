@@ -116,7 +116,8 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 int number = UnboxSafely(atom.AtomicNumber, Config.Elements.OfString(atom.Symbol).AtomicNumber);
 
-                if (number == 0) return GeneratePseudoSymbol("?", position);
+                if (number == 0)
+                    return GeneratePseudoSymbol("?", position);
 
                 // unset the mass if it's the major isotope (could be an option)
                 var mass = atom.MassNumber;
