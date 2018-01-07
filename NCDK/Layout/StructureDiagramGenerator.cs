@@ -107,7 +107,7 @@ namespace NCDK.Layout
                 .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
         public StructureDiagramGenerator()
-                : this(DefaultTempleteLibrary)
+            : this(DefaultTempleteLibrary)
         { }
 
         private StructureDiagramGenerator(IdentityTemplateLibrary identityLibrary)
@@ -1803,6 +1803,7 @@ namespace NCDK.Layout
 
                     longestUnplacedChain = AtomPlacer.GetLongestUnplacedChain(molecule, atom);
 
+#if DEBUG
                     Debug.WriteLine("---start of longest unplaced chain---");
                     try
                     {
@@ -1814,7 +1815,7 @@ namespace NCDK.Layout
                         Debug.WriteLine(exc);
                     }
                     Debug.WriteLine("---end of longest unplaced chain---");
-
+#endif
                     if (longestUnplacedChain.Atoms.Count > 1)
                     {
                         if (placedAtoms.Atoms.Count > 1)

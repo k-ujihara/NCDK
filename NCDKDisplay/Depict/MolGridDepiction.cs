@@ -52,7 +52,7 @@ namespace NCDK.Depict
                                 List<Bounds> titles,
                                 Dimensions dimensions,
                                 int nRow, int nCol)
-                : base(model)
+            : base(model)
         {
             this.model = model;
             this.dimensions = dimensions;
@@ -115,7 +115,7 @@ namespace NCDK.Depict
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
-                visitor.SetTransform(new ScaleTransform(1, 1));
+                visitor.Transform = Transform.Identity;
                 visitor.Visit(new RectangleElement(new Point(0, 0), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
 
                 // compound the zoom, fitting and scaling into a single value
@@ -161,7 +161,7 @@ namespace NCDK.Depict
 
             // PDF and PS are in point to we need to account for that
             if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(M_MMToPoint);
+                targetDim = targetDim.Scale(MM_TO_POINT);
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                              .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
@@ -183,13 +183,13 @@ namespace NCDK.Depict
             {
                 // we want all vector graphics dims in MM
                 if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(M_MMToPoint);
+                    return dimensions.Scale(MM_TO_POINT);
                 else
                     return dimensions;
             }
         }
 
-        internal override string ToVecStr(string fmt)
+        internal override string ToVectorString(string fmt)
         {
             // format margins and padding for raster images
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
@@ -204,9 +204,9 @@ namespace NCDK.Depict
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
             {
-                zoom *= M_MMToPoint;
-                margin *= M_MMToPoint;
-                padding *= M_MMToPoint;
+                zoom *= MM_TO_POINT;
+                margin *= MM_TO_POINT;
+                padding *= MM_TO_POINT;
             }
 
             // row and col offsets for alignment
@@ -233,7 +233,7 @@ namespace NCDK.Depict
             {
             }
 
-            visitor.SetTransform(new ScaleTransform(1, -1));
+            visitor.Transform = new ScaleTransform(1, -1);
             visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
 
             // compound the fitting and scaling into a single value

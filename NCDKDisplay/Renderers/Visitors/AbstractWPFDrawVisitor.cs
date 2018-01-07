@@ -106,18 +106,15 @@ namespace NCDK.Renderers.Visitors
             return new Rect(0, 0, ft.Width, ft.Height);
         }
 
-        /// <summary>
-        /// Sets a new affine transformation to convert world coordinates into
-        /// screen coordinates.
-        /// </summary>
-        /// <param name="transform">the new <see cref="Transform"/>.</param>
-        public void SetTransform(Transform transform)
+        /// <inheritdoc/>
+        public Transform Transform 
         {
-            this.transform = transform;
+            get => this.transform;
+            set => this.transform = value;
         }
 
-        public abstract void SetFontManager(IFontManager fontManager);
-        public abstract void SetRendererModel(RendererModel rendererModel);
+        public abstract IFontManager FontManager { get; set; }
+        public abstract RendererModel RendererModel { get; set; }
         public abstract void Visit(IRenderingElement element);
     }
 }

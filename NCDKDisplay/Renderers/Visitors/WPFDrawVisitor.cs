@@ -57,30 +57,41 @@ namespace NCDK.Renderers.Visitors
         /// </summary>
         public IDictionary<int, Pen> StrokeMap { get; } = new Dictionary<int, Pen>();
 
-        /// <summary>
-        /// Returns the current <see cref="RendererModel"/>.
-        /// </summary>
-        /// <returns>the current model</returns>
-        public RendererModel GetRendererModel()
+        /// <inheritdoc/>
+        public override RendererModel RendererModel
         {
-            return rendererModel;
+            get => rendererModel;
+
+            set
+            {
+                this.rendererModel = value;
+                if (rendererModel.HasParameter(typeof(UseAntiAliasing)))
+                {
+                    if (rendererModel.GetV<bool>(typeof(UseAntiAliasing)))
+                    {
+                        // just ignore it.
+                        //graphics..SetRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        // g.SetStroke(new WPF::Media.Pen((int)rendererModel.GetBondWidth()));
+                    }
+                }
+            }
         }
 
         private readonly double minStroke;
         private readonly bool strokeCache;
+
+        /// <summary>
+        /// The <see cref="DrawingContext"/> for this visitor.
+        /// </summary>
         private readonly DrawingContext graphics;
 
         /// <summary>
-        /// Returns the <see cref="DrawingContext"/> for for this visitor.
+        /// The <see cref="DrawingContext"/> for this visitor. 
         /// </summary>
-        /// <returns>the <see cref="DrawingContext"/> object</returns>
-        public DrawingContext GetGraphics()
-        {
-            return graphics;
-        }
+        public DrawingContext Graphics => graphics;
 
         /// <summary>
-        /// Constructs a new <see cref="IDrawVisitor"/> using the AWT widget toolkit,
+        /// Constructs a new <see cref="IDrawVisitor"/>
         /// taking a <see cref="DrawingContext"/> object to which the chemical content
         /// is drawn.
         /// </summary>
@@ -150,7 +161,7 @@ namespace NCDK.Renderers.Visitors
         {
             var radius = ScaleX(oval.radius);
             var diameter = ScaleX(oval.radius * 2);
-            var center = Transform(oval.coord);
+            var center = GetTransformed(oval.coord);
             var brush = new SolidColorBrush(oval.color);
 
             if (oval.fill)
@@ -179,24 +190,27 @@ namespace NCDK.Renderers.Visitors
             return (yCoord * transform.Value.M22); // Scale Y
         }
 
-        private WPF::Point Transform(WPF::Point coord)
+        private WPF::Point GetTransformed(WPF::Point coord)
         {
             var result = transform.Transform(coord);
             return result;
         }
 
-        private Color GetBackgroundColor()
+        private Color BackgroundColor
         {
-            return rendererModel == null ?
-                new BasicSceneGenerator.BackgroundColor().Default.Value :
-                rendererModel.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor));
+            get
+            {
+                return rendererModel == null ?
+                    new BasicSceneGenerator.BackgroundColor().Default.Value :
+                    rendererModel.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor));
+            }
         }
 
         private void Visit(TextElement textElement)
         {
             var point = this.GetTextBasePoint(textElement.text, textElement.coord, this.fontManager.Typeface, this.fontManager.Size);
             var textBounds = this.GetTextBounds(textElement.text, textElement.coord, this.fontManager.Typeface, this.fontManager.Size);
-            var backColor = GetBackgroundColor();
+            var backColor = this.BackgroundColor;
             this.graphics.DrawRectangle(new SolidColorBrush(backColor), null, textBounds);
             this.graphics.DrawText(new FormattedText(
                           textElement.text,
@@ -327,7 +341,7 @@ namespace NCDK.Renderers.Visitors
 
             bounds = new WPF.Rect(xy.X - (w / 2), xy.Y - (h / 2), w, h);
 
-            var backgroundBrush = new SolidColorBrush(GetBackgroundColor());
+            var backgroundBrush = new SolidColorBrush(this.BackgroundColor);
             var atomSymbolBrush = new SolidColorBrush(atomSymbol.color);
 
             double padding = h / 4;
@@ -425,7 +439,7 @@ namespace NCDK.Renderers.Visitors
         {
             var width = ScaleX(rectangle.width);
             var height = ScaleY(rectangle.height);
-            var p = Transform(rectangle.coord);
+            var p = GetTransformed(rectangle.coord);
             var rect = new WPF.Rect(p.X, p.Y, width, height);
             if (rectangle.filled)
             {
@@ -468,19 +482,19 @@ namespace NCDK.Renderers.Visitors
                             g.Figures.Add(pf);
                         pf = new PathFigure
                         {
-                            StartPoint = Transform(pp[0])
+                            StartPoint = GetTransformed(pp[0])
                         };
                         break;
                     case PathType.LineTo:
-                        var ls = new LineSegment(Transform(pp[0]), true);
+                        var ls = new LineSegment(GetTransformed(pp[0]), true);
                         pf.Segments.Add(ls);
                         break;
                     case PathType.QuadTo:
-                        var qs = new QuadraticBezierSegment(Transform(pp[0]), Transform(pp[1]), true);
+                        var qs = new QuadraticBezierSegment(GetTransformed(pp[0]), GetTransformed(pp[1]), true);
                         pf.Segments.Add(qs);
                         break;
                     case PathType.CubicTo:
-                        var cs = new BezierSegment(Transform(pp[0]), Transform(pp[1]), Transform(pp[2]), true);
+                        var cs = new BezierSegment(GetTransformed(pp[0]), GetTransformed(pp[1]), GetTransformed(pp[2]), true);
                         pf.Segments.Add(cs);
                         break;
                     case PathType.Close:
@@ -552,7 +566,7 @@ namespace NCDK.Renderers.Visitors
         {
             var point = GetTextBasePoint(textGroup.text, textGroup.coord, fontManager.CureentTypeface, fontManager.Size);
             var textBounds = GetTextBounds(textGroup.text, textGroup.coord, fontManager.CureentTypeface, fontManager.Size);
-            this.graphics.DrawRectangle(new SolidColorBrush(GetBackgroundColor()), null, textBounds);
+            this.graphics.DrawRectangle(new SolidColorBrush(this.BackgroundColor), null, textBounds);
             this.graphics.DrawText(new FormattedText(
                 textGroup.text,
                 CultureInfo.CurrentCulture,
@@ -632,63 +646,58 @@ namespace NCDK.Renderers.Visitors
         /// <inheritdoc/>
         public override void Visit(IRenderingElement element)
         {
-            if (element is ElementGroup)
-                Visit((ElementGroup)element);
-            else if (element is WedgeLineElement)
-                Visit((WedgeLineElement)element);
-            else if (element is LineElement)
-                Visit((LineElement)element);
-            else if (element is OvalElement)
-                Visit((OvalElement)element);
-            else if (element is TextGroupElement)
-                Visit((TextGroupElement)element);
-            else if (element is AtomSymbolElement)
-                Visit((AtomSymbolElement)element);
-            else if (element is TextElement)
-                Visit((TextElement)element);
-            else if (element is RectangleElement)
-                Visit((RectangleElement)element);
-            else if (element is Renderers.Elements.PathElement)
-                Visit((Renderers.Elements.PathElement)element);
-            else if (element is GeneralPath)
-                Visit((GeneralPath)element);
-            else if (element is ArrowElement)
-                Visit((ArrowElement)element);
-            else if (element is Bounds)
+            switch (element)
             {
-                Visit(((Bounds)element).Root);
+                case ElementGroup e:
+                    Visit(e);
+                    break;
+                case WedgeLineElement e:
+                    Visit(e);
+                    break;
+                case LineElement e:
+                    Visit(e);
+                    break;
+                case OvalElement e:
+                    Visit(e);
+                    break;
+                case TextGroupElement e:
+                    Visit(e);
+                    break;
+                case AtomSymbolElement e:
+                    Visit(e);
+                    break;
+                case TextElement e:
+                    Visit(e);
+                    break;
+                case RectangleElement e:
+                    Visit(e);
+                    break;
+                case Renderers.Elements.PathElement e:
+                    Visit(e);
+                    break;
+                case GeneralPath e:
+                    Visit(e);
+                    break;
+                case ArrowElement e:
+                    Visit(e);
+                    break;
+                case Bounds e:
+                    Visit(e.Root);
+                    break;
+                case MarkedElement e:
+                    Visit(e.Element());
+                    break;
+                default:
+                    Console.Error.WriteLine($"Visitor method for {element.GetType()} is not implemented.");
+                    break;
             }
-            else if (element is MarkedElement)
-            {
-                Visit(((MarkedElement)element).Element());
-            }
-            else
-                Console.Error.WriteLine("Visitor method for " + element.GetType().FullName + " is not implemented");
-        }
-
-        /// <summary>
-        /// The font manager must be set by any renderer that uses this class!
-        /// This manager is needed to keep track of fonts of the right size.
-        /// </summary>
-        /// <param name="fontManager">the <see cref="IFontManager"/> to be used</param>
-        public override void SetFontManager(IFontManager fontManager)
-        {
-            this.fontManager = (WPFFontManager)fontManager;
         }
 
         /// <inheritdoc/>
-        public override void SetRendererModel(RendererModel rendererModel)
+        public override IFontManager FontManager
         {
-            this.rendererModel = rendererModel;
-            if (rendererModel.HasParameter(typeof(UseAntiAliasing)))
-            {
-                if (rendererModel.GetV<bool>(typeof(UseAntiAliasing)))
-                {
-                    // just ignore it.
-                    //graphics..SetRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                    // g.SetStroke(new WPF::Media.Pen((int)rendererModel.GetBondWidth()));
-                }
-            }
+            get => this.fontManager;
+            set => this.fontManager = (WPFFontManager)value;
         }
     }
 }

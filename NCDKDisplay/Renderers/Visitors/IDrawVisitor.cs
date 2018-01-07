@@ -30,15 +30,13 @@ namespace NCDK.Renderers.Visitors
     public interface IDrawVisitor : IRenderingVisitor
     {
         /// <summary>
-        /// Sets the <see cref="IFontManager"/> this <see cref="IDrawVisitor"/> should use.
+        /// The <see cref="IFontManager"/> this <see cref="IDrawVisitor"/> should use.
         /// </summary>
-        /// <param name="fontManager">the <see cref="IFontManager"/> to be used</param>
-        void SetFontManager(IFontManager fontManager);
+        IFontManager FontManager { get; set; }
 
         /// <summary>
-        /// Sets the <see cref="RendererModel"/> this <see cref="IDrawVisitor"/> should use.
+        /// The <see cref="RendererModel"/> this <see cref="IDrawVisitor"/> should use.
         /// </summary>
-        /// <param name="rendererModel">the <see cref="RendererModel"/> to be used</param>
-        void SetRendererModel(RendererModel rendererModel);
+        RendererModel RendererModel { get; set; }
     }
 }

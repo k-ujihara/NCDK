@@ -247,7 +247,7 @@ namespace NCDK.Depict
             using (var g2 = dv.RenderOpen())
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
-                visitor.SetTransform(new ScaleTransform(1, -1));
+                visitor.Transform = new ScaleTransform(1, -1);
                 visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
 
                 // compound the zoom, fitting and scaling into a single value
@@ -288,7 +288,7 @@ namespace NCDK.Depict
                         Draw(visitor,
                              1, // no zoom since arrows is drawn as big as needed
                              CreateArrow(w, arrowHeight * rescale),
-                             rect(x, y, w, h));
+                             MakeRect(x, y, w, h));
                         continue;
                     }
 
@@ -301,7 +301,7 @@ namespace NCDK.Depict
                     if (bounds.IsEmpty())
                         continue;
 
-                    Draw(visitor, zoom, bounds, rect(x, y, w, h));
+                    Draw(visitor, zoom, bounds, MakeRect(x, y, w, h));
                 }
 
                 // RXN TITLE DRAW
@@ -309,7 +309,7 @@ namespace NCDK.Depict
                 {
                     double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                     double h = rescale * title.Height;
-                    Draw(visitor, zoom, title, rect(0, y, total.w, h));
+                    Draw(visitor, zoom, title, MakeRect(0, y, total.w, h));
                 }
 
                 // SIDE COMPONENTS DRAW
@@ -328,7 +328,7 @@ namespace NCDK.Depict
                     double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
                     double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
 
-                    Draw(visitor, zoom, sideComps[i], rect(x, y, w, h));
+                    Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
                 }
 
                 // CONDITIONS DRAW
@@ -337,7 +337,7 @@ namespace NCDK.Depict
                     yBase += mainCompOffset;        // back to top
                     yBase += (fitting * mainRequired.h) / 2;    // now on center line (arrow)
                     yBase += arrowHeight;           // now just bellow
-                    Draw(visitor, zoom, conditions, rect(xBase,
+                    Draw(visitor, zoom, conditions, MakeRect(xBase,
                                                          yBase,
                                                          fitting * condRequired.w, fitting * condRequired.h));
                 }
@@ -353,7 +353,7 @@ namespace NCDK.Depict
             }
         }
 
-        internal override string ToVecStr(string fmt)
+        internal override string ToVectorString(string fmt)
         {
             // format margins and padding for raster images
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
@@ -369,9 +369,9 @@ namespace NCDK.Depict
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
             {
-                zoom *= M_MMToPoint;
-                margin *= M_MMToPoint;
-                padding *= M_MMToPoint;
+                zoom *= MM_TO_POINT;
+                margin *= MM_TO_POINT;
+                padding *= MM_TO_POINT;
             }
 
             // work out the required space of the main and side components separately
@@ -406,7 +406,7 @@ namespace NCDK.Depict
             }
 
             // background color
-            visitor.SetTransform(new ScaleTransform(1, -1));
+            visitor.Transform = new ScaleTransform(1, -1);
             visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
 
             // compound the zoom, fitting and scaling into a single value
@@ -447,7 +447,7 @@ namespace NCDK.Depict
                     Draw(visitor,
                          1, // no zoom since arrows is drawn as big as needed
                          CreateArrow(w, arrowHeight * rescale),
-                         rect(x, y, w, h));
+                         MakeRect(x, y, w, h));
                     continue;
                 }
 
@@ -460,7 +460,7 @@ namespace NCDK.Depict
                 if (bounds.IsEmpty())
                     continue;
 
-                Draw(visitor, zoom, bounds, rect(x, y, w, h));
+                Draw(visitor, zoom, bounds, MakeRect(x, y, w, h));
             }
 
             // RXN TITLE DRAW
@@ -468,7 +468,7 @@ namespace NCDK.Depict
             {
                 double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                 double h = rescale * title.Height;
-                Draw(visitor, zoom, title, rect(0, y, total.w, h));
+                Draw(visitor, zoom, title, MakeRect(0, y, total.w, h));
             }
 
             // SIDE COMPONENTS DRAW
@@ -487,7 +487,7 @@ namespace NCDK.Depict
                 double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
                 double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
 
-                Draw(visitor, zoom, sideComps[i], rect(x, y, w, h));
+                Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
             }
 
             // CONDITIONS DRAW
@@ -496,7 +496,7 @@ namespace NCDK.Depict
                 yBase += mainCompOffset;         // back to top
                 yBase += (fitting * mainRequired.h) / 2;     // now on center line (arrow)
                 yBase += arrowHeight;            // now just bellow
-                Draw(visitor, zoom, conditions, rect(xBase,
+                Draw(visitor, zoom, conditions, MakeRect(xBase,
                                                      yBase,
                                                      fitting * condRequired.w, fitting * condRequired.h));
             }
@@ -551,7 +551,7 @@ namespace NCDK.Depict
 
             // PDF and PS are in point to we need to account for that
             if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(M_MMToPoint);
+                targetDim = targetDim.Scale(MM_TO_POINT);
 
             double resize = Math.Min(targetDim.w / required.w,
                                      targetDim.h / required.h);
@@ -592,13 +592,13 @@ namespace NCDK.Depict
             {
                 // we want all vector graphics dims in MM
                 if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(M_MMToPoint);
+                    return dimensions.Scale(MM_TO_POINT);
                 else
                     return dimensions;
             }
         }
 
-        private Rect rect(double x, double y, double w, double h)
+        private Rect MakeRect(double x, double y, double w, double h)
         {
             return new Rect(x, y, w, h);
         }
@@ -639,12 +639,16 @@ namespace NCDK.Depict
                     break;
                 case ReactionDirections.Bidirectional: // equilibrium?
                     {
-                        var fp1 = new PathFigure();
-                        fp1.StartPoint = new Point(0, 0.5 * +headThickness);
+                        var fp1 = new PathFigure
+                        {
+                            StartPoint = new Point(0, 0.5 * +headThickness)
+                        };
                         fp1.Segments.Add(new LineSegment(new Point(minWidth + minHeight + minHeight, 0.5 * +headThickness), true));
                         fp1.Segments.Add(new LineSegment(new Point(minWidth + minHeight, 1.5 * +headThickness), true));
-                        var fp2 = new PathFigure();
-                        fp2.StartPoint = new Point(minWidth + minHeight + minHeight, 0.5 * -headThickness);
+                        var fp2 = new PathFigure
+                        {
+                            StartPoint = new Point(minWidth + minHeight + minHeight, 0.5 * -headThickness)
+                        };
                         fp2.Segments.Add(new LineSegment(new Point(0, 0.5 * -headThickness), true));
                         fp2.Segments.Add(new LineSegment(new Point(minHeight, 1.5 * -headThickness), true));
                         var path = new PathGeometry(new[] { fp1, fp2 });

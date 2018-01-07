@@ -226,7 +226,8 @@ namespace NCDK.Renderers.Generators.Standards
         private IRenderingElement GenerateSingleBond(IBond bond, IAtom from, IAtom to)
         {
             BondStereo stereo = bond.Stereo;
-            if (stereo == BondStereo.None) return GeneratePlainSingleBond(from, to);
+            if (stereo == BondStereo.None)
+                return GeneratePlainSingleBond(from, to);
 
             var fromBonds = container.GetConnectedBonds(from).ToList();
             var toBonds = container.GetConnectedBonds(to).ToList();
@@ -1196,12 +1197,14 @@ namespace NCDK.Renderers.Generators.Standards
         internal static Vector2 BackOffPointOf(AtomSymbol symbol, Vector2 fromPoint, Vector2 toPoint, double backOff)
         {
             // no symbol
-            if (symbol == null) return fromPoint;
+            if (symbol == null)
+                return fromPoint;
 
             Vector2 intersect = ToVector(symbol.GetConvexHull().Intersect(ToPoint(fromPoint), ToPoint(toPoint)));
 
             // does not intersect
-            if (intersect == null) return fromPoint;
+            if (intersect == null)
+                return fromPoint;
 
             // move the point away from the intersect by the desired back off amount
             Vector2 unit = NewUnitVector(fromPoint, toPoint);

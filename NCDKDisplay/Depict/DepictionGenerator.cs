@@ -1123,7 +1123,7 @@ namespace NCDK.Depict
             return copy;
         }
 
-        private double CaclModelScale(ICollection<IAtomContainer> mols)
+        private double CaclModelScale(IEnumerable<IAtomContainer> mols)
         {
             var bonds = new List<IBond>();
             foreach (var mol in mols)

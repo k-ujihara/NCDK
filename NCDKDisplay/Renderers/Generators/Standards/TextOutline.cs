@@ -111,7 +111,7 @@ namespace NCDK.Renderers.Generators.Standards
         public Geometry GetOutline()
         {
             var c = outline.Clone();
-            c.Transform = transform;
+            c.Transform = new MatrixTransform(c.Transform.Value * transform.Value);
             return c;
         }
 

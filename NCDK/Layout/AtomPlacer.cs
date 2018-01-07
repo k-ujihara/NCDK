@@ -64,14 +64,14 @@ namespace NCDK.Layout
         ///  remaining space around an atom in a geometrically nice way.
         ///  IMPORTANT: This method is not supposed to handle the
         ///  case of one or no place neighbor. In the case of
-        ///  one placed neigbor, the chain placement methods
+        ///  one placed neighbor, the chain placement methods
         ///  should be used.
         /// </summary>
         /// <param name="atom">The atom whose partners are to be placed</param>
         /// <param name="placedNeighbours">The atoms which are already placed</param>
         /// <param name="unplacedNeighbours">The partners to be placed</param>
-        /// <param name="bondLength">The standared bond length for the newly placed Atoms</param>
-        /// <param name="sharedAtomsCenter">The 2D centre of the placed Atoms</param>
+        /// <param name="bondLength">The standard bond length for the newly placed atoms</param>
+        /// <param name="sharedAtomsCenter">The 2D centre of the placed atoms</param>
         public void DistributePartners(IAtom atom, IAtomContainer placedNeighbours, Vector2 sharedAtomsCenter,
                 IAtomContainer unplacedNeighbours, double bondLength)
         {
@@ -90,7 +90,7 @@ namespace NCDK.Layout
             Vector2 newDirection = atom.Point2D.Value;
             Vector2 occupiedDirection = sharedAtomsCenter;
             occupiedDirection = Vector2.Subtract(occupiedDirection, newDirection);
-            // if the placing on the centre atom we get NaNs just give a arbitary direciton the
+            // if the placing on the centre atom we get NaNs just give a arbitrary direction the
             // rest works it's self out
             if (Math.Abs(occupiedDirection.Length()) < 0.001)
                 occupiedDirection = new Vector2(0, 1);
@@ -100,7 +100,7 @@ namespace NCDK.Layout
             Debug.WriteLine("Number of shared atoms: ", placedNeighbours.Atoms.Count);
 
             // IMPORTANT: This method is not supposed to handle the case of one or
-            // no place neighbor. In the case of one placed neigbor, the chain
+            // no place neighbor. In the case of one placed neighbor, the chain
             // placement methods should be used.
             if (placedNeighbours.Atoms.Count == 1)
             {
@@ -363,7 +363,7 @@ namespace NCDK.Layout
                     int atomicNumber = atom.AtomicNumber.Value;
                     int charge = atom.FormalCharge.Value;
 
-                    // double length of the last bond to determing next placement
+                    // double length of the last bond to determining next placement
                     Vector2 p = prevBond.GetOther(atom).Point2D.Value;
                     p = Vector2.Lerp(p, atom.Point2D.Value, 2);
                     nextAtom.Point2D = p;
@@ -383,7 +383,7 @@ namespace NCDK.Layout
                     }
                     catch (Exception)
                     {
-                        Debug.WriteLine("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
+                        Debug.WriteLine("Exception in detecting E/Z. This could mean that cleanup does not respect E/Z");
                     }
                     bondVector = GetNextBondVector(nextAtom, atom, GeometryUtil.Get2DCenter(Molecule), trans);
                 }
@@ -415,11 +415,8 @@ namespace NCDK.Layout
         /// <returns>A vector pointing to the location of the next atom to draw</returns>
         public Vector2 GetNextBondVector(IAtom atom, IAtom previousAtom, Vector2 distanceMeasure, bool trans)
         {
-#if DEBUG
             Debug.WriteLine("Entering AtomPlacer.GetNextBondVector()");
-            Debug.WriteLine("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: "
-                    + distanceMeasure);
-#endif
+            Debug.WriteLine($"Arguments are atom: {atom}, previousAtom: {previousAtom}, distanceMeasure: {distanceMeasure}");
             var a = previousAtom.Point2D;
             var b = atom.Point2D;
 
@@ -491,7 +488,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Partition the bonding partners of a given atom into placed (coordinates assinged) and not placed.
+        ///  Partition the bonding partners of a given atom into placed (coordinates assigned) and not placed.
         /// </summary>
         /// <param name="atom">The atom whose bonding partners are to be partitioned</param>
         /// <param name="unplacedPartners">A vector for the unplaced bonding partners to go in</param>
@@ -525,7 +522,7 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("Start of GetInitialLongestChain()");
             double[][] conMat = ConnectionMatrix.GetMatrix(molecule);
-            Debug.WriteLine("Computing all-pairs-shortest-pathes");
+            Debug.WriteLine("Computing all-pairs-shortest-paths");
             int[][] apsp = PathTools.ComputeFloydAPSP(conMat);
             int maxPathLength = 0;
             int bestStartAtom = -1;
@@ -549,7 +546,7 @@ namespace NCDK.Layout
                     }
                 }
             }
-            Debug.WriteLine("Longest chaing in molecule is of length " + maxPathLength + " between atoms "
+            Debug.WriteLine("Longest chain in molecule is of length " + maxPathLength + " between atoms "
                     + (bestStartAtom + 1) + " and " + (bestEndAtom + 1));
 
             startAtom = molecule.Atoms[bestStartAtom];
@@ -587,8 +584,10 @@ namespace NCDK.Layout
                 pathes[f] = molecule.Builder.NewAtomContainer();
                 pathes[f].Atoms.Add(startAtom);
             }
-            var startSphere = new List<IAtom>();
-            startSphere.Add(startAtom);
+            var startSphere = new List<IAtom>
+            {
+                startAtom
+            };
             BreadthFirstSearch(molecule, startSphere, pathes);
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
@@ -618,7 +617,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="ac">The AtomContainer to be searched</param>
         /// <param name="sphere">A sphere of atoms to start the search with</param>
-        /// <param name="pathes">A vector of N pathes (N = no of heavy atoms).</param>
+        /// <param name="pathes">A vector of N paths (N = no of heavy atoms).</param>
         /// <exception cref="CDKException"> Description of the Exception</exception>
         static public void BreadthFirstSearch(IAtomContainer ac, IList<IAtom> sphere, IAtomContainer[] pathes)
         {
@@ -668,6 +667,7 @@ namespace NCDK.Layout
             Debug.WriteLine("End of breadthFirstSearch");
         }
 
+#if DEBUG
         /// <summary>
         ///  Returns a string with the numbers of all placed atoms in an AtomContainer
         /// </summary>
@@ -691,12 +691,12 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        ///  Returns a string with the numbers of all atoms in an AtomContainer relative
-        ///  to a given Molecule. I.e. the number the is listesd is the position of each
-        ///  atom in the Molecule.
+        /// Returns a string with the numbers of all atoms in an <see cref="IAtomContainer"/> relative
+        /// to a given Molecule, i.e. the number is listed is the position of each
+        /// atom in the Molecule.
         /// </summary>
-        /// <param name="ac">The AtomContainer for which the placed atoms are to be listed</param>
-        /// <param name="mol">Description of  Parameter</param>
+        /// <param name="mol">Description of Parameter</param>
+        /// <param name="ac">The <see cref="IAtomContainer"/> for which the placed atoms are to be listed</param>
         /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
         /// <exception cref="CDKException"></exception>
         static public string ListNumbers(IAtomContainer mol, IAtomContainer ac)
@@ -726,6 +726,7 @@ namespace NCDK.Layout
             }
             return s;
         }
+#endif
 
         /// <summary>
         ///  True is all the atoms in the given AtomContainer have been placed

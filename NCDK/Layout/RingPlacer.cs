@@ -314,10 +314,11 @@ namespace NCDK.Layout
                 }
             }
 
+#if DEBUG
             Debug.WriteLine($"placeBridgedRing->atomsToPlace: {AtomPlacer.ListNumbers(Molecule, atoms)}");
             Debug.WriteLine($"placeBridgedRing->startAngle: {Vectors.RadianToDegree(startAngle)}");
             Debug.WriteLine($"placeBridgedRing->tStep: {Vectors.RadianToDegree(tStep)}");
-
+#endif
             AtomPlacer.PopulatePolygonCorners(atoms, ringCenter, startAngle, -tStep, radius);
         }
 
@@ -493,10 +494,12 @@ namespace NCDK.Layout
             }
             addAngle = addAngle * direction;
 
+#if DEBUG
             Debug.WriteLine("placeFusedRing->startAngle: " + Vectors.RadianToDegree(startAngle));
             Debug.WriteLine("placeFusedRing->addAngle: " + Vectors.RadianToDegree(addAngle));
             Debug.WriteLine("placeFusedRing->startAtom is: " + (Molecule.Atoms.IndexOf(startAtom) + 1));
             Debug.WriteLine("AtomsToDraw: " + AtomPlacer.ListNumbers(Molecule, atomsToDraw));
+#endif
 
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
         }

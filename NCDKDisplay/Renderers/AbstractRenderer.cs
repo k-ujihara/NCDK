@@ -323,9 +323,9 @@ namespace NCDK.Renderers
             fontManager.FontName = rendererModel.Get<string>(typeof(FontName));
             fontManager.FontStyle = rendererModel.GetV<Fonts.FontStyles>(typeof(UsedFontStyle));
 
-            drawVisitor.SetFontManager(this.fontManager);
-            drawVisitor.SetTransform(this.transform);
-            drawVisitor.SetRendererModel(this.rendererModel);
+            drawVisitor.FontManager = this.fontManager;
+            drawVisitor.Transform = this.transform;
+            drawVisitor.RendererModel = this.rendererModel;
             diagram.Accept(drawVisitor);
         }
 

@@ -101,7 +101,7 @@ namespace NCDK.Depict
             return transform.Value.M11 * num;
         }
 
-        private void Transform(Point[] points)
+        private void TransformPoints(Point[] points)
         {
             if (transform != null)
             {
@@ -202,14 +202,16 @@ namespace NCDK.Depict
             }
         }
 
-        public void SetFontManager(IFontManager fontManager)
+        public IFontManager FontManager
         {
-            // ignored
+            get => null;
+            set { } // ignored
         }
 
-        public void SetRendererModel(RendererModel model)
+        public RendererModel RendererModel
         {
-            this.model = model;
+            get => this.model;
+            set => this.model = value;
         }
 
         /// <summary>
@@ -294,7 +296,7 @@ namespace NCDK.Depict
                     case Renderers.Elements.Path.PathType.LineTo:
                         {
                             var points = pelem.Points;
-                            Transform(points);
+                            TransformPoints(points);
                             var d = points[0] - currPoint;
                             // horizontal and vertical lines can be even more compact
                             if (Math.Abs(d.X) < 0.01)
@@ -318,7 +320,7 @@ namespace NCDK.Depict
                             var points = pelem.Points;
                             // We have Move as always absolute
                             sb.Append("M");
-                            Transform(points);
+                            TransformPoints(points);
                             AppendPoints(sb, points, 1);
                             currPoint = points[0];
                         }
@@ -327,7 +329,7 @@ namespace NCDK.Depict
                         {
                             var points = pelem.Points;
                             sb.Append("q");
-                            Transform(points);
+                            TransformPoints(points);
                             AppendRelativePoints(sb, points, currPoint, 2);
                             currPoint = points[1];
                         }
@@ -336,7 +338,7 @@ namespace NCDK.Depict
                         {
                             var points = pelem.Points;
                             sb.Append("c");
-                            Transform(points);
+                            TransformPoints(points);
                             AppendRelativePoints(sb, points, currPoint, 3);
                             currPoint = points[2];
                         }
@@ -345,7 +347,7 @@ namespace NCDK.Depict
                         {
                             var points = pelem.Points;
                             sb.Append("a");
-                            Transform(points);
+                            TransformPoints(points);
                             ArcTo e = (ArcTo)pelem;
                             var size = transform == null ? e.Size : new Size(e.Size.Width * transform.Value.M11, e.Size.Height * transform.Value.M22);
                             sb.Append(FormatDecimal(size.Width));
@@ -388,7 +390,7 @@ namespace NCDK.Depict
         private void Visit(string id, string cls, LineElement elem)
         {
             var points = new Point[] { elem.firstPoint, elem.secondPoint };
-            Transform(points);
+            TransformPoints(points);
             AppendIdent();
             sb.Append("<line");
             if (id != null) sb.Append(" id='").Append(id).Append("'");
@@ -459,7 +461,7 @@ namespace NCDK.Depict
         {
             AppendIdent();
             var points = new Point[] { elem.coord };
-            Transform(points);
+            TransformPoints(points);
             sb.Append("<rect");
             sb.Append(" x='").Append(ToStr(points[0].X)).Append("'");
             sb.Append(" y='").Append(ToStr(points[0].Y - elem.height)).Append("'");
@@ -482,7 +484,7 @@ namespace NCDK.Depict
         {
             AppendIdent();
             var points = new Point[] { elem.coord };
-            Transform(points);
+            TransformPoints(points);
             sb.Append("<ellipse");
             sb.Append(" cx='").Append(ToStr(points[0].X)).Append("'");
             sb.Append(" cy='").Append(ToStr(points[0].Y)).Append("'");
@@ -505,13 +507,13 @@ namespace NCDK.Depict
         {
             AppendIdent();
             Point[] points = new Point[] { elem.coord };
-            Transform(points);
+            TransformPoints(points);
             sb.Append("<text ");
             sb.Append(" x='").Append(ToStr(points[0].X)).Append("'");
             sb.Append(" y='").Append(ToStr(points[0].Y)).Append("'");
             sb.Append(" fill='").Append(ToStr(elem.color)).Append("'");
             sb.Append(" text-anchor='middle'");
-            // todo need font manager for scaling...
+            // TODO need font manager for scaling...
             sb.Append(">");
             sb.Append(System.Security.SecurityElement.Escape(elem.text));
             sb.Append("</text>\n");
@@ -590,9 +592,10 @@ namespace NCDK.Depict
             }
         }
 
-        public void SetTransform(Transform transform)
+        public Transform Transform
         {
-            this.transform = transform;
+            get => this.transform;
+            set => this.transform = value;
         }
 
         public override string ToString()

@@ -131,7 +131,7 @@ namespace NCDK.Renderers.Generators.Standards
         public static IList<Point> PointsOf(Geometry shape)
         {
             var points = new List<Point>();
-             var path = shape.GetFlattenedPathGeometry();
+            var path = shape.GetFlattenedPathGeometry();
             foreach (var figure in path.Figures)
             {
                 var newPoints = new List<Point>();
@@ -181,7 +181,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <seealso href="http://en.wikipedia.org/wiki/Graham_scan">Graham scan, Wikipedia</seealso>
         public static IList<Point> GrahamScan(IList<Point> points)
         {
-            if (points.Count <= 3) return new List<Point>(points);
+            if (points.Count <= 3)
+                return new List<Point>(points);
 
             var ps = new List<Point>(points);
             ps.Sort(new CompareYThenX());

@@ -26,7 +26,8 @@ namespace NCDK.Renderers.Elements
     /// </summary>
     // @cdk.module  renderbasic
     // @cdk.githash
-    public class ElementGroup : IRenderingElement, IEnumerable<IRenderingElement>
+    public class ElementGroup 
+        : IRenderingElement, IEnumerable<IRenderingElement>
     {
         /// <summary>
         /// The elements in the group.
@@ -59,8 +60,8 @@ namespace NCDK.Renderers.Elements
         {
             if (element != null)
             {
-                if (element is ElementGroup)
-                    elements.AddRange(((ElementGroup)element).elements);
+                if (element is ElementGroup e)
+                    elements.AddRange(e.elements);
                 else
                     elements.Add(element);
             }

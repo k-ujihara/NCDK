@@ -37,9 +37,8 @@ namespace NCDK.Renderers.Elements
         void Visit(IRenderingElement element);
 
         /// <summary>
-        /// Sets the affine transformations used.
+        /// The affine transformations used.
         /// </summary>
-        /// <param name="transform">the affine transformation used.</param>
-        void SetTransform(Transform transform);
+        Transform Transform { get; set; }
     }
 }

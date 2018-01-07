@@ -148,7 +148,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel parameters)
         {
-            if (container.Atoms.Count == 0) return new ElementGroup();
+            if (container.Atoms.Count == 0)
+                return new ElementGroup();
 
             var symbolRemap = new Dictionary<IAtom, string>();
             StandardSgroupGenerator.PrepareDisplayShortcuts(container, symbolRemap);

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
@@ -42,7 +43,7 @@ namespace NCDK.Depict
         /// <summary>
         /// For converting MM coordinates to PS Point (1/72 inch)
         /// </summary>
-        internal const double M_MMToPoint = 2.83464566751;
+        internal const double MM_TO_POINT = 2.83464566751;
 
         /// <summary>
         /// When no fixed padding value is specified we use margin
@@ -107,7 +108,7 @@ namespace NCDK.Depict
         /// <returns>svg XML content</returns>
         public string ToSvgString()
         {
-            return ToVecStr(SVG_FMT);
+            return ToVectorString(SVG_FMT);
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace NCDK.Depict
         /// <returns>eps content</returns>
         public string ToEpsString()
         {
-            return ToVecStr(PS_FMT);
+            return ToVectorString(PS_FMT);
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace NCDK.Depict
         /// <returns>pdf content</returns>
         public string ToPdfString()
         {
-            return ToVecStr(PDF_FMT);
+            return ToVectorString(PDF_FMT);
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="fmt">the vector graphics format</param>
         /// <returns>the vector graphics format string</returns>
-        internal abstract string ToVecStr(string fmt);
+        internal abstract string ToVectorString(string fmt);
 
         /// <summary>
         /// List the available formats that can be rendered.
@@ -340,9 +341,9 @@ namespace NCDK.Depict
                 Zoom = zoomToFit
             };
 
-            visitor.SetRendererModel(model);
-            visitor.SetFontManager(fontManager);
-            visitor.SetTransform(new MatrixTransform(transform));
+            visitor.RendererModel = model;
+            visitor.FontManager = fontManager;
+            visitor.Transform = new MatrixTransform(transform);
 
             // setup up transform
             visitor.Visit(bounds.Root);
@@ -360,9 +361,9 @@ namespace NCDK.Depict
 
         protected internal void SvgPrevisit(string fmt, double rescale, SvgDrawVisitor visitor, IEnumerable<IRenderingElement> elements)
         {
-            visitor.SetTransform(new TranslateTransform(rescale, rescale));
+            visitor.Transform = new TranslateTransform(rescale, rescale);
             visitor.Previsit(elements);
-            visitor.SetTransform(null);
+            visitor.Transform = null;
         }
     }
 }
