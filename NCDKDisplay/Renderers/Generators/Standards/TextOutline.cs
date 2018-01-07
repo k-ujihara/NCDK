@@ -59,28 +59,36 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         private readonly Transform transform;
 
+        private readonly Typeface font;
+        private readonly double emSize;
+
+        private static FormattedText CreateFormattedText(string text, Typeface font, double emSize)
+            => new FormattedText(
+                      text,
+                      CultureInfo.InvariantCulture,
+                      FlowDirection.LeftToRight,
+                      font, emSize, new SolidColorBrush());
+
         /// <summary>
         /// Create an outline of text in provided font.
         /// </summary>
         /// <param name="text">the text to create an outline of</param>
         /// <param name="font">the font style, size, and shape that defines the outline</param>
         public TextOutline(string text, Typeface font, double emSize)
-            : this(
-                  text,
-                  new FormattedText(
-                      text,
-                      CultureInfo.InvariantCulture,
-                      FlowDirection.LeftToRight,
-                      font, emSize, new SolidColorBrush()))
+            : this(text, font, emSize, WPF.Media.Transform.Identity)
         { }
 
+        private TextOutline(string text, Typeface font, double emSize, Transform transform)
+            : this(text, font, emSize, CreateFormattedText(text, font, emSize), transform)
+        { }
+        
         /// <summary>
         /// Create an outline of text and the glyphs for that text.
         /// </summary>
         /// <param name="text">the text to create an outline of</param>
         /// <param name="glyphs">the glyphs for the provided outlined</param>
-        public TextOutline(string text, FormattedText glyphs)
-            : this(text, glyphs, glyphs.BuildGeometry(new Point(0, 0)), WPF.Media.Transform.Identity)
+        private TextOutline(string text, Typeface font, double emSize, FormattedText glyphs, Transform transform)
+            : this(text, font, emSize, glyphs, glyphs.BuildGeometry(new Point(0, 0)), transform)
         { }
 
         /// <summary>
@@ -90,9 +98,11 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="glyphs">glyphs of the text</param>
         /// <param name="outline">the outline of the glyphs</param>
         /// <param name="transform">the transform</param>
-        private TextOutline(string text, FormattedText glyphs, Geometry outline, Transform transform)
+        private TextOutline(string text, Typeface font, double emSize, FormattedText glyphs, Geometry outline, Transform transform)
         {
             this.text = text;
+            this.font = font;
+            this.emSize = emSize;
             this.glyphs = glyphs;
             this.outline = outline;
             this.transform = transform;
@@ -189,18 +199,24 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>center point</returns>
         private Point GetGlyphCenter(int index)
         {
-            if (text.Length == 1) return GetCenter();
-            if (index == 0)
+            if (text.Length == 1)
             {
-                var bounds = GetBounds();
-                var p = new Point(bounds.Left, (bounds.Top + bounds.Bottom) / 2);
-                return transform.Transform(p);
+                return GetCenter();
             }
-            var o1 = new TextOutline(text.Substring(0, index - 1), glyphs, outline, transform);
-            var o2 = new TextOutline(text.Substring(0, index), glyphs, outline, transform);
-            var b1 = o1.GetBounds();
-            var b2 = o2.GetBounds();
-            return new Point((b1.Right + b2.Right) / 2, (b1.Bottom + b2.Bottom) / 2);
+            else if (index == 0)
+            {
+                var o1 = new TextOutline(text.Substring(0, 1), font, emSize, transform);
+                var center = o1.GetCenter();
+                return transform.Transform(center);
+            }
+            else
+            {
+                var o1 = new TextOutline(text.Substring(0, index), font, emSize, transform);
+                var o2 = new TextOutline(text.Substring(0, index + 1), font, emSize, transform);
+                var b1 = o1.GetBounds();
+                var b2 = o2.GetBounds();
+                return new Point((b1.Right + b2.Right) / 2, (b2.Top + b2.Bottom) / 2);
+            }
         }
 
         /// <summary>
@@ -212,6 +228,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             return new TextOutline(
                 text, 
+                font,
+                emSize,
                 glyphs, 
                 outline, 
                 new MatrixTransform(transform.Value * nextTransform.Value));

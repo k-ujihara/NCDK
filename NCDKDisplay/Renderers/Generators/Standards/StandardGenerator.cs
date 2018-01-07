@@ -327,7 +327,7 @@ namespace NCDK.Renderers.Generators.Standards
                 }
 
                 bool remapped = symbolRemap.ContainsKey(atom);
-               var bonds = container.GetConnectedBonds(atom);
+                var bonds = container.GetConnectedBonds(atom);
                 var neighbors = container.GetConnectedAtoms(atom);
                 var visNeighbors = new List<IAtom>();
 

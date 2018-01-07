@@ -67,12 +67,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Renderers\AtomContainerRenderer.cs" />
-    <Compile Include="Renderers\BoundsCalculator.cs" />
-    <Compile Include="Renderers\IRenderer.cs" />
-    <Compile Include="Renderers\JChemPaintRendererModel.cs" />
-    <Compile Include="Renderers\RenderingParameters.cs" />
-    <Compile Include="Utils.cs" />
     <Page Include="MolWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

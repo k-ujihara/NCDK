@@ -351,9 +351,9 @@ namespace NCDK.Renderers.Generators.Standards
             var sgroupAtoms = sgroup.Atoms;
             Debug.Assert(sgroupAtoms.Any());
 
-            Color highlight = sgroupAtoms.First().GetProperty<Color>(StandardGenerator.HIGHLIGHT_COLOR);
-            StandardGenerator.HighlightStyle style = parameters.Get<HighlightStyle>(typeof(StandardGenerator.Highlighting));
-            double glowWidth = parameters.GetV<double>(typeof(StandardGenerator.OuterGlowWidth));
+            var highlight = sgroupAtoms.First().GetProperty<Color>(StandardGenerator.HIGHLIGHT_COLOR);
+            var style = parameters.GetV<HighlightStyle>(typeof(StandardGenerator.Highlighting));
+            var glowWidth = parameters.GetV<double>(typeof(StandardGenerator.OuterGlowWidth));
 
             Vector2 labelCoords = GeometryUtil.Get2DCenter(sgroupAtoms);
 
