@@ -682,8 +682,10 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyrroleAnion()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom nitrogenAnion = new Atom("N");
-            nitrogenAnion.FormalCharge = -1;
+            IAtom nitrogenAnion = new Atom("N")
+            {
+                FormalCharge = -1
+            };
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(nitrogenAnion); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -810,7 +812,7 @@ namespace NCDK.Templates
         }
 
         /// <summary>
-        /// Returns Oxazole without explicit hydrogens.
+        /// Returns oxazole without explicit hydrogens.
         /// </summary>
         // @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
         public static IAtomContainer MakeOxazole()
@@ -832,7 +834,7 @@ namespace NCDK.Templates
         }
 
         /// <summary>
-        /// Returns Isoxazole without explicit hydrogens.
+        /// Returns isoxazole without explicit hydrogens.
         /// </summary>
         // @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
         public static IAtomContainer MakeIsoxazole()
