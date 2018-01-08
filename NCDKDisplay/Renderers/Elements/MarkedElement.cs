@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Media;
 
 namespace NCDK.Renderers.Elements
 {
@@ -78,6 +79,11 @@ namespace NCDK.Renderers.Elements
         public IList<string> GetClasses()
         {
             return new ReadOnlyCollection<string>(classes);
+        }
+
+        public void Accept(IRenderingVisitor visitor, Transform transform)
+        {
+            visitor.Visit(this, transform);
         }
 
         public void Accept(IRenderingVisitor visitor)

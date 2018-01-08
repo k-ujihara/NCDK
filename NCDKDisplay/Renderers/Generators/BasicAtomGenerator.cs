@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
+﻿/*  Copyright (C) 2008  Arvid Berg <goglepox@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -64,7 +64,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>Converter between atoms and colors.</summary>
         private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
-        /// <summary> bool property that triggers atoms to be colored by type
+        /// <summary>boolean property that triggers atoms to be colored by type
         ///  when set to true.</summary>
         public class ColorByType : AbstractGeneratorParameter<bool?>
         {
@@ -76,7 +76,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>If true, colors atoms by their type.</summary>
         private IGeneratorParameter<bool?> colorByType = new ColorByType();
 
-        /// <summary>bool property that triggers explicit hydrogens to be
+        /// <summary>boolean property that triggers explicit hydrogens to be
         ///  drawn if set to true.</summary>
         public class ShowExplicitHydrogens : AbstractGeneratorParameter<bool?>
         {
@@ -101,7 +101,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>The atom radius on screen.</summary>
         private IGeneratorParameter<double?> atomRadius = new AtomRadius();
 
-        /// <summary> bool parameters that will cause atoms to be drawn as
+        /// <summary>boolean parameters that will cause atoms to be drawn as
         ///  filled shapes when set to true. The actual used shape used
         ///  is defined by the <see cref="CompactShape"/> parameter.</summary>
         public class CompactAtom : AbstractGeneratorParameter<bool?>
@@ -114,7 +114,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>If true, atoms are displayed as 'compact' symbols, not text.</summary>
         private IGeneratorParameter<bool?> isCompact = new CompactAtom();
 
-        /// <summary>Determines whether structures should be drawn as Kekule structures, thus
+        /// <summary>Determines whether structures should be drawn as Kekulé structures, thus
         /// giving each carbon element explicitly, instead of not displaying the
         /// element symbol. Example C-C-C instead of /\.
         /// </summary>
@@ -126,7 +126,7 @@ namespace NCDK.Renderers.Generators
         }
 
         /// <summary>
-        /// Determines whether structures should be drawn as Kekule structures, thus
+        /// Determines whether structures should be drawn as Kekulé structures, thus
         /// giving each carbon element explicitly, instead of not displaying the
         /// element symbol. Example C-C-C instead of /\.
         /// </summary>
@@ -155,7 +155,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>The compact shape used to display atoms when isCompact is true.</summary>
         private IGeneratorParameter<Shapes?> compactShape = new CompactShape();
 
-        /// <summary> bool parameters that will show carbons with only one
+        /// <summary>boolean parameters that will show carbons with only one
         /// (non-hydrogen) neighbor to be drawn with an element symbol.
         ///  This setting overwrites and is used in combination with
         ///  the <see cref="KekuleStructure"/> parameter.

@@ -18,6 +18,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace NCDK.Renderers.Elements
 {
@@ -67,6 +68,7 @@ namespace NCDK.Renderers.Elements
             }
         }
 
+
         /// <summary>
         /// Visit the members of the group.
         /// </summary>
@@ -77,6 +79,11 @@ namespace NCDK.Renderers.Elements
             {
                 child.Accept(visitor);
             }
+        }
+
+        public void Accept(IRenderingVisitor visitor, Transform transform)
+        {
+            visitor.Visit(this, transform);
         }
 
         public virtual void Accept(IRenderingVisitor v)

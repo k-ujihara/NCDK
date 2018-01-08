@@ -42,7 +42,7 @@ namespace NCDK.Isomorphisms
         /// <summary>Adjacency list representation of the containers.</summary>
         protected internal readonly int[][] g1, g2;
 
-        /// <summary>Mapping - m1 is the the mapping from g1 to g1, m2 is from g2 to g1.</summary>
+        /// <summary>Mapping - m1 is the mapping from g1 to g1, m2 is from g2 to g1.</summary>
         protected internal readonly int[] m1, m2;
 
         /// <summary>The (terminal) vertices which are adjacent to each mapped pair.</summary>

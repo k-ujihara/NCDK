@@ -77,7 +77,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// If the molecule has display shortcuts (abbreviations or multiple group sgroups) certain parts
         /// of the structure are hidden from display. This method marks the parts to hide and in the case
-        /// of abbreviations, remaps atom symbols. Appart from additional property flags, the molecule
+        /// of abbreviations, remaps atom symbols. Apart from additional property flags, the molecule
         /// is unchanged by this method.
         /// </summary>
         /// <param name="container">molecule input</param>
@@ -399,7 +399,6 @@ namespace NCDK.Renderers.Generators.Standards
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
             if (brackets != null)
             {
-
                 SgroupTypes type = sgroup.Type;
 
                 var subscript = (string)sgroup.GetValue(SgroupKeys.CtabSubScript);
@@ -550,11 +549,11 @@ namespace NCDK.Renderers.Generators.Standards
                     symbols.ContainsKey(atom))
                 {
                     TextOutline prefix = new TextOutline('·' + subscriptSuffix, font, emSize).Resize(1 / scale, 1 / -scale);
-                    Rect prefixBounds = prefix.GetLogicalBounds();
+                    Rect prefixBounds = prefix.LogicalBounds;
 
                     AtomSymbol symbol = symbols[atom];
 
-                    Rect bounds = symbol.GetConvexHull().Outline().Bounds;
+                    Rect bounds = symbol.GetConvexHull().Outline.Bounds;
 
                     // make slightly large
                     bounds = new Rect(bounds.Bottom - 2 * stroke,
@@ -563,7 +562,7 @@ namespace NCDK.Renderers.Generators.Standards
                                    bounds.Height + 4 * stroke);
 
                     prefix = prefix.Translate(bounds.Bottom - prefixBounds.Top,
-                                              symbol.GetAlignmentCenter().Y - prefixBounds.GetCenterY());
+                                              symbol.GetAlignmentCenter().Y - prefixBounds.CenterY());
 
                     result.Add(GeneralPath.ShapeOf(prefix.GetOutline(), foreground));
                 }
@@ -582,7 +581,7 @@ namespace NCDK.Renderers.Generators.Standards
                     {
                         AtomSymbol symbol = symbols[atom];
 
-                        var bounds = symbol.GetConvexHull().Outline().Bounds;
+                        var bounds = symbol.GetConvexHull().Outline.Bounds;
                         // make slightly large
                         bounds = new Rect(bounds.Left - 2 * stroke,
                                        bounds.Top - 2 * stroke,
@@ -739,70 +738,78 @@ namespace NCDK.Renderers.Generators.Standards
                     double.IsNaN(b2pvec.X) || double.IsNaN(b2pvec.Y))
                     return result;
 
-                var path = new PathGeometry();
-
-                if (round)
                 {
+                    var path = new PathGeometry();
+
+                    if (round)
                     {
-                        // bracket 1 (cp: control point)
-                        var pf = new PathFigure
                         {
-                            StartPoint = new Point(b1p1.X + b1pvec.X, b1p1.Y + b1pvec.Y)
-                        };
-                        Vector2 cpb1 = VecmathUtil.Midpoint(b1p1, b1p2);
-                        cpb1 += VecmathUtil.Negate(b1pvec);
-                        var seg = new QuadraticBezierSegment
+                            // bracket 1 (cp: control point)
+                            var pf = new PathFigure
+                            {
+                                StartPoint = new Point(b1p1.X + b1pvec.X, b1p1.Y + b1pvec.Y)
+                            };
+                            Vector2 cpb1 = VecmathUtil.Midpoint(b1p1, b1p2);
+                            cpb1 += VecmathUtil.Negate(b1pvec);
+                            var seg = new QuadraticBezierSegment
+                            {
+                                Point1 = new Point(cpb1.X, cpb1.Y),
+                                Point2 = new Point(b1p2.X + b1pvec.X, b1p2.Y + b1pvec.Y)
+                            };
+                            pf.Segments.Add(seg);
+                            path.Figures.Add(pf);
+                        }
+
                         {
-                            Point1 = new Point(cpb1.X, cpb1.Y),
-                            Point2 = new Point(b1p2.X + b1pvec.X, b1p2.Y + b1pvec.Y)
-                        };
-                        path.Figures.Add(pf);
+                            // bracket 2 (cp: control point)
+                            var pf = new PathFigure
+                            {
+                                StartPoint = new Point(b2p1.X + b2pvec.X, b2p1.Y + b2pvec.Y)
+                            };
+                            Vector2 cpb2 = VecmathUtil.Midpoint(b2p1, b2p2);
+                            cpb2 += VecmathUtil.Negate(b2pvec);
+                            var seg = new QuadraticBezierSegment
+                            {
+                                Point1 = new Point(cpb2.X, cpb2.Y),
+                                Point2 = new Point(b2p2.X + b2pvec.X, b2p2.Y + b2pvec.Y)
+                            };
+                            pf.Segments.Add(seg);
+                            path.Figures.Add(pf);
+                        }
+                    }
+                    else
+                    {
+                        {
+                            // bracket 1
+                            var pf = new PathFigure
+                            {
+                                StartPoint = new Point(b1p1.X + b1pvec.X, b1p1.Y + b1pvec.Y)
+                            };
+                            var seg = new PolyLineSegment();
+                            seg.Points.Add(new Point(b1p1.X, b1p1.Y));
+                            seg.Points.Add(new Point(b1p2.X, b1p2.Y));
+                            seg.Points.Add(new Point(b1p2.X + b1pvec.X, b1p2.Y + b1pvec.Y));
+                            pf.Segments.Add(seg);
+                            path.Figures.Add(pf);
+                        }
+
+                        {
+                            // bracket 2
+                            var pf = new PathFigure
+                            {
+                                StartPoint = new Point(b2p1.X + b2pvec.X, b2p1.Y + b2pvec.Y)
+                            };
+                            var seg = new PolyLineSegment();
+                            seg.Points.Add(new Point(b2p1.X, b2p1.Y));
+                            seg.Points.Add(new Point(b2p2.X, b2p2.Y));
+                            seg.Points.Add(new Point(b2p2.X + b2pvec.X, b2p2.Y + b2pvec.Y));
+                            pf.Segments.Add(seg);
+                            path.Figures.Add(pf);
+                        }
                     }
 
-                    {
-                        // bracket 2 (cp: control point)
-                        var pf = new PathFigure
-                        {
-                            StartPoint = new Point(b2p1.X + b2pvec.X, b2p1.Y + b2pvec.Y)
-                        };
-                        Vector2 cpb2 = VecmathUtil.Midpoint(b2p1, b2p2);
-                        cpb2 += VecmathUtil.Negate(b2pvec);
-                        var seg = new QuadraticBezierSegment
-                        {
-                            Point1 = new Point(cpb2.X, cpb2.Y),
-                            Point2 = new Point(b2p2.X + b2pvec.X, b2p2.Y + b2pvec.Y)
-                        };
-                        path.Figures.Add(pf);
-                    }
+                    result.Add(GeneralPath.OutlineOf(path, stroke, foreground));
                 }
-                else
-                {
-                    {
-                        // bracket 1
-                        var pf = new PathFigure
-                        {
-                            StartPoint = new Point(b1p1.X + b1pvec.X, b1p1.Y + b1pvec.Y)
-                        };
-                        var seg = new PolyLineSegment();
-                        seg.Points.Add(new Point(b1p1.X, b1p1.Y));
-                        seg.Points.Add(new Point(b1p2.X, b1p2.Y));
-                        seg.Points.Add(new Point(b1p2.X + b1pvec.X, b1p2.Y + b1pvec.Y));
-                    }
-
-                    {
-                        // bracket 2
-                        var pf = new PathFigure
-                        {
-                            StartPoint = new Point(b2p1.X + b2pvec.X, b2p1.Y + b2pvec.Y)
-                        };
-                        var seg = new PolyLineSegment();
-                        seg.Points.Add(new Point(b2p1.X, b2p1.Y));
-                        seg.Points.Add(new Point(b2p2.X, b2p2.Y));
-                        seg.Points.Add(new Point(b2p2.X + b2pvec.X, b2p2.Y + b2pvec.Y));
-                    }
-                }
-
-                result.Add(GeneralPath.OutlineOf(path, stroke, foreground));
 
                 // work out where to put the suffix labels (e.g. ht/hh/eu) superscript
                 // and (e.g. n, xl, c, mix) subscript
@@ -866,7 +873,8 @@ namespace NCDK.Renderers.Generators.Standards
                 Point1 = new Point(cpb1.X, cpb1.Y),
                 Point2 = new Point(p2.X + perp.X, p2.Y + perp.Y)
             };
-
+            pf.Segments.Add(seg);
+            path.Figures.Add(pf);
             return GeneralPath.OutlineOf(path, stroke, foreground);
         }
 
@@ -882,7 +890,8 @@ namespace NCDK.Renderers.Generators.Standards
             seg.Points.Add(new Point(p1.X, p1.Y));
             seg.Points.Add(new Point(p2.X, p2.Y));
             seg.Points.Add(new Point(p2.X + perp.X, p2.Y + perp.Y));
-
+            pf.Segments.Add(seg);
+            path.Figures.Add(pf);
             return GeneralPath.OutlineOf(path, stroke, foreground);
         }
 

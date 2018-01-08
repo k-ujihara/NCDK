@@ -94,7 +94,7 @@ namespace NCDK.Renderers.Generators.Standards
             var hydrogenCountBounds = positioned.GetBounds();
 
             Assert.IsTrue(hydrogenCountBounds.Left > hydrogenBounds.Left);
-            Assert.AreEqual(hydrogenBounds.Bottom, hydrogenCountBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(hydrogenBounds.Bottom, hydrogenCountBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -107,7 +107,7 @@ namespace NCDK.Renderers.Generators.Standards
             var massBounds = positioned.GetBounds();
 
             Assert.IsTrue(massBounds.Right < elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, massBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(elementBounds.Top, massBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -123,7 +123,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > hydrogenBounds.Left);
-            Assert.AreEqual(hydrogenBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(hydrogenBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -140,7 +140,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -156,7 +156,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -170,7 +170,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -186,7 +186,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > hydrogenBounds.Left);
-            Assert.AreEqual(hydrogenBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(hydrogenBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -202,7 +202,7 @@ namespace NCDK.Renderers.Generators.Standards
             var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
+            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]

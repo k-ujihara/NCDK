@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System.Drawing;
+
 using System.Windows.Media;
 using WPF = System.Windows;
 
@@ -73,6 +73,11 @@ namespace NCDK.Renderers.Elements
             this.height = height;
             this.filled = filled;
             this.color = color;
+        }
+
+        public virtual void Accept(IRenderingVisitor v, Transform transform)
+        {
+            v.Visit(this, transform);
         }
 
         /// <inheritdoc/>

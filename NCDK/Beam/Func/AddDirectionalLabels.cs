@@ -107,8 +107,7 @@ namespace NCDK.Beam
                     if (e.Other(u) > u)
                     {
                         Edge ee = e;
-                        Edge replacement;
-                        if (replacements.TryGetValue(e, out replacement))
+                        if (replacements.TryGetValue(e, out Edge replacement))
                             ee = replacement;
                         h.AddEdge(ee);
                     }
@@ -120,7 +119,7 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Given a double bond edge traverse the neighbors of both endpoints and
-        /// accumulate any explicit replacements in the 'acc' accumulator.
+        /// accumulate any explicit replacements in the <paramref name="e"/> accumulator.
         /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
@@ -208,8 +207,7 @@ namespace NCDK.Beam
 
             int v = implicit_.Other(u);
 
-            Edge existing;
-            if (!acc.TryGetValue(implicit_, out existing))
+            if (!acc.TryGetValue(implicit_, out Edge existing))
                 existing = null;
             acc[implicit_] = new Edge(u,
                                       v,
@@ -217,7 +215,7 @@ namespace NCDK.Beam
                                                .Inverse());
 
             if (existing != null && existing.GetBond(u) != explicit_.GetBond(u).Inverse())
-                throw new InvalidSmilesException("unable to assign explict type for " + implicit_);
+                throw new InvalidSmilesException("unable to assign explicit type for " + implicit_);
 
             return false;
         }
@@ -235,8 +233,7 @@ namespace NCDK.Beam
                 int v = e.Other(u);
                 if (!visited[v])
                 {
-                    Edge f;
-                    if (replacement.TryGetValue(e, out f))
+                    if (replacement.TryGetValue(e, out Edge f))
                     {
                         replacement[e] = f.Inverse();
                     }

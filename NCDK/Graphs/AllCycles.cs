@@ -69,7 +69,7 @@ namespace NCDK.Graphs
         /// (Dec '12) which would successfully complete for a given Degree are listed
         /// below.
         /// <list type="table">
-        /// <listheader>Table 1. Num of structures processable in PubChem Compound (Dec 2012) as a result of
+        /// <listheader>Table 1. Number of structures processable in PubChem Compound (Dec 2012) as a result of
         /// setting the max degree</listheader>
         /// <item><term>Percent</term><term>Max Degree</term></item>
         /// <item><term>99%</term><term>9</term></item> <item><term>99.95%</term><term>72</term></item>

@@ -49,7 +49,7 @@ namespace NCDK.Renderers.Generators
 
         private IGeneratorParameter<Color?> textColor = new AtomNumberTextColor();
 
-        /// <summary> bool parameter indicating if atom numbers should be drawn, allowing
+        /// <summary>boolean parameter indicating if atom numbers should be drawn, allowing
         /// this feature to be disabled temporarily. 
         /// </summary>
         public class WillDrawAtomNumbers : AbstractGeneratorParameter<bool?>
@@ -61,7 +61,7 @@ namespace NCDK.Renderers.Generators
         private WillDrawAtomNumbers willDrawAtomNumbers = new WillDrawAtomNumbers();
 
         /// <summary> The color scheme by which to color the atom numbers, if
-        /// the <see cref="ColorByType"/> bool is true.</summary>
+        /// the <see cref="ColorByType"/> boolean is <see langword="true"/>.</summary>
         public class AtomColorer : AbstractGeneratorParameter<IAtomColorer>
         {
             /// <inheritdoc/>
@@ -70,7 +70,7 @@ namespace NCDK.Renderers.Generators
 
         private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
-        /// <summary>bool to indicate of the <see cref="AtomColorer"/> scheme will be used.</summary>
+        /// <summary>boolean to indicate of the <see cref="AtomColorer"/> scheme will be used.</summary>
         public class ColorByType : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>

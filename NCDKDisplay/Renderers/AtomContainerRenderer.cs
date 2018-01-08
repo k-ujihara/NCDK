@@ -134,8 +134,8 @@ namespace NCDK.Renderers
         {
             this.SetScale(atomContainer);
             var bounds = BoundsCalculator.CalculateBounds(atomContainer);
-            this.modelCenter = new Point(bounds.GetCenterX(), bounds.GetCenterY());
-            this.drawCenter = new Point(screen.GetCenterX(), screen.GetCenterY());
+            this.modelCenter = new Point(bounds.CenterX(), bounds.CenterY());
+            this.drawCenter = new Point(screen.CenterX(), screen.CenterY());
             this.Setup();
         }
 

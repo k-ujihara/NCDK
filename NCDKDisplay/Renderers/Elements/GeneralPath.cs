@@ -21,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Renderers.Elements.Path;
-using System.Collections.Generic;
-using System.Diagnostics;
+
 using System.Windows.Media;
 
 namespace NCDK.Renderers.Elements
@@ -46,7 +44,7 @@ namespace NCDK.Renderers.Elements
         public readonly bool fill;
 
         /// <summary>The elements in the path.</summary>
-        public readonly IList<Path.PathElement> elements;
+        public readonly PathGeometry elements;
 
         /// <summary>Winding rule for determining path interior.</summary>
         public readonly FillRule winding;
@@ -56,8 +54,8 @@ namespace NCDK.Renderers.Elements
         /// </summary>
         /// <param name="elements">the elements that make up the path</param>
         /// <param name="color">the color of the path</param>
-        public GeneralPath(IList<Path.PathElement> elements, Color color)
-           : this(elements, color, FillRule.EvenOdd, 1, true)
+        public GeneralPath(PathGeometry elements, Color color)
+           : this(elements, color, 1, true)
         { }
 
         /// <summary>
@@ -65,11 +63,10 @@ namespace NCDK.Renderers.Elements
         /// </summary>
         /// <param name="elements">the elements that make up the path</param>
         /// <param name="color">the color of the path</param>
-        private GeneralPath(IList<Path.PathElement> elements, Color color, FillRule winding, double stroke, bool fill)
+        private GeneralPath(PathGeometry elements, Color color, double stroke, bool fill)
         {
             this.elements = elements;
             this.color = color;
-            this.winding = winding;
             this.fill = fill;
             this.stroke = stroke;
         }
@@ -81,7 +78,7 @@ namespace NCDK.Renderers.Elements
         /// <returns>the recolored path</returns>
         public GeneralPath Recolor(Color newColor)
         {
-            return new GeneralPath(elements, newColor, winding, stroke, fill);
+            return new GeneralPath(elements, newColor, stroke, fill);
         }
 
         /// <summary>
@@ -91,7 +88,12 @@ namespace NCDK.Renderers.Elements
         /// <returns>the outlined path</returns>
         public GeneralPath Outline(double newStroke)
         {
-            return new GeneralPath(elements, color, winding, newStroke, false);
+            return new GeneralPath(elements, color, newStroke, false);
+        }
+
+        public virtual void Accept(IRenderingVisitor v, Transform transform)
+        {
+            v.Visit(this, transform);
         }
 
         public virtual void Accept(IRenderingVisitor v)
@@ -107,11 +109,9 @@ namespace NCDK.Renderers.Elements
         /// <returns>a new general path</returns>
         public static GeneralPath ShapeOf(Geometry shape, Color color)
         {
-            PathGeometry pathIt = shape is PathGeometry ?
-                (PathGeometry)shape :
-                shape.GetFlattenedPathGeometry(0.01, ToleranceType.Relative);
-            var elements = ToPathElements(pathIt);
-            return new GeneralPath(elements, color, pathIt.FillRule, 0, true);
+            PathGeometry pathIt = shape.GetOutlinedPathGeometry();
+            pathIt.FillRule = FillRule.EvenOdd;
+            return new GeneralPath(pathIt, color, 0, true);
         }
 
         /// <summary>
@@ -122,70 +122,15 @@ namespace NCDK.Renderers.Elements
         /// <returns>a new general path</returns>
         public static GeneralPath OutlineOf(Geometry shape, double stroke, Color color)
         {
-            var pathIt = shape.GetFlattenedPathGeometry();
-            var elements = ToPathElements(pathIt);
-            return new GeneralPath(elements, color, pathIt.FillRule, stroke, false);
-        }
-
-        private static List<Path.PathElement> ToPathElements(PathGeometry pathIt)
-        {
-            var trans = pathIt.Transform ?? Transform.Identity;
-            var elements = new List<Path.PathElement>();
-            foreach (var figure in pathIt.Figures)
+            if (shape is PathGeometry)
             {
-                elements.Add(new MoveTo(trans.Transform(figure.StartPoint)));
-                foreach (var seg in figure.Segments)
-                {
-                    switch (seg)
-                    {
-                        case LineSegment s:
-                            elements.Add(new LineTo(trans.Transform(s.Point)));
-                            break;
-                        case QuadraticBezierSegment s:
-                            elements.Add(new QuadTo(trans.Transform(s.Point1), trans.Transform(s.Point2)));
-                            break;
-                        case BezierSegment s:
-                            elements.Add(new CubicTo(trans.Transform(s.Point1), trans.Transform(s.Point2), trans.Transform(s.Point3)));
-                            break;
-                        case PolyLineSegment s:
-                            {
-                                foreach (var p in s.Points)
-                                    elements.Add(new LineTo(trans.Transform(p)));
-                            }
-                            break;
-                        case ArcSegment s:
-                            {
-                                if (s.RotationAngle != 0)
-                                    throw new System.NotImplementedException();
-                                var p = trans.Transform(s.Point);
-                                var t = trans.Value;
-                                t.OffsetX = 0;
-                                t.OffsetY = 0;
-                                var a = new System.Windows.Point(s.Size.Width, s.Size.Height);
-                                a = t.Transform(a);
-                                var aa = new ArcTo(p, new System.Windows.Size(a.X, a.Y), 0, s.IsLargeArc, s.SweepDirection);
-                                elements.Add(aa);
-                            }
-                            break;
-                        case PolyBezierSegment s:
-                            throw new System.NotImplementedException();
-                            //foreach (var p in s.Points)
-                            //    elements.Add(new LineTo(p));  // TODO handle PolyBezierSegment
-                            //break;
-                        case PolyQuadraticBezierSegment s:
-                            throw new System.NotImplementedException();
-                            //foreach (var p in s.Points)
-                            //    elements.Add(new LineTo(p));  // TODO handle PolyQuadraticBezierSegment
-                            //break;
-                        default:
-                            Trace.TraceWarning($"'{seg}' is ignored in {nameof(ToPathElements)}");
-                            break;
-                    }
-                }
-                if (figure.IsClosed)
-                    elements.Add(new Close());
+                return new GeneralPath((PathGeometry)shape, color, stroke, false);
             }
-            return elements;
+            else
+            {
+                var pathIt = shape.GetWidenedPathGeometry(new Pen(new SolidColorBrush(color), stroke));
+                return new GeneralPath(pathIt, color, 0, true);
+            }
         }
     }
 }

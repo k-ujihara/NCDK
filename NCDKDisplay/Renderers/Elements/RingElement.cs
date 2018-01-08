@@ -20,6 +20,11 @@ namespace NCDK.Renderers.Elements
             : base(center, radius, false, color)
         { }
 
+        public override void Accept(IRenderingVisitor v, Transform transform)
+        {
+            v.Visit(this, transform);
+        }
+
         /// <inheritdoc/>
         public override void Accept(IRenderingVisitor v)
         {

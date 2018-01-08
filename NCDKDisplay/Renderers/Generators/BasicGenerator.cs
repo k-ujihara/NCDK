@@ -53,10 +53,12 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer ac, RendererModel model)
         {
-            ElementGroup diagram = new ElementGroup();
-            diagram.Add(this.sceneGenerator.Generate(ac, model));
-            diagram.Add(this.bondGenerator.Generate(ac, model));
-            diagram.Add(this.atomGenerator.Generate(ac, model));
+            ElementGroup diagram = new ElementGroup
+            {
+                this.sceneGenerator.Generate(ac, model),
+                this.bondGenerator.Generate(ac, model),
+                this.atomGenerator.Generate(ac, model)
+            };
             return diagram;
         }
 

@@ -911,7 +911,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="BasicSceneGenerator.ShowMoleculeTitle"/>
-        public DepictionGenerator WithMolTitle()
+        public DepictionGenerator WithMolecularTitle()
         {
             return WithParam(typeof(BasicSceneGenerator.ShowMoleculeTitle), (bool?)true);
         }
@@ -923,7 +923,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="BasicSceneGenerator.ShowReactionTitle"/>
-        public DepictionGenerator WithRxnTitle()
+        public DepictionGenerator WithReactionTitle()
         {
             return WithParam(typeof(BasicSceneGenerator.ShowReactionTitle), (bool?)true);
         }

@@ -133,8 +133,8 @@ namespace NCDK.Renderers
         {
             this.SetScale(moleculeSet);
             var bounds = BoundsCalculator.CalculateBounds(moleculeSet);
-            if (bounds != null) this.modelCenter = new Point(bounds.GetCenterX(), bounds.GetCenterY());
-            this.drawCenter = new Point(screen.GetCenterX(), screen.GetCenterY());
+            if (bounds != null) this.modelCenter = new Point(bounds.CenterX(), bounds.CenterY());
+            this.drawCenter = new Point(screen.CenterX(), screen.CenterY());
             this.Setup();
         }
 

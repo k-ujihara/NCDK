@@ -18,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
@@ -31,24 +32,28 @@ using static NCDK.Renderers.Generators.BasicSceneGenerator;
 namespace NCDK.Renderers
 {
     /// <summary>
-    /// <para>The base class for all renderers, handling the core aspects of rendering
+    /// The base class for all renderers, handling the core aspects of rendering
     /// such as the location of the model in 'model space' and the location on
     /// the screen to draw the model. It also holds a reference to the list of
     /// <see cref="IGenerator{T}"/> instances that are used to create the diagram. These
-    /// generators are accessed through the generateDiagram method.</para>
-    ///
-    /// <para>The terminology 'model space' and 'screen space' refer to the coordinate
+    /// generators are accessed through the generateDiagram method.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The terminology 'model space' and 'screen space' refer to the coordinate
     /// systems for the model and the drawing, respectively. So the 2D points for
     /// atoms in the model might be 1 unit apart (roughly representing Ångström,
     /// perhaps) but the circles in the diagram that represent those atoms might be
     /// 10 pixels apart on screen. Therefore screen space will be 10 times model
-    /// space for this example.</para>
-    ///
-    /// <para>The abstract method <see cref="CalculateScaleForBondLength(double)"/> is
+    /// space for this example.
+    /// </para>
+    /// <para>
+    /// The abstract method <see cref="CalculateScaleForBondLength(double)"/> is
     /// needed to determine the scale. For the model example just given, this would
     /// return '10.0' for an input of '10.0', as that is the scale for that desired
-    /// bond length.</para>
-    /// </summary>
+    /// bond length.
+    /// </para>
+    /// </remarks>
     // @cdk.module renderbasic
     // @author maclean
     // @cdk.githash
@@ -324,9 +329,8 @@ namespace NCDK.Renderers
             fontManager.FontStyle = rendererModel.GetV<Fonts.FontStyles>(typeof(UsedFontStyle));
 
             drawVisitor.FontManager = this.fontManager;
-            drawVisitor.Transform = this.transform;
             drawVisitor.RendererModel = this.rendererModel;
-            diagram.Accept(drawVisitor);
+            diagram.Accept(drawVisitor, this.transform);
         }
 
         /// <summary>

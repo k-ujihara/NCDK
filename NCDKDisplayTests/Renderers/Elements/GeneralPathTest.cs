@@ -19,8 +19,9 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+using WPF = System.Windows;
 
 namespace NCDK.Renderers.Elements
 {
@@ -30,7 +31,7 @@ namespace NCDK.Renderers.Elements
     {
         static GeneralPathTest()
         {
-            IRenderingElement element = new GeneralPath(new List<Path.PathElement>(), System.Windows.Media.Colors.Black);
+            IRenderingElement element = new GeneralPath(new WPF.Media.PathGeometry(), WPF.Media.Colors.Black);
             SetRenderingElement(element);
         }
     }

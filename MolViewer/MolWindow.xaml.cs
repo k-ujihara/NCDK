@@ -23,6 +23,7 @@
 using Microsoft.Win32;
 using NCDK.Default;
 using NCDK.Depict;
+using NCDK.Graphs.InChI;
 using NCDK.IO;
 using NCDK.Layout;
 using NCDK.Smiles;
@@ -30,6 +31,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace NCDK.MolViewer
 {
@@ -37,90 +40,97 @@ namespace NCDK.MolViewer
     {
         private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
+        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Default);
+        private static InChIGeneratorFactory inChIGeneratorFactory = new InChIGeneratorFactory();
+
         private static DepictionGenerator generator = new DepictionGenerator();
         private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static ReaderFactory readerFactory = new ReaderFactory();
+        private IAtomContainer _molecular = null;
 
-        private IAtomContainer mol = null;
-
-        class MolWindowListener 
-            : Events.ICDKChangeListener
-        {
-            MolWindow parent;
-            public MolWindowListener(MolWindow parent)
-            {
-                this.parent = parent;
-            }
-
-            public void StateChanged(ChemObjectChangeEventArgs evt)
-            {
-                parent.Render();
-            }
-        }
+        private TextChangedEventHandler textSmiles_TextChangedEventHandler; 
 
         public MolWindow()
         {
             InitializeComponent();
+
+            textSmiles_TextChangedEventHandler = new TextChangedEventHandler(this.TextSmiles_TextChanged);
+            this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
         }
 
-        private void MenuItem_PasteAsInchi_Click(object sender, RoutedEventArgs e)
+        private IAtomContainer Molecular
         {
-            IAtomContainer mol = null;
-            if (Clipboard.ContainsText())
+            get => _molecular;
+            set
             {
-                var text = Clipboard.GetText();
-                try
-                {
-                    using (var ins = new StringReader(text))
-                    using (var reader = new InChIPlainTextReader(ins))
-                    {
-                        var chemFile = reader.Read(new ChemFile());
-                        mol = chemFile.First().First().MoleculeSet.First();
-                    }
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
+                _molecular = value;
+                UpdateMolecular();
             }
-            if (mol == null)
-                return;
+        }
 
-            this.mol = mol;
+        private void UpdateMolecular()
+        {
+            string smiles;
+            try
+            {
+                smiles = smilesGenerator.Create(_molecular);
+            }
+            catch (Exception)
+            {
+                smiles = "Failed to create SMILES";
+
+            }
+            UpdateSmilesWithoutEvent(smiles);
             Render();
         }
 
-        private void MenuItem_PasteAsSmiles_Click(object sender, RoutedEventArgs e)
+        private void UpdateSmiles()
         {
             IAtomContainer mol = null;
-            if (Clipboard.ContainsText())
+            var text = this.textSmiles.Text;
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+            try
             {
-                var smiles = Clipboard.GetText();
-                try
-                {
-                    mol = parser.ParseSmiles(smiles);
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
+                mol = parser.ParseSmiles(text);
+            }
+            catch (Exception)
+            {
+                // ignore
             }
             if (mol == null)
                 return;
 
-            this.mol = mol;
+            this._molecular = mol;
             Render();
         }
 
         public void Render()
         {
-            if (mol == null)
+            if (Molecular == null)
                 return;
 
             DepictionGenerator myGenerator = generator.WithZoom(1.6);
-            Depiction depiction = myGenerator.Depict(mol);
+            Depiction depiction = myGenerator.Depict(Molecular);
+#if true
+            var dv = new DrawingVisual();
+            depiction.Draw(dv);
+            DrawingGroup dg = dv.Drawing;
+            Image image = new Image
+            {
+                Source = new DrawingImage(dg)
+            };
+            myGrid.Children.Clear();
+            myGrid.Children.Add(image);
+#else
             var img = depiction.ToBitmap();
-            image.Source = img;
+            Image image = new Image
+            {
+                Source = img
+            };
+            myGrid.Children.Clear();
+            myGrid.Children.Add(image);
+#endif
         }
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
@@ -151,13 +161,13 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            this.mol = mol;
+            this.Molecular = mol;
             Render();
         }
 
         private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (mol == null)
+            if (Molecular == null)
                 return;
 
             SaveFileDialog fileDialog = new SaveFileDialog
@@ -175,20 +185,60 @@ namespace NCDK.MolViewer
                 return;
 
             DepictionGenerator myGenerator = generator.WithZoom(1.6);
-            Depiction depiction = myGenerator.Depict(mol);
+            Depiction depiction = myGenerator.Depict(Molecular);
             depiction.WriteTo(fileDialog.FileName);
+        }
+
+        private void MenuItem_PasteAsInchi_Click(object sender, RoutedEventArgs e)
+        {
+            IAtomContainer mol = null;
+            if (Clipboard.ContainsText())
+            {
+                var text = Clipboard.GetText();
+                try
+                {
+                    // Get InChIToStructure
+                    InChIToStructure converter = inChIGeneratorFactory.GetInChIToStructure(text, builder);
+                    mol = converter.AtomContainer;
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+            }
+            if (mol == null)
+                return;
+
+            this.Molecular = mol;
+            Render();
         }
 
         private void Clean_structure_Click(object sender, RoutedEventArgs e)
         {
-            if (this.mol != null)
+            if (this.Molecular != null)
             {
-                var mol = (IAtomContainer)this.mol.Clone();
+                var mol = (IAtomContainer)this.Molecular.Clone();
                 sdg.Molecule = mol;
                 sdg.GenerateCoordinates(mol);
-                this.mol = mol;
-                Render();
+                this.Molecular = mol;
             }
+        }
+
+        private object syncUpdateSmilesWithoutEvent = new object();
+
+        private void UpdateSmilesWithoutEvent(string newSmiles)
+        {
+            lock (syncUpdateSmilesWithoutEvent)
+            {
+                this.textSmiles.TextChanged -= textSmiles_TextChangedEventHandler;
+                this.textSmiles.Text = newSmiles;
+                this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
+            }
+        }
+
+        private void TextSmiles_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateSmiles();
         }
     }
 }

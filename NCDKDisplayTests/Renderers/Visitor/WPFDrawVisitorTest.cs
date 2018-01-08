@@ -92,10 +92,9 @@ namespace NCDK.Renderers.Visitors
             DrawingContext g2d = drawingVisual.RenderOpen();
             WPFDrawVisitor visitor = new WPFDrawVisitor(g2d)
             {
-                FontManager = new WPFFontManager(),
-                Transform = Transform.Identity
+                FontManager = new WPFFontManager()
             };
-            visitor.Visit(new TextElement(new WPF.Point(2, 3), "Foo", WPF::Media.Colors.Black));
+            visitor.Visit(new TextElement(new WPF.Point(2, 3), "Foo", WPF::Media.Colors.Black), Transform.Identity);
             // at least we now know it did not crash...
             Assert.IsNotNull(visitor);
         }

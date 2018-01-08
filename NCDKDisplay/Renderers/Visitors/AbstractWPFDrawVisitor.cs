@@ -1,4 +1,4 @@
-/* Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
+﻿/* Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
  *               2011 Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
@@ -36,39 +36,23 @@ namespace NCDK.Renderers.Visitors
     public abstract class AbstractWPFDrawVisitor : IDrawVisitor
     {
         /// <summary>
-        /// This is initially null, and must be set <see cref="Transform"/> property!
-        /// </summary>
-        protected Transform transform = null;
-
-        /// <summary>
-        /// Transforms a point according to the current affine transformation,
-        /// converting a world coordinate into a screen coordinate.
-        /// </summary>
-        /// <param name="coord">coordinate of the world point to transform</param>
-        /// <returns>the transformed screen coordinate</returns>
-        public WPF::Point TransformPoint(WPF::Point coord)
-        {
-            return this.transform.Transform(coord);
-        }
-
-        /// <summary>
         /// Calculates the boundaries of a text string in screen coordinates.
         /// </summary>
         /// <param name="text">the text string</param>
         /// <param name="coord">the world x-coordinate of where the text should be placed</param>
         /// <returns>the screen coordinates</returns>
-        protected internal Rect GetTextBounds(string text, WPF::Point coord, Typeface typeface, double emSize)
+        protected internal WPF.Rect GetTextBounds(string text, WPF::Point coord, Typeface typeface, double emSize)
         {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            var bounds = new Rect(0, 0, ft.Width, ft.Height);
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            var bounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
 
             double widthPad = 3;
             double heightPad = 1;
 
             double width = bounds.Width + widthPad;
             double height = bounds.Height + heightPad;
-            var point = this.TransformPoint(coord);
-            return new Rect(point.X - width / 2, point.Y - height / 2, width, height);
+            var point = coord;
+            return new WPF.Rect(point.X - width / 2, point.Y - height / 2, width, height);
         }
 
         /// <summary>
@@ -82,16 +66,16 @@ namespace NCDK.Renderers.Visitors
         /// <param name="text">the text string</param>
         /// <param name="coord">the world coordinate of where the text should be placed</param>
         /// <returns>the screen coordinates</returns>
-        protected internal Point GetTextBasePoint(string text, Point coord, Typeface typeface, double emSize)
+        protected internal WPF.Point GetTextBasePoint(string text, WPF.Point coord, Typeface typeface, double emSize)
         {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            var stringBounds = new Rect(0, 0, ft.Width, ft.Height);
-            var point = this.TransformPoint(coord);
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            var stringBounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
+            var point = coord;
             var baseX = point.X - (stringBounds.Width / 2);
 
             // correct the baseline by the ascent
             var baseY = point.Y + (typeface.CapsHeight - stringBounds.Height / 2);
-            return new Point(baseX, baseY);
+            return new WPF.Point(baseX, baseY);
         }
 
         /// <summary>
@@ -101,21 +85,15 @@ namespace NCDK.Renderers.Visitors
         /// <param name="text">the text to obtain the bounds of</param>
         /// <returns>bounds of the text</returns>
         /// <seealso cref="Typeface"/>
-        protected internal Rect GetTextBounds(string text, Typeface typeface, double emSize)
+        protected internal WPF.Rect GetTextBounds(string text, Typeface typeface, double emSize)
         {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            return new Rect(0, 0, ft.Width, ft.Height);
-        }
-
-        /// <inheritdoc/>
-        public Transform Transform 
-        {
-            get => this.transform;
-            set => this.transform = value;
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            return new WPF.Rect(0, 0, ft.Width, ft.Height);
         }
 
         public abstract IFontManager FontManager { get; set; }
         public abstract RendererModel RendererModel { get; set; }
         public abstract void Visit(IRenderingElement element);
+        public abstract void Visit(IRenderingElement element, Transform transform);
     }
 }

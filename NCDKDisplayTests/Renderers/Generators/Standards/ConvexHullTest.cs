@@ -37,7 +37,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var oval = new RectangleGeometry(new Rect(-5, -5, 10, 10), 5, 5);
             ConvexHull hull = ConvexHull.OfShape(oval);
-            Rect bounds = hull.Outline().Bounds;
+            Rect bounds = hull.Outline.Bounds;
             Assert.AreEqual(-5, bounds.Left, 0.01);
             Assert.AreEqual(-5, bounds.Top, 0.01);
             Assert.AreEqual(5, bounds.Right, 0.01);
@@ -58,7 +58,7 @@ namespace NCDK.Renderers.Generators.Standards
                     }, true)
                 });
             ConvexHull hull = ConvexHull.OfShape(path);
-            var bounds = hull.Outline().Bounds;
+            var bounds = hull.Outline.Bounds;
             Assert.AreEqual(-5, bounds.Left, 0.01);
             Assert.AreEqual(0, bounds.Top, 0.01);
             Assert.AreEqual(5, bounds.Right, 0.01);
@@ -72,7 +72,7 @@ namespace NCDK.Renderers.Generators.Standards
             var rect2 = new RectangleGeometry(new Rect(15, 16, 20, 25));
             var rect3 = new RectangleGeometry(new Rect(-15, 6, 2, 5));
             ConvexHull hull = ConvexHull.OfShapes(new[] { rect1, rect2, rect3 });
-            var bounds = hull.Outline().Bounds;
+            var bounds = hull.Outline.Bounds;
             Assert.AreEqual(-15, bounds.Left, 0.01);
             Assert.AreEqual(-10, bounds.Top, 0.01);
             Assert.AreEqual(35, bounds.Right, 0.01);
@@ -89,8 +89,8 @@ namespace NCDK.Renderers.Generators.Standards
 
             ConvexHull transformedHull = hull.Transform(new TranslateTransform(10, 15));
 
-            var bounds = hull.Outline().Bounds;
-            var transformedBounds = transformedHull.Outline().Bounds;
+            var bounds = hull.Outline.Bounds;
+            var transformedBounds = transformedHull.Outline.Bounds;
 
             Assert.AreNotEqual(transformedBounds.Left, bounds.Left, 0.01);
             Assert.AreNotEqual(transformedBounds.Top, bounds.Top, 0.01);

@@ -36,9 +36,6 @@ namespace NCDK.Renderers.Elements
         /// <param name="element">abstract rendering element reflecting some part of the chemical drawing.</param>
         void Visit(IRenderingElement element);
 
-        /// <summary>
-        /// The affine transformations used.
-        /// </summary>
-        Transform Transform { get; set; }
+        void Visit(IRenderingElement element, Transform transform);
     }
 }

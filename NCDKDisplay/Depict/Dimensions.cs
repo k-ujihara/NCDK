@@ -35,25 +35,23 @@ namespace NCDK.Depict
         /// </summary>
         public readonly static Dimensions AUTOMATIC = new Dimensions(DepictionGenerator.AUTOMATIC, DepictionGenerator.AUTOMATIC);
 
-        /// <summary>
-        /// The values.
-        /// </summary>
-        public readonly double w, h;
+        public readonly double width;
+        public readonly double height;
 
-        public Dimensions(double w, double h)
+        public Dimensions(double width, double height)
         {
-            this.w = w;
-            this.h = h;
+            this.width = width;
+            this.height = height;
         }
 
-        public Dimensions Add(double w, double h)
+        public Dimensions Add(double width, double height)
         {
-            return new Dimensions(this.w + w, this.h + h);
+            return new Dimensions(this.width + width, this.height + height);
         }
 
         public Dimensions Scale(double coef)
         {
-            return new Dimensions(coef * w, coef * h);
+            return new Dimensions(coef * width, coef * height);
         }
 
         public static Dimensions OfRow(IList<Bounds> elems)
@@ -74,7 +72,7 @@ namespace NCDK.Depict
         /// <summary>
         /// Determine how much space is needed to depiction the bound <see cref="IRenderingElement"/> if
         /// they were aligned in a grid without padding or margins. The method takes arrays
-        /// for for the offset which are one item bigger than the size of the gird
+        /// for the offset which are one item bigger than the size of the gird
         /// (e.g. 3x2 would need arrays of length 4 and 2). The arrays are filled with the
         /// cumulative width/heights for each grid point allowing easy alignment.
         /// </summary>
@@ -152,7 +150,7 @@ namespace NCDK.Depict
 
         public override string ToString()
         {
-            return Math.Ceiling(w) + "x" + Math.Ceiling(h);
+            return Math.Ceiling(width) + "x" + Math.Ceiling(height);
         }
     }
 }

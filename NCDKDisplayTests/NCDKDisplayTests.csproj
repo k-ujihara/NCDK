@@ -105,12 +105,6 @@
     <Compile Include="Renderers\Elements\GeneralPathTest.cs" />
     <Compile Include="Renderers\Elements\LineElementTest.cs" />
     <Compile Include="Renderers\Elements\OvalElementTest.cs" />
-    <Compile Include="Renderers\Elements\PathElementTest.cs" />
-    <Compile Include="Renderers\Elements\Path\AbstractPathElementTest.cs" />
-    <Compile Include="Renderers\Elements\Path\CubicToTest.cs" />
-    <Compile Include="Renderers\Elements\Path\LineToTest.cs" />
-    <Compile Include="Renderers\Elements\Path\MoveToTest.cs" />
-    <Compile Include="Renderers\Elements\Path\QuadToTest.cs" />
     <Compile Include="Renderers\Elements\RectangleElementTest.cs" />
     <Compile Include="Renderers\Elements\RingElementTest.cs" />
     <Compile Include="Renderers\Elements\TextElementTest.cs" />

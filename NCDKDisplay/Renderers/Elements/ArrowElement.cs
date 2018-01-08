@@ -58,6 +58,11 @@ namespace NCDK.Renderers.Elements
             this.direction = direction;
         }
 
+        public virtual void Accept(IRenderingVisitor v, Transform transform)
+        {
+            v.Visit(this, transform);
+        }
+
         /// <inheritdoc/>
         public virtual void Accept(IRenderingVisitor v)
         {

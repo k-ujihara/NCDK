@@ -96,6 +96,8 @@ namespace NCDK.Depict
             this.model = model;
         }
 
+        public abstract Size Draw(DrawingVisual drawingVisual);
+
         /// <summary>
         /// Render the depiction to a WPF.
         /// </summary>
@@ -326,7 +328,9 @@ namespace NCDK.Depict
             double modelScale = zoom * model.GetV<double>(typeof(BasicSceneGenerator.Scale));
             double zoomToFit = Math.Min(viewBounds.Width / (bounds.Width * modelScale), viewBounds.Height / (bounds.Height * modelScale));
             Matrix transform = Matrix.Identity;
-            transform.TranslatePrepend(viewBounds.GetCenterX(), viewBounds.GetCenterY());
+
+            // setup up transform
+            transform.TranslatePrepend(viewBounds.CenterX(), viewBounds.CenterY());
             transform.ScalePrepend(modelScale, -modelScale);
 
             // default is shrink only unless specified
@@ -343,10 +347,8 @@ namespace NCDK.Depict
 
             visitor.RendererModel = model;
             visitor.FontManager = fontManager;
-            visitor.Transform = new MatrixTransform(transform);
 
-            // setup up transform
-            visitor.Visit(bounds.Root);
+            visitor.Visit(bounds.Root, new MatrixTransform(transform));
         }
 
         /// <summary>

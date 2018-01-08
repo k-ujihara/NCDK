@@ -150,8 +150,8 @@ namespace NCDK.Renderers
         {
             this.SetScale(reaction);
             var bounds = BoundsCalculator.CalculateBounds(reaction);
-            this.modelCenter = new Point(bounds.Value.GetCenterX(), bounds.Value.GetCenterY());
-            this.drawCenter = new Point(screen.GetCenterX(), screen.GetCenterY());
+            this.modelCenter = new Point(bounds.Value.CenterX(), bounds.Value.CenterY());
+            this.drawCenter = new Point(screen.CenterX(), screen.CenterY());
             this.Setup();
         }
 

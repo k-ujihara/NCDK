@@ -148,8 +148,7 @@ namespace NCDK.Aromaticities
         /// <returns>the number of electrons</returns>
         private static int ElectronsForAtomType(IAtom atom)
         {
-            int electrons;
-            if (Types.TryGetValue(atom.AtomTypeName, out electrons))
+            if (Types.TryGetValue(atom.AtomTypeName, out int electrons))
                 return electrons;
 
             try

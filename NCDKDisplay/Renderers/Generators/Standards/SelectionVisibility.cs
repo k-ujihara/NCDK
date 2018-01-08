@@ -100,7 +100,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// Determines if any bond in the list is selected
         /// </summary>
         /// <param name="bonds">list of bonds</param>
-        /// <returns>at least bond bond is selected</returns>
+        /// <returns>at least bond is selected</returns>
         internal static bool HasSelectedBond(IEnumerable<IBond> bonds, RendererModel model)
         {
             foreach (var bond in bonds)

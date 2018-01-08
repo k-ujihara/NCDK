@@ -32,6 +32,7 @@ namespace NCDK.Renderers.Visitors
         private sealed class NestedAWTDrawVisitor : AbstractWPFDrawVisitor
         {
             public override void Visit(IRenderingElement element) { }
+            public override void Visit(IRenderingElement element, Transform transform) { }
             public override RendererModel RendererModel { get => null; set { } }
             public override IFontManager FontManager { get => null; set { } }
         }
@@ -46,20 +47,14 @@ namespace NCDK.Renderers.Visitors
         [TestMethod()]
         public void TestSetAffineTransformation()
         {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor
-            {
-                Transform = Transform.Identity
-            };
+            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor();
             Assert.IsNotNull(visitor);
         }
 
         [TestMethod()]
         public void TestGetTextBounds()
         {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor
-            {
-                Transform = Transform.Identity
-            };
+            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor();
             var typeface = new Typeface(
                   new FontFamily("Arial"),
                   WPF::FontStyles.Normal,
@@ -70,24 +65,9 @@ namespace NCDK.Renderers.Visitors
         }
 
         [TestMethod()]
-        public void TestTransformPoint()
-        {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor
-            {
-                Transform = Transform.Identity // no transform
-            };
-            var transformed = visitor.TransformPoint(new WPF.Point(1, 2));
-            Assert.AreEqual(1, transformed.X);
-            Assert.AreEqual(2, transformed.Y);
-        }
-
-        [TestMethod()]
         public void TestGetTextBasePoint()
         {
-            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor
-            {
-                Transform = Transform.Identity
-            };
+            AbstractWPFDrawVisitor visitor = new NestedAWTDrawVisitor();
             var typeface = new Typeface(
                   new FontFamily("Arial"),
                   WPF::FontStyles.Normal,

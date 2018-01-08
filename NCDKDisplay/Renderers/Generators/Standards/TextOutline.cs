@@ -28,6 +28,7 @@ using System.Globalization;
 using System;
 using System.Text;
 using WPF = System.Windows;
+using System.Windows.Media.Composition;
 
 namespace NCDK.Renderers.Generators.Standards
 {
@@ -45,11 +46,6 @@ namespace NCDK.Renderers.Generators.Standards
         private readonly string text;
 
         /// <summary>
-        /// The original glyphs.
-        /// </summary>
-        private readonly FormattedText glyphs;
-
-        /// <summary>
         /// The outline of the text (untransformed).
         /// </summary>
         private readonly Geometry outline;
@@ -62,61 +58,42 @@ namespace NCDK.Renderers.Generators.Standards
         private readonly Typeface font;
         private readonly double emSize;
 
-        private static FormattedText CreateFormattedText(string text, Typeface font, double emSize)
-            => new FormattedText(
-                      text,
-                      CultureInfo.InvariantCulture,
-                      FlowDirection.LeftToRight,
-                      font, emSize, new SolidColorBrush());
-
         /// <summary>
         /// Create an outline of text in provided font.
         /// </summary>
         /// <param name="text">the text to create an outline of</param>
-        /// <param name="font">the font style, size, and shape that defines the outline</param>
+        /// <param name="font">the style and shape of font that defines the outline</param>
+        /// <param name="emSize">the size of font that defines the outline</param>
         public TextOutline(string text, Typeface font, double emSize)
             : this(text, font, emSize, WPF.Media.Transform.Identity)
         { }
 
-        private TextOutline(string text, Typeface font, double emSize, Transform transform)
-            : this(text, font, emSize,
-                  CreateFormattedText(text, font, emSize),
-                  transform)
-        { }
-        
         /// <summary>
         /// Create an outline of text and the glyphs for that text.
         /// </summary>
         /// <param name="text">the text to create an outline of</param>
-        /// <param name="glyphs">the glyphs for the provided outlined</param>
-        private TextOutline(string text, Typeface font, double emSize, FormattedText glyphs, Transform transform)
-            : this(text, font, emSize, glyphs,
-                  WPFUtil.ToPathGeometry(text, font, emSize),
+        /// <param name="font">the style and shape of font that defines the outline</param>
+        /// <param name="emSize">the size of font that defines the outline</param>
+        /// <param name="transform">the transform</param>
+        private TextOutline(string text, Typeface font, double emSize, Transform transform)
+            : this(text, font, emSize, 
+                  new FormattedText(text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, font, emSize, Brushes.Transparent).BuildGeometry(new Point()),
                   transform)
         { }
-
-        static GeometryGroup A(Geometry g)
-        {
-            var a = new GeometryGroup();
-            a.Children.Add(g);
-            return a;
-        }
 
         /// <summary>
         /// Internal constructor, requires all attributes.
         /// </summary>
         /// <param name="text">the text</param>
-        /// <param name="glyphs">glyphs of the text</param>
+        /// <param name="font">the style and shape of font that defines the outline</param>
+        /// <param name="emSize">the size of font that defines the outline</param>
         /// <param name="outline">the outline of the glyphs</param>
         /// <param name="transform">the transform</param>
-        private TextOutline(string text, Typeface font, double emSize, FormattedText glyphs, Geometry outline, Transform transform)
+        private TextOutline(string text, Typeface font, double emSize, Geometry outline, Transform transform)
         {
             this.text = text;
             this.font = font;
             this.emSize = emSize;
-            this.glyphs = glyphs;
-            if (outline.Transform == null)
-                outline.Transform = System.Windows.Media.Transform.Identity;
             this.outline = outline;
             this.transform = transform;
         }
@@ -148,10 +125,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// Access the transformed logical bounds of the outline text.
         /// </summary>
         /// <returns>logical bounds</returns>
-        public Rect GetLogicalBounds()
-        {
-            return TransformedBounds(new RectangleGeometry(glyphs.BuildGeometry(new Point()).Bounds));
-        }
+        public Rect LogicalBounds
+            => TransformedBounds(new RectangleGeometry(outline.Bounds));
 
         /// <summary>
         /// Access the bounds of a shape that have been transformed.
@@ -178,9 +153,8 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Access the transformed center of the whole outline.
+        /// The transformed center of the whole outline.
         /// </summary>
-        /// <returns>center of outline</returns>
         public Point GetCenter()
         {
             var bounds = GetBounds();
@@ -243,7 +217,6 @@ namespace NCDK.Renderers.Generators.Standards
                 text, 
                 font,
                 emSize,
-                glyphs, 
                 outline, 
                 new MatrixTransform(transform.Value * nextTransform.Value));
         }

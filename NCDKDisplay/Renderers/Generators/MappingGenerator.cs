@@ -57,7 +57,7 @@ namespace NCDK.Renderers.Generators
 
         private IGeneratorParameter<double> mappingLineWidth = new MappingLineWidth();
 
-        /// <summary>bool by which atom-atom mapping depiction can be temporarily disabled.</summary>
+        /// <summary>boolean by which atom-atom mapping depiction can be temporarily disabled.</summary>
         public class ShowAtomAtomMapping : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>

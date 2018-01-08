@@ -21,11 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
 using System.Windows;
+using System.Windows.Media;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Elements
@@ -127,23 +128,13 @@ namespace NCDK.Renderers.Elements
         /// <param name="path">general path</param>
         private void Add(GeneralPath path)
         {
-            foreach (var element in path.elements)
-            {
-                var points = element.Points;
-                switch (element.Type)
-                {
-                    case Path.PathType.MoveTo:
-                    case Path.PathType.LineTo:
-                        Add(points[0]);
-                        break;
-                    case Path.PathType.QuadTo:
-                        Add(points[1]);
-                        break;
-                    case Path.PathType.CubicTo:
-                        Add(points[2]);
-                        break;
-                }
-            }
+            var b = path.elements.Bounds;
+            if (b.IsEmpty)
+                return;
+            Add(b.BottomLeft);
+            Add(b.BottomRight);
+            Add(b.TopLeft);
+            Add(b.TopRight);
         }
 
         private void Traverse(IRenderingElement newElement)
@@ -174,8 +165,7 @@ namespace NCDK.Renderers.Elements
                         Add(lineElem.secondPoint + vec - ortho);
                         break;
                     case ElementGroup elementGroup:
-                        foreach (var child in elementGroup)
-                            stack.Add(child);
+                        stack.AddRange(elementGroup);
                         break;
                     case MarkedElement e:
                         stack.Add(e.Element());
@@ -214,6 +204,11 @@ namespace NCDK.Renderers.Elements
         /// <returns>bounds are empty (true) or not (false)</returns>
         /// </summary>
         public bool IsEmpty() => minX > maxX || minY > maxY;
+
+        public void Accept(IRenderingVisitor visitor, Transform transform)
+        {
+            visitor.Visit(this, transform);
+        }
 
         public void Accept(IRenderingVisitor visitor)
         {

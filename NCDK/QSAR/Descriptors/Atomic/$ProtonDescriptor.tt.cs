@@ -23,7 +23,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object
         /// </summary>
-        /// <value>Parameters are the proton position and a bool (<see langword="true"/> if you need to detect aromaticity)</value>
+        /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
         public virtual object[] Parameters
         {
@@ -135,9 +135,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomContainer detected = varAtomContainerSet.FirstOrDefault();
 
-            // neighboors[0] is the atom joined to the target proton:
-            var neighboors = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = neighboors.First();
+            // neighbors[0] is the atom joined to the target proton:
+            var neighbors = mol.GetConnectedAtoms(clonedAtom);
+            IAtom neighbour0 = neighbors.First();
 
             // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
             var atomsInSecondSphere = mol.GetConnectedAtoms(neighbour0);
@@ -146,7 +146,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> singles = new List<int>(); // list of any bond not rotatable
             List<int> doubles = new List<int>(); // list with only double bonds
             List<int> atoms = new List<int>(); // list with all the atoms in spheres
-                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighboors[0]) ) );
+                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighbors[0]) ) );
             List<int> bondsInCycloex = new List<int>(); // list for bonds in cycloexane-like rings
 
             // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -467,7 +467,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object
         /// </summary>
-        /// <value>Parameters are the proton position and a bool (<see langword="true"/> if you need to detect aromaticity)</value>
+        /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
         public virtual object[] Parameters
         {
@@ -579,9 +579,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomContainer detected = varAtomContainerSet.FirstOrDefault();
 
-            // neighboors[0] is the atom joined to the target proton:
-            var neighboors = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = neighboors.First();
+            // neighbors[0] is the atom joined to the target proton:
+            var neighbors = mol.GetConnectedAtoms(clonedAtom);
+            IAtom neighbour0 = neighbors.First();
 
             // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
             var atomsInSecondSphere = mol.GetConnectedAtoms(neighbour0);
@@ -590,7 +590,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> singles = new List<int>(); // list of any bond not rotatable
             List<int> doubles = new List<int>(); // list with only double bonds
             List<int> atoms = new List<int>(); // list with all the atoms in spheres
-                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighboors[0]) ) );
+                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighbors[0]) ) );
             List<int> bondsInCycloex = new List<int>(); // list for bonds in cycloexane-like rings
 
             // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -911,7 +911,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object
         /// </summary>
-        /// <value>Parameters are the proton position and a bool (<see langword="true"/> if you need to detect aromaticity)</value>
+        /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
         public virtual object[] Parameters
         {
@@ -1023,9 +1023,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomContainer detected = varAtomContainerSet.FirstOrDefault();
 
-            // neighboors[0] is the atom joined to the target proton:
-            var neighboors = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = neighboors.First();
+            // neighbors[0] is the atom joined to the target proton:
+            var neighbors = mol.GetConnectedAtoms(clonedAtom);
+            IAtom neighbour0 = neighbors.First();
 
             // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
             var atomsInSecondSphere = mol.GetConnectedAtoms(neighbour0);
@@ -1034,7 +1034,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> singles = new List<int>(); // list of any bond not rotatable
             List<int> doubles = new List<int>(); // list with only double bonds
             List<int> atoms = new List<int>(); // list with all the atoms in spheres
-                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighboors[0]) ) );
+                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighbors[0]) ) );
             List<int> bondsInCycloex = new List<int>(); // list for bonds in cycloexane-like rings
 
             // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -1355,7 +1355,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object
         /// </summary>
-        /// <value>Parameters are the proton position and a bool (<see langword="true"/> if you need to detect aromaticity)</value>
+        /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
         public virtual object[] Parameters
         {
@@ -1467,9 +1467,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomContainer detected = varAtomContainerSet.FirstOrDefault();
 
-            // neighboors[0] is the atom joined to the target proton:
-            var neighboors = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = neighboors.First();
+            // neighbors[0] is the atom joined to the target proton:
+            var neighbors = mol.GetConnectedAtoms(clonedAtom);
+            IAtom neighbour0 = neighbors.First();
 
             // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
             var atomsInSecondSphere = mol.GetConnectedAtoms(neighbour0);
@@ -1478,7 +1478,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> singles = new List<int>(); // list of any bond not rotatable
             List<int> doubles = new List<int>(); // list with only double bonds
             List<int> atoms = new List<int>(); // list with all the atoms in spheres
-                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighboors[0]) ) );
+                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighbors[0]) ) );
             List<int> bondsInCycloex = new List<int>(); // list for bonds in cycloexane-like rings
 
             // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
@@ -1799,7 +1799,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         /// The parameters attribute of the RDFProtonDescriptor object
         /// </summary>
-        /// <value>Parameters are the proton position and a bool (<see langword="true"/> if you need to detect aromaticity)</value>
+        /// <value>Parameters are the proton position and a boolean (<see langword="true"/> if you need to detect aromaticity)</value>
         /// <exception cref="CDKException"></exception>
         public virtual object[] Parameters
         {
@@ -1911,9 +1911,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             IAtomContainer detected = varAtomContainerSet.FirstOrDefault();
 
-            // neighboors[0] is the atom joined to the target proton:
-            var neighboors = mol.GetConnectedAtoms(clonedAtom);
-            IAtom neighbour0 = neighboors.First();
+            // neighbors[0] is the atom joined to the target proton:
+            var neighbors = mol.GetConnectedAtoms(clonedAtom);
+            IAtom neighbour0 = neighbors.First();
 
             // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
             var atomsInSecondSphere = mol.GetConnectedAtoms(neighbour0);
@@ -1922,7 +1922,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             List<int> singles = new List<int>(); // list of any bond not rotatable
             List<int> doubles = new List<int>(); // list with only double bonds
             List<int> atoms = new List<int>(); // list with all the atoms in spheres
-                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighboors[0]) ) );
+                                               // atoms.Add( int.ValueOf( mol.Atoms.IndexOf(neighbors[0]) ) );
             List<int> bondsInCycloex = new List<int>(); // list for bonds in cycloexane-like rings
 
             // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:

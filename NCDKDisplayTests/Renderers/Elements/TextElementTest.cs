@@ -46,7 +46,10 @@ namespace NCDK.Renderers.Elements
                 isVisited = true;
             }
 
-            public Transform Transform { get => Transform.Identity; set { } }
+            public void Visit(IRenderingElement element, Transform transform)
+            {
+                isVisited = true;
+            }
         }
 
         [TestMethod()]

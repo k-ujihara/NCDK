@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2014  European Bioinformatics Institute (EMBL-EBI)
  *                     John May <jwmay@users.sf.net>
  *               2014  Mark B Vine (orcid:0000-0002-7794-0426)
@@ -29,7 +29,6 @@ using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Renderers.Colors;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Elements.Path;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -362,10 +361,21 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
-            return new GeneralPath(new Renderers.Elements.Path.PathElement[]
-                {
-                    new MoveTo(a), new LineTo(b), new LineTo(c), new LineTo(e), new LineTo(d), new Close()
-                }, foreground);
+            var path = new PathGeometry();
+            var pf = new PathFigure()
+            {
+                StartPoint = ToPoint(a),
+                Segments = new PathSegmentCollection(new[]
+                    {
+                        new LineSegment(ToPoint(b), false),
+                        new LineSegment(ToPoint(c), false),
+                        new LineSegment(ToPoint(e), false),
+                        new LineSegment(ToPoint(d), false),
+                    }),
+            };
+            path.Figures.Add(pf);
+
+            return new GeneralPath(path, foreground);
         }
 
         /// <summary>
@@ -489,19 +499,20 @@ namespace NCDK.Renderers.Generators.Standards
 
             Vector2 peak = Scale(perpendicular, step);
 
-            bool started = false;
-
             double start = fromPoint.Equals(fromBackOffPoint) ? double.MinValue : Vector2.Distance(fromPoint, fromBackOffPoint);
             double end = toPoint.Equals(toBackOffPoint) ? double.MaxValue : Vector2.Distance(fromPoint, toBackOffPoint);
 
-            var path = new List<Renderers.Elements.Path.PathElement>();
+            var path = new PathGeometry();
+            PathFigure pf = null;
             if (start == double.MinValue)
             {
-                path.Add(new MoveTo(fromPoint));
-                started = true;
+                pf = new PathFigure()
+                {
+                    StartPoint = ToPoint(fromPoint)
+                };
             }
 
-            // the wavy bond is drawn using Bezier curves, removing the control points each
+            // the wavy bond is drawn using Bézier curves, removing the control points each
             // first 'endPoint' of the iteration forms a zig-zag pattern. The second 'endPoint'
             // lies on the central line between the atoms.
 
@@ -539,16 +550,18 @@ namespace NCDK.Renderers.Generators.Standards
                     {
                         // first end point
                         Vector2 endPoint = Sum(Sum(fromPoint, Scale(unit, dist)), peak);
-                        if (started)
+                        if (pf != null)
                         {
-                            Vector2 controlPoint1 = Sum(Sum(fromPoint, Scale(unit, (i - 1) * step)), Scale(peak, 0.5));
-                            Vector2 controlPoint2 = Sum(Sum(fromPoint, Scale(unit, (i - 0.5) * step)), peak);
-                            path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
+                            var controlPoint1 = Sum(Sum(fromPoint, Scale(unit, (i - 1) * step)), Scale(peak, 0.5));
+                            var controlPoint2 = Sum(Sum(fromPoint, Scale(unit, (i - 0.5) * step)), peak);
+                            pf.Segments.Add(new BezierSegment(ToPoint(controlPoint1), ToPoint(controlPoint2), ToPoint(endPoint), true));
                         }
                         else
                         {
-                            path.Add(new MoveTo(endPoint));
-                            started = true;
+                            pf = new PathFigure()
+                            {
+                                StartPoint = ToPoint(endPoint)
+                            };
                         }
                     }
                 }
@@ -559,24 +572,27 @@ namespace NCDK.Renderers.Generators.Standards
 
                     if (dist >= start && dist <= end)
                     {
-
                         // second end point
-                        Vector2 endPoint = Sum(fromPoint, Scale(unit, dist));
+                        var endPoint = ToPoint(Sum(fromPoint, Scale(unit, dist)));
 
-                        if (started)
+                        if (pf != null)
                         {
-                            Vector2 controlPoint1 = Sum(Sum(fromPoint, Scale(unit, (i + 0.5) * step)), peak);
-                            Vector2 controlPoint2 = Sum(Sum(fromPoint, Scale(unit, dist)), Scale(peak, 0.5));
-                            path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
+                            var controlPoint1 = ToPoint(Sum(Sum(fromPoint, Scale(unit, (i + 0.5) * step)), peak));
+                            var controlPoint2 = ToPoint(Sum(Sum(fromPoint, Scale(unit, dist)), Scale(peak, 0.5)));
+                            pf.Segments.Add(new BezierSegment(controlPoint1, controlPoint2, endPoint, true));
                         }
                         else
                         {
-                            path.Add(new MoveTo(endPoint));
-                            started = true;
+                            pf = new PathFigure()
+                            {
+                                StartPoint = endPoint
+                            };
                         }
                     }
                 }
             }
+            if (pf != null)
+                path.Figures.Add(pf);
 
             return new GeneralPath(path, foreground).Outline(stroke);
         }
@@ -689,7 +705,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             foreach (var bond in bonds)
             {
-                if (IsPlainBond(bond)) return bond;
+                if (IsPlainBond(bond))
+                    return bond;
             }
             return bonds[0];
         }
@@ -730,7 +747,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Displays an offset double bond as per the IUPAC recomendation (GR-1.10) <token>cdk-cite-Brecher08</token>. 
+        /// Displays an offset double bond as per the IUPAC recommendation (GR-1.10) <token>cdk-cite-Brecher08</token>. 
         /// An offset bond has one line drawn between the two atoms and other draw to one
         /// side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
         /// displayed symbol.
@@ -746,8 +763,8 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
-        /// Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
+        /// Displays an offset double bond as per the IUPAC recomendation (GR-1.10) <token>cdk-cite-Brecher08</token>.
+        /// An offset bond has one line drawn between the two atoms and other draw to one
         /// side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
         /// displayed symbol.
         /// </summary>
@@ -993,63 +1010,73 @@ namespace NCDK.Renderers.Generators.Standards
             Vector2 peak = Scale(bndVec, step);
             Vector2 unit = VecmathUtil.NewUnitVector(beg, end);
 
-            var path = new List<Renderers.Elements.Path.PathElement>();
-
+            var path = new PathGeometry();
             int halfNCurves = nCurves / 2;
-            // one half
-            path.Add(new MoveTo(mid));
-            for (int i = 1; i < halfNCurves; i += 2)
             {
-                peak = Vector2.Negate(peak); // alternate wave side
-
-                // curving away from the center line
+                // one half
+                var pf = new PathFigure()
                 {
-                    double dist = i * step;
-                    // first end point
-                    Vector2 endPoint = mid + Scale(unit, dist) + peak;
-                    Vector2 controlPoint1 = mid + Scale(unit, (i - 1) * step) + Scale(peak, 0.5);
-                    Vector2 controlPoint2 = mid + Scale(unit, (i - 0.5) * step) + peak;
-                    path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
-                }
-
-                // curving towards the center line
+                    StartPoint = ToPoint(mid),
+                };
+                for (int i = 1; i < halfNCurves; i += 2)
                 {
-                    double dist = (i + 1) * step;
-                    // second end point
-                    Vector2 endPoint = mid + Scale(unit, dist);
+                    peak = Vector2.Negate(peak); // alternate wave side
 
-                    Vector2 controlPoint1 = mid + Scale(unit, (i + 0.5) * step) + peak;
-                    Vector2 controlPoint2 = mid + Scale(unit, dist) + Scale(peak, 0.5);
-                    path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
+                    // curving away from the center line
+                    {
+                        double dist = i * step;
+                        // first end point
+                        var endPoint = ToPoint(mid + Scale(unit, dist) + peak);
+                        var controlPoint1 = ToPoint(mid + Scale(unit, (i - 1) * step) + Scale(peak, 0.5));
+                        var controlPoint2 = ToPoint(mid + Scale(unit, (i - 0.5) * step) + peak);
+                        pf.Segments.Add(new BezierSegment(controlPoint1, controlPoint2, endPoint, true));
+                    }
+
+                    // curving towards the center line
+                    {
+                        double dist = (i + 1) * step;
+                        // second end point
+                        var endPoint = ToPoint(mid + Scale(unit, dist));
+                        var controlPoint1 = ToPoint(mid + Scale(unit, (i + 0.5) * step) + peak);
+                        var controlPoint2 = ToPoint(mid + Scale(unit, dist) + Scale(peak, 0.5));
+                        pf.Segments.Add(new BezierSegment(controlPoint1, controlPoint2, endPoint, true));
+                    }
                 }
+                path.Figures.Add(pf);
             }
-            // other half
-            unit = Vector2.Negate(unit);
-            peak = Vector2.Negate(peak);
-            path.Add(new MoveTo(mid));
-            for (int i = 1; i < halfNCurves; i += 2)
+
             {
-                peak = Vector2.Negate(peak); // alternate wave side
-
-                // curving away from the center line
+                // other half
+                var pf = new PathFigure()
                 {
-                    double dist = i * step;
-                    // first end point
-                    Vector2 endPoint = mid + Scale(unit, dist) + peak;
-                    Vector2 controlPoint1 = mid + Scale(unit, (i - 1) * step) + Scale(peak, 0.5);
-                    Vector2 controlPoint2 = mid + Scale(unit, (i - 0.5) * step) + peak;
-                    path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
-                }
-
-                // curving towards the center line
+                    StartPoint = ToPoint(mid)
+                };
+                unit = Vector2.Negate(unit);
+                peak = Vector2.Negate(peak);
+                for (int i = 1; i < halfNCurves; i += 2)
                 {
-                    double dist = (i + 1) * step;
-                    // second end point
-                    Vector2 endPoint = mid + Scale(unit, dist);
+                    peak = Vector2.Negate(peak); // alternate wave side
 
-                    Vector2 controlPoint1 = mid + Scale(unit, (i + 0.5) * step) + peak;
-                    Vector2 controlPoint2 = mid + Scale(unit, dist) + Scale(peak, 0.5);
-                    path.Add(new CubicTo(controlPoint1, controlPoint2, endPoint));
+                    // curving away from the center line
+                    {
+                        double dist = i * step;
+                        // first end point
+                        var endPoint = ToPoint(mid + Scale(unit, dist) + peak);
+                        var controlPoint1 = ToPoint(mid + Scale(unit, (i - 1) * step) + Scale(peak, 0.5));
+                        var controlPoint2 = ToPoint(mid + Scale(unit, (i - 0.5) * step) + peak);
+                        pf.Segments.Add(new BezierSegment(controlPoint1, controlPoint2, endPoint, true));
+                    }
+
+                    // curving towards the center line
+                    {
+                        double dist = (i + 1) * step;
+                        // second end point
+                        var endPoint = ToPoint(mid + Scale(unit, dist));
+                        var controlPoint1 = ToPoint(mid + Scale(unit, (i + 0.5) * step) + peak);
+                        var controlPoint2 = ToPoint(mid + Scale(unit, dist) + Scale(peak, 0.5));
+                        pf.Segments.Add(new BezierSegment(controlPoint1, controlPoint2, endPoint, true));
+                    }
+                    path.Figures.Add(pf);
                 }
             }
 
@@ -1081,7 +1108,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Add an annotation label for the bond between the two atoms on the specified 'side' (providied
+        /// Add an annotation label for the bond between the two atoms on the specified 'side' (provided
         /// as a the perpendicular directional vector).
         /// </summary>
         /// <param name="atom1">first atom</param>
@@ -1341,6 +1368,15 @@ namespace NCDK.Renderers.Generators.Standards
             public RingBondOffsetComparator()
             { }
 
+            private static readonly Config.Elements[] preferedElements = new []
+            {
+                Config.Elements.Carbon,
+                Config.Elements.Nitrogen,
+                Config.Elements.Oxygen,
+                Config.Elements.Sulfur,
+                Config.Elements.Phosphorus
+            };
+
             /// <inheritdoc/>
             public int Compare(IAtomContainer containerA, IAtomContainer containerB)
             {
@@ -1357,13 +1393,7 @@ namespace NCDK.Renderers.Generators.Standards
                 int[] freqA = CountLightElements(containerA);
                 int[] freqB = CountLightElements(containerB);
 
-                foreach (var element in new[]
-                {
-        Config.Elements.Carbon,
-        Config.Elements.Nitrogen,
-        Config.Elements.Oxygen,
-        Config.Elements.Sulfur,
-            Config.Elements.Phosphorus })
+                foreach (var element in preferedElements)
                 {
                     int elemCmp = Ints.Compare(freqA[element.AtomicNumber], freqB[element.AtomicNumber]);
                     if (elemCmp != 0) return -elemCmp;

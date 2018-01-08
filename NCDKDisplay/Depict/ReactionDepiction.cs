@@ -44,7 +44,6 @@ namespace NCDK.Depict
     /// </summary>
     sealed class ReactionDepiction : Depiction
     {
-
         private readonly RendererModel model;
         private readonly Dimensions dimensions;
 
@@ -77,7 +76,7 @@ namespace NCDK.Depict
                                  List<Bounds> products,
                                  List<Bounds> agents,
                                  Bounds plus,
-          ReactionDirections direction,
+                                 ReactionDirections direction,
                                  Dimensions dimensions,
                                  IList<Bounds> reactantTitles,
                                  IList<Bounds> productTitles,
@@ -90,7 +89,6 @@ namespace NCDK.Depict
             this.dimensions = dimensions;
             this.title = title;
             this.fgcol = fgcol;
-
 
             // side components (catalysts, solvents, etc) note we deliberately
             // swap sideGrid width and height as we to stack agents on top of
@@ -164,7 +162,7 @@ namespace NCDK.Depict
 
             this.conditions = conditions;
 
-            // arrow params
+            // arrow parameters
             this.arrowIdx = Math.Max(reactants.Count + reactants.Count - 1, 0);
             this.direction = direction;
             this.arrowHeight = plus.Height;
@@ -174,7 +172,7 @@ namespace NCDK.Depict
                                         yOffsets = new double[nRow + 1],
                                         xOffsets = new double[nCol + 1]);
 
-            double middleRequired = Math.Max(prelimSideDim.w, conditions.Width);
+            double middleRequired = Math.Max(prelimSideDim.width, conditions.Width);
 
             // avoid v. small arrows, we take in to account the padding provided by the arrow head height/length
             if (middleRequired < minArrowWidth - arrowHeight - arrowHeight)
@@ -184,13 +182,13 @@ namespace NCDK.Depict
                 for (int i = 0; i < xOffsetSide.Length; i++)
                     xOffsetSide[i] += xAdjust;
                 // need to recenter agents
-                if (conditions.Width > prelimSideDim.w)
+                if (conditions.Width > prelimSideDim.width)
                 {
                     for (int i = 0; i < xOffsetSide.Length; i++)
-                        xOffsetSide[i] += (conditions.Width - prelimSideDim.w) / 2;
+                        xOffsetSide[i] += (conditions.Width - prelimSideDim.width) / 2;
                 }
                 // update side dims
-                this.sideDim = new Dimensions(minArrowWidth, prelimSideDim.h);
+                this.sideDim = new Dimensions(minArrowWidth, prelimSideDim.height);
                 this.condDim = new Dimensions(minArrowWidth, conditions.Height);
             }
             else
@@ -200,20 +198,36 @@ namespace NCDK.Depict
                     xOffsetSide[i] += arrowHeight;
 
                 // need to recenter agents
-                if (conditions.Width > prelimSideDim.w)
+                if (conditions.Width > prelimSideDim.width)
                 {
                     for (int i = 0; i < xOffsetSide.Length; i++)
-                        xOffsetSide[i] += (conditions.Width - prelimSideDim.w) / 2;
+                        xOffsetSide[i] += (conditions.Width - prelimSideDim.width) / 2;
                 }
 
                 this.sideDim = new Dimensions(2 * arrowHeight + middleRequired,
-                                              prelimSideDim.h);
+                                              prelimSideDim.height);
                 this.condDim = new Dimensions(2 * arrowHeight + middleRequired,
                                               conditions.Height);
             }
         }
 
         public override RenderTargetBitmap ToBitmap()
+        {
+            return ToBitmap(96, 96, PixelFormats.Pbgra32);
+        }
+
+        public RenderTargetBitmap ToBitmap(double dpiX, double dpiY, PixelFormat pixelFormat)
+        {
+            var drawingVisual = new DrawingVisual();
+            var size = Draw(drawingVisual);
+
+            // create the image for rendering
+            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
+            img.Render(drawingVisual);
+            return img;
+        }
+
+        public override Size Draw(DrawingVisual drawingVisual)
         {
             // format margins and padding for raster images
             double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
@@ -237,7 +251,7 @@ namespace NCDK.Depict
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
 
             // create the image for rendering
-            var img = new RenderTargetBitmap((int)Math.Ceiling(total.w), (int)Math.Ceiling(total.h), 96, 96, PixelFormats.Pbgra32);
+            var img = new RenderTargetBitmap((int)Math.Ceiling(total.width), (int)Math.Ceiling(total.height), 96, 96, PixelFormats.Pbgra32);
 
             // we use the AWT for vector graphics if though we're raster because
             // fractional strokes can be figured out by interpolation, without
@@ -246,33 +260,31 @@ namespace NCDK.Depict
             using (var g2 = dv.RenderOpen())
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
-                visitor.Transform = new ScaleTransform(1, -1);
-                visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
+                visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
 
                 // compound the zoom, fitting and scaling into a single value
                 double rescale = zoom * fitting * scale;
                 double mainCompOffset = 0;
 
                 // shift product x-offset to make room for the arrow / side components
-                mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
+                mainCompOffset = fitting * sideRequired.height + nSideRow * padding - fitting * firstRowHeight / 2;
                 for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
                 {
-                    xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
+                    xOffsets[i] += sideRequired.width * 1 / (scale * zoom);
                 }
 
                 // MAIN COMPONENTS DRAW
                 // x,y base coordinates include the margin and centering (only if fitting to a size)
                 double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-                double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
-                double xBase = margin + (total.w - totalRequiredWidth) / 2;
-                double yBase = margin + Math.Max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
+                double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
+                double xBase = margin + (total.width - totalRequiredWidth) / 2;
+                double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
                 for (int i = 0; i < mainComp.Count; i++)
                 {
-
                     int row = i / nCol;
                     int col = i % nCol;
 
-                    // calc the 'view' bounds:
+                    // calculate the 'view' bounds:
                     //  amount of padding depends on which row or column we are in.
                     //  the width/height of this col/row can be determined by the next offset
                     double x = xBase + col * padding + rescale * xOffsets[col];
@@ -308,7 +320,7 @@ namespace NCDK.Depict
                 {
                     double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                     double h = rescale * title.Height;
-                    Draw(visitor, zoom, title, MakeRect(0, y, total.w, h));
+                    Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
                 }
 
                 // SIDE COMPONENTS DRAW
@@ -319,7 +331,7 @@ namespace NCDK.Depict
                     int row = i / nSideCol;
                     int col = i % nSideCol;
 
-                    // calc the 'view' bounds:
+                    // calculate the 'view' bounds:
                     //  amount of padding depends on which row or column we are in.
                     //  the width/height of this col/row can be determined by the next offset
                     double x = xBase + col * padding + rescale * xOffsetSide[col];
@@ -334,21 +346,21 @@ namespace NCDK.Depict
                 if (!conditions.IsEmpty())
                 {
                     yBase += mainCompOffset;        // back to top
-                    yBase += (fitting * mainRequired.h) / 2;    // now on center line (arrow)
+                    yBase += (fitting * mainRequired.height) / 2;    // now on center line (arrow)
                     yBase += arrowHeight;           // now just bellow
                     Draw(visitor, zoom, conditions, MakeRect(xBase,
                                                          yBase,
-                                                         fitting * condRequired.w, fitting * condRequired.h));
+                                                         fitting * condRequired.width, fitting * condRequired.height));
                 }
 
                 // reset shared xOffsets
                 if (sideComps.Any())
                 {
                     for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
-                        xOffsets[i] -= sideRequired.w * 1 / (scale * zoom);
+                        xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
                 }
-                img.Render(dv);
-                return img;
+
+                return new Size(total.width, total.height);
             }
         }
 
@@ -391,8 +403,8 @@ namespace NCDK.Depict
             // create the image for rendering
             FreeHepWrapper wrapper = null;
             if (!fmt.Equals(SVG_FMT))
-                wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.w, total.h)
+                wrapper = new FreeHepWrapper(fmt, total.width, total.height);
+            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.width, total.height)
                                                             : (IDrawVisitor)WPFDrawVisitor.ForVectorGraphics(wrapper.g2);
             if (fmt.Equals(SVG_FMT))
             {
@@ -400,38 +412,37 @@ namespace NCDK.Depict
             }
             else
             {
-                // pdf can handle fraction coords just fine
+                // pdf can handle fraction coordinates just fine
                 //((WPFDrawVisitor) visitor).SetRounding(false);
             }
 
             // background color
-            visitor.Transform = new ScaleTransform(1, -1);
-            visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
+            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
 
             // compound the zoom, fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
             double mainCompOffset = 0;
 
             // shift product x-offset to make room for the arrow / side components
-            mainCompOffset = fitting * sideRequired.h + nSideRow * padding - fitting * firstRowHeight / 2;
+            mainCompOffset = fitting * sideRequired.height + nSideRow * padding - fitting * firstRowHeight / 2;
             for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
             {
-                xOffsets[i] += sideRequired.w * 1 / (scale * zoom);
+                xOffsets[i] += sideRequired.width * 1 / (scale * zoom);
             }
 
             // MAIN COMPONENTS DRAW
             // x,y base coordinates include the margin and centering (only if fitting to a size)
             double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
-            double xBase = margin + (total.w - totalRequiredWidth) / 2;
-            double yBase = margin + Math.Max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
+            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
+            double xBase = margin + (total.width - totalRequiredWidth) / 2;
+            double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
             for (int i = 0; i < mainComp.Count; i++)
             {
 
                 int row = i / nCol;
                 int col = i % nCol;
 
-                // calc the 'view' bounds:
+                // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
                 double x = xBase + col * padding + rescale * xOffsets[col];
@@ -467,7 +478,7 @@ namespace NCDK.Depict
             {
                 double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                 double h = rescale * title.Height;
-                Draw(visitor, zoom, title, MakeRect(0, y, total.w, h));
+                Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
             }
 
             // SIDE COMPONENTS DRAW
@@ -478,7 +489,7 @@ namespace NCDK.Depict
                 int row = i / nSideCol;
                 int col = i % nSideCol;
 
-                // calc the 'view' bounds:
+                // calculate the 'view' bounds:
                 //  amount of padding depends on which row or column we are in.
                 //  the width/height of this col/row can be determined by the next offset
                 double x = xBase + col * padding + rescale * xOffsetSide[col];
@@ -493,18 +504,18 @@ namespace NCDK.Depict
             if (!conditions.IsEmpty())
             {
                 yBase += mainCompOffset;         // back to top
-                yBase += (fitting * mainRequired.h) / 2;     // now on center line (arrow)
+                yBase += (fitting * mainRequired.height) / 2;     // now on center line (arrow)
                 yBase += arrowHeight;            // now just bellow
                 Draw(visitor, zoom, conditions, MakeRect(xBase,
                                                      yBase,
-                                                     fitting * condRequired.w, fitting * condRequired.h));
+                                                     fitting * condRequired.width, fitting * condRequired.height));
             }
 
             // reset shared xOffsets
             if (sideComps.Any())
             {
                 for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
-                    xOffsets[i] -= sideRequired.w * 1 / (scale * zoom);
+                    xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
             }
 
             if (wrapper != null)
@@ -529,31 +540,31 @@ namespace NCDK.Depict
             int nSideRow = yOffsetSide.Length - 1;
 
             // need padding in calculation
-            double mainCompOffset = sideRequired.h > 0 ? sideRequired.h + (nSideRow * padding) - (firstRowHeight / 2) : 0;
+            double mainCompOffset = sideRequired.height > 0 ? sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2) : 0;
             if (mainCompOffset < 0)
                 mainCompOffset = 0;
 
-            Dimensions required = mainRequired.Add(sideRequired.w, mainCompOffset)
-                                              .Add(0, Math.Max(0, titleRequired.h));
+            Dimensions required = mainRequired.Add(sideRequired.width, mainCompOffset)
+                                              .Add(0, Math.Max(0, titleRequired.height));
 
             // We take out the padding height of the side components but in reality
             // some of it overlaps, since reactions are normally wider then they are
-            // tall we won't normally bit fitting by this param. If do fit by this
-            // param we might make the depiction smaller then it needs to be but thats
+            // tall we won't normally bit fitting by this parameter. If do fit by this
+            // parameter we might make the depiction smaller then it needs to be but thats
             // better than cutting bits off
             Dimensions targetDim = dimensions;
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                  .Add(-((nCol - 1) * padding), -((nRow - 1) * padding))
                                  .Add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding)
-                                 .Add(0, titleRequired.h > 0 ? -padding : 0);
+                                 .Add(0, titleRequired.height > 0 ? -padding : 0);
 
             // PDF and PS are in point to we need to account for that
             if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
                 targetDim = targetDim.Scale(MM_TO_POINT);
 
-            double resize = Math.Min(targetDim.w / required.w,
-                                     targetDim.h / required.h);
+            double resize = Math.Min(targetDim.width / required.width,
+                                     targetDim.height / required.height);
 
             if (resize > 1 && !model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)))
                 resize = 1;
@@ -571,17 +582,17 @@ namespace NCDK.Depict
                 int nSideCol = xOffsetSide.Length - 1;
                 int nSideRow = yOffsetSide.Length - 1;
 
-                double mainCompOffset = sideRequired.h + (nSideRow * padding) - (firstRowHeight / 2);
+                double mainCompOffset = sideRequired.height + (nSideRow * padding) - (firstRowHeight / 2);
                 if (mainCompOffset < 0)
                     mainCompOffset = 0;
 
-                double titleExtra = Math.Max(0, titleRequired.h);
+                double titleExtra = Math.Max(0, titleRequired.height);
                 if (titleExtra > 0)
                     titleExtra += padding;
 
                 return mainRequired.Add(2 * margin, 2 * margin)
                                    .Add(Math.Max(0, nCol - 1) * padding, (nRow - 1) * padding)
-                                   .Add(Math.Max(0, sideRequired.w), 0)           // side component extra width
+                                   .Add(Math.Max(0, sideRequired.width), 0)           // side component extra width
                                    .Add(Math.Max(0, nSideCol - 1) * padding, 0) // side component padding
                                    .Add(0, mainCompOffset)
                                    .Add(0, titleExtra);

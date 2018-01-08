@@ -44,8 +44,8 @@ namespace NCDK.Renderers.Generators
             double separation = model.GetV<double>(typeof(BondLength)) / model.GetV<double>(typeof(Scale));
             var foregroundColor = model.GetV<Color>(typeof(BasicSceneGenerator.ForegroundColor));
             return new ArrowElement(
-                new WPF::Point(totalBoundsReactants.Right + separation, totalBoundsReactants.GetCenterY()),
-                new WPF::Point(totalBoundsProducts.Left - separation, totalBoundsReactants.GetCenterY()),
+                new WPF::Point(totalBoundsReactants.Right + separation, totalBoundsReactants.CenterY()),
+                new WPF::Point(totalBoundsProducts.Left - separation, totalBoundsReactants.CenterY()),
                 1 / model.GetV<double>(typeof(Scale)), true, foregroundColor);
         }
 

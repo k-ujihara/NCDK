@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Generators
             {
                 var totalBoundsReactants = BoundsCalculator.CalculateBounds(reactants);
                 var bounds1 = BoundsCalculator.CalculateBounds(reactants[0]);
-                double axis = totalBoundsReactants.GetCenterY();
+                double axis = totalBoundsReactants.CenterY();
                 foreach (var reactant in reaction.Reactants.Skip(1))
                 {
                     var bounds2 = BoundsCalculator.CalculateBounds(reactant);
@@ -60,7 +60,7 @@ namespace NCDK.Renderers.Generators
             if (products.Count > 1)
             {
                 var totalBoundsProducts = BoundsCalculator.CalculateBounds(products);
-                double axis = totalBoundsProducts.GetCenterY();
+                double axis = totalBoundsProducts.CenterY();
                 var bounds1 = BoundsCalculator.CalculateBounds(reactants[0]);
                 foreach (var product in reaction.Products.Skip(1))
                 {
@@ -76,7 +76,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>Place a '+' sign between two molecules.</summary>
         private TextElement MakePlus(Rect moleculeBox1, Rect moleculeBox2, double axis, Color color)
         {
-            double arrowCenter = (moleculeBox1.GetCenterX() + moleculeBox2.GetCenterX()) / 2;
+            double arrowCenter = (moleculeBox1.CenterX() + moleculeBox2.CenterX()) / 2;
             return new TextElement(new Point(arrowCenter, axis), "+", color);
         }
 

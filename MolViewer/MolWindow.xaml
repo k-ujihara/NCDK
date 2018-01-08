@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NCDK.MolViewer"
         mc:Ignorable="d"
-        Title="MolWindow">
-    <DockPanel LastChildFill="False">
+        Title="MolWindow" Width="702.667" Height="428">
+    <DockPanel Margin="0,0,-0.333,0">
         <Menu x:Name="menu" Grid.RowSpan="2" VerticalAlignment="Top" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem x:Name="menuItem_Open" Header="_Open" Click="MenuItem_Open_Click"/>
@@ -15,7 +15,6 @@
                 <MenuItem Header="E_xit"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem x:Name="paste_as_smiles" Header="Paste as SMILES" Click="MenuItem_PasteAsSmiles_Click"/>
                 <MenuItem x:Name="paste_as_InChI" Header="Paste as InChI"  Click="MenuItem_PasteAsInchi_Click"/>
             </MenuItem>
             <MenuItem Header="_View">
@@ -25,6 +24,10 @@
                 <MenuItem Header="_About"/>
             </MenuItem>
         </Menu>
-        <Image x:Name="image" DockPanel.Dock="Bottom" />
+        <Grid VerticalAlignment="Top" DockPanel.Dock="Top" Height="35">
+            <Label Content="SMILES:" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="54"/>
+            <TextBox x:Name="textSmiles" DockPanel.Dock="Top" TextWrapping="Wrap" Text="" Margin="54,0,0,0"/>
+        </Grid>
+        <Grid Name="myGrid" DockPanel.Dock="Bottom" Margin="0" UseLayoutRounding="False"/>
     </DockPanel>
 </Window>

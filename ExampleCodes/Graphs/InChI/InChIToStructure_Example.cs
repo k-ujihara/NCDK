@@ -10,11 +10,11 @@ namespace NCDK.Graphs.InChI
             string inchi = "inchi";
             #region 
             // Generate factory -  if native code does not load
-             InChIGeneratorFactory factory = new InChIGeneratorFactory();
-             // Get InChIToStructure
-             InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
-             
-             INCHI_RET ret = intostruct.ReturnStatus;
+            InChIGeneratorFactory factory = new InChIGeneratorFactory();
+            // Get InChIToStructure
+            InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
+
+            INCHI_RET ret = intostruct.ReturnStatus;
             if (ret == INCHI_RET.WARNING)
             {
                 // Structure generated, but with warning message
@@ -23,9 +23,9 @@ namespace NCDK.Graphs.InChI
             else if (ret != INCHI_RET.OKAY)
             {
                 // Structure generation failed
-                throw new CDKException($"Structure generation failed failed: {ret.ToString()} [{intostruct.Message}]");
+                throw new CDKException($"Structure generation failed: {ret.ToString()} [{intostruct.Message}]");
             }             
-             IAtomContainer container = intostruct.AtomContainer;
+            IAtomContainer container = intostruct.AtomContainer;
             #endregion
         }
     }

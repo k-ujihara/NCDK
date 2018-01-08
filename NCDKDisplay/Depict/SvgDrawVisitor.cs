@@ -25,11 +25,11 @@ using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Elements.Path;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -54,7 +54,7 @@ namespace NCDK.Depict
         private Transform transform = null;
         private RendererModel model = null;
         private static string FormatDecimal(double v)
-            => ((float)v).ToString();//NCDK.Common.Primitives.Strings.JavaFormat(v, 2, false);
+            => NCDK.Common.Primitives.Strings.JavaFormat(v, 2, true);
 
         private bool defaultsWritten = false;
         private Color? defaultStroke = null;
@@ -282,89 +282,114 @@ namespace NCDK.Depict
         {
             AppendIdent();
             sb.Append("<path");
-            if (id != null) sb.Append(" id='").Append(id).Append("'");
-            if (cls != null) sb.Append(" class='").Append(cls).Append("'");
+            if (id != null)
+                sb.Append(" id='").Append(id).Append("'");
+            if (cls != null)
+                sb.Append(" class='").Append(cls).Append("'");
             sb.Append(" d='");
             Point currPoint = new Point(0, 0);
-            foreach (var pelem in elem.elements)
+
+            var g = elem.elements;
+            var tran = g.Transform ?? Transform.Identity;
+            foreach (var pelem in g.Figures)
             {
-                switch (pelem.type)
+                Point[] points;
+
+                points = new[] { pelem.StartPoint };
+                // We have Move as always absolute
+                sb.Append("M");
+                TransformPoints(points);
+                AppendPoints(sb, points, 1);
+                currPoint = points[0];
+
+                foreach (var seg in pelem.Segments)
                 {
-                    case Renderers.Elements.Path.PathType.Close:
-                        sb.Append("z");
-                        currPoint = new Point(0, 0);
-                        break;
-                    case Renderers.Elements.Path.PathType.LineTo:
-                        {
-                            var points = pelem.Points;
-                            TransformPoints(points);
-                            var d = points[0] - currPoint;
-                            // horizontal and vertical lines can be even more compact
-                            if (Math.Abs(d.X) < 0.01)
+                    switch (seg)
+                    {
+                        case LineSegment e:
                             {
-                                sb.Append("v").Append(ToString(d.Y));
+                                points = new Point[] { tran.Transform(e.Point) };
+                                TransformPoints(points);
+                                DrawLineTo(currPoint, points);
+                                currPoint = points[0];
                             }
-                            else if ((Math.Abs(d.Y) < 0.01))
+                            break;
+                        case PolyLineSegment e:
+                            for (int i = 0; i < e.Points.Count; i++)
                             {
-                                sb.Append("h").Append(ToString(d.X));
+                                points = new Point[] { tran.Transform(e.Points[i]) };
+                                TransformPoints(points);
+                                DrawLineTo(currPoint, points);
+                                currPoint = points[0];
                             }
-                            else
+                            break;
+                        case QuadraticBezierSegment e:
                             {
-                                sb.Append("l");
+                                points = new[] { tran.Transform(e.Point1), tran.Transform(e.Point2) };
+                                sb.Append("q");
+                                TransformPoints(points);
+                                AppendRelativePoints(sb, points, currPoint, 2);
+                                currPoint = points[1];
+                            }
+                            break;
+                        case PolyQuadraticBezierSegment e:
+                            for (int i = 0; i < e.Points.Count / 2; i++)
+                            {
+                                points = new[] { tran.Transform(e.Points[i * 2]), tran.Transform(e.Points[i * 2 + 1]) };
+                                sb.Append("q");
+                                TransformPoints(points);
+                                AppendRelativePoints(sb, points, currPoint, 2);
+                                currPoint = points[1];
+                            }
+                            break;
+                        case BezierSegment e:
+                            {
+                                points = new[] { tran.Transform(e.Point1), tran.Transform(e.Point2), tran.Transform(e.Point3) };
+                                sb.Append("c");
+                                TransformPoints(points);
+                                AppendRelativePoints(sb, points, currPoint, 3);
+                                currPoint = points[2];
+                            }
+                            break;
+                        case PolyBezierSegment e:
+                            for (int i = 0; i < e.Points.Count / 3; i++)
+                            {
+                                points = new[] { tran.Transform(e.Points[i * 3]), tran.Transform(e.Points[i * 3 + 1]), tran.Transform(e.Points[i * 3 + 2]) };
+                                sb.Append("c");
+                                TransformPoints(points);
+                                AppendRelativePoints(sb, points, currPoint, 3);
+                                currPoint = points[2];
+                            }
+                            break;
+                        case ArcSegment e:
+                            {
+                                points = new[] { e.Point };
+                                sb.Append("a");
+                                TransformPoints(points);
+                                var size = transform == null ? e.Size : new Size(e.Size.Width * transform.Value.M11, e.Size.Height * transform.Value.M22);
+                                sb.Append(FormatDecimal(size.Width));
+                                sb.Append(' ');
+                                sb.Append(FormatDecimal(size.Height));
+                                sb.Append(' ');
+                                sb.Append(FormatDecimal(Vectors.RadianToDegree(e.RotationAngle)));
+                                sb.Append(' ');
+                                sb.Append(e.IsLargeArc ? '1' : '0');
+                                sb.Append(' ');
+                                sb.Append((int)e.SweepDirection);
+                                sb.Append(' ');
                                 AppendRelativePoints(sb, points, currPoint, 1);
+                                currPoint = points[0];
                             }
-                            currPoint = points[0];
-                        }
-                        break;
-                    case Renderers.Elements.Path.PathType.MoveTo:
-                        {
-                            var points = pelem.Points;
-                            // We have Move as always absolute
-                            sb.Append("M");
-                            TransformPoints(points);
-                            AppendPoints(sb, points, 1);
-                            currPoint = points[0];
-                        }
-                        break;
-                    case Renderers.Elements.Path.PathType.QuadTo:
-                        {
-                            var points = pelem.Points;
-                            sb.Append("q");
-                            TransformPoints(points);
-                            AppendRelativePoints(sb, points, currPoint, 2);
-                            currPoint = points[1];
-                        }
-                        break;
-                    case Renderers.Elements.Path.PathType.CubicTo:
-                        {
-                            var points = pelem.Points;
-                            sb.Append("c");
-                            TransformPoints(points);
-                            AppendRelativePoints(sb, points, currPoint, 3);
-                            currPoint = points[2];
-                        }
-                        break;
-                    case Renderers.Elements.Path.PathType.ArcTo:
-                        {
-                            var points = pelem.Points;
-                            sb.Append("a");
-                            TransformPoints(points);
-                            ArcTo e = (ArcTo)pelem;
-                            var size = transform == null ? e.Size : new Size(e.Size.Width * transform.Value.M11, e.Size.Height * transform.Value.M22);
-                            sb.Append(FormatDecimal(size.Width));
-                            sb.Append(' ');
-                            sb.Append(FormatDecimal(size.Height));
-                            sb.Append(' ');
-                            sb.Append(FormatDecimal(Vectors.RadianToDegree(e.RotationAngle)));
-                            sb.Append(' ');
-                            sb.Append(e.IsLargeArc ? '1' : '0');
-                            sb.Append(' ');
-                            sb.Append((int)e.SweepDirection);
-                            sb.Append(' ');
-                            AppendRelativePoints(sb, points, currPoint, 1);
-                            currPoint = points[0];
-                        }
-                        break;
+                            break;
+                        default:
+                            Trace.TraceWarning($"{seg.GetType()} is ignored in {nameof(Visit)} method.");
+                            break;
+                    }
+                }
+                if (elem.fill)
+                {
+                    sb.Append("z");
+                    currPoint = new Point(0, 0);
                 }
             }
             sb.Append("'");
@@ -381,6 +406,25 @@ namespace NCDK.Depict
                 sb.Append(" stroke-width='").Append(ToString(Scaled(elem.stroke))).Append("'");
             }
             sb.Append("/>\n");
+        }
+
+        private void DrawLineTo(Point currPoint, Point[] points)
+        {
+            var d = points[0] - currPoint;
+            // horizontal and vertical lines can be even more compact
+            if (Math.Abs(d.X) < 0.01)
+            {
+                sb.Append("v").Append(ToString(d.Y));
+            }
+            else if ((Math.Abs(d.Y) < 0.01))
+            {
+                sb.Append("h").Append(ToString(d.X));
+            }
+            else
+            {
+                sb.Append("l");
+                AppendRelativePoints(sb, points, currPoint, 1);
+            }
         }
 
         private void Visit(LineElement elem)
@@ -518,6 +562,14 @@ namespace NCDK.Depict
             sb.Append(">");
             sb.Append(System.Security.SecurityElement.Escape(elem.text));
             sb.Append("</text>\n");
+        }
+
+        public void Visit(IRenderingElement root, Transform transform)
+        {
+            var saveTransform = this.transform;
+            this.transform = transform;
+            Visit(root);
+            this.transform = saveTransform;
         }
 
         public void Visit(IRenderingElement root)

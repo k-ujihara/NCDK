@@ -168,7 +168,7 @@ namespace NCDK.Renderers
 
             // the parameter was not registered yet, so we throw an exception to
             // indicate that the API is not used correctly.
-            throw new TypeAccessException($"You requested the active parameter of type {param.FullName}, but it has not been registered yet. Did you make sure the IGeneratorParameter is registered, by registring the appropriate IGenerator? Alternatively, you can use Default to query the default value for any parameter on the classpath.");
+            throw new TypeAccessException($"You requested the active parameter of type {param.FullName}, but it has not been registered yet. Did you make sure the IGeneratorParameter is registered, by registering the appropriate IGenerator? Alternatively, you can use Default to query the default value for any parameter on the classpath.");
         }
 
         /// <summary>
@@ -284,11 +284,11 @@ namespace NCDK.Renderers
         }
 
         /// <summary>
-        /// This is the central facility for handling "merges" of atoms. A merge occures if during moving atoms an atom is in Range of another atom.
+        /// This is the central facility for handling "merges" of atoms. A merge occurs if during moving atoms an atom is in Range of another atom.
         /// These atoms are then put into the merge map as a key-value pair. During the move, the atoms are then marked by a circle and on releasing the mouse
-        /// they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been marged with.
+        /// they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been merged with.
         /// </summary>
-        /// <returns>Returns the merge.map</returns>
+        /// <returns>The merged map</returns>
         public IDictionary<IAtom, IAtom> GetMerge()
         {
             return merge;
@@ -464,7 +464,7 @@ namespace NCDK.Renderers
         /// registered.
         /// </summary>
         /// <param name="param">parameter for which it is tested if it is registered</param>
-        /// <returns>bool indicating the parameters is registered</returns>
+        /// <returns>boolean indicating the parameters is registered</returns>
         public bool HasParameter(Type param)
         {
             Debug.Assert(typeof(IGeneratorParameter).IsAssignableFrom(param));

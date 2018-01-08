@@ -21,11 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -38,13 +38,10 @@ namespace NCDK.Renderers.Generators.Standards
     /// <example>
     /// <code>
     /// ConvexHull hull = ConvexHull.OfShape(shape);
-    ///
     /// // the hull can be transformed
-    /// hull = hull.Transform(new AffineTransform());
-    ///
+    /// hull = hull.Transform(Transform.Identity);
     /// // given a line, a point on the hull can be found that intersects the line
-    /// Point2D point == hull.Intersect(new Line2D.Double(...), 0);
-    /// }
+    /// Point point = hull.Intersect(new Point(px1, py1), new Point(px2, py2));
     /// </code>
     /// </example>
     // @author John May
@@ -65,35 +62,31 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Calculate the convex hull of a shape.
         /// </summary>
-        /// <param name="shape">a Java 2D shape</param>
+        /// <param name="shape">a shape</param>
         /// <returns>the convex hull</returns>
         public static ConvexHull OfShape(Geometry shape)
         {
-            return OfShapes(new ReadOnlyCollection<Geometry>(new[] { shape }));
+            return new ConvexHull(ShapeOf(GrahamScan(PointsOf(shape))));
         }
 
         /// <summary>
         /// Calculate the convex hull of multiple shapes.
         /// </summary>
-        /// <param name="shapes">Java 2D shapes</param>
+        /// <param name="shapes">shapes</param>
         /// <returns>the convex hull</returns>
-        public static ConvexHull OfShapes(IEnumerable<Geometry> shapes)
+        public static ConvexHull OfShapes(IList<Geometry> shapes)
         {
             var combined = new GeometryGroup
             {
                 Children = new GeometryCollection(shapes)
             };
-            return new ConvexHull(ShapeOf(GrahamScan(PointsOf(combined))));
+            return OfShape(combined);
         }
 
         /// <summary>
-        /// The outline of the hull as a Java 2D shape.
+        /// The outline of the hull as a <see cref="Geometry"/>.
         /// </summary>
-        /// <returns>outline of the hull</returns>
-        public Geometry Outline()
-        {
-            return hull;
-        }
+        public Geometry Outline => hull;
 
         /// <summary>
         /// Apply the provided transformation to the convex hull.
@@ -124,14 +117,14 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Convert a Java 2D shape to a list of points.
+        /// Convert a <see cref="Geometry"/> to a <see cref="IList{Point}"/>
         /// </summary>
         /// <param name="shape">a shape</param>
         /// <returns>list of point</returns>
-        public static IList<Point> PointsOf(Geometry shape)
+        public static List<Point> PointsOf(Geometry shape)
         {
             var points = new List<Point>();
-            var path = shape.GetFlattenedPathGeometry();
+            PathGeometry path = shape.GetOutlinedPathGeometry();
             foreach (var figure in path.Figures)
             {
                 var newPoints = new List<Point>
@@ -181,7 +174,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="points">set of points</param>
         /// <returns>points in the convex hull</returns>
         /// <seealso href="http://en.wikipedia.org/wiki/Graham_scan">Graham scan, Wikipedia</seealso>
-        public static IList<Point> GrahamScan(IList<Point> points)
+        public static List<Point> GrahamScan(List<Point> points)
         {
             if (points.Count <= 3)
                 return new List<Point>(points);
@@ -217,7 +210,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="point1">start of the line</param>
         /// <param name="point2">end of the line</param>
         /// <returns>the intersection</returns>
-        private Point Intersect(IList<Point> outline, Point point1, Point point2)
+        private Point Intersect(List<Point> outline, Point point1, Point point2)
         {
             var previousPoint = outline[outline.Count - 1];
             foreach (var point in outline)

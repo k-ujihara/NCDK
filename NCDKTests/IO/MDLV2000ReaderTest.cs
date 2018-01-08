@@ -355,8 +355,10 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.superspiro.mol"; // just a random file
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            IAtomContainer superspiro = new AtomContainer();
-            superspiro.Id = "superspiro";
+            IAtomContainer superspiro = new AtomContainer
+            {
+                Id = "superspiro"
+            };
             IAtomContainer result = reader.Read(superspiro);
             reader.Close();
             Assert.AreEqual(superspiro.Id, result.Id);
@@ -516,8 +518,10 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
-            var prop = new NameValueCollection();
-            prop["ForceReadAs3DCoordinates"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["ForceReadAs3DCoordinates"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
@@ -898,8 +902,10 @@ namespace NCDK.IO
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
 
-            var prop = new NameValueCollection();
-            prop["InterpretHydrogenIsotopes"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["InterpretHydrogenIsotopes"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
@@ -1233,8 +1239,10 @@ namespace NCDK.IO
             MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             // yuk!
-            var prop = new NameValueCollection();
-            prop["ForceReadAs3DCoordinates"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["ForceReadAs3DCoordinates"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
@@ -1252,8 +1260,10 @@ namespace NCDK.IO
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_3d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
 
-            var prop = new NameValueCollection();
-            prop["ForceReadAs3DCoordinates"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["ForceReadAs3DCoordinates"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
@@ -1272,8 +1282,10 @@ namespace NCDK.IO
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(ins);
 
-            var prop = new NameValueCollection();
-            prop["AddStereoElements"] = "false";
+            var prop = new NameValueCollection
+            {
+                ["AddStereoElements"] = "false"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
@@ -1860,8 +1872,10 @@ namespace NCDK.IO
                  "M  END\n" +
                  "\n";
             var bytes = Encoding.UTF8.GetBytes(mol);
-            MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new MemoryStream(bytes));
-            mdlv2000Reader.ReaderMode = ChemObjectReaderModes.Relaxed;
+            MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new MemoryStream(bytes))
+            {
+                ReaderMode = ChemObjectReaderModes.Relaxed
+            };
             var atomContainer = mdlv2000Reader.Read(new Silent.AtomContainer());
             Assert.AreEqual(17, atomContainer.Atoms.Count);
         }

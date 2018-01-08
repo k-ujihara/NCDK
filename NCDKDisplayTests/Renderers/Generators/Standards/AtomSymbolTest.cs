@@ -95,8 +95,8 @@ namespace NCDK.Renderers.Generators.Standards
             ConvexHull outlineHull = ConvexHull.OfShape(outline.GetOutline());
             ConvexHull symbolHull = symbol.GetConvexHull();
 
-            var outlineBounds = outlineHull.Outline().Bounds;
-            var symbolBounds = symbolHull.Outline().Bounds;
+            var outlineBounds = outlineHull.Outline.Bounds;
+            var symbolBounds = symbolHull.Outline.Bounds;
 
             Assert.AreEqual(symbolBounds.X, outlineBounds.X, 0.01);
             Assert.AreEqual(symbolBounds.Y, outlineBounds.Y, 0.01);
@@ -127,8 +127,8 @@ namespace NCDK.Renderers.Generators.Standards
             var oBounds = outline.GetBounds();
             var newBounds = transformed.GetOutlines()[0].Bounds;
 
-            double dx = 2 - oBounds.GetCenterX();
-            double dy = 2 - oBounds.GetCenterY();
+            double dx = 2 - oBounds.CenterX();
+            double dy = 2 - oBounds.CenterY();
 
             Assert.AreEqual(oBounds.Left + dx, newBounds.X, 0.01);
             Assert.AreEqual(oBounds.Top + dy, newBounds.Y, 0.01);

@@ -2302,8 +2302,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             string[] fragment = new string[container.Atoms.Count];
-            EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher();
-            eStateMatcher.RingSet = rs;
+            EStateAtomTypeMatcher eStateMatcher = new EStateAtomTypeMatcher
+            {
+                RingSet = rs
+            };
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -2328,20 +2330,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException(e.Message));
             }
 
-            ArrayResult<double> results = new ArrayResult<double>();
-            results.Add(ret[0]);
-            results.Add(ret[1]);
-            results.Add(ret[2]);
+            ArrayResult<double> results = new ArrayResult<double>
+            {
+                ret[0],
+                ret[1],
+                ret[2]
+            };
 
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results, DescriptorNames);
         }
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            ArrayResult<double> results = new ArrayResult<double>();
-            results.Add(double.NaN);
-            results.Add(double.NaN);
-            results.Add(double.NaN);
+            ArrayResult<double> results = new ArrayResult<double>
+            {
+                double.NaN,
+                double.NaN,
+                double.NaN
+            };
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, results,
                     DescriptorNames, e);
         }

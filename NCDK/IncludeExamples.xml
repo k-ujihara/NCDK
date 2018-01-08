@@ -109,26 +109,30 @@
 </code>
   </Codes>
   <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+2">
-    <code>                new DepictionGenerator().Depict(mol).WriteTo("mo.png");
+    <code>                new DepictionGenerator().Depict(mol).WriteTo("mol.png");
 </code>
   </Codes>
   <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+3">
     <code>                Depiction depiction = new DepictionGenerator().Depict(mol);
                  
-                 // quick use, format determined by name by path
-                 depiction.WriteTo("mol.png");
-                 depiction.WriteTo("mol.svg");
-                 depiction.WriteTo("mol.pdf");
-                 depiction.WriteTo("mol.jpg");
+                // quick use, format determined by name by path
+                depiction.WriteTo("mol.png");
+                depiction.WriteTo("mol.svg");
+                depiction.WriteTo("mol.pdf");
+                depiction.WriteTo("mol.jpg");
                  
-                 // manually specify the format
-                 depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
+                // manually specify the format
+                depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
 
                 // convert to a Java buffered image
-                RenderTargetBitmap img = depiction.ToImg();
-                 
-                 // get the SVG XML string
-                 string svg = depiction.ToSvgStr();
+                RenderTargetBitmap img = depiction.ToBitmap();
+
+                // get the SVG XML string
+                string svg = depiction.ToSvgString();
+</code>
+  </Codes>
+  <Codes id="NCDK.Depict.Depiction_Example.cs+EnsureSuffix">
+    <code>            depiction.WriteTo(Depiction.SVG_FMT, "~/chemical"); // create a file "~/chemical.svg" 
 </code>
   </Codes>
   <Codes id="NCDK.Depict.SvgDrawVisitor_Example.cs">
@@ -285,11 +289,11 @@
   </Codes>
   <Codes id="NCDK.Graphs.InChI.InChIToStructure_Example.cs">
     <code>            // Generate factory -  if native code does not load
-             InChIGeneratorFactory factory = new InChIGeneratorFactory();
-             // Get InChIToStructure
-             InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
-             
-             INCHI_RET ret = intostruct.ReturnStatus;
+            InChIGeneratorFactory factory = new InChIGeneratorFactory();
+            // Get InChIToStructure
+            InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
+
+            INCHI_RET ret = intostruct.ReturnStatus;
             if (ret == INCHI_RET.WARNING)
             {
                 // Structure generated, but with warning message
@@ -298,9 +302,9 @@
             else if (ret != INCHI_RET.OKAY)
             {
                 // Structure generation failed
-                throw new CDKException($"Structure generation failed failed: {ret.ToString()} [{intostruct.Message}]");
+                throw new CDKException($"Structure generation failed: {ret.ToString()} [{intostruct.Message}]");
             }             
-             IAtomContainer container = intostruct.AtomContainer;
+            IAtomContainer container = intostruct.AtomContainer;
 </code>
   </Codes>
   <Codes id="NCDK.Graphs.Invariant.Canon_Example.cs">

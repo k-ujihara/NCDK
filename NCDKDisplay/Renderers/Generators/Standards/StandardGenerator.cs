@@ -528,7 +528,7 @@ namespace NCDK.Renderers.Generators.Standards
                 yOffset += lineHeight * outline.GetBounds().Height;
 
                 group.Add(GeneralPath.ShapeOf(outline.GetOutline(), color));
-                var logicalBounds = outline.GetLogicalBounds();
+                var logicalBounds = outline.LogicalBounds;
                 group.Add(new Bounds(logicalBounds.Left, logicalBounds.Top, logicalBounds.Right, logicalBounds.Bottom));
             }
 

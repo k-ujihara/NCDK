@@ -50,6 +50,11 @@ namespace NCDK.Renderers.Elements
             this.color = color;
         }
 
+        public virtual void Accept(IRenderingVisitor v, Transform transform)
+        {
+            v.Visit(this, transform);
+        }
+
         /// <inheritdoc/>
         public virtual void Accept(IRenderingVisitor visitor)
         {

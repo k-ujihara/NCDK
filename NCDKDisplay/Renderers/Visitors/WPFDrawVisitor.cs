@@ -18,7 +18,6 @@
  */
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Elements.Path;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
 using System;
@@ -38,7 +37,7 @@ namespace NCDK.Renderers.Visitors
     /// </summary>
     // @cdk.module renderawt
     // @cdk.githash
-    public class WPFDrawVisitor : AbstractWPFDrawVisitor
+    public class WPFDrawVisitor : IDrawVisitor
     {
         /// <summary>
         /// The font manager cannot be set by the constructor as it needs to
@@ -58,7 +57,7 @@ namespace NCDK.Renderers.Visitors
         public IDictionary<int, Pen> StrokeMap { get; } = new Dictionary<int, Pen>();
 
         /// <inheritdoc/>
-        public override RendererModel RendererModel
+        public RendererModel RendererModel
         {
             get => rendererModel;
 
@@ -126,6 +125,62 @@ namespace NCDK.Renderers.Visitors
             return new WPFDrawVisitor(g2, false, double.NegativeInfinity);
         }
 
+        /// <summary>
+        /// Calculates the boundaries of a text string in screen coordinates.
+        /// </summary>
+        /// <param name="text">the text string</param>
+        /// <param name="coord">the world x-coordinate of where the text should be placed</param>
+        /// <returns>the screen coordinates</returns>
+        protected internal WPF.Rect GetTextBounds(string text, WPF::Point coord, Typeface typeface, double emSize)
+        {
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            var bounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
+
+            double widthPad = 3;
+            double heightPad = 1;
+
+            double width = bounds.Width + widthPad;
+            double height = bounds.Height + heightPad;
+            var point = coord;
+            return new WPF.Rect(point.X - width / 2, point.Y - height / 2, width, height);
+        }
+
+        /// <summary>
+        /// Calculates the base point where text should be rendered, as text in Java
+        /// is typically placed using the left-lower corner point in screen coordinates.
+        /// However, because the Java coordinate system is inverted in the y-axis with
+        /// respect to scientific coordinate systems (Java has 0,0 in the top left
+        /// corner, while in science we have 0,0 in the lower left corner), some
+        /// special action is needed, involving the size of the text.
+        /// </summary>
+        /// <param name="text">the text string</param>
+        /// <param name="coord">the world coordinate of where the text should be placed</param>
+        /// <returns>the screen coordinates</returns>
+        protected internal WPF.Point GetTextBasePoint(string text, WPF.Point coord, Typeface typeface, double emSize)
+        {
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            var stringBounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
+            var point = coord;
+            var baseX = point.X - (stringBounds.Width / 2);
+
+            // correct the baseline by the ascent
+            var baseY = point.Y + (typeface.CapsHeight - stringBounds.Height / 2);
+            return new WPF.Point(baseX, baseY);
+        }
+
+        /// <summary>
+        /// Obtain the exact bounding box of the <paramref name="text"/> in the provided
+        /// graphics environment.
+        /// </summary>
+        /// <param name="text">the text to obtain the bounds of</param>
+        /// <returns>bounds of the text</returns>
+        /// <seealso cref="Typeface"/>
+        protected internal WPF.Rect GetTextBounds(string text, Typeface typeface, double emSize)
+        {
+            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
+            return new WPF.Rect(0, 0, ft.Width, ft.Height);
+        }
+
         private void Visit(ElementGroup elementGroup)
         {
             elementGroup.Visit(this);
@@ -134,7 +189,7 @@ namespace NCDK.Renderers.Visitors
         private void Visit(LineElement line)
         {
             // scale the stroke by zoom + scale (both included in the AffineTransform)
-            var width = line.width * transform.Value.M11;  // GetScaleX()
+            var width = line.width;
             if (width < minStroke) width = minStroke;
 
             int key = (int)(width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
@@ -152,16 +207,16 @@ namespace NCDK.Renderers.Visitors
 
             var linePoints = new WPF::Point[] { line.firstPoint, line.secondPoint };
 
-            linePoints[0] = transform.Transform(linePoints[0]);
-            linePoints[1] = transform.Transform(linePoints[1]);
+            linePoints[0] = linePoints[0];
+            linePoints[1] = linePoints[1];
             graphics.DrawLine(pen, linePoints[0], linePoints[1]);
         }
 
         private void Visit(OvalElement oval)
         {
-            var radius = ScaleX(oval.radius);
-            var diameter = ScaleX(oval.radius * 2);
-            var center = GetTransformed(oval.coord);
+            var radius = oval.radius;
+            var diameter = oval.radius * 2;
+            var center = oval.coord;
             var brush = new SolidColorBrush(oval.color);
 
             if (oval.fill)
@@ -178,22 +233,6 @@ namespace NCDK.Renderers.Visitors
                     new Pen(brush, 1),
                     new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
             }
-        }
-
-        private double ScaleX(double xCoord)
-        {
-            return (xCoord * transform.Value.M11);  // Scale X
-        }
-
-        private double ScaleY(double yCoord)
-        {
-            return (yCoord * transform.Value.M22); // Scale Y
-        }
-
-        private WPF::Point GetTransformed(WPF::Point coord)
-        {
-            var result = transform.Transform(coord);
-            return result;
         }
 
         private Color BackgroundColor
@@ -213,25 +252,25 @@ namespace NCDK.Renderers.Visitors
             var backColor = this.BackgroundColor;
             this.graphics.DrawRectangle(new SolidColorBrush(backColor), null, textBounds);
             this.graphics.DrawText(new FormattedText(
-                          textElement.text,
-                          CultureInfo.CurrentCulture,
-                          WPF.FlowDirection.LeftToRight,
-                          this.fontManager.CureentTypeface,
-                          this.fontManager.Size,
-                          new SolidColorBrush(textElement.color)), point);
+                textElement.text,
+                CultureInfo.InvariantCulture,
+                WPF.FlowDirection.LeftToRight,
+                this.fontManager.CureentTypeface,
+                this.fontManager.Size,
+                new SolidColorBrush(textElement.color)), point);
         }
 
         private void Visit(WedgeLineElement wedge)
         {
             // make the vector normal to the wedge axis
-            Vector2 normal = new Vector2(wedge.firstPoint.Y - wedge.secondPoint.Y, wedge.secondPoint.X - wedge.firstPoint.X);
+            var normal = new Vector2(wedge.firstPoint.Y - wedge.secondPoint.Y, wedge.secondPoint.X - wedge.firstPoint.X);
             normal = Vector2.Normalize(normal);
             normal *= (rendererModel.GetV<double>(typeof(WedgeWidth)) / rendererModel.GetV<double>(typeof(Scale)));
 
             // make the triangle corners
-            Vector2 vertexA = new Vector2(wedge.firstPoint.X, wedge.firstPoint.Y);
-            Vector2 vertexB = new Vector2(wedge.secondPoint.X, wedge.secondPoint.Y) + normal;
-            Vector2 vertexC = vertexB - normal;
+            var vertexA = new Vector2(wedge.firstPoint.X, wedge.firstPoint.Y);
+            var vertexB = new Vector2(wedge.secondPoint.X, wedge.secondPoint.Y) + normal;
+            var vertexC = vertexB - normal;
 
             var brush = new SolidColorBrush(wedge.color);
 
@@ -251,8 +290,8 @@ namespace NCDK.Renderers.Visitors
                 {
                     Vector2 point1 = Vector2.Lerp(vertexA, vertexB, displacement);
                     Vector2 point2 = Vector2.Lerp(vertexA, vertexC, displacement);
-                    var p1T = this.TransformPoint(ToPoint(point1));
-                    var p2T = this.TransformPoint(ToPoint(point2));
+                    var p1T = ToPoint(point1);
+                    var p2T = ToPoint(point2);
                     this.graphics.DrawLine(pen, p1T, p2T);
                     if (distance * (displacement + gapFactor) >= distance)
                     {
@@ -266,9 +305,9 @@ namespace NCDK.Renderers.Visitors
             }
             else if (wedge.type == WedgeLineElement.Types.Wedged)
             {
-                var pointB = this.TransformPoint(ToPoint(vertexB));
-                var pointC = this.TransformPoint(ToPoint(vertexC));
-                var pointA = this.TransformPoint(ToPoint(vertexA));
+                var pointB = ToPoint(vertexB);
+                var pointC = ToPoint(vertexC);
+                var pointA = ToPoint(vertexA);
 
                 var figure = new PathFigure
                 {
@@ -298,7 +337,7 @@ namespace NCDK.Renderers.Visitors
                 // draw by interpolating along the edges of the triangle
                 Vector2 point1 = Vector2.Lerp(vertexA, vertexB, displacement);
                 bool flip = false;
-                var p1T = this.TransformPoint(ToPoint(point1));
+                var p1T = ToPoint(point1);
                 displacement += gapFactor;
                 for (int i = 0; i < numberOfDashes; i++)
                 {
@@ -312,7 +351,7 @@ namespace NCDK.Renderers.Visitors
                         point2 = Vector2.Lerp(vertexA, vertexB, displacement);
                     }
                     flip = !flip;
-                    var p2T = this.TransformPoint(ToPoint(point2));
+                    var p2T = ToPoint(point2);
                     this.graphics.DrawLine(pen, p1T, p2T);
                     if (distance * (displacement + gapFactor) >= distance)
                     {
@@ -329,7 +368,7 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(AtomSymbolElement atomSymbol)
         {
-            var xy = this.TransformPoint(atomSymbol.coord);
+            var xy = atomSymbol.coord;
 
             var bounds = GetTextBounds(atomSymbol.text, this.fontManager.CureentTypeface, this.fontManager.Size);
 
@@ -387,8 +426,8 @@ namespace NCDK.Renderers.Visitors
                 return;
             }
 
-            var xCoord = bounds.GetCenterX();
-            var yCoord = bounds.GetCenterY();
+            var xCoord = bounds.CenterX();
+            var yCoord = bounds.CenterY();
             if (atomSymbol.alignment == 1)
             { // RIGHT
                 this.graphics.DrawText(new FormattedText(
@@ -437,9 +476,9 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(RectangleElement rectangle)
         {
-            var width = ScaleX(rectangle.width);
-            var height = ScaleY(rectangle.height);
-            var p = GetTransformed(rectangle.coord);
+            var width = rectangle.width;
+            var height = rectangle.height;
+            var p = rectangle.coord;
             var rect = new WPF.Rect(p.X, p.Y, width, height);
             if (rectangle.filled)
             {
@@ -451,76 +490,19 @@ namespace NCDK.Renderers.Visitors
             }
         }
 
-        private void Visit(Elements.PathElement path)
-        {
-            var pen = new Pen(new SolidColorBrush(path.color), 1);
-            for (int i = 1; i < path.points.Count; i++)
-            {
-                var point1 = path.points[i - 1];
-                var point2 = path.points[i];
-                var lineStart = this.TransformPoint(point1);
-                var lineEnd = this.TransformPoint(point2);
-                this.graphics.DrawLine(pen, lineStart, lineEnd);
-            }
-        }
-
         private void Visit(GeneralPath path)
         {
-            PathGeometry g = new PathGeometry
-            {
-                FillRule = path.winding
-            };
-
-            PathFigure pf = null;
-            foreach (var element in path.elements)
-            {
-                var pp = element.Points;
-                switch (element.Type)
-                {
-                    case PathType.MoveTo:
-                        if (pf != null)
-                            g.Figures.Add(pf);
-                        pf = new PathFigure
-                        {
-                            StartPoint = GetTransformed(pp[0])
-                        };
-                        break;
-                    case PathType.LineTo:
-                        var ls = new LineSegment(GetTransformed(pp[0]), true);
-                        pf.Segments.Add(ls);
-                        break;
-                    case PathType.QuadTo:
-                        var qs = new QuadraticBezierSegment(GetTransformed(pp[0]), GetTransformed(pp[1]), true);
-                        pf.Segments.Add(qs);
-                        break;
-                    case PathType.CubicTo:
-                        var cs = new BezierSegment(GetTransformed(pp[0]), GetTransformed(pp[1]), GetTransformed(pp[2]), true);
-                        pf.Segments.Add(cs);
-                        break;
-                    case PathType.Close:
-                    default:
-                        g.Figures.Add(pf);
-                        pf = null;
-                        break;
-                }
-            }
-            if (pf != null)
-            {
-                g.Figures.Add(pf);
-                pf = null;
-            }
-
             if (path.fill)
             {
                 this.graphics.DrawGeometry(
                     new SolidColorBrush(path.color),
                     null,
-                    g);
+                    path.elements);
             }
             else
             {
-                var pen = new Pen(new SolidColorBrush(path.color), path.stroke * transform.Value.M11);
-                this.graphics.DrawGeometry(null, pen, g);
+                var pen = new Pen(new SolidColorBrush(path.color), path.stroke);
+                this.graphics.DrawGeometry(null, pen, path.elements);
             }
         }
 
@@ -542,21 +524,21 @@ namespace NCDK.Renderers.Visitors
                 }
             }
 
-            var a = this.TransformPoint(line.start);
-            var b = this.TransformPoint(line.end);
+            var a = line.start;
+            var b = line.end;
             graphics.DrawLine(pen, a, b);
             double aW = rendererModel.GetV<double>(typeof(ArrowHeadWidth)) / scale;
             if (line.direction)
             {
-                var c = this.TransformPoint(new WPF.Point(line.start.X - aW, line.start.Y - aW));
-                var d = this.TransformPoint(new WPF.Point(line.start.X - aW, line.start.Y + aW));
+                var c = new WPF.Point(line.start.X - aW, line.start.Y - aW);
+                var d = new WPF.Point(line.start.X - aW, line.start.Y + aW);
                 graphics.DrawLine(pen, a, c);
                 graphics.DrawLine(pen, a, d);
             }
             else
             {
-                var c = this.TransformPoint(new WPF.Point(line.end.X + aW, line.end.Y - aW));
-                var d = this.TransformPoint(new WPF.Point(line.end.X + aW, line.end.Y + aW));
+                var c = new WPF.Point(line.end.X + aW, line.end.Y - aW);
+                var d = new WPF.Point(line.end.X + aW, line.end.Y + aW);
                 graphics.DrawLine(pen, b, c);
                 graphics.DrawLine(pen, b, d);
             }
@@ -576,7 +558,7 @@ namespace NCDK.Renderers.Visitors
                 new SolidColorBrush(textGroup.color)),
                 new WPF::Point(point.X, point.Y));
 
-            var coord = new WPF::Point(textBounds.GetCenterX(), textBounds.GetCenterY());
+            var coord = new WPF::Point(textBounds.CenterX(), textBounds.CenterY());
             var coord1 = textBounds.TopLeft;
             var coord2 = new WPF::Point(point.X + textBounds.Width, textBounds.Bottom);
 
@@ -619,7 +601,7 @@ namespace NCDK.Renderers.Visitors
 
                 this.graphics.DrawText(new FormattedText(
                     child.text,
-                    CultureInfo.CurrentCulture,
+                    CultureInfo.InvariantCulture,
                     WPF.FlowDirection.LeftToRight,
                     this.fontManager.CureentTypeface,
                     this.fontManager.Size,
@@ -633,7 +615,7 @@ namespace NCDK.Renderers.Visitors
                     var scy = p.Y + (childBounds.Height / 3);
                     this.graphics.DrawText(new FormattedText(
                         child.subscript,
-                        CultureInfo.CurrentCulture,
+                        CultureInfo.InvariantCulture,
                         WPF.FlowDirection.LeftToRight,
                         this.fontManager.CureentTypeface,
                         this.fontManager.Size - 2,
@@ -644,7 +626,15 @@ namespace NCDK.Renderers.Visitors
         }
 
         /// <inheritdoc/>
-        public override void Visit(IRenderingElement element)
+        public void Visit(IRenderingElement element, Transform transform)
+        {
+            this.graphics.PushTransform(transform);
+            Visit(element);
+            this.graphics.Pop();
+        }
+
+        /// <inheritdoc/>
+        public void Visit(IRenderingElement element)
         {
             switch (element)
             {
@@ -672,9 +662,6 @@ namespace NCDK.Renderers.Visitors
                 case RectangleElement e:
                     Visit(e);
                     break;
-                case Renderers.Elements.PathElement e:
-                    Visit(e);
-                    break;
                 case GeneralPath e:
                     Visit(e);
                     break;
@@ -694,7 +681,7 @@ namespace NCDK.Renderers.Visitors
         }
 
         /// <inheritdoc/>
-        public override IFontManager FontManager
+        public IFontManager FontManager
         {
             get => this.fontManager;
             set => this.fontManager = (WPFFontManager)value;

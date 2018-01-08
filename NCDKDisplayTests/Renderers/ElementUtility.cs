@@ -47,10 +47,13 @@ namespace NCDK.Renderers
             return this.elements.Count;
         }
 
-        public Transform Transform
+
+        public void Visit(IRenderingElement element, Transform transform)
         {
-            get => this.transform;
-            set => this.transform = value;
+            var save = transform;
+            this.transform = transform;
+            Visit(element);
+            transform = save;
         }
 
         public void Visit(IRenderingElement element)

@@ -61,10 +61,7 @@ namespace NCDK.Renderers.Generators
         {
             if (model != null) return; // things are already set up
             model = new RendererModel();
-            elementUtil = new ElementUtility
-            {
-                Transform = this.GetTransform()
-            };
+            elementUtil = new ElementUtility();
             sceneGenerator = new BasicSceneGenerator();
             model.RegisterParameters(sceneGenerator);
         }

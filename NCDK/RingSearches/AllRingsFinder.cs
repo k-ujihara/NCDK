@@ -260,7 +260,7 @@ namespace NCDK.RingSearches
         /// <summary>
         /// The threshold values provide a limit at which the computation stops.
         /// There will always be some ring systems in which we cannot compute every
-        /// possible ring (e.g. Fullerenes). This limit replaces the previous timeout
+        /// possible ring (e.g. fullerenes). This limit replaces the previous timeout
         /// and provides a more meaningful measure of what to expect based on
         /// precomputed percentiles. It is important to consider that, higher is not
         /// always better - generally the large values generate many more rings then

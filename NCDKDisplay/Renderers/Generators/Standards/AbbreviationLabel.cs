@@ -47,7 +47,7 @@ namespace NCDK.Renderers.Generators.Standards
     {
         /// <summary>
         /// Better rendering of negative charge by using minus and not
-        /// an ascii hyphen.
+        /// an ASCII hyphen.
         /// </summary>
         private const string MINUS_STRING = "\u2212";
 
@@ -460,7 +460,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             if (trie == null)
                 return best;
-            if (trie.token != null)
+            if (trie.Token != null)
                 best = i;
             if (i == str.Length)
                 return best;
@@ -469,9 +469,9 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Insert a string (str) into the trie.
+        /// Insert a string (<paramref name="str"/>) into the <paramref name="trie"/>.
         /// </summary>
-        /// <param name="trie">trie node</param>
+        /// <param name="trie"><paramref name="trie"/> node</param>
         /// <param name="str">the string to insert</param>
         /// <param name="i">index in the string</param>
         /// <returns>a created child node or null</returns>
@@ -481,7 +481,7 @@ namespace NCDK.Renderers.Generators.Standards
                 trie = new Trie();
             if (i == str.Length)
             {
-                trie.token = str;
+                trie.Token = str;
             }
             else
             {
@@ -496,7 +496,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         private sealed class Trie
         {
-            public string token { get; set; }
+            public string Token { get; set; }
             public Trie[] Children { get; } = new Trie[128];
         }
     }

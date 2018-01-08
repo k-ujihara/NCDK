@@ -45,18 +45,15 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Depict\Dimension.cs" />
-    <Compile Include="Renderers\Elements\Path\ArcTo.cs" />
     <Compile Include="Renderers\Elements\TextGroupElement.cs" />
+    <Compile Include="Renderers\Visitors\AbstractWPFDrawVisitor.cs" />
     <Compile Include="Renderers\WPFUtil.cs" />
     <Compile Include="Depict\Depiction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,15 +93,6 @@
     <Compile Include="Renderers\Elements\LineElement.cs" />
     <Compile Include="Renderers\Elements\MarkedElement.cs" />
     <Compile Include="Renderers\Elements\OvalElement.cs" />
-    <Compile Include="Renderers\Elements\PathElement.cs" />
-    <Compile Include="Renderers\Elements\Path\Close.cs" />
-    <Compile Include="Renderers\Elements\Path\CubicTo.cs" />
-    <Compile Include="Renderers\Elements\Path\LineTo.cs" />
-    <Compile Include="Renderers\Elements\Path\MoveTo.cs" />
-    <Compile Include="Renderers\Elements\Path\PathBuilder.cs" />
-    <Compile Include="Renderers\Elements\Path\PathElement.cs" />
-    <Compile Include="Renderers\Elements\Path\QuadTo.cs" />
-    <Compile Include="Renderers\Elements\Path\PathType.cs" />
     <Compile Include="Renderers\Elements\RectangleElement.cs" />
     <Compile Include="Renderers\Elements\RingElement.cs" />
     <Compile Include="Renderers\Elements\TextElement.cs" />
@@ -161,7 +149,6 @@
     <Compile Include="Renderers\ReactionSetRenderer.cs" />
     <Compile Include="Renderers\Selection\AbstractSelection.cs" />
     <Compile Include="Renderers\SymbolVisibility.cs" />
-    <Compile Include="Renderers\Visitors\AbstractWPFDrawVisitor.cs" />
     <Compile Include="Renderers\Visitors\WPFDrawVisitor.cs" />
   </ItemGroup>
   <ItemGroup>

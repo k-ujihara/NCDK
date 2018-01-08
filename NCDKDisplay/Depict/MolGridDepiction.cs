@@ -92,6 +92,22 @@ namespace NCDK.Depict
 
         public override RenderTargetBitmap ToBitmap()
         {
+            return ToBitmap(96, 96, PixelFormats.Pbgra32);
+        }
+
+        public RenderTargetBitmap ToBitmap(double dpiX, double dpiY, PixelFormat pixelFormat)
+        {
+            var drawingVisual = new DrawingVisual();
+            var size = Draw(drawingVisual);
+
+            // create the image for rendering
+            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
+            img.Render(drawingVisual);
+            return img;
+        }
+
+        public override Size Draw(DrawingVisual drawingVisual)
+        {
             // format margins and padding for raster images
             double margin = GetMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
@@ -107,23 +123,18 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, required, null);
             double fitting = CalcFitting(margin, padding, required, null);
 
-            // we use the AWT for vector graphics if though we're raster because
-            // fractional strokes can be figured out by interpolation, without
-            // when we shrink diagrams bonds can look too bold/chubby
-            var dv = new DrawingVisual();
-            using (var g2 = dv.RenderOpen())
+            using (var g2 = drawingVisual.RenderOpen())
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
-                visitor.Transform = Transform.Identity;
-                visitor.Visit(new RectangleElement(new Point(0, 0), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), Transform.Identity);
 
                 // compound the zoom, fitting and scaling into a single value
                 double rescale = zoom * fitting * scale;
 
                 // x,y base coordinates include the margin and centering (only if fitting to a size)
-                double xBase = margin + (total.w - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
-                double yBase = margin + (total.h - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
+                double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
+                double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
 
                 for (int i = 0; i < elements.Count; i++)
                 {
@@ -147,10 +158,7 @@ namespace NCDK.Depict
                 }
             }
 
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)Math.Ceiling(total.w), (int)Math.Ceiling(total.h), 96, 96, PixelFormats.Pbgra32);
-            img.Render(dv);
-            return img;
+            return new Size(total.width, total.height);
         }
 
         private double CalcFitting(double margin, double padding, Dimensions required, string fmt)
@@ -165,8 +173,8 @@ namespace NCDK.Depict
 
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                              .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
-            double resize = Math.Min(targetDim.w / required.w,
-                                     targetDim.h / required.h);
+            double resize = Math.Min(targetDim.width / required.width,
+                                     targetDim.height / required.height);
             if (resize > 1 && !model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)))
                 resize = 1;
             return resize;
@@ -221,8 +229,8 @@ namespace NCDK.Depict
             // create the image for rendering
             FreeHepWrapper wrapper = null;
             if (!fmt.Equals(SVG_FMT))
-                wrapper = new FreeHepWrapper(fmt, total.w, total.h);
-            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.w, total.h)
+                wrapper = new FreeHepWrapper(fmt, total.width, total.height);
+            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.width, total.height)
                                                             : (IDrawVisitor)WPFDrawVisitor.ForVectorGraphics(wrapper.g2);
 
             if (fmt.Equals(SVG_FMT))
@@ -233,15 +241,14 @@ namespace NCDK.Depict
             {
             }
 
-            visitor.Transform = new ScaleTransform(1, -1);
-            visitor.Visit(new RectangleElement(new Point(0, -total.h), total.w, total.h, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))));
+            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
 
             // compound the fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
 
             // x,y base coordinates include the margin and centering (only if fitting to a size)
-            double xBase = margin + (total.w - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
-            double yBase = margin + (total.h - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
+            double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
+            double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
 
             for (int i = 0; i < elements.Count; i++)
             {
