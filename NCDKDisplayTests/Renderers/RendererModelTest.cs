@@ -35,84 +35,9 @@ namespace NCDK.Renderers
     {
         class Class_IGenerator_IChemObject : IGenerator<IChemObject>
         {
-            IGeneratorParameter<bool?> someParam = new SomeParam();
-
-            public IList<IGeneratorParameter> Parameters => new List<IGeneratorParameter>() { someParam };
-
             public IRenderingElement Generate(IChemObject obj, RendererModel model) => null;
         }
-
-        [TestMethod()]
-        public void TestGetRenderingParameter()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-
-            RendererModel model = new RendererModel();
-            model.RegisterParameters(generator);
-            Assert.AreEqual(false, model.GetDefaultV<bool>(typeof(SomeParam)));
-        }
-
-        [TestMethod()]
-        public void TestHasParameter()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-            RendererModel model = new RendererModel();
-            Assert.IsFalse(model.HasParameter(typeof(SomeParam)));
-            model.RegisterParameters(generator);
-            Assert.IsTrue(model.HasParameter(typeof(SomeParam)));
-        }
-
-        [TestMethod()]
-        public void TestReturningTheRealParamaterValue()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-            RendererModel model = new RendererModel();
-            model.RegisterParameters(generator);
-            IGeneratorParameter<bool?> param = model.GetParameter<bool?>(typeof(SomeParam));
-            // test the default value
-            Assert.AreEqual(false, param.Value.Value);
-            param.Value = true;
-            Assert.AreEqual(true, model.GetV<bool>(typeof(SomeParam)));
-        }
-
-        [TestMethod()]
-        public void TestSetRenderingParameter()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-            RendererModel model = new RendererModel();
-            model.RegisterParameters(generator);
-            Assert.AreEqual(false, model.GetV<bool>(typeof(SomeParam)));
-            model.SetV(typeof(SomeParam), true);
-            Assert.AreEqual(true, model.GetV<bool>(typeof(SomeParam)));
-        }
-
-        [TestMethod()]
-        public void TestGetDefaultRenderingParameter()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-            RendererModel model = new RendererModel();
-            model.RegisterParameters(generator);
-            Assert.AreEqual(false, model.GetDefaultV<bool>(typeof(SomeParam)));
-        }
-
-        [TestMethod()]
-        public void TestGetRenderingParameters()
-        {
-            IGenerator<IChemObject> generator = new Class_IGenerator_IChemObject();
-            RendererModel model = new RendererModel();
-            int nDefaultParams = model.GetRenderingParameters().Count;
-            model.RegisterParameters(generator);
-            var parameters = model.GetRenderingParameters();
-            Assert.IsNotNull(parameters);
-            Assert.AreEqual(nDefaultParams + 1, parameters.Count); // the registered one + defaults
-
-            //var paramClasses = new List<Type>();
-            //        foreach (var param in parameters)
-            //            paramClasses.Add(param.GetType());
-
-            //        AssertThat(paramClasses, HasItem(typeof(SomeParam)));
-        }
-
+        
         [TestMethod()]
         public void TestGetSetNotification()
         {
@@ -145,19 +70,6 @@ namespace NCDK.Renderers
             model.SetToolTipTextMap(tips);
             Assert.AreEqual(tips, model.GetToolTipTextMap());
             Assert.AreEqual("Repelsteeltje", model.GetToolTipText(anonAtom));
-        }
-
-        [TestMethod()]
-        public void TestClipboardContent()
-        {
-            RendererModel model = new RendererModel();
-            // test default
-            Assert.IsNull(model.GetClipboardContent());
-            IAtomContainer content = new AtomContainer();
-            model.SetClipboardContent(content);
-            Assert.AreEqual(content, model.GetClipboardContent());
-            model.SetClipboardContent(null);
-            Assert.IsNull(model.GetClipboardContent());
         }
 
         [TestMethod()]
@@ -239,14 +151,14 @@ namespace NCDK.Renderers
             MockListener listener = new MockListener();
             model.Listeners.Add(listener);
             Assert.IsFalse(listener.IsChanged);
-            model.FireChange();
+            model.OnStateChanged(null);
             Assert.IsTrue(listener.IsChanged);
 
             // test unregistering
             listener.IsChanged = false;
             Assert.IsFalse(listener.IsChanged);
             model.Listeners.Remove(listener);
-            model.FireChange();
+            model.OnStateChanged(null);
             Assert.IsFalse(listener.IsChanged);
         }
 
@@ -254,7 +166,7 @@ namespace NCDK.Renderers
         public void TestMerge()
         {
             RendererModel model = new RendererModel();
-            Assert.IsNotNull(model.GetMerge());
+            Assert.IsNotNull(model.Merge);
             // any further testing I can do here?
         }
     }

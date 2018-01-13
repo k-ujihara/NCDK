@@ -125,7 +125,6 @@
     <Compile Include="Renderers\Generators\ExtendedAtomGeneratorTest.cs" />
     <Compile Include="Renderers\Generators\LonePairGeneratorTest.cs" />
     <Compile Include="Renderers\Generators\MappingGeneratorTest.cs" />
-    <Compile Include="Renderers\Generators\Parameters\AbstractGeneratorParameterTest.cs" />
     <Compile Include="Renderers\Generators\ProductsBoxGeneratorTest.cs" />
     <Compile Include="Renderers\Generators\RadicalGeneratorTest.cs" />
     <Compile Include="Renderers\Generators\ReactantsBoxGeneratorTest.cs" />
@@ -147,7 +146,6 @@
     <Compile Include="Renderers\ReactionRendererTest.cs" />
     <Compile Include="Renderers\ReactionSetRendererTest.cs" />
     <Compile Include="Renderers\RendererModelTest.cs" />
-    <Compile Include="Renderers\SomeParam.cs" />
     <Compile Include="Renderers\SymbolVisibilityTest.cs" />
     <Compile Include="Renderers\Visitor\AbstractWPFDrawVisitorTest.cs" />
     <Compile Include="Renderers\Visitor\WPFDrawVisitorTest.cs" />
@@ -155,6 +153,9 @@
   <ItemGroup>
     <None Include="ncdk.snk" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Renderers\Generators\Parameters\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -16,15 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static NCDK.Renderers.Elements.TextGroupElement;
-using static NCDK.Renderers.Generators.AtomNumberGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 
 namespace NCDK.Renderers.Generators
@@ -37,39 +35,20 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class ExtendedAtomGenerator : BasicAtomGenerator
     {
-        /// <summary>Indicates implicit hydrogens should be depicted.</summary>
-        public class ShowImplicitHydrogens : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        private IGeneratorParameter<bool?> showImplicitHydrogens = new ShowImplicitHydrogens();
-
-        /// <summary>Indicates atom type names should be given instead
-        /// of element symbols. </summary>
-        public class ShowAtomTypeNames : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => false;
-        }
-
-        private ShowAtomTypeNames showAtomTypeNames = new ShowAtomTypeNames();
-
         /// <inheritdoc/>
         public override IRenderingElement Generate(IAtomContainer container, IAtom atom, RendererModel model)
         {
             bool drawNumbers = false;
-            if (model.HasParameter(typeof(WillDrawAtomNumbers)))
+            if (model.HasWillDrawAtomNumbers())
             {
-                drawNumbers = model.GetV<bool>(typeof(WillDrawAtomNumbers));
+                drawNumbers = model.GetWillDrawAtomNumbers();
             }
             if (!HasCoordinates(atom) || InvisibleHydrogen(atom, model)
                     || (InvisibleCarbon(atom, container, model) && !drawNumbers))
             {
                 return null;
             }
-            else if (model.GetV<bool>(typeof(CompactAtom)))
+            else if (model.GetCompactAtom())
             {
                 return this.GenerateCompactElement(atom, model);
             }
@@ -100,9 +79,9 @@ namespace NCDK.Renderers.Generators
         {
             Deque<Position> unused = GetUnusedPositions(container, atom);
 
-            if (model.HasParameter(typeof(WillDrawAtomNumbers)))
+            if (model.HasWillDrawAtomNumbers())
             {
-                bool drawNumbers = model.GetV<bool>(typeof(WillDrawAtomNumbers));
+                bool drawNumbers = model.GetWillDrawAtomNumbers();
                 if (!InvisibleCarbon(atom, container, model) && drawNumbers)
                 {
                     Position position = GetNextPosition(unused);
@@ -111,7 +90,7 @@ namespace NCDK.Renderers.Generators
                 }
             }
 
-            if (showImplicitHydrogens.Value.Value)
+            if (model.GetShowImplicitHydrogens())
             {
                 if (atom.ImplicitHydrogenCount != null)
                 {
@@ -235,19 +214,6 @@ namespace NCDK.Renderers.Generators
                 {
                     return Position.SE;
                 }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override IList<IGeneratorParameter> Parameters
-        {
-            get
-            {
-                var parameters = new List<IGeneratorParameter>();
-                parameters.Add(showImplicitHydrogens);
-                parameters.Add(showAtomTypeNames);
-                parameters.AddRange(base.Parameters);
-                return parameters;
             }
         }
     }

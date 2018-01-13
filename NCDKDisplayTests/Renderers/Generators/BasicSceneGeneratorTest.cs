@@ -45,7 +45,6 @@ namespace NCDK.Renderers.Generators
                             : base()
         {
             this.generator = new BasicSceneGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

@@ -53,6 +53,19 @@
   <ItemGroup>
     <Compile Include="Depict\Dimension.cs" />
     <Compile Include="Renderers\Elements\TextGroupElement.cs" />
+    <Content Include="Renderers\RenderModelTools.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RenderModelTools.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Renderers\Generators\AtomShapeTypes.cs" />
+    <Compile Include="Renderers\Generators\BasicGenerator.cs" />
+    <Compile Include="Renderers\HighlightStyles.cs" />
+    <Compile Include="Renderers\ObserbableDictionary.cs" />
+    <Compile Include="Renderers\RenderModelTools.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RenderModelTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Renderers\Visitors\AbstractWPFDrawVisitor.cs" />
     <Compile Include="Renderers\WPFUtil.cs" />
     <Compile Include="Depict\Depiction.cs" />
@@ -98,8 +111,6 @@
     <Compile Include="Renderers\Elements\TextElement.cs" />
     <Compile Include="Renderers\Fonts\IFontManager.cs" />
     <Compile Include="Renderers\Generators\IGenerator.cs" />
-    <Compile Include="Renderers\Generators\IGeneratorParameter.cs" />
-    <Compile Include="Renderers\Generators\Parameters\AbstractGeneratorParameter.cs" />
     <Compile Include="Renderers\Selection\IChemObjectSelection.cs" />
     <Compile Include="Renderers\Visitors\IDrawVisitor.cs" />
     <Compile Include="Renderers\Elements\WedgeLineElement.cs" />
@@ -119,7 +130,6 @@
     <Compile Include="Renderers\Generators\AtomNumberGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicAtomGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicBondGenerator.cs" />
-    <Compile Include="Renderers\Generators\BasicGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicSceneGenerator.cs" />
     <Compile Include="Renderers\Generators\BoundsGenerator.cs" />
     <Compile Include="Renderers\Generators\ExtendedAtomGenerator.cs" />
@@ -166,6 +176,7 @@
   <ItemGroup>
     <None Include="ncdk.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

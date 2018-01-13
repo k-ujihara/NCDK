@@ -26,7 +26,6 @@ using NCDK.Common.Mathematics;
 using NCDK.Numerics;
 using NCDK.Renderers.Colors;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +47,8 @@ namespace NCDK.Renderers.Generators.Standards
     /// depictions). The font used to generate the diagram must be provided to the constructor. <p/>
     /// </para>
     /// <para>
-    /// Atoms and bonds can be highlighted by setting the <see cref="HIGHLIGHT_COLOR"/>. The style of
-    /// highlight is set with the <see cref="Highlighting"/> parameter.
+    /// Atoms and bonds can be highlighted by setting the <see cref="HighlightColorKey"/>. The style of
+    /// highlight is set with the <see cref="RenderModelTools.GetHighlighting"/> parameter.
     /// </para>
     /// <para>
     /// The <see href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki page</see>
@@ -68,7 +67,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <code>
         /// atom.SetProperty(StandardGenerator.HIGHLIGHT_COLOR, WPF::Media.Colors.Red);
         /// </code></example>
-        public const string HIGHLIGHT_COLOR = "stdgen.highlight.color";
+        public const string HighlightColorKey = "stdgen.highlight.color";
 
         /// <summary>
         /// Defines the annotation Label(s) of a chem object in a depiction. The annotation
@@ -79,7 +78,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// string number = Integer.ToString(1 + container.Atoms.IndexOf(atom));
         /// atom.SetProperty(CDKConstants.ANNOTATION_LABEL, number);
         /// </code></example>
-        public const string ANNOTATION_LABEL = "stdgen.annotation.label";
+        public const string AnnotationLabelKey = "stdgen.annotation.label";
 
         /// <summary>
         /// A special markup for annotation labels that hints the generator to renderer
@@ -90,49 +89,18 @@ namespace NCDK.Renderers.Generators.Standards
         /// string cipLabel = "R";
         /// atom.SetProperty(CDKConstants.ANNOTATION_LABEL, StandardGenerator.ITALIC_DISPLAY_PREFIX + cipLabel);
         /// </code></example>
-        public const string ITALIC_DISPLAY_PREFIX = "std.itl:";
+        public const string ItalicDisplayPrefix = "std.itl:";
 
         /// <summary>
         /// Marks atoms and bonds as being hidden from the actual depiction. Set this
         /// property to non-null to indicate this.
         /// </summary>
-        public const string HIDDEN = "stdgen.hidden";
-        public const string HIDDEN_FULLY = "stdgen.hidden.fully";
+        public const string HiddenKey = "stdgen.hidden";
+        public const string HiddenFullyKey = "stdgen.hidden.fully";
 
         private readonly Typeface font;
         private readonly double emSize;
         private readonly StandardAtomGenerator atomGenerator;
-
-        /// <summary>
-        /// Enumeration of highlight style.
-        /// </summary>
-        public enum HighlightStyle
-        {
-            /// <summary>
-            /// Ignore highlight hints.
-            /// </summary>
-            None,
-
-            /// <summary>
-            /// Displayed atom symbols and bonds are coloured.
-            /// </summary>
-            Colored,
-
-            /// <summary>
-            /// An outer glow is placed in the background behind the depiction.
-            /// </summary>
-            /// <seealso cref="StandardGenerator.OuterGlowWidth"/> 
-            OuterGlow
-        }
-
-        private readonly IGeneratorParameter atomColor = new AtomColor(), visibility = new Visibility(),
-                strokeRatio = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
-                marginRatio = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
-                waveSections = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
-                fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
-                glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
-                annFontSize = new AnnotationFontScale(), sgroupBracketDepth = new SgroupBracketDepth(),
-                sgroupFontScale = new SgroupFontScale(), omitMajorIsotopes = new OmitMajorIsotopes();
 
         /// <summary>
         /// Create a new standard generator that utilises the specified font to display atom symbols.
@@ -154,25 +122,25 @@ namespace NCDK.Renderers.Generators.Standards
             var symbolRemap = new Dictionary<IAtom, string>();
             StandardSgroupGenerator.PrepareDisplayShortcuts(container, symbolRemap);
 
-            double scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            double scale = parameters.GetScale();
 
-            SymbolVisibility visibility = parameters.Get<SymbolVisibility>(typeof(Visibility));
-            IAtomColorer coloring = parameters.Get<IAtomColorer>(typeof(AtomColor));
-            Color annotationColor = parameters.GetV<Color>(typeof(AnnotationColor));
+            SymbolVisibility visibility = parameters.GetVisibility();
+            IAtomColorer coloring = parameters.GetAtomColorer();
+            Color annotationColor = parameters.GetAnnotationColor();
             var foreground = coloring.GetAtomColor(container.Builder.NewAtom("C"));
 
             // the stroke width is based on the font. a better method is needed to get
             // the exact font stroke but for now we use the width of the pipe character.
             double fontStroke = new TextOutline("|", font, emSize).Resize(1 / scale, 1 / scale).GetBounds().Width;
-            double stroke = parameters.GetV<double>(typeof(StrokeRatio)) * fontStroke;
+            double stroke = parameters.GetStrokeRatio() * fontStroke;
 
             ElementGroup annotations = new ElementGroup();
 
             AtomSymbol[] symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
             IRenderingElement[] bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
 
-            HighlightStyle style = parameters.GetV<HighlightStyle>(typeof(Highlighting));
-            double glowWidth = parameters.GetV<double>(typeof(OuterGlowWidth));
+            var style = parameters.GetHighlighting();
+            double glowWidth = parameters.GetOuterGlowWidth();
 
             ElementGroup backLayer = new ElementGroup();
             ElementGroup middleLayer = new ElementGroup();
@@ -187,11 +155,11 @@ namespace NCDK.Renderers.Generators.Standards
                     continue;
 
                 var highlight = GetHighlightColor(bond, parameters);
-                if (highlight != null && style == HighlightStyle.OuterGlow)
+                if (highlight != null && style == HighlightStyles.OuterGlow)
                 {
                     backLayer.Add(MarkedElement.Markup(OuterGlow(bondElements[i], highlight.Value, glowWidth, stroke), "outerglow"));
                 }
-                if (highlight != null && style == HighlightStyle.Colored)
+                if (highlight != null && style == HighlightStyles.Colored)
                 {
                     frontLayer.Add(MarkedElement.MarkupBond(Recolor(bondElements[i], highlight.Value), bond));
                 }
@@ -215,7 +183,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (symbols[i] == null)
                 {
                     // we add a 'ball' around atoms with no symbols (e.g. carbons)
-                    if (highlight != null && style == HighlightStyle.OuterGlow)
+                    if (highlight != null && style == HighlightStyles.OuterGlow)
                     {
                         backLayer.Add(MarkedElement.Markup(new OvalElement(ToPoint(atom.Point2D.Value), 1.75 * glowWidth * stroke, true, highlight.Value), "outerglow"));
                     }
@@ -235,12 +203,12 @@ namespace NCDK.Renderers.Generators.Standards
                     annotations.Add(MarkedElement.Markup(GeneralPath.ShapeOf(shape, annotationColor), "annotation"));
                 }
 
-                if (highlight != null && style == HighlightStyle.OuterGlow)
+                if (highlight != null && style == HighlightStyles.OuterGlow)
                 {
                     backLayer.Add(MarkedElement.Markup(OuterGlow(symbolElements, highlight.Value, glowWidth, stroke), "outerglow"));
                 }
 
-                if (highlight != null && style == HighlightStyle.Colored)
+                if (highlight != null && style == HighlightStyles.Colored)
                 {
                     frontLayer.Add(MarkedElement.MarkupAtom(symbolElements, atom));
                 }
@@ -268,10 +236,10 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         private Color GetColorOfAtom(IDictionary<IAtom, string> symbolRemap, IAtomColorer coloring, Color foreground,
-                             HighlightStyle style, IAtom atom, Color? highlight)
+                             HighlightStyles style, IAtom atom, Color? highlight)
         {
             // atom is highlighted...?
-            if (highlight != null && style == HighlightStyle.Colored)
+            if (highlight != null && style == HighlightStyles.Colored)
                 return highlight.Value;
             // abbreviations default to foreground color
             if (symbolRemap.ContainsKey(atom))
@@ -291,15 +259,15 @@ namespace NCDK.Renderers.Generators.Standards
         private AtomSymbol[] GenerateAtomSymbols(IAtomContainer container,
                                                 IDictionary<IAtom, string> symbolRemap,
                                                 SymbolVisibility visibility,
-                                                RendererModel parameters, ElementGroup annotations,
+                                                RendererModel parameters, 
+                                                ElementGroup annotations,
                                                 Color foreground,
                                                 double stroke)
         {
-            double scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
-            double annDist = parameters.GetV<double>(typeof(AnnotationDistance))
-                              * (parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale);
-            double annScale = (1 / scale) * parameters.GetV<double>(typeof(AnnotationFontScale));
-            Color annColor = parameters.GetV<Color>(typeof(AnnotationColor));
+            double scale = parameters.GetScale();
+            double annDist = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
+            double annScale = (1 / scale) * parameters.GetAnnotationFontScale();
+            Color annColor = parameters.GetAnnotationColor();
             double halfStroke = stroke / 2;
 
             AtomSymbol[] symbols = new AtomSymbol[container.Atoms.Count];
@@ -345,7 +313,7 @@ namespace NCDK.Renderers.Generators.Standards
                 // only generate if the symbol is visible
                 if (visibility.Visible(atom, bonds, parameters) || remapped)
                 {
-                     HydrogenPosition hPosition = HydrogenPositionTools.Position(atom, visNeighbors);
+                    HydrogenPosition hPosition = HydrogenPositionTools.Position(atom, visNeighbors);
 
                     if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount > 0)
                         auxVectors.Add(hPosition.Vector());
@@ -390,7 +358,7 @@ namespace NCDK.Renderers.Generators.Standards
                 {
                     // to ensure consistent draw distance we need to adjust the annotation distance
                     // depending on whether we are drawing next to an atom symbol or not.
-                     double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
+                    double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
 
                     var vector = NewAtomAnnotationVector(atom, bonds, auxVectors);
                     var annOutline = GenerateAnnotation(atom.Point2D.Value, label, vector, annDist + strokeAdjust, annScale, font, emSize, symbols[i]);
@@ -421,11 +389,12 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // to ensure consistent draw distance we need to adjust the annotation distance
                     // depending on whether we are drawing next to an atom symbol or not.
-                     double strokeAdjust = -halfStroke;
+                    double strokeAdjust = -halfStroke;
 
-   var vector = NewAttachPointAnnotationVector(atom,
-                                                                           container.GetConnectedBonds(atom),
-                                                                           new List<Vector2>());
+                    var vector = NewAttachPointAnnotationVector(
+                        atom,
+                        container.GetConnectedBonds(atom),
+                        new List<Vector2>());
 
                     var outline = GenerateAnnotation(atom.Point2D.Value,
                             attachNum.ToString(),
@@ -459,7 +428,6 @@ namespace NCDK.Renderers.Generators.Standards
             return symbols;
         }
 
-
         /// <summary>
         /// Generate an annotation 'label' for an atom (located at 'basePoint'). The label is offset from
         /// the basePoint by the provided 'distance' and 'direction'.
@@ -474,9 +442,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position text outline for the annotation</returns>
         internal static TextOutline GenerateAnnotation(Vector2 basePoint, string label, Vector2 direction, double distance, double scale, Typeface font, double emSize, AtomSymbol symbol)
         {
-            bool italicHint = label.StartsWith(ITALIC_DISPLAY_PREFIX);
+            bool italicHint = label.StartsWith(ItalicDisplayPrefix);
 
-            label = italicHint ? label.Substring(ITALIC_DISPLAY_PREFIX.Length) : label;
+            label = italicHint ? label.Substring(ItalicDisplayPrefix.Length) : label;
 
             var annFont = italicHint ? new Typeface(font.FontFamily, WPF.FontStyles.Italic, font.Weight, font.Stretch) : font;
 
@@ -534,22 +502,16 @@ namespace NCDK.Renderers.Generators.Standards
 
             return group;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters =>
-            new[] {atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
-                    hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
-                    annCol, annDist, annFontSize, sgroupBracketDepth, sgroupFontScale, omitMajorIsotopes };
-
+ 
         internal static string GetAnnotationLabel(IChemObject chemObject)
         {
-            object obj = chemObject.GetProperty<object>(ANNOTATION_LABEL);
+            object obj = chemObject.GetProperty<object>(AnnotationLabelKey);
             return obj is string ? (string)obj : null;
         }
 
         private Color? GetHighlightColor(IChemObject bond, RendererModel parameters)
         {
-            var propCol = GetColorProperty(bond, HIGHLIGHT_COLOR);
+            var propCol = GetColorProperty(bond, HighlightColorKey);
 
             if (propCol != null)
             {
@@ -558,7 +520,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             if (parameters.GetSelection() != null && parameters.GetSelection().Contains(bond))
             {
-                return parameters.GetV<Color>(typeof(RendererModel.SelectionColor));
+                return parameters.GetSelectionColor();
             }
 
             return null;
@@ -573,8 +535,10 @@ namespace NCDK.Renderers.Generators.Standards
         internal static Color? GetColorProperty(IChemObject obj, string key)
         {
             var value = obj.GetProperty<object>(key);
-            if (value is Color) return (Color)value;
-            if (value != null) throw new ArgumentException(key + " property should be a java.awt.Color");
+            if (value is Color color)
+                return color;
+            if (value != null)
+                throw new ArgumentException($"{key} property should be a {nameof(Color)}");
             return null;
         }
 
@@ -758,7 +722,7 @@ namespace NCDK.Renderers.Generators.Standards
             // want the annotation below
             if (perpVector.Y > 0)
                 perpVector = -perpVector;
-            
+
             var vector = new Vector2((bondVector.X + perpVector.X) / 2,
                                            (bondVector.Y + perpVector.Y) / 2);
             vector = Vector2.Normalize(vector);
@@ -794,7 +758,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>whether it is hidden</returns>
         public static bool IsHidden(IChemObject chemobj)
         {
-            return chemobj.GetProperty<bool>(HIDDEN, false);
+            return chemobj.GetProperty<bool>(HiddenKey, false);
         }
 
         /// <summary>
@@ -804,7 +768,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>whether it is hidden</returns>
         internal static bool IsHiddenFully(IChemObject chemobj)
         {
-            return chemobj.GetProperty<bool>(HIDDEN_FULLY, false);
+            return chemobj.GetProperty<bool>(HiddenFullyKey, false);
         }
 
         /// <summary>
@@ -814,7 +778,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="chemobj">a chem obj (atom or bond) to hide</param>
         public static void Hide(IChemObject chemobj)
         {
-            chemobj.SetProperty(HIDDEN, true);
+            chemobj.SetProperty(HiddenKey, true);
         }
 
         /// <summary>
@@ -823,7 +787,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="chemobj">a chem obj (atom or bond) to hide</param>
         internal static void HideFully(IChemObject chemobj)
         {
-            chemobj.SetProperty(HIDDEN_FULLY, true);
+            chemobj.SetProperty(HiddenFullyKey, true);
         }
 
         /// <summary>
@@ -832,192 +796,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="chemobj">a chem obj (atom or bond) to unhide</param>
         internal static void Unhide(IChemObject chemobj)
         {
-            chemobj.SetProperty(HIDDEN, false);
-            chemobj.SetProperty(HIDDEN_FULLY, false);
-        }
-
-        /// <summary>
-        /// Defines the color of unselected atoms (and bonds). Bonds colored is defined by the carbon
-        /// color. The default option is uniform black coloring as recommended by IUPAC.
-        /// </summary>
-        public sealed class AtomColor : AbstractGeneratorParameter<IAtomColorer>
-        {
-            /// <inheritdoc/>
-            public override IAtomColorer Default { get; } = new UniColor(Color.FromRgb(0x44, 0x44, 0x44));
-        }
-
-        /// <summary>
-        /// Defines which atoms have their symbol displayed. The default option is 
-        /// <see cref="SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon"/> wrapped with 
-        /// <see cref="SelectionVisibility.Disconnected(SymbolVisibility)"/>.
-        /// </summary>
-        public sealed class Visibility : AbstractGeneratorParameter<SymbolVisibility>
-        {
-            /// <inheritdoc/>
-            public override SymbolVisibility Default { get; } = SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon);
-        }
-
-        /// <summary>
-        /// Defines the ratio of the stroke to the width of the stroke of the font used to depict atom
-        /// symbols. Default = 1.
-        /// </summary>
-        public sealed class StrokeRatio : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 1;
-        }
-
-        /// <summary>
-        /// Defines the ratio of the separation between lines in double bonds as a percentage of length
-        /// (<see cref="BasicSceneGenerator.bondLength"/>). The default value is 18% (0.18).
-        /// </summary>
-        public sealed class BondSeparation : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 0.18;
-        }
-
-        /// <summary>
-        /// Defines the margin between an atom symbol and a connected bond based on the stroke width.
-        /// Default = 2.
-        /// </summary>
-        public sealed class SymbolMarginRatio : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 2;
-        }
-
-        /// <summary>
-        /// Ratio of the wide end of wedge compared to the narrow end (stroke width). Default = 8.
-        /// </summary>
-        public sealed class WedgeRatio : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 6;
-        }
-
-        /// <summary>
-        /// The preferred spacing between lines in hashed bonds. The number of hashed sections displayed
-        /// is then <see cref="BasicSceneGenerator.BondLength"/> / spacing. The default value is 5.
-        /// </summary>
-        public sealed class HashSpacing : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 5;
-        }
-
-        /// <summary>
-        /// The spacing of waves (semi circles) drawn in wavy bonds with. Default = 5.
-        /// </summary>
-        public sealed class WaveSpacing : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 5;
-        }
-
-        /// <summary>
-        /// The number of sections to render in a dashed 'unknown' bond, default = 4;
-        /// </summary>
-        public sealed class DashSection : AbstractGeneratorParameter<int?>
-        {
-            /// <inheritdoc/>
-            public override int? Default => 8;
-        }
-
-        /// <summary>
-        /// Modify bold wedges to be flush with adjacent bonds, default = true.
-        /// </summary>
-        public sealed class FancyBoldWedges : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        /// <summary>
-        /// Modify hashed wedges to be flush when there is a single adjacent bond, default = true.
-        /// </summary>
-        public sealed class FancyHashedWedges : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        /// <summary>
-        /// The width of outer glow as a percentage of stroke width. The default value is 200% (2.0d).
-        /// This means the bond outer glow, is 5 times the width as the glow extends to twice the width
-        /// on each side.
-        /// </summary>
-        public sealed class OuterGlowWidth : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 2;
-        }
-
-        /// <summary>
-        /// Parameter defines the style of highlight used to emphasis atoms and bonds. The default option
-        /// is to color the atom and bond symbols (<see cref="HighlightStyle.Colored"/>).
-        /// </summary>
-        public sealed class Highlighting : AbstractGeneratorParameter<HighlightStyle?>
-        {
-            /// <inheritdoc/>
-            public override HighlightStyle? Default => HighlightStyle.Colored;
-        }
-
-        /// <summary>
-        /// The color of the atom numbers. The parameter value is null, the color of the symbol
-        /// <see cref="AtomColor"/> is used. The default color is red to distinguish from normal atom symbols.
-        /// </summary>
-        public sealed class AnnotationColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <inheritdoc/>
-            public override Color? Default => WPF.Media.Colors.Red;
-        }
-
-        /// <summary>
-        /// The distance of atom numbers from their parent atom as a percentage of bond length, default
-        /// value is 0.25 (25%)
-        /// </summary>
-        public sealed class AnnotationDistance : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 0.25;
-        }
-
-        /// <summary>
-        /// Annotation font size relative to element symbols, default = 0.4 (40%).
-        /// </summary>
-        public sealed class AnnotationFontScale : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 0.5;
-        }
-
-        /// <summary>
-        /// How "deep" are brackets drawn. The value is relative to bond length.
-        /// </summary>
-        public sealed class SgroupBracketDepth : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 0.18;
-        }
-
-        /// <summary>
-        /// Scale Sgroup annotations relative to the normal font size (atom symbol).
-        /// </summary>
-        public sealed class SgroupFontScale : AbstractGeneratorParameter<double?>
-        {
-            /// <inheritdoc/>
-            public override double? Default => 0.6;
-        }
-
-        /// <summary>
-        /// Whether Major Isotopes e.g. 12C, 16O should be omitted.
-        /// </summary>
-        public sealed class OmitMajorIsotopes : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => false;
+            chemobj.SetProperty(HiddenKey, false);
+            chemobj.SetProperty(HiddenFullyKey, false);
         }
     }
 }
-

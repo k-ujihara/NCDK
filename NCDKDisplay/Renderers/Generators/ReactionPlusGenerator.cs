@@ -17,8 +17,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -38,7 +38,7 @@ namespace NCDK.Renderers.Generators
         {
             ElementGroup diagram = new ElementGroup();
 
-            var color = model.GetV<Color>(typeof(BasicSceneGenerator.ForegroundColor));
+            var color = model.GetForegroundColor();
             var reactants = reaction.Reactants;
 
             // only draw + signs when there are more than one reactant
@@ -79,8 +79,5 @@ namespace NCDK.Renderers.Generators
             double arrowCenter = (moleculeBox1.CenterX() + moleculeBox2.CenterX()) / 2;
             return new TextElement(new Point(arrowCenter, axis), "+", color);
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => new IGeneratorParameter[] { };
     }
 }

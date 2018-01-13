@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace NCDK.Depict
         /// <summary>
         /// Magic value for automated sizing.
         /// </summary>
-        public readonly static Dimensions AUTOMATIC = new Dimensions(DepictionGenerator.AUTOMATIC, DepictionGenerator.AUTOMATIC);
+        public readonly static Dimensions Automatic = new Dimensions(DepictionGenerator.Automatic, DepictionGenerator.Automatic);
 
         public readonly double width;
         public readonly double height;

@@ -38,11 +38,7 @@ namespace NCDK.Renderers.Generators
         public AtomContainerBoundsGeneratorTest()
             : base()
         {
-            model.RegisterParameters(new BasicSceneGenerator());
-            model.RegisterParameters(new BasicAtomGenerator());
-            model.RegisterParameters(new BasicBondGenerator());
             this.generator = new AtomContainerBoundsGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

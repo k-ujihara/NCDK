@@ -38,10 +38,7 @@ namespace NCDK.Renderers.Generators
         public AtomMassGeneratorTest()
             : base()
         {
-            model.RegisterParameters(new BasicSceneGenerator());
-            model.RegisterParameters(new BasicBondGenerator());
             this.generator = new AtomMassGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

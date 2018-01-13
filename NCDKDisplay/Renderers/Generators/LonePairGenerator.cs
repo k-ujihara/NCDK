@@ -16,14 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
-using System;
-using System.Collections.Generic;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicAtomGenerator;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 using WPF = System.Windows;
 
@@ -51,9 +48,9 @@ namespace NCDK.Renderers.Generators
             Color RADICAL_COLOR = WPF.Media.Colors.Black;
 
             // XXX : is this the best option?
-            double ATOM_RADIUS = model.GetV<double>(typeof(AtomRadius));
+            double ATOM_RADIUS = model.GetAtomRadius();
 
-            double scale = model.GetV<double>(typeof(Scale));
+            double scale = model.GetScale();
             double modelAtomRadius = ATOM_RADIUS / scale;
             double modelPointRadius = SCREEN_RADIUS / scale;
             double modelSeparation = SCREEN_SEPARATION / scale;
@@ -89,8 +86,5 @@ namespace NCDK.Renderers.Generators
             }
             return group;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => Array.Empty<IGeneratorParameter>();
     }
 }

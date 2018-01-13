@@ -48,7 +48,6 @@ namespace NCDK.Renderers.Generators
             : base()
         {
             this.generator = new ExtendedAtomGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 
@@ -95,8 +94,8 @@ namespace NCDK.Renderers.Generators
 
             IAtomContainer dummyContainer = base.builder.NewAtomContainer();
 
-            model.SetV(typeof(KekuleStructure), true);
-            model.SetV(typeof(ShowExplicitHydrogens), true);
+            model.SetKekuleStructure(true);
+            model.SetShowExplicitHydrogens(true);
 
             Assert.IsTrue(generator.CanDraw(drawableCAtom, dummyContainer, model));
             Assert.IsTrue(generator.CanDraw(drawableHAtom, dummyContainer, model));
@@ -106,17 +105,17 @@ namespace NCDK.Renderers.Generators
         public override void InvisibleHydrogenTest()
         {
             IAtom hydrogen = base.builder.NewAtom("H");
-            model.SetV(typeof(ShowExplicitHydrogens), false);
+            model.SetShowExplicitHydrogens(false);
             Assert.IsTrue(generator.InvisibleHydrogen(hydrogen, model));
 
-            model.SetV(typeof(ShowExplicitHydrogens), true);
+            model.SetShowExplicitHydrogens(true);
             Assert.IsFalse(generator.InvisibleHydrogen(hydrogen, model));
 
             IAtom nonHydrogen = base.builder.NewAtom("C");
-            model.SetV(typeof(ShowExplicitHydrogens), false);
+            model.SetShowExplicitHydrogens(false);
             Assert.IsFalse(generator.InvisibleHydrogen(nonHydrogen, model));
 
-            model.SetV(typeof(ShowExplicitHydrogens), true);
+            model.SetShowExplicitHydrogens(true);
             Assert.IsFalse(generator.InvisibleHydrogen(nonHydrogen, model));
         }
 
@@ -129,7 +128,7 @@ namespace NCDK.Renderers.Generators
             IAtomContainer dummyContainer = base.builder.NewAtomContainer();
 
             // we force the issue by making isKekule=true
-            model.SetV(typeof(KekuleStructure), true);
+            model.SetKekuleStructure(true);
 
             Assert.IsFalse(generator.InvisibleCarbon(carbon, dummyContainer, model));
         }
@@ -140,7 +139,7 @@ namespace NCDK.Renderers.Generators
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[1];
 
-            model.SetV(typeof(KekuleStructure), true);
+            model.SetKekuleStructure(true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 
@@ -168,7 +167,7 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[0];
-            model.SetV(typeof(ShowEndCarbons), true);
+            model.SetShowEndCarbons(true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 
@@ -194,8 +193,8 @@ namespace NCDK.Renderers.Generators
         public override void OvalShapeTest()
         {
             IAtomContainer singleAtom = MakeSingleAtom();
-            model.SetV<Shapes>(typeof(CompactShape), Shapes.Oval);
-            model.SetV(typeof(CompactAtom), true);
+            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
             Assert.AreEqual(typeof(OvalElement), elements[0].GetType());
@@ -205,8 +204,8 @@ namespace NCDK.Renderers.Generators
         public override void SquareShapeTest()
         {
             IAtomContainer singleAtom = MakeSingleAtom();
-            model.SetV<Shapes>(typeof(CompactShape), Shapes.Square);
-            model.SetV(typeof(CompactAtom), true);
+            model.SetCompactShape(AtomShapeTypes.Square);
+            model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
             Assert.AreEqual(typeof(RectangleElement), elements[0].GetType());
@@ -217,8 +216,8 @@ namespace NCDK.Renderers.Generators
         {
             var testColor = WPF::Media.Colors.Red;
             IAtomContainer singleAtom = MakeSingleAtom("O");
-            model.SetV(typeof(AtomColor), testColor);
-            model.SetV(typeof(ColorByType), false);
+            model.SetAtomColor(testColor);
+            model.SetAtomColorByType(false);
             generator.GetAtomColor(singleAtom.Atoms[0], model);
 
             var elements = GetAllSimpleElements(generator, singleAtom);
@@ -232,13 +231,16 @@ namespace NCDK.Renderers.Generators
         public override void AtomColorerTest()
         {
             IAtomContainer cnop = MakeSNOPSquare();
-            var colorMap = new Dictionary<string, Color>();
-            colorMap["S"] = WPF::Media.Colors.Yellow;
-            colorMap["N"] = WPF::Media.Colors.Blue;
-            colorMap["O"] = WPF::Media.Colors.Red;
-            colorMap["P"] = WPF::Media.Colors.Magenta;
-            IAtomColorer atomColorer = new BasicAtomGeneratorTest.AtomColorerTestIAtomColorer(colorMap);
-            model.Set(typeof(AtomColorer), atomColorer);
+            var colorMap = new Dictionary<string, Color>
+            {
+                ["S"] = WPF::Media.Colors.Yellow,
+                ["N"] = WPF::Media.Colors.Blue,
+                ["O"] = WPF::Media.Colors.Red,
+                ["P"] = WPF::Media.Colors.Magenta
+            };
+            IAtomColorer atomColorer = new AtomColorerTestIAtomColorer(colorMap);
+            model.SetAtomColorer(atomColorer);
+            model.SetAtomColorByType(true);
             var elements = GetAllSimpleElements(generator, cnop);
             Assert.AreEqual(4, elements.Count);
             foreach (var element in elements)
@@ -254,9 +256,9 @@ namespace NCDK.Renderers.Generators
         public override void ColorByTypeTest()
         {
             IAtomContainer snop = MakeSNOPSquare();
-            model.SetV(typeof(ColorByType), false);
+            model.SetAtomColorByType(false);
             var elements = GetAllSimpleElements(generator, snop);
-            Color defaultColor = model.GetDefaultV<Color>(typeof(AtomColor));
+            Color defaultColor = RenderModelTools.DefaultAtomColor;
             foreach (var element in elements)
             {
                 TextGroupElement symbolElement = (TextGroupElement)element;
@@ -269,12 +271,12 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer methane = MakeMethane();
             // don't generate elements for hydrogens
-            model.SetV(typeof(ShowExplicitHydrogens), false);
+            model.SetShowExplicitHydrogens(false);
             var carbonOnly = GetAllSimpleElements(generator, methane);
             Assert.AreEqual(1, carbonOnly.Count);
 
             // do generate elements for hydrogens
-            model.SetV(typeof(ShowExplicitHydrogens), true);
+            model.SetShowExplicitHydrogens(true);
             var carbonPlusHydrogen = GetAllSimpleElements(generator, methane);
             Assert.AreEqual(5, carbonPlusHydrogen.Count);
         }
@@ -283,9 +285,9 @@ namespace NCDK.Renderers.Generators
         public override void KekuleTest()
         {
             IAtomContainer singleBond = MakeSingleBond();
-            model.SetV(typeof(KekuleStructure), true);
+            model.SetKekuleStructure(true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
-            model.SetV(typeof(KekuleStructure), false);
+            model.SetKekuleStructure(false);
             Assert.AreEqual(0, GetAllSimpleElements(generator, singleBond).Count);
         }
 
@@ -293,9 +295,9 @@ namespace NCDK.Renderers.Generators
         public override void ShowEndCarbonsTest()
         {
             IAtomContainer singleBond = MakeCCC();
-            model.SetV(typeof(ShowEndCarbons), true);
+            model.SetShowEndCarbons(true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
-            model.SetV(typeof(ShowEndCarbons), false);
+            model.SetShowEndCarbons(false);
             Assert.AreEqual(0, GetAllSimpleElements(generator, singleBond).Count);
         }
 
@@ -314,9 +316,9 @@ namespace NCDK.Renderers.Generators
         public override void TestSingleBond()
         {
             IAtomContainer container = MakeSingleBond();
-            model.SetV(typeof(CompactAtom), true);
-            model.SetV(typeof(CompactShape), Shapes.Oval);
-            model.SetV(typeof(ShowEndCarbons), true);
+            model.SetCompactAtom(true);
+            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetShowEndCarbons(true);
 
             // generate the single line element
             IRenderingElement root = generator.Generate(container, model);
@@ -333,7 +335,7 @@ namespace NCDK.Renderers.Generators
         public override void TestSquare()
         {
             IAtomContainer square = MakeSquare();
-            model.SetV(typeof(KekuleStructure), true);
+            model.SetKekuleStructure(true);
 
             // generate all four atoms
             IRenderingElement root = generator.Generate(square, model);
@@ -342,21 +344,6 @@ namespace NCDK.Renderers.Generators
 
             // test that the center is at the origin
             Assert.AreEqual(new Point(0, 0), Center(elements));
-        }
-
-        [TestMethod()]
-        public override void GetParametersTest()
-        {
-            var parameters = generator.Parameters;
-            ContainsParameterType(parameters, typeof(AtomColor));
-            ContainsParameterType(parameters, typeof(AtomColorer));
-            ContainsParameterType(parameters, typeof(AtomRadius));
-            ContainsParameterType(parameters, typeof(ColorByType));
-            ContainsParameterType(parameters, typeof(CompactShape));
-            ContainsParameterType(parameters, typeof(CompactAtom));
-            ContainsParameterType(parameters, typeof(KekuleStructure));
-            ContainsParameterType(parameters, typeof(ShowEndCarbons));
-            ContainsParameterType(parameters, typeof(ShowExplicitHydrogens));
         }
     }
 }

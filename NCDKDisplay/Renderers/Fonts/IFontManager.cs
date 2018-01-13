@@ -16,19 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+using WPF = System.Windows;
+
 namespace NCDK.Renderers.Fonts
 {
-    /// <summary>
-    /// Style of the font to use to draw text.
-    /// </summary>
-    public enum FontStyles
-    {
-        /// <summary>Regular font style.</summary>
-        Normal,
-        /// <summary>Bold font style.</summary>
-        Bold,
-    }
-
     /// <summary>
     /// An interface for managing the drawing of fonts at different zoom levels.
     /// </summary>
@@ -44,9 +36,9 @@ namespace NCDK.Renderers.Fonts
         double Zoom { get; set; }
 
         /// <summary>
-        /// The font style.
+        /// The font weight.
         /// </summary>
-        FontStyles FontStyle { get; set; }
+        WPF.FontWeight FontWeight { get; set; }
 
         /// <summary>
         /// The font name ('Arial', 'Times New Roman' and so on).

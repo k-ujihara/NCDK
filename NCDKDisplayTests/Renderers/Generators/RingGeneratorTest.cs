@@ -38,10 +38,7 @@ namespace NCDK.Renderers.Generators
         public RingGeneratorTest()
             : base()
         {
-            model.RegisterParameters(new BasicSceneGenerator());
-            model.RegisterParameters(new BasicAtomGenerator());
             this.generator = new RingGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

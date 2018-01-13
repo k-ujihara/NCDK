@@ -16,12 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
-using static NCDK.Renderers.Generators.ReactionSceneGenerator;
 
 namespace NCDK.Renderers.Generators
 {
@@ -36,10 +33,10 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetV<bool>(typeof(ShowReactionBoxes))) return null;
+            if (!model.GetShowReactionBoxes()) return null;
             if (reaction.Reactants.Count == 0) return new ElementGroup();
 
-            double separation = model.GetV<double>(typeof(BondLength)) / model.GetV<double>(typeof(Scale)) / 2;
+            double separation = model.GetBondLength() / model.GetScale() / 2;
             var totalBounds = BoundsCalculator.CalculateBounds(reaction.Reactants);
 
             ElementGroup diagram = new ElementGroup();
@@ -47,13 +44,10 @@ namespace NCDK.Renderers.Generators
             double minY = totalBounds.Top;
             double maxX = totalBounds.Right;
             double maxY = totalBounds.Bottom;
-            var foregroundColor = model.GetParameter<Color>(typeof(BasicSceneGenerator.ForegroundColor)).Value;
+            var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(new Rect(minX - separation, minY - separation, maxX + separation, maxY + separation), foregroundColor));
             diagram.Add(new TextElement(new Point((minX + maxX) / 2, minY - separation), "Reactants", foregroundColor));
             return diagram;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => new IGeneratorParameter[] { };
     }
 }

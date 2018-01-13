@@ -17,9 +17,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
-using System.Collections.Generic;
 
 namespace NCDK.Renderers.Generators
 {
@@ -30,33 +29,10 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class ReactionSceneGenerator : IGenerator<IReaction>
     {
-        /// <summary>bool that indicates if boxes are drawn around the reaction.</summary>
-        public class ShowReactionBoxes : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        private IGeneratorParameter<bool?> showReactionBoxes = new ShowReactionBoxes();
-
-        /// <summary>Double which indicates how wide the arrow head is in screen pixels.</summary>
-        public class ArrowHeadWidth : AbstractGeneratorParameter<double?>
-        {
-
-            /// <inheritdoc/>
-            public override double? Default => 10;
-        }
-
-        private IGeneratorParameter<double?> arrowHeadWidth = new ArrowHeadWidth();
-
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
             return new ElementGroup();
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters =>
-            new IGeneratorParameter[] { showReactionBoxes, arrowHeadWidth };
     }
 }

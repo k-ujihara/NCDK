@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Generators
                 : base()
         {
             this.generator = new BasicBondGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

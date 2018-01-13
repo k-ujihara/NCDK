@@ -27,7 +27,6 @@ using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Numerics;
-using NCDK.Renderers.Colors;
 using NCDK.Renderers.Elements;
 using NCDK.Tools.Manipulator;
 using System;
@@ -36,8 +35,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
-using static NCDK.Renderers.Generators.Standards.StandardGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 
 namespace NCDK.Renderers.Generators.Standards
@@ -116,24 +113,24 @@ namespace NCDK.Renderers.Generators.Standards
             ringMap = RingPreferenceMap(container);
 
             // set parameters
-            this.scale = parameters.GetV<double>(typeof(Scale));
+            this.scale = parameters.GetScale();
             this.stroke = stroke;
-            double length = parameters.GetV<double>(typeof(BondLength)) / scale;
-            this.separation = (parameters.GetV<double>(typeof(BondSeparation)) * parameters.GetV<double>(typeof(BondLength))) / scale;
-            this.backOff = parameters.GetV<double>(typeof(SymbolMarginRatio)) * stroke;
-            this.wedgeWidth = parameters.GetV<double>(typeof(StandardGenerator.WedgeRatio)) * stroke;
-            this.hashSpacing = parameters.GetV<double>(typeof(HashSpacing)) / scale;
-            this.waveSpacing = parameters.GetV<double>(typeof(WaveSpacing)) / scale;
-            this.fancyBoldWedges = parameters.GetV<bool>(typeof(FancyBoldWedges));
-            this.fancyHashedWedges = parameters.GetV<bool>(typeof(FancyHashedWedges));
-            this.annotationDistance = parameters.GetV<double>(typeof(AnnotationDistance)) * (parameters.GetV<double>(typeof(BondLength)) / scale);
-            this.annotationScale = (1 / scale) * parameters.GetV<double>(typeof(AnnotationFontScale));
-            this.annotationColor = parameters.GetV<Color>(typeof(AnnotationColor));
+            double length = parameters.GetBondLength() / scale;
+            this.separation = (parameters.GetBondSeparation() * parameters.GetBondLength()) / scale;
+            this.backOff = parameters.GetSymbolMarginRatio() * stroke;
+            this.wedgeWidth = parameters.GetWedgeRatio() * stroke;
+            this.hashSpacing = parameters.GetHashSpacing() / scale;
+            this.waveSpacing = parameters.GetWaveSpacing() / scale;
+            this.fancyBoldWedges = parameters.GetFancyBoldWedges();
+            this.fancyHashedWedges = parameters.GetFancyHashedWedges();
+            this.annotationDistance = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
+            this.annotationScale = (1 / scale) * parameters.GetAnnotationFontScale();
+            this.annotationColor = parameters.GetAnnotationColor();
             this.font = font;
             this.emSize = emSize;
 
             // foreground is based on the carbon color
-            this.foreground = parameters.Get<IAtomColorer>(typeof(AtomColor)).GetAtomColor(container.Builder.NewAtom("C"));
+            this.foreground = parameters.GetAtomColorer().GetAtomColor(container.Builder.NewAtom("C"));
         }
 
         /// <summary>
@@ -458,7 +455,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// A fancy hashed wedge can be drawn if the following conditions are met:
         /// <list type="number">
-        /// <item><see cref="StandardGenerator.FancyHashedWedges"/> is enabled</item>
+        /// <item><see cref="RenderModelTools.GetFancyHashedWedges"/> is enabled</item>
         /// <item>Bond is of 'normal' length</item>
         /// <item>The atom at the wide has one other neighbor and no symbol displayed</item>
         /// </list>
@@ -470,7 +467,7 @@ namespace NCDK.Renderers.Generators.Standards
         private bool CanDrawFancyHashedWedge(IAtom to, List<IBond> toBonds, double length)
         {
             // a bond is long if is more than 4 units larger that the desired 'BondLength'
-            bool longBond = (length * scale) - parameters.GetV<double>(typeof(BondLength)) > 4;
+            bool longBond = (length * scale) - parameters.GetBondLength() > 4;
             return fancyHashedWedges && !longBond && !HasDisplayedSymbol(to) && toBonds.Count == 1;
         }
 
@@ -1136,7 +1133,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             Vector2 unit = NewUnitVector(fromPoint, toPoint);
 
-            int nDashes = parameters.GetV<int>(typeof(StandardGenerator.DashSection));
+            int nDashes = parameters.GetDashSection();
 
             double step = Vector2.Distance(fromPoint, toPoint) / ((3 * nDashes) - 2);
 

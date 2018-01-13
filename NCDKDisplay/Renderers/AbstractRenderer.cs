@@ -27,7 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 
 namespace NCDK.Renderers
 {
@@ -135,9 +134,9 @@ namespace NCDK.Renderers
         /// <returns>the bounds of the diagram as drawn on screen</returns>
         public virtual Rect CalculateScreenBounds(Rect modelBounds)
         {
-            double scale = rendererModel.GetV<double>(typeof(Scale));
-            double zoom = rendererModel.GetV<double>(typeof(ZoomFactor));
-            double margin = rendererModel.GetV<double>(typeof(Margin));
+            double scale = rendererModel.GetScale();
+            double zoom = rendererModel.GetZoomFactor();
+            double margin = rendererModel.GetMargin();
             var modelScreenCenter = this.ToScreenCoordinates(
                 modelBounds.X + modelBounds.Width / 2,
                 modelBounds.Y + modelBounds.Height / 2);
@@ -211,7 +210,7 @@ namespace NCDK.Renderers
         /// <param name="zoom">the zoom as a double value</param>
         public virtual void SetZoom(double zoom)
         {
-            rendererModel.GetParameter<double?>(typeof(ZoomFactor)).Value = zoom;
+            rendererModel.SetZoomFactor(zoom);
             Setup();
         }
 
@@ -223,8 +222,8 @@ namespace NCDK.Renderers
         /// </summary>
         protected virtual void Setup()
         {
-            double scale = rendererModel.GetV<double>(typeof(Scale));
-            double zoom = rendererModel.GetV<double>(typeof(ZoomFactor));
+            double scale = rendererModel.GetScale();
+            double zoom = rendererModel.GetZoomFactor();
             // set the transform
             try
             {
@@ -290,7 +289,7 @@ namespace NCDK.Renderers
         /// <param name="diagramHeight">the height of the diagram</param>
         public virtual void SetZoomToFit(double drawWidth, double drawHeight, double diagramWidth, double diagramHeight)
         {
-            double margin = rendererModel.GetV<double>(typeof(Margin));
+            double margin = rendererModel.GetMargin();
 
             // determine the zoom needed to fit the diagram to the screen
             double widthRatio = drawWidth / (diagramWidth + (2 * margin));
@@ -301,7 +300,7 @@ namespace NCDK.Renderers
             this.fontManager.Zoom = zoom;
 
             // record the zoom in the model, so that generators can use it
-            rendererModel.GetParameter<double?>(typeof(ZoomFactor)).Value = zoom;
+            rendererModel.SetZoomFactor(zoom);
         }
 
         /// <summary>
@@ -325,8 +324,8 @@ namespace NCDK.Renderers
             // cache the diagram for quick-redraw
             this.cachedDiagram = diagram;
 
-            fontManager.FontName = rendererModel.Get<string>(typeof(FontName));
-            fontManager.FontStyle = rendererModel.GetV<Fonts.FontStyles>(typeof(UsedFontStyle));
+            fontManager.FontName = rendererModel.GetFontName();
+            fontManager.FontWeight = rendererModel.GetUsedFontStyle();
 
             drawVisitor.FontManager = this.fontManager;
             drawVisitor.RendererModel = this.rendererModel;
@@ -339,7 +338,7 @@ namespace NCDK.Renderers
         /// <param name="modelBounds">the bounding box of the model</param>
         protected virtual void SetupTransformNatural(Rect modelBounds)
         {
-            double zoom = rendererModel.GetV<double>(typeof(ZoomFactor));
+            double zoom = rendererModel.GetZoomFactor();
             this.fontManager.Zoom = zoom;
             this.Setup();
         }
@@ -401,8 +400,8 @@ namespace NCDK.Renderers
             var modelWidth = modelBounds.Width;
             var modelHeight = modelBounds.Height;
 
-            var scale = rendererModel.GetV<double>(typeof(Scale));
-            var zoom = rendererModel.GetV<double>(typeof(ZoomFactor));
+            var scale = rendererModel.GetScale();
+            var zoom = rendererModel.GetZoomFactor();
 
             var screenCoord = this.ToScreenCoordinates(xCenter, yCenter);
 
@@ -412,7 +411,7 @@ namespace NCDK.Renderers
                 return new Rect(screenCoord.X, screenCoord.Y, 0, 0);
             }
 
-            var margin = rendererModel.GetV<double>(typeof(Margin));
+            var margin = rendererModel.GetMargin();
             var width = ((scale * zoom * modelWidth) + (2 * margin));
             var height = ((scale * zoom * modelHeight) + (2 * margin));
             var xCoord = (screenCoord.X - width / 2);
@@ -430,7 +429,7 @@ namespace NCDK.Renderers
         /// <param name="reset">if true, model center will be set to the modelBounds center and the scale will be re-calculated</param>
         protected internal virtual void SetupTransformToFit(Rect screenBounds, Rect modelBounds, bool reset)
         {
-            double scale = rendererModel.GetV<double>(typeof(Scale));
+            double scale = rendererModel.GetScale();
 
             if (screenBounds == null) return;
 
@@ -446,7 +445,7 @@ namespace NCDK.Renderers
 
             // this controls whether editing a molecule causes it to re-center
             // with each change or not
-            if (reset || rendererModel.GetV<bool>(typeof(FitToScreen)))
+            if (reset || rendererModel.GetFitToScreen())
             {
                 SetModelCenter(modelBounds.X + modelBounds.Width / 2, modelBounds.Y + modelBounds.Height / 2);
             }
@@ -480,14 +479,14 @@ namespace NCDK.Renderers
 
             // this controls whether editing a molecule causes it to re-center
             // with each change or not
-            if (reset || rendererModel.GetV<bool>(typeof(FitToScreen)))
+            if (reset || rendererModel.GetFitToScreen())
             {
                 SetModelCenter(modelBounds.X + modelBounds.Width / 2, modelBounds.Y + modelBounds.Height / 2);
             }
 
             // set the scale in the renderer model for the generators
-            rendererModel.GetParameter<double?>(typeof(Scale)).Value = scale;
-
+            rendererModel.SetScale(scale);
+            
             Setup();
         }
 

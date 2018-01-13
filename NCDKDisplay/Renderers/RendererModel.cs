@@ -21,16 +21,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ *  
+ */
+
 using NCDK.Events;
-using NCDK.Renderers.Generators;
-using NCDK.Renderers.Generators.Parameters;
 using NCDK.Renderers.Selection;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Media;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers
 {
@@ -42,81 +39,17 @@ namespace NCDK.Renderers
     // @cdk.githash
     [Serializable]
     public class RendererModel
+        : IChemObjectListener
     {
         [NonSerialized]
         private HashSet<ICDKChangeListener> listeners = null;
-        private IDictionary<IAtom, string> toolTipTextMap = new Dictionary<IAtom, string>();
+
+        private readonly IDictionary<string, object> parameters;
+        private IDictionary<IAtom, string> toolTipTextMap;
         private IAtom highlightedAtom = null;
         private IBond highlightedBond = null;
         private IAtomContainer externalSelectedPart = null;
-        private IAtomContainer clipboardContent = null;
         private IChemObjectSelection selection;
-        private IDictionary<IAtom, IAtom> merge = new Dictionary<IAtom, IAtom>();
-
-        /// <summary>
-        /// Color of a selection.
-        /// </summary>
-        public class SelectionColor : AbstractGeneratorParameter<Color?>
-        {
-            public override Color? Default => Color.FromRgb(0x49, 0xdf, 0xff);
-        }
-
-        /// <summary>
-        /// The color used to highlight external selections.
-        /// </summary>
-        public class ExternalHighlightColor : AbstractGeneratorParameter<Color?>
-        {
-            public override Color? Default => WPF.Media.Colors.Gray;
-        }
-
-        private IGeneratorParameter<Color?> externalHighlightColor = new ExternalHighlightColor();
-
-        /// <summary>
-        /// Padding between molecules in a grid or row.
-        /// </summary>
-        public class Padding : AbstractGeneratorParameter<double?>
-        {
-            public override double? Default => 16;
-        }
-
-        /// <summary>
-        /// The color hash is used to color substructures.
-        /// </summary>
-        public class ColorHash : AbstractGeneratorParameter<IDictionary<IChemObject, Color>>
-        {
-            public override IDictionary<IChemObject, Color> Default => new Dictionary<IChemObject, Color>();
-        }
-
-        private IGeneratorParameter<IDictionary<IChemObject, Color>> colorHash = new ColorHash();
-
-        /// <summary>
-        /// Size of title font relative compared to atom symbols
-        /// </summary>
-        public class TitleFontScale : AbstractGeneratorParameter<double?>
-        {
-            public override double? Default => 0.8d;
-        }
-
-        /// <summary>
-        /// Color of title text.
-        /// </summary>
-        public class TitleColor : AbstractGeneratorParameter<Color?>
-        {
-            public override Color? Default => WPF.Media.Colors.Red;
-        }
-
-        /// <summary>
-        /// If format supports it (e.g. SVG) should marked up elements (id and classes) be output.
-        /// </summary>
-        public class MarkedOutput : AbstractGeneratorParameter<bool?>
-        {
-            public override bool? Default => true;
-        }
-
-        /// <summary>
-        /// A map of <see cref="IGeneratorParameter"/> class names to instances.
-        /// </summary>
-        private IDictionary<string, IGeneratorParameter> renderingParameters = new Dictionary<string, IGeneratorParameter>();
 
         /// <summary>
         /// Construct a renderer model with no parameters. To put parameters into
@@ -124,145 +57,11 @@ namespace NCDK.Renderers
         /// </summary>
         public RendererModel()
         {
-            renderingParameters[colorHash.GetType().FullName] = colorHash;
-            renderingParameters[externalHighlightColor.GetType().FullName] = externalHighlightColor;
-            renderingParameters[typeof(SelectionColor).FullName] = new SelectionColor();
-            renderingParameters[typeof(Padding).FullName] = new Padding();
-            renderingParameters[typeof(TitleFontScale).FullName] = new TitleFontScale();
-            renderingParameters[typeof(TitleColor).FullName] = new TitleColor();
-            renderingParameters[typeof(MarkedOutput).FullName] = new MarkedOutput();
+            parameters = new ObserbableDictionary<string, object>(this);
+            toolTipTextMap = new ObserbableDictionary<IAtom, string>(this);
         }
 
-        /// <summary>
-        /// Returns all <see cref="IGeneratorParameter"/>s for the current <see cref="RendererModel"/>.
-        /// </summary>
-        /// <returns>a new List with <see cref="IGeneratorParameter"/>s</returns>
-        public List<IGeneratorParameter> GetRenderingParameters()
-        {
-            List<IGeneratorParameter> parameters = new List<IGeneratorParameter>();
-            parameters.AddRange(renderingParameters.Values);
-            return parameters;
-        }
-
-        /// <summary>
-        /// Returns the <see cref="IGeneratorParameter"/> for the active <see cref="IRenderer{T}"/>.
-        /// It returns a new instance of it was unregistered.
-        /// </summary>
-        /// <param name="param"><see cref="IGeneratorParameter"/> to get the value of.</param>
-        /// <returns>the <see cref="IGeneratorParameter"/> instance with the active value.</returns>
-        /// <typeparam name="T"></typeparam>
-        public IGeneratorParameter<T> GetParameter<T>(Type param) 
-        {
-#if DEBUG
-            var f = typeof(IGeneratorParameter<T>).IsAssignableFrom(param);
-            if (!f)
-                throw new InvalidOperationException();
-#endif
-            return (IGeneratorParameter<T>)GetParameter(param);
-        }
-
-        public IGeneratorParameter GetParameter(Type param)
-        {
-            if (renderingParameters.TryGetValue(param.FullName, out IGeneratorParameter ret))
-                return ret;
-
-            // the parameter was not registered yet, so we throw an exception to
-            // indicate that the API is not used correctly.
-            throw new TypeAccessException($"You requested the active parameter of type {param.FullName}, but it has not been registered yet. Did you make sure the IGeneratorParameter is registered, by registering the appropriate IGenerator? Alternatively, you can use Default to query the default value for any parameter on the classpath.");
-        }
-
-        /// <summary>
-        /// Returns the default value for the <see cref="IGeneratorParameter"/> for the
-        /// active <see cref="IRenderer{T}"/>.
-        /// </summary>
-        /// <typeparam name="T"><see cref="IGeneratorParameter"/> to get the value of.</typeparam>
-        /// <returns>the default value for which the type is defined by the provided <see cref="IGeneratorParameter"/>-typed <code>param</code> parameter.</returns>
-        /// <seealso cref="Get{T}"/>
-        public T GetDefault<T>(Type param)
-        {
-#if DEBUG
-            var f = typeof(IGeneratorParameter<T>).IsAssignableFrom(param);
-            if (!f)
-                throw new InvalidOperationException();
-#endif
-
-            if (renderingParameters.TryGetValue(param.FullName, out IGeneratorParameter ret))
-            {
-                return ((IGeneratorParameter<T>)ret).Default;
-            }
-
-            // OK, this parameter is not registered, but that's fine, as we are
-            // only to return the default value anyway...
-            return ((IGeneratorParameter<T>)param.GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>())).Default;
-        }
-
-        public T GetDefaultV<T>(Type param) where T : struct
-        {
-            return GetDefault<T?>(param).Value;
-        }
-
-        /// <summary>
-        /// The <see cref="IGeneratorParameter"/> for the active <see cref="IRenderer{T}"/>.
-        /// </summary>
-        /// <param name="paramType"><see cref="IGeneratorParameter"/> to set the value of.</param>
-        /// <param name="value">new <see cref="IGeneratorParameter"/> value </param>
-        public void Set<T>(Type paramType,  T value) 
-        {
-#if DEBUG
-            {
-                var f = typeof(IGeneratorParameter<T>).IsAssignableFrom(paramType);
-                if (!f)
-                    throw new InvalidOperationException();
-            }
-#endif
-            var parameter = GetParameter<T>(paramType);
-            if (!parameter.Value.Equals(value))
-            {
-                parameter.Value = value;
-                FireChange();
-            }
-        }
-
-        public void Set(Type paramType, object value)
-        {
-            var parameter = GetParameter(paramType);
-            paramType.GetProperty(nameof(IGeneratorParameter<object>.Value)).SetValue(parameter, value);
-
-            FireChange();
-        }
-
-        public void SetV<T>(Type paramType, T value) where T : struct
-        {
-            Set<T?>(paramType, value);
-        }
-        
-        /// <summary>
-        /// Returns the <see cref="IGeneratorParameter"/> for the active <see cref="IRenderer{T}"/>.
-        /// </summary>
-        /// <param name="paramType"><see cref="IGeneratorParameter"/> to get the value of.</param>
-        /// <returns>the <see cref="IGeneratorParameter"/> value.</returns>
-        /// <see cref="GetParameter{T}"/>
-        public T Get<T>(Type paramType) 
-        {
-            return GetParameter<T>(paramType).Value;
-        }
-
-        public T GetV<T>(Type paramType) where T : struct
-        {
-            return GetParameter<T?>(paramType).Value.Value;
-        }
-
-        /// <summary>
-        /// Registers rendering parameters from <see cref="IGenerator{T}"/>s with this model.
-        /// </summary>
-        /// <param name="generator"></param>
-        public void RegisterParameters<T>(IGenerator<T> generator) where T : IChemObject
-        {
-            foreach (var param in generator.Parameters)
-            {
-                renderingParameters[param.GetType().FullName] = param;
-            }
-        }
+        public IDictionary<string, object> Parameters => parameters;
 
         /// <summary>
         /// Set the selected <see cref="IChemObject"/>s.
@@ -288,11 +87,7 @@ namespace NCDK.Renderers
         /// These atoms are then put into the merge map as a key-value pair. During the move, the atoms are then marked by a circle and on releasing the mouse
         /// they get actually merged, meaning one atom is removed and bonds pointing to this atom are made to point to the atom it has been merged with.
         /// </summary>
-        /// <returns>The merged map</returns>
-        public IDictionary<IAtom, IAtom> GetMerge()
-        {
-            return merge;
-        }
+        public IDictionary<IAtom, IAtom> Merge { get; } = new Dictionary<IAtom, IAtom>();
 
         /// <summary>
         /// Returns the atom currently highlighted.
@@ -312,7 +107,7 @@ namespace NCDK.Renderers
             if ((this.highlightedAtom != null) || (highlightedAtom != null))
             {
                 this.highlightedAtom = highlightedAtom;
-                FireChange();
+                OnStateChanged(null);
             }
         }
 
@@ -334,28 +129,8 @@ namespace NCDK.Renderers
             if ((this.highlightedBond != null) || (highlightedBond != null))
             {
                 this.highlightedBond = highlightedBond;
-                FireChange();
+                OnStateChanged(null);
             }
-        }
-
-        /// <summary>
-        /// Returns the atoms and bonds on the Renderer2D clipboard. If the clipboard
-        /// is empty it returns null. Primarily used for copy/paste.
-        /// </summary>
-        /// <returns>an atomcontainer with the atoms and bonds on the clipboard.</returns>
-        public IAtomContainer GetClipboardContent()
-        {
-            return clipboardContent;
-        }
-
-        /// <summary>
-        /// Sets the atoms and bonds on the Renderer2D clipboard. Primarily used for
-        /// copy/paste.
-        /// </summary>
-        /// <param name="content">the new content of the clipboard.</param>
-        public void SetClipboardContent(IAtomContainer content)
-        {
-            this.clipboardContent = content;
         }
 
         /// <summary>
@@ -375,11 +150,11 @@ namespace NCDK.Renderers
         /// Notifies registered listeners of certain changes that have occurred in
         /// this model.
         /// </summary>
-        public void FireChange()
+        public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
             if (Notification && listeners != null)
             {
-                var evt = new ChemObjectChangeEventArgs(this);
+                evt = new ChemObjectChangeEventArgs(this);
                 foreach (var listener in listeners)
                 {
                     listener.StateChanged(evt);
@@ -406,7 +181,7 @@ namespace NCDK.Renderers
         public void SetToolTipTextMap(IDictionary<IAtom, string> map)
         {
             toolTipTextMap = map;
-            FireChange();
+            OnStateChanged(null);
         }
 
         /// <summary>
@@ -436,39 +211,26 @@ namespace NCDK.Renderers
         public void SetExternalSelectedPart(IAtomContainer externalSelectedPart)
         {
             this.externalSelectedPart = externalSelectedPart;
-            var colorHash = GetParameter<IDictionary<IChemObject, Color>>(typeof(ColorHash)).Value;
+            var colorHash = this.GetColorHash();
             colorHash.Clear();
             if (externalSelectedPart != null)
             {
                 for (int i = 0; i < externalSelectedPart.Atoms.Count; i++)
                 {
-                    colorHash[externalSelectedPart.Atoms[i]] = GetParameter<Color>(typeof(ExternalHighlightColor)).Value;
+                    colorHash[externalSelectedPart.Atoms[i]] = this.GetExternalHighlightColor();
                 }
                 var bonds = externalSelectedPart.Bonds;
                 foreach (var bond in bonds)
                 {
-                    colorHash[bond] = GetParameter<Color>(typeof(ExternalHighlightColor)).Value;
+                    colorHash[bond] = this.GetExternalHighlightColor();
                 }
             }
-            FireChange();
+            OnStateChanged(null);
         }
 
         /// <summary>
         /// Determines if the model sends around change notifications.
         /// </summary>
-        /// <value>true, if notifications are sent around upon changes</value>
         public bool Notification { get; set; } = true;
-
-        /// <summary>
-        /// Returns true if the passed <see cref="IGeneratorParameter"/>s has been
-        /// registered.
-        /// </summary>
-        /// <param name="param">parameter for which it is tested if it is registered</param>
-        /// <returns>boolean indicating the parameters is registered</returns>
-        public bool HasParameter(Type param)
-        {
-            Debug.Assert(typeof(IGeneratorParameter).IsAssignableFrom(param));
-            return renderingParameters.ContainsKey(param.FullName);
-        }
     }
 }

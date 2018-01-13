@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Windows.Media;
 using WPF = System.Windows;
 
@@ -56,7 +57,7 @@ namespace NCDK.Renderers.Fonts
             Typeface = new Typeface(
                 new FontFamily(this.FontName),
                 WPF::FontStyles.Normal,
-                this.FontStyle == FontStyles.Bold ? WPF::FontWeights.Bold : WPF::FontWeights.Normal,
+                this.FontWeight,
                 WPF::FontStretches.Normal);
             Size = 9;
 

@@ -609,7 +609,7 @@ namespace NCDK.Depict
                 }
                 else if (elem is MarkedElement)
                 {
-                    if (model != null && model.GetV<bool>(typeof(RendererModel.MarkedOutput)))
+                    if (model != null && model.GetMarkedOutput())
                     {
                         Visit(((MarkedElement)elem));
                     }

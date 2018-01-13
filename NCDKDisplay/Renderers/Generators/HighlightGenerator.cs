@@ -21,8 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -35,7 +35,7 @@ namespace NCDK.Renderers.Generators
     /// Generate an under/overlaid highlight in structure depictions. The highlight
     /// emphasises atoms and bonds. Each atom and bond is optionally assigned an
     /// integer identifier. Entities with identifiers are then highlighted using the
-    /// <see cref="Palette"/> to determine the color. The size of the highlight is
+    /// <see cref="IPalette"/> to determine the color. The size of the highlight is
     /// specified with the <see cref="HighlightRadius"/> parameter.
     /// </summary>
     /// <example>
@@ -68,7 +68,7 @@ namespace NCDK.Renderers.Generators
     /// </code>
     ///
     /// By default colours are automatically generated, to assign specific colors
-    /// a custom <see cref="Palette"/> must be used. Here are some examples of setting
+    /// a custom <see cref="IPalette"/> must be used. Here are some examples of setting
     /// the palette parameter in the renderer.
     ///
     /// <code>
@@ -95,12 +95,6 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public sealed class HighlightGenerator : IGenerator<IAtomContainer>
     {
-        /// <summary>The atom radius on screen.</summary>
-        private readonly HighlightRadius highlightRadius = new HighlightRadius();
-
-        /// <summary>Color palette to use.</summary>
-        private readonly HighlightPalette highlightPalette = new HighlightPalette();
-
         /// <summary>Property key.</summary>
         public const string ID_MAP = "cdk.highlight.id";
 
@@ -111,15 +105,14 @@ namespace NCDK.Renderers.Generators
 
             if (highlight == null) return null;
 
-            Palette palette = model.Get<Palette>(typeof(HighlightPalette));
-            double radius = model.GetV<double>(typeof(HighlightRadius)) / model.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            IPalette palette = model.GetHighlightPalette();
+            double radius = model.GetHighlightRadius() / model.GetScale();
 
             var shapes = new Dictionary<int, Geometry>();
 
             foreach (var atom in container.Atoms)
             {
-                int id;
-                if (!highlight.TryGetValue(atom, out id))
+                if (!highlight.TryGetValue(atom, out int id))
                     continue;
 
                 var area = shapes[id];
@@ -133,8 +126,7 @@ namespace NCDK.Renderers.Generators
 
             foreach (var bond in container.Bonds)
             {
-                int id;
-                if (!highlight.TryGetValue(bond, out id))
+                if (!highlight.TryGetValue(bond, out int id))
                     continue;
 
                 var area = shapes[id];
@@ -148,13 +140,13 @@ namespace NCDK.Renderers.Generators
                 // punch out the area occupied by atoms highlighted with a
                 // different color
 
-                IAtom a1 = bond.Begin, a2 = bond.End;
-                int a1Id, a2Id;
-                if (highlight.TryGetValue(a1, out a1Id))
+                var a1 = bond.Begin;
+                var a2 = bond.End;
+                if (highlight.TryGetValue(a1, out int a1Id))
                 {
                     if (!a1Id.Equals(id)) area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a1Id]);
                 }
-                if (highlight.TryGetValue(a2, out a2Id))
+                if (highlight.TryGetValue(a2, out int a2Id))
                 {
                     if (!a2Id.Equals(id)) area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a2Id]);
                 }
@@ -218,16 +210,12 @@ namespace NCDK.Renderers.Generators
             return s;
         }
 
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters =>
-            new IGeneratorParameter[] { highlightRadius, highlightPalette };
-
         /// <summary>
         /// Create a palette which uses the provided colors.
         /// </summary>
         /// <param name="colors">colors to use in the palette</param>
         /// <returns>a palette to use in highlighting</returns>
-        public static Palette CreatePalette(Color[] colors)
+        public static IPalette CreatePalette(Color[] colors)
         {
             return new FixedPalette(colors);
         }
@@ -237,7 +225,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         /// <param name="colors">colors to use in the palette</param>
         /// <returns>a palette to use in highlighting</returns>
-        public static Palette CreatePalette(Color color, params Color[] colors)
+        public static IPalette CreatePalette(Color color, params Color[] colors)
         {
             Color[] cs = new Color[colors.Length + 1];
             cs[0] = color;
@@ -253,7 +241,7 @@ namespace NCDK.Renderers.Generators
         /// <param name="brightness">color brightness, 0.0 &lt; x &lt; 1.0</param>
         /// <param name="alpha">color alpha (transparency), 0 &lt; x &lt; 255</param>
         /// <returns>a palette to use in highlighting</returns>
-        public static Palette CreateAutoPalette(float saturation, float brightness, int alpha)
+        public static IPalette CreateAutoPalette(float saturation, float brightness, int alpha)
         {
             return new AutoGenerated(5, saturation, brightness, alpha);
         }
@@ -266,7 +254,7 @@ namespace NCDK.Renderers.Generators
         /// <param name="brightness">color brightness, 0.0 &lt; x &lt; 1.0</param>
         /// <param name="transparent">generate transparent colors, 0 &lt; x &lt; 255</param>
         /// <returns>a palette to use in highlighting</returns>
-        public static Palette CreateAutoGenPalette(float saturation, float brightness, bool transparent)
+        public static IPalette CreateAutoGenPalette(float saturation, float brightness, bool transparent)
         {
             return new AutoGenerated(5, saturation, brightness, transparent ? 200 : 255);
         }
@@ -277,7 +265,7 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         /// <param name="transparent">generate transparent colors</param>
         /// <returns>a palette to use in highlighting</returns>
-        public static Palette CreateAutoGenPalette(bool transparent)
+        public static IPalette CreateAutoGenPalette(bool transparent)
         {
             return new AutoGenerated(5, transparent ? 200 : 255);
         }
@@ -286,7 +274,7 @@ namespace NCDK.Renderers.Generators
         /// Defines a color palette, the palette should provide a color the specified
         /// identifier (id).
         /// </summary>
-        public interface Palette
+        public interface IPalette
         {
             /// <summary>
             /// Obtain the color in index, id.
@@ -300,7 +288,7 @@ namespace NCDK.Renderers.Generators
         /// A palette that allows one to define the precise colors of each class. The
         /// colors are passed in the constructor.
         /// </summary>
-        private sealed class FixedPalette : Palette
+        private sealed class FixedPalette : IPalette
         {
             /// <summary>Colors of the palette.</summary>
             private readonly Color[] colors;
@@ -328,7 +316,7 @@ namespace NCDK.Renderers.Generators
         /// ratio to generate colors with varied hue.
         /// </summary>
         /// <seealso href="http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/">Create Random Colors Programmatically</seealso>
-        private sealed class AutoGenerated : Palette
+        private sealed class AutoGenerated : IPalette
         {
             /// <summary>Golden ratio.</summary>
             private const float PHI = 0.618033988749895f;
@@ -455,30 +443,7 @@ namespace NCDK.Renderers.Generators
             }
         }
 
-        /// <summary>
-        /// Magic number with unknown units that defines the radius around an atom,
-        /// e.g. used for highlighting atoms.
-        /// </summary>
-        public class HighlightRadius : AbstractGeneratorParameter<double?>
-        {
-            /// <summary>
-            /// Returns the default value.
-            /// </summary>
-            /// <returns>10.0</returns>
-            public override double? Default => 10;
-        }
-
         /// <summary>Default color palette.</summary>
-        private static readonly Palette DEFAULT_PALETTE = CreateAutoGenPalette(true);
-
-        /// <summary>Defines the color palette used to provide the highlight colors.</summary>
-        public class HighlightPalette : AbstractGeneratorParameter<Palette>
-        {
-            /// <summary>
-            /// Returns the default value.
-            /// </summary>
-            /// <returns>an auto-generating palette</returns>
-            public override Palette Default => DEFAULT_PALETTE;
-        }
+        internal static readonly IPalette DefaultPalette = CreateAutoGenPalette(true);
     }
 }

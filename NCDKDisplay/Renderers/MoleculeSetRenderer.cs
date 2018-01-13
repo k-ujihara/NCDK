@@ -19,6 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
@@ -26,7 +27,6 @@ using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 
 namespace NCDK.Renderers
 {
@@ -114,10 +114,6 @@ namespace NCDK.Renderers
         public MoleculeSetRenderer(RendererModel rendererModel, IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
             : base(rendererModel)
         {
-            foreach (var generator in generators)
-            {
-                rendererModel.RegisterParameters(generator);
-            }
             this.fontManager = fontManager;
             atomContainerRenderer = new AtomContainerRenderer(rendererModel, generators, fontManager);
             this.generators = Array.Empty<IGenerator<IChemObjectSet<IAtomContainer>>>();
@@ -204,7 +200,7 @@ namespace NCDK.Renderers
             double scale = this.CalculateScaleForBondLength(bondLength);
 
             // store the scale so that other components can access it
-            this.rendererModel.GetParameter<double?>(typeof(Scale)).Value = scale;
+            this.rendererModel.SetScale(scale);
         }
 
         /// <inheritdoc/>
@@ -269,11 +265,11 @@ namespace NCDK.Renderers
         {
             if (double.IsNaN(modelBondLength) || modelBondLength == 0)
             {
-                return rendererModel.GetDefaultV<double>(typeof(Scale));
+                return rendererModel.GetScale();
             }
             else
             {
-                return this.rendererModel.GetV<double>(typeof(BondLength)) / modelBondLength;
+                return this.rendererModel.GetBondLength() / modelBondLength;
             }
         }
 

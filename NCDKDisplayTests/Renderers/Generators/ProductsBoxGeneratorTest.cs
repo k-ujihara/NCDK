@@ -38,10 +38,7 @@ namespace NCDK.Renderers.Generators
         public ProductsBoxGeneratorTest()
             : base()
         {
-            model.RegisterParameters(new ReactionSceneGenerator());
-            model.RegisterParameters(new BasicBondGenerator());
             this.generator = new ProductsBoxGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

@@ -38,11 +38,7 @@ namespace NCDK.Renderers.Generators
         public MappingGeneratorTest()
             : base()
         {
-            model.RegisterParameters(new BasicSceneGenerator());
-            model.RegisterParameters(new BasicAtomGenerator());
-            model.RegisterParameters(new BasicBondGenerator());
             this.generator = new MappingGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

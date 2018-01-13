@@ -63,16 +63,6 @@ namespace NCDK.Renderers.Generators
             model = new RendererModel();
             elementUtil = new ElementUtility();
             sceneGenerator = new BasicSceneGenerator();
-            model.RegisterParameters(sceneGenerator);
-        }
-
-        public bool ContainsParameterType(IList<IGeneratorParameter> list, Type type)
-        {
-            foreach (var item in list)
-            {
-                if (item.GetType().FullName.Equals(type.FullName)) return true;
-            }
-            return false;
         }
 
         public IList<IRenderingElement> GetAllSimpleElements(IGenerator<IAtomContainer> generator, IAtomContainer container)
@@ -281,7 +271,6 @@ namespace NCDK.Renderers.Generators
         public void TestGetParameters()
         {
             Assert.IsNotNull(this.testedGenerator, "The tested generator is not set.");
-            Assert.IsNotNull(this.testedGenerator.Parameters, "The Parameters must not return a null value.");
         }
     }
 }

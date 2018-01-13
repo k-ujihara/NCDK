@@ -38,11 +38,7 @@ namespace NCDK.Renderers.Generators
         public RadicalGeneratorTest()
                 : base()
         {
-            model.RegisterParameters(new BasicSceneGenerator());
-            model.RegisterParameters(new BasicAtomGenerator());
-            model.RegisterParameters(new BasicBondGenerator());
             this.generator = new RadicalGenerator();
-            model.RegisterParameters(generator);
             base.SetTestedGenerator(generator);
         }
 

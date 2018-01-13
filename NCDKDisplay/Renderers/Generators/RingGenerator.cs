@@ -17,9 +17,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
 using System;
 using System.Collections.Generic;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
@@ -34,55 +34,6 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class RingGenerator : BasicBondGenerator
     {
-        /// <summary>
-        /// Determines whether rings should be drawn with a circle if they are
-        /// aromatic.
-        /// </summary>
-        public class ShowAromaticity : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value. <see langword="true"/></summary>
-            public override bool? Default => true;
-        }
-
-        private IGeneratorParameter<bool?> showAromaticity = new ShowAromaticity();
-
-        /// <summary>
-        /// Depicts aromaticity of rings in the original CDK style.
-        /// </summary>
-        public class CDKStyleAromaticity : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value. <see langword="false"/></summary>
-            public override bool? Default => false;
-        }
-
-        /// <summary>If true, the aromatic ring is indicated by light gray inner bonds</summary>
-        private IGeneratorParameter<bool?> cdkStyleAromaticity = new CDKStyleAromaticity();
-
-        /// <summary>
-        /// The maximum ring size for which an aromatic ring should be drawn.
-        /// </summary>
-        public class MaxDrawableAromaticRing : AbstractGeneratorParameter<int?>
-        {
-            /// <summary>
-            /// The maximum default ring size for which an aromatic ring should be drawn.
-            /// </summary>
-            /// <returns>the maximum ring size</returns>
-            public override int? Default => 8;
-        }
-
-        private IGeneratorParameter<int?> maxDrawableAromaticRing = new MaxDrawableAromaticRing();
-
-        /// <summary>
-        /// The proportion of a ring bounds to use to draw the ring.
-        /// </summary>
-        public class RingProportion : AbstractGeneratorParameter<double?>
-        {
-            /// <summary>The default value. 0.35</summary>
-            public override double? Default => 0.35;
-        }
-
-        private IGeneratorParameter<double?> ringProportion = new RingProportion();
-
         /// <summary>
         /// The rings that have already been painted - that is, a ring element
         /// has been generated for it.
@@ -100,11 +51,11 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public override IRenderingElement GenerateRingElements(IBond bond, IRing ring, RendererModel model)
         {
-            if (RingIsAromatic(ring) && showAromaticity.Value.Value
-                    && ring.Atoms.Count < maxDrawableAromaticRing.Value)
+            if (RingIsAromatic(ring) && model.GetShowAromaticity()
+                    && ring.Atoms.Count < model.GetMaxDrawableAromaticRing())
             {
                 ElementGroup pair = new ElementGroup();
-                if (cdkStyleAromaticity.Value.Value)
+                if (model.GetCDKStyleAromaticity())
                 {
                     pair.Add(GenerateBondElement(bond, BondOrder.Single, model));
                     base.SetOverrideColor(WPF.Media.Colors.LightGray);
@@ -135,7 +86,7 @@ namespace NCDK.Renderers.Generators
             double[] minmax = GeometryUtil.GetMinMax(ring);
             double width = minmax[2] - minmax[0];
             double height = minmax[3] - minmax[1];
-            double radius = Math.Min(width, height) * ringProportion.Value.Value;
+            double radius = Math.Min(width, height) * model.GetRingProportion();
             var color = GetColorForBond(bond, model);
 
             return new OvalElement(c, radius, false, color);
@@ -164,28 +115,6 @@ namespace NCDK.Renderers.Generators
                 }
             }
             return isAromatic;
-        }
-
-        /// <inheritdoc/>
-        public override IList<IGeneratorParameter> Parameters
-        {
-            get
-            {
-                // Get our super class's version of things
-                var superPars = base.Parameters;
-
-                // Allocate ArrayList with sufficient space for everything.
-                // Note that the number should ideally be the same as the number of entries
-                // that we add here, though this is *only* an efficiency consideration.
-                var pars = new List<IGeneratorParameter>(superPars.Count + 3);
-
-                pars.AddRange(superPars);
-                pars.Add(cdkStyleAromaticity);
-                pars.Add(showAromaticity);
-                pars.Add(maxDrawableAromaticRing);
-                pars.Add(ringProportion);
-                return pars;
-            }
         }
     }
 }

@@ -23,17 +23,12 @@ using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Media;
 using static NCDK.Renderers.Elements.WedgeLineElement;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
-using static NCDK.Renderers.RendererModel;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators
 {
@@ -43,67 +38,7 @@ namespace NCDK.Renderers.Generators
     // @cdk.module renderbasic
     // @cdk.githash
     public class BasicBondGenerator : IGenerator<IAtomContainer>
-    {
-        // FIXME: bond width should be defined in world, not screen coordinates
-        /// <summary>
-        /// The width on screen of a bond.
-        /// </summary>
-        public class BondWidth : AbstractGeneratorParameter<double?>
-        {
-            /// <summary>Returns the default value.</summary>
-            /// <returns>1.0</returns>
-            public override double? Default => 1;
-        }
-
-        private IGeneratorParameter<double?> bondWidth = new BondWidth();
-
-        /// <summary>
-        /// The gap between double and triple bond lines on the screen.
-        /// </summary>
-        public class BondDistance : AbstractGeneratorParameter<double?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns>2.0</returns>
-            public override double? Default => 2;
-        }
-
-        private IGeneratorParameter<double?> bondDistance = new BondDistance();
-
-        /// <summary>
-        /// The color to draw bonds if not other color is given.
-        /// </summary>
-        public class DefaultBondColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <summary> Returns the default value <see cref="WPF.Media.Colors.Black"/>.</summary>
-            public override Color? Default => WPF.Media.Colors.Black;
-        }
-
-        private IGeneratorParameter<Color?> defaultBondColor = new DefaultBondColor();
-
-        /// <summary>
-        /// The width on screen of the fat end of a wedge bond.
-        /// </summary>
-        public class WedgeWidth : AbstractGeneratorParameter<double?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns>2.0</returns>
-            public override double? Default => 2;
-        }
-
-        private IGeneratorParameter<double?> wedgeWidth = new WedgeWidth();
-
-        /// <summary>
-        /// The proportion to move in towards the ring center.
-        /// </summary>
-        public class TowardsRingCenterProportion : AbstractGeneratorParameter<double?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns>0.15</returns>
-            public override double? Default => 0.15;
-        }
-
-        private IGeneratorParameter<double?> ringCenterProportion = new TowardsRingCenterProportion();
-
+    {        
         /// <summary>
         /// Necessary for calculating inner-ring bond elements.
         /// </summary>
@@ -193,9 +128,9 @@ namespace NCDK.Renderers.Generators
                 return overrideColor.Value;
             }
 
-            if (!model.Get<IDictionary<IChemObject, Color>>(typeof(ColorHash)).TryGetValue(bond, out Color color))
+            if (!model.GetColorHash().TryGetValue(bond, out Color color))
             {
-                color = model.GetV<Color>(typeof(DefaultBondColor));
+                color = model.GetDefaultBondColor();
             }
             return color;
         }
@@ -210,14 +145,14 @@ namespace NCDK.Renderers.Generators
         /// <returns>a double in chem-model space</returns>
         public virtual double GetWidthForBond(IBond bond, RendererModel model)
         {
-            double scale = model.GetV<double>(typeof(Scale));
+            double scale = model.GetScale();
             if (this.overrideBondWidth != -1)
             {
                 return this.overrideBondWidth / scale;
             }
             else
             {
-                return model.GetV<double>(typeof(BondWidth)) / scale;
+                return model.GetBondWidth() / scale;
             }
         }
 
@@ -291,7 +226,7 @@ namespace NCDK.Renderers.Generators
             Vector2 point2 = bond.End.Point2D.Value;
             Color color = this.GetColorForBond(bond, model);
             double bondWidth = this.GetWidthForBond(bond, model);
-            double bondDistance = model.GetV<double>(typeof(BondDistance)) / model.GetV<double>(typeof(Scale));
+            double bondDistance = model.GetBondDistance() / model.GetScale();
             if (type == BondOrder.Single)
             {
                 return new LineElement(ToPoint(point1), ToPoint(point2), bondWidth, color);
@@ -386,7 +321,7 @@ namespace NCDK.Renderers.Generators
             Vector2 b = bond.End.Point2D.Value;
 
             // the proportion to move in towards the ring center
-            double distanceFactor = model.GetV<double>(typeof(TowardsRingCenterProportion));
+            double distanceFactor = model.GetTowardsRingCenterProportion();
             double ringDistance = distanceFactor * IDEAL_RINGSIZE / ring.Atoms.Count;
             if (ringDistance < distanceFactor / MIN_RINGSIZE_FACTOR) ringDistance = distanceFactor / MIN_RINGSIZE_FACTOR;
 
@@ -472,11 +407,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>one or more rendering elements</returns>
         public virtual IRenderingElement GenerateBond(IBond bond, RendererModel model)
         {
-            bool showExplicitHydrogens = true;
-            if (model.HasParameter(typeof(BasicAtomGenerator.ShowExplicitHydrogens)))
-            {
-                showExplicitHydrogens = model.GetV<bool>(typeof(BasicAtomGenerator.ShowExplicitHydrogens));
-            }
+            bool showExplicitHydrogens = model.GetShowExplicitHydrogens();
 
             if (!showExplicitHydrogens && BindsHydrogen(bond))
             {
@@ -492,9 +423,5 @@ namespace NCDK.Renderers.Generators
                 return GenerateBondElement(bond, model);
             }
         }
-
-        /// <inheritdoc/>
-        public virtual IList<IGeneratorParameter> Parameters
-                => new IGeneratorParameter[] { bondWidth, defaultBondColor, wedgeWidth, bondDistance, ringCenterProportion };
     }
 }

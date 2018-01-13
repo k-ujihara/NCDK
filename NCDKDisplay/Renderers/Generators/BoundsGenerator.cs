@@ -17,11 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
-using System.Collections.Generic;
-using System.Windows.Media;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators
 {
@@ -33,17 +30,7 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class BoundsGenerator : IGenerator<IReaction>
     {
-        /// <summary>
-        /// The color of the box drawn at the bounds of a
-        /// molecule, molecule set, or reaction.
-        /// </summary>
-        public class BoundsColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <inheritdoc/>
-            public override Color? Default => WPF.Media.Colors.LightGray;
-        }
-
-        private IGeneratorParameter<Color?> boundsColor = new BoundsColor();
+        
 
         public BoundsGenerator() { }
 
@@ -54,27 +41,23 @@ namespace NCDK.Renderers.Generators
             var reactants = reaction.Reactants;
             if (reactants != null)
             {
-                elementGroup.Add(this.Generate(reactants));
+                elementGroup.Add(this.Generate(reactants, model));
             }
 
             var products = reaction.Products;
             if (products != null)
             {
-                elementGroup.Add(this.Generate(products));
+                elementGroup.Add(this.Generate(products, model));
             }
 
             return elementGroup;
         }
 
-        private IRenderingElement Generate(IChemObjectSet<IAtomContainer> moleculeSet)
+        private IRenderingElement Generate(IChemObjectSet<IAtomContainer> moleculeSet, RendererModel model)
         {
             var totalBounds = BoundsCalculator.CalculateBounds(moleculeSet);
 
-            return new RectangleElement(totalBounds, boundsColor.Value.Value);
+            return new RectangleElement(totalBounds, model.GetBoundsColor());
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters
-            => new IGeneratorParameter[] { boundsColor };
     }
 }

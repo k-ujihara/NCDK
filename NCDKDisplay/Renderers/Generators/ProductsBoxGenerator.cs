@@ -16,12 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
-using static NCDK.Renderers.Generators.ReactionSceneGenerator;
 
 namespace NCDK.Renderers.Generators
 {
@@ -36,9 +33,9 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetV<bool>(typeof(ShowReactionBoxes))) return null;
+            if (!model.GetShowReactionBoxes()) return null;
             if (reaction.Products.Count == 0) return new ElementGroup();
-            double distance = model.GetV<double>(typeof(BondLength)) / model.GetV<double>(typeof(Scale)) / 2;
+            double distance = model.GetBondLength() / model.GetScale() / 2;
             Rect? totalBounds = null;
             foreach (var molecule in reaction.Products)
             {
@@ -55,7 +52,7 @@ namespace NCDK.Renderers.Generators
             if (totalBounds == null) return null;
 
             ElementGroup diagram = new ElementGroup();
-            var foregroundColor = model.GetParameter<Color>(typeof(BasicSceneGenerator.ForegroundColor)).Value;
+            var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(
                 new Rect(
                     totalBounds.Value.Left - distance,
@@ -70,8 +67,5 @@ namespace NCDK.Renderers.Generators
                 "Products", foregroundColor));
             return diagram;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => new IGeneratorParameter[] { };
    }
 }

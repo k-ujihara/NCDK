@@ -23,7 +23,6 @@
 
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
@@ -90,29 +89,13 @@ namespace NCDK.Depict
             this.nRow = nRow;
         }
 
-        public override RenderTargetBitmap ToBitmap()
-        {
-            return ToBitmap(96, 96, PixelFormats.Pbgra32);
-        }
-
-        public RenderTargetBitmap ToBitmap(double dpiX, double dpiY, PixelFormat pixelFormat)
-        {
-            var drawingVisual = new DrawingVisual();
-            var size = Draw(drawingVisual);
-
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
-            img.Render(drawingVisual);
-            return img;
-        }
-
         public override Size Draw(DrawingVisual drawingVisual)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+            double margin = GetMarginValue(DepictionGenerator.DefaultPxMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
-            double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
-            double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor));
+            double scale = model.GetScale();
+            double zoom = model.GetZoomFactor();
 
             // row and col offsets for alignment
             double[] yOffset = new double[nRow + 1];
@@ -127,7 +110,7 @@ namespace NCDK.Depict
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
-                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), Transform.Identity);
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
                 // compound the zoom, fitting and scaling into a single value
                 double rescale = zoom * fitting * scale;
@@ -163,7 +146,7 @@ namespace NCDK.Depict
 
         private double CalcFitting(double margin, double padding, Dimensions required, string fmt)
         {
-            if (dimensions == Dimensions.AUTOMATIC)
+            if (dimensions == Dimensions.Automatic)
                 return 1; // no fitting
             Dimensions targetDim = dimensions;
 
@@ -175,14 +158,14 @@ namespace NCDK.Depict
                                              .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
             double resize = Math.Min(targetDim.width / required.width,
                                      targetDim.height / required.height);
-            if (resize > 1 && !model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)))
+            if (resize > 1 && !model.GetFitToScreen())
                 resize = 1;
             return resize;
         }
 
         private Dimensions CalcTotalDimensions(double margin, double padding, Dimensions required, string fmt)
         {
-            if (dimensions == Dimensions.AUTOMATIC)
+            if (dimensions == Dimensions.Automatic)
             {
                 return required.Add(2 * margin, 2 * margin)
                                .Add((nCol - 1) * padding, (nRow - 1) * padding);
@@ -200,14 +183,14 @@ namespace NCDK.Depict
         internal override string ToVectorString(string fmt)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+            double margin = GetMarginValue(DepictionGenerator.DefaultMMMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
-            double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            double scale = model.GetScale();
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor)) * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
 
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
@@ -241,7 +224,7 @@ namespace NCDK.Depict
             {
             }
 
-            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
+            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetBackgroundColor()), new ScaleTransform(1, -1));
 
             // compound the fitting and scaling into a single value
             double rescale = zoom * fitting * scale;

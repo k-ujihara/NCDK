@@ -16,7 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
+using WPF = System.Windows;
 
 namespace NCDK.Renderers.Fonts
 {
@@ -30,9 +32,9 @@ namespace NCDK.Renderers.Fonts
         /// <summary>The default font family</summary>
         private string fontName = "Arial";
 
-        /// <summary>The font style - normal or bold</summary>
-        private FontStyles fontStyle = FontStyles.Normal;
-
+        /// <summary>The font weight</summary>
+        private WPF.FontWeight fontWeight = WPF.FontWeights.Normal;
+        
         /// <summary>The mapping between zoom levels and font sizes</summary>
         private IDictionary<double, int> zoomToFontSizeMap;
 
@@ -81,21 +83,21 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font style, defined in the <see cref="IFontManager"/> interface.
         /// </summary>
-        public virtual FontStyles FontStyle
+        public virtual WPF.FontWeight FontWeight
         {
             get
             {
-                return this.fontStyle;
+                return this.fontWeight;
             }
             set
             {
-                if (this.fontStyle == value)
+                if (this.fontWeight == value)
                 {
                     return;
                 }
                 else
                 {
-                    this.fontStyle = value;
+                    this.fontWeight = value;
                     MakeFonts();
                 }
             }

@@ -72,18 +72,20 @@ namespace NCDK.Renderers
         {
             IAtomContainer square = MakeSquare();
 
-            var generators = new List<IGenerator<IAtomContainer>>();
-            generators.Add(new BasicSceneGenerator());
-            generators.Add(new BasicBondGenerator());
+            var generators = new List<IGenerator<IAtomContainer>>
+            {
+                new BasicSceneGenerator(),
+                new BasicBondGenerator()
+            };
             BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
             generators.Add(atomGenerator);
 
             AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new WPFFontManager());
             RendererModel model = renderer.GetRenderer2DModel();
-            model.GetParameter<Shapes?>(typeof(CompactShape)).Value = Shapes.Oval;
-            model.GetParameter<bool?>(typeof(CompactAtom)).Value = true;
-            model.GetParameter<bool?>(typeof(KekuleStructure)).Value = true;
-            model.GetParameter<bool?>(typeof(ShowEndCarbons)).Value = true;
+            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetCompactAtom(true);
+            model.SetKekuleStructure(true);
+            model.SetShowEndCarbons(true);
 
             ElementUtility visitor = new ElementUtility();
             var screen = new Rect(0, 0, 100, 100);

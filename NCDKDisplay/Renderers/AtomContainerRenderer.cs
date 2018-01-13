@@ -18,6 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
@@ -28,7 +29,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 
 namespace NCDK.Renderers
 {
@@ -86,7 +86,7 @@ namespace NCDK.Renderers
     /// </para>
     /// <para>
     /// So, if the bond length on screen is set to 40, and the average bond length
-    /// of the model is 2 (unitless, but roughly Ångstrom scale) then the
+    /// of the model is 2 (unitless, but roughly Ångström scale) then the
     /// scale will be 20. If the model is 10 units wide, then the diagram drawn at
     /// 100% zoom will be 10 * 20 = 200 in width on screen. If the screen is 400
     /// pixels wide, then fitting it to the screen will make the zoom 200%. Since the
@@ -101,7 +101,7 @@ namespace NCDK.Renderers
         /// <summary>
         /// The default scale is used when the model is empty.
         /// </summary>
-        public const double DEFAULT_SCALE = 30.0;
+        public const double DefaultScale = 30.0;
 
         /// <summary>
         /// A renderer that generates diagrams using the specified
@@ -112,10 +112,6 @@ namespace NCDK.Renderers
         public AtomContainerRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
             : this(new RendererModel(), generators, fontManager)
         {
-            foreach (var generator in generators)
-            {
-                rendererModel.RegisterParameters(generator);
-            }
         }
 
         public AtomContainerRenderer(RendererModel rendererModel, IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
@@ -146,7 +142,7 @@ namespace NCDK.Renderers
         {
             modelCenter = new Point(0, 0);
             drawCenter = new Point(200, 200);
-            rendererModel.GetParameter<double?>(typeof(ZoomFactor)).Value= 1;
+            rendererModel.SetZoomFactor(1);
             Setup();
         }
 
@@ -159,7 +155,7 @@ namespace NCDK.Renderers
         public void SetScale(IAtomContainer atomContainer)
         {
             double bondLength = GeometryUtil.GetBondLengthAverage(atomContainer);
-            rendererModel.GetParameter<double?>(typeof(Scale)).Value = this.CalculateScaleForBondLength(bondLength);
+            rendererModel.SetScale(this.CalculateScaleForBondLength(bondLength));
         }
 
         /// <inheritdoc/>
@@ -181,7 +177,7 @@ namespace NCDK.Renderers
         /// distance between all atoms is measured and then the minimum distance is
         /// divided by 1.5. This length is required for scaling renderings.
         /// </summary>
-        /// <param name="container">a chemical structure with no bonds at at least 2 atoms</param>
+        /// <param name="container">a chemical structure with no bonds at least 2 atoms</param>
         /// <returns>the estimated bond length</returns>
         /// <exception cref="ArgumentException">the structure had a bond or less than two atoms</exception>
         private static double EstimatedBondLength(IAtomContainer container)
@@ -211,13 +207,13 @@ namespace NCDK.Renderers
         {
             if (atomContainer.Bonds.Count > 0 || atomContainer.Atoms.Count == 1)
             {
-                rendererModel.GetParameter<double?>(typeof(Scale)).Value
-                    = CalculateScaleForBondLength(GeometryUtil.GetBondLengthAverage(atomContainer));
+                rendererModel.SetScale(
+                    CalculateScaleForBondLength(GeometryUtil.GetBondLengthAverage(atomContainer)));
             }
             else if (atomContainer.Atoms.Count > 1)
             {
-                rendererModel.GetParameter<double?>(typeof(Scale)).Value
-                    = CalculateScaleForBondLength(EstimatedBondLength(atomContainer));
+                rendererModel.SetScale(
+                    CalculateScaleForBondLength(EstimatedBondLength(atomContainer)));
             }
 
             // the diagram to draw
@@ -248,11 +244,11 @@ namespace NCDK.Renderers
         {
             if (double.IsNaN(modelBondLength) || modelBondLength == 0)
             {
-                return DEFAULT_SCALE;
+                return DefaultScale;
             }
             else
             {
-                return rendererModel.GetV<double>(typeof(BondLength)) / modelBondLength;
+                return rendererModel.GetBondLength() / modelBondLength;
             }
         }
 

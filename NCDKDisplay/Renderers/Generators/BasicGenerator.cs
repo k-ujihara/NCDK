@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System.Collections.Generic;
 
 namespace NCDK.Renderers.Generators
 {
@@ -60,19 +60,6 @@ namespace NCDK.Renderers.Generators
                 this.atomGenerator.Generate(ac, model)
             };
             return diagram;
-        }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters
-        {
-            get
-            {
-                var list = new List<IGeneratorParameter>();
-                list.AddRange(this.atomGenerator.Parameters);
-                list.AddRange(this.bondGenerator.Parameters);
-                list.AddRange(this.sceneGenerator.Parameters);
-                return list;
-            }
         }
     }
 }

@@ -21,7 +21,6 @@
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Media;
 using WPF = System.Windows;
 

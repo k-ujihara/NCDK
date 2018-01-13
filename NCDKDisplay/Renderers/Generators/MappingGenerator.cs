@@ -17,14 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
-using System.Collections.Generic;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators
 {
@@ -35,45 +31,14 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class MappingGenerator : IGenerator<IReaction>
     {
-        /// <summary>
-        /// The width on screen of an atom-atom mapping line.
-        /// </summary>
-        public class AtomAtomMappingLineColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <inheritdoc/>
-            public override Color? Default => WPF.Media.Colors.Gray;
-        }
-
-        private IGeneratorParameter<Color?> atomAtomMappingLineColor = new AtomAtomMappingLineColor();
-
-        /// <summary>
-        /// The width on screen of an atom-atom mapping line.
-        /// </summary>
-        public class MappingLineWidth : AbstractGeneratorParameter<double>
-        {
-            /// <inheritdoc/>
-            public override double Default => 1;
-        }
-
-        private IGeneratorParameter<double> mappingLineWidth = new MappingLineWidth();
-
-        /// <summary>boolean by which atom-atom mapping depiction can be temporarily disabled.</summary>
-        public class ShowAtomAtomMapping : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        private IGeneratorParameter<bool?> showAtomAtomMapping = new ShowAtomAtomMapping();
-
         public MappingGenerator() { }
 
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!showAtomAtomMapping.Value.Value) return null;
+            if (!model.GetShowAtomAtomMapping()) return null;
             ElementGroup elementGroup = new ElementGroup();
-            Color mappingColor = atomAtomMappingLineColor.Value.Value;
+            Color mappingColor = model.GetAtomAtomMappingLineColor();
             foreach (var mapping in reaction.Mappings)
             {
                 // XXX assume that there are only 2 endpoints!
@@ -96,12 +61,8 @@ namespace NCDK.Renderers.Generators
         /// <returns>a double in chem-model space</returns>
         private double GetWidthForMappingLine(RendererModel model)
         {
-            double scale = model.GetV<double>(typeof(Scale));
-            return mappingLineWidth.Value / scale;
+            double scale = model.GetScale();
+            return model.GetMappingLineWidth() / scale;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters =>
-            new IGeneratorParameter[] { showAtomAtomMapping, mappingLineWidth, atomAtomMappingLineColor };
     }
 }

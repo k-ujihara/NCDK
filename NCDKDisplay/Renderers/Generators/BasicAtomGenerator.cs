@@ -16,15 +16,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
-using NCDK.Renderers.Colors;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
 using NCDK.Validate;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 using WPF = System.Windows;
 
@@ -37,142 +34,6 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class BasicAtomGenerator : IGenerator<IAtomContainer>
     {
-        /// <summary>
-        /// Class to hold the color by which atom labels are drawn.
-        /// This color is overwritten by the <see cref="IAtomContainer"/>.
-        /// </summary>
-        public class AtomColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <summary>
-            /// Returns the default value, <see cref="WPF.Media.Colors.Black"/>.
-            /// </summary>
-            public override Color? Default => WPF.Media.Colors.Black;
-        }
-
-        /// <summary>The default atom color.</summary>
-        private IGeneratorParameter<Color?> atomColor = new AtomColor();
-
-        /// <summary><see cref="IAtomContainer"/> used to draw elements.</summary>
-        public class AtomColorer : AbstractGeneratorParameter<IAtomColorer>
-        {
-            /// <summary>
-            /// Returns the default value, <see cref="CDK2DAtomColors"/>.
-            /// </summary>
-            public override IAtomColorer Default => new CDK2DAtomColors();
-        }
-
-        /// <summary>Converter between atoms and colors.</summary>
-        private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
-
-        /// <summary>boolean property that triggers atoms to be colored by type
-        ///  when set to true.</summary>
-        public class ColorByType : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see langword="true"/></returns>
-            public override bool? Default => true;
-        }
-
-        /// <summary>If true, colors atoms by their type.</summary>
-        private IGeneratorParameter<bool?> colorByType = new ColorByType();
-
-        /// <summary>boolean property that triggers explicit hydrogens to be
-        ///  drawn if set to true.</summary>
-        public class ShowExplicitHydrogens : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see langword="true"/></returns>
-            public override bool? Default => true;
-        }
-
-        /// <summary>If true, explicit hydrogens are displayed.</summary>
-        private IGeneratorParameter<bool?> showExplicitHydrogens = new ShowExplicitHydrogens();
-
-        /// <summary> Magic number with unknown units that defines the radius
-        ///  around an atom, e.g. used for highlighting atoms.</summary>
-        public class AtomRadius : AbstractGeneratorParameter<double?>
-        {
-            /// <summary>
-            /// Returns the default value. 8.0
-            /// </summary>
-            public override double? Default => 8;
-        }
-
-        /// <summary>The atom radius on screen.</summary>
-        private IGeneratorParameter<double?> atomRadius = new AtomRadius();
-
-        /// <summary>boolean parameters that will cause atoms to be drawn as
-        ///  filled shapes when set to true. The actual used shape used
-        ///  is defined by the <see cref="CompactShape"/> parameter.</summary>
-        public class CompactAtom : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see langword="false"/></returns>
-            public override bool? Default => false;
-        }
-
-        /// <summary>If true, atoms are displayed as 'compact' symbols, not text.</summary>
-        private IGeneratorParameter<bool?> isCompact = new CompactAtom();
-
-        /// <summary>Determines whether structures should be drawn as Kekulé structures, thus
-        /// giving each carbon element explicitly, instead of not displaying the
-        /// element symbol. Example C-C-C instead of /\.
-        /// </summary>
-        public class KekuleStructure : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see langword="false"/></returns>
-            public override bool? Default => false;
-        }
-
-        /// <summary>
-        /// Determines whether structures should be drawn as Kekulé structures, thus
-        /// giving each carbon element explicitly, instead of not displaying the
-        /// element symbol. Example C-C-C instead of /\.
-        /// </summary>
-        private IGeneratorParameter<bool?> isKekule = new KekuleStructure();
-
-        /// <summary>
-        /// When atoms are selected or in compact mode, they will
-        /// be covered by a shape determined by this enumeration.
-        /// </summary>
-        public enum Shapes
-        {
-            Oval, Square
-        };
-
-        /// <summary>
-        /// Shape to be used when drawing atoms in compact mode,
-        /// as defined by the <see cref="CompactAtom"/> parameter.
-        /// </summary>
-        public class CompactShape : AbstractGeneratorParameter<Shapes?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns>Shape.Square</returns>
-            public override Shapes? Default => Shapes.Square;
-        }
-
-        /// <summary>The compact shape used to display atoms when isCompact is true.</summary>
-        private IGeneratorParameter<Shapes?> compactShape = new CompactShape();
-
-        /// <summary>boolean parameters that will show carbons with only one
-        /// (non-hydrogen) neighbor to be drawn with an element symbol.
-        ///  This setting overwrites and is used in combination with
-        ///  the <see cref="KekuleStructure"/> parameter.
-        /// </summary>
-        public class ShowEndCarbons : AbstractGeneratorParameter<bool?>
-        {
-            /// <summary> Returns the default value.</summary>
-            /// <returns><see langword="false"/></returns>
-            public override bool? Default => false;
-        }
-
-        /// <summary>
-        /// Determines whether methyl carbons' symbols should be drawn explicit for
-        /// methyl carbons. Example C/\C instead of /\.
-        /// </summary>
-        private IGeneratorParameter<bool?> showEndCarbons = new ShowEndCarbons();
-
         /// <summary>
         /// An empty constructor necessary for reflection.
         /// </summary>
@@ -228,7 +89,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>true if this atom should not be shown</returns>
         protected internal virtual bool InvisibleHydrogen(IAtom atom, RendererModel model)
         {
-            return IsHydrogen(atom) && !model.GetV<bool>(typeof(ShowExplicitHydrogens));
+            return IsHydrogen(atom) && !model.GetShowExplicitHydrogens();
         }
 
         /// <summary>
@@ -289,7 +150,7 @@ namespace NCDK.Renderers.Generators
             {
                 return null;
             }
-            else if (model.GetV<bool>(typeof(CompactAtom)))
+            else if (model.GetCompactAtom())
             {
                 return this.GenerateCompactElement(atom, model);
             }
@@ -319,13 +180,13 @@ namespace NCDK.Renderers.Generators
         public virtual IRenderingElement GenerateCompactElement(IAtom atom, RendererModel model)
         {
             var point = atom.Point2D.Value;
-            double radius = model.GetV<double>(typeof(AtomRadius)) / model.GetV<double>(typeof(Scale));
+            double radius = model.GetAtomRadius() / model.GetScale();
             double distance = 2 * radius;
-            if (model.GetV<Shapes>(typeof(CompactShape)) == Shapes.Square)
+            if (model.GetCompactShape() == AtomShapeTypes.Square)
             {
                 return new RectangleElement(
-                    new WPF.Point(point.X - radius, point.Y - radius), 
-                    distance, distance, 
+                    new WPF.Point(point.X - radius, point.Y - radius),
+                    distance, distance,
                     true, GetAtomColor(atom, model));
             }
             else
@@ -366,11 +227,11 @@ namespace NCDK.Renderers.Generators
         /// <returns>true if the carbon should be shown</returns>
         public virtual bool ShowCarbon(IAtom carbonAtom, IAtomContainer container, RendererModel model)
         {
-            if (model.GetV<bool>(typeof(KekuleStructure))) return true;
+            if (model.GetKekuleStructure()) return true;
             if (carbonAtom.FormalCharge != 0) return true;
             int connectedBondCount = container.GetConnectedBonds(carbonAtom).Count();
             if (connectedBondCount < 1) return true;
-            if ((bool)model.GetV<bool>(typeof(ShowEndCarbons)) && connectedBondCount == 1) return true;
+            if ((bool)model.GetShowEndCarbons() && connectedBondCount == 1) return true;
             if (carbonAtom.GetProperty<bool>(ProblemMarker.ErrorMarker, false)) return true;
             if (container.GetConnectedSingleElectrons(carbonAtom).Any()) return true;
             return false;
@@ -384,16 +245,12 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         protected internal virtual Color GetAtomColor(IAtom atom, RendererModel model)
         {
-            var atomColor = model.GetV<Color>(typeof(AtomColor));
-            if (model.GetV<bool>(typeof(ColorByType)))
+            var atomColor = model.GetAtomColor();
+            if (model.GetAtomColorByType())
             {
-                atomColor = model.Get<IAtomColorer>(typeof(AtomColorer)).GetAtomColor(atom);
+                atomColor = model.GetAtomColorer().GetAtomColor(atom);
             }
             return atomColor;
         }
-
-        /// <inheritdoc/>
-        public virtual IList<IGeneratorParameter> Parameters
-                => new IGeneratorParameter[] { atomColor, atomColorer, atomRadius, colorByType, compactShape, isCompact, isKekule, showEndCarbons, showExplicitHydrogens };
     }
 }

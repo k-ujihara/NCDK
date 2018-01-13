@@ -36,7 +36,7 @@ namespace NCDK.Renderers.Generators.Standards
     /// (disconnected). Alternatively, all select atoms can be displayed. 
     /// </para>
     /// <para>
-    /// An atom or bond is selected if the <see cref="StandardGenerator.HIGHLIGHT_COLOR"/> is non-null.
+    /// An atom or bond is selected if the <see cref="StandardGenerator.HighlightColorKey"/> is non-null.
     /// </para>
     /// </summary>
     // @author John May
@@ -91,7 +91,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>object is selected</returns>
         internal static bool IsSelected(IChemObject obj, RendererModel model)
         {
-            if (obj.GetProperty<Color?>(StandardGenerator.HIGHLIGHT_COLOR) != null) return true;
+            if (obj.GetProperty<Color?>(StandardGenerator.HighlightColorKey) != null) return true;
             if (model.GetSelection() != null) return model.GetSelection().Contains(obj);
             return false;
         }

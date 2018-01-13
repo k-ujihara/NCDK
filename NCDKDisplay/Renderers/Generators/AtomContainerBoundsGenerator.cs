@@ -16,10 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Renderers.Elements;
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -38,8 +37,5 @@ namespace NCDK.Renderers.Generators
             double[] minMax = GeometryUtil.GetMinMax(container);
             return new RectangleElement(new Point(minMax[0], minMax[1]), new Point(minMax[2], minMax[3]), Color.FromArgb(255, (int)(255 * 0.7), (int)(255 * 0.7), 255));
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => Array.Empty<IGeneratorParameter>();
     }
 }

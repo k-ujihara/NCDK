@@ -26,7 +26,6 @@ using NCDK.Common.Mathematics;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace NCDK.Renderers

@@ -16,14 +16,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
-using System;
 using System.Collections.Generic;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicAtomGenerator;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 using WPF = System.Windows;
 
@@ -45,13 +43,13 @@ namespace NCDK.Renderers.Generators
             ElementGroup group = new ElementGroup();
 
             // TODO : put into RendererModel
-            const double SCREEN_RADIUS = 2.0;
-            Color RADICAL_COLOR = WPF.Media.Colors.Black;
+            const double ScreenRadius = 2.0;
+            Color RadicalColor = WPF.Media.Colors.Black;
 
             // XXX : is this the best option?
-            double ATOM_RADIUS = model.GetV<double>(typeof(AtomRadius)) / model.GetV<double>(typeof(Scale));
+            double AtomRadius = model.GetAtomRadius() / model.GetScale();
 
-            double modelRadius = SCREEN_RADIUS / model.GetV<double>(typeof(Scale));
+            double modelRadius = ScreenRadius / model.GetScale();
             double modelSpacing = modelRadius * 2.5;
             var singleElectronsPerAtom = new Dictionary<IAtom, int>();
             foreach (var electron in container.SingleElectrons)
@@ -64,27 +62,24 @@ namespace NCDK.Renderers.Generators
                 var center = ToPoint(point);
                 if (align == 1)
                 {
-                    center.X += ATOM_RADIUS * 4 + singleElectronsPerAtom[atom] * modelSpacing;
+                    center.X += AtomRadius * 4 + singleElectronsPerAtom[atom] * modelSpacing;
                 }
                 else if (align == -1)
                 {
-                    center.X -= ATOM_RADIUS * 4 + singleElectronsPerAtom[atom] * modelSpacing;
+                    center.X -= AtomRadius * 4 + singleElectronsPerAtom[atom] * modelSpacing;
                 }
                 else if (align == 2)
                 {
-                    center.Y += ATOM_RADIUS * 4 + singleElectronsPerAtom[atom] * modelSpacing;
+                    center.Y += AtomRadius * 4 + singleElectronsPerAtom[atom] * modelSpacing;
                 }
                 else if (align == -2)
                 {
-                    center.Y -= ATOM_RADIUS * 4 + singleElectronsPerAtom[atom] * modelSpacing;
+                    center.Y -= AtomRadius * 4 + singleElectronsPerAtom[atom] * modelSpacing;
                 }
                 singleElectronsPerAtom[atom] = singleElectronsPerAtom[atom] + 1;
-                group.Add(new OvalElement(center, modelRadius, true, RADICAL_COLOR));
+                group.Add(new OvalElement(center, modelRadius, true, RadicalColor));
             }
             return group;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => Array.Empty<IGeneratorParameter>();
     }
 }

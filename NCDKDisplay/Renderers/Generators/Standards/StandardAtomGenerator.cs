@@ -123,7 +123,7 @@ namespace NCDK.Renderers.Generators.Standards
                 var mass = atom.MassNumber;
                 if (mass != null &&
                               model != null &&
-                              model.GetV<bool>(typeof(StandardGenerator.OmitMajorIsotopes)) &&
+                              model.GetOmitMajorIsotopes() &&
                               IsMajorIsotope(number, mass.Value))
                 {
                     mass = null;

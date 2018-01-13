@@ -211,28 +211,12 @@ namespace NCDK.Depict
             }
         }
 
-        public override RenderTargetBitmap ToBitmap()
-        {
-            return ToBitmap(96, 96, PixelFormats.Pbgra32);
-        }
-
-        public RenderTargetBitmap ToBitmap(double dpiX, double dpiY, PixelFormat pixelFormat)
-        {
-            var drawingVisual = new DrawingVisual();
-            var size = Draw(drawingVisual);
-
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
-            img.Render(drawingVisual);
-            return img;
-        }
-
         public override Size Draw(DrawingVisual drawingVisual)
         {
             // format margins and padding for raster images
-            double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
-            double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor));
-            double margin = GetMarginValue(DepictionGenerator.DEFAULT_PX_MARGIN);
+            double scale = model.GetScale();
+            double zoom = model.GetZoomFactor();
+            double margin = GetMarginValue(DepictionGenerator.DefaultPxMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // work out the required space of the main and side components separately
@@ -250,17 +234,14 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
 
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)Math.Ceiling(total.width), (int)Math.Ceiling(total.height), 96, 96, PixelFormats.Pbgra32);
-
             // we use the AWT for vector graphics if though we're raster because
             // fractional strokes can be figured out by interpolation, without
             // when we shrink diagrams bonds can look too bold/chubby
-            var dv = new DrawingVisual();
-            using (var g2 = dv.RenderOpen())
+            using (var g2 = drawingVisual.RenderOpen())
             {
                 IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
-                visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
+
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
                 // compound the zoom, fitting and scaling into a single value
                 double rescale = zoom * fitting * scale;
@@ -359,7 +340,6 @@ namespace NCDK.Depict
                     for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
                         xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
                 }
-
                 return new Size(total.width, total.height);
             }
         }
@@ -367,15 +347,15 @@ namespace NCDK.Depict
         internal override string ToVectorString(string fmt)
         {
             // format margins and padding for raster images
-            double scale = model.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            double scale = model.GetScale();
 
-            double margin = GetMarginValue(DepictionGenerator.DEFAULT_MM_MARGIN);
+            double margin = GetMarginValue(DepictionGenerator.DefaultMMMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetV<double>(typeof(BasicSceneGenerator.ZoomFactor)) * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
+            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
 
             // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
             if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
@@ -417,7 +397,7 @@ namespace NCDK.Depict
             }
 
             // background color
-            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor))), new ScaleTransform(1, -1));
+            visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetBackgroundColor()), new ScaleTransform(1, -1));
 
             // compound the zoom, fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
@@ -533,7 +513,7 @@ namespace NCDK.Depict
                                    Dimensions titleRequired,
                                    double firstRowHeight, string fmt)
         {
-            if (dimensions == Dimensions.AUTOMATIC)
+            if (dimensions == Dimensions.Automatic)
                 return 1; // no fitting
 
             int nSideCol = xOffsetSide.Length - 1;
@@ -566,7 +546,7 @@ namespace NCDK.Depict
             double resize = Math.Min(targetDim.width / required.width,
                                      targetDim.height / required.height);
 
-            if (resize > 1 && !model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)))
+            if (resize > 1 && !model.GetFitToScreen())
                 resize = 1;
             return resize;
         }
@@ -576,7 +556,7 @@ namespace NCDK.Depict
                                                double firstRowHeight,
                                                string fmt)
         {
-            if (dimensions == Dimensions.AUTOMATIC)
+            if (dimensions == Dimensions.Automatic)
             {
 
                 int nSideCol = xOffsetSide.Length - 1;

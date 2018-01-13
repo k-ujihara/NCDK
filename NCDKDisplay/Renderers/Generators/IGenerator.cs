@@ -16,8 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System.Collections.Generic;
 
 namespace NCDK.Renderers.Generators
 {
@@ -35,11 +35,6 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public interface IGenerator<T> where T: IChemObject
     {
-        /// <summary>
-        /// The list of <see cref="IGeneratorParameter"/> for this particular generator.
-        /// </summary>
-        IList<IGeneratorParameter> Parameters { get; }
-
         /// <summary>
         /// Converts a <see cref="IChemObject"/> from the chemical data model into
         /// something that can be drawn in the chemical drawing.

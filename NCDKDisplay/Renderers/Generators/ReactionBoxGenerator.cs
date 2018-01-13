@@ -16,13 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
-using static NCDK.Renderers.Generators.ReactionSceneGenerator;
 
 namespace NCDK.Renderers.Generators
 {
@@ -37,13 +33,13 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetV<bool>(typeof(ShowReactionBoxes))) return null;
-            double separation = model.GetV<double>(typeof(BondLength)) / model.GetV<double>(typeof(Scale));
+            if (!model.GetShowReactionBoxes()) return null;
+            double separation = model.GetBondLength() / model.GetScale();
             var totalBounds = BoundsCalculator.CalculateBounds(reaction);
             if (totalBounds == null) return null;
 
             ElementGroup diagram = new ElementGroup();
-            var foregroundColor = model.GetV<Color>(typeof(BasicSceneGenerator.ForegroundColor));
+            var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(new Rect(totalBounds.Value.Left - separation, totalBounds.Value.Top - separation,
                     totalBounds.Value.Right + separation, totalBounds.Value.Bottom + separation), foregroundColor));
             if (reaction.Id != null)
@@ -54,8 +50,5 @@ namespace NCDK.Renderers.Generators
             }
             return diagram;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => Array.Empty<IGeneratorParameter>();
     }
 }

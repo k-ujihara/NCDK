@@ -16,11 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
-using System;
-using System.Collections.Generic;
-using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators
@@ -41,15 +38,12 @@ namespace NCDK.Renderers.Generators
 
             if (totalBoundsReactants == null || totalBoundsProducts == null) return null;
 
-            double separation = model.GetV<double>(typeof(BondLength)) / model.GetV<double>(typeof(Scale));
-            var foregroundColor = model.GetV<Color>(typeof(BasicSceneGenerator.ForegroundColor));
+            double separation = model.GetBondLength() / model.GetScale();
+            var foregroundColor = model.GetForegroundColor();
             return new ArrowElement(
                 new WPF::Point(totalBoundsReactants.Right + separation, totalBoundsReactants.CenterY()),
                 new WPF::Point(totalBoundsProducts.Left - separation, totalBoundsReactants.CenterY()),
-                1 / model.GetV<double>(typeof(Scale)), true, foregroundColor);
+                1 / model.GetScale(), true, foregroundColor);
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters => Array.Empty<IGeneratorParameter>();
     }
 }

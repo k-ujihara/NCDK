@@ -16,16 +16,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Generators;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicBondGenerator;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 using WPF = System.Windows;
 
@@ -60,20 +58,7 @@ namespace NCDK.Renderers.Visitors
         public RendererModel RendererModel
         {
             get => rendererModel;
-
-            set
-            {
-                this.rendererModel = value;
-                if (rendererModel.HasParameter(typeof(UseAntiAliasing)))
-                {
-                    if (rendererModel.GetV<bool>(typeof(UseAntiAliasing)))
-                    {
-                        // just ignore it.
-                        //graphics..SetRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        // g.SetStroke(new WPF::Media.Pen((int)rendererModel.GetBondWidth()));
-                    }
-                }
-            }
+            set => rendererModel = value;
         }
 
         private readonly double minStroke;
@@ -240,8 +225,8 @@ namespace NCDK.Renderers.Visitors
             get
             {
                 return rendererModel == null ?
-                    new BasicSceneGenerator.BackgroundColor().Default.Value :
-                    rendererModel.GetV<Color>(typeof(BasicSceneGenerator.BackgroundColor));
+                    RenderModelTools.DefaultBackgroundColor :
+                    rendererModel.GetBackgroundColor();
             }
         }
 
@@ -265,7 +250,7 @@ namespace NCDK.Renderers.Visitors
             // make the vector normal to the wedge axis
             var normal = new Vector2(wedge.firstPoint.Y - wedge.secondPoint.Y, wedge.secondPoint.X - wedge.firstPoint.X);
             normal = Vector2.Normalize(normal);
-            normal *= (rendererModel.GetV<double>(typeof(WedgeWidth)) / rendererModel.GetV<double>(typeof(Scale)));
+            normal *= (rendererModel.GetWedgeWidth() / rendererModel.GetScale());
 
             // make the triangle corners
             var vertexA = new Vector2(wedge.firstPoint.X, wedge.firstPoint.Y);
@@ -508,7 +493,7 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(ArrowElement line)
         {
-            double scale = rendererModel.GetV<double>(typeof(Scale));
+            double scale = rendererModel.GetScale();
 
             Pen pen = null;
             {
@@ -527,7 +512,7 @@ namespace NCDK.Renderers.Visitors
             var a = line.start;
             var b = line.end;
             graphics.DrawLine(pen, a, b);
-            double aW = rendererModel.GetV<double>(typeof(ArrowHeadWidth)) / scale;
+            double aW = rendererModel.GetArrowHeadWidth() / scale;
             if (line.direction)
             {
                 var c = new WPF.Point(line.start.X - aW, line.start.Y - aW);

@@ -29,7 +29,6 @@ using NCDK.Layout;
 using NCDK.Smiles;
 using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -42,11 +41,11 @@ namespace NCDK.MolViewer
         private static SmilesParser parser = new SmilesParser(builder);
         private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Default);
         private static InChIGeneratorFactory inChIGeneratorFactory = new InChIGeneratorFactory();
-
-        private static DepictionGenerator generator = new DepictionGenerator();
         private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static ReaderFactory readerFactory = new ReaderFactory();
-        private IAtomContainer _molecular = null;
+
+        private DepictionGenerator generator = new DepictionGenerator();
+        private IChemObject _chemObject = null;
 
         private TextChangedEventHandler textSmiles_TextChangedEventHandler; 
 
@@ -56,62 +55,103 @@ namespace NCDK.MolViewer
 
             textSmiles_TextChangedEventHandler = new TextChangedEventHandler(this.TextSmiles_TextChanged);
             this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
+
+            generator.WithZoom(1.6);
         }
 
-        private IAtomContainer Molecular
+        private IChemObject ChemObject
         {
-            get => _molecular;
+            get => _chemObject;
             set
             {
-                _molecular = value;
+                _chemObject = value;
                 UpdateMolecular();
             }
         }
 
         private void UpdateMolecular()
         {
-            string smiles;
+            string smiles = null;
+
             try
             {
-                smiles = smilesGenerator.Create(_molecular);
+                switch (_chemObject)
+                {
+                    case IAtomContainer mol:
+                        smiles = smilesGenerator.Create(mol);
+                        break;
+                    case IReaction rxn:
+                        smiles = smilesGenerator.Create(rxn);
+                        break;
+                    default:
+                        smiles = $"{_chemObject.GetType()} is not supported.";
+                        break;
+                }
             }
             catch (Exception)
             {
                 smiles = "Failed to create SMILES";
-
             }
+
             UpdateSmilesWithoutEvent(smiles);
             Render();
         }
 
+        private static bool IsReactionSmilees(string smiles)
+        {
+            return smiles.Split(' ')[0].Contains(">");
+        }
+
         private void UpdateSmiles()
         {
-            IAtomContainer mol = null;
             var text = this.textSmiles.Text;
             if (string.IsNullOrWhiteSpace(text))
                 return;
-            try
-            {
-                mol = parser.ParseSmiles(text);
-            }
-            catch (Exception)
-            {
-                // ignore
-            }
-            if (mol == null)
-                return;
 
-            this._molecular = mol;
+            if (IsReactionSmilees(text))
+            {
+                IReaction rxn = null;
+                try
+                {
+                    rxn = parser.ParseReactionSmiles(text);
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+                if (rxn == null)
+                    return;
+                this._chemObject = rxn;
+            }
+            else
+            {
+                IAtomContainer mol = null;
+                try
+                {
+                    mol = parser.ParseSmiles(text);
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+                if (mol == null)
+                    return;
+                this._chemObject = mol;
+            }
+
             Render();
         }
 
         public void Render()
         {
-            if (Molecular == null)
+            if (ChemObject == null)
                 return;
 
-            DepictionGenerator myGenerator = generator.WithZoom(1.6);
-            Depiction depiction = myGenerator.Depict(Molecular);
+            generator.WithZoom(1.6);
+            var depiction = CreateDepiction();
+
+            if (depiction == null)
+                return;
 #if true
             var dv = new DrawingVisual();
             depiction.Draw(dv);
@@ -131,6 +171,25 @@ namespace NCDK.MolViewer
             myGrid.Children.Clear();
             myGrid.Children.Add(image);
 #endif
+        }
+
+        private Depiction CreateDepiction()
+        {
+            Depiction depiction;
+            switch (ChemObject)
+            {
+                case IAtomContainer mol:
+                    depiction = generator.Depict(mol);
+                    break;
+                case IReaction rxn:
+                    depiction = generator.Depict(rxn);
+                    break;
+                default:
+                    depiction = null;
+                    break;
+            }
+
+            return depiction;
         }
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
@@ -161,13 +220,13 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            this.Molecular = mol;
+            this.ChemObject = mol;
             Render();
         }
 
         private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (Molecular == null)
+            if (ChemObject == null)
                 return;
 
             SaveFileDialog fileDialog = new SaveFileDialog
@@ -184,8 +243,7 @@ namespace NCDK.MolViewer
             if (fileDialog.ShowDialog() != true)
                 return;
 
-            DepictionGenerator myGenerator = generator.WithZoom(1.6);
-            Depiction depiction = myGenerator.Depict(Molecular);
+            Depiction depiction = CreateDepiction();
             depiction.WriteTo(fileDialog.FileName);
         }
 
@@ -209,18 +267,18 @@ namespace NCDK.MolViewer
             if (mol == null)
                 return;
 
-            this.Molecular = mol;
+            this.ChemObject = mol;
             Render();
         }
 
         private void Clean_structure_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Molecular != null)
+            if (this.ChemObject != null)
             {
-                var mol = (IAtomContainer)this.Molecular.Clone();
+                var mol = (IAtomContainer)this.ChemObject.Clone();
                 sdg.Molecule = mol;
                 sdg.GenerateCoordinates(mol);
-                this.Molecular = mol;
+                this.ChemObject = mol;
             }
         }
 

@@ -19,6 +19,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
@@ -26,7 +27,6 @@ using NCDK.Renderers.Visitors;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 
 namespace NCDK.Renderers
 {
@@ -110,10 +110,6 @@ namespace NCDK.Renderers
         public ReactionRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
             : this(new RendererModel(), generators, fontManager)
         {
-            foreach (var generator in generators)
-            {
-                rendererModel.RegisterParameters(generator);
-            }
         }
 
         public ReactionRenderer(RendererModel rendererModel, IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
@@ -133,10 +129,6 @@ namespace NCDK.Renderers
         public ReactionRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IEnumerable<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager)
                 : this(generators, fontManager)
         {
-            foreach (var generator in reactionGenerators)
-            {
-                rendererModel.RegisterParameters(generator);
-            }
             this.generators = reactionGenerators.ToList();
             this.Setup();
         }
@@ -167,7 +159,7 @@ namespace NCDK.Renderers
             double scale = this.CalculateScaleForBondLength(bondLength);
 
             // store the scale so that other components can access it
-            this.rendererModel.GetParameter<double?>(typeof(Scale)).Value = scale;
+            this.rendererModel.SetScale(scale);
         }
 
         /// <inheritdoc/>
@@ -221,11 +213,11 @@ namespace NCDK.Renderers
         {
             if (double.IsNaN(modelBondLength) || modelBondLength == 0)
             {
-                return rendererModel.GetDefaultV<double>(typeof(Scale));
+                return rendererModel.GetScale();
             }
             else
             {
-                return this.rendererModel.GetV<double>(typeof(BondLength)) / modelBondLength;
+                return this.rendererModel.GetBondLength() / modelBondLength;
             }
         }
 

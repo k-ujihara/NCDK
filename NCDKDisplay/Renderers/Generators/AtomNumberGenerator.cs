@@ -20,15 +20,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
-using NCDK.Renderers.Colors;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators.Parameters;
-using System.Collections.Generic;
-using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators
 {
@@ -40,79 +35,28 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class AtomNumberGenerator : IGenerator<IAtomContainer>
     {
-        /// <summary>Color to draw the atom numbers with.</summary>
-        public class AtomNumberTextColor : AbstractGeneratorParameter<Color?>
-        {
-            /// <inheritdoc/>
-            public override Color? Default => WPF.Media.Colors.Black;
-        }
-
-        private IGeneratorParameter<Color?> textColor = new AtomNumberTextColor();
-
-        /// <summary>boolean parameter indicating if atom numbers should be drawn, allowing
-        /// this feature to be disabled temporarily. 
-        /// </summary>
-        public class WillDrawAtomNumbers : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => true;
-        }
-
-        private WillDrawAtomNumbers willDrawAtomNumbers = new WillDrawAtomNumbers();
-
-        /// <summary> The color scheme by which to color the atom numbers, if
-        /// the <see cref="ColorByType"/> boolean is <see langword="true"/>.</summary>
-        public class AtomColorer : AbstractGeneratorParameter<IAtomColorer>
-        {
-            /// <inheritdoc/>
-            public override IAtomColorer Default => new CDK2DAtomColors();
-        }
-
-        private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
-
-        /// <summary>boolean to indicate of the <see cref="AtomColorer"/> scheme will be used.</summary>
-        public class ColorByType : AbstractGeneratorParameter<bool?>
-        {
-            /// <inheritdoc/>
-            public override bool? Default => false;
-        }
-        private IGeneratorParameter<bool?> colorByType = new ColorByType();
-
-        /// <summary>
-        /// Offset vector in screen space coordinates where the atom number label
-        /// will be placed.
-        /// </summary>
-        public class Offset : AbstractGeneratorParameter<Vector2?>
-        {
-            /// <inheritdoc/>
-            public override Vector2? Default => Vector2.Zero;
-        }
-
-        private Offset offset = new Offset();
-
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
             ElementGroup numbers = new ElementGroup();
-            if (!model.GetV<bool>(typeof(WillDrawAtomNumbers))) return numbers;
+            if (!model.GetWillDrawAtomNumbers()) return numbers;
 
-            Vector2 offset = new Vector2(this.offset.Value.Value.X, -this.offset.Value.Value.Y);
-            offset *= (1 / model.GetV<double>(typeof(Scale)));
+            var _offset = model.GetAtomNumberOffset();
+            Vector2 offset = new Vector2(_offset.X, -_offset.Y);
+            offset *= (1 / model.GetScale());
 
             int number = 1;
             foreach (var atom in container.Atoms)
             {
                 Vector2 point = atom.Point2D.Value + offset;
                 numbers.Add(
-                    new TextElement(ToPoint(point), number.ToString(), 
-                        colorByType.Value.Value ? atomColorer.Value.GetAtomColor(atom) : textColor.Value.Value));
+                    new TextElement(ToPoint(point), number.ToString(),
+                        model.GetAtomNumberColorByType() ?
+                            model.GetAtomNumberColorer().GetAtomColor(atom) :
+                            model.GetAtomNumberTextColor()));
                 number++;
             }
             return numbers;
         }
-
-        /// <inheritdoc/>
-        public IList<IGeneratorParameter> Parameters =>
-            new IGeneratorParameter[] { textColor, willDrawAtomNumbers, offset, atomColorer, colorByType };
     }
 }

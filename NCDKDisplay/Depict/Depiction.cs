@@ -20,7 +20,6 @@
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Generators;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
@@ -99,12 +98,6 @@ namespace NCDK.Depict
         public abstract Size Draw(DrawingVisual drawingVisual);
 
         /// <summary>
-        /// Render the depiction to a WPF.
-        /// </summary>
-        /// <returns>WPF Bitmap</returns>
-        public abstract RenderTargetBitmap ToBitmap();
-
-        /// <summary>
         /// Render the image to an SVG image.
         /// </summary>
         /// <returns>svg XML content</returns>
@@ -139,8 +132,8 @@ namespace NCDK.Depict
         /// <returns>padding</returns>
         internal double GetPaddingValue(double defaultPadding)
         {
-            double padding = model.GetV<double>(typeof(RendererModel.Padding));
-            if (padding == DepictionGenerator.AUTOMATIC)
+            double padding = model.GetPadding();
+            if (padding == DepictionGenerator.Automatic)
                 padding = defaultPadding;
             return padding;
         }
@@ -153,8 +146,8 @@ namespace NCDK.Depict
         /// <returns>margin</returns>
         internal double GetMarginValue(double defaultMargin)
         {
-            double margin = model.GetV<double>(typeof(BasicSceneGenerator.Margin));
-            if (margin == DepictionGenerator.AUTOMATIC)
+            double margin = model.GetMargin();
+            if (margin == DepictionGenerator.Automatic)
                 margin = defaultMargin;
             return margin;
         }
@@ -317,6 +310,37 @@ namespace NCDK.Depict
         }
 
         /// <summary>
+        /// Render the depiction to a WPF.
+        /// </summary>
+        /// <returns>WPF Bitmap</returns>
+        public virtual RenderTargetBitmap ToBitmap()
+        {
+            return ToBitmap(96, 96, PixelFormats.Pbgra32);
+        }
+
+        public virtual RenderTargetBitmap ToBitmap(double dpiX, double dpiY, PixelFormat pixelFormat)
+        {
+            var drawingVisual = new DrawingVisual();
+
+            if (model.HasUseAntiAliasing())
+            {
+                RenderOptions.SetBitmapScalingMode(drawingVisual,
+                    model.GetUseAntiAliasing() ?
+                        BitmapScalingMode.Linear : BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetEdgeMode(drawingVisual,
+                    model.GetUseAntiAliasing() ?
+                        EdgeMode.Unspecified : EdgeMode.Aliased);
+            }
+
+            var size = Draw(drawingVisual);
+
+            // create the image for rendering
+            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
+            img.Render(drawingVisual);
+            return img;
+        }
+
+        /// <summary>
         /// Low-level draw method used by other rendering methods.
         /// </summary>
         /// <param name="visitor">the draw visitor</param>
@@ -325,7 +349,7 @@ namespace NCDK.Depict
         /// <param name="viewBounds">the view bounds - the root will be centered in the bounds</param>
         protected void Draw(IDrawVisitor visitor, double zoom, Bounds bounds, Rect viewBounds)
         {
-            double modelScale = zoom * model.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            double modelScale = zoom * model.GetScale();
             double zoomToFit = Math.Min(viewBounds.Width / (bounds.Width * modelScale), viewBounds.Height / (bounds.Height * modelScale));
             Matrix transform = Matrix.Identity;
 
@@ -334,7 +358,7 @@ namespace NCDK.Depict
             transform.ScalePrepend(modelScale, -modelScale);
 
             // default is shrink only unless specified
-            if (model.GetV<bool>(typeof(BasicSceneGenerator.FitToScreen)) || zoomToFit < 1)
+            if (model.GetFitToScreen() || zoomToFit < 1)
                 transform.ScalePrepend(zoomToFit, zoomToFit);
 
             transform.TranslatePrepend(-(bounds.minX + bounds.maxX) / 2, -(bounds.minY + bounds.maxY) / 2);
@@ -358,7 +382,7 @@ namespace NCDK.Depict
         /// <returns>the scaling factor</returns>
         internal double RescaleForBondLength(double bondLength)
         {
-            return bondLength / model.GetV<double>(typeof(BasicSceneGenerator.BondLength));
+            return bondLength / model.GetBondLength();
         }
 
         protected internal void SvgPrevisit(string fmt, double rescale, SvgDrawVisitor visitor, IEnumerable<IRenderingElement> elements)

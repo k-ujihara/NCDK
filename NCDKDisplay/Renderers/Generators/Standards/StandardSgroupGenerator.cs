@@ -33,7 +33,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.Standards.StandardGenerator;
 
 namespace NCDK.Renderers.Generators.Standards
 {
@@ -57,11 +56,11 @@ namespace NCDK.Renderers.Generators.Standards
         {
             this.font = font;
             this.emSize = emSize;
-            this.scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            this.scale = parameters.GetScale();
             this.stroke = stroke;
-            double length = parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale;
-            this.bracketDepth = parameters.GetV<double>(typeof(StandardGenerator.SgroupBracketDepth)) * length;
-            this.labelScale = parameters.GetV<double>(typeof(StandardGenerator.SgroupFontScale));
+            double length = parameters.GetBondLength() / scale;
+            this.bracketDepth = parameters.GetSgroupBracketDepth() * length;
+            this.labelScale = parameters.GetSgroupFontScale();
 
             // foreground is based on the carbon color
             this.foreground = foreground;
@@ -153,7 +152,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             foreach (var atom in sgroupAtoms)
             {
-                if ((color = atom.GetProperty<Color?>(StandardGenerator.HIGHLIGHT_COLOR)) != null)
+                if ((color = atom.GetProperty<Color?>(StandardGenerator.HighlightColorKey)) != null)
                 {
                     atomHighlight++;
                     if (refcolor == null)
@@ -173,7 +172,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (sgroupAtoms.Contains(beg) && sgroupAtoms.Contains(end))
                 {
                     numSgroupBonds++;
-                    if ((color = bond.GetProperty<Color?>(StandardGenerator.HIGHLIGHT_COLOR)) != null)
+                    if ((color = bond.GetProperty<Color?>(StandardGenerator.HighlightColorKey)) != null)
                     {
                         bondHighlight++;
                         if (refcolor == null)
@@ -351,9 +350,9 @@ namespace NCDK.Renderers.Generators.Standards
             var sgroupAtoms = sgroup.Atoms;
             Debug.Assert(sgroupAtoms.Any());
 
-            var highlight = sgroupAtoms.First().GetProperty<Color>(StandardGenerator.HIGHLIGHT_COLOR);
-            var style = parameters.GetV<HighlightStyle>(typeof(StandardGenerator.Highlighting));
-            var glowWidth = parameters.GetV<double>(typeof(StandardGenerator.OuterGlowWidth));
+            var highlight = sgroupAtoms.First().GetProperty<Color>(StandardGenerator.HighlightColorKey);
+            var style = parameters.GetHighlighting();
+            var glowWidth = parameters.GetOuterGlowWidth();
 
             Vector2 labelCoords = GeometryUtil.Get2DCenter(sgroupAtoms);
 
@@ -362,7 +361,7 @@ namespace NCDK.Renderers.Generators.Standards
                                               .Resize(1 / scale, 1 / -scale)
                                               .GetOutlines())
             {
-                if (highlight != null && style == StandardGenerator.HighlightStyle.Colored)
+                if (highlight != null && style == HighlightStyles.Colored)
                 {
                     labelgroup.Add(GeneralPath.ShapeOf(outline, highlight));
                 }
@@ -372,7 +371,7 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
-            if (highlight != null && style == StandardGenerator.HighlightStyle.OuterGlow)
+            if (highlight != null && style == HighlightStyles.OuterGlow)
             {
                 ElementGroup group = new ElementGroup
                 {
