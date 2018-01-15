@@ -115,8 +115,7 @@ namespace NCDK.IO
             }
             else
             {
-                throw new CDKException("Only supported are Reaction and ChemModel, and not " + obj.GetType().Name
-                        + ".");
+                throw new CDKException($"Only supported are Reaction and ChemModel, and not {obj.GetType().Name}.");
             }
         }
 

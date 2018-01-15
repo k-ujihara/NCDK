@@ -194,21 +194,36 @@ namespace NCDK.MolViewer
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
-            IAtomContainer mol = null;
+            IChemObject _mol = null;
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     FilterIndex = 1,
-                    Filter = "MDL Molfile (*.mol)|*.mol|All Files (*.*)|*.*"
+                    Filter = "All supported files (*.mol;*.rxn)|*.mol;*.rxn|" +
+                        "MDL Molfile (*.mol)|*.mol|" +
+                        "MDL Rxnfile (*.rxn)|*.rxn|" +
+                        "All Files (*.*)|*.*"
                 };
                 bool? result = openFileDialog.ShowDialog();
                 if (result == true)
                 {
                     var fn = openFileDialog.FileName;
-                    using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
+                    var ex = Path.GetExtension(fn);
+                    switch (ex)
                     {
-                        mol = reader.Read(new AtomContainer());
+                        case ".rxn":
+                            using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
+                            {
+                                _mol = reader.Read(new Silent.Reaction());
+                            }
+                            break;
+                        default:
+                            using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
+                            {
+                                _mol = reader.Read(new Silent.AtomContainer());
+                            }
+                            break;
                     }
                 }
             }
@@ -217,10 +232,10 @@ namespace NCDK.MolViewer
                 MessageBox.Show(ex.Message);
             }
 
-            if (mol == null)
+            if (_mol == null)
                 return;
 
-            this.ChemObject = mol;
+            this.ChemObject = _mol;
             Render();
         }
 
