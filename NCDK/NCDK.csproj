@@ -1360,7 +1360,7 @@
     <Compile Include="IO\Formats\JMEFormat.cs" />
     <Compile Include="IO\Formats\MacroModelFormat.cs" />
     <Compile Include="IO\Formats\MDLFormat.cs" />
-    <Compile Include="IO\Formats\MDLRXNFormat.cs" />
+    <Compile Include="IO\Formats\MDLRXNV2000Format.cs" />
     <Compile Include="IO\Formats\MDLRXNV3000Format.cs" />
     <Compile Include="IO\Formats\MDLV2000Format.cs" />
     <Compile Include="IO\Formats\MDLV3000Format.cs" />

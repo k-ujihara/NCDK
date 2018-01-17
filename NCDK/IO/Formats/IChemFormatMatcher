@@ -22,7 +22,7 @@ NCDK.IO.Formats.InChIFormat
 NCDK.IO.Formats.InChIPlainTextFormat
 NCDK.IO.Formats.JaguarFormat
 NCDK.IO.Formats.MDLFormat
-NCDK.IO.Formats.MDLRXNFormat
+NCDK.IO.Formats.MDLRXNV2000Format
 NCDK.IO.Formats.MDLRXNV3000Format
 NCDK.IO.Formats.MDLV2000Format
 NCDK.IO.Formats.MDLV3000Format

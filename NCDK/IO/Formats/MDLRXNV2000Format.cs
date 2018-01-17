@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -25,17 +26,17 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    public class MDLRXNFormat : SimpleChemFormatMatcher, IChemFormatMatcher
+    public class MDLRXNV2000Format : AbstractResourceFormat, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;
 
-        public MDLRXNFormat() { }
+        public MDLRXNV2000Format() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new MDLRXNFormat();
+                if (myself == null) myself = new MDLRXNV2000Format();
                 return myself;
             }
         }
@@ -53,28 +54,50 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions => new string[] { "rxn" };
 
         /// <inheritdoc/>
-        public override string ReaderClassName => "NCDK.IO.MDLRXNReader";
+        public string ReaderClassName => "NCDK.IO.MDLRXNV2000Reader";
 
         /// <inheritdoc/>
-        public override string WriterClassName => null;
+        public string WriterClassName => null;
 
         /// <inheritdoc/>
-        public override bool Matches(int lineNumber, string line)
+        public MatchResult Matches(IList<string> lines)
         {
-            if (line.StartsWith("$RXN"))
+            // if the first line doesn't have '$RXN' then it can't match
+            if (lines.Count < 1 || lines[0].Trim() != "$RXN")
+                return MatchResult.NO_MATCH;
+
+            // check the header (fifth line)
+            string header = lines.Count > 4 ? lines[4] : "";
+
+            // atom count
+            if (header.Length < 3 || !char.IsDigit(header[2])) return MatchResult.NO_MATCH;
+            // bond count
+            if (header.Length < 6 || !char.IsDigit(header[5])) return MatchResult.NO_MATCH;
+
+            // check the rest of the header is only spaces and digits
+            if (header.Length > 6)
             {
-                return true;
+                string remainder = header.Substring(6).Trim();
+                for (int i = 0; i < remainder.Length; ++i)
+                {
+                    char c = remainder[i];
+                    if (!(char.IsDigit(c) || char.IsWhiteSpace(c)))
+                    {
+                        return MatchResult.NO_MATCH;
+                    }
+                }
             }
-            return false;
+
+            return new MatchResult(true, this, 0);
         }
 
         /// <inheritdoc/>
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures => DataFeatures.None;
+        public int SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures => DataFeatures.None;
+        public int RequiredDataFeatures => DataFeatures.None;
     }
 }

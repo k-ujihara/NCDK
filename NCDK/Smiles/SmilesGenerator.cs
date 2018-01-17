@@ -343,7 +343,6 @@ namespace NCDK.Smiles
 
                     if (SmiFlavors.IsSet(flavour, SmiFlavor.StereoCisTrans))
                     {
-
                         // FIXME: required to ensure canonical double bond labelling
                         g.Sort(new Graph.VisitHighOrderFirst());
 
@@ -427,6 +426,7 @@ namespace NCDK.Smiles
         /// write the output order to the provided array.
         /// </summary>
         /// <param name="reaction">CDK reaction instance</param>
+        /// <param name="ordering">order of output</param>
         /// <returns>reaction SMILES</returns>
         public string Create(IReaction reaction, int[] ordering)
         {

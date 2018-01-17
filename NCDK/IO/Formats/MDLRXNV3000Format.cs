@@ -50,31 +50,15 @@ namespace NCDK.IO.Formats
 
         public MatchResult Matches(IList<string> lines)
         {
-
             // if the first line doesn't have '$RXN' then it can't match
-            if (lines.Count < 1 || !lines[0].Contains("$RXN")) return MatchResult.NO_MATCH;
+            if (lines.Count < 1 || !lines[0].StartsWith("$RXN V3000"))
+                return MatchResult.NO_MATCH;
 
             // check the header (fifth line)
             string header = lines.Count > 4 ? lines[4] : "";
 
-            // atom count
-            if (header.Length < 3 || !char.IsDigit(header[2])) return MatchResult.NO_MATCH;
-            // bond count
-            if (header.Length < 6 || !char.IsDigit(header[5])) return MatchResult.NO_MATCH;
-
-            // check the rest of the header is only spaces and digits
-            if (header.Length > 6)
-            {
-                string remainder = header.Substring(6).Trim();
-                for (int i = 0; i < remainder.Length; ++i)
-                {
-                    char c = remainder[i];
-                    if (!(char.IsDigit(c) || char.IsWhiteSpace(c)))
-                    {
-                        return MatchResult.NO_MATCH;
-                    }
-                }
-            }
+            if (!header.StartsWith("M  V30 "))
+                return MatchResult.NO_MATCH;
 
             return new MatchResult(true, this, 0);
         }

@@ -58,7 +58,8 @@ namespace NCDK.IO.Formats
         {
             for (int i = 0; i < lines.Count; i++)
             {
-                if (Matches(i + 1, lines[i])) return new MatchResult(true, this, i);
+                if (Matches(i + 1, lines[i]))
+                    return new MatchResult(true, this, i);
             }
             return MatchResult.NO_MATCH;
         }

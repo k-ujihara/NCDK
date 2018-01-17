@@ -67,7 +67,7 @@ namespace NCDK.IO
             : this(new StreamReader(input), mode)
         { }
 
-        public override IResourceFormat Format => MDLRXNFormat.Instance;
+        public override IResourceFormat Format => MDLRXNV2000Format.Instance;
 
         public override bool Accepts(Type type)
         {
