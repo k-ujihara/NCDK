@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NCDK.MolViewer.Properties {
+namespace NCDK.Controls.Properties {
     using System;
     
     

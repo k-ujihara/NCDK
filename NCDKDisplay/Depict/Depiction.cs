@@ -95,7 +95,7 @@ namespace NCDK.Depict
             this.model = model;
         }
 
-        public abstract Size Draw(DrawingVisual drawingVisual);
+        public abstract Size Draw(DrawingContext drawingVisual);
 
         /// <summary>
         /// Render the image to an SVG image.
@@ -332,12 +332,15 @@ namespace NCDK.Depict
                         EdgeMode.Unspecified : EdgeMode.Aliased);
             }
 
-            var size = Draw(drawingVisual);
+            using (var drawingContext = drawingVisual.RenderOpen())
+            {
+                var size = Draw(drawingContext);
 
-            // create the image for rendering
-            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
-            img.Render(drawingVisual);
-            return img;
+                // create the image for rendering
+                var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
+                img.Render(drawingVisual);
+                return img;
+            }
         }
 
         /// <summary>

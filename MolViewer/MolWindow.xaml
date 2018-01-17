@@ -1,9 +1,10 @@
-﻿<Window x:Class="NCDK.MolViewer.MolWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NCDK.MolViewer"
+        xmlns:local="clr-namespace:NCDK.Controls"
+        x:Class="NCDK.Controls.MolWindow"
         mc:Ignorable="d"
         Title="MolWindow" Width="702.667" Height="428">
     <DockPanel Margin="0,0,-0.333,0">
@@ -28,6 +29,9 @@
             <Label Content="SMILES:" DockPanel.Dock="Top" HorizontalAlignment="Left" Width="54"/>
             <TextBox x:Name="textSmiles" DockPanel.Dock="Top" TextWrapping="Wrap" Text="" Margin="54,0,0,0"/>
         </Grid>
-        <Grid Name="myGrid" DockPanel.Dock="Bottom" Margin="0" UseLayoutRounding="False"/>
+        <Grid x:Name="myGrid" DockPanel.Dock="Bottom" UseLayoutRounding="False">
+            <local:ChemObjectBox x:Name="objectBox" RenderTransformOrigin="0.251,0.373"/>
+        </Grid>
     </DockPanel>
+
 </Window>

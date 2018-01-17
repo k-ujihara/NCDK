@@ -89,7 +89,7 @@ namespace NCDK.Depict
             this.nRow = nRow;
         }
 
-        public override Size Draw(DrawingVisual drawingVisual)
+        public override Size Draw(DrawingContext drawingContext)
         {
             // format margins and padding for raster images
             double margin = GetMarginValue(DepictionGenerator.DefaultPxMargin);
@@ -106,39 +106,36 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, required, null);
             double fitting = CalcFitting(margin, padding, required, null);
 
-            using (var g2 = drawingVisual.RenderOpen())
+            IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(drawingContext);
+
+            visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
+
+            // compound the zoom, fitting and scaling into a single value
+            double rescale = zoom * fitting * scale;
+
+            // x,y base coordinates include the margin and centering (only if fitting to a size)
+            double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
+            double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
+
+            for (int i = 0; i < elements.Count; i++)
             {
-                IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
+                int row = i / nCol;
+                int col = i % nCol;
 
-                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
+                // skip empty elements
+                var bounds = this.elements[i];
+                if (bounds.IsEmpty())
+                    continue;
 
-                // compound the zoom, fitting and scaling into a single value
-                double rescale = zoom * fitting * scale;
+                // calculate the 'view' bounds:
+                //  amount of padding depends on which row or column we are in.
+                //  the width/height of this col/row can be determined by the next offset
+                double x = xBase + col * padding + rescale * xOffset[col];
+                double y = yBase + row * padding + rescale * yOffset[row];
+                double w = rescale * (xOffset[col + 1] - xOffset[col]);
+                double h = rescale * (yOffset[row + 1] - yOffset[row]);
 
-                // x,y base coordinates include the margin and centering (only if fitting to a size)
-                double xBase = margin + (total.width - 2 * margin - (nCol - 1) * padding - (rescale * xOffset[nCol])) / 2;
-                double yBase = margin + (total.height - 2 * margin - (nRow - 1) * padding - (rescale * yOffset[nRow])) / 2;
-
-                for (int i = 0; i < elements.Count; i++)
-                {
-                    int row = i / nCol;
-                    int col = i % nCol;
-
-                    // skip empty elements
-                    var bounds = this.elements[i];
-                    if (bounds.IsEmpty())
-                        continue;
-
-                    // calculate the 'view' bounds:
-                    //  amount of padding depends on which row or column we are in.
-                    //  the width/height of this col/row can be determined by the next offset
-                    double x = xBase + col * padding + rescale * xOffset[col];
-                    double y = yBase + row * padding + rescale * yOffset[row];
-                    double w = rescale * (xOffset[col + 1] - xOffset[col]);
-                    double h = rescale * (yOffset[row + 1] - yOffset[row]);
-
-                    Draw(visitor, zoom, bounds, new Rect(x, y, w, h));
-                }
+                Draw(visitor, zoom, bounds, new Rect(x, y, w, h));
             }
 
             return new Size(total.width, total.height);

@@ -30,7 +30,7 @@ namespace NCDK.IO.Formats
     {
         public MDLRXNFormatTest()
         {
-            base.SetChemFormatMatcher((IChemFormatMatcher)MDLRXNFormat.Instance);
+            base.SetChemFormatMatcher((IChemFormatMatcher)MDLRXNV2000Format.Instance);
         }
     }
 }

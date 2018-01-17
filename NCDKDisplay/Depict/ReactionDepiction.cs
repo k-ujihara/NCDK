@@ -23,7 +23,6 @@
 
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
-using NCDK.Renderers.Generators;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
@@ -31,7 +30,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace NCDK.Depict
 {
@@ -165,7 +163,7 @@ namespace NCDK.Depict
             // arrow parameters
             this.arrowIdx = Math.Max(reactants.Count + reactants.Count - 1, 0);
             this.direction = direction;
-            this.arrowHeight = plus.Height;
+            this.arrowHeight = plus.Height * 2;
             this.minArrowWidth = 4 * arrowHeight;
 
             mainDim = Dimensions.OfGrid(mainComp,
@@ -211,8 +209,11 @@ namespace NCDK.Depict
             }
         }
 
-        public override Size Draw(DrawingVisual drawingVisual)
+        public override Size Draw(DrawingContext g2)
         {
+            // we use the AWT for vector graphics if though we're raster because
+            // fractional strokes can be figured out by interpolation, without
+            // when we shrink diagrams bonds can look too bold/chubby
             // format margins and padding for raster images
             double scale = model.GetScale();
             double zoom = model.GetZoomFactor();
@@ -234,114 +235,108 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, null);
 
-            // we use the AWT for vector graphics if though we're raster because
-            // fractional strokes can be figured out by interpolation, without
-            // when we shrink diagrams bonds can look too bold/chubby
-            using (var g2 = drawingVisual.RenderOpen())
+            IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
+
+            visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
+
+            // compound the zoom, fitting and scaling into a single value
+            double rescale = zoom * fitting * scale;
+            double mainCompOffset = 0;
+
+            // shift product x-offset to make room for the arrow / side components
+            mainCompOffset = fitting * sideRequired.height + nSideRow * padding - fitting * firstRowHeight / 2;
+            for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
             {
-                IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
-
-                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
-
-                // compound the zoom, fitting and scaling into a single value
-                double rescale = zoom * fitting * scale;
-                double mainCompOffset = 0;
-
-                // shift product x-offset to make room for the arrow / side components
-                mainCompOffset = fitting * sideRequired.height + nSideRow * padding - fitting * firstRowHeight / 2;
-                for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
-                {
-                    xOffsets[i] += sideRequired.width * 1 / (scale * zoom);
-                }
-
-                // MAIN COMPONENTS DRAW
-                // x,y base coordinates include the margin and centering (only if fitting to a size)
-                double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-                double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
-                double xBase = margin + (total.width - totalRequiredWidth) / 2;
-                double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
-                for (int i = 0; i < mainComp.Count; i++)
-                {
-                    int row = i / nCol;
-                    int col = i % nCol;
-
-                    // calculate the 'view' bounds:
-                    //  amount of padding depends on which row or column we are in.
-                    //  the width/height of this col/row can be determined by the next offset
-                    double x = xBase + col * padding + rescale * xOffsets[col];
-                    double y = yBase + row * padding + rescale * yOffsets[row];
-                    double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
-                    double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
-
-                    // intercept arrow draw and make it as big as need
-                    if (i == arrowIdx)
-                    {
-                        w = rescale * (xOffsets[i + 1] - xOffsets[i]) + Math.Max(0, nSideCol - 1) * padding;
-                        Draw(visitor,
-                             1, // no zoom since arrows is drawn as big as needed
-                             CreateArrow(w, arrowHeight * rescale),
-                             MakeRect(x, y, w, h));
-                        continue;
-                    }
-
-                    // extra padding from the side components
-                    if (i > arrowIdx)
-                        x += Math.Max(0, nSideCol - 1) * padding;
-
-                    // skip empty elements
-                    Bounds bounds = this.mainComp[i];
-                    if (bounds.IsEmpty())
-                        continue;
-
-                    Draw(visitor, zoom, bounds, MakeRect(x, y, w, h));
-                }
-
-                // RXN TITLE DRAW
-                if (!title.IsEmpty())
-                {
-                    double y = yBase + nRow * padding + rescale * yOffsets[nRow];
-                    double h = rescale * title.Height;
-                    Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
-                }
-
-                // SIDE COMPONENTS DRAW
-                xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
-                yBase -= mainCompOffset;
-                for (int i = 0; i < sideComps.Count; i++)
-                {
-                    int row = i / nSideCol;
-                    int col = i % nSideCol;
-
-                    // calculate the 'view' bounds:
-                    //  amount of padding depends on which row or column we are in.
-                    //  the width/height of this col/row can be determined by the next offset
-                    double x = xBase + col * padding + rescale * xOffsetSide[col];
-                    double y = yBase + row * padding + rescale * yOffsetSide[row];
-                    double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
-                    double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
-
-                    Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
-                }
-
-                // CONDITIONS DRAW
-                if (!conditions.IsEmpty())
-                {
-                    yBase += mainCompOffset;        // back to top
-                    yBase += (fitting * mainRequired.height) / 2;    // now on center line (arrow)
-                    yBase += arrowHeight;           // now just bellow
-                    Draw(visitor, zoom, conditions, MakeRect(xBase,
-                                                         yBase,
-                                                         fitting * condRequired.width, fitting * condRequired.height));
-                }
-
-                // reset shared xOffsets
-                if (sideComps.Any())
-                {
-                    for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
-                        xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
-                }
-                return new Size(total.width, total.height);
+                xOffsets[i] += sideRequired.width * 1 / (scale * zoom);
             }
+
+            // MAIN COMPONENTS DRAW
+            // x,y base coordinates include the margin and centering (only if fitting to a size)
+            double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
+            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.height + fitting * Math.Max(0, titleRequired.height);
+            double xBase = margin + (total.width - totalRequiredWidth) / 2;
+            double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
+            for (int i = 0; i < mainComp.Count; i++)
+            {
+                int row = i / nCol;
+                int col = i % nCol;
+
+                // calculate the 'view' bounds:
+                //  amount of padding depends on which row or column we are in.
+                //  the width/height of this col/row can be determined by the next offset
+                double x = xBase + col * padding + rescale * xOffsets[col];
+                double y = yBase + row * padding + rescale * yOffsets[row];
+                double w = rescale * (xOffsets[col + 1] - xOffsets[col]);
+                double h = rescale * (yOffsets[row + 1] - yOffsets[row]);
+
+                // intercept arrow draw and make it as big as need
+                if (i == arrowIdx)
+                {
+                    w = rescale * (xOffsets[i + 1] - xOffsets[i]) + Math.Max(0, nSideCol - 1) * padding;
+                    Draw(visitor,
+                         1, // no zoom since arrows is drawn as big as needed
+                         CreateArrow(w, arrowHeight * rescale),
+                         MakeRect(x, y, w, h));
+                    continue;
+                }
+
+                // extra padding from the side components
+                if (i > arrowIdx)
+                    x += Math.Max(0, nSideCol - 1) * padding;
+
+                // skip empty elements
+                Bounds bounds = this.mainComp[i];
+                if (bounds.IsEmpty())
+                    continue;
+
+                Draw(visitor, zoom, bounds, MakeRect(x, y, w, h));
+            }
+
+            // RXN TITLE DRAW
+            if (!title.IsEmpty())
+            {
+                double y = yBase + nRow * padding + rescale * yOffsets[nRow];
+                double h = rescale * title.Height;
+                Draw(visitor, zoom, title, MakeRect(0, y, total.width, h));
+            }
+
+            // SIDE COMPONENTS DRAW
+            xBase += arrowIdx * padding + rescale * xOffsets[arrowIdx];
+            yBase -= mainCompOffset;
+            for (int i = 0; i < sideComps.Count; i++)
+            {
+                int row = i / nSideCol;
+                int col = i % nSideCol;
+
+                // calculate the 'view' bounds:
+                //  amount of padding depends on which row or column we are in.
+                //  the width/height of this col/row can be determined by the next offset
+                double x = xBase + col * padding + rescale * xOffsetSide[col];
+                double y = yBase + row * padding + rescale * yOffsetSide[row];
+                double w = rescale * (xOffsetSide[col + 1] - xOffsetSide[col]);
+                double h = rescale * (yOffsetSide[row + 1] - yOffsetSide[row]);
+
+                Draw(visitor, zoom, sideComps[i], MakeRect(x, y, w, h));
+            }
+
+            // CONDITIONS DRAW
+            if (!conditions.IsEmpty())
+            {
+                yBase += mainCompOffset;        // back to top
+                yBase += (fitting * mainRequired.height) / 2;    // now on center line (arrow)
+                yBase += arrowHeight;           // now just bellow
+                Draw(visitor, zoom, conditions, MakeRect(xBase,
+                                                     yBase,
+                                                     fitting * condRequired.width, fitting * condRequired.height));
+            }
+
+            // reset shared xOffsets
+            if (sideComps.Any())
+            {
+                for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
+                    xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
+            }
+            return new Size(total.width, total.height);
         }
 
         internal override string ToVectorString(string fmt)

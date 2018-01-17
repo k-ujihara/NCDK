@@ -7,7 +7,7 @@
     <ProjectGuid>{D7CA78A9-2F56-4FDD-883B-37C237569FAA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NCDK.MolViewer</RootNamespace>
+    <RootNamespace>NCDK.Controls</RootNamespace>
     <AssemblyName>MolViewer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,7 +42,7 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>NCDK.MolViewer.App</StartupObject>
+    <StartupObject>NCDK.Controls.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -73,6 +73,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChemObjectBox.cs" />
     <Compile Include="MolWindow.xaml.cs">
       <DependentUpon>MolWindow.xaml</DependentUpon>
     </Compile>
