@@ -295,7 +295,7 @@ namespace NCDK.Renderers.Generators
             IAtomContainer snop = MakeSNOPSquare();
             model.SetAtomColorByType(false);
             var elements = GetAllSimpleElements(generator, snop);
-            Color defaultColor = RenderModelTools.DefaultAtomColor;
+            Color defaultColor = RendererModelTools.DefaultAtomColor;
             foreach (var element in elements)
             {
                 AtomSymbolElement symbolElement = (AtomSymbolElement)Unbox(element);

@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -53,10 +54,10 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions { get; } = new string[] { "mol2" };
 
         /// <inheritdoc/>
-        public override string ReaderClassName => "NCDK.IO.Mol2Reader";
+        public override string ReaderClassName { get; } = typeof(Mol2Reader).FullName;
 
         /// <inheritdoc/>
-        public override string WriterClassName => "NCDK.IO.Mol2Writer";
+        public override string WriterClassName { get; } = typeof(Mol2Writer).FullName;
 
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
@@ -72,10 +73,10 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
+        public override DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
                     | DataFeatures.HAS_GRAPH_REPRESENTATION;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

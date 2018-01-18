@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -42,7 +43,7 @@ namespace NCDK.IO.Formats
         }
 
         /// <inheritdoc/>
-        public override string FormatName => "MDL Reaction format";
+        public override string FormatName => "MDL RXN V2000";
 
         /// <inheritdoc/>
         public override string MIMEType => "chemical/x-mdl-rxnfile";
@@ -54,7 +55,7 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions => new string[] { "rxn" };
 
         /// <inheritdoc/>
-        public string ReaderClassName => "NCDK.IO.MDLRXNV2000Reader";
+        public string ReaderClassName { get; } = typeof(MDLRXNV2000Reader).FullName;
 
         /// <inheritdoc/>
         public string WriterClassName => null;
@@ -95,9 +96,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public int SupportedDataFeatures => DataFeatures.None;
+        public DataFeatures SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public int RequiredDataFeatures => DataFeatures.None;
+        public DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

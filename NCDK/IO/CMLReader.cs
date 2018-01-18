@@ -107,10 +107,12 @@ namespace NCDK.IO
         {
             Debug.WriteLine("Started parsing from input...");
 
-            XmlReaderSettings setting = new XmlReaderSettings();
-            setting.DtdProcessing = DtdProcessing.Parse;
-            setting.ValidationFlags = XmlSchemaValidationFlags.None;
-            setting.XmlResolver = new CMLResolver();
+            XmlReaderSettings setting = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Parse,
+                ValidationFlags = XmlSchemaValidationFlags.None,
+                XmlResolver = new CMLResolver()
+            };
 
             XmlReader parser;
             if (input == null)
@@ -131,8 +133,10 @@ namespace NCDK.IO
                 handler.RegisterConvention(conv, userConventions[conv]);
             }
 
-            var reader = new XReader();
-            reader.Handler = handler;
+            var reader = new XReader
+            {
+                Handler = handler
+            };
             try
             {
                 XDocument doc = XDocument.Load(parser);

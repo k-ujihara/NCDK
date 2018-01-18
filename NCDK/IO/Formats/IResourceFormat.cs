@@ -20,10 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NCDK.IO.Formats
 {
@@ -40,31 +36,31 @@ namespace NCDK.IO.Formats
     {
         /// <summary>
         /// Returns a one-lined format name of the format.
-       /// </summary>
+        /// </summary>
         string FormatName { get; }
 
         /// <summary>
         /// Returns the preferred resource name extension.
-       /// </summary>
+        /// </summary>
         string PreferredNameExtension { get; }
 
         /// <summary>
         /// Returns an array of common resource name extensions.
-       /// </summary>
+        /// </summary>
         string[] NameExtensions { get; }
 
         /// <summary>
         /// Returns the accepted MIME type for this format.
         ///
         /// <returns>null if no MIME type has been accepted on</returns>
-       /// </summary>
+        /// </summary>
         string MIMEType { get; }
 
         /// <summary>
         /// Indicates if the format is an XML-based language.
         ///
         /// <returns>if the format is XML-based.</returns>
-       /// </summary>
+        /// </summary>
         bool IsXmlBased { get; }
     }
 }

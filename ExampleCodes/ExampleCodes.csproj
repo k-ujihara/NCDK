@@ -124,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property_Example.cs" />
     <Compile Include="QSAR\DescriptorEngine_Example.cs" />
+    <Compile Include="Renderers\Elements\MarkedElement_Example.cs" />
     <Compile Include="RingSearches\AllRingsFinder_Example.cs" />
     <Compile Include="RingSearches\RingSearch_Example.cs" />
     <Compile Include="Signatures\MoleculeSignature_Example.cs" />

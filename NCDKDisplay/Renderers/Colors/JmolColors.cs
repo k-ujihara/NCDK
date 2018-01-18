@@ -20,8 +20,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using System.Windows.Media;
-using WPF = System.Windows;
 using static NCDK.Config.Elements;
 
 namespace NCDK.Renderers.Colors

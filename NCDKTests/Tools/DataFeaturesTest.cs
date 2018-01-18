@@ -33,7 +33,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestDataFeatures()
         {
-            Assert.IsFalse(DataFeatures.HAS_2D_COORDINATES == -1);
+            Assert.IsFalse(DataFeatures.HAS_2D_COORDINATES == (DataFeatures)(-1));
         }
 
         // FIXME: should add a test here that used introspection and test whether there

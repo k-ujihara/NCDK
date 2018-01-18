@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System;
 
@@ -38,13 +39,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "ZMatrix";
+
+        /// <inheritdoc/>
         public override string MIMEType => null;
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => null;
+
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = Array.Empty<string>();
-        public override string ReaderClassName => "NCDK.IO.ZMatrixReader";
+
+        /// <inheritdoc/>
+        public override string ReaderClassName { get; } = typeof(ZMatrixReader).FullName;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (lineNumber == 4 && line.IndexOf("Z Matrix") != -1)
@@ -55,8 +68,7 @@ namespace NCDK.IO.Formats
         }
 
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }
-

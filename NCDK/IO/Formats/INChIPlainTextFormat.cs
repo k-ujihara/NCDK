@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -37,13 +38,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "IUPAC-NIST Chemical Identifier (Plain Text)";
+
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-inchi";
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => null;
+
+        /// <inheritdoc/>
         public override string[] NameExtensions => new string[0];
-        public override string ReaderClassName => "NCDK.IO.InChIPlainTextReader";
+
+        /// <inheritdoc/>
+        public override string ReaderClassName { get; } = typeof(InChIPlainTextReader).FullName;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.StartsWith("INChI="))
@@ -53,8 +66,13 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

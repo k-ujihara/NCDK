@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -38,16 +39,34 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "PubChem Substances XML";
-        public override string MIMEType => null;
-        public override string PreferredNameExtension => NameExtensions[0];
-        public override string[] NameExtensions { get; } = new string[] { "xml" };
-        public override string ReaderClassName => null;
-        public override string WriterClassName => null;
-        public override bool IsXmlBased => true;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
 
+        /// <inheritdoc/>
+        public override string MIMEType => null;
+
+        /// <inheritdoc/>
+        public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
+        public override string[] NameExtensions { get; } = new string[] { "xml" };
+
+        /// <inheritdoc/>
+        public override string ReaderClassName => null;
+
+        /// <inheritdoc/>
+        public override string WriterClassName => null;
+
+        /// <inheritdoc/>
+        public override bool IsXmlBased => true;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.Contains("<PC-Substances")) return true;

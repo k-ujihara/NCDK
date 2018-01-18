@@ -73,20 +73,20 @@ namespace NCDK.IO.Formats
         [TestMethod()]
         public void TestGetSupportedDataFeatures()
         {
-            int supported = chemFormat.SupportedDataFeatures;
+            var supported = chemFormat.SupportedDataFeatures;
             Assert.IsTrue(supported >= DataFeatures.None);
-            Assert.IsTrue(supported <= 1 << 13); // 13 features, so: all summed <= 1<<13
+            Assert.IsTrue(supported <= (DataFeatures)(1 << 13)); // 13 features, so: all summed <= 1<<13
         }
 
         [TestMethod()]
         public void TestGetRequiredDataFeatures()
         {
-            int required = chemFormat.RequiredDataFeatures;
+            var required = chemFormat.RequiredDataFeatures;
             Assert.IsTrue(required >= DataFeatures.None);
-            Assert.IsTrue(required <= 1 << 13); // 13 features, so: all summed <= 1<<13
+            Assert.IsTrue(required <= (DataFeatures)(1 << 13)); // 13 features, so: all summed <= 1<<13
 
             // test that the required features is a subset of the supported features
-            int supported = chemFormat.SupportedDataFeatures;
+            var supported = chemFormat.SupportedDataFeatures;
             Assert.IsTrue(supported - required >= 0);
         }
     }

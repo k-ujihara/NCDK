@@ -16,12 +16,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using NCDK.Tools;
+
 using NCDK.Common.Primitives;
+using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -58,7 +56,7 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions { get; } = new string[] { "mol" };
 
         /// <inheritdoc/>
-        public override string ReaderClassName => typeof(NCDK.IO.MDLReader).ToString();
+        public override string ReaderClassName => typeof(MDLReader).ToString();
 
         /// <inheritdoc/>
         public override string WriterClassName => null;
@@ -104,12 +102,12 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures
+        public override DataFeatures SupportedDataFeatures
                 => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
                     | DataFeatures.HAS_GRAPH_REPRESENTATION;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures
+        public override DataFeatures RequiredDataFeatures
             => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

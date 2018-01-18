@@ -30,7 +30,7 @@
             <TextBox x:Name="textSmiles" DockPanel.Dock="Top" TextWrapping="Wrap" Text="" Margin="54,0,0,0"/>
         </Grid>
         <Grid x:Name="myGrid" DockPanel.Dock="Bottom" UseLayoutRounding="False">
-            <local:ChemObjectBox x:Name="objectBox" RenderTransformOrigin="0.251,0.373"/>
+            <local:ChemObjectBox x:Name="objectBox" RenderTransformOrigin="0,0"/>
         </Grid>
     </DockPanel>
 

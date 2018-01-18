@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -40,13 +41,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "ShelXL";
+        
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-shelx";
+        
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+        
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = new string[] { "ins", "res" };
-        public override string ReaderClassName => "NCDK.IO.ShelXReader";
-        public override string WriterClassName => "NCDK.IO.ShelXWriter";
+        
+        /// <inheritdoc/>
+        public override string ReaderClassName { get; } = typeof(ShelXReader).FullName;
+        
+        /// <inheritdoc/>
+        public override string WriterClassName { get; } = typeof(ShelXWriter).FullName;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.StartsWith("ZERR ") || line.StartsWith("TITL "))
@@ -56,9 +69,14 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => RequiredDataFeatures;
-        public override int RequiredDataFeatures =>
+        
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => RequiredDataFeatures;
+        
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures =>
                 DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_UNITCELL_PARAMETERS
                     | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }

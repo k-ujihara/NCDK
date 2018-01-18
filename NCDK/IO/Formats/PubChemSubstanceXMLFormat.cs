@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -38,16 +39,35 @@ namespace NCDK.IO.Formats
             }
         }
 
-        public override string FormatName => "PubChem Substance XML";
-        public override string MIMEType => null;
-        public override string PreferredNameExtension => NameExtensions[0];
-        public override string[] NameExtensions { get; } = new string[] { "xml" };
-        public string ReaderClassName => "NCDK.IO.PCSubstanceXMLReader";
-        public string WriterClassName => null;
-        public override bool IsXmlBased => true;
-        public int SupportedDataFeatures => DataFeatures.None;
-        public int RequiredDataFeatures => DataFeatures.None;
 
+        /// <inheritdoc/>
+        public override string FormatName => "PubChem Substance XML";
+
+        /// <inheritdoc/>
+        public override string MIMEType => null;
+
+        /// <inheritdoc/>
+        public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
+        public override string[] NameExtensions { get; } = new string[] { "xml" };
+
+        /// <inheritdoc/>
+        public string ReaderClassName { get; } = typeof(PCSubstanceXMLReader).FullName;
+
+        /// <inheritdoc/>
+        public string WriterClassName => null;
+
+        /// <inheritdoc/>
+        public override bool IsXmlBased => true;
+
+        /// <inheritdoc/>
+        public DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public DataFeatures RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
         public MatchResult Matches(IList<string> lines)
         {
             MatchResult result = MatchResult.NO_MATCH;

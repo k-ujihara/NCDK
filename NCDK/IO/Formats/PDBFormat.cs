@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -53,10 +54,10 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions { get; } = new string[] { "pdb", "ent" };
 
         /// <inheritdoc/>
-        public override string ReaderClassName => "NCDK.IO.PDBReader";
+        public override string ReaderClassName { get; } = typeof(PDBReader).FullName;
 
         /// <inheritdoc/>
-        public override string WriterClassName => "NCDK.IO.PDBWriter";
+        public override string WriterClassName { get; } = typeof(PDBWriter).FullName;
 
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
@@ -72,11 +73,11 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures =>
+        public override DataFeatures SupportedDataFeatures =>
             DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES | RequiredDataFeatures;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures =>
-             DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public override DataFeatures RequiredDataFeatures =>
+            DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

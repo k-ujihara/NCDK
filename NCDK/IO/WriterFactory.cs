@@ -22,6 +22,7 @@
  *
  */
 using NCDK.IO.Formats;
+using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -65,7 +66,7 @@ namespace NCDK.IO
         /// <param name="features">the data features for which a IChemFormat is searched</param>
         /// <returns>an array of IChemFormat's that can contain the given features</returns>
         /// <seealso cref="Tools.DataFeatures"/>
-        public IChemFormat[] FindChemFormats(int features)
+        public IChemFormat[] FindChemFormats(DataFeatures features)
         {
             if (formats == null) LoadFormats();
 
@@ -165,8 +166,7 @@ namespace NCDK.IO
                 {
                     try
                     {
-                        Type clazz = null;
-                        if (!registeredReaders.TryGetValue(writerClassName, out clazz))
+                        if (!registeredReaders.TryGetValue(writerClassName, out Type clazz))
                         {
                             clazz = this.GetType().Assembly.GetType(writerClassName);
                             if (clazz == null)

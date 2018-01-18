@@ -3,11 +3,21 @@ using System.Windows.Media;
 
 namespace NCDK.Controls
 {
-    public class ChemObjectBox : System.Windows.Controls.Image
+    public class ChemObjectBox : System.Windows.Controls.UserControl
     {
-        public DepictionGenerator Generator { get; } = new DepictionGenerator();
+        private static DepictionGenerator Generator { get; } = new DepictionGenerator();
+        private Depiction depiction;
         private IChemObject _ChemObject = null;
 
+        protected override void OnRender(DrawingContext dc)
+        {
+            base.OnRender(dc);
+
+            if (depiction != null)
+            {
+                depiction.Draw(dc);
+            }
+        }
 
         public IChemObject ChemObject
         {
@@ -18,7 +28,6 @@ namespace NCDK.Controls
                 {
                     _ChemObject = value;
 
-                    Depiction depiction;
                     switch (ChemObject)
                     {
                         case IAtomContainer mol:
@@ -30,16 +39,6 @@ namespace NCDK.Controls
                         default:
                             depiction = null;
                             break;
-                    }
-
-                    if (depiction != null)
-                    {
-                        var drawingVisual = new DrawingVisual();
-                        using (var g2 = drawingVisual.RenderOpen())
-                        {
-                            depiction.Draw(g2);
-                        }
-                        Source = new DrawingImage(drawingVisual.Drawing);
                     }
 
                     this.InvalidateVisual();

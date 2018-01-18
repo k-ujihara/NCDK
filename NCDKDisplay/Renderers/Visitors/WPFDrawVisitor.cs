@@ -225,7 +225,7 @@ namespace NCDK.Renderers.Visitors
             get
             {
                 return rendererModel == null ?
-                    RenderModelTools.DefaultBackgroundColor :
+                    RendererModelTools.DefaultBackgroundColor :
                     rendererModel.GetBackgroundColor();
             }
         }

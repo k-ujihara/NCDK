@@ -32,7 +32,7 @@ namespace NCDK.Depict
                 depiction.WriteTo("mol.jpg");
                  
                 // manually specify the format
-                depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
+                depiction.WriteTo(Depiction.SvgFormatKey, "~/mol");
 
                 // convert to a Java buffered image
                 RenderTargetBitmap img = depiction.ToBitmap();

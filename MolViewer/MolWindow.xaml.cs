@@ -83,9 +83,9 @@ namespace NCDK.Controls
                             break;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    smiles = "Failed to create SMILES";
+                    smiles = $"Failed to create SMILES: {e.Message}";
                 }
 
                 UpdateSmilesWithoutEvent(smiles);
@@ -166,9 +166,11 @@ namespace NCDK.Controls
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     FilterIndex = 1,
-                    Filter = "All supported files (*.mol;*.rxn)|*.mol;*.rxn|" +
+                    Filter = 
+                        "All supported files (*.mol;*.rxn;*.mol2)|*.mol;*.rxn;*.mol2|" +
                         "MDL Molfile (*.mol)|*.mol|" +
                         "MDL Rxnfile (*.rxn)|*.rxn|" +
+                        "Mol2 (Sybyl) (*.mol2)|*.mol2|" +
                         "All Files (*.*)|*.*"
                 };
                 bool? result = openFileDialog.ShowDialog();
@@ -187,6 +189,8 @@ namespace NCDK.Controls
                         default:
                             using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
                             {
+                                if (reader == null)
+                                    throw new Exception("Not supported.");
                                 _mol = reader.Read(new Silent.AtomContainer());
                             }
                             break;

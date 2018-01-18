@@ -40,9 +40,9 @@ namespace NCDK.Depict
     public abstract class Depiction
     {
         /// <summary>
-        /// For converting MM coordinates to PS Point (1/72 inch)
+        /// For converting millimeter coordinates to PS Point (1/72 inch)
         /// </summary>
-        internal const double MM_TO_POINT = 2.83464566751;
+        internal const double MillimeterToPoint = 2.83464566751;
 
         /// <summary>
         /// When no fixed padding value is specified we use margin
@@ -53,34 +53,27 @@ namespace NCDK.Depict
         /// <summary>
         /// Structured Vector Graphics (SVG) format key.
         /// </summary>
-        public const string SVG_FMT = "svg";
-
-        /// <summary>
-        /// PostScript (PS) format key.
-        /// </summary>
-        public const string PS_FMT = "ps";
-
-        /// <summary>
-        /// Portable Document Format (PDF) format key.
-        /// </summary>
-        public const string PDF_FMT = "pdf";
+        public const string SvgFormatKey = "svg";
 
         /// <summary>
         /// Joint Photographic Experts Group (JPG) format key.
         /// </summary>
-        public const string JPG_FMT = "jpg";
+        public const string JpegFormatLKey = "jpg";
 
         /// <summary>
         /// Portable Network Graphics (PNG) format key.
         /// </summary>
-        public const string PNG_FMT = "png";
+        public const string PngFormatKey = "png";
 
         /// <summary>
         /// Graphics Interchange Format (GIF) format key.
         /// </summary>
-        public const string GIF_FMT = "gif";
+        public const string GifFormatKey = "gif";
 
-        internal const double ACS_1996_BOND_LENGTH_MM = 5.08;
+        /// <summary>
+        /// Bond length in mm recommended by ACS at 1996.
+        /// </summary>
+        internal const double ACS1996BondLength = 5.08;
 
         private const char DOT = '.';
 
@@ -103,25 +96,7 @@ namespace NCDK.Depict
         /// <returns>svg XML content</returns>
         public string ToSvgString()
         {
-            return ToVectorString(SVG_FMT);
-        }
-
-        /// <summary>
-        /// Render the image to an EPS format string.
-        /// </summary>
-        /// <returns>eps content</returns>
-        public string ToEpsString()
-        {
-            return ToVectorString(PS_FMT);
-        }
-
-        /// <summary>
-        /// Render the image to an PDF format string.
-        /// </summary>
-        /// <returns>pdf content</returns>
-        public string ToPdfString()
-        {
-            return ToVectorString(PDF_FMT);
+            return ToVectorString(SvgFormatKey);
         }
 
         /// <summary>
@@ -156,9 +131,9 @@ namespace NCDK.Depict
         /// Internal - implementations should overload this method for vector graphics
         /// rendering.
         /// </summary>
-        /// <param name="fmt">the vector graphics format</param>
+        /// <param name="format">the vector graphics format</param>
         /// <returns>the vector graphics format string</returns>
-        internal abstract string ToVectorString(string fmt);
+        internal abstract string ToVectorString(string format);
 
         /// <summary>
         /// List the available formats that can be rendered.
@@ -168,25 +143,14 @@ namespace NCDK.Depict
         {
             var formats = new List<string>
             {
-                SVG_FMT,
-                SVG_FMT.ToUpperInvariant(),
-                PS_FMT,
-                PS_FMT.ToUpperInvariant(),
-                PDF_FMT,
-                PDF_FMT.ToUpperInvariant(),
-
-                "bmp",
-                "bmp".ToUpperInvariant(),
-                GIF_FMT,
-                GIF_FMT.ToUpperInvariant(),
-                JPG_FMT,
-                JPG_FMT.ToUpperInvariant(),
-                PNG_FMT,
-                PNG_FMT.ToUpperInvariant(),
-                "tif",
-                "tif".ToUpperInvariant(),
-                "wmp",
-                "wmp".ToUpperInvariant()
+                SvgFormatKey,
+                SvgFormatKey.ToUpperInvariant(),
+                GifFormatKey,
+                GifFormatKey.ToUpperInvariant(),
+                JpegFormatLKey,
+                JpegFormatLKey.ToUpperInvariant(),
+                PngFormatKey,
+                PngFormatKey.ToUpperInvariant(),
             };
             return formats;
         }
@@ -194,56 +158,44 @@ namespace NCDK.Depict
         /// <summary>
         /// Write the depiction to the provided output stream.
         /// </summary>
-        /// <param name="fmt">format</param>
+        /// <param name="format">format</param>
         /// <param name="output">output stream</param>
         /// <exception cref="IOException">depiction could not be written, low level IO problem</exception>
         /// <seealso cref="ListFormats"/>
-        public void WriteTo(string fmt, Stream output)
+        public void WriteTo(string format, Stream output)
         {
-            switch (fmt.ToLowerInvariant())
+            switch (format.ToLowerInvariant())
             {
-                case SVG_FMT:
+                case SvgFormatKey:
                     {
                         var bytes = Encoding.UTF8.GetBytes(ToSvgString());
                         output.Write(bytes, 0, bytes.Length);
                     }
                     break;
-                case PS_FMT:
-                    {
-                        var bytes = Encoding.UTF8.GetBytes(ToEpsString());
-                        output.Write(bytes, 0, bytes.Length);
-                    }
-                    break;
-                case PDF_FMT:
-                    {
-                        var bytes = Encoding.UTF8.GetBytes(ToPdfString());
-                        output.Write(bytes, 0, bytes.Length);
-                    }
-                    break;
-                case PNG_FMT:
-                case JPG_FMT:
-                case GIF_FMT:
+                case PngFormatKey:
+                case JpegFormatLKey:
+                case GifFormatKey:
                     BitmapEncoder enc = null;
-                    switch (fmt.ToLowerInvariant())
+                    switch (format.ToLowerInvariant())
                     {
-                        case PNG_FMT:
+                        case PngFormatKey:
                             enc = new PngBitmapEncoder();
                             break;
-                        case JPG_FMT:
+                        case JpegFormatLKey:
                             enc = new JpegBitmapEncoder();
                             break;
-                        case GIF_FMT:
+                        case GifFormatKey:
                             enc = new GifBitmapEncoder();
                             break;
                         default:
-                            throw new NotImplementedException();
+                            throw new ApplicationException("Should not happened.");
                     }
                     var rtb = ToBitmap();
                     enc.Frames.Add(BitmapFrame.Create(rtb));
                     enc.Save(output);
                     break;
                 default:
-                    throw new NotImplementedException();
+                    throw new NotSupportedException($"{format} format is not supported.");
             }
         }
 

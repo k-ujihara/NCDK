@@ -26,7 +26,7 @@ using NCDK.IO.Formats;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-
+using NCDK.Tools;
 
 namespace NCDK.IO
 {
@@ -292,8 +292,8 @@ namespace NCDK.IO
         {
             public string ReaderClassName => null;
             public string WriterClassName => null;
-            public int SupportedDataFeatures => 0;
-            public int RequiredDataFeatures => 0;
+            public DataFeatures SupportedDataFeatures => 0;
+            public DataFeatures RequiredDataFeatures => 0;
             public string FormatName => "Dummy Format";
             public string MIMEType => null;
             public bool IsXmlBased => false;

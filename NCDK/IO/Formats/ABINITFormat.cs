@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System;
 
@@ -70,9 +71,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures => DataFeatures.None;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures => DataFeatures.None;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

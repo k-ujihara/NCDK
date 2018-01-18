@@ -455,7 +455,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// A fancy hashed wedge can be drawn if the following conditions are met:
         /// <list type="number">
-        /// <item><see cref="RenderModelTools.GetFancyHashedWedges"/> is enabled</item>
+        /// <item><see cref="RendererModelTools.GetFancyHashedWedges"/> is enabled</item>
         /// <item>Bond is of 'normal' length</item>
         /// <item>The atom at the wide has one other neighbor and no symbol displayed</item>
         /// </list>

@@ -19,7 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ *  
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO.Formats;
@@ -99,6 +101,18 @@ namespace NCDK.IO
         public void TestMDLMolV3000()
         {
             ExpectReader("NCDK.Data.MDL.molV3000.mol", MDLV3000Format.Instance, -1, -1);
+        }
+
+        [TestMethod()]
+        public void TestMDLRxnV2000()
+        {
+            ExpectReader("NCDK.Data.MDL.reaction-1.rxn", MDLRXNV2000Format.Instance, -1, -1);
+        }
+
+        [TestMethod()]
+        public void TestMDLRxnV3000()
+        {
+            ExpectReader("NCDK.Data.MDL.reaction_v3.rxn", MDLRXNV3000Format.Instance, -1, -1);
         }
 
         [TestMethod(), Ignore()] // test moved to cdk-test-pdb/PDBReaderFactoryTest

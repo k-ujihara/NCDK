@@ -165,7 +165,7 @@ namespace NCDK.Depict
             return cuts;
         }
 
-        private const string CUT_BOND = "cutbond";
+        private const string PropertyName_CutBond = "cutbond";
 
         private static List<IAtomContainer> MakeCut(IBond cut, IAtomContainer mol, Dictionary<IAtom, int> idx, int[][] adjlist)
         {
@@ -226,7 +226,7 @@ namespace NCDK.Depict
                 foreach (var atom in bvisit)
                     bfrag.Atoms.Add(atom);
                 bfrag.AddBond(bfrag.Atoms[0], bfrag.Atoms[1], cut.Order);
-                bfrag.Bonds[0].SetProperty(CUT_BOND, cut);
+                bfrag.Bonds[0].SetProperty(PropertyName_CutBond, cut);
             }
 
             if (evisit.Any())
@@ -235,7 +235,7 @@ namespace NCDK.Depict
                 foreach (var atom in evisit)
                     efrag.Atoms.Add(atom);
                 efrag.AddBond(efrag.Atoms[0], efrag.Atoms[1], cut.Order);
-                efrag.Bonds[0].SetProperty(CUT_BOND, cut);
+                efrag.Bonds[0].SetProperty(PropertyName_CutBond, cut);
             }
 
             foreach (var bond in mol.Bonds)
@@ -367,7 +367,7 @@ namespace NCDK.Depict
                         }
                         if (complexAbbr.Any())
                         {
-                            // merge together the abbreviations, iff there is at least
+                            // merge together the abbreviations, if there is at least
                             // one complex abbr
                             if (complexAbbr.Any() &&
                                 complexAbbr.Count + simpleAbbr.Count > 1)
@@ -435,7 +435,7 @@ namespace NCDK.Depict
                         Subscript = label
                     };
 
-                    IBond attachBond = frag.Bonds[0].GetProperty<IBond>(CUT_BOND);
+                    IBond attachBond = frag.Bonds[0].GetProperty<IBond>(PropertyName_CutBond);
                     IAtom attachAtom = null;
                     sgroup.Bonds.Add(attachBond);
                     for (int i = 1; i < numAtoms; i++)
@@ -660,7 +660,7 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Generates and assigns abbreviations to a molecule. Abbrevations are first
+        /// Generates and assigns abbreviations to a molecule. Abbreviations are first
         /// generated with <see cref="Generate(IAtomContainer)"/> and the filtered based on
         /// the coverage. Currently only abbreviations that cover 100%, or &lt; 40% of the
         /// atoms are assigned.
@@ -915,18 +915,19 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Load a set of abbreviations from a classpath resource or file.
+        /// Load a set of abbreviations from a resource or file.
+        /// </summary>
+        /// <remarks>
         /// <pre>
         /// *c1ccccc1 Ph
         /// *c1ccccc1 OAc
         /// </pre>
-        ///
         /// Available:
         /// <pre>
         /// obabel_superatoms.smi - 
         /// <see href="https://www.github.com/openbabel/superatoms"/>
         /// </pre>
-        /// </summary>
+        /// </remarks>
         /// <param name="path">classpath or filesystem path to a SMILES file</param>
         /// <returns>the number of loaded abbreviation</returns>
         /// <exception cref="IOException"></exception>

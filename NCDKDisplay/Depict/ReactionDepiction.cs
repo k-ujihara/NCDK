@@ -217,7 +217,7 @@ namespace NCDK.Depict
             // format margins and padding for raster images
             double scale = model.GetScale();
             double zoom = model.GetZoomFactor();
-            double margin = GetMarginValue(DepictionGenerator.DefaultPxMargin);
+            double margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // work out the required space of the main and side components separately
@@ -331,11 +331,9 @@ namespace NCDK.Depict
             }
 
             // reset shared xOffsets
-            if (sideComps.Any())
-            {
-                for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
-                    xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
-            }
+            for (int i = arrowIdx + 1; i < xOffsets.Length; i++)
+                xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
+
             return new Size(total.width, total.height);
         }
 
@@ -344,21 +342,13 @@ namespace NCDK.Depict
             // format margins and padding for raster images
             double scale = model.GetScale();
 
-            double margin = GetMarginValue(DepictionGenerator.DefaultMMMargin);
+            double margin = GetMarginValue(DepictionGenerator.DefaultMillimeterMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
-
-            // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
-            if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
-            {
-                zoom *= MM_TO_POINT;
-                margin *= MM_TO_POINT;
-                padding *= MM_TO_POINT;
-            }
+            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS1996BondLength);
 
             // work out the required space of the main and side components separately
             // will draw these in two passes (main then side) hence want different offsets for each
@@ -375,13 +365,8 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
-            // create the image for rendering
-            FreeHepWrapper wrapper = null;
-            if (!fmt.Equals(SVG_FMT))
-                wrapper = new FreeHepWrapper(fmt, total.width, total.height);
-            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.width, total.height)
-                                                            : (IDrawVisitor)WPFDrawVisitor.ForVectorGraphics(wrapper.g2);
-            if (fmt.Equals(SVG_FMT))
+            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height);
+            if (fmt.Equals(SvgFormatKey))
             {
                 SvgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor)visitor, mainComp);
             }
@@ -413,7 +398,6 @@ namespace NCDK.Depict
             double yBase = margin + Math.Max(mainCompOffset, 0) + (total.height - totalRequiredHeight) / 2;
             for (int i = 0; i < mainComp.Count; i++)
             {
-
                 int row = i / nCol;
                 int col = i % nCol;
 
@@ -493,15 +477,7 @@ namespace NCDK.Depict
                     xOffsets[i] -= sideRequired.width * 1 / (scale * zoom);
             }
 
-            if (wrapper != null)
-            {
-                wrapper.Dispose();
-                return wrapper.ToString();
-            }
-            else
-            {
-                return visitor.ToString();
-            }
+            return visitor.ToString();
         }
 
         private double CalcFitting(double margin, double padding, Dimensions mainRequired, Dimensions sideRequired,
@@ -533,10 +509,6 @@ namespace NCDK.Depict
                                  .Add(-((nCol - 1) * padding), -((nRow - 1) * padding))
                                  .Add(-(nSideCol - 1) * padding, -(nSideRow - 1) * padding)
                                  .Add(0, titleRequired.height > 0 ? -padding : 0);
-
-            // PDF and PS are in point to we need to account for that
-            if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(MM_TO_POINT);
 
             double resize = Math.Min(targetDim.width / required.width,
                                      targetDim.height / required.height);
@@ -575,11 +547,7 @@ namespace NCDK.Depict
             }
             else
             {
-                // we want all vector graphics dims in MM
-                if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(MM_TO_POINT);
-                else
-                    return dimensions;
+                return dimensions;
             }
         }
 

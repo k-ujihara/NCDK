@@ -30,7 +30,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace NCDK.Depict
 {
@@ -92,7 +91,7 @@ namespace NCDK.Depict
         public override Size Draw(DrawingContext drawingContext)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DefaultPxMargin);
+            double margin = GetMarginValue(DepictionGenerator.DefaultPixelMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
             double scale = model.GetScale();
             double zoom = model.GetZoomFactor();
@@ -107,8 +106,6 @@ namespace NCDK.Depict
             double fitting = CalcFitting(margin, padding, required, null);
 
             IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(drawingContext);
-
-            visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
             // compound the zoom, fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
@@ -147,10 +144,6 @@ namespace NCDK.Depict
                 return 1; // no fitting
             Dimensions targetDim = dimensions;
 
-            // PDF and PS are in point to we need to account for that
-            if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                targetDim = targetDim.Scale(MM_TO_POINT);
-
             targetDim = targetDim.Add(-2 * margin, -2 * margin)
                                              .Add(-((nCol - 1) * padding), -((nRow - 1) * padding));
             double resize = Math.Min(targetDim.width / required.width,
@@ -170,32 +163,21 @@ namespace NCDK.Depict
             else
             {
                 // we want all vector graphics dims in MM
-                if (PDF_FMT.Equals(fmt) || PS_FMT.Equals(fmt))
-                    return dimensions.Scale(MM_TO_POINT);
-                else
-                    return dimensions;
+                return dimensions;
             }
         }
 
         internal override string ToVectorString(string fmt)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DefaultMMMargin);
+            double margin = GetMarginValue(DepictionGenerator.DefaultMillimeterMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
             double scale = model.GetScale();
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS_1996_BOND_LENGTH_MM);
-
-            // PDF and PS units are in Points (1/72 inch) in FreeHEP so need to adjust for that
-            if (fmt.Equals(PDF_FMT) || fmt.Equals(PS_FMT))
-            {
-                zoom *= MM_TO_POINT;
-                margin *= MM_TO_POINT;
-                padding *= MM_TO_POINT;
-            }
+            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS1996BondLength);
 
             // row and col offsets for alignment
             double[] yOffset = new double[nRow + 1];
@@ -207,13 +189,9 @@ namespace NCDK.Depict
             double fitting = CalcFitting(margin, padding, required, fmt);
 
             // create the image for rendering
-            FreeHepWrapper wrapper = null;
-            if (!fmt.Equals(SVG_FMT))
-                wrapper = new FreeHepWrapper(fmt, total.width, total.height);
-            IDrawVisitor visitor = fmt.Equals(SVG_FMT) ? (IDrawVisitor)new SvgDrawVisitor(total.width, total.height)
-                                                            : (IDrawVisitor)WPFDrawVisitor.ForVectorGraphics(wrapper.g2);
+            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height);
 
-            if (fmt.Equals(SVG_FMT))
+            if (fmt.Equals(SvgFormatKey))
             {
                 SvgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor)visitor, elements);
             }
@@ -246,15 +224,7 @@ namespace NCDK.Depict
                 Draw(visitor, zoom, elements[i], new Rect(x, y, w, h));
             }
 
-            if (wrapper != null)
-            {
-                wrapper.Dispose();
-                return wrapper.ToString();
-            }
-            else
-            {
-                return visitor.ToString();
-            }
+            return visitor.ToString();
         }
     }
 }

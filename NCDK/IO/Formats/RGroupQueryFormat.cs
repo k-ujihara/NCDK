@@ -20,8 +20,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -46,13 +46,26 @@ namespace NCDK.IO.Formats
             }
         }
 
-        public override string FormatName => "Symyx Rgroup query files";
-        public override string MIMEType => null;
-        public override string PreferredNameExtension => NameExtensions[0];
-        public override string[] NameExtensions { get; } = new string[] { "mol", "rgp" };
-        public override string ReaderClassName => "NCDK.IO.RGroupQueryReader";
-        public override string WriterClassName => "NCDK.IO.RGroupQueryWriter";
 
+        /// <inheritdoc/>
+        public override string FormatName => "Symyx Rgroup query files";
+
+        /// <inheritdoc/>
+        public override string MIMEType => null;
+
+        /// <inheritdoc/>
+        public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
+        public override string[] NameExtensions { get; } = new string[] { "mol", "rgp" };
+
+        /// <inheritdoc/>
+        public override string ReaderClassName { get; } = typeof(RGroupQueryReader).FullName;
+
+        /// <inheritdoc/>
+        public override string WriterClassName { get; } = typeof(RGroupQueryWriter).FullName;
+
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.IndexOf("$RGP") >= 0)
@@ -61,8 +74,13 @@ namespace NCDK.IO.Formats
                 return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES;
-        public override int RequiredDataFeatures => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_2D_COORDINATES;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

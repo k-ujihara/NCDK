@@ -19,12 +19,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
+
 using NCDK.Common.Primitives;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
 {
@@ -51,7 +50,7 @@ namespace NCDK.IO.Formats
     /// Simple class holds whether a format matcher matched, when it matched and
     /// what the format was. The result is comparable to be prioritised (lower
     /// match position being favoured).
-   /// </summary>
+    /// </summary>
     public sealed class MatchResult : IComparable<MatchResult>
     {
         /// <summary>Convenience method for indicating a format did not match.</summary>
@@ -96,7 +95,7 @@ namespace NCDK.IO.Formats
         /// <summary>
         /// Compares the match result with another, results with lower position
         /// are ordered before those with higher position.
-       /// </summary>
+        /// </summary>
         public int CompareTo(MatchResult that)
         {
             return Ints.Compare(this.position, that.position);

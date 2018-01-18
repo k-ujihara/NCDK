@@ -7,7 +7,7 @@ using WPF = System.Windows;
 namespace NCDK.Renderers
 {
 
-    public static partial class RenderModelTools
+    public static partial class RendererModelTools
     {
 		public static readonly WPF.Media.Color DefaultSelectionColor = WPF.Media.Color.FromRgb(0x49, 0xdf, 0xff);
 

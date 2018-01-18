@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 using NCDK.Features;
 using NCDK.Geometries;
 
@@ -38,10 +39,10 @@ namespace NCDK.Tools
         /// Determines the features present in the given <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="molecule">IAtomContainer to determine the features off</param>
-       /// <returns>integer representation of the present features</returns>
-        public static int GetSupportedDataFeatures(IAtomContainer molecule)
+        /// <returns>integer representation of the present features</returns>
+        public static DataFeatures GetSupportedDataFeatures(IAtomContainer molecule)
         {
-            int features = DataFeatures.None;
+            DataFeatures features = DataFeatures.None;
             if (MoleculeFeaturesTool.HasElementSymbols(molecule))
                 features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
             if (GeometryUtil.Has2DCoordinates(molecule)) features = features | DataFeatures.HAS_2D_COORDINATES;

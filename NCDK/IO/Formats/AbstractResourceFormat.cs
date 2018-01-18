@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using System;
 
 namespace NCDK.IO.Formats
@@ -34,20 +35,31 @@ namespace NCDK.IO.Formats
     // @cdk.githash
     public abstract class AbstractResourceFormat : IResourceFormat
     {
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return GetType().GetHashCode();
         }
 
+        /// <inheritdoc/>
         public override bool Equals(Object that)
         {
             return that != null && this.GetType().Equals(that.GetType());
         }
 
+        /// <inheritdoc/>
         public abstract string FormatName { get; }
+        
+        /// <inheritdoc/>
         public abstract string PreferredNameExtension { get; }
+        
+        /// <inheritdoc/>
         public abstract string[] NameExtensions { get; }
+        
+        /// <inheritdoc/>
         public abstract string MIMEType { get; }
+        
+        /// <inheritdoc/>
         public abstract bool IsXmlBased { get; }
     }
 }

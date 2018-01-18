@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System;
 
@@ -38,13 +39,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "Dalton";
+
+        /// <inheritdoc/>
         public override string MIMEType => null;
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => null;
+
+        /// <inheritdoc/>
         public override string[] NameExtensions => Array.Empty<string>();
+
+        /// <inheritdoc/>
         public override string ReaderClassName => null;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.IndexOf("DALTON") >= 0)
@@ -54,8 +67,13 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -41,13 +42,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "MDL RXN V3000";
+
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-mdl-rxnfile";
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = new string[] { "rxn" };
-        public string ReaderClassName => "NCDK.IO.MDLRXNV3000Reader";
+
+        /// <inheritdoc/>
+        public string ReaderClassName { get; } = typeof(MDLRXNV3000Reader).FullName;
+
+        /// <inheritdoc/>
         public string WriterClassName => null;
 
+        /// <inheritdoc/>
         public MatchResult Matches(IList<string> lines)
         {
             // if the first line doesn't have '$RXN' then it can't match
@@ -63,8 +76,13 @@ namespace NCDK.IO.Formats
             return new MatchResult(true, this, 0);
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public int SupportedDataFeatures => DataFeatures.None;
-        public int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

@@ -21,6 +21,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
+using System;
+
 namespace NCDK.Tools
 {
     /// <summary>
@@ -37,10 +40,11 @@ namespace NCDK.Tools
     // @author     Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module annotation
     // @cdk.githash
-    public class DataFeatures
+    [Flags]
+    public enum DataFeatures
     {
         /// <summary>Indicated that no feature are defined.</summary>
-        public const int None = 0;
+        None = 0,
 
         // The int allows for up to 750 different properties. Should
         // be enough for now.
@@ -48,40 +52,40 @@ namespace NCDK.Tools
         // COORDINATE SYSTEMS
 
         /// <summary>@cdk.dictref bodf:coordinates2D</summary>
-        public const int HAS_2D_COORDINATES = 1 << 0;
+        HAS_2D_COORDINATES = 1 << 0,
         /// <summary>@cdk.dictref bodf:coordinates3D</summary>
-        public const int HAS_3D_COORDINATES = 1 << 1;
+        HAS_3D_COORDINATES = 1 << 1,
         /// <summary>@cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates</summary>
-        public const int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2;
+        HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2,
 
         // ATOMIC FEATURES
         //                      HAS_ATOMS ??
 
         /// <summary>@cdk.dictref bodf:hasAtomElementSymbol</summary>
-        public const int HAS_ATOM_ELEMENT_SYMBOL = 1 << 3;
+        HAS_ATOM_ELEMENT_SYMBOL = 1 << 3,
         /// <summary>@cdk.dictref bodf:partialAtomicCharges</summary>
-        public const int HAS_ATOM_PARTIAL_CHARGES = 1 << 4;
+        HAS_ATOM_PARTIAL_CHARGES = 1 << 4,
         /// <summary>@cdk.dictref bodf:formalAtomicCharges</summary>
-        public const int HAS_ATOM_FORMAL_CHARGES = 1 << 5;
+        HAS_ATOM_FORMAL_CHARGES = 1 << 5,
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        public const int HAS_ATOM_HYBRIDIZATIONS = 1 << 6;
+        HAS_ATOM_HYBRIDIZATIONS = 1 << 6,
         /// <summary>@cdk.dictref bodf:massNumbers</summary>
-        public const int HAS_ATOM_MASS_NUMBERS = 1 << 7;
+        HAS_ATOM_MASS_NUMBERS = 1 << 7,
         /// <summary>@cdk.dictref bodf:isotopeNumbers</summary>
-        public const int HAS_ATOM_ISOTOPE_NUMBERS = 1 << 8;
+        HAS_ATOM_ISOTOPE_NUMBERS = 1 << 8,
 
         // GRAPH FEATURES
 
         /// <summary>@cdk.dictref bodf:graphRepresentation</summary>
-        public const int HAS_GRAPH_REPRESENTATION = 1 << 9;
+        HAS_GRAPH_REPRESENTATION = 1 << 9,
         /// <summary>@cdk.dictref bodf:dietzRepresentation</summary>
-        public const int HAS_DIETZ_REPRESENTATION = 1 << 10;
+        HAS_DIETZ_REPRESENTATION = 1 << 10,
 
         // MODEL FEATURES
 
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        public const int HAS_UNITCELL_PARAMETERS = 1 << 11;
+        HAS_UNITCELL_PARAMETERS = 1 << 11,
         /// <summary>FIXME: NOT YET IN BODF !!! </summary>
-        public const int HAS_REACTIONS = 1 << 12;
+        HAS_REACTIONS = 1 << 12,
     }
 }

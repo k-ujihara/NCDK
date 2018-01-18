@@ -40,12 +40,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "CDK OWL (N3)";
+        
+        /// <inheritdoc/>
         public override string MIMEType => "text/n3";
+        
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+        
+        /// <inheritdoc/>
         public override string[] NameExtensions => new string[] { "n3" };
-        public override string ReaderClassName => "NCDK.IO.RDF.CDKOWLReader";
-        public override string WriterClassName => "NCDK.IO.RDF.CDKOWLWriter";
+
+        /// <inheritdoc/>
+        public override string ReaderClassName { get; } = typeof(RDF.CDKOWLReader).FullName;
+        
+        /// <inheritdoc/>
+        public override string WriterClassName { get; } = typeof(RDF.CDKOWLWriter).FullName;
+        
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.StartsWith("PREFIX") && line.Contains("http://cdk.sourceforge.net/model.owl#"))
@@ -55,13 +68,17 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures =>
+        
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures =>
                 DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
                     | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
                     | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
                     | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 
-        public override int RequiredDataFeatures => DataFeatures.None;
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

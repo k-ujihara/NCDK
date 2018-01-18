@@ -60,9 +60,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public int SupportedDataFeatures => DataFeatures.None;
+        public DataFeatures SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public int RequiredDataFeatures => DataFeatures.None;
+        public DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

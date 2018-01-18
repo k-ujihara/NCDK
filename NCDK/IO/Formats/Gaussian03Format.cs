@@ -54,7 +54,7 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions => Array.Empty<string>();
 
         /// <inheritdoc/>
-        public override string ReaderClassName => "NCDK.IO.Gaussian03Reader";
+        public override string ReaderClassName { get; } = typeof(Gaussian03Reader).FullName;
 
         /// <inheritdoc/>
         public override string WriterClassName => null;
@@ -73,9 +73,9 @@ namespace NCDK.IO.Formats
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public override int SupportedDataFeatures => DataFeatures.None;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public override int RequiredDataFeatures => DataFeatures.None;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

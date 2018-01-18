@@ -9,7 +9,7 @@ namespace NCDK.Tools
         void Main()
         {
             #region 1
-            int features = new XYZFormat().SupportedDataFeatures;
+            var features = new XYZFormat().SupportedDataFeatures;
             bool has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
             #endregion
         }

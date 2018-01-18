@@ -38,14 +38,31 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "Chem3D Cartesian 1";
+        
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-chem3d";
+        
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+        
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = new string[] { "c3d1" };
+        
+        /// <inheritdoc/>
         public string ReaderClassName => null;
+        
+        /// <inheritdoc/>
         public string WriterClassName => null;
+        
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public int SupportedDataFeatures => DataFeatures.None;
-        public int RequiredDataFeatures => DataFeatures.None;
+        
+        /// <inheritdoc/>
+        public DataFeatures SupportedDataFeatures => DataFeatures.None;
+        
+        /// <inheritdoc/>
+        public DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

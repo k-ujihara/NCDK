@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -37,8 +38,8 @@ namespace NCDK.IO.Formats
     {
         public abstract string ReaderClassName { get; }
         public abstract string WriterClassName { get; }
-        public abstract int SupportedDataFeatures { get; }
-        public abstract int RequiredDataFeatures { get; }
+        public abstract DataFeatures SupportedDataFeatures { get; }
+        public abstract DataFeatures RequiredDataFeatures { get; }
 
         /// <summary>
         /// Check whether a given line at a specified position (line number) could
@@ -62,11 +63,6 @@ namespace NCDK.IO.Formats
                     return new MatchResult(true, this, i);
             }
             return MatchResult.NO_MATCH;
-        }
-
-        public MatchResult Matches(List<string> lines)
-        {
-            throw new NotImplementedException();
         }
     }
 }

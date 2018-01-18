@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.IO.Formats;
+using NCDK.Tools;
 
 namespace NCDK.IO
 {
@@ -32,8 +33,8 @@ namespace NCDK.IO
     public class CustomFormat : IChemFormat
     {
         public string ReaderClassName => null;
-        public int RequiredDataFeatures => 0;
-        public int SupportedDataFeatures => 0;
+        public DataFeatures RequiredDataFeatures => 0;
+        public DataFeatures SupportedDataFeatures => 0;
         public string WriterClassName => "NCDK.IO.CustomWriter";
         public string FormatName => null;
         public string MIMEType => null;

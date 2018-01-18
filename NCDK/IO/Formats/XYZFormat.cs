@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -50,18 +51,18 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions { get; } = new string[] { "xyz" };
 
         /// <inheritdoc/>
-        public string ReaderClassName => "NCDK.IO.XYZReader";
+        public string ReaderClassName { get; } = typeof(XYZReader).FullName;
 
         /// <inheritdoc/>
-        public string WriterClassName => "NCDK.IO.XYZWriter";
+        public string WriterClassName { get; } = typeof(XYZWriter).FullName;
 
         /// <inheritdoc/>
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public int SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_ATOM_PARTIAL_CHARGES;
+        public DataFeatures SupportedDataFeatures => RequiredDataFeatures | DataFeatures.HAS_ATOM_PARTIAL_CHARGES;
 
         /// <inheritdoc/>
-        public int RequiredDataFeatures => DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+        public DataFeatures RequiredDataFeatures => DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
     }
 }

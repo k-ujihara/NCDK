@@ -35,6 +35,5 @@ namespace NCDK.Renderers.Elements
         void Accept(IRenderingVisitor visitor);
 
         void Accept(IRenderingVisitor visitor, Transform transform);
-
     }
 }

@@ -101,12 +101,12 @@ namespace NCDK.Depict
         /// <summary>
         /// Default margin for vector graphics formats.
         /// </summary>
-        public static double DefaultMMMargin = 0.56;
+        public const double DefaultMillimeterMargin = 0.56;
 
         /// <summary>
         /// Default margin for raster graphics formats.
         /// </summary>
-        public static double DefaultPxMargin = 4;
+        public const double DefaultPixelMargin = 4;
 
         /// <summary>
         /// The dimensions (width x height) of the depiction.
@@ -264,7 +264,7 @@ namespace NCDK.Depict
             int molId = 0;
             foreach (var mol in mols)
             {
-                SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
+                SetIfMissing(mol, MarkedElement.IdKey, "mol" + ++molId);
                 layoutBackups.Add(new LayoutBackup(mol));
             }
 
@@ -309,11 +309,10 @@ namespace NCDK.Depict
         /// Prepare a collection of molecules for rendering. If coordinates are not
         /// present they are generated, if coordinates exists they are scaled to
         /// be consistent (length=1.5).
-        ///
+        /// </summary>
         /// <param name="mols">molecules</param>
         /// <returns>coordinates</returns>
         /// <exception cref="CDKException"></exception>
-        /// </summary>
         private void PrepareCoords(IEnumerable<IAtomContainer> mols)
         {
             foreach (IAtomContainer mol in mols)
@@ -368,29 +367,29 @@ namespace NCDK.Depict
 
             Color fgcol = templateModel.GetAtomColorer().GetAtomColor(rxn.Builder.NewAtom("C"));
 
-            var reactants = ToList(rxn.Reactants);
-            var products = ToList(rxn.Products);
-            var agents = ToList(rxn.Agents);
+            var reactants = rxn.Reactants.ToList();
+            var products = rxn.Products.ToList();
+            var agents = rxn.Agents.ToList();
             List<LayoutBackup> layoutBackups = new List<LayoutBackup>();
 
             // set ids for tagging elements
             int molId = 0;
             foreach (var mol in reactants)
             {
-                SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
-                SetIfMissing(mol, MarkedElement.CLASS_KEY, "reactant");
+                SetIfMissing(mol, MarkedElement.IdKey, "mol" + ++molId);
+                SetIfMissing(mol, MarkedElement.ClassKey, "reactant");
                 layoutBackups.Add(new LayoutBackup(mol));
             }
             foreach (var mol in products)
             {
-                SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
-                SetIfMissing(mol, MarkedElement.CLASS_KEY, "product");
+                SetIfMissing(mol, MarkedElement.IdKey, "mol" + ++molId);
+                SetIfMissing(mol, MarkedElement.ClassKey, "product");
                 layoutBackups.Add(new LayoutBackup(mol));
             }
             foreach (var mol in agents)
             {
-                SetIfMissing(mol, MarkedElement.ID_KEY, "mol" + ++molId);
-                SetIfMissing(mol, MarkedElement.CLASS_KEY, "agent");
+                SetIfMissing(mol, MarkedElement.IdKey, "mol" + ++molId);
+                SetIfMissing(mol, MarkedElement.ClassKey, "agent");
                 layoutBackups.Add(new LayoutBackup(mol));
             }
 
@@ -420,8 +419,8 @@ namespace NCDK.Depict
 
             // reactant/product/agent element generation, we number the reactants, then products then agents
             List<Bounds> reactantBounds = Generate(reactants, model, 1);
-            List<Bounds> productBounds = Generate(ToList(rxn.Products), model, rxn.Reactants.Count);
-            List<Bounds> agentBounds = Generate(ToList(rxn.Agents), model, rxn.Reactants.Count + rxn.Products.Count);
+            List<Bounds> productBounds = Generate(rxn.Products.ToList(), model, rxn.Reactants.Count);
+            List<Bounds> agentBounds = Generate(rxn.Agents.ToList(), model, rxn.Reactants.Count + rxn.Products.Count);
 
             // remove current highlight buffer
             foreach (var obj in myHighlight.Keys)
@@ -540,22 +539,17 @@ namespace NCDK.Depict
             return new Bounds(StandardGenerator.EmbedText(font, emSize, "+", fgcol, 1 / scale));
         }
 
-        private List<IAtomContainer> ToList(IChemObjectSet<IAtomContainer> set)
-        {
-            return set.ToList();
-        }
-
         private IRenderingElement Generate(IAtomContainer molecule, RendererModel model, int atomNum)
         {
             // tag the atom and bond ids
-            string molId = molecule.GetProperty<string>(MarkedElement.ID_KEY);
+            string molId = molecule.GetProperty<string>(MarkedElement.IdKey);
             if (molId != null)
             {
                 int atomId = 0, bondid = 0;
                 foreach (var atom in molecule.Atoms)
-                    SetIfMissing(atom, MarkedElement.ID_KEY, molId + "atm" + ++atomId);
+                    SetIfMissing(atom, MarkedElement.IdKey, molId + "atm" + ++atomId);
                 foreach (var bond in molecule.Bonds)
-                    SetIfMissing(bond, MarkedElement.ID_KEY, molId + "bnd" + ++bondid);
+                    SetIfMissing(bond, MarkedElement.IdKey, molId + "bnd" + ++bondid);
             }
 
             if (annotateAtomNum)
@@ -678,8 +672,8 @@ namespace NCDK.Depict
         /// blue, etc.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RenderModelTools.GetAtomColorer"/>
-        /// <seealso cref="RenderModelTools.GetHighlighting"/>
+        /// <seealso cref="RendererModelTools.GetAtomColorer"/>
+        /// <seealso cref="RendererModelTools.GetHighlighting"/>
         /// <seealso cref="HighlightStyles"/>
         /// <seealso cref="CDK2DAtomColors"/>
         public DepictionGenerator WithAtomColors()
@@ -691,8 +685,8 @@ namespace NCDK.Depict
         /// Color atom symbols using provided colorer.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RenderModelTools.GetAtomColorer"/>
-        /// <seealso cref="RenderModelTools.GetHighlighting"/>
+        /// <seealso cref="RendererModelTools.GetAtomColorer"/>
+        /// <seealso cref="RendererModelTools.GetHighlighting"/>
         /// <seealso cref="HighlightStyles"/>
         /// <seealso cref="UniColor"/>
         public DepictionGenerator WithAtomColors(IAtomColorer colorer)
@@ -706,7 +700,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="color">background color</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RenderModelTools.GetBackgroundColor"/>
+        /// <seealso cref="RendererModelTools.GetBackgroundColor"/>
         public DepictionGenerator WithBackgroundColor(Color color)
         {
             templateModel.SetBackgroundColor(color);
@@ -719,7 +713,7 @@ namespace NCDK.Depict
         /// 4x the stroke width.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RenderModelTools.SetHighlighting"/>
+        /// <seealso cref="RendererModelTools.SetHighlighting"/>
         /// <seealso cref="HighlightStyles"/>
         public DepictionGenerator WithOuterGlowHighlight()
         {

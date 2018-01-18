@@ -43,7 +43,6 @@ namespace NCDK.Depict
     /// (only <see cref="Renderers.Elements.LineElement"/> and <see cref="Renderers.Elements.GeneralPath"/>).
     /// </summary>
     /// <example>
-    /// Usage:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.SvgDrawVisitor_Example.cs+1"]/*' />
     /// </example>
     public sealed class SvgDrawVisitor : IDrawVisitor

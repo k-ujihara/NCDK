@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -55,72 +56,71 @@ namespace NCDK.Renderers.Colors
         private static readonly Color ForestGreen = Color.FromRgb(0x22, 0x8B, 0x22);
 
         // The atom color look-up table.
-        private static readonly IDictionary<int, Color> AtomColorsMassNum = new Dictionary<int, Color>();
-        private static readonly IDictionary<string, Color> AtomColorsSymbol = new Dictionary<string, Color>();
+        private static IReadOnlyDictionary<int, Color> AtomColorsMassNum { get; } = new Dictionary<int, Color>
+        {
+            // Colors keyed on atomic number.
+            [1] = AtomColorsSymbol["H"],
+            [2] = AtomColorsSymbol["HE"],
+            [3] = AtomColorsSymbol["LI"],
+            [5] = AtomColorsSymbol["B"],
+            [6] = AtomColorsSymbol["C"],
+            [7] = AtomColorsSymbol["N"],
+            [8] = AtomColorsSymbol["O"],
+            [9] = AtomColorsSymbol["F"],
+            [11] = AtomColorsSymbol["NA"],
+            [12] = AtomColorsSymbol["MG"],
+            [13] = AtomColorsSymbol["AL"],
+            [14] = AtomColorsSymbol["SI"],
+            [15] = AtomColorsSymbol["P"],
+            [16] = AtomColorsSymbol["S"],
+            [17] = AtomColorsSymbol["CL"],
+            [20] = AtomColorsSymbol["CA"],
+            [22] = AtomColorsSymbol["TI"],
+            [24] = AtomColorsSymbol["CR"],
+            [25] = AtomColorsSymbol["MN"],
+            [26] = AtomColorsSymbol["FE"],
+            [28] = AtomColorsSymbol["NI"],
+            [29] = AtomColorsSymbol["CU"],
+            [30] = AtomColorsSymbol["ZN"],
+            [35] = AtomColorsSymbol["BR"],
+            [47] = AtomColorsSymbol["AG"],
+            [53] = AtomColorsSymbol["I"],
+            [56] = AtomColorsSymbol["BA"],
+            [79] = AtomColorsSymbol["AU"]
+        };
 
-        // Build table.
-        static CPKAtomColors()
+        private static IReadOnlyDictionary<string, Color> AtomColorsSymbol { get; } = new Dictionary<string, Color>
         {
             // Colors keyed on (uppercase) atomic symbol.
-            AtomColorsSymbol["H"] = White;
-            AtomColorsSymbol["HE"] = Pink;
-            AtomColorsSymbol["LI"] = FireBrick;
-            AtomColorsSymbol["B"] = Green;
-            AtomColorsSymbol["C"] = LightGrey;
-            AtomColorsSymbol["N"] = SkyBlue;
-            AtomColorsSymbol["O"] = Red;
-            AtomColorsSymbol["F"] = GoldenRod;
-            AtomColorsSymbol["NA"] = Blue;
-            AtomColorsSymbol["MG"] = ForestGreen;
-            AtomColorsSymbol["AL"] = DarkGrey;
-            AtomColorsSymbol["SI"] = GoldenRod;
-            AtomColorsSymbol["P"] = Orange;
-            AtomColorsSymbol["S"] = Yellow;
-            AtomColorsSymbol["CL"] = Green;
-            AtomColorsSymbol["CA"] = DarkGrey;
-            AtomColorsSymbol["TI"] = DarkGrey;
-            AtomColorsSymbol["CR"] = DarkGrey;
-            AtomColorsSymbol["MN"] = DarkGrey;
-            AtomColorsSymbol["FE"] = Orange;
-            AtomColorsSymbol["NI"] = Brown;
-            AtomColorsSymbol["CU"] = Brown;
-            AtomColorsSymbol["ZN"] = Brown;
-            AtomColorsSymbol["BR"] = Brown;
-            AtomColorsSymbol["AG"] = DarkGrey;
-            AtomColorsSymbol["I"] = Purple;
-            AtomColorsSymbol["BA"] = Orange;
-            AtomColorsSymbol["AU"] = GoldenRod;
-
-            // Colors keyed on atomic number.
-            AtomColorsMassNum[1] = AtomColorsSymbol["H"];
-            AtomColorsMassNum[2] = AtomColorsSymbol["HE"];
-            AtomColorsMassNum[3] = AtomColorsSymbol["LI"];
-            AtomColorsMassNum[5] = AtomColorsSymbol["B"];
-            AtomColorsMassNum[6] = AtomColorsSymbol["C"];
-            AtomColorsMassNum[7] = AtomColorsSymbol["N"];
-            AtomColorsMassNum[8] = AtomColorsSymbol["O"];
-            AtomColorsMassNum[9] = AtomColorsSymbol["F"];
-            AtomColorsMassNum[11] = AtomColorsSymbol["NA"];
-            AtomColorsMassNum[12] = AtomColorsSymbol["MG"];
-            AtomColorsMassNum[13] = AtomColorsSymbol["AL"];
-            AtomColorsMassNum[14] = AtomColorsSymbol["SI"];
-            AtomColorsMassNum[15] = AtomColorsSymbol["P"];
-            AtomColorsMassNum[16] = AtomColorsSymbol["S"];
-            AtomColorsMassNum[17] = AtomColorsSymbol["CL"];
-            AtomColorsMassNum[20] = AtomColorsSymbol["CA"];
-            AtomColorsMassNum[22] = AtomColorsSymbol["TI"];
-            AtomColorsMassNum[24] = AtomColorsSymbol["CR"];
-            AtomColorsMassNum[25] = AtomColorsSymbol["MN"];
-            AtomColorsMassNum[26] = AtomColorsSymbol["FE"];
-            AtomColorsMassNum[28] = AtomColorsSymbol["NI"];
-            AtomColorsMassNum[29] = AtomColorsSymbol["CU"];
-            AtomColorsMassNum[30] = AtomColorsSymbol["ZN"];
-            AtomColorsMassNum[35] = AtomColorsSymbol["BR"];
-            AtomColorsMassNum[47] = AtomColorsSymbol["AG"];
-            AtomColorsMassNum[53] = AtomColorsSymbol["I"];
-            AtomColorsMassNum[56] = AtomColorsSymbol["BA"];
-            AtomColorsMassNum[79] = AtomColorsSymbol["AU"];
-        }
+            ["H"] = White,
+            ["HE"] = Pink,
+            ["LI"] = FireBrick,
+            ["B"] = Green,
+            ["C"] = LightGrey,
+            ["N"] = SkyBlue,
+            ["O"] = Red,
+            ["F"] = GoldenRod,
+            ["NA"] = Blue,
+            ["MG"] = ForestGreen,
+            ["AL"] = DarkGrey,
+            ["SI"] = GoldenRod,
+            ["P"] = Orange,
+            ["S"] = Yellow,
+            ["CL"] = Green,
+            ["CA"] = DarkGrey,
+            ["TI"] = DarkGrey,
+            ["CR"] = DarkGrey,
+            ["MN"] = DarkGrey,
+            ["FE"] = Orange,
+            ["NI"] = Brown,
+            ["CU"] = Brown,
+            ["ZN"] = Brown,
+            ["BR"] = Brown,
+            ["AG"] = DarkGrey,
+            ["I"] = Purple,
+            ["BA"] = Orange,
+            ["AU"] = GoldenRod
+        };
 
         //////////
         // METHODS

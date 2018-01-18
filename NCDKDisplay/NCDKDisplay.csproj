@@ -53,18 +53,18 @@
   <ItemGroup>
     <Compile Include="Depict\Dimension.cs" />
     <Compile Include="Renderers\Elements\TextGroupElement.cs" />
-    <Content Include="Renderers\RenderModelTools.tt">
+    <Content Include="Renderers\RendererModelTools.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RenderModelTools.tt.cs</LastGenOutput>
+      <LastGenOutput>RendererModelTools.tt.cs</LastGenOutput>
     </Content>
     <Compile Include="Renderers\Generators\AtomShapeTypes.cs" />
     <Compile Include="Renderers\Generators\BasicGenerator.cs" />
     <Compile Include="Renderers\HighlightStyles.cs" />
     <Compile Include="Renderers\ObserbableDictionary.cs" />
-    <Compile Include="Renderers\RenderModelTools.tt.cs">
+    <Compile Include="Renderers\RendererModelTools.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RenderModelTools.tt</DependentUpon>
+      <DependentUpon>RendererModelTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Renderers\Visitors\AbstractWPFDrawVisitor.cs" />
     <Compile Include="Renderers\WPFUtil.cs" />
@@ -78,7 +78,6 @@
     <Compile Include="Depict\Abbreviations.cs" />
     <Compile Include="Depict\DepictionGenerator.cs" />
     <Compile Include="Depict\Dimensions.cs" />
-    <Compile Include="Depict\FreeHepWrapper.cs" />
     <Compile Include="Depict\MolGridDepiction.cs" />
     <Compile Include="Depict\ReactionDepiction.cs" />
     <Compile Include="Depict\SvgDrawVisitor.cs" />

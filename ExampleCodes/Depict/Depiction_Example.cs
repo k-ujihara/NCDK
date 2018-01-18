@@ -6,7 +6,7 @@
         {
             Depiction depiction = null;
             #region EnsureSuffix
-            depiction.WriteTo(Depiction.SVG_FMT, "~/chemical"); // create a file "~/chemical.svg" 
+            depiction.WriteTo(Depiction.SvgFormatKey, "~/chemical"); // create a file "~/chemical.svg" 
             #endregion
         }
     }

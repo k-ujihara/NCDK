@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 
 namespace NCDK.IO.Formats
@@ -37,13 +38,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "MOPAC 2002";
+
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-mopac-out";
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = new string[] { "mop", "mopcrt", "mopout" };
+
+        /// <inheritdoc/>
         public override string ReaderClassName => null;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.IndexOf("MOPAC2002") >= 0)
@@ -53,8 +66,13 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

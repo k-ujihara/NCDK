@@ -36,19 +36,14 @@ namespace NCDK.Renderers.Elements
     /// attributes in SVG.
     /// </summary>
     /// <example>
-    /// To set the mol, atom, or bond id set a string property to <see cref="ID_KEY"/>.
-    /// Similarly, the <see cref="CLASS_KEY"/> can be used to set the classes.
-    /// <code>
-    /// IAtomContainer mol;
-    /// atom.SetProperty(MarkedElement.ID_KEY, "my_atm_id");
-    /// atom.SetProperty(MarkedElement.CLASS_KEY, "h_donor");
-    /// atom.SetProperty(MarkedElement.CLASS_KEY, "h_acceptor");
-    /// </code>
+    /// To set the mol, atom, or bond id set a string property to <see cref="IdKey"/>.
+    /// Similarly, the <see cref="ClassKey"/> can be used to set the classes.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Renderers.Elements.MarkedElement_Example.cs"]/*' />
     /// </example>
     public sealed class MarkedElement : IRenderingElement
     {
-        public const string ID_KEY = nameof(MarkedElement) + "_ID";
-        public const string CLASS_KEY = nameof(MarkedElement) + "_CLS";
+        public const string IdKey = nameof(MarkedElement) + "_ID";
+        public const string ClassKey = nameof(MarkedElement) + "_CLS";
 
         readonly IRenderingElement elem;
         private readonly IList<string> classes = new List<string>(5);
@@ -67,7 +62,7 @@ namespace NCDK.Renderers.Elements
         /// Add a <paramref name="cls"/> to the element.
         /// </summary>
         /// <param name="cls">a class</param>
-        private void AggClass(string cls)
+        private void AddClass(string cls)
         {
             if (cls != null)
                 this.classes.Add(cls);
@@ -77,7 +72,7 @@ namespace NCDK.Renderers.Elements
         /// Access the classes of the element.
         /// </summary>
         /// <returns>id, empty if none</returns>
-        public IList<string> GetClasses()
+        public IReadOnlyCollection<string> GetClasses()
         {
             return new ReadOnlyCollection<string>(classes);
         }
@@ -112,7 +107,7 @@ namespace NCDK.Renderers.Elements
             Debug.Assert(elem != null);
             MarkedElement tagElem = new MarkedElement(elem);
             foreach (var cls in classes)
-                tagElem.AggClass(cls);
+                tagElem.AddClass(cls);
             return tagElem;
         }
 
@@ -122,8 +117,8 @@ namespace NCDK.Renderers.Elements
             MarkedElement tagElem = new MarkedElement(elem);
             if (chemObj != null)
             {
-                tagElem.Id = chemObj.GetProperty<string>(ID_KEY);
-                tagElem.AggClass(chemObj.GetProperty<string>(CLASS_KEY));
+                tagElem.Id = chemObj.GetProperty<string>(IdKey);
+                tagElem.AddClass(chemObj.GetProperty<string>(ClassKey));
             }
             return tagElem;
         }
@@ -139,7 +134,7 @@ namespace NCDK.Renderers.Elements
         {
             Debug.Assert(elem != null);
             MarkedElement tagElem = MarkupChemObj(elem, mol);
-            tagElem.AggClass("mol");
+            tagElem.AddClass("mol");
             return tagElem;
         }
 
@@ -155,7 +150,7 @@ namespace NCDK.Renderers.Elements
             if (elem == null)
                 return null;
             MarkedElement tagElem = MarkupChemObj(elem, atom);
-            tagElem.AggClass("atom");
+            tagElem.AddClass("atom");
             return tagElem;
         }
 
@@ -171,7 +166,7 @@ namespace NCDK.Renderers.Elements
             if (elem == null)
                 throw new ArgumentNullException(nameof(elem));
             MarkedElement tagElem = MarkupChemObj(elem, bond);
-            tagElem.AggClass("bond");
+            tagElem.AddClass("bond");
             return tagElem;
         }
     }

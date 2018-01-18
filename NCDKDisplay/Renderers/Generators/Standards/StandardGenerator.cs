@@ -48,7 +48,7 @@ namespace NCDK.Renderers.Generators.Standards
     /// </para>
     /// <para>
     /// Atoms and bonds can be highlighted by setting the <see cref="HighlightColorKey"/>. The style of
-    /// highlight is set with the <see cref="RenderModelTools.GetHighlighting"/> parameter.
+    /// highlight is set with the <see cref="RendererModelTools.GetHighlighting"/> parameter.
     /// </para>
     /// <para>
     /// The <see href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki page</see>

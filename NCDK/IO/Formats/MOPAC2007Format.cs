@@ -38,21 +38,38 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "MOPAC 2007";
+
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-mopac-out";
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
+
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = new string[] { "mop", "mopcrt", "mopout" };
+
+        /// <inheritdoc/>
         public override string ReaderClassName => null;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             return line.Contains("MOPAC2007");
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }
 

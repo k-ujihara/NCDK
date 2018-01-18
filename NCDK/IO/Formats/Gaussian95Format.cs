@@ -38,13 +38,25 @@ namespace NCDK.IO.Formats
             }
         }
 
+        /// <inheritdoc/>
         public override string FormatName => "Gaussian95";
+
+        /// <inheritdoc/>
         public override string MIMEType => "chemical/x-gaussian-log";
+
+        /// <inheritdoc/>
         public override string PreferredNameExtension => null;
+
+        /// <inheritdoc/>
         public override string[] NameExtensions { get; } = Array.Empty<string>();
+
+        /// <inheritdoc/>
         public override string ReaderClassName => null;
+
+        /// <inheritdoc/>
         public override string WriterClassName => null;
 
+        /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
             if (line.IndexOf("Gaussian 95") >= 0)
@@ -54,8 +66,13 @@ namespace NCDK.IO.Formats
             return false;
         }
 
+        /// <inheritdoc/>
         public override bool IsXmlBased => false;
-        public override int SupportedDataFeatures => DataFeatures.None;
-        public override int RequiredDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
+
+        /// <inheritdoc/>
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }
