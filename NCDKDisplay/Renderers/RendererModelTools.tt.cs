@@ -1263,18 +1263,18 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
-		public static readonly WPF.FontWeight DefaultUsedFontStyle = WPF.FontWeights.Regular;
+		public static readonly Fonts.FontWeights DefaultUsedFontStyle = Fonts.FontWeights.Normal;
 
         /// <summary>
-        /// Get the font style to use for text. Default value is WPF.FontWeights.Regular.
+        /// Get the font style to use for text. Default value is Fonts.FontWeights.Normal.
         /// </summary>
         /// <returns>the font style to use for text</returns>
-        public static WPF.FontWeight GetUsedFontStyle(this RendererModel model)
+        public static Fonts.FontWeights GetUsedFontStyle(this RendererModel model)
         {
             const string key = "UsedFontStyle";
-            WPF.FontWeight value;
+            Fonts.FontWeights value;
             if (model.Parameters.TryGetValue(key, out object v))
-                value = (WPF.FontWeight)v;
+                value = (Fonts.FontWeights)v;
             else
                 model.Parameters[key] = value = DefaultUsedFontStyle;
 
@@ -1284,7 +1284,7 @@ namespace NCDK.Renderers
         /// <summary>
         /// Set the font style to use for text.
         /// </summary>
-		public static void SetUsedFontStyle(this RendererModel model, WPF.FontWeight value)
+		public static void SetUsedFontStyle(this RendererModel model, Fonts.FontWeights value)
         {
             const string key = "UsedFontStyle";
             model.Parameters[key] = value;

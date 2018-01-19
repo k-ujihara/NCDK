@@ -22,6 +22,17 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Fonts
 {
     /// <summary>
+    /// Weight of the font to use to draw text.
+    /// </summary>
+    public enum FontWeights
+    {
+        /// <summary>Regular font style.</summary>
+        Normal,
+        /// <summary>Bold font style.</summary>
+        Bold,
+    }
+
+    /// <summary>
     /// An interface for managing the drawing of fonts at different zoom levels.
     /// </summary>
     // @author maclean
@@ -38,7 +49,7 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font weight.
         /// </summary>
-        WPF.FontWeight FontWeight { get; set; }
+        FontWeights FontWeight { get; set; }
 
         /// <summary>
         /// The font name ('Arial', 'Times New Roman' and so on).

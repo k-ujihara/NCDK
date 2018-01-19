@@ -51,7 +51,7 @@ namespace NCDK.Renderers
     }
 #>
 
-    public static partial class RenderModelTools
+    public static partial class RendererModelTools
     {
 <#
 		P("SelectionColor", "WPF.Media.Color", "WPF.Media.Color.FromRgb(0x49, 0xdf, 0xff)", "the color of a selection");
@@ -102,7 +102,7 @@ namespace NCDK.Renderers
         P("ForegroundColor", "WPF.Media.Color", "WPF.Media.Colors.Black", "the foreground color, with which objects are drawn");
         P("UseAntiAliasing", "bool", "true", "if set to true, uses anti-aliasing for drawing");
         P("Margin", "double", "10", "area on each of the four margins to keep empty");
-        P("UsedFontStyle", "WPF.FontWeight", "WPF.FontWeights.Regular", "the font style to use for text");
+        P("UsedFontStyle", "Fonts.FontWeights", "Fonts.FontWeights.Normal", "the font style to use for text");
 		P("FontName", "string", "\"Arial\"", "font name to use for text");
 		P("ZoomFactor", "double", "1", "the zoom factor which is a user oriented parameter allowing the user to zoom in on parts of the molecule");
 

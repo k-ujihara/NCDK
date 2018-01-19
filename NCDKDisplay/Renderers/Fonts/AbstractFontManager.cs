@@ -33,7 +33,7 @@ namespace NCDK.Renderers.Fonts
         private string fontName = "Arial";
 
         /// <summary>The font weight</summary>
-        private WPF.FontWeight fontWeight = WPF.FontWeights.Normal;
+        private FontWeights fontWeight = FontWeights.Normal;
         
         /// <summary>The mapping between zoom levels and font sizes</summary>
         private IDictionary<double, int> zoomToFontSizeMap;
@@ -83,7 +83,7 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font style, defined in the <see cref="IFontManager"/> interface.
         /// </summary>
-        public virtual WPF.FontWeight FontWeight
+        public virtual FontWeights FontWeight
         {
             get
             {

@@ -35,7 +35,7 @@ namespace NCDK.Renderers.Visitors
     /// </summary>
     // @cdk.module renderawt
     // @cdk.githash
-    public class WPFDrawVisitor : IDrawVisitor
+    public class WPFDrawVisitor : AbstractWPFDrawVisitor
     {
         /// <summary>
         /// The font manager cannot be set by the constructor as it needs to
@@ -55,7 +55,7 @@ namespace NCDK.Renderers.Visitors
         public IDictionary<int, Pen> StrokeMap { get; } = new Dictionary<int, Pen>();
 
         /// <inheritdoc/>
-        public RendererModel RendererModel
+        public override RendererModel RendererModel
         {
             get => rendererModel;
             set => rendererModel = value;
@@ -108,62 +108,6 @@ namespace NCDK.Renderers.Visitors
         public static WPFDrawVisitor ForVectorGraphics(DrawingContext g2)
         {
             return new WPFDrawVisitor(g2, false, double.NegativeInfinity);
-        }
-
-        /// <summary>
-        /// Calculates the boundaries of a text string in screen coordinates.
-        /// </summary>
-        /// <param name="text">the text string</param>
-        /// <param name="coord">the world x-coordinate of where the text should be placed</param>
-        /// <returns>the screen coordinates</returns>
-        protected internal WPF.Rect GetTextBounds(string text, WPF::Point coord, Typeface typeface, double emSize)
-        {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            var bounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
-
-            double widthPad = 3;
-            double heightPad = 1;
-
-            double width = bounds.Width + widthPad;
-            double height = bounds.Height + heightPad;
-            var point = coord;
-            return new WPF.Rect(point.X - width / 2, point.Y - height / 2, width, height);
-        }
-
-        /// <summary>
-        /// Calculates the base point where text should be rendered, as text in Java
-        /// is typically placed using the left-lower corner point in screen coordinates.
-        /// However, because the Java coordinate system is inverted in the y-axis with
-        /// respect to scientific coordinate systems (Java has 0,0 in the top left
-        /// corner, while in science we have 0,0 in the lower left corner), some
-        /// special action is needed, involving the size of the text.
-        /// </summary>
-        /// <param name="text">the text string</param>
-        /// <param name="coord">the world coordinate of where the text should be placed</param>
-        /// <returns>the screen coordinates</returns>
-        protected internal WPF.Point GetTextBasePoint(string text, WPF.Point coord, Typeface typeface, double emSize)
-        {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            var stringBounds = new WPF.Rect(0, 0, ft.Width, ft.Height);
-            var point = coord;
-            var baseX = point.X - (stringBounds.Width / 2);
-
-            // correct the baseline by the ascent
-            var baseY = point.Y + (typeface.CapsHeight - stringBounds.Height / 2);
-            return new WPF.Point(baseX, baseY);
-        }
-
-        /// <summary>
-        /// Obtain the exact bounding box of the <paramref name="text"/> in the provided
-        /// graphics environment.
-        /// </summary>
-        /// <param name="text">the text to obtain the bounds of</param>
-        /// <returns>bounds of the text</returns>
-        /// <seealso cref="Typeface"/>
-        protected internal WPF.Rect GetTextBounds(string text, Typeface typeface, double emSize)
-        {
-            var ft = new FormattedText(text, CultureInfo.CurrentCulture, WPF.FlowDirection.LeftToRight, typeface, emSize, Brushes.Black);
-            return new WPF.Rect(0, 0, ft.Width, ft.Height);
         }
 
         private void Visit(ElementGroup elementGroup)
@@ -611,7 +555,7 @@ namespace NCDK.Renderers.Visitors
         }
 
         /// <inheritdoc/>
-        public void Visit(IRenderingElement element, Transform transform)
+        public override void Visit(IRenderingElement element, Transform transform)
         {
             this.graphics.PushTransform(transform);
             Visit(element);
@@ -619,7 +563,7 @@ namespace NCDK.Renderers.Visitors
         }
 
         /// <inheritdoc/>
-        public void Visit(IRenderingElement element)
+        public override void Visit(IRenderingElement element)
         {
             switch (element)
             {
@@ -665,8 +609,7 @@ namespace NCDK.Renderers.Visitors
             }
         }
 
-        /// <inheritdoc/>
-        public IFontManager FontManager
+        public override IFontManager FontManager
         {
             get => this.fontManager;
             set => this.fontManager = (WPFFontManager)value;
