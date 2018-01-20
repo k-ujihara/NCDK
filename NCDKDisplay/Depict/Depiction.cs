@@ -75,7 +75,7 @@ namespace NCDK.Depict
         /// </summary>
         internal const double ACS1996BondLength = 5.08;
 
-        private const char DOT = '.';
+        private const char DotChar = '.';
 
         private readonly RendererModel model;
 
@@ -256,9 +256,9 @@ namespace NCDK.Depict
         /// <returns>path with correct suffix</returns>
         private static string EnsureSuffix(string path, string suffix)
         {
-            if (path.EndsWith(DOT + suffix))
+            if (path.EndsWith(DotChar + suffix))
                 return path;
-            return path + DOT + suffix;
+            return path + DotChar + suffix;
         }
 
         /// <summary>

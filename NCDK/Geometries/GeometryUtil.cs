@@ -133,10 +133,10 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Multiplies all the coordinates of the atoms of the given molecule with the scalefactor. 
+        /// Multiplies all the coordinates of the atoms of the given molecule with the <paramref name="scaleFactor"/>. 
         /// </summary>
         /// <param name="atomCon">The molecule to be scaled</param>
-        /// <param name="scaleFactor">Description of the Parameter</param>
+        /// <param name="scaleFactor">scale factor</param>
         public static void ScaleMolecule(IAtomContainer atomCon, double scaleFactor)
         {
             for (int i = 0; i < atomCon.Atoms.Count; i++)

@@ -77,15 +77,6 @@ namespace NCDK.Renderers.Visitors
         }
 
         [TestMethod()]
-        public void TestGetStrokeMap()
-        {
-            DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext g2d = drawingVisual.RenderOpen();
-            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            Assert.IsNotNull(visitor.StrokeMap);
-        }
-
-        [TestMethod()]
         public void TestVisit()
         {
             DrawingVisual drawingVisual = new DrawingVisual();
@@ -103,9 +94,9 @@ namespace NCDK.Renderers.Visitors
         public void TestGetGraphics()
         {
             DrawingVisual drawingVisual = new DrawingVisual();
-            DrawingContext g2d = drawingVisual.RenderOpen();
-            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
-            Assert.AreEqual(g2d, visitor.Graphics);
+            DrawingContext dc = drawingVisual.RenderOpen();
+            WPFDrawVisitor visitor = new WPFDrawVisitor(dc);
+            Assert.AreEqual(dc, visitor.dc);
         }
     }
 }

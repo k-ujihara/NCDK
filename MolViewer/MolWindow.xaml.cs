@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2017  Kazuya Ujihara <ujihara.kazuya@gmail.com>
+ * Copyright (C) 2017-2018  Kazuya Ujihara <ujihara.kazuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -47,7 +47,7 @@ namespace NCDK.Controls
         private DepictionGenerator generator = new DepictionGenerator();
         private IChemObject _chemObject = null;
 
-        private TextChangedEventHandler textSmiles_TextChangedEventHandler; 
+        private TextChangedEventHandler textSmiles_TextChangedEventHandler;
 
         public MolWindow()
         {
@@ -56,7 +56,7 @@ namespace NCDK.Controls
             textSmiles_TextChangedEventHandler = new TextChangedEventHandler(this.TextSmiles_TextChanged);
             this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
 
-            generator.WithZoom(1.6);
+            generator.Zoom = 1.6;
         }
 
         private IChemObject ChemObject
@@ -160,7 +160,7 @@ namespace NCDK.Controls
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
-            IChemObject _mol = null;
+            IChemObject obj = null;
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog
@@ -183,7 +183,7 @@ namespace NCDK.Controls
                         case ".rxn":
                             using (var reader = readerFactory.CreateReader(new FileStream(fn, FileMode.Open)))
                             {
-                                _mol = reader.Read(new Silent.Reaction());
+                                obj = reader.Read(new Silent.Reaction());
                             }
                             break;
                         default:
@@ -191,7 +191,7 @@ namespace NCDK.Controls
                             {
                                 if (reader == null)
                                     throw new Exception("Not supported.");
-                                _mol = reader.Read(new Silent.AtomContainer());
+                                obj = reader.Read(new Silent.AtomContainer());
                             }
                             break;
                     }
@@ -202,10 +202,10 @@ namespace NCDK.Controls
                 MessageBox.Show(ex.Message);
             }
 
-            if (_mol == null)
+            if (obj == null)
                 return;
 
-            this.ChemObject = _mol;
+            this.ChemObject = obj;
         }
 
         private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
