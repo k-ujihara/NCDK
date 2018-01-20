@@ -55,6 +55,39 @@ namespace NCDK.Renderers.Colors
         private static readonly Color FireBrick = Color.FromRgb(0xB2, 0x22, 0x22);
         private static readonly Color ForestGreen = Color.FromRgb(0x22, 0x8B, 0x22);
 
+        private static IReadOnlyDictionary<string, Color> AtomColorsSymbol { get; } = new Dictionary<string, Color>
+        {
+            // Colors keyed on (uppercase) atomic symbol.
+            ["H"] = White,
+            ["HE"] = Pink,
+            ["LI"] = FireBrick,
+            ["B"] = Green,
+            ["C"] = LightGrey,
+            ["N"] = SkyBlue,
+            ["O"] = Red,
+            ["F"] = GoldenRod,
+            ["NA"] = Blue,
+            ["MG"] = ForestGreen,
+            ["AL"] = DarkGrey,
+            ["SI"] = GoldenRod,
+            ["P"] = Orange,
+            ["S"] = Yellow,
+            ["CL"] = Green,
+            ["CA"] = DarkGrey,
+            ["TI"] = DarkGrey,
+            ["CR"] = DarkGrey,
+            ["MN"] = DarkGrey,
+            ["FE"] = Orange,
+            ["NI"] = Brown,
+            ["CU"] = Brown,
+            ["ZN"] = Brown,
+            ["BR"] = Brown,
+            ["AG"] = DarkGrey,
+            ["I"] = Purple,
+            ["BA"] = Orange,
+            ["AU"] = GoldenRod
+        };
+
         // The atom color look-up table.
         private static IReadOnlyDictionary<int, Color> AtomColorsMassNum { get; } = new Dictionary<int, Color>
         {
@@ -87,39 +120,6 @@ namespace NCDK.Renderers.Colors
             [53] = AtomColorsSymbol["I"],
             [56] = AtomColorsSymbol["BA"],
             [79] = AtomColorsSymbol["AU"]
-        };
-
-        private static IReadOnlyDictionary<string, Color> AtomColorsSymbol { get; } = new Dictionary<string, Color>
-        {
-            // Colors keyed on (uppercase) atomic symbol.
-            ["H"] = White,
-            ["HE"] = Pink,
-            ["LI"] = FireBrick,
-            ["B"] = Green,
-            ["C"] = LightGrey,
-            ["N"] = SkyBlue,
-            ["O"] = Red,
-            ["F"] = GoldenRod,
-            ["NA"] = Blue,
-            ["MG"] = ForestGreen,
-            ["AL"] = DarkGrey,
-            ["SI"] = GoldenRod,
-            ["P"] = Orange,
-            ["S"] = Yellow,
-            ["CL"] = Green,
-            ["CA"] = DarkGrey,
-            ["TI"] = DarkGrey,
-            ["CR"] = DarkGrey,
-            ["MN"] = DarkGrey,
-            ["FE"] = Orange,
-            ["NI"] = Brown,
-            ["CU"] = Brown,
-            ["ZN"] = Brown,
-            ["BR"] = Brown,
-            ["AG"] = DarkGrey,
-            ["I"] = Purple,
-            ["BA"] = Orange,
-            ["AU"] = GoldenRod
         };
 
         //////////

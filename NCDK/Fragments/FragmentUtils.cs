@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,7 +36,7 @@ namespace NCDK.Fragments
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module fragment
-    public class FragmentUtils
+    internal static class FragmentUtils
     {
         /// <summary>
         /// Non destructively split a molecule into two parts at the specified bond.
@@ -61,8 +62,10 @@ namespace NCDK.Fragments
                 else
                     excludedAtom = bond.Begin;
 
-                List<IBond> part = new List<IBond>();
-                part.Add(bond);
+                List<IBond> part = new List<IBond>
+                {
+                    bond
+                };
                 part = Traverse(atomContainer, atom, part);
 
                 // at this point we have a partion which contains the bond we

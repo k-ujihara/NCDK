@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using NCDK.IO.PubChemXml;
 using System;
@@ -33,9 +34,9 @@ namespace NCDK.IO
     /// bits are supported: atoms.aid, atoms.element, bonds.aid1, bonds.aid2. Additionally,
     /// it extracts the InChI and canonical SMILES properties.
     /// </summary>
-     // @cdk.module io
-     // @cdk.githash
-     // @cdk.iooptions
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
     // @cdk.keyword file format, PubChem Compound ASN
     public class PCSubstanceXMLReader : DefaultChemObjectReader
     {

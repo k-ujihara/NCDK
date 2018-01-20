@@ -17,9 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using NCDK.Tools.Diff.Tree;
 
 namespace NCDK.Tools.Diff
@@ -30,14 +27,8 @@ namespace NCDK.Tools.Diff
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class AtomDiff
+    public static class AtomDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private AtomDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>
@@ -76,9 +67,9 @@ namespace NCDK.Tools.Diff
                     secondElem.ImplicitHydrogenCount));
             totalDiff
                     .AddChild(IntegerDifference.Construct("SP", firstElem.StereoParity, secondElem.StereoParity));
-            totalDiff.AddChild(Point2dDifference.Construct("2D", firstElem.Point2D, secondElem.Point2D));
-            totalDiff.AddChild(Point3dDifference.Construct("3D", firstElem.Point3D, secondElem.Point3D));
-            totalDiff.AddChild(Point3dDifference.Construct("F3D", firstElem.FractionalPoint3D,
+            totalDiff.AddChild(Point2DDifference.Construct("2D", firstElem.Point2D, secondElem.Point2D));
+            totalDiff.AddChild(Point3DDifference.Construct("3D", firstElem.Point3D, secondElem.Point3D));
+            totalDiff.AddChild(Point3DDifference.Construct("F3D", firstElem.FractionalPoint3D,
                     secondElem.FractionalPoint3D));
             totalDiff.AddChild(DoubleDifference.Construct("C", firstElem.Charge, secondElem.Charge));
             totalDiff.AddChild(AtomTypeDiff.Difference(first, second));

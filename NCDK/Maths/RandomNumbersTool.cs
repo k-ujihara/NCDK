@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Maths
@@ -212,9 +213,9 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Generates a random bool.
+        /// Generates a random <see cref="Boolean"/>.
         /// </summary>
-        /// <returns>a random bool.</returns>
+        /// <returns>a random <see cref="Boolean"/>.</returns>
         public static bool RandomBoolean()
         {
             return (RandomInt() == 1);
@@ -230,7 +231,7 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Returns a bool value based on a biased coin toss.
+        /// Returns a boolean value based on a biased coin toss.
         /// </summary>
         /// <param name="p">the probability of success.</param>
         /// <returns><see langword="true"/> if a success was found; <see langword="false"/> otherwise.</returns>
@@ -274,7 +275,6 @@ namespace NCDK.Maths
     /// <summary>
     /// Base class for random number generators that generates bits streams.
     /// </summary>
-    // @version $Id: BitsStreamGenerator.java 1244107 2012-02-14 16:17:55Z erans $
     // @since 2.0
     public abstract class BitsStreamGenerator
     {

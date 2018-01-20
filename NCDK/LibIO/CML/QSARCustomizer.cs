@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
 using System.Text;
@@ -60,49 +60,48 @@ namespace NCDK.LibIO.CML
         private XElement CreateScalar(IDescriptorResult value)
         {
             XElement scalar = null;
-            if (value is Result<double>)
+            switch (value)
             {
-                scalar = new CMLScalar(((Result<double>)value).Value);
-            }
-            else if (value is Result<int>)
-            {
-                scalar = new CMLScalar(((Result<int>)value).Value);
-            }
-            else if (value is Result<bool>)
-            {
-                scalar = new CMLScalar(((Result<bool>)value).Value);
-            }
-            else if (value is ArrayResult<int>)
-            {
-                ArrayResult<int> result = (ArrayResult<int>)value;
-                scalar = new CMLArray();
-                scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
-                scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString());
-                StringBuilder buffer = new StringBuilder();
-                for (int i = 0; i < result.Length; i++)
-                {
-                    buffer.Append(result[i] + " ");
-                }
-                scalar.Add(buffer.ToString());
-            }
-            else if (value is ArrayResult<double>)
-            {
-                ArrayResult<double> result = (ArrayResult<double>)value;
-                scalar = new CMLArray();
-                scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:double");
-                scalar.SetAttributeValue(CMLElement.Attribute_size, "" + result.Length);
-                StringBuilder buffer = new StringBuilder();
-                for (int i = 0; i < result.Length; i++)
-                {
-                    buffer.Append(result[i] + " ");
-                }
-                scalar.Add(buffer.ToString());
-            }
-            else
-            {
-                // Trace.TraceError("Could not convert this object to a scalar element: ", value);
-                scalar = new CMLScalar();
-                scalar.Add(value.ToString());
+                case Result<double> v:
+                    scalar = new CMLScalar(v.Value);
+                    break;
+                case Result<int> v:
+                    scalar = new CMLScalar(v.Value);
+                    break;
+                case Result<bool> v:
+                    scalar = new CMLScalar(v.Value);
+                    break;
+                case ArrayResult<int> result:
+                    {
+                        scalar = new CMLArray();
+                        scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
+                        scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString());
+                        StringBuilder buffer = new StringBuilder();
+                        for (int i = 0; i < result.Length; i++)
+                        {
+                            buffer.Append(result[i] + " ");
+                        }
+                        scalar.Add(buffer.ToString());
+                    }
+                    break;
+                case ArrayResult<double> result:
+                    {
+                        scalar = new CMLArray();
+                        scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:double");
+                        scalar.SetAttributeValue(CMLElement.Attribute_size, "" + result.Length);
+                        StringBuilder buffer = new StringBuilder();
+                        for (int i = 0; i < result.Length; i++)
+                        {
+                            buffer.Append(result[i] + " ");
+                        }
+                        scalar.Add(buffer.ToString());
+                    }
+                    break;
+                default:
+                    // Trace.TraceError("Could not convert this object to a scalar element: ", value);
+                    scalar = new CMLScalar();
+                    scalar.Add(value.ToString());
+                    break;
             }
             return scalar;
         }
@@ -116,9 +115,8 @@ namespace NCDK.LibIO.CML
             XElement propList = null;
             foreach (var key in props.Keys)
             {
-                if (key is DescriptorSpecification)
+                if (key is DescriptorSpecification specs)
                 {
-                    DescriptorSpecification specs = (DescriptorSpecification)key;
                     var value = (IDescriptorValue)props[key];
                     IDescriptorResult result = value.Value;
                     if (propList == null)

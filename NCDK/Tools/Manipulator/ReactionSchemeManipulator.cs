@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,7 +31,7 @@ namespace NCDK.Tools.Manipulator
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    public class ReactionSchemeManipulator
+    public static class ReactionSchemeManipulator
     {
         /// <summary>
         /// Get all molecule objects from a set of Reactions given a <see cref="IAtomContainerSet"/> to add.

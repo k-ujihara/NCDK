@@ -19,17 +19,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.IO.Formats;
-using System.IO;
-using System;
-using System.Xml;
-using System.Xml.Schema;
-using NCDK.IO.InChI;
-using System.Diagnostics;
-using System.Xml.Linq;
 using NCDK.Utils.Xml;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace NCDK.IO
 {
@@ -97,15 +96,19 @@ namespace NCDK.IO
         private IChemFile ReadChemFile(IChemObjectBuilder bldr)
         {
             IChemFile cf = null;
-            XmlReaderSettings setting = new XmlReaderSettings();
-            setting.ValidationFlags = XmlSchemaValidationFlags.None;
+            XmlReaderSettings setting = new XmlReaderSettings
+            {
+                ValidationFlags = XmlSchemaValidationFlags.None
+            };
 
             InChIHandler handler = new InChIHandler(bldr);
 
             try
             {
-                var r = new XReader();
-                r.Handler = handler;
+                var r = new XReader
+                {
+                    Handler = handler
+                };
                 XDocument doc = XDocument.Load(input);
                 r.Read(doc);
                 cf = handler.ChemFile;

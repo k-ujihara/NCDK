@@ -31,7 +31,7 @@ namespace NCDK.Validate
         {
             string filename = "NCDK.Data.MDL.Heptane-TestFF-output.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             ValidatorEngine engine = new ValidatorEngine();
             engine.Add(new Geometry3DValidator());

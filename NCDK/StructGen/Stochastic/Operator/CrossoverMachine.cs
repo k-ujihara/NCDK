@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
 using NCDK.Maths;
 using NCDK.Tools;
@@ -37,7 +38,7 @@ namespace NCDK.StructGen.Stochastic.Operator
         /// <summary>
         /// Indicates which mode <see cref="CrossoverMachine"/> is using.
         /// </summary>
-        public enum SplitModes
+        public enum SplitMode
         {
             /// <summary>Random mode.</summary>
             Random = 0,
@@ -48,7 +49,7 @@ namespace NCDK.StructGen.Stochastic.Operator
         }
 
         /// <summary>selects a partitioning mode</summary>
-        SplitModes splitMode = SplitModes.BreadthFirst;
+        SplitMode splitMode = SplitMode.BreadthFirst;
         /// <summary>selects a partitioning scale</summary>
         int numatoms = 5;
 
@@ -80,7 +81,7 @@ namespace NCDK.StructGen.Stochastic.Operator
                 IList<int> blueAtoms = new List<int>();
 
                 // randomly divide atoms into two parts: redAtoms and blueAtoms.
-                if (splitMode == SplitModes.Random)
+                if (splitMode == SplitMode.Random)
                 {
                     // better way to randomly divide atoms into two parts: redAtoms
                     // and blueAtoms.
@@ -96,9 +97,11 @@ namespace NCDK.StructGen.Stochastic.Operator
                 else
                 {
                     // split graph using depth/breadth first traverse 
-                    ChemGraph graph = new ChemGraph(dad);
-                    graph.NumAtoms = numatoms;
-                    if (splitMode == SplitModes.DepthFirst)
+                    ChemGraph graph = new ChemGraph(dad)
+                    {
+                        NumAtoms = numatoms
+                    };
+                    if (splitMode == SplitMode.DepthFirst)
                     {
                         redAtoms = graph.PickDFGraph();
                     }

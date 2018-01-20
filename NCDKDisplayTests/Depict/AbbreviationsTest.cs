@@ -164,7 +164,7 @@ namespace NCDK.Depict
             sgroup.Atoms.Add(mol.Atoms[6]);
             sgroup.Atoms.Add(mol.Atoms[7]);
             sgroup.Atoms.Add(mol.Atoms[8]);
-            sgroup.Type = SgroupTypes.CtabAbbreviation;
+            sgroup.Type = SgroupType.CtabAbbreviation;
             sgroup.Subscript = "n-Bu";
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
             var sgroups = factory.Generate(mol);

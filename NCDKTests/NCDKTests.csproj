@@ -442,9 +442,13 @@
     <Compile Include="AssociationTest.cs" />
     <Compile Include="CloneAtomContainerTest.cs" />
     <Compile Include="MockMolecule.cs" />
-    <Compile Include="Reactions\ReactionChainTest.cs" />
     <Compile Include="Tools\BremserPredictorTest.cs" />
     <Compile Include="Tools\HOSECodeAnalyserTest.cs" />
+    <Compile Include="TT\ReactionChainTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionChainTest.tt</DependentUpon>
+    </Compile>
     <Compile Include="Validate\Geometry3DValidatorTest.cs" />
     <EmbeddedResource Include="Data\MDL\24763.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1777,6 +1781,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FaulonSignatures\SignatureTests.csproj" />
+    <Content Include="TT\ReactionChainTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionChainTest.tt.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

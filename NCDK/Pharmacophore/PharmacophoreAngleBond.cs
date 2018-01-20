@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
-using NCDK.Default;
 using System;
 
 namespace NCDK.Pharmacophore
@@ -31,7 +31,7 @@ namespace NCDK.Pharmacophore
     // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreAngleBond : Bond
+    public class PharmacophoreAngleBond : Silent.Bond
     {
         /// <summary>
         /// Create a pharmacophore distance constraint.

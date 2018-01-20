@@ -74,7 +74,7 @@ namespace NCDK.Tools
             IAtomContainer molecule = null;
             string filename = "NCDK.Data.MDL.BremserPredictionTest.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molecule = reader.Read(new AtomContainer());
             double prediction;
             BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();

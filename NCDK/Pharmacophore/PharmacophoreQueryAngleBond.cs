@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Default;
+
 using NCDK.Isomorphisms.Matchers;
 using System;
 using System.Text;
@@ -34,7 +34,7 @@ namespace NCDK.Pharmacophore
     // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreQueryAngleBond : Bond, IQueryBond
+    public class PharmacophoreQueryAngleBond : Silent.Bond, IQueryBond
     {
         private double upper;
         private double lower;
@@ -97,9 +97,8 @@ namespace NCDK.Pharmacophore
         /// <returns>true if the target angle lies within the range of the query constraint</returns>
         public bool Matches(IBond bond)
         {
-            if (bond is PharmacophoreAngleBond)
+            if (bond is PharmacophoreAngleBond pbond)
             {
-                PharmacophoreAngleBond pbond = (PharmacophoreAngleBond)bond;
                 double bondLength = Round(pbond.BondLength, 2);
                 return bondLength >= lower && bondLength <= upper;
             }

@@ -24,7 +24,7 @@ namespace NCDK.Renderers.Fonts
     /// <summary>
     /// Weight of the font to use to draw text.
     /// </summary>
-    public enum FontWeights
+    public enum FontWeight
     {
         /// <summary>Regular font style.</summary>
         Normal,
@@ -49,7 +49,7 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font weight.
         /// </summary>
-        FontWeights FontWeight { get; set; }
+        FontWeight FontWeight { get; set; }
 
         /// <summary>
         /// The font name ('Arial', 'Times New Roman' and so on).

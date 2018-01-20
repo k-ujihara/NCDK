@@ -14,10 +14,10 @@ namespace NCDK.FaulonSignatures
     // @author maclean
     public abstract class AbstractVertexSignature
     {
-        public const char START_BRANCH_SYMBOL = '(';
-        public const char END_BRANCH_SYMBOL = ')';
-        public const char START_NODE_SYMBOL = '[';
-        public const char END_NODE_SYMBOL = ']';
+        private const char StartBranchSymbolChar = '(';
+        private const char EndBranchSymbolChar = ')';
+        private const char StartNodeSymbolChar = '[';
+        private const char EndNodeSymbolChar = ']';
 
         private DAG dag;
 
@@ -44,15 +44,15 @@ namespace NCDK.FaulonSignatures
         /// </summary>
         private Dictionary<int, int> vertexMapping;
 
-        public enum InvariantTypes { STRING, INTEGER };
+        public enum InvariantType { String, Integer };
 
-        private InvariantTypes invariantType;
+        private InvariantType invariantType;
 
         /// <summary>
         /// Create an abstract vertex signature.
         /// </summary>
         public AbstractVertexSignature()
-           : this(InvariantTypes.STRING)
+           : this(InvariantType.String)
         { }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace NCDK.FaulonSignatures
         /// for the initial invariants. 
         /// </summary>
         /// <param name="invariantType"></param>
-        public AbstractVertexSignature(InvariantTypes invariantType)
+        public AbstractVertexSignature(InvariantType invariantType)
         {
             this.vertexCount = 0;
             this.invariantType = invariantType;
@@ -111,16 +111,18 @@ namespace NCDK.FaulonSignatures
         public void Create(int rootVertexIndex, int graphVertexCount, int height)
         {
             this.height = height;
-            vertexMapping = new Dictionary<int, int>();
-            vertexMapping[rootVertexIndex] = 0;
+            vertexMapping = new Dictionary<int, int>
+            {
+                [rootVertexIndex] = 0
+            };
             dag = new DAG(0, graphVertexCount);
             vertexCount = 1;
             Builder(1, dag.GetRootLayer(), new List<DAG.Arc>(), height);
-            if (invariantType == InvariantTypes.STRING)
+            if (invariantType == InvariantType.String)
             {
                 CreateWithStringLabels();
             }
-            else if (invariantType == InvariantTypes.INTEGER)
+            else if (invariantType == InvariantType.Integer)
             {
                 CreateWithIntLabels();
             }
@@ -417,14 +419,14 @@ namespace NCDK.FaulonSignatures
             }
 
             // print out the text that represents the node itself
-            buffer.Append(AbstractVertexSignature.START_NODE_SYMBOL);
+            buffer.Append(AbstractVertexSignature.StartNodeSymbolChar);
             buffer.Append(GetVertexSymbol(vertexIndex));
             int color = dag.ColorFor(node.vertexIndex);
             if (color != -1)
             {
                 buffer.Append(',').Append(color);
             }
-            buffer.Append(AbstractVertexSignature.END_NODE_SYMBOL);
+            buffer.Append(AbstractVertexSignature.EndNodeSymbolChar);
 
             // Need to sort the children here, so that they are printed in an order 
             // according to their invariants.
@@ -443,7 +445,7 @@ namespace NCDK.FaulonSignatures
                 {
                     if (!addedBranchSymbol)
                     {
-                        buffer.Append(AbstractVertexSignature.START_BRANCH_SYMBOL);
+                        buffer.Append(AbstractVertexSignature.StartBranchSymbolChar);
                         addedBranchSymbol = true;
                     }
                     arcs.Add(arc);
@@ -452,7 +454,7 @@ namespace NCDK.FaulonSignatures
             }
             if (addedBranchSymbol)
             {
-                buffer.Append(AbstractVertexSignature.END_BRANCH_SYMBOL);
+                buffer.Append(AbstractVertexSignature.EndBranchSymbolChar);
             }
         }
 
@@ -480,20 +482,20 @@ namespace NCDK.FaulonSignatures
             for (int i = 0; i < s.Length; i++)
             {
                 char c = s[i];
-                if (c == AbstractVertexSignature.START_BRANCH_SYMBOL)
+                if (c == AbstractVertexSignature.StartBranchSymbolChar)
                 {
                     parent = current;
                     currentHeight++;
                     tree.UpdateHeight(currentHeight);
                     l = i;
                 }
-                else if (c == AbstractVertexSignature.END_BRANCH_SYMBOL)
+                else if (c == AbstractVertexSignature.EndBranchSymbolChar)
                 {
                     parent = parent.parent;
                     currentHeight--;
                     l = i;
                 }
-                else if (c == START_NODE_SYMBOL)
+                else if (c == StartNodeSymbolChar)
                 {
                     if (l < i)
                     {
@@ -502,7 +504,7 @@ namespace NCDK.FaulonSignatures
                     }
                     j = i + 1;
                 }
-                else if (c == END_NODE_SYMBOL)
+                else if (c == EndNodeSymbolChar)
                 {
                     string ss;
                     if (k < j)

@@ -86,11 +86,23 @@ namespace NCDK.IO
         /// This will be added to the data as TimeZone. format according to 23c. Examples "+01:00" "-05:00"
         /// </summary>
         private string TimeZone = "+01:00";
+        private IDictionary<IChemObject, IEnumerable<XElement>> multiMap = new Dictionary<IChemObject, IEnumerable<XElement>>();
 
         /// <summary>
         /// the multi map. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
         /// </summary>
-        public IDictionary<IChemObject, IEnumerable<XElement>> multiMap { get; set; } = new Dictionary<IChemObject, IEnumerable<XElement>>();
+        public IDictionary<IChemObject, IEnumerable<XElement>> GetMultiMap()
+        {
+            return multiMap;
+        }
+
+        /// <summary>
+        /// the multi map. If you put any number of nu.xom.Elements in this map with one of the objects you want to write as key, it will be added as a child to the same node as the cml code of the object
+        /// </summary>
+        public void SetMultiMap(IDictionary<IChemObject, IEnumerable<XElement>> value)
+        {
+            multiMap = value;
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -144,20 +156,30 @@ namespace NCDK.IO
                 rdfElement.SetAttributeValue(XNamespace.Xmlns + "cml", Convertor.NS_CML);
                 doc.Add(rdfElement);
                 var channelElement = new XElement(NS_RSS10 + "channel");
-                var titleElement = new XElement(NS_RSS10 + "title");
-                titleElement.Value = this.Title;
+                var titleElement = new XElement(NS_RSS10 + "title")
+                {
+                    Value = this.Title
+                };
                 channelElement.Add(titleElement);
-                var linkElement = new XElement(NS_RSS10 + "link");
-                linkElement.Value = Link;
+                var linkElement = new XElement(NS_RSS10 + "link")
+                {
+                    Value = Link
+                };
                 channelElement.Add(linkElement);
-                var descriptionElement = new XElement(NS_RSS10 + "description");
-                descriptionElement.Value = Description;
+                var descriptionElement = new XElement(NS_RSS10 + "description")
+                {
+                    Value = Description
+                };
                 channelElement.Add(descriptionElement);
-                var publisherElement = new XElement(NS_DCELEMENTS + "publisher");
-                publisherElement.Value = Publisher;
+                var publisherElement = new XElement(NS_DCELEMENTS + "publisher")
+                {
+                    Value = Publisher
+                };
                 channelElement.Add(publisherElement);
-                var creatorElement = new XElement(NS_DCELEMENTS + "creator");
-                creatorElement.Value = Creator;
+                var creatorElement = new XElement(NS_DCELEMENTS + "creator")
+                {
+                    Value = Creator
+                };
                 channelElement.Add(creatorElement);
                 var imageElement = new XElement(NS_RSS10 + "image");
                 imageElement.SetAttributeValue(NS_RDF + "resource", ImageLink);
@@ -184,41 +206,55 @@ namespace NCDK.IO
                 {
                     IChemObject chemObject = (IChemObject)list[i];
                     var itemElement = new XElement(NS_RSS10 + "item");
-                    string easylink = (string)LinkMap[chemObject];
+                    string easylink = LinkMap[chemObject];
                     if (easylink != null) itemElement.SetAttributeValue(NS_RDF + "about", easylink);
-                    var link2Element = new XElement(NS_RSS10 + "link");
-                    link2Element.Value = easylink;
+                    var link2Element = new XElement(NS_RSS10 + "link")
+                    {
+                        Value = easylink
+                    };
                     itemElement.Add(link2Element);
-                    string title = (string)chemObject.GetProperties()[CDKPropertyName.Title];
+                    string title = chemObject.GetProperty<string>(CDKPropertyName.Title);
                     if (TitleMap[chemObject] != null)
                     {
-                        var title2Element = new XElement(NS_RSS10 + "title");
-                        title2Element.Value = (string)TitleMap[chemObject];
+                        var title2Element = new XElement(NS_RSS10 + "title")
+                        {
+                            Value = TitleMap[chemObject]
+                        };
                         itemElement.Add(title2Element);
                     }
                     if (title != null)
                     {
-                        var description2Element = new XElement(NS_RSS10 + "description");
-                        description2Element.Value = title;
+                        var description2Element = new XElement(NS_RSS10 + "description")
+                        {
+                            Value = title
+                        };
                         itemElement.Add(description2Element);
-                        var subjectElement = new XElement(NS_DCELEMENTS + "subject");
-                        subjectElement.Value = title;
+                        var subjectElement = new XElement(NS_DCELEMENTS + "subject")
+                        {
+                            Value = title
+                        };
                         itemElement.Add(subjectElement);
                     }
                     if (DateMap[chemObject] != null)
                     {
-                        var dateElement = new XElement(NS_DCELEMENTS + "date");
-                        dateElement.Value = DateMap[chemObject].ToString("yyyy-MM-dd'T'HH:mm:ss") + TimeZone;
+                        var dateElement = new XElement(NS_DCELEMENTS + "date")
+                        {
+                            Value = DateMap[chemObject].ToString("yyyy-MM-dd'T'HH:mm:ss") + TimeZone
+                        };
                         itemElement.Add(dateElement);
                     }
-                    var creator2Element = new XElement(NS_DCELEMENTS + "creator");
-                    creator2Element.Value = (string)CreatorMap[chemObject];
+                    var creator2Element = new XElement(NS_DCELEMENTS + "creator")
+                    {
+                        Value = CreatorMap[chemObject]
+                    };
                     itemElement.Add(creator2Element);
                     // add the InChI to the CMLRSS feed
                     if (InChIMap[chemObject] != null)
                     {
-                        var inchiElement = new XElement(NS_CML + "identifier");
-                        inchiElement.Value = (string)InChIMap[chemObject];
+                        var inchiElement = new XElement(NS_CML + "identifier")
+                        {
+                            Value = InChIMap[chemObject]
+                        };
                         itemElement.Add(inchiElement);
                     }
                     CMLElement root = null;
@@ -269,9 +305,9 @@ namespace NCDK.IO
                         throw new CDKException("Unsupported chemObject: " + obj.GetType().Name);
                     }
                     itemElement.Add(root);
-                    if (multiMap[chemObject] != null)
+                    if (GetMultiMap()[chemObject] != null)
                     {
-                        var coll = multiMap[chemObject];
+                        var coll = GetMultiMap()[chemObject];
                         foreach (var e in coll)
                         {
                             itemElement.Add(e);

@@ -48,7 +48,7 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             MDLReader reader = new MDLReader(new StringReader(""));
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             Assert.IsTrue(reader.Accepts(typeof(ChemFile)));
             Assert.IsTrue(reader.Accepts(typeof(ChemModel)));
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
@@ -69,7 +69,7 @@ namespace NCDK.IO
                     + "   -0.2264    1.3994   -0.1675 H   0  0  0  0  0\n" + "  1  2  1  6  0  0\n"
                     + "  1  3  1  6  0  0\n" + "  1  4  1  0  0  0\n" + "  1  5  1  1  0  0\n" + "  2  3  1  0  0  0\n"
                     + "  2  6  1  0  0  0\n" + "  2  7  1  6  0  0\n" + "  3  8  1  6  0  0\n" + "  3  9  1  0  0  0\n";
-            MDLReader reader = new MDLReader(new StringReader(mdl), ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(new StringReader(mdl), ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -96,7 +96,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MDL.Strychnine_nichtOK.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -111,7 +111,7 @@ namespace NCDK.IO
         {
             string mdl = "proton.mol\n" + "\n" + "\n" + "  1  0  0  0  0                 1\n"
                     + "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
-            MDLReader reader = new MDLReader(new StringReader(mdl), ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(new StringReader(mdl), ChemObjectReaderMode.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNotNull(mol);
@@ -130,7 +130,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -152,7 +152,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -166,7 +166,7 @@ namespace NCDK.IO
         public void TestEmptyString()
         {
             string emptyString = "";
-            MDLReader reader = new MDLReader(new StringReader(emptyString), ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(new StringReader(emptyString), ChemObjectReaderMode.Strict);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNull(mol);
@@ -178,7 +178,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MDL.ChEBI_26120.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Relaxed);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Relaxed);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
             Assert.AreEqual(BondStereo.EOrZ, mol.Bonds[1].Stereo);
@@ -209,7 +209,7 @@ namespace NCDK.IO
             string filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
             var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Relaxed);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Relaxed);
             molOne = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNull(molOne.Atoms[0].Point2D);
@@ -246,7 +246,7 @@ namespace NCDK.IO
         public void WrongFormat()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             IChemFile chemfile = Default.ChemObjectBuilder.Instance.NewChemFile();
             chemfile = reader.Read(chemfile);
         }

@@ -27,14 +27,8 @@ namespace NCDK.Tools.Diff
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class AtomContainerDiff
+    public static class AtomContainerDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private AtomContainerDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>

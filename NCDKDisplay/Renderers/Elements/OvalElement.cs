@@ -30,16 +30,16 @@ namespace NCDK.Renderers.Elements
     public class OvalElement : IRenderingElement
     {
         /// <summary>The center of the oval. </summary>
-        public readonly Point coord;
+        public readonly Point Coord;
 
         /// <summary>The radius of the oval. </summary>
-        public readonly double radius; // TODO : width AND height
+        public readonly double Radius; // TODO : width AND height
 
         /// <summary>If true, draw the oval as filled. </summary>
-        public readonly bool fill;
+        public readonly bool Fill;
 
         /// <summary>The color to draw the oval. </summary>
-        public readonly Color color;
+        public readonly Color Color;
 
         /// <summary>
         /// Make an oval with a default radius of 10.
@@ -69,10 +69,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="color">the color of the oval</param>
         public OvalElement(Point coord, double radius, bool fill, Color color)
         {
-            this.coord = coord;
-            this.radius = radius;
-            this.fill = fill;
-            this.color = color;
+            this.Coord = coord;
+            this.Radius = radius;
+            this.Fill = fill;
+            this.Color = color;
         }
         
         public virtual void Accept(IRenderingVisitor v, Transform transform)

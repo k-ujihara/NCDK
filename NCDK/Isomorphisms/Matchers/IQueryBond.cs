@@ -16,10 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
-    /// Defines the abililty to be matched against IBond's. Most prominent application
+    /// Defines the ability to be matched against IBond's. Most prominent application
     /// is in isomorphism and substructure matching in the UniversalIsomorphismTester.
     /// </summary>
     /// <seealso cref="UniversalIsomorphismTester"/>

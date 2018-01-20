@@ -128,7 +128,7 @@ namespace NCDK.Smiles
             IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |m:1:2.3.4.5.6.7|");
             IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             Assert.AreEqual(1, sgroups.Count);
-            Assert.AreEqual(SgroupTypes.ExtMulticenter, sgroups[0].Type);
+            Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);
             Assert.AreEqual(7, sgroups[0].Atoms.Count);
             Assert.AreEqual(1, sgroups[0].Bonds.Count);
         }
@@ -139,9 +139,9 @@ namespace NCDK.Smiles
             IAtomContainer mol = smipar.ParseSmiles("**.c1ccccc1CC |Sg:n:8:m:ht|");
             IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             Assert.AreEqual(1, sgroups.Count);
-            Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroups[0].Type);
+            Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroups[0].Type);
             Assert.AreEqual("m", sgroups[0].Subscript);
-            Assert.AreEqual("ht", sgroups[0].GetValue(SgroupKeys.CtabConnectivity));
+            Assert.AreEqual("ht", sgroups[0].GetValue(SgroupKey.CtabConnectivity));
             Assert.AreEqual(1, sgroups[0].Atoms.Count);
             Assert.AreEqual(2, sgroups[0].Bonds.Count);
         }

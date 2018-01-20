@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 
@@ -29,7 +30,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             Vector3 foo = new Vector3(1.0, 2.0, 4.5);
             Vector3 bar = new Vector3(1.0, 5.0, 8.3);
-            IDifference result = Point3dDifference.Construct("Foo", foo, bar);
+            IDifference result = Point3DDifference.Construct("Foo", foo, bar);
             Assert.IsNotNull(result);
         }
 
@@ -38,14 +39,14 @@ namespace NCDK.Tools.Diff.Tree
         {
             Vector3 foo = new Vector3(1.0, 2.0, 4.5);
             Vector3 bar = new Vector3(1.0, 2.0, 4.5);
-            IDifference result = Point3dDifference.Construct("Foo", foo, bar);
+            IDifference result = Point3DDifference.Construct("Foo", foo, bar);
             Assert.IsNull(result);
         }
 
         [TestMethod()]
         public void TestTwoNull()
         {
-            IDifference result = Point3dDifference.Construct("Foo", null, null);
+            IDifference result = Point3DDifference.Construct("Foo", null, null);
             Assert.IsNull(result);
         }
 
@@ -53,10 +54,10 @@ namespace NCDK.Tools.Diff.Tree
         public void TestOneNull()
         {
             Vector3 bar = new Vector3(1.0, 5.0, 8.3);
-            IDifference result = Point3dDifference.Construct("Foo", null, bar);
+            IDifference result = Point3DDifference.Construct("Foo", null, bar);
             Assert.IsNotNull(result);
 
-            result = Point3dDifference.Construct("Foo", bar, null);
+            result = Point3DDifference.Construct("Foo", bar, null);
             Assert.IsNotNull(result);
         }
 
@@ -64,7 +65,7 @@ namespace NCDK.Tools.Diff.Tree
         public void TestToString()
         {
             Vector3 bar = new Vector3(1.0, 5.0, 8.3);
-            IDifference result = Point3dDifference.Construct("Foo", null, bar);
+            IDifference result = Point3DDifference.Construct("Foo", null, bar);
             string diffString = result.ToString();
             Assert.IsNotNull(diffString);
             AssertOneLiner(diffString);

@@ -93,7 +93,7 @@ namespace NCDK.Stereo
         {
         }
 
-        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement.Configurations configure)
+        ExtendedTetrahedral(IAtom focus, IEnumerable<IAtom> peripherals, StereoElement.Configuration configure)
             : base(focus, peripherals.ToList(), new StereoElement(StereoElement.Classes.Allenal, configure))
         {
         }

@@ -30,19 +30,19 @@ namespace NCDK.Renderers.Elements
     public class RectangleElement : IRenderingElement
     {
         /// <summary>The base point of the rectangle. </summary>
-        public readonly WPF.Point coord;
+        public readonly WPF.Point Coord;
 
         /// <summary>The width of the rectangle. </summary>
-        public readonly double width;
+        public readonly double Width;
 
         /// <summary>The height of the rectangle. </summary>
-        public readonly double height;
+        public readonly double Height;
 
         /// <summary>If true, the rectangle is drawn as filled. </summary>
-        public readonly bool filled;
+        public readonly bool Filled;
 
         /// <summary>The color of the rectangle. </summary>
-        public readonly WPF.Media.Color color;
+        public readonly WPF.Media.Color Color;
 
         /// <summary>
         /// Make a rectangle from two opposite corners (x1, y1) and (x2, y2).
@@ -68,11 +68,16 @@ namespace NCDK.Renderers.Elements
         /// <param name="color">the color of the rectangle</param>
         public RectangleElement(WPF.Point coord, double width, double height, bool filled, WPF.Media.Color color)
         {
-            this.coord = coord;
-            this.width = width;
-            this.height = height;
-            this.filled = filled;
-            this.color = color;
+            this.Coord = coord;
+            this.Width = width;
+            this.Height = height;
+            this.Filled = filled;
+            this.Color = color;
+        }
+
+        public RectangleElement(double height)
+        {
+            Height = height;
         }
 
         public virtual void Accept(IRenderingVisitor v, Transform transform)

@@ -32,9 +32,7 @@ namespace NCDK
 
         internal ChemObjectRef(IChemObject chemobj)
         {
-            if (chemobj == null)
-                throw new ArgumentNullException("Proxy object can not be null!");
-            this.chemobj = chemobj;
+            this.chemobj = chemobj ?? throw new ArgumentNullException("Proxy object can not be null!");
         }
 
         /// <inheritdoc/>

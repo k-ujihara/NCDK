@@ -29,15 +29,8 @@ namespace NCDK.Tools.Diff.Tree
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class ElementDiff
+    public static class ElementDiff
     {
-
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private ElementDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         ///

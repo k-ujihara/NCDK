@@ -38,7 +38,7 @@ namespace NCDK.Tools.Manipulator
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-    public class MolecularFormulaManipulator
+    public static class MolecularFormulaManipulator
     {
         /// <summary>
         /// Checks a set of Nodes for the occurrence of each isotopes

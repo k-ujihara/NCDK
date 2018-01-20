@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -412,11 +413,7 @@ namespace NCDK.IO
                     IBond bond = GetBond(bondIndex);
                     string id = GetValue(line);
                     IAtom atom = (IAtom)atomIDs[id];
-                    if (atom == null)
-                    {
-                        throw new CDKException("File is corrupt: atom ID does not exist " + id);
-                    }
-                    bond.Atoms[pos] = atom;
+                    bond.Atoms[pos] = atom ?? throw new CDKException("File is corrupt: atom ID does not exist " + id);
                     bondIndex++;
                 }
                 line = input.ReadLine();

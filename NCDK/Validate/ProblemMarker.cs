@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 namespace NCDK.Validate
 {
     /// <summary>
@@ -29,7 +29,7 @@ namespace NCDK.Validate
     // @cdk.githash
     // @author   Egon Willighagen
     // @cdk.created  2003-08-11
-    public class ProblemMarker
+    public static class ProblemMarker
     {
         public const string ErrorMarker = "NCDK.Validate.error";
         public const string WarningMarker = "NCDK.Validate.warning";

@@ -56,27 +56,27 @@ namespace NCDK
         public static DoubleBondConformation Invert(this DoubleBondConformation value)
             => value == Together ? Opposite : Together;
 
-        public static DoubleBondConformation ToConformation(this StereoElement.Configurations configure)
+        public static DoubleBondConformation ToConformation(this StereoElement.Configuration configure)
         {
             switch (configure)
             {
-                case StereoElement.Configurations.Together:
+                case StereoElement.Configuration.Together:
                     return Together;
-                case StereoElement.Configurations.Opposite:
+                case StereoElement.Configuration.Opposite:
                     return Opposite;
                 default:
                     throw new System.ArgumentException("Cannot map config to enum: " + configure);
             }
         }
 
-        public static StereoElement.Configurations ToConfiguration(this DoubleBondConformation conformation)
+        public static StereoElement.Configuration ToConfiguration(this DoubleBondConformation conformation)
         {
             switch (conformation)
             {
                 case DoubleBondConformation.Together:
-                    return StereoElement.Configurations.Together;
+                    return StereoElement.Configuration.Together;
                 case DoubleBondConformation.Opposite:
-                    return StereoElement.Configurations.Opposite;
+                    return StereoElement.Configuration.Opposite;
                 default:
                     throw new System.ArgumentException("Cannot map enum to config: " + conformation);
             }

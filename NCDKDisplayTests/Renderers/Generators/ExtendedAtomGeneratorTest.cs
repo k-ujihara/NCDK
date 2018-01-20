@@ -59,13 +59,13 @@ namespace NCDK.Renderers.Generators
             atom.ImplicitHydrogenCount = 0;
             int alignment = 1;
             var element = generator.GenerateElement(atom, alignment, model);
-            Assert.AreEqual(atom.Point2D.Value.X, element.coord.X, 0.1);
-            Assert.AreEqual(atom.Point2D.Value.Y, element.coord.Y, 0.1);
-            Assert.AreEqual(atom.Symbol, element.text);
-            Assert.AreEqual((int)atom.FormalCharge, element.formalCharge);
-            Assert.AreEqual((int)atom.ImplicitHydrogenCount, element.hydrogenCount);
-            Assert.AreEqual(alignment, element.alignment);
-            Assert.AreEqual(generator.GetAtomColor(atom, model), element.color);
+            Assert.AreEqual(atom.Point2D.Value.X, element.Coord.X, 0.1);
+            Assert.AreEqual(atom.Point2D.Value.Y, element.Coord.Y, 0.1);
+            Assert.AreEqual(atom.Symbol, element.Text);
+            Assert.AreEqual((int)atom.FormalCharge, element.FormalCharge);
+            Assert.AreEqual((int)atom.ImplicitHydrogenCount, element.HydrogenCount);
+            Assert.AreEqual(alignment, element.Alignment);
+            Assert.AreEqual(generator.GetAtomColor(atom, model), element.Color);
         }
 
         [TestMethod()]
@@ -193,7 +193,7 @@ namespace NCDK.Renderers.Generators
         public override void OvalShapeTest()
         {
             IAtomContainer singleAtom = MakeSingleAtom();
-            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetCompactShape(AtomShapeType.Oval);
             model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
@@ -204,7 +204,7 @@ namespace NCDK.Renderers.Generators
         public override void SquareShapeTest()
         {
             IAtomContainer singleAtom = MakeSingleAtom();
-            model.SetCompactShape(AtomShapeTypes.Square);
+            model.SetCompactShape(AtomShapeType.Square);
             model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
@@ -223,7 +223,7 @@ namespace NCDK.Renderers.Generators
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
             TextGroupElement element = ((TextGroupElement)elements[0]);
-            Assert.AreEqual(testColor, element.color);
+            Assert.AreEqual(testColor, element.Color);
         }
 
 
@@ -246,9 +246,9 @@ namespace NCDK.Renderers.Generators
             foreach (var element in elements)
             {
                 TextGroupElement symbolElement = (TextGroupElement)element;
-                string symbol = symbolElement.text;
+                string symbol = symbolElement.Text;
                 Assert.IsTrue(colorMap.ContainsKey(symbol));
-                Assert.AreEqual(colorMap[symbol], symbolElement.color);
+                Assert.AreEqual(colorMap[symbol], symbolElement.Color);
             }
         }
 
@@ -262,7 +262,7 @@ namespace NCDK.Renderers.Generators
             foreach (var element in elements)
             {
                 TextGroupElement symbolElement = (TextGroupElement)element;
-                Assert.AreEqual(defaultColor, symbolElement.color);
+                Assert.AreEqual(defaultColor, symbolElement.Color);
             }
         }
 
@@ -317,7 +317,7 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer container = MakeSingleBond();
             model.SetCompactAtom(true);
-            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetCompactShape(AtomShapeType.Oval);
             model.SetShowEndCarbons(true);
 
             // generate the single line element
@@ -328,7 +328,7 @@ namespace NCDK.Renderers.Generators
             // test that the endpoints are distinct
             OvalElement ovalA = (OvalElement)elements[0];
             OvalElement ovalB = (OvalElement)elements[1];
-            Assert.AreNotSame(0, Distance(ovalA.coord, ovalB.coord));
+            Assert.AreNotSame(0, Distance(ovalA.Coord, ovalB.Coord));
         }
 
         [TestMethod()]

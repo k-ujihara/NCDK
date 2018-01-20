@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
@@ -593,28 +594,28 @@ namespace NCDK.IO
                         // Could do ordinal()-1 but this is clearer
                         switch (((CTFileQueryBond)bond).Type)
                         {
-                            case CTFileQueryBond.BondTypes.Single:
+                            case CTFileQueryBond.BondType.Single:
                                 bondType = 1;
                                 break;
-                            case CTFileQueryBond.BondTypes.Double:
+                            case CTFileQueryBond.BondType.Double:
                                 bondType = 2;
                                 break;
-                            case CTFileQueryBond.BondTypes.Triple:
+                            case CTFileQueryBond.BondType.Triple:
                                 bondType = 3;
                                 break;
-                            case CTFileQueryBond.BondTypes.Aromatic:
+                            case CTFileQueryBond.BondType.Aromatic:
                                 bondType = 4;
                                 break;
-                            case CTFileQueryBond.BondTypes.SingleOrDouble:
+                            case CTFileQueryBond.BondType.SingleOrDouble:
                                 bondType = 5;
                                 break;
-                            case CTFileQueryBond.BondTypes.SingleOrAromatic:
+                            case CTFileQueryBond.BondType.SingleOrAromatic:
                                 bondType = 6;
                                 break;
-                            case CTFileQueryBond.BondTypes.DoubleOrAromatic:
+                            case CTFileQueryBond.BondType.DoubleOrAromatic:
                                 bondType = 7;
                                 break;
-                            case CTFileQueryBond.BondTypes.Any:
+                            case CTFileQueryBond.BondType.Any:
                                 bondType = 8;
                                 break;
                         }
@@ -840,7 +841,7 @@ namespace NCDK.IO
             // remove non-ctab Sgroups 
             {
                 var removes = new List<Sgroup>();
-                foreach (var e in sgroups.Where(n => n.Type == SgroupTypes.ExtMulticenter))
+                foreach (var e in sgroups.Where(n => n.Type == SgroupType.ExtMulticenter))
                     removes.Add(e);
                 foreach (var e in removes)
                     sgroups.Remove(e);
@@ -909,20 +910,20 @@ namespace NCDK.IO
                     writer.Write('\n');
                 }
 
-                ICollection<SgroupKeys> attributeKeys = sgroup.AttributeKeys;
+                ICollection<SgroupKey> attributeKeys = sgroup.AttributeKeys;
                 // TODO order and aggregate attribute keys
                 foreach (var key in attributeKeys)
                 {
                     switch (key)
                     {
-                        case SgroupKeys.CtabSubScript:
+                        case SgroupKey.CtabSubScript:
                             writer.Write("M  SMT ");
                             writer.Write(FormatMDLInt(id, 3));
                             writer.Write(' ');
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabExpansion:
+                        case SgroupKey.CtabExpansion:
                             bool expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                             {
@@ -933,7 +934,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabBracket:
+                        case SgroupKey.CtabBracket:
                             IEnumerable<SgroupBracket> brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
@@ -947,7 +948,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabBracketStyle:
+                        case SgroupKey.CtabBracketStyle:
                             writer.Write("M  SBT");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -956,7 +957,7 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt((int)sgroup.GetValue(key), 3));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabConnectivity:
+                        case SgroupKey.CtabConnectivity:
                             writer.Write("M  SCN");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -965,7 +966,7 @@ namespace NCDK.IO
                             writer.Write(((string)sgroup.GetValue(key)).ToUpperInvariant());
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabSubType:
+                        case SgroupKey.CtabSubType:
                             writer.Write("M  SST");
                             writer.Write(FormatMDLInt(1, 3));
                             writer.Write(' ');
@@ -974,7 +975,7 @@ namespace NCDK.IO
                             writer.Write((string)sgroup.GetValue(key));
                             writer.Write('\n');
                             break;
-                        case SgroupKeys.CtabParentAtomList:
+                        case SgroupKey.CtabParentAtomList:
                             IEnumerable<IAtom> parentAtomList = (IEnumerable<IAtom>)sgroup.GetValue(key);
                             foreach (var atoms in Wrap(parentAtomList.ToList(), 15))
                             {
@@ -989,7 +990,7 @@ namespace NCDK.IO
                                 writer.Write('\n');
                             }
                             break;
-                        case SgroupKeys.CtabComponentNumber:
+                        case SgroupKey.CtabComponentNumber:
                             int compNumber = (int)sgroup.GetValue(key);
                             writer.Write("M  SNC");
                             writer.Write(FormatMDLInt(1, 3));

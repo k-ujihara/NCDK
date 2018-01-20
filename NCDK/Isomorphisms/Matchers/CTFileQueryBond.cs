@@ -20,6 +20,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Isomorphisms.Matchers
@@ -29,12 +30,12 @@ namespace NCDK.Isomorphisms.Matchers
     /// </summary>
     // @cdk.module  isomorphism
     // @cdk.githash
-    public class CTFileQueryBond : Default.Bond, IQueryBond // use Default.Bond instead of QueryBond
+    public class CTFileQueryBond : Silent.Bond, IQueryBond // use Default.Bond instead of QueryBond
     {
         /// <summary>
         /// Bond types, as stated in the CTFile manual
         /// </summary>
-        public enum BondTypes
+        public enum BondType
         {
             Unset = 0,
             Single = 1,
@@ -55,7 +56,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// The type of this bond.
         /// </summary>
-        public CTFileQueryBond.BondTypes Type { get; set; } = BondTypes.Unset;
+        public CTFileQueryBond.BondType Type { get; set; } = BondType.Unset;
 
         public bool Matches(IBond bond)
         {
@@ -72,34 +73,36 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>a new CTFileQueryBond</returns>
         public static CTFileQueryBond OfType(IBond bond, int type)
         {
-            CTFileQueryBond queryBond = new CTFileQueryBond(bond.Builder);
-            queryBond.Order = BondOrder.Unset;
+            CTFileQueryBond queryBond = new CTFileQueryBond(bond.Builder)
+            {
+                Order = BondOrder.Unset
+            };
             queryBond.SetAtoms(bond.Atoms);
             switch (type)
             {
                 case 1:
-                    queryBond.Type = BondTypes.Single;
+                    queryBond.Type = BondType.Single;
                     break;
                 case 2:
-                    queryBond.Type = BondTypes.Double;
+                    queryBond.Type = BondType.Double;
                     break;
                 case 3:
-                    queryBond.Type = BondTypes.Triple;
+                    queryBond.Type = BondType.Triple;
                     break;
                 case 4:
-                    queryBond.Type = BondTypes.Aromatic;
+                    queryBond.Type = BondType.Aromatic;
                     break;
                 case 5:
-                    queryBond.Type = BondTypes.SingleOrDouble;
+                    queryBond.Type = BondType.SingleOrDouble;
                     break;
                 case 6:
-                    queryBond.Type = BondTypes.SingleOrAromatic;
+                    queryBond.Type = BondType.SingleOrAromatic;
                     break;
                 case 7:
-                    queryBond.Type = BondTypes.DoubleOrAromatic;
+                    queryBond.Type = BondType.DoubleOrAromatic;
                     break;
                 case 8:
-                    queryBond.Type = BondTypes.Any;
+                    queryBond.Type = BondType.Any;
                     break;
                 default:
                     throw new ArgumentException("Unknown bond type: " + type);

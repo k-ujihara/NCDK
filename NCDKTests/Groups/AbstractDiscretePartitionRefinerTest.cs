@@ -71,7 +71,7 @@ namespace NCDK.Groups
             }
         }
 
-        private class GraphRefinable : Refinable
+        private class GraphRefinable : IRefinable
         {
             private readonly Graph graph;
 
@@ -117,7 +117,7 @@ namespace NCDK.Groups
                 return Partition.Unit(GetVertexCount());
             }
 
-            public Invariant NeighboursInBlock(ISet<int> block, int vertexIndex)
+            public IInvariant NeighboursInBlock(ISet<int> block, int vertexIndex)
             {
                 int neighbours = 0;
                 foreach (int connected in GetConnectedIndices(vertexIndex))
@@ -151,8 +151,10 @@ namespace NCDK.Groups
         public void GetConnectivityTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } }
+            };
             MockRefiner refiner = new MockRefiner(g);
             Assert.AreEqual(1, refiner.GetConnectivity(0, 1));
         }
@@ -177,8 +179,10 @@ namespace NCDK.Groups
         public void FirstIsIdentityTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -190,8 +194,10 @@ namespace NCDK.Groups
         public void GetAutomorphismPartitionTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -205,8 +211,10 @@ namespace NCDK.Groups
         public void GetFirstHalfMatrixStringTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 0, 1 }, new[] { 0, 0, 1 }, new[] { 1, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 0, 1 }, new[] { 0, 0, 1 }, new[] { 1, 1, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -220,8 +228,10 @@ namespace NCDK.Groups
         public void GetGroupTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -232,8 +242,10 @@ namespace NCDK.Groups
         public void GetBestTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -247,8 +259,10 @@ namespace NCDK.Groups
         public void GetFirstTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -262,8 +276,10 @@ namespace NCDK.Groups
         public void IsCanonical_TrueTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -275,8 +291,10 @@ namespace NCDK.Groups
         public void IsCanonical_FalseTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 0 }, new[] { 1, 0, 1 }, new[] { 0, 1, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);
@@ -288,8 +306,10 @@ namespace NCDK.Groups
         public void RefineTest()
         {
             int n = 3;
-            Graph g = new Graph(n);
-            g.connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } };
+            Graph g = new Graph(n)
+            {
+                connectionTable = new int[][] { new[] { 0, 1, 1 }, new[] { 1, 0, 0 }, new[] { 1, 0, 0 } }
+            };
             PermutationGroup group = new PermutationGroup(n);
             MockRefiner refiner = new MockRefiner(g);
             Setup(refiner, group, g);

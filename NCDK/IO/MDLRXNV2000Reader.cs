@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
@@ -50,20 +51,20 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         public MDLRXNV2000Reader(TextReader input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLRXNV2000Reader(TextReader input, ChemObjectReaderModes mode)
+        public MDLRXNV2000Reader(TextReader input, ChemObjectReaderMode mode)
         {
             this.input = input;
             base.ReaderMode = mode;
         }
 
         public MDLRXNV2000Reader(Stream input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLRXNV2000Reader(Stream input, ChemObjectReaderModes mode)
+        public MDLRXNV2000Reader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input), mode)
         { }
 
@@ -180,7 +181,7 @@ namespace NCDK.IO
                     agentCount = int.Parse(tokenizer.Current);
                     // ChemAxon extension, technically BIOVIA now support this but
                     // not documented yet
-                    if (ReaderMode == ChemObjectReaderModes.Strict && agentCount > 0)
+                    if (ReaderMode == ChemObjectReaderMode.Strict && agentCount > 0)
                         throw new CDKException("RXN files uses agent count extension");
                 }
                 Trace.TraceInformation("Expecting " + productCount + " products in file");

@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Utils.Xml;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -24,7 +25,7 @@ using static NCDK.Config.AtomType.OWLConstants;
 namespace NCDK.Config.AtomType
 {
     /// <summary>
-    /// SAX Handler for the <see cref="OWLAtomTypeMappingReader"/>.
+    /// Handler for the <see cref="OWLAtomTypeMappingReader"/>.
     /// </summary>
     // @cdk.module  atomtype
     // @cdk.githash

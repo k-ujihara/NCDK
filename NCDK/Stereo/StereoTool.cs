@@ -41,7 +41,7 @@ namespace NCDK.Stereo
         /// Currently unused, but intended for the StereoTool to indicate what it
         /// 'means' by an assignment of some atoms to a class.
         /// </summary>
-        public enum StereoClasses
+        public enum StereoClass
         {
             Tetrahedral, SquarePlanar, TrigonalBipyramidal, Octahedral
         }
@@ -50,7 +50,7 @@ namespace NCDK.Stereo
         /// The handedness of a tetrahedron, in terms of the point-plane distance
         /// of three of the corners, compared to the fourth.
         /// </summary>
-        public enum TetrahedralSigns
+        public enum TetrahedralSign
         {
             /// <summary>
             /// Indices a positive point-plane distance
@@ -266,10 +266,10 @@ namespace NCDK.Stereo
                 Vector3 normal = StereoTool.GetNormal(pointC, pointD, pointE);
 
                 // get the side of the plane that axis point A is
-                TetrahedralSigns handednessCDEA = StereoTool.GetHandedness(normal, pointC, pointF);
+                TetrahedralSign handednessCDEA = StereoTool.GetHandedness(normal, pointC, pointF);
 
                 // get the side of the plane that axis point F is
-                TetrahedralSigns handednessCDEF = StereoTool.GetHandedness(normal, pointC, pointA);
+                TetrahedralSign handednessCDEF = StereoTool.GetHandedness(normal, pointC, pointA);
 
                 // in other words, the two axial points (A,F) are on opposite sides
                 // of the equatorial plane CDE
@@ -294,9 +294,9 @@ namespace NCDK.Stereo
         {
             // a normal is calculated for the base atoms (2, 3, 4) and compared to
             // the first atom. PLUS indicates ACW.
-            TetrahedralSigns sign = StereoTool.GetHandedness(atom2, atom3, atom4, atom1);
+            TetrahedralSign sign = StereoTool.GetHandedness(atom2, atom3, atom4, atom1);
 
-            if (sign == TetrahedralSigns.Plus)
+            if (sign == TetrahedralSign.Plus)
             {
                 return TetrahedralStereo.AntiClockwise;
             }
@@ -317,7 +317,7 @@ namespace NCDK.Stereo
         /// <param name="baseAtomC">the third atom in the base of the tetrahedron</param>
         /// <param name="apexAtom">the atom in the point of the tetrahedron</param>
         /// <returns>the sign of the tetrahedron</returns>
-        public static TetrahedralSigns GetHandedness(IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom)
+        public static TetrahedralSign GetHandedness(IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom)
         {
             Vector3 pointA = baseAtomA.Point3D.Value;
             Vector3 pointB = baseAtomB.Point3D.Value;
@@ -326,7 +326,7 @@ namespace NCDK.Stereo
             return StereoTool.GetHandedness(pointA, pointB, pointC, pointD);
         }
 
-        private static TetrahedralSigns GetHandedness(Vector3 pointA, Vector3 pointB, Vector3 pointC, Vector3 pointD)
+        private static TetrahedralSign GetHandedness(Vector3 pointA, Vector3 pointB, Vector3 pointC, Vector3 pointD)
         {
             // assumes anti-clockwise for a right-handed system
             Vector3 normal = StereoTool.GetNormal(pointA, pointB, pointC);
@@ -335,7 +335,7 @@ namespace NCDK.Stereo
             return StereoTool.GetHandedness(normal, pointA, pointD);
         }
 
-        private static TetrahedralSigns GetHandedness(Vector3 planeNormal, Vector3 pointInPlane, Vector3 testPoint)
+        private static TetrahedralSign GetHandedness(Vector3 planeNormal, Vector3 pointInPlane, Vector3 testPoint)
         {
             double distance = SignedDistanceToPlane(planeNormal, pointInPlane, testPoint);
 
@@ -344,11 +344,11 @@ namespace NCDK.Stereo
             // relative to the plane normal.
             if (distance > 0)
             {
-                return TetrahedralSigns.Plus;
+                return TetrahedralSign.Plus;
             }
             else
             {
-                return TetrahedralSigns.Minus;
+                return TetrahedralSign.Minus;
             }
         }
 

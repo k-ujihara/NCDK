@@ -44,7 +44,7 @@ namespace NCDK.FaulonSignatures
             string[] labels = new string[] { "C", "C", "C" };
             ring.InitializeWithStringLabels(labels);
 
-            ring.UpdateNodeInvariants(DAG.Direction.UP);
+            ring.UpdateNodeInvariants(DAG.Direction.Up);
             Console.Out.WriteLine(ring.CopyInvariants());
 
             ring.ComputeVertexInvariants();
@@ -155,7 +155,7 @@ namespace NCDK.FaulonSignatures
                            vertexInvariantsAfterComputeVertexInv,
                            simpleDAG.CopyInvariants());
 
-            simpleDAG.UpdateNodeInvariants(DAG.Direction.UP);
+            simpleDAG.UpdateNodeInvariants(DAG.Direction.Up);
             int[] nodeInvariantsAfterUp = { 1, 1, 1 };
             int[] vertexInvariantsAfterUp = { 2, 1, 1 };
             TestInvariants(nodeInvariantsAfterUp,
@@ -214,7 +214,7 @@ namespace NCDK.FaulonSignatures
                            vertexInvariantsAfterComputeVertexInv,
                            simpleDAG.CopyInvariants());
 
-            simpleDAG.UpdateNodeInvariants(DAG.Direction.UP);
+            simpleDAG.UpdateNodeInvariants(DAG.Direction.Up);
             int[] nodeInvariantsAfterUp = { 1, 1, 1 };
             int[] vertexInvariantsAfterUp = { 2, 1, 1 };
             TestInvariants(nodeInvariantsAfterUp,

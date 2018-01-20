@@ -13,7 +13,7 @@ namespace NCDK.Aromaticities
                 var molecules = new Silent.AtomContainerSet();
                 #region 
                 ElectronDonation model = ElectronDonation.DaylightModel;
-                CycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
 
                 // apply our configured model to each molecule

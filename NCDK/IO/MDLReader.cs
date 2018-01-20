@@ -20,15 +20,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
 using System.Text.RegularExpressions;
 
 namespace NCDK.IO
@@ -74,11 +75,11 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="input">The Stream to read from</param>
         public MDLReader(Stream input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         {
         }
 
-        public MDLReader(Stream input, ChemObjectReaderModes mode)
+        public MDLReader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input))
         {
             base.ReaderMode = mode;
@@ -89,11 +90,11 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         public MDLReader(TextReader input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         {
         }
 
-        public MDLReader(TextReader input, ChemObjectReaderModes mode)
+        public MDLReader(TextReader input, ChemObjectReaderMode mode)
         {
             base.ReaderMode = mode;
             this.input = input;
@@ -347,7 +348,7 @@ namespace NCDK.IO
                 line = input.ReadLine();
                 linecount++;
                 Debug.WriteLine("Line " + linecount + ": " + line);
-                if (ReaderMode == ChemObjectReaderModes.Strict)
+                if (ReaderMode == ChemObjectReaderMode.Strict)
                 {
                     if (line.Contains("V2000") || line.Contains("v2000"))
                     {
@@ -434,7 +435,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        if (ReaderMode == ChemObjectReaderModes.Strict)
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
                         {
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");

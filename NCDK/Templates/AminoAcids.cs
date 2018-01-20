@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Default;
 using NCDK.Dict;
@@ -37,7 +38,7 @@ namespace NCDK.Templates
     // @cdk.keyword templates
     // @cdk.keyword amino acids, stuctures
     // @cdk.created 2005-02-08
-    public class AminoAcids
+    public static class AminoAcids
     {
         private static object syncLock = new object();
 
@@ -126,9 +127,8 @@ namespace NCDK.Templates
                         foreach (var next in ac.GetProperties().Keys)
                         {
                             Debug.WriteLine("Prop: " + next.ToString());
-                            if (next is DictRef)
+                            if (next is DictRef dictRef)
                             {
-                                DictRef dictRef = (DictRef)next; 
                                 // Debug.WriteLine("DictRef type: " + dictRef.Type);
                                 if (dictRef.Type.Equals("pdb:residueName"))
                                 {

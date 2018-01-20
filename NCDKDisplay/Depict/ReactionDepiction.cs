@@ -53,7 +53,7 @@ namespace NCDK.Depict
 
         // arrow info
         private readonly int arrowIdx;
-        private readonly ReactionDirections direction;
+        private readonly ReactionDirection direction;
         private readonly double arrowHeight;
         private readonly double minArrowWidth;
 
@@ -74,7 +74,7 @@ namespace NCDK.Depict
                                  List<Bounds> products,
                                  List<Bounds> agents,
                                  Bounds plus,
-                                 ReactionDirections direction,
+                                 ReactionDirection direction,
                                  Dimensions dimensions,
                                  IList<Bounds> reactantTitles,
                                  IList<Bounds> productTitles,
@@ -237,7 +237,8 @@ namespace NCDK.Depict
 
             IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(g2);
 
-            visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
+            if (model.GetBackgroundColor() != Colors.Transparent)
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
 
             // compound the zoom, fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
@@ -564,7 +565,7 @@ namespace NCDK.Depict
             double headLength = minHeight;
             switch (direction)
             {
-                case ReactionDirections.Forward:
+                case ReactionDirection.Forward:
                     {
                         var fp = new PathFigure();
                         arrow.Add(new LineElement(new Point(0, 0), new Point(minWidth - 0.5 * headLength, 0), minHeight / 14, fgcol));
@@ -577,7 +578,7 @@ namespace NCDK.Depict
                         arrow.Add(GeneralPath.ShapeOf(path, fgcol));
                     }
                     break;
-                case ReactionDirections.Backward:
+                case ReactionDirection.Backward:
                     {
                         var fp = new PathFigure();
                         arrow.Add(new LineElement(new Point(0.5 * headLength, 0), new Point(minWidth, 0), minHeight / 14, fgcol));
@@ -590,7 +591,7 @@ namespace NCDK.Depict
                         arrow.Add(GeneralPath.ShapeOf(path, fgcol));
                     }
                     break;
-                case ReactionDirections.Bidirectional: // equilibrium?
+                case ReactionDirection.Bidirectional: // equilibrium?
                     {
                         var fp1 = new PathFigure
                         {

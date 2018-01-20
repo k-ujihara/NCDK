@@ -28,7 +28,6 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     public class RingSizeComparator : IComparer<IRing>
     {
-
         /// <summary>Flag to denote that the set is order with the largest ring first</summary>
         public const int LARGE_FIRST = 1;
         /// <summary>Flag to denote that the set is order with the smallest ring first</summary>
@@ -45,7 +44,6 @@ namespace NCDK.Tools.Manipulator
         {
             sortOrder = order;
         }
-
 
         public int Compare(IRing object1, IRing object2)
         {

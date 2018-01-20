@@ -2,7 +2,6 @@ using System;
 
 namespace NCDK.Formula
 {
-
     /// <summary>
     /// This class gives a score hit of similarity between two different isotope abundance pattern.
     /// </summary>

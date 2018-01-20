@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Groups
@@ -29,5 +30,5 @@ namespace NCDK.Groups
     /// </summary>
     // @author maclean
     // @cdk.module group  
-    public interface Invariant : IComparable<Invariant> { }
+    public interface IInvariant : IComparable<IInvariant> { }
 }

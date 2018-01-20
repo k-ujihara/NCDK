@@ -18,11 +18,12 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.Common.Util;
-using NCDK.Numerics;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Numerics;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
@@ -93,9 +94,8 @@ namespace NCDK.IO
         {
             CustomizeJob();
 
-            if (obj is IChemFile)
+            if (obj is IChemFile file)
             {
-                IChemFile file = (IChemFile)obj;
                 try
                 {
                     file = ReadChemFile(file);

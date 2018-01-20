@@ -20,7 +20,7 @@ namespace NCDK.Beam
             // copy atom/topology information this is unchanged
             for (int u = 0; u < g.Order; u++)
             {
-                if (g.TopologyOf(u).Type == Configuration.Types.DoubleBond)
+                if (g.TopologyOf(u).Type == Configuration.ConfigurationType.DoubleBond)
                 {
                     h.AddAtom(ReducedAtom(g, u));
                 }
@@ -114,7 +114,7 @@ namespace NCDK.Beam
 
                 Topology t = g.TopologyOf(u);
 
-                if (t.Type == Configuration.Types.DoubleBond)
+                if (t.Type == Configuration.ConfigurationType.DoubleBond)
                 {
 
                     if (offset < 0)

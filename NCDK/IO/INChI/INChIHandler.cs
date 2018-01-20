@@ -16,11 +16,12 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Utils.Xml;
+
 using NCDK.Default;
+using NCDK.Utils.Xml;
+using System;
 using System.Diagnostics;
 using System.Xml.Linq;
-using System;
 
 namespace NCDK.IO.InChI
 {

@@ -145,8 +145,8 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: verifying circular fingerprints for a single molecule");
 
-            CheckFP(REF_MOLECULE, CircularFingerprinter.Classes.ECFP6, 0, REF_ECFP6_0);
-            CheckFP(REF_MOLECULE, CircularFingerprinter.Classes.ECFP6, 1024, REF_ECFP6_1024);
+            CheckFP(REF_MOLECULE, CircularFingerprinter.CFPClass.ECFP6, 0, REF_ECFP6_0);
+            CheckFP(REF_MOLECULE, CircularFingerprinter.CFPClass.ECFP6, 1024, REF_ECFP6_1024);
         }
 
         [TestMethod()]
@@ -171,10 +171,10 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: comparing folded fingerprints to reference set");
 
-            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.Classes.ECFP6, 0);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinter.Classes.ECFP6, 1024);
-            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinter.Classes.ECFP6, 32768);
-            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinter.Classes.FCFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/0", CircularFingerprinter.CFPClass.ECFP6, 0);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/1024", CircularFingerprinter.CFPClass.ECFP6, 1024);
+            CompareFolding("FoldedProbes.sdf", "ECFP6/32768", CircularFingerprinter.CFPClass.ECFP6, 32768);
+            CompareFolding("FoldedProbes.sdf", "FCFP6/0", CircularFingerprinter.CFPClass.FCFP6, 0);
         }
 
         [TestMethod()]
@@ -183,10 +183,10 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
-            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
-            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.ECFP6, 32768, 5,
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.ECFP6, 32768, 5,
                 "Binders-ECFP6-32768-xv5.bayesian", true);
-            RunTest("Binders.sdf", "active", CircularFingerprinter.Classes.FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CFPClass.FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian", true);
         }
 
         [TestMethod()]
@@ -195,22 +195,22 @@ namespace NCDK.Fingerprints.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.ECFP6, 1024, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.ECFP6, 1024, 0,
                 "MLProbes-ECFP6-1024-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.ECFP6, 32768, 5,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.ECFP6, 32768, 5,
                 "MLProbes-ECFP6-32768-xv5.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.FCFP6, 0, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.FCFP6, 0, 0,
                 "MLProbes-FCFP6-0-loo.bayesian");
-            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.Classes.FCFP6, 256, 3,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CFPClass.FCFP6, 256, 3,
                 "MLProbes-FCFP6-256-xv3.bayesian");
         }
 
         // ----------------- private methods -----------------
 
         // make sure that for a single molecule, the way that the hashes are created & folded is consistent with a reference
-        private void CheckFP(string molstr, CircularFingerprinter.Classes classType, int folding, int[] refHash)
+        private void CheckFP(string molstr, CircularFingerprinter.CFPClass classType, int folding, int[] refHash)
         {
-            string strType = classType == CircularFingerprinter.Classes.ECFP6 ? "ECFP6" : "FCFP6";
+            string strType = classType == CircularFingerprinter.CFPClass.ECFP6 ? "ECFP6" : "FCFP6";
             WriteLine("Comparing hash codes for " + strType + "/folding=" + folding);
 
             IAtomContainer mol = new EnumerableSDFReader(new StringReader(molstr), Default.ChemObjectBuilder.Instance).First();
@@ -241,7 +241,7 @@ namespace NCDK.Fingerprints.Model
             string dummyTitle = "some title", dummyOrigin = "some origin";
             string[] dummyComments = new string[] { "comment1", "comment2" };
 
-            Bayesian model1 = new Bayesian(CircularFingerprinter.Classes.ECFP6)
+            Bayesian model1 = new Bayesian(CircularFingerprinter.CFPClass.ECFP6)
             {
                 NoteTitle = dummyTitle,
                 NoteOrigin = dummyOrigin,
@@ -276,7 +276,7 @@ namespace NCDK.Fingerprints.Model
 
             List<IAtomContainer> molecules = new List<IAtomContainer>();
             List<bool> activities = new List<bool>();
-            Bayesian model = new Bayesian(CircularFingerprinter.Classes.ECFP6, 1024);
+            Bayesian model = new Bayesian(CircularFingerprinter.CFPClass.ECFP6, 1024);
 
             try
             {
@@ -337,7 +337,7 @@ namespace NCDK.Fingerprints.Model
         }
 
         // compares a series of molecules for folding fingerprints being literally identical
-        private void CompareFolding(string sdfile, string fpField, CircularFingerprinter.Classes classType, int folding)
+        private void CompareFolding(string sdfile, string fpField, CircularFingerprinter.CFPClass classType, int folding)
         {
             WriteLine("[" + sdfile + "] calculation of: " + fpField);
 
@@ -385,12 +385,12 @@ namespace NCDK.Fingerprints.Model
 
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
-        private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN)
+        private void RunTest(string sdfile, string actvField, CircularFingerprinter.CFPClass classType, int folding, int xval, string modelFN)
         { 
             RunTest(sdfile, actvField, classType, folding, xval, modelFN, false);
         }
 
-        private void RunTest(string sdfile, string actvField, CircularFingerprinter.Classes classType, int folding, int xval, string modelFN, bool perceiveStereo)
+        private void RunTest(string sdfile, string actvField, CircularFingerprinter.CFPClass classType, int folding, int xval, string modelFN, bool perceiveStereo)
         {
             WriteLine("[" + modelFN + "]");
             WriteLine("    Loading " + sdfile);

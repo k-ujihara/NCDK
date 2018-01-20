@@ -106,7 +106,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondTypes.SingleOrDouble, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrDouble, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -119,7 +119,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondTypes.SingleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondType.SingleOrAromatic, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -132,7 +132,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondTypes.DoubleOrAromatic, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondType.DoubleOrAromatic, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -145,7 +145,7 @@ namespace NCDK.IO
             Assert.IsFalse(bond.IsAromatic);
             Assert.IsFalse(bond.IsSingleOrDouble);
             Assert.IsInstanceOfType(bond, typeof(CTFileQueryBond));
-            Assert.AreEqual(CTFileQueryBond.BondTypes.Any, ((CTFileQueryBond)bond).Type);
+            Assert.AreEqual(CTFileQueryBond.BondType.Any, ((CTFileQueryBond)bond).Type);
         }
 
         [TestMethod()]
@@ -198,7 +198,7 @@ namespace NCDK.IO
         public void UpDoubleBond()
         {
             string input = "  1  3  2  1  0  0  0";
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
         }
 
@@ -207,7 +207,7 @@ namespace NCDK.IO
         public void DownDoubleBond()
         {
             string input = "  1  3  2  1  0  0  0";
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
         }
 
@@ -216,7 +216,7 @@ namespace NCDK.IO
         public void UpOrDownDoubleBond()
         {
             string input = "  1  3  2  4  0  0  0";
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
         }
 
@@ -225,7 +225,7 @@ namespace NCDK.IO
         public void CisOrTransSingleBond()
         {
             string input = "  1  3  1  3  0  0  0";
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
         }
 

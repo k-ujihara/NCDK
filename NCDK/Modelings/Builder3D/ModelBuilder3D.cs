@@ -22,16 +22,17 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Layout;
+using NCDK.Numerics;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
 using System.Linq;
 
 namespace NCDK.Modelings.Builder3D

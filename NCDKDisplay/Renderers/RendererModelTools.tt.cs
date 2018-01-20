@@ -375,9 +375,9 @@ namespace NCDK.Renderers
 		public static readonly double DefaultBondSeparation = 0.18;
 
         /// <summary>
-        /// Get defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="BasicRendererModel.BondLength"/>). Default value is 0.18.
+        /// Get defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>). Default value is 0.18.
         /// </summary>
-        /// <returns>defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="BasicRendererModel.BondLength"/>)</returns>
+        /// <returns>defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>)</returns>
         public static double GetBondSeparation(this RendererModel model)
         {
             const string key = "BondSeparation";
@@ -391,7 +391,7 @@ namespace NCDK.Renderers
         }
 
         /// <summary>
-        /// Set defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="BasicRendererModel.BondLength"/>).
+        /// Set defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>).
         /// </summary>
 		public static void SetBondSeparation(this RendererModel model, double value)
         {
@@ -669,18 +669,18 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
-		public static readonly HighlightStyles DefaultHighlighting = HighlightStyles.Colored;
+		public static readonly HighlightStyle DefaultHighlighting = HighlightStyle.Colored;
 
         /// <summary>
-        /// Get the style of highlight used to emphasis atoms and bonds. Default value is HighlightStyles.Colored.
+        /// Get the style of highlight used to emphasis atoms and bonds. Default value is HighlightStyle.Colored.
         /// </summary>
         /// <returns>the style of highlight used to emphasis atoms and bonds</returns>
-        public static HighlightStyles GetHighlighting(this RendererModel model)
+        public static HighlightStyle GetHighlighting(this RendererModel model)
         {
             const string key = "Highlighting";
-            HighlightStyles value;
+            HighlightStyle value;
             if (model.Parameters.TryGetValue(key, out object v))
-                value = (HighlightStyles)v;
+                value = (HighlightStyle)v;
             else
                 model.Parameters[key] = value = DefaultHighlighting;
 
@@ -690,7 +690,7 @@ namespace NCDK.Renderers
         /// <summary>
         /// Set the style of highlight used to emphasis atoms and bonds.
         /// </summary>
-		public static void SetHighlighting(this RendererModel model, HighlightStyles value)
+		public static void SetHighlighting(this RendererModel model, HighlightStyle value)
         {
             const string key = "Highlighting";
             model.Parameters[key] = value;
@@ -1263,18 +1263,18 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
-		public static readonly Fonts.FontWeights DefaultUsedFontStyle = Fonts.FontWeights.Normal;
+		public static readonly Fonts.FontWeight DefaultUsedFontStyle = Fonts.FontWeight.Normal;
 
         /// <summary>
-        /// Get the font style to use for text. Default value is Fonts.FontWeights.Normal.
+        /// Get the font style to use for text. Default value is Fonts.FontWeight.Normal.
         /// </summary>
         /// <returns>the font style to use for text</returns>
-        public static Fonts.FontWeights GetUsedFontStyle(this RendererModel model)
+        public static Fonts.FontWeight GetUsedFontStyle(this RendererModel model)
         {
             const string key = "UsedFontStyle";
-            Fonts.FontWeights value;
+            Fonts.FontWeight value;
             if (model.Parameters.TryGetValue(key, out object v))
-                value = (Fonts.FontWeights)v;
+                value = (Fonts.FontWeight)v;
             else
                 model.Parameters[key] = value = DefaultUsedFontStyle;
 
@@ -1284,7 +1284,7 @@ namespace NCDK.Renderers
         /// <summary>
         /// Set the font style to use for text.
         /// </summary>
-		public static void SetUsedFontStyle(this RendererModel model, Fonts.FontWeights value)
+		public static void SetUsedFontStyle(this RendererModel model, Fonts.FontWeight value)
         {
             const string key = "UsedFontStyle";
             model.Parameters[key] = value;
@@ -1560,18 +1560,18 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
-		public static readonly AtomShapeTypes DefaultCompactShape = AtomShapeTypes.Square;
+		public static readonly AtomShapeType DefaultCompactShape = AtomShapeType.Square;
 
         /// <summary>
-        /// Get Shape to be used when drawing atoms in compact mode, as defined by the <see cref="GetCompactAtom"/> parameter. Default value is AtomShapeTypes.Square.
+        /// Get Shape to be used when drawing atoms in compact mode, as defined by the <see cref="GetCompactAtom"/> parameter. Default value is AtomShapeType.Square.
         /// </summary>
         /// <returns>Shape to be used when drawing atoms in compact mode, as defined by the <see cref="GetCompactAtom"/> parameter</returns>
-        public static AtomShapeTypes GetCompactShape(this RendererModel model)
+        public static AtomShapeType GetCompactShape(this RendererModel model)
         {
             const string key = "CompactShape";
-            AtomShapeTypes value;
+            AtomShapeType value;
             if (model.Parameters.TryGetValue(key, out object v))
-                value = (AtomShapeTypes)v;
+                value = (AtomShapeType)v;
             else
                 model.Parameters[key] = value = DefaultCompactShape;
 
@@ -1581,7 +1581,7 @@ namespace NCDK.Renderers
         /// <summary>
         /// Set Shape to be used when drawing atoms in compact mode, as defined by the <see cref="GetCompactAtom"/> parameter.
         /// </summary>
-		public static void SetCompactShape(this RendererModel model, AtomShapeTypes value)
+		public static void SetCompactShape(this RendererModel model, AtomShapeType value)
         {
             const string key = "CompactShape";
             model.Parameters[key] = value;

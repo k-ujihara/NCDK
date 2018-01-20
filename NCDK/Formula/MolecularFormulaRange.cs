@@ -24,7 +24,7 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Class defining a expanded molecular formula object. The Isotopes don't have
-    /// a fix occurrence in the MolecularFormula but they have a range.
+    /// a fix occurrence in the <see cref="MolecularFormula"/> but they have a range.
     /// <para>
     /// With this class man can define a MolecularFormula which contains certain IIsotope
     /// with a maximum and minimum occurrence.

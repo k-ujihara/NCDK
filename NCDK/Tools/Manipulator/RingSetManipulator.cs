@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,10 +28,10 @@ namespace NCDK.Tools.Manipulator
 {
     // @cdk.module standard
     // @cdk.githash
-    public class RingSetManipulator
+    public static class RingSetManipulator
     {
         /// <summary>
-        /// Return the total number of atoms over all the rings in the colllection.
+        /// Return the total number of atoms over all the rings in the collection.
         /// </summary>
         /// <param name="set">The collection of rings</param>
         /// <returns> The total number of atoms</returns>

@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace NCDK.Tools
     // @author   Egon Willighagen
     // @cdk.created  2003-04-01
     // @cdk.keyword  id, creation
-    public abstract class IDCreator
+    public static class IDCreator
     {
         // counters for generated in current session IDs
         private static int reactionCount = 0;
@@ -62,15 +63,18 @@ namespace NCDK.Tools
         private const string CHEMSEQUENCE_PREFIX = "seq";
         private const string CHEMFILE_PREFIX = "file";
 
-        /// <summary>
-        /// Old ID generation policy - to generate IDs unique over the entire set
-        /// </summary>
-        public const int SET_UNIQUE_POLICY = 0;
+        public enum UniquePolicy
+        {
+            /// <summary>
+            /// Old ID generation policy - to generate IDs unique over the entire set
+            /// </summary>
+            Set = 0,
 
-        /// <summary>
-        /// New ID generation policy - to generate IDs unique only in a molecule
-        /// </summary>
-        public const int OBJECT_UNIQUE_POLICY = 1;
+            /// <summary>
+            /// New ID generation policy - to generate IDs unique only in a molecule
+            /// </summary>
+            Object = 1,
+        }
 
         /// <summary>
         /// Internal flag identifying the IDs generation policy. The old policy
@@ -84,7 +88,7 @@ namespace NCDK.Tools
         /// The new policy is to keep the singularity of IDs only within a single
         /// molecule, i.e. in a set of two molecules first atoms of each will be "a1".
         /// </remarks>
-        private static int policy = SET_UNIQUE_POLICY;
+        private static UniquePolicy policy = UniquePolicy.Set;
 
         /// <summary>
         /// Alters the policy of ID generation. The IDCreator should in any case
@@ -92,10 +96,10 @@ namespace NCDK.Tools
         /// has an ID set, this ID will be skipped in all the cases when attempting to
         /// generate a new ID value
         /// <param name="policy">new policy to be used</param>
-        /// <seealso cref="OBJECT_UNIQUE_POLICY"/>
-        /// <seealso cref="SET_UNIQUE_POLICY"/>
+        /// <seealso cref="UniquePolicy.Object"/>
+        /// <seealso cref="UniquePolicy.Set"/>
         /// </summary>
-        public static void SetIDPolicy(int policy)
+        public static void SetIDPolicy(UniquePolicy policy)
         {
             IDCreator.policy = policy;
         }
@@ -111,7 +115,7 @@ namespace NCDK.Tools
         {
             if (chemObject == null) return;
 
-            ReSetCounters();
+            ResetCounters();
 
             if (chemObject is IAtomContainer)
             {
@@ -147,7 +151,7 @@ namespace NCDK.Tools
         /// Reset the counters so that we keep generating simple IDs within
         /// single chem object or a set of them
         /// </summary>
-        private static void ReSetCounters()
+        private static void ResetCounters()
         {
             atomCount = 0;
             bondCount = 0;
@@ -197,7 +201,7 @@ namespace NCDK.Tools
             // the tabu list for the container should force singularity
             // within a container only!
             IList<string> internalTabuList = AtomContainerManipulator.GetAllIDs(container);
-            if (policy == OBJECT_UNIQUE_POLICY)
+            if (policy == UniquePolicy.Object)
             {
                 // start atom and bond indices within a container set always from 1
                 atomCount = 0;
@@ -240,7 +244,7 @@ namespace NCDK.Tools
                 atomContainerSetCount = SetId(ATOMCONTAINERSET_PREFIX, atomContainerSetCount, containerSet, tabuList);
             }
 
-            if (policy == OBJECT_UNIQUE_POLICY)
+            if (policy == UniquePolicy.Object)
             {
                 // start atom and bond indices within a container set always from 1
                 atomCount = 0;
@@ -268,7 +272,7 @@ namespace NCDK.Tools
                 reactionCount = SetId(REACTION_PREFIX, reactionCount, reaction, tabuList);
             }
 
-            if (policy == OBJECT_UNIQUE_POLICY)
+            if (policy == UniquePolicy.Object)
             {
                 // start atom and bond indices within a reaction set always from 1
                 atomCount = 0;
@@ -314,7 +318,7 @@ namespace NCDK.Tools
                 chemFileCount = SetId(CHEMFILE_PREFIX, chemFileCount, file, tabuList);
             }
 
-            if (policy == OBJECT_UNIQUE_POLICY)
+            if (policy == UniquePolicy.Object)
             {
                 // start indices within a chem file always from 1
                 chemSequenceCount = 0;
@@ -335,7 +339,7 @@ namespace NCDK.Tools
                 chemSequenceCount = SetId(CHEMSEQUENCE_PREFIX, chemSequenceCount, sequence, tabuList);
             }
 
-            if (policy == OBJECT_UNIQUE_POLICY)
+            if (policy == UniquePolicy.Object)
             {
                 // start indices within a chem file always from 1
                 chemSequenceCount = 0;
@@ -359,7 +363,7 @@ namespace NCDK.Tools
             ICrystal crystal = model.Crystal;
             if (crystal != null)
             {
-                if (policy == OBJECT_UNIQUE_POLICY)
+                if (policy == UniquePolicy.Object)
                 {
                     atomCount = 0;
                     bondCount = 0;
@@ -370,7 +374,7 @@ namespace NCDK.Tools
             IChemObjectSet<IAtomContainer> moleculeSet = model.MoleculeSet;
             if (moleculeSet != null)
             {
-                if (policy == OBJECT_UNIQUE_POLICY)
+                if (policy == UniquePolicy.Object)
                 {
                     atomContainerSetCount = 0;
                     atomContainerCount = 0;
@@ -381,7 +385,7 @@ namespace NCDK.Tools
             IReactionSet reactionSet = model.ReactionSet;
             if (reactionSet != null)
             {
-                if (policy == OBJECT_UNIQUE_POLICY)
+                if (policy == UniquePolicy.Object)
                 {
                     reactionSetCount = 0;
                     reactionCount = 0;

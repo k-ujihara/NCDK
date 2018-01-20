@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
@@ -49,21 +50,21 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="ins">The Reader to read from</param>
         public MDLRXNReader(TextReader ins)
-            : this(ins, ChemObjectReaderModes.Relaxed)
+            : this(ins, ChemObjectReaderMode.Relaxed)
         {
         }
 
-        public MDLRXNReader(TextReader ins, ChemObjectReaderModes mode)
+        public MDLRXNReader(TextReader ins, ChemObjectReaderMode mode)
         {
             input = ins;
             base.ReaderMode = mode;
         }
 
         public MDLRXNReader(Stream input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLRXNReader(Stream input, ChemObjectReaderModes mode)
+        public MDLRXNReader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input), mode)
         { }
 

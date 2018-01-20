@@ -137,23 +137,23 @@ namespace NCDK.Renderers
             {
                 case LineElement e:
                     {
-                        string p1 = ToString(e.firstPoint);
-                        string p2 = ToString(e.secondPoint);
-                        string p1T = ToString(TransformPoint(e.firstPoint));
-                        string p2T = ToString(TransformPoint(e.secondPoint));
+                        string p1 = ToString(e.FirstPoint);
+                        string p2 = ToString(e.SecondPoint);
+                        string p1T = ToString(TransformPoint(e.FirstPoint));
+                        string p2T = ToString(TransformPoint(e.SecondPoint));
                         string lineFormat = "Line [%s, %s] -> [%s, %s]\n";
                         return string.Format(lineFormat, p1, p2, p1T, p2T);
                     }
                 case OvalElement e:
                     {
-                        double r = e.radius;
-                        string c = ToString(e.coord.X, e.coord.Y, r);
-                        string p1 = ToString(TransformPoint(new Point(e.coord.X - r, e.coord.Y - r)));
-                        string p2 = ToString(TransformPoint(new Point(e.coord.X + r, e.coord.Y + r)));
+                        double r = e.Radius;
+                        string c = ToString(e.Coord.X, e.Coord.Y, r);
+                        string p1 = ToString(TransformPoint(new Point(e.Coord.X - r, e.Coord.Y - r)));
+                        string p2 = ToString(TransformPoint(new Point(e.Coord.X + r, e.Coord.Y + r)));
                         return string.Format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
                     }
                 case AtomSymbolElement e:
-                    return string.Format("AtomSymbol [%s]\n", e.text);
+                    return string.Format("AtomSymbol [%s]\n", e.Text);
                 case ElementGroup e:
                     return "Element Group\n";
                 default:

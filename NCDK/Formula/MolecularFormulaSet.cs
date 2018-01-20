@@ -16,16 +16,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Formula
 {
     /// <summary>
     /// Class defining an set object of MolecularFormulas. It maintains
-    /// a list of list IMolecularFormula.
+    /// a list of list <see cref="IMolecularFormula"/>.
     /// </summary>
     // @cdk.module  data
     // @author      miguelrojasch

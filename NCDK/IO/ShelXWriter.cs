@@ -18,13 +18,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.IO.Formats;
-using System.IO;
-using System;
+
 using NCDK.Common.Mathematics;
+using NCDK.Geometries;
+using NCDK.IO.Formats;
 using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
-using NCDK.Geometries;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace NCDK.IO

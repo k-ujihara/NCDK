@@ -20,9 +20,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using System.Collections.Generic;
 using static NCDK.Smiles.CxSmilesState;
-using static NCDK.Smiles.CxSmilesState.Radicals;
+using static NCDK.Smiles.CxSmilesState.Radical;
 
 namespace NCDK.Smiles
 {
@@ -50,8 +51,8 @@ namespace NCDK.Smiles
     /// </remarks>
     internal sealed class CxSmilesParser
     {
-        private const char COMMA_SEPARATOR = ',';
-        private const char DOT_SEPARATOR = '.';
+        private const char CommaSeparatorChar = ',';
+        private const char DotSeparatorChar = '.';
 
         private CxSmilesParser()
         {
@@ -206,9 +207,9 @@ namespace NCDK.Smiles
             while (iter.HasNext())
             {
                 dest.Clear();
-                if (!ProcessIntList(iter, DOT_SEPARATOR, dest))
+                if (!ProcessIntList(iter, DotSeparatorChar, dest))
                     return false;
-                iter.NextIf(COMMA_SEPARATOR);
+                iter.NextIf(CommaSeparatorChar);
                 if (dest.Count == 0)
                     return true;
                 state.fragGroups.Add(new List<int>(dest));
@@ -234,7 +235,7 @@ namespace NCDK.Smiles
                 state.dataSgroups = new List<DataSgroup>(4);
 
             IList<int> atomset = new List<int>();
-            if (!ProcessIntList(iter, COMMA_SEPARATOR, atomset))
+            if (!ProcessIntList(iter, CommaSeparatorChar, atomset))
                 return false;
 
             if (!iter.NextIf(':'))
@@ -306,7 +307,7 @@ namespace NCDK.Smiles
             if (!iter.NextIf(':'))
                 return false;
             IList<int> atomset = new List<int>();
-            if (!ProcessIntList(iter, COMMA_SEPARATOR, atomset))
+            if (!ProcessIntList(iter, CommaSeparatorChar, atomset))
                 return false;
 
 
@@ -364,7 +365,7 @@ namespace NCDK.Smiles
                     if (!iter.NextIf(':'))
                         return false;
                     IList<int> endpoints = new List<int>(6);
-                    if (!ProcessIntList(iter, DOT_SEPARATOR, endpoints))
+                    if (!ProcessIntList(iter, DotSeparatorChar, endpoints))
                         return false;
                     iter.NextIf(',');
                     state.positionVar.Add(beg, endpoints);
@@ -386,8 +387,8 @@ namespace NCDK.Smiles
         private static bool ProcessRadicals(CharIter iter, CxSmilesState state)
         {
             if (state.atomRads == null)
-                state.atomRads = new SortedDictionary<int, Radicals>();
-            CxSmilesState.Radicals rad;
+                state.atomRads = new SortedDictionary<int, Radical>();
+            CxSmilesState.Radical rad;
             switch (iter.Next())
             {
                 case '1':
@@ -417,7 +418,7 @@ namespace NCDK.Smiles
             if (!iter.NextIf(':'))
                 return false;
             IList<int> dest = new List<int>(4);
-            if (!ProcessIntList(iter, COMMA_SEPARATOR, dest))
+            if (!ProcessIntList(iter, CommaSeparatorChar, dest))
                 return false;
             foreach (var atomidx in dest)
                 state.atomRads.Add(atomidx, rad);
@@ -462,20 +463,20 @@ namespace NCDK.Smiles
                         // c/t:
                         if (iter.NextIf(':'))
                         {
-                            if (!SkipIntList(iter, COMMA_SEPARATOR))
+                            if (!SkipIntList(iter, CommaSeparatorChar))
                                 return -1;
                         }
                         // ctu:
                         else if (iter.NextIf("tu:"))
                         {
-                            if (!SkipIntList(iter, COMMA_SEPARATOR))
+                            if (!SkipIntList(iter, CommaSeparatorChar))
                                 return -1;
                         }
                         break;
                     case 'r': // Skip relative stereochemistry
                         if (!iter.NextIf(':'))
                             return -1;
-                        if (!SkipIntList(iter, COMMA_SEPARATOR))
+                        if (!SkipIntList(iter, CommaSeparatorChar))
                             return -1;
                         break;
                     case 'f': // fragment grouping
@@ -516,7 +517,7 @@ namespace NCDK.Smiles
                             return -1;
                         while (iter.HasNext() && IsDigit(iter.Curr()))
                         {
-                            if (!SkipIntList(iter, DOT_SEPARATOR))
+                            if (!SkipIntList(iter, DotSeparatorChar))
                                 return -1;
                             iter.NextIf(',');
                         }

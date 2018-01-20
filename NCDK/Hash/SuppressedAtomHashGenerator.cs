@@ -33,9 +33,10 @@ namespace NCDK.Hash
     /// hydrogens but ignore any values for the explicit hydrogens. This particularly
     /// useful for stereo-centres where by removing explicit hydrogens could affect
     /// the configuration.
-    ///
-    /// The suppress atom hashes are returned as '0'.
     /// </summary>
+    /// <remarks>
+    /// The suppress atom hashes are returned as '0'.
+    /// </remarks>
     /// <seealso cref="SeedGenerator"/>
     // @author John May
     // @cdk.module hash

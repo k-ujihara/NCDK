@@ -134,7 +134,7 @@ namespace NCDK.Stereo
                     continue;
                 if (ringSearch.Cyclic(v))
                     continue;
-                if (stereocenters.ElementType(v) != Stereocenters.CoordinateTypes.Tetracoordinate)
+                if (stereocenters.ElementType(v) != Stereocenters.CoordinateType.Tetracoordinate)
                     continue;
                 if (!stereocenters.IsStereocenter(v))
                     continue;

@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System.Xml.Linq;
 
 namespace NCDK.LibIO.CML
@@ -42,105 +42,128 @@ namespace NCDK.LibIO.CML
                 throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
             XElement element = (XElement)nodeToAdd;
-            if (atom is IPDBAtom)
+            if (atom is IPDBAtom pdbAtom)
             {
-                IPDBAtom pdbAtom = (IPDBAtom)atom;
                 if (HasContent(pdbAtom.AltLoc))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:altLoc";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:altLoc"
+                    };
                     scalar.Add(pdbAtom.AltLoc);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.ChainID))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:chainID";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:chainID"
+                    };
                     scalar.Add(pdbAtom.ChainID);
                     element.Add(scalar);
                 }
 
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:hetAtom";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:hetAtom"
+                    };
                     scalar.Add("" + pdbAtom.HetAtom);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.ICode))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:iCode";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:iCode"
+                    };
                     scalar.Add(pdbAtom.ICode);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.Name))
                 {
-                    var scalar = new CMLLabel();
-                    scalar.DictRef = "pdb:name";
+                    var scalar = new CMLLabel
+                    {
+                        DictRef = "pdb:name"
+                    };
                     scalar.Add(pdbAtom.Name);
                     element.Add(scalar);
                 }
 
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:oxt";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:oxt"
+                    };
                     scalar.Add("" + pdbAtom.Oxt);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.Record))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:record";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:record"
+                    };
                     scalar.Add(pdbAtom.Record);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.ResName))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:resName";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:resName"
+                    };
                     scalar.Add(pdbAtom.ResName);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.ResSeq))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:resSeq";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:resSeq"
+                    };
                     scalar.Add(pdbAtom.ResSeq);
                     element.Add(scalar);
                 }
 
                 if (HasContent(pdbAtom.SegID))
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:segID";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:segID"
+                    };
                     scalar.Add(pdbAtom.SegID);
                     element.Add(scalar);
                 }
 
                 if (pdbAtom.Serial != 0)
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:serial";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:serial"
+                    };
                     scalar.Add("" + pdbAtom.Serial);
                     element.Add(scalar);
                 }
 
                 if (pdbAtom.TempFactor != -1.0)
                 {
-                    var scalar = new CMLScalar();
-                    scalar.DictRef = "pdb:tempFactor";
+                    var scalar = new CMLScalar
+                    {
+                        DictRef = "pdb:tempFactor"
+                    };
                     scalar.Add("" + pdbAtom.TempFactor);
                     element.Add(scalar);
                 }
 
                 element.SetAttributeValue("occupancy", "" + pdbAtom.Occupancy);
-                
+
                 // remove isotope info
                 element.SetAttributeValue("isotopeNumber", null);
             }

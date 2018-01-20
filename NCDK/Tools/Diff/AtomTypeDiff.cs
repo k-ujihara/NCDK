@@ -17,9 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using NCDK.Tools.Diff.Tree;
 
 namespace NCDK.Tools.Diff
@@ -30,14 +27,8 @@ namespace NCDK.Tools.Diff
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class AtomTypeDiff
+    public static class AtomTypeDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private AtomTypeDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>

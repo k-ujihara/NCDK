@@ -33,7 +33,7 @@ namespace NCDK.Tools
     // @author egonw
     // @cdk.githash
     // @see    org.openscience.cdk.tools.DataFeatures
-    public class DataFeaturesTool
+    public static class DataFeaturesTool
     {
         /// <summary>
         /// Determines the features present in the given <see cref="IAtomContainer"/>.

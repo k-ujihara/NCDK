@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.IO.Formats;
 using NCDK.IO.Iterator;
 using NCDK.Smiles;
@@ -93,9 +93,8 @@ namespace NCDK.IO
             {
                 return (T)ReadAtomContainerSet((IChemObjectSet<IAtomContainer>)obj);
             }
-            else if (obj is IChemFile)
+            else if (obj is IChemFile file)
             {
-                IChemFile file = (IChemFile)obj;
                 IChemSequence sequence = file.Builder.NewChemSequence();
                 IChemModel chemModel = file.Builder.NewChemModel();
                 chemModel.MoleculeSet = ReadAtomContainerSet(file.Builder.NewAtomContainerSet());

@@ -90,9 +90,9 @@ namespace NCDK.Renderers.Generators.Standards
             // select abbreviations that should be contracted
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type == SgroupTypes.CtabAbbreviation)
+                if (sgroup.Type == SgroupType.CtabAbbreviation)
                 {
-                    bool? expansion = (bool?)sgroup.GetValue(SgroupKeys.CtabExpansion);
+                    bool? expansion = (bool?)sgroup.GetValue(SgroupKey.CtabExpansion);
                     // abbreviation is displayed as expanded
                     if (expansion ?? false)
                         continue;
@@ -104,11 +104,11 @@ namespace NCDK.Renderers.Generators.Standards
                     if (CheckAbbreviationHighlight(container, sgroup))
                         ContractAbbreviation(container, symbolRemap, sgroup);
                 }
-                else if (sgroup.Type == SgroupTypes.CtabMultipleGroup)
+                else if (sgroup.Type == SgroupType.CtabMultipleGroup)
                 {
                     HideMultipleParts(container, sgroup);
                 }
-                else if (sgroup.Type == SgroupTypes.ExtMulticenter)
+                else if (sgroup.Type == SgroupType.ExtMulticenter)
                 {
                     var atoms = sgroup.Atoms;
                     // should only be one bond
@@ -139,7 +139,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the abbreviation can be contracted</returns>
         private static bool CheckAbbreviationHighlight(IAtomContainer container, Sgroup sgroup)
         {
-            Debug.Assert(sgroup.Type == SgroupTypes.CtabAbbreviation);
+            Debug.Assert(sgroup.Type == SgroupType.CtabAbbreviation);
 
             var sgroupAtoms = sgroup.Atoms;
             int atomHighlight = 0;
@@ -202,7 +202,7 @@ namespace NCDK.Renderers.Generators.Standards
         {
             var crossing = sgroup.Bonds;
             var atoms = sgroup.Atoms;
-            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
+            var parentAtoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
 
             foreach (var bond in container.Bonds)
             {
@@ -286,28 +286,28 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 switch (sgroup.Type)
                 {
-                    case SgroupTypes.CtabAbbreviation:
+                    case SgroupType.CtabAbbreviation:
                         result.Add(GenerateAbbreviationSgroup(container, sgroup));
                         break;
-                    case SgroupTypes.CtabMultipleGroup:
+                    case SgroupType.CtabMultipleGroup:
                         result.Add(GenerateMultipleSgroup(sgroup));
                         break;
-                    case SgroupTypes.CtabAnyPolymer:
-                    case SgroupTypes.CtabMonomer:
-                    case SgroupTypes.CtabCrossLink:
-                    case SgroupTypes.CtabCopolymer:
-                    case SgroupTypes.CtabStructureRepeatUnit:
-                    case SgroupTypes.CtabMer:
-                    case SgroupTypes.CtabGraft:
-                    case SgroupTypes.CtabModified:
+                    case SgroupType.CtabAnyPolymer:
+                    case SgroupType.CtabMonomer:
+                    case SgroupType.CtabCrossLink:
+                    case SgroupType.CtabCopolymer:
+                    case SgroupType.CtabStructureRepeatUnit:
+                    case SgroupType.CtabMer:
+                    case SgroupType.CtabGraft:
+                    case SgroupType.CtabModified:
                         result.Add(GeneratePolymerSgroup(sgroup, symbolMap));
                         break;
-                    case SgroupTypes.CtabComponent:
-                    case SgroupTypes.CtabMixture:
-                    case SgroupTypes.CtabFormulation:
+                    case SgroupType.CtabComponent:
+                    case SgroupType.CtabMixture:
+                    case SgroupType.CtabFormulation:
                         result.Add(GenerateMixtureSgroup(sgroup));
                         break;
-                    case SgroupTypes.CtabGeneric:
+                    case SgroupType.CtabGeneric:
                         // not strictly a polymer but okay to draw as one
                         result.Add(GeneratePolymerSgroup(sgroup, null));
                         break;
@@ -320,13 +320,13 @@ namespace NCDK.Renderers.Generators.Standards
         private IRenderingElement GenerateMultipleSgroup(Sgroup sgroup)
         {
             // just draw the brackets - multiplied group parts have already been hidden in prep phase
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             if (brackets != null)
             {
                 return GenerateSgroupBrackets(sgroup,
                                               brackets,
                                               Dictionaries.Empty<IAtom, AtomSymbol>(),
-                                              (string)sgroup.GetValue(SgroupKeys.CtabSubScript),
+                                              (string)sgroup.GetValue(SgroupKey.CtabSubScript),
                                               null);
             }
             else
@@ -361,7 +361,7 @@ namespace NCDK.Renderers.Generators.Standards
                                               .Resize(1 / scale, 1 / -scale)
                                               .GetOutlines())
             {
-                if (highlight != null && style == HighlightStyles.Colored)
+                if (highlight != null && style == HighlightStyle.Colored)
                 {
                     labelgroup.Add(GeneralPath.ShapeOf(outline, highlight));
                 }
@@ -371,7 +371,7 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
-            if (highlight != null && style == HighlightStyles.OuterGlow)
+            if (highlight != null && style == HighlightStyle.OuterGlow)
             {
                 ElementGroup group = new ElementGroup
                 {
@@ -395,19 +395,19 @@ namespace NCDK.Renderers.Generators.Standards
         private IRenderingElement GeneratePolymerSgroup(Sgroup sgroup, IDictionary<IAtom, AtomSymbol> symbolMap)
         {
             // draw the brackets
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             if (brackets != null)
             {
-                SgroupTypes type = sgroup.Type;
+                SgroupType type = sgroup.Type;
 
-                var subscript = (string)sgroup.GetValue(SgroupKeys.CtabSubScript);
-                var connectivity = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
+                var subscript = (string)sgroup.GetValue(SgroupKey.CtabSubScript);
+                var connectivity = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
 
                 switch (type)
                 {
-                    case SgroupTypes.CtabCopolymer:
+                    case SgroupType.CtabCopolymer:
                         subscript = "co";
-                        string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
+                        string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
                         if ("RAN".Equals(subtype))
                             subscript = "ran";
                         else if ("BLK".Equals(subtype))
@@ -415,25 +415,25 @@ namespace NCDK.Renderers.Generators.Standards
                         else if ("ALT".Equals(subtype))
                             subscript = "alt";
                         break;
-                    case SgroupTypes.CtabCrossLink:
+                    case SgroupType.CtabCrossLink:
                         subscript = "xl";
                         break;
-                    case SgroupTypes.CtabAnyPolymer:
+                    case SgroupType.CtabAnyPolymer:
                         subscript = "any";
                         break;
-                    case SgroupTypes.CtabGraft:
+                    case SgroupType.CtabGraft:
                         subscript = "grf";
                         break;
-                    case SgroupTypes.CtabMer:
+                    case SgroupType.CtabMer:
                         subscript = "mer";
                         break;
-                    case SgroupTypes.CtabMonomer:
+                    case SgroupType.CtabMonomer:
                         subscript = "mon";
                         break;
-                    case SgroupTypes.CtabModified:
+                    case SgroupType.CtabModified:
                         subscript = "mod";
                         break;
-                    case SgroupTypes.CtabStructureRepeatUnit:
+                    case SgroupType.CtabStructureRepeatUnit:
                         if (subscript == null)
                             subscript = "n";
                         if (connectivity == null)
@@ -464,24 +464,24 @@ namespace NCDK.Renderers.Generators.Standards
             // draw the brackets
             // TODO - mixtures normally have attached Sgroup data
             // TODO - e.g. COMPONENT_FRACTION, ACTIVITY_TYPE, WEIGHT_PERCENT
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             if (brackets != null)
             {
-                SgroupTypes type = sgroup.Type;
+                SgroupType type = sgroup.Type;
                 string subscript = "?";
                 switch (type)
                 {
-                    case SgroupTypes.CtabComponent:
-                        var compNum = (int?)sgroup.GetValue(SgroupKeys.CtabComponentNumber);
+                    case SgroupType.CtabComponent:
+                        var compNum = (int?)sgroup.GetValue(SgroupKey.CtabComponentNumber);
                         if (compNum != null)
                             subscript = "c" + compNum.ToString();
                         else
                             subscript = "c";
                         break;
-                    case SgroupTypes.CtabMixture:
+                    case SgroupType.CtabMixture:
                         subscript = "mix";
                         break;
-                    case SgroupTypes.CtabFormulation:
+                    case SgroupType.CtabFormulation:
                         subscript = "f";
                         break;
                 }
@@ -522,7 +522,7 @@ namespace NCDK.Renderers.Generators.Standards
                                                          string superscriptSuffix)
         {
             // brackets are square by default (style:0)
-            var style = (int?)sgroup.GetValue(SgroupKeys.CtabBracketStyle);
+            var style = (int?)sgroup.GetValue(SgroupKey.CtabBracketStyle);
             bool round = style != null && style == 1;
             ElementGroup result = new ElementGroup();
 

@@ -25,10 +25,10 @@
 using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.RingSearches;
-using System.Collections.Generic;
-using static NCDK.Graphs.GraphUtil;
-using static NCDK.Common.Base.Preconditions;
 using System;
+using System.Collections.Generic;
+using static NCDK.Common.Base.Preconditions;
+using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {

@@ -19,8 +19,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
 using NCDK.Config;
@@ -786,7 +786,7 @@ namespace NCDK.Layout
                                     if (begBonds.Count != 1 || endBonds.Count != 1)
                                         continue;
                                     bool flipped = begBonds.Contains(firstCarrier) != endBonds.Contains(secondCarrier);
-                                    StereoElement.Configurations cfg = flipped ? se.Configure.Flip() : se.Configure;
+                                    StereoElement.Configuration cfg = flipped ? se.Configure.Flip() : se.Configure;
                                     ring.StereoElements.Add(new DoubleBondStereochemistry(stereoBond,
                                                                                         new IBond[] { begBonds[0], endBonds[0] },
                                                                                         cfg));
@@ -2198,7 +2198,7 @@ namespace NCDK.Layout
             var multipleGroups = new List<Sgroup>();
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type == SgroupTypes.CtabMultipleGroup)
+                if (sgroup.Type == SgroupType.CtabMultipleGroup)
                     multipleGroups.Add(sgroup);
             }
             if (multipleGroups.Count == 0)
@@ -2218,7 +2218,7 @@ namespace NCDK.Layout
                 // extract substructure
                 IAtomContainer substructure = mol.Builder.NewAtomContainer();
                 var visit = new HashSet<IAtom>();
-                var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
+                var patoms = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
                 if (patoms == null)
                     continue;
                 foreach (var atom in patoms)
@@ -2580,7 +2580,7 @@ namespace NCDK.Layout
             var mapping = new MultiDictionary<ISet<IAtom>, IAtom>();
             foreach (var sgroup in sgroups)
             {
-                if (sgroup.Type != SgroupTypes.ExtMulticenter)
+                if (sgroup.Type != SgroupType.ExtMulticenter)
                     continue;
 
                 IAtom beg = null;
@@ -2662,7 +2662,7 @@ namespace NCDK.Layout
                 var xbonds = sgroup.Bonds;
 
                 // clear all the existing brackets
-                sgroup.PutValue(SgroupKeys.CtabBracket, null);
+                sgroup.PutValue(SgroupKey.CtabBracket, null);
 
                 // assign brackets to crossing bonds
                 if (xbonds.Count >= 2)
@@ -2779,20 +2779,20 @@ namespace NCDK.Layout
         {
             switch (sgroup.Type)
             {
-                case SgroupTypes.CtabStructureRepeatUnit:
-                case SgroupTypes.CtabAnyPolymer:
-                case SgroupTypes.CtabCrossLink:
-                case SgroupTypes.CtabComponent:
-                case SgroupTypes.CtabMixture:
-                case SgroupTypes.CtabFormulation:
-                case SgroupTypes.CtabGraft:
-                case SgroupTypes.CtabModified:
-                case SgroupTypes.CtabMonomer:
-                case SgroupTypes.CtabCopolymer:
-                case SgroupTypes.CtabMultipleGroup:
+                case SgroupType.CtabStructureRepeatUnit:
+                case SgroupType.CtabAnyPolymer:
+                case SgroupType.CtabCrossLink:
+                case SgroupType.CtabComponent:
+                case SgroupType.CtabMixture:
+                case SgroupType.CtabFormulation:
+                case SgroupType.CtabGraft:
+                case SgroupType.CtabModified:
+                case SgroupType.CtabMonomer:
+                case SgroupType.CtabCopolymer:
+                case SgroupType.CtabMultipleGroup:
                     return true;
-                case SgroupTypes.CtabGeneric:
-                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+                case SgroupType.CtabGeneric:
+                    IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
                     return brackets != null && brackets.Count != 0;
                 default:
                     return false;

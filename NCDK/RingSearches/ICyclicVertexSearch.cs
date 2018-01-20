@@ -32,7 +32,7 @@ namespace NCDK.RingSearches
     // @author John May
     // @cdk.module core
     // @cdk.githash
-    public interface CyclicVertexSearch
+    public interface ICyclicVertexSearch
     {
         /// <summary>
         /// The number of cycles (circuit rank, frère jacques number, num SSSR).

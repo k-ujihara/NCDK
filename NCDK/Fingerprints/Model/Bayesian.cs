@@ -75,9 +75,9 @@ namespace NCDK.Fingerprints.Model
     public class Bayesian
     {
         /// <summary>
-        /// Access to the fingerprint type, one of <see cref="CircularFingerprinter.Classes"/>.
+        /// Access to the fingerprint type, one of <see cref="CircularFingerprinter.CFPClass"/>.
         /// </summary>
-        public CircularFingerprinter.Classes ClassType { get; private set; }
+        public CircularFingerprinter.CFPClass ClassType { get; private set; }
 
         /// <summary>
         /// Access to the fingerprint folding extent, either 0 (for none) or a power of 2.
@@ -163,7 +163,7 @@ namespace NCDK.Fingerprints.Model
         /// Instantiate a Bayesian model with no data.
         /// </summary>
         /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
-        public Bayesian(CircularFingerprinter.Classes classType)
+        public Bayesian(CircularFingerprinter.CFPClass classType)
         {
             this.ClassType = classType;
         }
@@ -171,9 +171,9 @@ namespace NCDK.Fingerprints.Model
         /// <summary>
         /// Instantiate a Bayesian model with no data.
         /// </summary>
-        /// <param name="classType">one of the <see cref="CircularFingerprinter.Classes"/> enum</param>
+        /// <param name="classType">one of the <see cref="CircularFingerprinter.CFPClass"/> enum</param>
         /// <param name="folding">the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding</param>
-        public Bayesian(CircularFingerprinter.Classes classType, int folding)
+        public Bayesian(CircularFingerprinter.CFPClass classType, int folding)
         {
             this.ClassType = classType;
             this.Folding = folding;
@@ -441,14 +441,14 @@ namespace NCDK.Fingerprints.Model
         {
             StringBuilder buff = new StringBuilder();
 
-            string fpname = ClassType == CircularFingerprinter.Classes.ECFP0 ? "ECFP0"
-                    : ClassType == CircularFingerprinter.Classes.ECFP2 ? "ECFP2"
-                            : ClassType == CircularFingerprinter.Classes.ECFP4 ? "ECFP4"
-                                    : ClassType == CircularFingerprinter.Classes.ECFP6 ? "ECFP6"
-                                            : ClassType == CircularFingerprinter.Classes.FCFP0 ? "FCFP0"
-                                                    : ClassType == CircularFingerprinter.Classes.FCFP2 ? "FCFP2"
-                                                            : ClassType == CircularFingerprinter.Classes.FCFP4 ? "FCFP4"
-                                                                    : ClassType == CircularFingerprinter.Classes.FCFP6 ? "FCFP6"
+            string fpname = ClassType == CircularFingerprinter.CFPClass.ECFP0 ? "ECFP0"
+                    : ClassType == CircularFingerprinter.CFPClass.ECFP2 ? "ECFP2"
+                            : ClassType == CircularFingerprinter.CFPClass.ECFP4 ? "ECFP4"
+                                    : ClassType == CircularFingerprinter.CFPClass.ECFP6 ? "ECFP6"
+                                            : ClassType == CircularFingerprinter.CFPClass.FCFP0 ? "FCFP0"
+                                                    : ClassType == CircularFingerprinter.CFPClass.FCFP2 ? "FCFP2"
+                                                            : ClassType == CircularFingerprinter.CFPClass.FCFP4 ? "FCFP4"
+                                                                    : ClassType == CircularFingerprinter.CFPClass.FCFP6 ? "FCFP6"
                                                                             : "?";
 
             buff.Append("Bayesian!(" + fpname + "," + Folding + "," + LowThreshold + "," + HighThreshold + ")\n");
@@ -519,14 +519,14 @@ namespace NCDK.Fingerprints.Model
             string[] bits = line.Substring(10, line.Length - 11).Split(',');
             if (bits.Length < 4) throw new IOException("Invalid header content");
 
-            CircularFingerprinter.Classes classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.Classes.ECFP0
-                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.Classes.ECFP2
-                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.Classes.ECFP4
-                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.Classes.ECFP6
-                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.Classes.FCFP0 : bits[0]
-                                                    .Equals("FCFP2") ? CircularFingerprinter.Classes.FCFP2 : bits[0]
-                                                    .Equals("FCFP4") ? CircularFingerprinter.Classes.FCFP4 : bits[0]
-                                                    .Equals("FCFP6") ? CircularFingerprinter.Classes.FCFP6 : 0;
+            CircularFingerprinter.CFPClass classType = bits[0].Equals("ECFP0") ? CircularFingerprinter.CFPClass.ECFP0
+                    : bits[0].Equals("ECFP2") ? CircularFingerprinter.CFPClass.ECFP2
+                            : bits[0].Equals("ECFP4") ? CircularFingerprinter.CFPClass.ECFP4
+                                    : bits[0].Equals("ECFP6") ? CircularFingerprinter.CFPClass.ECFP6
+                                            : bits[0].Equals("FCFP0") ? CircularFingerprinter.CFPClass.FCFP0 : bits[0]
+                                                    .Equals("FCFP2") ? CircularFingerprinter.CFPClass.FCFP2 : bits[0]
+                                                    .Equals("FCFP4") ? CircularFingerprinter.CFPClass.FCFP4 : bits[0]
+                                                    .Equals("FCFP6") ? CircularFingerprinter.CFPClass.FCFP6 : 0;
             if (classType == 0) throw new IOException("Unknown fingerprint type: " + bits[0]);
 
             int folding = int.Parse(bits[1]);

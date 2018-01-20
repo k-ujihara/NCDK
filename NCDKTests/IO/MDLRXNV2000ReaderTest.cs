@@ -55,7 +55,7 @@ namespace NCDK.IO
             string filename1 = "NCDK.Data.MDL.0024.stg02.rxn";
             Trace.TraceInformation("Testing: " + filename1);
             var ins1 = ResourceLoader.GetAsStream(filename1);
-            MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
             reader1.Close();
@@ -81,7 +81,7 @@ namespace NCDK.IO
             string filename1 = "NCDK.Data.MDL.0002.stg01.rxn";
             Trace.TraceInformation("Testing: " + filename1);
             var ins1 = ResourceLoader.GetAsStream(filename1);
-            MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
             reader1.Close();

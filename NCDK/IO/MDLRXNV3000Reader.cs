@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
@@ -42,10 +43,10 @@ namespace NCDK.IO
         TextReader input = null;
 
         public MDLRXNV3000Reader(TextReader input)
-           : this(input, ChemObjectReaderModes.Relaxed)
+           : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLRXNV3000Reader(TextReader input, ChemObjectReaderModes mode)
+        public MDLRXNV3000Reader(TextReader input, ChemObjectReaderMode mode)
         {
             this.input = input;
             InitIOSettings();
@@ -53,10 +54,10 @@ namespace NCDK.IO
         }
 
         public MDLRXNV3000Reader(Stream input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLRXNV3000Reader(Stream input, ChemObjectReaderModes mode)
+        public MDLRXNV3000Reader(Stream input, ChemObjectReaderMode mode)
            : this(new StreamReader(input), mode)
         { }
 

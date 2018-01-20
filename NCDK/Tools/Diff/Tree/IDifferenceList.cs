@@ -35,9 +35,8 @@ namespace NCDK.Tools.Diff.Tree
         /// <summary>
         /// Adds a new <see cref="IDifference"/> as child to this tree. For example, an <see cref="IAtom"/> difference
         /// would have a child difference for <see cref="Vector2"/>.
-        ///
-        /// <param name="childDiff">child <see cref="IDifference"/> to add to this <see cref="IDifference"/></param>
         /// </summary>
+        /// <param name="childDiff">child <see cref="IDifference"/> to add to this <see cref="IDifference"/></param>
         void AddChild(IDifference childDiff);
 
         /// <summary>

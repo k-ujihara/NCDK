@@ -144,7 +144,7 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Output multi-center bonds, positional variation is specified with <see cref="Sgroups.Sgroup"/>s
-        /// of the type <see cref="Sgroups.SgroupTypes.ExtMulticenter"/>.
+        /// of the type <see cref="Sgroups.SgroupType.ExtMulticenter"/>.
         /// </summary>
         CxMulticenter = 0x040000,
 

@@ -18,7 +18,6 @@
  */
 
 using System.Collections.Generic;
-using WPF = System.Windows;
 
 namespace NCDK.Renderers.Fonts
 {
@@ -33,7 +32,7 @@ namespace NCDK.Renderers.Fonts
         private string fontName = "Arial";
 
         /// <summary>The font weight</summary>
-        private FontWeights fontWeight = FontWeights.Normal;
+        private FontWeight fontWeight = FontWeight.Normal;
         
         /// <summary>The mapping between zoom levels and font sizes</summary>
         private IDictionary<double, int> zoomToFontSizeMap;
@@ -83,7 +82,7 @@ namespace NCDK.Renderers.Fonts
         /// <summary>
         /// The font style, defined in the <see cref="IFontManager"/> interface.
         /// </summary>
-        public virtual FontWeights FontWeight
+        public virtual FontWeight FontWeight
         {
             get
             {

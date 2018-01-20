@@ -143,11 +143,11 @@ namespace NCDK.Stereo
                 switch (centers.ElementType(v))
                 {
                     // elongated tetrahedrals
-                    case Stereocenters.CoordinateTypes.Bicoordinate:
+                    case Stereocenters.CoordinateType.Bicoordinate:
                         int t0 = graph[v][0];
                         int t1 = graph[v][1];
-                        if (centers.ElementType(t0) == Stereocenters.CoordinateTypes.Tricoordinate
-                                && centers.ElementType(t1) == Stereocenters.CoordinateTypes.Tricoordinate)
+                        if (centers.ElementType(t0) == Stereocenters.CoordinateType.Tricoordinate
+                                && centers.ElementType(t1) == Stereocenters.CoordinateType.Tricoordinate)
                         {
                             if (check && centers.IsStereocenter(t0) && centers.IsStereocenter(t1))
                             {
@@ -162,19 +162,19 @@ namespace NCDK.Stereo
                         }
                         break;
                     // tetrahedrals
-                    case Stereocenters.CoordinateTypes.Tetracoordinate:
+                    case Stereocenters.CoordinateType.Tetracoordinate:
                         {
                             var element = CreateTetrahedral(v, centers);
                             if (element != null) elements.Add(element);
                         }
                         break;
                     // aryl-aryl atropisomers
-                    case Stereocenters.CoordinateTypes.Tricoordinate:
+                    case Stereocenters.CoordinateType.Tricoordinate:
                         foreach (int w in graph[v])
                         {
                             IBond bond = bondMap[v, w];
                             if (w > v &&
-                                centers.ElementType(w) == Stereocenters.CoordinateTypes.Tricoordinate &&
+                                centers.ElementType(w) == Stereocenters.CoordinateType.Tricoordinate &&
                                 bond.Order == BondOrder.Single &&
                                 !bond.IsInRing &&
                                 bond.Begin.IsInRing && bond.End.IsInRing)
@@ -196,7 +196,7 @@ namespace NCDK.Stereo
                 switch (centers.ElementType(v))
                 {
                     // Cis/Trans double bonds
-                    case Stereocenters.CoordinateTypes.Tricoordinate:
+                    case Stereocenters.CoordinateType.Tricoordinate:
                         if (!centers.IsStereocenter(v))
                             continue;
                         foreach (int w in graph[v])
@@ -204,7 +204,7 @@ namespace NCDK.Stereo
                             IBond bond = bondMap[v, w];
                             if (w > v && bond.Order == BondOrder.Double)
                             {
-                                if (centers.ElementType(w) == Stereocenters.CoordinateTypes.Tricoordinate
+                                if (centers.ElementType(w) == Stereocenters.CoordinateType.Tricoordinate
                                     && centers.IsStereocenter(w) && !IsInSmallRing(bond))
                                 {
                                     var element = CreateGeometric(v, w, centers);
@@ -581,7 +581,7 @@ namespace NCDK.Stereo
                 tmp.Point2D = new Vector2((end1.Point2D.Value.X + end2.Point2D.Value.X) / 2,
                                            (end2.Point2D.Value.Y + end2.Point2D.Value.Y) / 2);
                 int parity = Parity(tmp, carriers, elevation);
-                var cfg = parity > 0 ? StereoElement.Configurations.Left : StereoElement.Configurations.Right;
+                var cfg = parity > 0 ? StereoElement.Configuration.Left : StereoElement.Configuration.Right;
 
                 return new Atropisomeric(container.GetBond(end1, end2), carriers, cfg);
             }
@@ -975,7 +975,7 @@ namespace NCDK.Stereo
                     return null;
 
                 int parity = Parity(carriers);
-                var cfg = parity > 0 ? StereoElement.Configurations.Left : StereoElement.Configurations.Right;
+                var cfg = parity > 0 ? StereoElement.Configuration.Left : StereoElement.Configuration.Right;
 
                 return new Atropisomeric(container.GetBond(end1, end2), carriers, cfg);
             }

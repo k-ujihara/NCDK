@@ -569,7 +569,7 @@ namespace NCDK.Beam
         public void Cisplatin()
         {
             Graph g = Graph.FromSmiles("[NH3][Pt@SP1]([NH3])(Cl)Cl");
-            Assert.AreEqual(Configuration.Types.SquarePlanar, g.TopologyOf(1).Type);
+            Assert.AreEqual(Configuration.ConfigurationType.SquarePlanar, g.TopologyOf(1).Type);
             Assert.AreEqual("[NH3][Pt@SP1]([NH3])(Cl)Cl", g.ToSmiles());
             Assert.AreEqual("[NH3][Pt@SP3]([NH3])(Cl)Cl", g.Permute(new int[] { 0, 1, 2, 4, 3 }).ToSmiles());
         }
@@ -578,7 +578,7 @@ namespace NCDK.Beam
         public void TrigonalBipyramidal()
         {
             Graph g = Graph.FromSmiles("S[As@TB1](F)(Cl)(Br)N");
-            Assert.AreEqual(Configuration.Types.TrigonalBipyramidal, g.TopologyOf(1).Type);
+            Assert.AreEqual(Configuration.ConfigurationType.TrigonalBipyramidal, g.TopologyOf(1).Type);
             Assert.AreEqual("S[As@](F)(Cl)(Br)N", g.ToSmiles());
             Assert.AreEqual("S[As@@](F)(Br)(Cl)N", g.Permute(new int[] { 0, 1, 2, 4, 3, 5 }).ToSmiles());
         }
@@ -587,7 +587,7 @@ namespace NCDK.Beam
         public void TrigonalBipyramidal2()
         {
             Graph g = Graph.FromSmiles("S[As@TB2](F)(Cl)(Br)N");
-            Assert.AreEqual(Configuration.Types.TrigonalBipyramidal, g.TopologyOf(1).Type);
+            Assert.AreEqual(Configuration.ConfigurationType.TrigonalBipyramidal, g.TopologyOf(1).Type);
             Assert.AreEqual("S[As@@](F)(Cl)(Br)N", g.ToSmiles());
             Assert.AreEqual("S[As@](F)(Br)(Cl)N", g.Permute(new int[] { 0, 1, 2, 4, 3, 5 }).ToSmiles());
         }
@@ -596,7 +596,7 @@ namespace NCDK.Beam
         public void TrigonalBipyramidal15()
         {
             Graph g = Graph.FromSmiles("F[As@TB15](Cl)(S)(Br)N");
-            Assert.AreEqual(Configuration.Types.TrigonalBipyramidal, g.TopologyOf(1).Type);
+            Assert.AreEqual(Configuration.ConfigurationType.TrigonalBipyramidal, g.TopologyOf(1).Type);
             Assert.AreEqual("F[As@TB15](Cl)(S)(Br)N", g.ToSmiles());
             Assert.AreEqual("F[As@TB17](Cl)(Br)(S)N", g.Permute(new int[] { 0, 1, 2, 4, 3, 5 }).ToSmiles());
         }
@@ -605,7 +605,7 @@ namespace NCDK.Beam
         public void Octahedral1()
         {
             Graph g = Graph.FromSmiles("C[Co@](F)(Cl)(Br)(I)S");
-            Assert.AreEqual(Configuration.Types.Octahedral, g.TopologyOf(1).Type);
+            Assert.AreEqual(Configuration.ConfigurationType.Octahedral, g.TopologyOf(1).Type);
             Assert.AreEqual("C[Co@](F)(Cl)(Br)(I)S", g.ToSmiles());
             Assert.AreEqual("C[Co@OH8](F)(Br)(Cl)(I)S", g.Permute(new int[] { 0, 1, 2, 4, 3, 5, 6 }).ToSmiles());
         }

@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,12 +76,12 @@ namespace NCDK.Graphs.Rebond
     // @cdk.keyword rebonding
     // @cdk.keyword Binary Space Partitioning Tree
     // @cdk.keyword join-the-dots
-    public sealed class Bspt<T> : IEnumerable<T> where T: Tuple
+    public sealed class Bspt<T> : IEnumerable<T> where T: ITuple
     {
         private const int LeafCount = 4;
         private const int StackDepth = 64;  // this corresponds to the max height of the tree
         int dimMax;
-        Element eleRoot;
+        IElement eleRoot;
 
         // static double Distance(int dim, Tuple t1, Tuple t2) { return
         // Math.Sqrt(Distance2(dim, t1, t2)); } static double Distance2(int dim,
@@ -116,7 +117,7 @@ namespace NCDK.Graphs.Rebond
         {
             Node[] stack = new Node[StackDepth];
             int sp = 0;
-            Element ele = eleRoot;
+            IElement ele = eleRoot;
             while (ele is Node)
             {
                 Node node = (Node)ele;
@@ -147,11 +148,11 @@ namespace NCDK.Graphs.Rebond
             yield break;
         }
 
-        public IEnumerable<T> EnumerateNears(Tuple center, double distance)
+        public IEnumerable<T> EnumerateNears(ITuple center, double distance)
         {
             Node[] stack = new Node[StackDepth];
             int sp = 0;
-            Element ele = eleRoot;
+            IElement ele = eleRoot;
             while (ele is Node)
             {
                 Node node = (Node)ele;
@@ -205,17 +206,17 @@ namespace NCDK.Graphs.Rebond
             }
         }
 
-        public IEnumerable<T> EnumerateSphere(Tuple center, double distance)
+        public IEnumerable<T> EnumerateSphere(ITuple center, double distance)
         {
             return EnumerateSphere(center, distance, false);
         }
 
-        public IEnumerable<T> EnumerateHemiSphere(Tuple center, double distance)
+        public IEnumerable<T> EnumerateHemiSphere(ITuple center, double distance)
         {
             return EnumerateSphere(center, distance, true);
         }
 
-        private IEnumerable<T> EnumerateSphere(Tuple center, double distance, bool tHemisphere) 
+        private IEnumerable<T> EnumerateSphere(ITuple center, double distance, bool tHemisphere) 
         {
             Node[] stack;
             int sp;
@@ -228,7 +229,7 @@ namespace NCDK.Graphs.Rebond
                 centerValues[dim] = center.GetDimValue(dim);
             stack = new Node[StackDepth];
             sp = 0;
-            Element ele = eleRoot;
+            IElement ele = eleRoot;
             while (ele is Node)
             {
                 Node node = (Node)ele;
@@ -304,7 +305,7 @@ namespace NCDK.Graphs.Rebond
             return GetEnumerator();
         }
 
-        interface Element 
+        interface IElement 
         {
             bool AddTuple(T tuple);
 
@@ -313,13 +314,13 @@ namespace NCDK.Graphs.Rebond
             bool IsLeafWithSpace();
         }
 
-        class Node : Element 
+        class Node : IElement 
         {
-            public Element eleLE;
+            public IElement eleLE;
             public int dim;
             public int dimMax;
             public double splitValue;
-            public Element eleGE;
+            public IElement eleGE;
 
             private Bspt<T> parent;
 
@@ -387,7 +388,7 @@ namespace NCDK.Graphs.Rebond
             }
         }
 
-        class Leaf : Element
+        class Leaf : IElement
         {
             public int count;
             public T[] tuples;
@@ -461,7 +462,7 @@ namespace NCDK.Graphs.Rebond
         }
     }
 
-    public interface Tuple
+    public interface ITuple
     {
         double GetDimValue(int dim);
         double Distance2 { get; set; } // the dist squared of a found Element;

@@ -22,7 +22,7 @@ namespace NCDK.Beam
                 // only attempt subset conversion if no known topology
                 Topology t = g.TopologyOf(u);
 
-                if (t.Type == Configuration.Types.None)
+                if (t.Type == Configuration.ConfigurationType.None)
                 {
                     h.AddAtom(ToSubset(g.GetAtom(u), g, u));
                 }

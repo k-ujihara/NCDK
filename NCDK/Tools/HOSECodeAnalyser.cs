@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.Tools
@@ -39,7 +40,7 @@ namespace NCDK.Tools
     // @cdk.created    2007-03-08
     // @cdk.module     extra
     // @cdk.githash
-    public class HOSECodeAnalyser
+    public static class HOSECodeAnalyser
     {
         public static IList<string> GetElements(string code)
         {

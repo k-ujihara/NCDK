@@ -108,7 +108,7 @@ namespace NCDK.IO
             : this(new StreamReader(input))
         { }
 
-        public MDLV2000Reader(Stream input, ChemObjectReaderModes mode)
+        public MDLV2000Reader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input), mode)
         { }
 
@@ -117,10 +117,10 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="input">The Reader to read from</param>
         public MDLV2000Reader(TextReader input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLV2000Reader(TextReader input, ChemObjectReaderModes mode)
+        public MDLV2000Reader(TextReader input, ChemObjectReaderMode mode)
         {
             this.input = input;
             InitIOSettings();
@@ -1007,7 +1007,7 @@ namespace NCDK.IO
                     // labelling the structure as you wish. If unique labels are required, downstream processing will be
                     // necessary to enforce this.
                     //
-                    if (ReaderMode == ChemObjectReaderModes.Strict)
+                    if (ReaderMode == ChemObjectReaderMode.Strict)
                     {
                         throw new CDKException("Atom property ZZC is illegal in Strict mode");
                     }
@@ -1037,14 +1037,14 @@ namespace NCDK.IO
                         lnOffset = 10 + (i * 8);
                         index = ReadMolfileInt(line, lnOffset);
 
-                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroups.ContainsKey(index))
+                        if (ReaderMode == ChemObjectReaderMode.Strict && sgroups.ContainsKey(index))
                             HandleError("STY line must appear before any other line that supplies Sgroup information");
 
                         sgroup = new Sgroup();
                         sgroups[index] = sgroup;
 
-                        SgroupTypes type = SgroupTypeTools.Parse(Strings.Substring(line, lnOffset + 4, 3));
-                        if (type != SgroupTypes.Nil)
+                        SgroupType type = SgroupTypeTools.Parse(Strings.Substring(line, lnOffset + 4, 3));
+                        if (type != SgroupType.Nil)
                             sgroup.Type = type;
                     }
                 }
@@ -1058,15 +1058,15 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroup.Type != SgroupTypes.CtabCopolymer)
+                        if (ReaderMode == ChemObjectReaderMode.Strict && sgroup.Type != SgroupType.CtabCopolymer)
                             HandleError("SST (Sgroup Subtype) specified for a non co-polymer group");
 
                         string sst = Strings.Substring(line, st + 4, 3);
 
-                        if (ReaderMode == ChemObjectReaderModes.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
+                        if (ReaderMode == ChemObjectReaderMode.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
                             HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
 
-                        sgroup.PutValue(SgroupKeys.CtabSubType, sst);
+                        sgroup.PutValue(SgroupKey.CtabSubType, sst);
                     }
                 }
                 else if (key == PropertyKey.M_SAL)
@@ -1123,9 +1123,9 @@ namespace NCDK.IO
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
                         string con = Strings.Substring(line, st + 4, 3).Trim();
-                        if (ReaderMode == ChemObjectReaderModes.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
+                        if (ReaderMode == ChemObjectReaderMode.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
                             HandleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
-                        sgroup.PutValue(SgroupKeys.CtabConnectivity,
+                        sgroup.PutValue(SgroupKey.CtabConnectivity,
                                         con);
                     }
                 }
@@ -1151,7 +1151,7 @@ namespace NCDK.IO
                     // (For multiple groups, m... is the text representation of the multiple group multiplier.
                     //  For abbreviation Sgroups, m... is the text of the abbreviation Sgroup label.)
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
-                    sgroup.PutValue(SgroupKeys.CtabSubScript,
+                    sgroup.PutValue(SgroupKey.CtabSubScript,
                                     Strings.Substring(line, 11).Trim());
                 }
                 else if (key == PropertyKey.M_SBT)
@@ -1168,7 +1168,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SgroupKeys.CtabBracketStyle,
+                        sgroup.PutValue(SgroupKey.CtabBracketStyle,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1183,10 +1183,10 @@ namespace NCDK.IO
                         for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                         {
                             sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, st));
-                            sgroup.PutValue(SgroupKeys.CtabExpansion, true);
+                            sgroup.PutValue(SgroupKey.CtabExpansion, true);
                         }
                     }
-                    else if (ReaderMode == ChemObjectReaderModes.Strict)
+                    else if (ReaderMode == ChemObjectReaderMode.Strict)
                     {
                         HandleError("Expected EXP to follow SDS tag");
                     }
@@ -1203,10 +1203,10 @@ namespace NCDK.IO
                     //       Sgroup Atom List M SAL entry.
                     sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
                     count = ReadMolfileInt(line, 10);
-                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKeys.CtabParentAtomList);
+                    ICollection<IAtom> parentAtomList = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
                     if (parentAtomList == null)
                     {
-                        sgroup.PutValue(SgroupKeys.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
+                        sgroup.PutValue(SgroupKey.CtabParentAtomList, parentAtomList = new HashSet<IAtom>());
                     }
                     for (int i = 0, st = 14; i < count && st + 3 <= length; i++, st += 4)
                     {
@@ -1225,7 +1225,7 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        sgroup.PutValue(SgroupKeys.CtabComponentNumber,
+                        sgroup.PutValue(SgroupKey.CtabComponentNumber,
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
@@ -1279,7 +1279,7 @@ namespace NCDK.IO
         {
             if (!map.TryGetValue(idx, out Sgroup sgroup))
             {
-                if (ReaderMode == ChemObjectReaderModes.Strict)
+                if (ReaderMode == ChemObjectReaderMode.Strict)
                     HandleError($"{nameof(Sgroup)} must first be defined by a STY property");
                 map[idx] = (sgroup = new Sgroup());
             }
@@ -1302,23 +1302,23 @@ namespace NCDK.IO
                 case 0:
                     return type == 2 ? BondStereo.EZByCoordinates : BondStereo.None;
                 case 1:
-                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderMode.Strict && type == 2)
                         throw new CDKException("stereo flag was 'up' but bond order was 2");
                     return BondStereo.Up;
                 case 3:
-                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 1)
+                    if (ReaderMode == ChemObjectReaderMode.Strict && type == 1)
                         throw new CDKException("stereo flag was 'cis/trans' but bond order was 1");
                     return BondStereo.EOrZ;
                 case 4:
-                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderMode.Strict && type == 2)
                         throw new CDKException("stereo flag was 'up/down' but bond order was 2");
                     return BondStereo.UpOrDown;
                 case 6:
-                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderMode.Strict && type == 2)
                         throw new CDKException("stereo flag was 'down' but bond order was 2");
                     return BondStereo.Down;
             }
-            if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("unknown bond stereo type: " + stereo);
+            if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("unknown bond stereo type: " + stereo);
             return BondStereo.None;
         }
 
@@ -1360,14 +1360,14 @@ namespace NCDK.IO
             }
             if (symbol.Equals("D") && interpretHydrogenIsotopes.IsSet)
             {
-                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
                 IAtom atom = builder.NewAtom("H");
                 atom.MassNumber = 2;
                 return atom;
             }
             if (symbol.Equals("T") && interpretHydrogenIsotopes.IsSet)
             {
-                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
                 IAtom atom = builder.NewAtom("H");
                 atom.MassNumber = 3;
                 return atom;
@@ -1377,7 +1377,7 @@ namespace NCDK.IO
             {
                 HandleError("invalid symbol: " + symbol, lineNum, 31, 34);
                 // when strict only accept labels from the specification
-                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                if (ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException("invalid symbol: " + symbol);
             }
             {
                 // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
@@ -1995,20 +1995,20 @@ namespace NCDK.IO
                 newBond = new CTFileQueryBond(builder);
                 newBond.SetAtoms(new[] { a1, a2 });
                 newBond.Order = BondOrder.Unset;
-                CTFileQueryBond.BondTypes queryBondType = CTFileQueryBond.BondTypes.Unset;
+                CTFileQueryBond.BondType queryBondType = CTFileQueryBond.BondType.Unset;
                 switch (order)
                 {
                     case 5:
-                        queryBondType = CTFileQueryBond.BondTypes.SingleOrDouble;
+                        queryBondType = CTFileQueryBond.BondType.SingleOrDouble;
                         break;
                     case 6:
-                        queryBondType = CTFileQueryBond.BondTypes.SingleOrAromatic;
+                        queryBondType = CTFileQueryBond.BondType.SingleOrAromatic;
                         break;
                     case 7:
-                        queryBondType = CTFileQueryBond.BondTypes.DoubleOrAromatic;
+                        queryBondType = CTFileQueryBond.BondType.DoubleOrAromatic;
                         break;
                     case 8:
-                        queryBondType = CTFileQueryBond.BondTypes.Any;
+                        queryBondType = CTFileQueryBond.BondType.Any;
                         break;
                 }
                 ((CTFileQueryBond)newBond).Type = queryBondType;

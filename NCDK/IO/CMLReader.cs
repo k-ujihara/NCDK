@@ -19,18 +19,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.IO.CML;
 using NCDK.IO.Formats;
-using System.Collections.Generic;
-using System.IO;
+using NCDK.Utils.Xml;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using NCDK.Utils.Xml;
 
 namespace NCDK.IO
 {

@@ -24,7 +24,7 @@ namespace NCDK.Groups
 {
     // @author maclean
     // @cdk.module group 
-    class IntegerInvariant : Invariant
+    class IntegerInvariant : IInvariant
     {
         private int value;
 
@@ -33,7 +33,7 @@ namespace NCDK.Groups
             this.value = value;
         }
 
-        public int CompareTo(Invariant o)
+        public int CompareTo(IInvariant o)
         {
             return value.CompareTo(((IntegerInvariant)o).value);
         }

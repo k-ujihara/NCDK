@@ -23,7 +23,6 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace NCDK.Graphs
@@ -275,8 +274,7 @@ namespace NCDK.Graphs
             {
                 get
                 {
-                    IBond bond;
-                    if (lookup.TryGetValue(new Tuple(v, w), out bond))
+                    if (lookup.TryGetValue(new Tuple(v, w), out IBond bond))
                         return bond;
                     return null;
                 }
@@ -314,9 +312,8 @@ namespace NCDK.Graphs
 
                 public override bool Equals(object o)
                 {
-                    if (o is Tuple)
+                    if (o is Tuple that)
                     {
-                        Tuple that = (Tuple)o;
                         return this.u == that.u && this.v == that.v || this.u == that.v && this.v == that.u;
                     }
                     return false;

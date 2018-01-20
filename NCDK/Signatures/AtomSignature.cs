@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
@@ -127,7 +128,7 @@ namespace NCDK.Signatures
         /// <param name="height">the maximum height of the signature</param>
         /// <param name="invariantType">the type of invariant (int, string, ...)</param>
         /// <param name="molecule">the molecule to create the signature from</param>
-        public AtomSignature(int atomIndex, int height, InvariantTypes invariantType, IAtomContainer molecule)
+        public AtomSignature(int atomIndex, int height, InvariantType invariantType, IAtomContainer molecule)
             : base(invariantType)
         {
             this.molecule = molecule;
@@ -142,7 +143,7 @@ namespace NCDK.Signatures
         /// <param name="height">the maximum height of the signature</param>
         /// <param name="invariantType">the type of invariant (int, string, ...)</param>
         /// <param name="molecule">the molecule to create the signature from</param>
-        public AtomSignature(IAtom atom, int height, InvariantTypes invariantType, IAtomContainer molecule)
+        public AtomSignature(IAtom atom, int height, InvariantType invariantType, IAtomContainer molecule)
                 : this(molecule.Atoms.IndexOf(atom), height, invariantType, molecule)
         { }
 

@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             MurckoFragmenter gf = new MurckoFragmenter();
             double Complexity = 0;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             gf.GenerateFragments(mol);
             var setOfFragments = gf.GetFrameworksAsContainers();
@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ins = ResourceLoader.GetAsStream(filename);
             MurckoFragmenter gf = new MurckoFragmenter();
             double Complexity = 0;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             gf.GenerateFragments(mol);
             var setOfFragments = gf.GetFrameworksAsContainers();

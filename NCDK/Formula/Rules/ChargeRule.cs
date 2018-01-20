@@ -16,12 +16,13 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
     /// <summary>
-    /// This class validate if the charge in the IMolecularFormula correspond with
+    /// This class validate if the charge in the <see cref="IMolecularFormula"/> correspond with
     /// a specific value. As default it is defined as neutral == 0.0.
     /// </summary>
     /// <remarks>
@@ -35,7 +36,7 @@ namespace NCDK.Formula.Rules
     /// <item>
     ///   <term>charge</term>
     ///   <term>0.0</term>
-    ///   <term>The Charge of MolecularFormula</term>
+    ///   <term>The Charge of <see cref="MolecularFormula"/></term>
     /// </item>
     /// </list>
     /// </remarks>

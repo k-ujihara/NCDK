@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
@@ -70,25 +70,29 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSFBug1708336()
         {
-            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IChemObjectBuilder builder = ChemObjectBuilder.Instance;
             IAtomContainer atomContainer = builder.NewAtomContainer();
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("C"));
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            IQueryAtomContainer query = new QueryAtomContainer(Default.ChemObjectBuilder.Instance);
-            IQueryAtom a1 = new SymbolQueryAtom(Default.ChemObjectBuilder.Instance);
-            a1.Symbol = "C";
+            IQueryAtomContainer query = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            IQueryAtom a1 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
+            {
+                Symbol = "C"
+            };
 
-            var a2 = new Matchers.SMARTS.AnyAtom(Default.ChemObjectBuilder.Instance);
+            var a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
 
-            IBond b1 = new OrderQueryBond(a1, a2, BondOrder.Single, Default.ChemObjectBuilder.Instance);
+            IBond b1 = new OrderQueryBond(a1, a2, BondOrder.Single, ChemObjectBuilder.Instance);
 
-            IQueryAtom a3 = new SymbolQueryAtom(Default.ChemObjectBuilder.Instance);
-            a3.Symbol = "C";
+            IQueryAtom a3 = new SymbolQueryAtom(ChemObjectBuilder.Instance)
+            {
+                Symbol = "C"
+            };
 
-            IBond b2 = new OrderQueryBond(a2, a3, BondOrder.Single, Default.ChemObjectBuilder.Instance);
+            IBond b2 = new OrderQueryBond(a2, a3, BondOrder.Single, ChemObjectBuilder.Instance);
             query.Atoms.Add(a1);
             query.Atoms.Add(a2);
             query.Atoms.Add(a3);
@@ -144,7 +148,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBasicQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
             IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
             var query = QueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
@@ -186,14 +190,14 @@ namespace NCDK.Isomorphisms
             QueryAtomContainer query2 = null;
 
             var ins = ResourceLoader.GetAsStream(molfile);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(mol);
             ins = ResourceLoader.GetAsStream(queryfile);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = sp.ParseSmiles("C1CCCCC1");
             query2 = QueryAtomContainerCreator.CreateBasicQueryContainer(atomContainer);
 
@@ -215,9 +219,9 @@ namespace NCDK.Isomorphisms
             IAtomContainer mol2 = new AtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
-            new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
+            new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             var ins2 = ResourceLoader.GetAsStream(file2);
-            new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
+            new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
 
             var list = uiTester.GetOverlaps(mol1, mol2);
             Assert.AreEqual(1, list.Count);
@@ -232,7 +236,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestBug2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -249,7 +253,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMap_2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -263,7 +267,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphMap_2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -277,7 +281,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearchNoConditions_2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -292,7 +296,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSearch_2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
@@ -318,7 +322,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestGetSubgraphAtomsMaps_2944080()
         {
-            SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser smilesParser = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer mol1 = smilesParser.ParseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
             IAtomContainer mol2 = smilesParser.ParseSmiles("CCCC(=O)NC(N)=O");
 
@@ -376,9 +380,9 @@ namespace NCDK.Isomorphisms
             IAtomContainer mol2 = new AtomContainer();
 
             var ins1 = ResourceLoader.GetAsStream(file1);
-            new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
+            new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             var ins2 = ResourceLoader.GetAsStream(file2);
-            new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
+            new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
             AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
             mol2 = new AtomContainer((AtomContainer)permutor.Current);
@@ -395,8 +399,8 @@ namespace NCDK.Isomorphisms
         {
             string smiles = "C1CCCCCCC1CC";
             var query = QueryAtomContainerCreator.CreateAnyAtomContainer(new SmilesParser(
-                    Default.ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
-            IAtomContainer ac = new SmilesParser(Default.ChemObjectBuilder.Instance).ParseSmiles(smiles);
+                    ChemObjectBuilder.Instance).ParseSmiles(smiles), true);
+            IAtomContainer ac = new SmilesParser(ChemObjectBuilder.Instance).ParseSmiles(smiles);
             if (standAlone)
             {
                 Console.Out.WriteLine("AtomCount of query: " + query.Atoms.Count);
@@ -423,7 +427,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestAnyAtomAnyBondCase()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
             IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -436,7 +440,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("O1C=CC=C1");
             IAtomContainer queryac = sp.ParseSmiles("C1CCCC1");
             var query = QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(queryac, false);
@@ -456,7 +460,7 @@ namespace NCDK.Isomorphisms
         public void TestSingleAtomMatching()
         {
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
             IAtomContainer target = sp.ParseSmiles("C");
             IAtomContainer query = sp.ParseSmiles("C");
@@ -470,7 +474,7 @@ namespace NCDK.Isomorphisms
         public void TestSingleAtomMismatching()
         {
 
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
 
             IAtomContainer target = sp.ParseSmiles("C");
             IAtomContainer query = sp.ParseSmiles("N");
@@ -484,7 +488,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("[H]");
             IAtomContainer queryac = sp.ParseSmiles("[H]");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -503,7 +507,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("CNC");
             IAtomContainer queryac = sp.ParseSmiles("C");
             var query = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(queryac);
@@ -529,7 +533,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestSingleAtomMatching3()
         {
-            SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            SmilesParser sp = new SmilesParser(ChemObjectBuilder.Instance);
             IAtomContainer target = sp.ParseSmiles("CNC");
             IAtomContainer queryac = sp.ParseSmiles("C");
 
@@ -589,27 +593,27 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestUITSymmetricMatch()
         {
-            QueryAtomContainer q = new QueryAtomContainer(Default.ChemObjectBuilder.Instance);
+            QueryAtomContainer q = new QueryAtomContainer(ChemObjectBuilder.Instance);
             //setting atoms
-            IQueryAtom a0 = new Matchers.SMARTS.AliphaticSymbolAtom("C", Default.ChemObjectBuilder.Instance);
+            IQueryAtom a0 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
             q.Atoms.Add(a0);
-            IQueryAtom a1 = new Matchers.SMARTS.AnyAtom(Default.ChemObjectBuilder.Instance);
+            IQueryAtom a1 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
             q.Atoms.Add(a1);
-            IQueryAtom a2 = new Matchers.SMARTS.AnyAtom(Default.ChemObjectBuilder.Instance);
+            IQueryAtom a2 = new Matchers.SMARTS.AnyAtom(ChemObjectBuilder.Instance);
             q.Atoms.Add(a2);
-            IQueryAtom a3 = new Matchers.SMARTS.AliphaticSymbolAtom("C", Default.ChemObjectBuilder.Instance);
+            IQueryAtom a3 = new Matchers.SMARTS.AliphaticSymbolAtom("C", ChemObjectBuilder.Instance);
             q.Atoms.Add(a3);
             //setting bonds
             var b0 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, Default.ChemObjectBuilder.Instance);
+                            BondOrder.Single, ChemObjectBuilder.Instance);
             b0.SetAtoms(new IAtom[] { a0, a1 });
             q.Bonds.Add(b0);
             var b1 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, Default.ChemObjectBuilder.Instance);
+                            BondOrder.Single, ChemObjectBuilder.Instance);
             b1.SetAtoms(new IAtom[] { a1, a2 });
             q.Bonds.Add(b1);
             var b2 = new Matchers.SMARTS.OrderQueryBond(
-                            BondOrder.Single, Default.ChemObjectBuilder.Instance);
+                            BondOrder.Single, ChemObjectBuilder.Instance);
             b2.SetAtoms(new IAtom[] { a2, a3 });
             q.Bonds.Add(b2);
 

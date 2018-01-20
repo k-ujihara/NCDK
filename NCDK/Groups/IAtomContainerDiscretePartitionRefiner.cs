@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Groups
 {
     /// <summary>
@@ -67,14 +68,14 @@ namespace NCDK.Groups
     /// 
     /// This way, the refinement is not carried out multiple times.
     /// </example>
-    public interface AtomContainerDiscretePartitionRefiner : DiscretePartitionRefiner
+    public interface IAtomContainerDiscretePartitionRefiner : IDiscretePartitionRefiner
     {
         /// <summary>
         /// Refine an atom container, which has the side effect of calculating
         /// the automorphism group.
         /// </summary>
         /// <remarks>
-        /// If the group is needed afterwards, call <see cref="DiscretePartitionRefiner.GetAutomorphismGroup()"/>
+        /// If the group is needed afterwards, call <see cref="IDiscretePartitionRefiner.GetAutomorphismGroup()"/>
         /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
         /// refine method will be called twice.
         /// </remarks>

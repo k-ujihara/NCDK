@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Templates
 {
     /// <summary>
@@ -23,9 +24,8 @@ namespace NCDK.Templates
     /// </summary>
     // @cdk.keyword templates
     // @cdk.githash
-    public class IsoAlkanes
+    public static class IsoAlkanes
     {
-
         public static IAtomContainer GetIsobutane(IChemObjectBuilder builder)
         {
             IAtomContainer mol = builder.NewAtomContainer();

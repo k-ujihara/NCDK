@@ -29,7 +29,7 @@ namespace NCDK.Features
     // @author egonw
     // @cdk.githash
     // @see    DataFeatures
-    public class MoleculeFeaturesTool
+    public static class MoleculeFeaturesTool
     {
         public static bool HasPartialCharges(IAtomContainer molecule)
         {

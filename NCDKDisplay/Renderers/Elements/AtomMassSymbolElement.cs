@@ -30,7 +30,7 @@ namespace NCDK.Renderers.Elements
     public class AtomMassSymbolElement : AtomSymbolElement
     {
         /// <summary>The <see cref="IAtom"/>s mass number.</summary>
-        public readonly int atomMassNumber;
+        public readonly int AtomMassNumber;
 
         /// <summary>
         /// Constructs a new <see cref="TextElement"/> displaying the atom's mass number information.
@@ -45,7 +45,7 @@ namespace NCDK.Renderers.Elements
         public AtomMassSymbolElement(Point coord, string symbol, int? formalCharge, int? hydrogenCount, int alignment, int? atomMass, Color color)
             : base(coord, symbol, formalCharge, hydrogenCount, alignment, color)
         {
-            this.atomMassNumber = atomMass ?? -1;
+            this.AtomMassNumber = atomMass ?? -1;
         }
     }
 }

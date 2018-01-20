@@ -16,15 +16,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace NCDK.Formula.Rules
 {
     /// <summary>
-    /// This class validate if the Isotope Pattern from a given <see cref="IMolecularFormula"/> correspond with other to compare.
+    /// This class validate if the <see cref="IsotopePattern"/> from a given <see cref="IMolecularFormula"/> correspond with other to compare.
     /// </summary>
     /// <remarks>
     /// Table 1: Parameters set by this rule.
@@ -37,7 +36,7 @@ namespace NCDK.Formula.Rules
     /// <item>
     ///   <term>isotopePattern</term>
     ///   <term>List &lt;Double[]&gt;</term>
-    ///   <term>The Isotope Pattern to compare</term>
+    ///   <term>The <see cref="IsotopePattern"/> to compare</term>
     /// </item>
     /// </list>
     /// </remarks> 
@@ -59,8 +58,10 @@ namespace NCDK.Formula.Rules
         public IsotopePatternRule()
         {
             isotopeGe = new IsotopePatternGenerator(0.01);
-            isotopePatternSimilarity = new IsotopePatternSimilarity();
-            isotopePatternSimilarity.Tolerance = toleranceMass;
+            isotopePatternSimilarity = new IsotopePatternSimilarity
+            {
+                Tolerance = toleranceMass
+            };
         }
 
         /// <summary>
@@ -86,13 +87,17 @@ namespace NCDK.Formula.Rules
                 parameters[1] = toleranceMass;
                 return parameters;
             }
+
             set
             {
-                if (value.Length != 2) throw new CDKException("IsotopePatternRule expects two parameter");
+                if (value.Length != 2)
+                    throw new CDKException("IsotopePatternRule expects two parameter");
 
-                if (!(value[0] is IList<double[]>)) throw new CDKException("The parameter one must be of type List<Double[]>");
+                if (!(value[0] is IList<double[]>))
+                    throw new CDKException("The parameter one must be of type List<Double[]>");
 
-                if (!(value[1] is double)) throw new CDKException("The parameter two must be of type Double");
+                if (!(value[1] is double))
+                    throw new CDKException("The parameter two must be of type Double");
 
                 pattern = new IsotopePattern();
                 foreach (var listISO in (IList<double[]>)value[0])

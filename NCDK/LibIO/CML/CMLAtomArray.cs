@@ -46,7 +46,7 @@ namespace NCDK.LibIO.CML
         /// currently only works for array type syntax.
         /// </summary>
         /// <param name="sort"></param>
-        public void Sort(CMLFormula.Sorts sort)
+        public void Sort(CMLFormula.SortType sort)
         {
             var elems = ElementType;
             var counts = Count;
@@ -56,11 +56,11 @@ namespace NCDK.LibIO.CML
                     sortS.Add(elems[i] + " " + counts[i]);
             }
             sortS.Sort();
-            if (sort == CMLFormula.Sorts.ALPHABETIC_ELEMENTS)
+            if (sort == CMLFormula.SortType.ALPHABETIC_ELEMENTS)
             {
                 ; // already done
             }
-            else if (sort == CMLFormula.Sorts.CHFIRST)
+            else if (sort == CMLFormula.SortType.CHFIRST)
             {
                 var temp = new List<string>();
                 foreach (var s in sortS)

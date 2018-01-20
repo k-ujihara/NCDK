@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -71,7 +72,7 @@ namespace NCDK.Groups
         /// An interface for use with the apply method, which runs through all the
         /// permutations in this group.
         /// </summary>
-        public interface Backtracker
+        public interface IBacktracker
         {
             /// <summary>
             /// Do something to the permutation
@@ -243,12 +244,12 @@ namespace NCDK.Groups
         {
             long m = this.Order() / subgroup.Order();
             var results = new List<Permutation>();
-            Backtracker transversalBacktracker = new TransversalBacktracker(this, subgroup, m, results);
+            IBacktracker transversalBacktracker = new TransversalBacktracker(this, subgroup, m, results);
             this.Apply(transversalBacktracker);
             return results;
         }
 
-        class TransversalBacktracker : Backtracker
+        class TransversalBacktracker : IBacktracker
         {
             PermutationGroup parent;
             PermutationGroup subgroup;
@@ -291,12 +292,12 @@ namespace NCDK.Groups
         /// Apply the backtracker to all permutations in the larger group.
         /// </summary>
         /// <param name="backtracker">a hook for acting on the permutations</param>
-        public void Apply(Backtracker backtracker)
+        public void Apply(IBacktracker backtracker)
         {
             this.Backtrack(0, new Permutation(size), backtracker);
         }
 
-        private void Backtrack(int l, Permutation g, Backtracker backtracker)
+        private void Backtrack(int l, Permutation g, IBacktracker backtracker)
         {
             if (backtracker.IsFinished())
             {
@@ -326,12 +327,12 @@ namespace NCDK.Groups
         public IList<Permutation> GenerateAll()
         {
             var permutations = new List<Permutation>();
-            Backtracker counter = new CounterBacktracker(permutations);
+            IBacktracker counter = new CounterBacktracker(permutations);
             this.Apply(counter);
             return permutations;
         }
 
-        class CounterBacktracker : Backtracker
+        class CounterBacktracker : IBacktracker
         {
             IList<Permutation> permutations;
 

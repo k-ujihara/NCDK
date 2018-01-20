@@ -36,7 +36,7 @@ namespace NCDK.Renderers.Generators
     /// emphasises atoms and bonds. Each atom and bond is optionally assigned an
     /// integer identifier. Entities with identifiers are then highlighted using the
     /// <see cref="IPalette"/> to determine the color. The size of the highlight is
-    /// specified with the <see cref="HighlightRadius"/> parameter.
+    /// specified with the <see cref="RendererModelTools.GetHighlightRadius(RendererModel)"/> parameter.
     /// </summary>
     /// <example>
     /// Basic usage:
@@ -96,12 +96,12 @@ namespace NCDK.Renderers.Generators
     public sealed class HighlightGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>Property key.</summary>
-        public const string ID_MAP = "cdk.highlight.id";
+        public const string IdMapKey = "cdk.highlight.id";
 
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            var highlight = container.GetProperty<IDictionary<IChemObject, int>>(ID_MAP);
+            var highlight = container.GetProperty<IDictionary<IChemObject, int>>(IdMapKey);
 
             if (highlight == null) return null;
 

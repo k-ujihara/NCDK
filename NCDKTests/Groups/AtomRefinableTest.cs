@@ -60,7 +60,7 @@ namespace NCDK.Groups
             IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
             AtomRefinable refinable = new AtomRefinable(ac);
 
-            Invariant invariant = refinable.NeighboursInBlock(Set(0, 2), 1);
+            IInvariant invariant = refinable.NeighboursInBlock(Set(0, 2), 1);
             Assert.IsTrue(invariant is IntegerInvariant);
             Assert.AreEqual(new IntegerInvariant(2), invariant);
         }
@@ -72,7 +72,7 @@ namespace NCDK.Groups
             IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
             AtomRefinable refinable = new AtomRefinable(ac);
 
-            Invariant invariant = refinable.NeighboursInBlock(Set(1, 2), 0);
+            IInvariant invariant = refinable.NeighboursInBlock(Set(1, 2), 0);
             Assert.IsTrue(invariant is IntegerListInvariant);
             Assert.AreEqual(new IntegerListInvariant(new int[] { 1, 1 }), invariant);
         }
@@ -84,7 +84,7 @@ namespace NCDK.Groups
             IAtomContainer ac = AtomContainerPrinter.FromString(acpString, builder);
             AtomRefinable refinable = new AtomRefinable(ac, false, true);
 
-            Invariant invariant = refinable.NeighboursInBlock(Set(1, 2), 0);
+            IInvariant invariant = refinable.NeighboursInBlock(Set(1, 2), 0);
             Assert.IsTrue(invariant is IntegerInvariant);
             Assert.AreEqual(new IntegerInvariant(2), invariant);
         }

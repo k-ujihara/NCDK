@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections.Generic;
 
@@ -83,8 +84,7 @@ namespace NCDK
 
         public bool TryGetValue<T>(T key, out T value) where T : IChemObject
         {
-            IChemObject v;
-            bool ret = Map.TryGetValue(key, out v);
+            bool ret = Map.TryGetValue(key, out IChemObject v);
             value = ret ? (T)v : default(T);
             return ret;
         }

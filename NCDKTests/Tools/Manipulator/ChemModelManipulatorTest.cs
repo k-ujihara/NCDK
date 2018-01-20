@@ -94,7 +94,7 @@ namespace NCDK.Tools.Manipulator
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
 
-            MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemModel chemFile = (ChemModel)reader.Read((ChemObject)new ChemModel());
             Assert.IsNotNull(chemFile);
             var containersList = ChemModelManipulator.GetAllAtomContainers(chemFile);

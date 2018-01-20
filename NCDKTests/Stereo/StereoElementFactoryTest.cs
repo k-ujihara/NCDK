@@ -1196,8 +1196,8 @@ namespace NCDK.Stereo
             var s2 = stereoDown[0];
             Assert.AreEqual(s2.Focus, s1.Focus);
             Assert.IsTrue(Compares.AreDeepEqual(s2.ReadOnlyCarriers, s1.ReadOnlyCarriers));
-            Assert.AreEqual(StereoElement.Configurations.Right, s1.Configure);
-            Assert.AreEqual(StereoElement.Configurations.Left, s2.Configure);
+            Assert.AreEqual(StereoElement.Configuration.Right, s1.Configure);
+            Assert.AreEqual(StereoElement.Configuration.Left, s2.Configure);
 
             // now test placement of wedges else where
             m.Bonds[12].Stereo = BondStereo.None;

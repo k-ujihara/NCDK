@@ -30,20 +30,20 @@ namespace NCDK.Renderers.Elements
     public class AtomSymbolElement : TextElement
     {
         /// <summary>The formal charge.</summary>
-        public readonly int formalCharge;
+        public readonly int FormalCharge;
 
         /// <summary>The hydrogen count.</summary>
-        public readonly int hydrogenCount;
+        public readonly int HydrogenCount;
 
         /// <summary>The hydrogen alignment.</summary>
-        public readonly int alignment;
+        public readonly int Alignment;
 
         public AtomSymbolElement(Point point, string symbol, int? formalCharge, int? hydrogenCount, int alignment, Color color)
             : base(point, symbol, color)
         {
-            this.formalCharge = formalCharge ?? -1;
-            this.hydrogenCount = hydrogenCount ?? -1;
-            this.alignment = alignment;
+            this.FormalCharge = formalCharge ?? -1;
+            this.HydrogenCount = hydrogenCount ?? -1;
+            this.Alignment = alignment;
         }
 
         /// <inheritdoc/>

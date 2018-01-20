@@ -20,13 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Groups
 {
     /// <summary>
-    /// An <see cref="AtomContainerDiscretePartitionRefiner"/> for atoms.
+    /// An <see cref="IAtomContainerDiscretePartitionRefiner"/> for atoms.
     /// </summary>
     // @author maclean
     // @cdk.module group 
@@ -63,7 +61,7 @@ namespace NCDK.Groups
         }
 
         /// <inheritdoc/>
-        protected override Refinable CreateRefinable(IAtomContainer atomContainer)
+        protected override IRefinable CreateRefinable(IAtomContainer atomContainer)
         {
             return new AtomRefinable(atomContainer, ignoreElements, ignoreBondOrders);
         }

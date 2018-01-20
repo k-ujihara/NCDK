@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.Groups
@@ -29,7 +30,7 @@ namespace NCDK.Groups
     /// </summary>
     // @author maclean
     // @cdk.module group  
-    class BondRefinable : Refinable
+    class BondRefinable : IRefinable
     {
         private readonly IAtomContainer atomContainer;
 
@@ -74,7 +75,7 @@ namespace NCDK.Groups
             return 0;
         }
 
-        public virtual Invariant NeighboursInBlock(ISet<int> block, int vertexIndex)
+        public virtual IInvariant NeighboursInBlock(ISet<int> block, int vertexIndex)
         {
             int neighbours = 0;
             foreach (int connected in GetConnectedIndices(vertexIndex))

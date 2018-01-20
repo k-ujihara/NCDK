@@ -24,8 +24,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
+
 using NCDK.Maths;
 using System;
 using System.Text;
@@ -42,8 +42,8 @@ namespace NCDK.Smiles
     public class InvPair
     {
        /// <summary> The description used to set the invariance numbers in the atom's property</summary>
-        public const string INVARIANCE_PAIR = "InvariancePair";
-        public const string CANONICAL_LABEL = "CanonicalLabel";
+        public const string InvariancePairKey = "InvariancePair";
+        public const string CanonicalLabelKey = "CanonicalLabel";
 
         public long Last { get; set; } = 0;
 
@@ -68,7 +68,7 @@ namespace NCDK.Smiles
         {
             Curr = current;
             Atom = atom;
-            atom.SetProperty(INVARIANCE_PAIR, this);
+            atom.SetProperty(InvariancePairKey, this);
         }
 
         public override bool Equals(object obj)
@@ -92,7 +92,7 @@ namespace NCDK.Smiles
 
         public void Commit()
         {
-            Atom.SetProperty(CANONICAL_LABEL, Curr);
+            Atom.SetProperty(CanonicalLabelKey, Curr);
         }
 
         /// <inheritdoc/>

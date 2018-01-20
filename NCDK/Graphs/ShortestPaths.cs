@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Graphs
@@ -55,7 +56,7 @@ namespace NCDK.Graphs
         private static readonly int[][] EmptyPaths = new int[0][] { };
 
         /* route to each vertex */
-        private readonly Route[] routeTo;
+        private readonly IRoute[] routeTo;
 
         /* distance to each vertex */
         private readonly int[] distTo;
@@ -126,7 +127,7 @@ namespace NCDK.Graphs
             this.limit = limit;
 
             this.distTo = new int[n];
-            this.routeTo = new Route[n];
+            this.routeTo = new IRoute[n];
             this.nPathsTo = new int[n];
             this.precedes = new bool[n];
 
@@ -485,7 +486,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>Helper class for building a route to the shortest path</summary>
-        private interface Route
+        private interface IRoute
         {
             /// <summary>
             /// Recursively convert this route to all possible shortest paths. The length
@@ -508,7 +509,7 @@ namespace NCDK.Graphs
 
         /// <summary>The source of a route, the source is always the start atom.</summary>
         private sealed class Source
-            : Route
+            : IRoute
         {
             private readonly int v;
 
@@ -541,12 +542,12 @@ namespace NCDK.Graphs
 
         /// <summary>A sequential route is vertex appended to a parent route.</summary>
         private class SequentialRoute
-            : Route
+            : IRoute
         {
             private readonly ShortestPaths parentObject;
 
             private readonly int v;
-            private readonly Route parent;
+            private readonly IRoute parent;
 
             /// <summary>
             /// Create a new sequential route from the parent and include the new vertex <paramref name="v"/>.
@@ -554,7 +555,7 @@ namespace NCDK.Graphs
             /// <param name="parentObject"></param>
             /// <param name="parent">parent route</param>
             /// <param name="v">additional vertex</param>
-            public SequentialRoute(ShortestPaths parentObject, Route parent, int v)
+            public SequentialRoute(ShortestPaths parentObject, IRoute parent, int v)
             {
                 this.parentObject = parentObject;
 
@@ -592,16 +593,16 @@ namespace NCDK.Graphs
         /// simply nesting a branch within a branch.
         /// </summary>
         private class Branch
-            : Route
+            : IRoute
         {
-            private readonly Route left, right;
+            private readonly IRoute left, right;
 
             /// <summary>
             /// Create a branch with a left and right
             /// </summary>
             /// <param name="left">route to the left</param>
             /// <param name="right">route to the right</param>
-            public Branch(Route left, Route right)
+            public Branch(IRoute left, IRoute right)
             {
                 this.left = left;
                 this.right = right;

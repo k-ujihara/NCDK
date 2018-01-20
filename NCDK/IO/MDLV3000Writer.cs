@@ -22,16 +22,15 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NCDK.IO
@@ -356,7 +355,7 @@ namespace NCDK.IO
             {
                 foreach (var sgroup in sgroups)
                 {
-                    if (sgroup.Type != SgroupTypes.ExtMulticenter)
+                    if (sgroup.Type != SgroupType.ExtMulticenter)
                         continue;
                     foreach (var bond in sgroup.Bonds)
                         multicenterSgroups[bond] = sgroup;
@@ -529,7 +528,7 @@ namespace NCDK.IO
             // when reading (we do).
             var a_sgroups = new List<Sgroup>(
                 sgroups
-                .Where(g => g.Type != SgroupTypes.ExtMulticenter)    // remove non-ctab Sgroups
+                .Where(g => g.Type != SgroupType.ExtMulticenter)    // remove non-ctab Sgroups
                 .OrderBy(g => g, aSgroupComparator));
             // going to reorder but keep the originals untouched
             // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
@@ -541,7 +540,7 @@ namespace NCDK.IO
             int sgroupIdx = 0;
             foreach (var sgroup in a_sgroups)
             {
-                SgroupTypes type = sgroup.Type;
+                SgroupType type = sgroup.Type;
                 writer.Write(++sgroupIdx).Write(' ').Write(type.Key()).Write(" 0");
 
                 if (sgroup.Atoms.Any())
@@ -553,7 +552,7 @@ namespace NCDK.IO
 
                 if (sgroup.Bonds.Any())
                 {
-                    if (type == SgroupTypes.CtabData)
+                    if (type == SgroupType.CtabData)
                     {
                         writer.Write(" CBONDS=("); // containment bonds
                     }
@@ -577,40 +576,40 @@ namespace NCDK.IO
                 {
                     switch (key)
                     {
-                        case SgroupKeys.CtabSubType:
+                        case SgroupKey.CtabSubType:
                             writer.Write(" SUBTYPE=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SgroupKeys.CtabConnectivity:
+                        case SgroupKey.CtabConnectivity:
                             writer.Write(" CONNECT=").Write(sgroup.GetValue(key).ToString().ToUpperInvariant());
                             break;
-                        case SgroupKeys.CtabSubScript:
-                            if (type == SgroupTypes.CtabMultipleGroup)
+                        case SgroupKey.CtabSubScript:
+                            if (type == SgroupType.CtabMultipleGroup)
                                 writer.Write(" MULT=").Write(sgroup.GetValue(key).ToString());
                             else
                                 writer.Write(" LABEL=").Write(sgroup.GetValue(key).ToString());
                             break;
-                        case SgroupKeys.CtabBracketStyle:
+                        case SgroupKey.CtabBracketStyle:
                             var btype = (int)sgroup.GetValue(key);
                             if (btype.Equals(1))
                                 writer.Write(" BRKTYP=PAREN");
                             break;
-                        case SgroupKeys.CtabParentAtomList:
+                        case SgroupKey.CtabParentAtomList:
                             var parentAtoms = (IEnumerable<IChemObject>)sgroup.GetValue(key);
                             writer.Write(" PATOMS=(")
                                                           .Write(parentAtoms, idxs)
                                                           .Write(')');
                             break;
-                        case SgroupKeys.CtabComponentNumber:
+                        case SgroupKey.CtabComponentNumber:
                             var number = (int)sgroup.GetValue(key);
                             if (number > 0)
                                 writer.Write(" COMPNO=").Write(number);
                             break;
-                        case SgroupKeys.CtabExpansion:
+                        case SgroupKey.CtabExpansion:
                             var expanded = (bool)sgroup.GetValue(key);
                             if (expanded)
                                 writer.Write(" ESTATE=E");
                             break;
-                        case SgroupKeys.CtabBracket:
+                        case SgroupKey.CtabBracket:
                             var brackets = (IEnumerable<SgroupBracket>)sgroup.GetValue(key);
                             foreach (var bracket in brackets)
                             {
@@ -646,7 +645,7 @@ namespace NCDK.IO
 
             int numSgroups = 0;
             foreach (var sgroup in sgroups)
-                if (sgroup.Type != SgroupTypes.ExtMulticenter)
+                if (sgroup.Type != SgroupType.ExtMulticenter)
                     numSgroups++;
 
             writer.Write("BEGIN CTAB\n");

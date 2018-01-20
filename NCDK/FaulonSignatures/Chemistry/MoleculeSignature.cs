@@ -6,13 +6,13 @@ namespace NCDK.FaulonSignatures.Chemistry
     {
         private Molecule molecule;
 
-        private InvariantTypes invariantType;
+        private InvariantType invariantType;
 
         public MoleculeSignature(Molecule molecule)
-            : this(molecule, InvariantTypes.STRING)
+            : this(molecule, InvariantType.String)
         { }
 
-        public MoleculeSignature(Molecule molecule, InvariantTypes invariantType)
+        public MoleculeSignature(Molecule molecule, InvariantType invariantType)
             : base(" + ")
         {
             this.molecule = molecule;

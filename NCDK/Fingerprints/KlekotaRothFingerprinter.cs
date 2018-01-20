@@ -5,6 +5,7 @@
  *
  *  The content of this file is released as domain.
  */
+
 namespace NCDK.Fingerprints
 {
     /// <summary>

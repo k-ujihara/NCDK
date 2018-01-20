@@ -36,7 +36,7 @@ namespace NCDK.Graphs
     // @author John May
     // @cdk.module core
     // @cdk.githash
-    public interface CycleFinder
+    public interface ICycleFinder
     {
         /// <summary>
         /// Find the cycles of the provided molecule.

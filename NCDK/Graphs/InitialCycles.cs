@@ -107,9 +107,7 @@ namespace NCDK.Graphs
         /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         private InitialCycles(int[][] graph, int limit, bool biconnected)
         {
-            if (graph == null)
-                throw new ArgumentNullException(nameof(graph), "no graph provided");
-            this.graph = graph;
+            this.graph = graph ?? throw new ArgumentNullException(nameof(graph), "no graph provided");
 
             // ordering ensures the number of initial cycles is polynomial
             this.biconnected = biconnected;
@@ -444,8 +442,10 @@ namespace NCDK.Graphs
         /// <returns>the paths joined end on end and the last vertex truncated</returns>
         public static int[] Join(int[] pathToP, int y, int[] pathToQ)
         {
-            List<int> aa = new List<int>(pathToP);
-            aa.Add(y);
+            List<int> aa = new List<int>(pathToP)
+            {
+                y
+            };
             aa.AddRange(pathToQ.Reverse());
             return aa.ToArray();
         }

@@ -81,7 +81,7 @@ namespace NCDK.Fingerprints
     // @cdk.githash
     public class CircularFingerprinter : AbstractFingerprinter, IFingerprinter
     {
-        public enum Classes
+        public enum CFPClass
         {
             // identity by literal atom environment
             ECFP0 = 1,
@@ -149,7 +149,7 @@ namespace NCDK.Fingerprints
         private bool[] tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
         // ------------ options -------------------
-        private Classes classType;
+        private CFPClass classType;
         private AtomClasses atomClass;
         private bool optPerceiveStereo = false;
 
@@ -159,7 +159,7 @@ namespace NCDK.Fingerprints
         /// Default constructor: uses the ECFP6 type.
         /// </summary>
         public CircularFingerprinter()
-            : this(Classes.ECFP6)
+            : this(CFPClass.ECFP6)
         { }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace NCDK.Fingerprints
         /// path diameter, and may be 0, 2, 4 or 6.
         /// </summary>
         /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
-        public CircularFingerprinter(Classes classType)
+        public CircularFingerprinter(CFPClass classType)
             : this(classType, 1024)
         { }
 
@@ -179,7 +179,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <param name="classType">one of Classes.ECFP{n} or Classes.FCFP{n}</param>
         /// <param name="len">size of folded (binary) fingerprint</param>
-        public CircularFingerprinter(Classes classType, int len)
+        public CircularFingerprinter(CFPClass classType, int len)
         {
             this.classType = classType;
             this.length = len;
@@ -201,14 +201,14 @@ namespace NCDK.Fingerprints
             string type = null;
             switch (classType)
             {
-                case Classes.ECFP0: type = "ECFP0"; break;
-                case Classes.ECFP2: type = "ECFP2"; break;
-                case Classes.ECFP4: type = "ECFP4"; break;
-                case Classes.ECFP6: type = "ECFP6"; break;
-                case Classes.FCFP0: type = "FCFP0"; break;
-                case Classes.FCFP2: type = "FCFP2"; break;
-                case Classes.FCFP4: type = "FCFP4"; break;
-                case Classes.FCFP6: type = "FCFP6"; break;
+                case CFPClass.ECFP0: type = "ECFP0"; break;
+                case CFPClass.ECFP2: type = "ECFP2"; break;
+                case CFPClass.ECFP4: type = "ECFP4"; break;
+                case CFPClass.ECFP6: type = "ECFP6"; break;
+                case CFPClass.FCFP0: type = "FCFP0"; break;
+                case CFPClass.FCFP2: type = "FCFP2"; break;
+                case CFPClass.FCFP4: type = "FCFP4"; break;
+                case CFPClass.FCFP6: type = "FCFP6"; break;
                 default:
                     break;
             }
@@ -225,7 +225,7 @@ namespace NCDK.Fingerprints
         {
             this.mol = mol;
             fplist.Clear();
-            atomClass = classType <= Classes.ECFP6 ? AtomClasses.ECFP : AtomClasses.FCFP;
+            atomClass = classType <= CFPClass.ECFP6 ? AtomClasses.ECFP : AtomClasses.FCFP;
 
             ExcavateMolecule();
             if (atomClass == AtomClasses.FCFP) CalculateBioTypes();
@@ -247,8 +247,8 @@ namespace NCDK.Fingerprints
                     fplist.Add(new FP(identity[n], 0, atomGroup[n]));
                 }
 
-            int niter = classType == Classes.ECFP2 || classType == Classes.FCFP2 ? 1 : classType == Classes.ECFP4
-                    || classType == Classes.FCFP4 ? 2 : classType == Classes.ECFP6 || classType == Classes.FCFP6 ? 3 : 0;
+            int niter = classType == CFPClass.ECFP2 || classType == CFPClass.FCFP2 ? 1 : classType == CFPClass.ECFP4
+                    || classType == CFPClass.FCFP4 ? 2 : classType == CFPClass.ECFP6 || classType == CFPClass.FCFP6 ? 3 : 0;
 
             // iterate outward
             for (int iter = 1; iter <= niter; iter++)
@@ -918,13 +918,13 @@ namespace NCDK.Fingerprints
                     }
                     switch (th.Configure)
                     {
-                        case StereoElement.Configurations.Left:
+                        case StereoElement.Configuration.Left:
                             int i = adj[2];
                             adj[2] = adj[3];
                             adj[3] = i;
                             tetra[mol.Atoms.IndexOf(focus)] = adj;
                             break;
-                        case StereoElement.Configurations.Right:
+                        case StereoElement.Configuration.Right:
                             tetra[mol.Atoms.IndexOf(focus)] = adj;
                             break;
                         default:

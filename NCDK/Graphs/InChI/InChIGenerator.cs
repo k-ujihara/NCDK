@@ -16,13 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+
 using NCDK.NInChI;
-using System.Collections.Generic;
-using NCDK.Config;
-using System.Linq;
 using NCDK.Stereo;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NCDK.Graphs.InChI
 {
@@ -308,17 +308,15 @@ namespace NCDK.Graphs.InChI
             // Process tetrahedral stereo elements
             foreach (var stereoElem in atomContainer.StereoElements)
             {
-                if (stereoElem is ITetrahedralChirality)
+                if (stereoElem is ITetrahedralChirality chirality)
                 {
-                    ITetrahedralChirality chirality = (ITetrahedralChirality)stereoElem;
-                    var surroundingAtoms = chirality.Ligands;
                     TetrahedralStereo stereoType = chirality.Stereo;
 
                     NInchiAtom atC = (NInchiAtom)atomMap[chirality.ChiralAtom];
-                    NInchiAtom at0 = (NInchiAtom)atomMap[surroundingAtoms[0]];
-                    NInchiAtom at1 = (NInchiAtom)atomMap[surroundingAtoms[1]];
-                    NInchiAtom at2 = (NInchiAtom)atomMap[surroundingAtoms[2]];
-                    NInchiAtom at3 = (NInchiAtom)atomMap[surroundingAtoms[3]];
+                    NInchiAtom at0 = (NInchiAtom)atomMap[chirality.Ligands[0]];
+                    NInchiAtom at1 = (NInchiAtom)atomMap[chirality.Ligands[1]];
+                    NInchiAtom at2 = (NInchiAtom)atomMap[chirality.Ligands[2]];
+                    NInchiAtom at3 = (NInchiAtom)atomMap[chirality.Ligands[3]];
                     INCHI_PARITY p = INCHI_PARITY.Unknown;
                     if (stereoType == TetrahedralStereo.AntiClockwise)
                     {
@@ -337,9 +335,8 @@ namespace NCDK.Graphs.InChI
                             INCHI_STEREOTYPE.Tetrahedral, p);
                     Input.Stereos.Add(jniStereo);
                 }
-                else if (stereoElem is IDoubleBondStereochemistry)
+                else if (stereoElem is IDoubleBondStereochemistry dbStereo)
                 {
-                    IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry)stereoElem;
                     var surroundingBonds = dbStereo.Bonds;
                     if (surroundingBonds[0] == null || surroundingBonds[1] == null)
                         throw new CDKException("Cannot generate an InChI with incomplete double bond info");
@@ -394,10 +391,8 @@ namespace NCDK.Graphs.InChI
                             INCHI_STEREOTYPE.DoubleBond, p);
                     Input.Stereos.Add(jniStereo);
                 }
-                else if (stereoElem is ExtendedTetrahedral)
+                else if (stereoElem is ExtendedTetrahedral extendedTetrahedral)
                 {
-
-                    ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral)stereoElem;
                     TetrahedralStereo winding = extendedTetrahedral.Winding;
 
                     // The periphals (p<i>) and terminals (t<i>) are refering to

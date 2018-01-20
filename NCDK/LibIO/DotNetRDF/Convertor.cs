@@ -17,7 +17,7 @@ namespace NCDK.LibIO.DotNetRDF
     // @cdk.keyword      RDF
     // @cdk.keyword      Web Ontology Language
     // @cdk.keyword      OWL
-    public class Convertor
+    internal class Convertor
     {
         private const string URI = "http://cdk.sourceforge.net/model.owl#";
 

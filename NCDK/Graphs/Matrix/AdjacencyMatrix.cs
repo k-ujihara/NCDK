@@ -16,13 +16,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 
 namespace NCDK.Graphs.Matrix
 {
     /// <summary>
     /// Calculator for a adjacency matrix representation of this AtomContainer. An
-    /// adjacency matrix is a matrix of quare NxN matrix, where N is the number of
+    /// adjacency matrix is a matrix of square NxN matrix, where N is the number of
     /// atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
     /// and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
     /// See <token>cdk-cite-TRI92</token>.

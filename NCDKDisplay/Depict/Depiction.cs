@@ -284,15 +284,17 @@ namespace NCDK.Depict
                         EdgeMode.Unspecified : EdgeMode.Aliased);
             }
 
+            Size size;
             using (var drawingContext = drawingVisual.RenderOpen())
             {
-                var size = Draw(drawingContext);
-
-                // create the image for rendering
-                var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
-                img.Render(drawingVisual);
-                return img;
+                size = Draw(drawingContext);
             }
+
+            // create the image for rendering
+            var img = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiX, dpiY, pixelFormat);
+            img.Render(drawingVisual);
+
+            return img;
         }
 
         /// <summary>
@@ -316,7 +318,7 @@ namespace NCDK.Depict
             if (model.GetFitToScreen() || zoomToFit < 1)
                 transform.ScalePrepend(zoomToFit, zoomToFit);
 
-            transform.TranslatePrepend(-(bounds.minX + bounds.maxX) / 2, -(bounds.minY + bounds.maxY) / 2);
+            transform.TranslatePrepend(-(bounds.MinX + bounds.MaxX) / 2, -(bounds.MinY + bounds.MaxY) / 2);
 
             // not always needed
             var fontManager = new WPFFontManager

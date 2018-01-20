@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Sgroups;
@@ -282,7 +283,7 @@ namespace NCDK.IO
             if (sgroups != null)
             {
                 foreach (Sgroup sgroup in sgroups)
-                    if (sgroup.Type == SgroupTypes.ExtMulticenter)
+                    if (sgroup.Type == SgroupType.ExtMulticenter)
                         return true;
             }
             return false;
@@ -296,8 +297,8 @@ namespace NCDK.IO
 
         static SDFWriter()
         {
-            cdkInternalProperties.Add(InvPair.CANONICAL_LABEL);
-            cdkInternalProperties.Add(InvPair.INVARIANCE_PAIR);
+            cdkInternalProperties.Add(InvPair.CanonicalLabelKey);
+            cdkInternalProperties.Add(InvPair.InvariancePairKey);
             cdkInternalProperties.Add(CDKPropertyName.CtabSgroups);
             // TITLE/REMARK written in Molfile header
             cdkInternalProperties.Add(CDKPropertyName.Remark);

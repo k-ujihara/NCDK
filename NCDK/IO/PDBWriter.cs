@@ -96,9 +96,8 @@ namespace NCDK.IO
             {
                 WriteMolecule((IAtomContainer)obj);
             }
-            else if (obj is IChemFile)
+            else if (obj is IChemFile chemFile)
             {
-                IChemFile chemFile = (IChemFile)obj;
                 IChemSequence sequence = chemFile[0];
                 if (sequence != null)
                 {

@@ -4,12 +4,7 @@
     /// Factory for partition refiners. 
     /// </summary>
     /// <example>
-    /// Use like:
-    /// 
-    /// <code>
-    ///     AtomContainerDiscretePartitionRefiner refiner = PartitionRefinement.forAtoms().create();
-    /// </code>
-    /// 
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.PartitionRefinement_Example.cs"]/*' />
     /// The methods forAtoms and forBonds return builders with methods to allow setting the
     /// switches for ignoring atom types and/or bond orders.
     /// </example>
@@ -39,7 +34,7 @@
                 return this;
             }
 
-            public AtomContainerDiscretePartitionRefiner Create()
+            public IAtomContainerDiscretePartitionRefiner Create()
             {
                 return new AtomDiscretePartitionRefiner(ignoreAtomTypes, ignoreBondOrders);
             }
@@ -61,7 +56,7 @@
                 return this;
             }
 
-            public AtomContainerDiscretePartitionRefiner Create()
+            public IAtomContainerDiscretePartitionRefiner Create()
             {
                 return new BondDiscretePartitionRefiner(ignoreBondOrders);
             }

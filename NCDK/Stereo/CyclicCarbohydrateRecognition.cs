@@ -101,7 +101,7 @@ namespace NCDK.Stereo
                                             isolated.Length);
 
                 Vector2[] points = CoordinatesOfCycle(cycle, container);
-                Turns[] turns = GetTurns(points);
+                Turn[] turns = GetTurns(points);
                 WoundProjection projection = WoundProjection.OfTurns(turns);
 
                 if (!projections.Contains(projection.Projection))
@@ -134,9 +134,9 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="points">polygon points</param>
         /// <returns>array of turns (left, right) or null if a parallel line was found</returns>
-        public static Turns[] GetTurns(Vector2[] points)
+        public static Turn[] GetTurns(Vector2[] points)
         {
-            Turns[] turns = new Turns[points.Length];
+            Turn[] turns = new Turn[points.Length];
 
             // cycle of size 6 is [1,2,3,4,5,6] not closed
             for (int i = 1; i <= points.Length; i++)
@@ -148,7 +148,7 @@ namespace NCDK.Stereo
                                                    currXy.X, currXy.Y,
                                                    nextXy.X, nextXy.Y));
                 if (parity == 0) return null;
-                turns[i % points.Length] = parity < 0 ? Turns.Right : Turns.Left;
+                turns[i % points.Length] = parity < 0 ? Turn.Right : Turn.Left;
             }
 
             return turns;
@@ -374,7 +374,7 @@ namespace NCDK.Stereo
         /// <param name="turns">the turns in the cycle (left/right)</param>
         /// <param name="projection">the type of projection</param>
         /// <returns>the horizontal offset</returns>
-        private Vector2 HorizontalOffset(Vector2[] points, Turns[] turns, Projection projection)
+        private Vector2 HorizontalOffset(Vector2[] points, Turn[] turns, Projection projection)
         {
             // Haworth must currently be drawn vertically, I have seen them drawn
             // slanted but it's difficult to determine which way the projection
@@ -414,7 +414,7 @@ namespace NCDK.Stereo
         /// </summary>
         /// <param name="turns">calculated turns in the chair projection</param>
         /// <returns>the offset</returns>
-        private static int ChairCenterOffset(Turns[] turns)
+        private static int ChairCenterOffset(Turn[] turns)
         {
             if (turns[1] == turns[2])
             {
@@ -462,7 +462,7 @@ namespace NCDK.Stereo
         /// <summary>
         /// Turns, recorded when walking around the cycle.
         /// </summary>
-        public enum Turns
+        public enum Turn
         {
             Left,
             Right
@@ -488,41 +488,42 @@ namespace NCDK.Stereo
 
             static WoundProjection()
             {
-                map = new Dictionary<Key, WoundProjection>();
+                map = new Dictionary<Key, WoundProjection>
+                {
+                    // Haworth |V| = 5
+                    { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left), HaworthAnticlockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right), HaworthClockwise },
 
-                // Haworth |V| = 5
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left), HaworthAnticlockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right), HaworthClockwise);
+                    // Haworth |V| = 6
+                    { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left), HaworthAnticlockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right), HaworthClockwise },
 
-                // Haworth |V| = 6
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left), HaworthAnticlockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right), HaworthClockwise);
+                    // Haworth |V| = 7
+                    { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Left), HaworthAnticlockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Right), HaworthClockwise },
 
-                // Haworth |V| = 7
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Left), HaworthAnticlockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Right), HaworthClockwise);
+                    // Chair
+                    { new Key(Turn.Left, Turn.Right, Turn.Right, Turn.Left, Turn.Right, Turn.Right), ChairClockwise },
+                    { new Key(Turn.Right, Turn.Left, Turn.Right, Turn.Right, Turn.Left, Turn.Right), ChairClockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Left, Turn.Right, Turn.Right, Turn.Left), ChairClockwise },
+                    { new Key(Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Left, Turn.Left), ChairAnticlockwise },
+                    { new Key(Turn.Left, Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Left), ChairAnticlockwise },
+                    { new Key(Turn.Left, Turn.Left, Turn.Right, Turn.Left, Turn.Left, Turn.Right), ChairAnticlockwise },
 
-                // Chair
-                map.Add(new Key(Turns.Left, Turns.Right, Turns.Right, Turns.Left, Turns.Right, Turns.Right), ChairClockwise);
-                map.Add(new Key(Turns.Right, Turns.Left, Turns.Right, Turns.Right, Turns.Left, Turns.Right), ChairClockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Left, Turns.Right, Turns.Right, Turns.Left), ChairClockwise);
-                map.Add(new Key(Turns.Right, Turns.Left, Turns.Left, Turns.Right, Turns.Left, Turns.Left), ChairAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Right, Turns.Left, Turns.Left, Turns.Right, Turns.Left), ChairAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Right, Turns.Left, Turns.Left, Turns.Right), ChairAnticlockwise);
-
-                // Boat
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Left, Turns.Left, Turns.Left, Turns.Left), BoatAnticlockwise);
-                map.Add(new Key(Turns.Right, Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Right), BoatAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Left, Turns.Left, Turns.Right, Turns.Right), BoatAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Left, Turns.Right, Turns.Right, Turns.Left), BoatAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Right, Turns.Right, Turns.Left, Turns.Left), BoatAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Right, Turns.Right, Turns.Left, Turns.Left, Turns.Left), BoatAnticlockwise);
-                map.Add(new Key(Turns.Left, Turns.Left, Turns.Right, Turns.Right, Turns.Right, Turns.Right), BoatClockwise);
-                map.Add(new Key(Turns.Left, Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Left), BoatClockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Right, Turns.Right, Turns.Left, Turns.Left), BoatClockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Right, Turns.Left, Turns.Left, Turns.Right), BoatClockwise);
-                map.Add(new Key(Turns.Right, Turns.Right, Turns.Left, Turns.Left, Turns.Right, Turns.Right), BoatClockwise);
-                map.Add(new Key(Turns.Right, Turns.Left, Turns.Left, Turns.Right, Turns.Right, Turns.Right), BoatClockwise);
+                    // Boat
+                    { new Key(Turn.Right, Turn.Right, Turn.Left, Turn.Left, Turn.Left, Turn.Left), BoatAnticlockwise },
+                    { new Key(Turn.Right, Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Right), BoatAnticlockwise },
+                    { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Left, Turn.Right, Turn.Right), BoatAnticlockwise },
+                    { new Key(Turn.Left, Turn.Left, Turn.Left, Turn.Right, Turn.Right, Turn.Left), BoatAnticlockwise },
+                    { new Key(Turn.Left, Turn.Left, Turn.Right, Turn.Right, Turn.Left, Turn.Left), BoatAnticlockwise },
+                    { new Key(Turn.Left, Turn.Right, Turn.Right, Turn.Left, Turn.Left, Turn.Left), BoatAnticlockwise },
+                    { new Key(Turn.Left, Turn.Left, Turn.Right, Turn.Right, Turn.Right, Turn.Right), BoatClockwise },
+                    { new Key(Turn.Left, Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Left), BoatClockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Right, Turn.Right, Turn.Left, Turn.Left), BoatClockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Right, Turn.Left, Turn.Left, Turn.Right), BoatClockwise },
+                    { new Key(Turn.Right, Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Right), BoatClockwise },
+                    { new Key(Turn.Right, Turn.Left, Turn.Left, Turn.Right, Turn.Right, Turn.Right), BoatClockwise }
+                };
             }
 
             public WoundProjection(Projection projection, TetrahedralStereo winding)
@@ -531,20 +532,20 @@ namespace NCDK.Stereo
                 this.Winding = winding;
             }
 
-            public static WoundProjection OfTurns(Turns[] turns)
+            public static WoundProjection OfTurns(Turn[] turns)
             {
-                if (turns == null) return WoundProjection.Other;
-                WoundProjection type;
-                if (map.TryGetValue(new Key(turns), out type))
+                if (turns == null)
+                    return WoundProjection.Other;
+                if (map.TryGetValue(new Key(turns), out WoundProjection type))
                     return type;
                 return Other;
             }
 
             private sealed class Key
             {
-                private readonly Turns[] turns;
+                private readonly Turn[] turns;
 
-                internal Key(params Turns[] turns)
+                internal Key(params Turn[] turns)
                 {
                     this.turns = turns;
                 }

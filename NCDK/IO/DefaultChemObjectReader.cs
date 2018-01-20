@@ -17,6 +17,7 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Listener;
 using System;
 
@@ -56,20 +57,20 @@ namespace NCDK.IO
             }
         }
 
-        public ChemObjectReaderModes ReaderMode { get; set; } = ChemObjectReaderModes.Relaxed;
+        public ChemObjectReaderMode ReaderMode { get; set; } = ChemObjectReaderMode.Relaxed;
 
         public IChemObjectReaderErrorHandler ErrorHandler { get; set; } = null;
 
         public void HandleError(string message)
         {
             if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message);
-            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException(message);
         }
 
         public void HandleError(string message, Exception exception)
         {
             if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, exception);
-            if (this.ReaderMode == ChemObjectReaderModes.Strict)
+            if (this.ReaderMode == ChemObjectReaderMode.Strict)
             {
                 throw new CDKException(message, exception);
             }
@@ -78,13 +79,13 @@ namespace NCDK.IO
         public void HandleError(string message, int row, int colStart, int colEnd)
         {
             if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd);
-            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ReaderMode == ChemObjectReaderMode.Strict) throw new CDKException(message);
         }
 
         public void HandleError(string message, int row, int colStart, int colEnd, Exception exception)
         {
             if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
-            if (this.ReaderMode == ChemObjectReaderModes.Strict)
+            if (this.ReaderMode == ChemObjectReaderMode.Strict)
             {
                 throw new CDKException(message, exception);
             }

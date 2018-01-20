@@ -30,13 +30,13 @@ namespace NCDK.Renderers.Elements
     public class TextElement : IRenderingElement
     {
         /// <summary>The coordinate where the text should be displayed.</summary>
-        public readonly Point coord;
+        public readonly Point Coord;
 
         /// <summary>The text to be displayed.</summary>
-        public readonly string text;
+        public readonly string Text;
 
         /// <summary>The color of the text.</summary>
-        public readonly Color color;
+        public readonly Color Color;
 
         /// <summary>
         /// Constructs a new TextElement with the content <paramref name="text"/> to be
@@ -47,9 +47,9 @@ namespace NCDK.Renderers.Elements
         /// <param name="color">the color of the text</param>
         public TextElement(Point coord, string text, Color color)
         {
-            this.coord = coord;
-            this.text = text;
-            this.color = color;
+            this.Coord = coord;
+            this.Text = text;
+            this.Color = color;
         }
 
         public virtual void Accept(IRenderingVisitor v, Transform transform)

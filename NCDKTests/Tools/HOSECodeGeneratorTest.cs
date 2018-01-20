@@ -50,7 +50,7 @@ namespace NCDK.Tools
         {
             string filename = "NCDK.Data.MDL.2,5-dimethyl-furan.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             Aromaticity.CDKLegacy.Apply(mol1);
@@ -63,12 +63,12 @@ namespace NCDK.Tools
         {
             string filename = "NCDK.Data.MDL.isopropylacetate.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             string code1 = new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[0], 6);
             filename = "NCDK.Data.MDL.testisopropylacetate.mol";
             Stream ins2 = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
             IAtomContainer mol2 = reader2.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             string code2 = new HOSECodeGenerator().GetHOSECode(mol2, mol2.Atoms[2], 6);
             Assert.AreNotSame(code2, code1);

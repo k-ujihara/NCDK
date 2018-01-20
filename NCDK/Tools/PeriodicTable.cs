@@ -81,8 +81,7 @@ namespace NCDK.Tools
         /// <returns>the chemical series of the element</returns>
         public static string GetChemicalSeries(string symbol)
         {
-            string series;
-            if (!MapToSeries.TryGetValue(Elements.OfString(symbol).AtomicNumber, out series))
+            if (!MapToSeries.TryGetValue(Elements.OfString(symbol).AtomicNumber, out string series))
                 return "";
             return series;
         }
@@ -124,8 +123,7 @@ namespace NCDK.Tools
         /// <returns>the phase of the element</returns>
         public static string GetPhase(string symbol)
         {
-            string phase;
-            if (!MapToPhase.TryGetValue(Elements.OfString(symbol).AtomicNumber, out phase))
+            if (!MapToPhase.TryGetValue(Elements.OfString(symbol).AtomicNumber, out string phase))
                 return "";
             return phase;
         }
@@ -200,127 +198,128 @@ namespace NCDK.Tools
 
         private static Dictionary<int, string> MakeMapToCasId()
         {
-            var ids = new Dictionary<int, string>();
-
-            ids.Add(Elements.Unknown.AtomicNumber, "");
-            ids.Add(Elements.Hydrogen.AtomicNumber, "1333-74-0");
-            ids.Add(Elements.Helium.AtomicNumber, "7440-59-7");
-            ids.Add(Elements.Lithium.AtomicNumber, "7439-93-2");
-            ids.Add(Elements.Beryllium.AtomicNumber, "7440-41-7");
-            ids.Add(Elements.Boron.AtomicNumber, "7440-42-8");
-            ids.Add(Elements.Carbon.AtomicNumber, "7440-44-0");
-            ids.Add(Elements.Nitrogen.AtomicNumber, "7727-37-9");
-            ids.Add(Elements.Oxygen.AtomicNumber, "7782-44-7");
-            ids.Add(Elements.Fluorine.AtomicNumber, "7782-41-4");
-            ids.Add(Elements.Neon.AtomicNumber, "7440-01-9");
-            ids.Add(Elements.Sodium.AtomicNumber, "7440-23-5");
-            ids.Add(Elements.Magnesium.AtomicNumber, "7439-95-4");
-            ids.Add(Elements.Aluminium.AtomicNumber, "7429-90-5");
-            ids.Add(Elements.Silicon.AtomicNumber, "7440-21-3");
-            ids.Add(Elements.Phosphorus.AtomicNumber, "7723-14-0");
-            ids.Add(Elements.Sulfur.AtomicNumber, "7704-34-9");
-            ids.Add(Elements.Chlorine.AtomicNumber, "7782-50-5");
-            ids.Add(Elements.Argon.AtomicNumber, "7440-37-1");
-            ids.Add(Elements.Potassium.AtomicNumber, "7440-09-7");
-            ids.Add(Elements.Calcium.AtomicNumber, "7440-70-2");
-            ids.Add(Elements.Scandium.AtomicNumber, "7440-20-2");
-            ids.Add(Elements.Titanium.AtomicNumber, "7440-32-6");
-            ids.Add(Elements.Vanadium.AtomicNumber, "7440-62-2");
-            ids.Add(Elements.Chromium.AtomicNumber, "7440-47-3");
-            ids.Add(Elements.Manganese.AtomicNumber, "7439-96-5");
-            ids.Add(Elements.Iron.AtomicNumber, "7439-89-6");
-            ids.Add(Elements.Cobalt.AtomicNumber, "7440-48-4");
-            ids.Add(Elements.Nickel.AtomicNumber, "7440-02-0");
-            ids.Add(Elements.Copper.AtomicNumber, "7440-50-8");
-            ids.Add(Elements.Zinc.AtomicNumber, "7440-66-6");
-            ids.Add(Elements.Gallium.AtomicNumber, "7440-55-3");
-            ids.Add(Elements.Germanium.AtomicNumber, "7440-56-4");
-            ids.Add(Elements.Arsenic.AtomicNumber, "7440-38-2");
-            ids.Add(Elements.Selenium.AtomicNumber, "7782-49-2");
-            ids.Add(Elements.Bromine.AtomicNumber, "7726-95-6");
-            ids.Add(Elements.Krypton.AtomicNumber, "7439-90-9");
-            ids.Add(Elements.Rubidium.AtomicNumber, "7440-17-7");
-            ids.Add(Elements.Strontium.AtomicNumber, "7440-24-6");
-            ids.Add(Elements.Yttrium.AtomicNumber, "7440-65-5");
-            ids.Add(Elements.Zirconium.AtomicNumber, "7440-67-7");
-            ids.Add(Elements.Niobium.AtomicNumber, "7440-03-1");
-            ids.Add(Elements.Molybdenum.AtomicNumber, "7439-98-7");
-            ids.Add(Elements.Technetium.AtomicNumber, "7440-26-8");
-            ids.Add(Elements.Ruthenium.AtomicNumber, "7440-18-8");
-            ids.Add(Elements.Rhodium.AtomicNumber, "7440-16-6");
-            ids.Add(Elements.Palladium.AtomicNumber, "7440-05-3");
-            ids.Add(Elements.Silver.AtomicNumber, "7440-22-4");
-            ids.Add(Elements.Cadmium.AtomicNumber, "7440-43-9");
-            ids.Add(Elements.Indium.AtomicNumber, "7440-74-6");
-            ids.Add(Elements.Tin.AtomicNumber, "7440-31-5");
-            ids.Add(Elements.Antimony.AtomicNumber, "7440-36-0");
-            ids.Add(Elements.Tellurium.AtomicNumber, "13494-80-9");
-            ids.Add(Elements.Iodine.AtomicNumber, "7553-56-2");
-            ids.Add(Elements.Xenon.AtomicNumber, "7440-63-3");
-            ids.Add(Elements.Caesium.AtomicNumber, "7440-46-2");
-            ids.Add(Elements.Barium.AtomicNumber, "7440-39-3");
-            ids.Add(Elements.Lanthanum.AtomicNumber, "7439-91-0");
-            ids.Add(Elements.Cerium.AtomicNumber, "7440-45-1");
-            ids.Add(Elements.Praseodymium.AtomicNumber, "7440-10-0");
-            ids.Add(Elements.Neodymium.AtomicNumber, "7440-00-8");
-            ids.Add(Elements.Promethium.AtomicNumber, "7440-12-2");
-            ids.Add(Elements.Samarium.AtomicNumber, "7440-19-9");
-            ids.Add(Elements.Europium.AtomicNumber, "7440-53-1");
-            ids.Add(Elements.Gadolinium.AtomicNumber, "7440-54-2");
-            ids.Add(Elements.Terbium.AtomicNumber, "7440-27-9");
-            ids.Add(Elements.Dysprosium.AtomicNumber, "7429-91-6");
-            ids.Add(Elements.Holmium.AtomicNumber, "7440-60-0");
-            ids.Add(Elements.Erbium.AtomicNumber, "7440-52-0");
-            ids.Add(Elements.Thulium.AtomicNumber, "7440-30-4");
-            ids.Add(Elements.Ytterbium.AtomicNumber, "7440-64-4");
-            ids.Add(Elements.Lutetium.AtomicNumber, "7439-94-3");
-            ids.Add(Elements.Hafnium.AtomicNumber, "7440-58-6");
-            ids.Add(Elements.Tantalum.AtomicNumber, "7440-25-7");
-            ids.Add(Elements.Tungsten.AtomicNumber, "7440-33-7");
-            ids.Add(Elements.Rhenium.AtomicNumber, "7440-15-5");
-            ids.Add(Elements.Osmium.AtomicNumber, "7440-04-2");
-            ids.Add(Elements.Iridium.AtomicNumber, "7439-88-5");
-            ids.Add(Elements.Platinum.AtomicNumber, "7440-06-4");
-            ids.Add(Elements.Gold.AtomicNumber, "7440-57-5");
-            ids.Add(Elements.Mercury.AtomicNumber, "7439-97-6");
-            ids.Add(Elements.Thallium.AtomicNumber, "7440-28-0");
-            ids.Add(Elements.Lead.AtomicNumber, "7439-92-1");
-            ids.Add(Elements.Bismuth.AtomicNumber, "7440-69-9");
-            ids.Add(Elements.Polonium.AtomicNumber, "7440-08-6");
-            ids.Add(Elements.Astatine.AtomicNumber, "7440-08-6");
-            ids.Add(Elements.Radon.AtomicNumber, "10043-92-2");
-            ids.Add(Elements.Francium.AtomicNumber, "7440-73-5");
-            ids.Add(Elements.Radium.AtomicNumber, "7440-14-4");
-            ids.Add(Elements.Actinium.AtomicNumber, "7440-34-8");
-            ids.Add(Elements.Thorium.AtomicNumber, "7440-29-1");
-            ids.Add(Elements.Protactinium.AtomicNumber, "7440-13-3");
-            ids.Add(Elements.Uranium.AtomicNumber, "7440-61-1");
-            ids.Add(Elements.Neptunium.AtomicNumber, "7439-99-8");
-            ids.Add(Elements.Plutonium.AtomicNumber, "7440-07-5");
-            ids.Add(Elements.Americium.AtomicNumber, "7440-35-9");
-            ids.Add(Elements.Curium.AtomicNumber, "7440-51-9");
-            ids.Add(Elements.Berkelium.AtomicNumber, "7440-40-6");
-            ids.Add(Elements.Californium.AtomicNumber, "7440-71-3");
-            ids.Add(Elements.Einsteinium.AtomicNumber, "7429-92-7");
-            ids.Add(Elements.Fermium.AtomicNumber, "7440-72-4");
-            ids.Add(Elements.Mendelevium.AtomicNumber, "7440-11-1");
-            ids.Add(Elements.Nobelium.AtomicNumber, "10028-14-5");
-            ids.Add(Elements.Lawrencium.AtomicNumber, "22537-19-5");
-            ids.Add(Elements.Rutherfordium.AtomicNumber, "53850-36-5");
-            ids.Add(Elements.Dubnium.AtomicNumber, "53850-35-4");
-            ids.Add(Elements.Seaborgium.AtomicNumber, "54038-81-2");
-            ids.Add(Elements.Bohrium.AtomicNumber, "54037-14-8");
-            ids.Add(Elements.Hassium.AtomicNumber, "54037-57-9");
-            ids.Add(Elements.Meitnerium.AtomicNumber, "54038-01-6");
-            ids.Add(Elements.Darmstadtium.AtomicNumber, "54083-77-1");
-            ids.Add(Elements.Roentgenium.AtomicNumber, "54386-24-2");
-            ids.Add(Elements.Copernicium.AtomicNumber, "54084-26-3");
-            ids.Add(Elements.Ununtrium.AtomicNumber, "");
-            ids.Add(Elements.Flerovium.AtomicNumber, "54085-16-4");
-            ids.Add(Elements.Ununpentium.AtomicNumber, "");
-            ids.Add(Elements.Livermorium.AtomicNumber, "54100-71-9");
-            ids.Add(Elements.Ununseptium.AtomicNumber, "");
-            ids.Add(Elements.Ununoctium.AtomicNumber, "");
+            var ids = new Dictionary<int, string>
+            {
+                { Elements.Unknown.AtomicNumber, "" },
+                { Elements.Hydrogen.AtomicNumber, "1333-74-0" },
+                { Elements.Helium.AtomicNumber, "7440-59-7" },
+                { Elements.Lithium.AtomicNumber, "7439-93-2" },
+                { Elements.Beryllium.AtomicNumber, "7440-41-7" },
+                { Elements.Boron.AtomicNumber, "7440-42-8" },
+                { Elements.Carbon.AtomicNumber, "7440-44-0" },
+                { Elements.Nitrogen.AtomicNumber, "7727-37-9" },
+                { Elements.Oxygen.AtomicNumber, "7782-44-7" },
+                { Elements.Fluorine.AtomicNumber, "7782-41-4" },
+                { Elements.Neon.AtomicNumber, "7440-01-9" },
+                { Elements.Sodium.AtomicNumber, "7440-23-5" },
+                { Elements.Magnesium.AtomicNumber, "7439-95-4" },
+                { Elements.Aluminium.AtomicNumber, "7429-90-5" },
+                { Elements.Silicon.AtomicNumber, "7440-21-3" },
+                { Elements.Phosphorus.AtomicNumber, "7723-14-0" },
+                { Elements.Sulfur.AtomicNumber, "7704-34-9" },
+                { Elements.Chlorine.AtomicNumber, "7782-50-5" },
+                { Elements.Argon.AtomicNumber, "7440-37-1" },
+                { Elements.Potassium.AtomicNumber, "7440-09-7" },
+                { Elements.Calcium.AtomicNumber, "7440-70-2" },
+                { Elements.Scandium.AtomicNumber, "7440-20-2" },
+                { Elements.Titanium.AtomicNumber, "7440-32-6" },
+                { Elements.Vanadium.AtomicNumber, "7440-62-2" },
+                { Elements.Chromium.AtomicNumber, "7440-47-3" },
+                { Elements.Manganese.AtomicNumber, "7439-96-5" },
+                { Elements.Iron.AtomicNumber, "7439-89-6" },
+                { Elements.Cobalt.AtomicNumber, "7440-48-4" },
+                { Elements.Nickel.AtomicNumber, "7440-02-0" },
+                { Elements.Copper.AtomicNumber, "7440-50-8" },
+                { Elements.Zinc.AtomicNumber, "7440-66-6" },
+                { Elements.Gallium.AtomicNumber, "7440-55-3" },
+                { Elements.Germanium.AtomicNumber, "7440-56-4" },
+                { Elements.Arsenic.AtomicNumber, "7440-38-2" },
+                { Elements.Selenium.AtomicNumber, "7782-49-2" },
+                { Elements.Bromine.AtomicNumber, "7726-95-6" },
+                { Elements.Krypton.AtomicNumber, "7439-90-9" },
+                { Elements.Rubidium.AtomicNumber, "7440-17-7" },
+                { Elements.Strontium.AtomicNumber, "7440-24-6" },
+                { Elements.Yttrium.AtomicNumber, "7440-65-5" },
+                { Elements.Zirconium.AtomicNumber, "7440-67-7" },
+                { Elements.Niobium.AtomicNumber, "7440-03-1" },
+                { Elements.Molybdenum.AtomicNumber, "7439-98-7" },
+                { Elements.Technetium.AtomicNumber, "7440-26-8" },
+                { Elements.Ruthenium.AtomicNumber, "7440-18-8" },
+                { Elements.Rhodium.AtomicNumber, "7440-16-6" },
+                { Elements.Palladium.AtomicNumber, "7440-05-3" },
+                { Elements.Silver.AtomicNumber, "7440-22-4" },
+                { Elements.Cadmium.AtomicNumber, "7440-43-9" },
+                { Elements.Indium.AtomicNumber, "7440-74-6" },
+                { Elements.Tin.AtomicNumber, "7440-31-5" },
+                { Elements.Antimony.AtomicNumber, "7440-36-0" },
+                { Elements.Tellurium.AtomicNumber, "13494-80-9" },
+                { Elements.Iodine.AtomicNumber, "7553-56-2" },
+                { Elements.Xenon.AtomicNumber, "7440-63-3" },
+                { Elements.Caesium.AtomicNumber, "7440-46-2" },
+                { Elements.Barium.AtomicNumber, "7440-39-3" },
+                { Elements.Lanthanum.AtomicNumber, "7439-91-0" },
+                { Elements.Cerium.AtomicNumber, "7440-45-1" },
+                { Elements.Praseodymium.AtomicNumber, "7440-10-0" },
+                { Elements.Neodymium.AtomicNumber, "7440-00-8" },
+                { Elements.Promethium.AtomicNumber, "7440-12-2" },
+                { Elements.Samarium.AtomicNumber, "7440-19-9" },
+                { Elements.Europium.AtomicNumber, "7440-53-1" },
+                { Elements.Gadolinium.AtomicNumber, "7440-54-2" },
+                { Elements.Terbium.AtomicNumber, "7440-27-9" },
+                { Elements.Dysprosium.AtomicNumber, "7429-91-6" },
+                { Elements.Holmium.AtomicNumber, "7440-60-0" },
+                { Elements.Erbium.AtomicNumber, "7440-52-0" },
+                { Elements.Thulium.AtomicNumber, "7440-30-4" },
+                { Elements.Ytterbium.AtomicNumber, "7440-64-4" },
+                { Elements.Lutetium.AtomicNumber, "7439-94-3" },
+                { Elements.Hafnium.AtomicNumber, "7440-58-6" },
+                { Elements.Tantalum.AtomicNumber, "7440-25-7" },
+                { Elements.Tungsten.AtomicNumber, "7440-33-7" },
+                { Elements.Rhenium.AtomicNumber, "7440-15-5" },
+                { Elements.Osmium.AtomicNumber, "7440-04-2" },
+                { Elements.Iridium.AtomicNumber, "7439-88-5" },
+                { Elements.Platinum.AtomicNumber, "7440-06-4" },
+                { Elements.Gold.AtomicNumber, "7440-57-5" },
+                { Elements.Mercury.AtomicNumber, "7439-97-6" },
+                { Elements.Thallium.AtomicNumber, "7440-28-0" },
+                { Elements.Lead.AtomicNumber, "7439-92-1" },
+                { Elements.Bismuth.AtomicNumber, "7440-69-9" },
+                { Elements.Polonium.AtomicNumber, "7440-08-6" },
+                { Elements.Astatine.AtomicNumber, "7440-08-6" },
+                { Elements.Radon.AtomicNumber, "10043-92-2" },
+                { Elements.Francium.AtomicNumber, "7440-73-5" },
+                { Elements.Radium.AtomicNumber, "7440-14-4" },
+                { Elements.Actinium.AtomicNumber, "7440-34-8" },
+                { Elements.Thorium.AtomicNumber, "7440-29-1" },
+                { Elements.Protactinium.AtomicNumber, "7440-13-3" },
+                { Elements.Uranium.AtomicNumber, "7440-61-1" },
+                { Elements.Neptunium.AtomicNumber, "7439-99-8" },
+                { Elements.Plutonium.AtomicNumber, "7440-07-5" },
+                { Elements.Americium.AtomicNumber, "7440-35-9" },
+                { Elements.Curium.AtomicNumber, "7440-51-9" },
+                { Elements.Berkelium.AtomicNumber, "7440-40-6" },
+                { Elements.Californium.AtomicNumber, "7440-71-3" },
+                { Elements.Einsteinium.AtomicNumber, "7429-92-7" },
+                { Elements.Fermium.AtomicNumber, "7440-72-4" },
+                { Elements.Mendelevium.AtomicNumber, "7440-11-1" },
+                { Elements.Nobelium.AtomicNumber, "10028-14-5" },
+                { Elements.Lawrencium.AtomicNumber, "22537-19-5" },
+                { Elements.Rutherfordium.AtomicNumber, "53850-36-5" },
+                { Elements.Dubnium.AtomicNumber, "53850-35-4" },
+                { Elements.Seaborgium.AtomicNumber, "54038-81-2" },
+                { Elements.Bohrium.AtomicNumber, "54037-14-8" },
+                { Elements.Hassium.AtomicNumber, "54037-57-9" },
+                { Elements.Meitnerium.AtomicNumber, "54038-01-6" },
+                { Elements.Darmstadtium.AtomicNumber, "54083-77-1" },
+                { Elements.Roentgenium.AtomicNumber, "54386-24-2" },
+                { Elements.Copernicium.AtomicNumber, "54084-26-3" },
+                { Elements.Ununtrium.AtomicNumber, "" },
+                { Elements.Flerovium.AtomicNumber, "54085-16-4" },
+                { Elements.Ununpentium.AtomicNumber, "" },
+                { Elements.Livermorium.AtomicNumber, "54100-71-9" },
+                { Elements.Ununseptium.AtomicNumber, "" },
+                { Elements.Ununoctium.AtomicNumber, "" }
+            };
 
             return ids;
         }

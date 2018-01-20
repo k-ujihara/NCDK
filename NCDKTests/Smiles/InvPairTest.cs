@@ -123,8 +123,8 @@ namespace NCDK.Smiles
             IAtom atom = new Atom(Elements.Carbon.ToIElement());
             InvPair pair = new InvPair(5L, atom);
             pair.Commit();
-            Assert.IsNotNull(atom.GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(5, ((long)atom.GetProperty<long>(InvPair.CANONICAL_LABEL)));
+            Assert.IsNotNull(atom.GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(5, ((long)atom.GetProperty<long>(InvPair.CanonicalLabelKey)));
         }
 
         [TestMethod()]

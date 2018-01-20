@@ -20,7 +20,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             //firstly read file to molecule
             string filename = "NCDK.Data.MDL.hydroxyamino.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];
             IChemModel model = seq[0];

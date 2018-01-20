@@ -21,7 +21,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.AtomTypes;
 using NCDK.Config;
 using NCDK.Graphs;
@@ -31,7 +32,6 @@ using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -51,7 +51,7 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     // @author  Egon Willighagen
     // @cdk.created 2003-08-07
-    public class AtomContainerManipulator
+    public static class AtomContainerManipulator
     {
         /// <summary>
         /// Extract a substructure from an atom container, in the form of a new
@@ -114,12 +114,10 @@ namespace NCDK.Tools.Manipulator
         {
             if (oldAtom == null)
                 throw new ArgumentNullException(nameof(oldAtom), "Atom to be replaced was null!");
-            if (newAtom == null)
-                throw new ArgumentNullException(nameof(newAtom), "Replacement atom was null!");
             int idx = container.Atoms.IndexOf(oldAtom);
             if (idx < 0)
                 return false;
-            container.Atoms[idx] = newAtom;
+            container.Atoms[idx] = newAtom ?? throw new ArgumentNullException(nameof(newAtom), "Replacement atom was null!");
             var sgrougs = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgrougs != null)
             {
@@ -142,7 +140,7 @@ namespace NCDK.Tools.Manipulator
                             cpy.Bonds.Add(bond);
                         foreach (Sgroup parent in org.Parents)
                             cpy.AddParent(parent);
-                        foreach (SgroupKeys key in org.AttributeKeys)
+                        foreach (SgroupKey key in org.AttributeKeys)
                             cpy.PutValue(key, org.GetValue(key));
                         replaced.Add(cpy);
                     }
@@ -494,51 +492,49 @@ namespace NCDK.Tools.Manipulator
             var stereos = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>();
             foreach (var stereo in atomContainer.StereoElements)
             {
-                if (stereo is ITetrahedralChirality)
+                switch (stereo)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)stereo;
+                    case ITetrahedralChirality tc:
+                        {
+                            IAtom focus = tc.Focus;
+                            IAtom[] carriers = tc.Carriers.ToArray();
 
-                    IAtom focus = tc.Focus;
-                    IAtom[] carriers = tc.Carriers.ToArray();
-                    IAtom hydrogen;
+                            // in sulfoxide - the implicit part of the tetrahedral centre
+                            // is a lone pair
 
-                    // in sulfoxide - the implicit part of the tetrahedral centre
-                    // is a lone pair
+                            if (hNeighbor.TryGetValue(focus, out IAtom hydrogen))
+                            {
+                                ReplaceAtom(carriers, focus, hydrogen);
+                                stereos.Add(new TetrahedralChirality(focus, carriers, tc.Stereo));
+                            }
+                            else
+                            {
+                                stereos.Add(stereo);
+                            }
+                        }
+                        break;
+                    case ExtendedTetrahedral tc:
+                        {
+                            IAtom focus = tc.Focus;
+                            IAtom[] carriers = tc.Carriers.ToArray();
 
-                    if (hNeighbor.TryGetValue(focus, out hydrogen))
-                    {
-                        ReplaceAtom(carriers, focus, hydrogen);
-                        stereos.Add(new TetrahedralChirality(focus, carriers, tc.Stereo));
-                    }
-                    else
-                    {
+                            // in sulfoxide - the implicit part of the tetrahedral centre
+                            // is a lone pair
+
+                            if (hNeighbor.TryGetValue(focus, out IAtom hydrogen))
+                            {
+                                ReplaceAtom(carriers, focus, hydrogen);
+                                stereos.Add(new TetrahedralChirality(focus, carriers, tc.Configure));
+                            }
+                            else
+                            {
+                                stereos.Add(stereo);
+                            }
+                        }
+                        break;
+                    default:
                         stereos.Add(stereo);
-                    }
-                }
-                else if (stereo is ExtendedTetrahedral)
-                {
-                    ExtendedTetrahedral tc = (ExtendedTetrahedral)stereo;
-
-                    IAtom focus = tc.Focus;
-                    IAtom[] carriers = tc.Carriers.ToArray();
-                    IAtom hydrogen;
-
-                    // in sulfoxide - the implicit part of the tetrahedral centre
-                    // is a lone pair
-
-                    if (hNeighbor.TryGetValue(focus, out hydrogen))
-                    {
-                        ReplaceAtom(carriers, focus, hydrogen);
-                        stereos.Add(new TetrahedralChirality(focus, carriers, tc.Configure));
-                    }
-                    else
-                    {
-                        stereos.Add(stereo);
-                    }
-                }
-                else
-                {
-                    stereos.Add(stereo);
+                        break;
                 }
             }
             atomContainer.SetStereoElements(stereos);
@@ -627,29 +623,32 @@ namespace NCDK.Tools.Manipulator
             // the use of IReadOnlyStereoElement<IChemObject, IChemObject> is not fully integrated yet to describe stereo information
             foreach (var stereoElement in org.StereoElements)
             {
-                if (stereoElement is ITetrahedralChirality)
+                switch (stereoElement)
                 {
-                    ITetrahedralChirality tetChirality = (ITetrahedralChirality)stereoElement;
-                    foreach (var atom in tetChirality.Ligands)
-                    {
-                        if (atom.Symbol.Equals("H") && orgAtomsToRemove.Contains(atom))
+                    case ITetrahedralChirality tetChirality:
                         {
-                            orgAtomsToRemove.Remove(atom);
+                            foreach (var atom in tetChirality.Ligands)
+                            {
+                                if (atom.Symbol.Equals("H") && orgAtomsToRemove.Contains(atom))
+                                {
+                                    orgAtomsToRemove.Remove(atom);
+                                }
+                            }
                         }
-                    }
-                }
-                else if (stereoElement is IDoubleBondStereochemistry)
-                {
-                    IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry)stereoElement;
-                    IBond stereoBond = dbs.StereoBond;
-                    foreach (var neighbor in org.GetConnectedAtoms(stereoBond.Begin))
-                    {
-                        orgAtomsToRemove.Remove(neighbor);
-                    }
-                    foreach (var neighbor in org.GetConnectedAtoms(stereoBond.End))
-                    {
-                        orgAtomsToRemove.Remove(neighbor);
-                    }
+                        break;
+                    case IDoubleBondStereochemistry dbs:
+                        {
+                            IBond stereoBond = dbs.StereoBond;
+                            foreach (var neighbor in org.GetConnectedAtoms(stereoBond.Begin))
+                            {
+                                orgAtomsToRemove.Remove(neighbor);
+                            }
+                            foreach (var neighbor in org.GetConnectedAtoms(stereoBond.End))
+                            {
+                                orgAtomsToRemove.Remove(neighbor);
+                            }
+                        }
+                        break;
                 }
             }
 
@@ -773,92 +772,94 @@ namespace NCDK.Tools.Manipulator
 
             foreach (var se in org.StereoElements)
             {
-                if (se is ITetrahedralChirality)
+                switch (se)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)se;
-                    IAtom focus = tc.ChiralAtom;
-                    var neighbors = tc.Ligands;
-                    bool updated = false;
-                    for (int i = 0; i < neighbors.Count; i++)
-                    {
-                        if (hydrogens.Contains(neighbors[i]))
+                    case ITetrahedralChirality tc:
                         {
-                            neighbors[i] = focus;
-                            updated = true;
+                            IAtom focus = tc.ChiralAtom;
+                            var neighbors = tc.Ligands;
+                            bool updated = false;
+                            for (int i = 0; i < neighbors.Count; i++)
+                            {
+                                if (hydrogens.Contains(neighbors[i]))
+                                {
+                                    neighbors[i] = focus;
+                                    updated = true;
+                                }
+                            }
+
+                            // no changes
+                            if (!updated)
+                            {
+                                elements.Add(tc);
+                            }
+                            else
+                            {
+                                elements.Add(new TetrahedralChirality(focus, neighbors, tc.Stereo));
+                            }
                         }
-                    }
+                        break;
+                    case IDoubleBondStereochemistry db:
+                        {
+                            DoubleBondConformation conformation = db.Stereo;
 
-                    // no changes
-                    if (!updated)
-                    {
-                        elements.Add(tc);
-                    }
-                    else
-                    {
-                        elements.Add(new TetrahedralChirality(focus, neighbors, tc.Stereo));
-                    }
-                }
-                else if (se is IDoubleBondStereochemistry)
-                {
-                    IDoubleBondStereochemistry db = (IDoubleBondStereochemistry)se;
-                    DoubleBondConformation conformation = db.Stereo;
+                            IBond orgStereo = db.StereoBond;
+                            IBond orgLeft = db.Bonds[0];
+                            IBond orgRight = db.Bonds[1];
 
-                    IBond orgStereo = db.StereoBond;
-                    IBond orgLeft = db.Bonds[0];
-                    IBond orgRight = db.Bonds[1];
+                            // we use the following variable names to refer to the
+                            // double bond atoms and substituents
+                            // x       y
+                            //  \     /
+                            //   u = v
 
-                    // we use the following variable names to refer to the
-                    // double bond atoms and substituents
-                    // x       y
-                    //  \     /
-                    //   u = v
+                            IAtom u = orgStereo.Begin;
+                            IAtom v = orgStereo.End;
+                            IAtom x = orgLeft.GetOther(u);
+                            IAtom y = orgRight.GetOther(v);
 
-                    IAtom u = orgStereo.Begin;
-                    IAtom v = orgStereo.End;
-                    IAtom x = orgLeft.GetOther(u);
-                    IAtom y = orgRight.GetOther(v);
+                            // if xNew == x and yNew == y we don't need to find the
+                            // connecting bonds
+                            IAtom xNew = x;
+                            IAtom yNew = y;
 
-                    // if xNew == x and yNew == y we don't need to find the
-                    // connecting bonds
-                    IAtom xNew = x;
-                    IAtom yNew = y;
+                            if (hydrogens.Contains(x))
+                            {
+                                conformation = conformation.Invert();
+                                xNew = FindOther(org, u, v, x);
+                            }
 
-                    if (hydrogens.Contains(x))
-                    {
-                        conformation = conformation.Invert();
-                        xNew = FindOther(org, u, v, x);
-                    }
+                            if (hydrogens.Contains(y))
+                            {
+                                conformation = conformation.Invert();
+                                yNew = FindOther(org, v, u, y);
+                            }
 
-                    if (hydrogens.Contains(y))
-                    {
-                        conformation = conformation.Invert();
-                        yNew = FindOther(org, v, u, y);
-                    }
+                            // no other atoms connected, invalid double-bond configuration
+                            // is removed. example [2H]/C=C/[H]
+                            if (x == null || y == null ||
+                                xNew == null || yNew == null) continue;
 
-                    // no other atoms connected, invalid double-bond configuration
-                    // is removed. example [2H]/C=C/[H]
-                    if (x == null || y == null ||
-                        xNew == null || yNew == null) continue;
+                            // no changes
+                            if (x.Equals(xNew) && y.Equals(yNew))
+                            {
+                                elements.Add(db);
+                                continue;
+                            }
 
-                    // no changes
-                    if (x.Equals(xNew) && y.Equals(yNew))
-                    {
-                        elements.Add(db);
-                        continue;
-                    }
+                            // XXX: may perform slow operations but works for now
+                            IBond cpyLeft = !object.Equals(xNew, x) ? org.GetBond(u, xNew) : orgLeft;
+                            IBond cpyRight = !object.Equals(yNew, y) ? org.GetBond(v, yNew) : orgRight;
 
-                    // XXX: may perform slow operations but works for now
-                    IBond cpyLeft = !object.Equals(xNew, x) ? org.GetBond(u, xNew) : orgLeft;
-                    IBond cpyRight = !object.Equals(yNew, y) ? org.GetBond(v, yNew) : orgRight;
-
-                    elements.Add(new DoubleBondStereochemistry(orgStereo,
-                                                               new IBond[] { cpyLeft, cpyRight },
-                                                               conformation));
-                }
-                else if (se is Atropisomeric)
-                {
-                    // can not have any H's
-                    elements.Add(se);
+                            elements.Add(new DoubleBondStereochemistry(orgStereo,
+                                                                       new IBond[] { cpyLeft, cpyRight },
+                                                                       conformation));
+                        }
+                        break;
+                    case Atropisomeric a:
+                        // can not have any H's
+                        elements.Add(se);
+                        break;
                 }
             }
 

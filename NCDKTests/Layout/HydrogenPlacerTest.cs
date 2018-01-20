@@ -159,7 +159,7 @@ namespace NCDK.Layout
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
             string filename = "NCDK.Data.MDL.reserpine.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];
             IChemModel model = seq[0];

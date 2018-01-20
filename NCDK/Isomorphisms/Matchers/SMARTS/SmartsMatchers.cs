@@ -37,9 +37,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     {
         /// <summary>
         /// Do not use - temporary method until the SMARTS packages are cleaned up.
-        ///
-        /// Prepares a target molecule for matching with SMARTS.
         /// </summary>
+        /// <remarks>
+        /// Prepares a target molecule for matching with SMARTS.
+        /// </remarks>
         /// <param name="container">the container to initialise</param>
         /// <param name="ringQuery">whether the smarts will check ring size queries</param>
         public static void Prepare(IAtomContainer container, bool ringQuery)

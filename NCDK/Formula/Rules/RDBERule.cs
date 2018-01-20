@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -219,36 +220,38 @@ namespace NCDK.Formula.Rules
         {
             if (oxidationStateTable == null)
             {
-                oxidationStateTable = new Dictionary<string, int[]>();
-                oxidationStateTable["H"] = new int[] { 1 };
-                //            oxidationStateTable["Li"] = 1;
-                //            oxidationStateTable["Be"] = 2;
-                oxidationStateTable["B"] = new int[] { 3 };
-                oxidationStateTable["C"] = new int[] { 4 };
-                oxidationStateTable["N"] = new int[] { 3 };
-                oxidationStateTable["O"] = new int[] { 2 };
-                oxidationStateTable["F"] = new int[] { 1 };
-                oxidationStateTable["Na"] = new int[] { 1 };
-                oxidationStateTable["Mg"] = new int[] { 2 };
-                oxidationStateTable["Al"] = new int[] { 3 };
-                oxidationStateTable["Si"] = new int[] { 4 };
-                oxidationStateTable["P"] = new int[] { 3, 5 };
-                oxidationStateTable["S"] = new int[] { 2, 4, 6 };
-                oxidationStateTable["Cl"] = new int[] { 1 };
-                //            oxidationStateTable["K"] = 1;
-                //            oxidationStateTable["Ca"] = 2;
-                //            oxidationStateTable["Ga"] = 3;
-                //            oxidationStateTable["Ge"] = 4;
-                //            oxidationStateTable["As"] = 5;
-                //            oxidationStateTable["Se"] = 6;
-                //            oxidationStateTable["Br"] = 7;
-                //            oxidationStateTable["Rb"] = 1;
-                //            oxidationStateTable["Sr"] = 2;
-                //            oxidationStateTable["In"] = 3;
-                //            oxidationStateTable["Sn"] = 4;
-                //            oxidationStateTable["Sb"] = 5;
-                //            oxidationStateTable["Te"] = 6;
-                oxidationStateTable["I"] = new int[] { 1 };
+                oxidationStateTable = new Dictionary<string, int[]>
+                {
+                    ["H"] = new int[] { 1 },
+                    //            oxidationStateTable["Li"] = 1;
+                    //            oxidationStateTable["Be"] = 2;
+                    ["B"] = new int[] { 3 },
+                    ["C"] = new int[] { 4 },
+                    ["N"] = new int[] { 3 },
+                    ["O"] = new int[] { 2 },
+                    ["F"] = new int[] { 1 },
+                    ["Na"] = new int[] { 1 },
+                    ["Mg"] = new int[] { 2 },
+                    ["Al"] = new int[] { 3 },
+                    ["Si"] = new int[] { 4 },
+                    ["P"] = new int[] { 3, 5 },
+                    ["S"] = new int[] { 2, 4, 6 },
+                    ["Cl"] = new int[] { 1 },
+                    //            oxidationStateTable["K"] = 1;
+                    //            oxidationStateTable["Ca"] = 2;
+                    //            oxidationStateTable["Ga"] = 3;
+                    //            oxidationStateTable["Ge"] = 4;
+                    //            oxidationStateTable["As"] = 5;
+                    //            oxidationStateTable["Se"] = 6;
+                    //            oxidationStateTable["Br"] = 7;
+                    //            oxidationStateTable["Rb"] = 1;
+                    //            oxidationStateTable["Sr"] = 2;
+                    //            oxidationStateTable["In"] = 3;
+                    //            oxidationStateTable["Sn"] = 4;
+                    //            oxidationStateTable["Sb"] = 5;
+                    //            oxidationStateTable["Te"] = 6;
+                    ["I"] = new int[] { 1 }
+                };
                 //            oxidationStateTable["Cs"] = 1;
                 //            oxidationStateTable["Ba"] = 2;
                 //            oxidationStateTable["Tl"] = 3;

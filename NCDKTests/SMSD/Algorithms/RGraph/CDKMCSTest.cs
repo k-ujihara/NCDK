@@ -198,10 +198,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             QueryAtomContainer query2 = null;
 
             Stream ins = ResourceLoader.GetAsStream(molfile);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(mol);
             ins = ResourceLoader.GetAsStream(queryfile);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
 
@@ -230,9 +230,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             IAtomContainer mol2 = new AtomContainer();
 
             Stream ins1 = ResourceLoader.GetAsStream(file1);
-            new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
+            new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             Stream ins2 = ResourceLoader.GetAsStream(file2);
-            new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
+            new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(mol1.Builder);
@@ -263,9 +263,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             IAtomContainer mol2 = new AtomContainer();
 
             Stream ins1 = ResourceLoader.GetAsStream(file1);
-            new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
+            new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict).Read(mol1);
             Stream ins2 = ResourceLoader.GetAsStream(file2);
-            new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
+            new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict).Read(mol2);
             AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
             mol2 = new AtomContainer(permutor.Current);

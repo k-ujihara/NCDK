@@ -11,12 +11,15 @@ namespace NCDK.Formula
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Formula.MolecularFormulaGenerator_Example.cs"]/*' />
     /// </example>    
     /// <remarks>
+    /// <para>
     /// This class offers two implementations: The Round Robin algorithm <token>cdk-cite-Boecker2008</token> on mass ranges
     /// <token>cdk-cite-Duehrkop2013</token> is used on most inputs. For special cases (e.g. single elements, extremely large mass ranges)
     /// a full enumeration algorithm <token>cdk-cite-Pluskal2012</token> is used.
-    /// 
+    /// </para>
+    /// <para>
     /// The Round Robin algorithm was originally developed for the SIRIUS 3 software. The full enumeration algorithm was
     /// originally developed for a MZmine 2 framework module, published in Pluskal et al. <token>cdk-cite-Pluskal2012</token>.
+    /// </para>
     /// </remarks>
     // @cdk.module formula
     // @author Tomas Pluskal, Kai Dührkop, Marcus Ludwig

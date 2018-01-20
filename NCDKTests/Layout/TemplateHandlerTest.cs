@@ -152,7 +152,7 @@ namespace NCDK.Layout
             // Set up molecule reader
             string filename = "NCDK.Data.MDL.diadamantane-cubane.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             // Read molecule
             IAtomContainer molecule = (IAtomContainer)molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());

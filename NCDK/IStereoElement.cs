@@ -83,6 +83,6 @@ namespace NCDK
         /// <summary>
         /// The configuration of the stereochemistry.
         /// </summary>
-        StereoElement.Configurations Configure { get; set; }
+        StereoElement.Configuration Configure { get; set; }
     }
 }

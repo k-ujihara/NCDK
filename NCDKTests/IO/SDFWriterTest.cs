@@ -112,13 +112,13 @@ namespace NCDK.IO
             IChemObjectSet<IAtomContainer> molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(new Atom("C"));
-            molecule.SetProperty(InvPair.CANONICAL_LABEL, "bar");
+            molecule.SetProperty(InvPair.CanonicalLabelKey, "bar");
             molSet.Add(molecule);
 
             SDFWriter sdfWriter = new SDFWriter(writer);
             sdfWriter.Write(molSet);
             sdfWriter.Close();
-            Assert.IsTrue(writer.ToString().IndexOf(InvPair.CANONICAL_LABEL) == -1);
+            Assert.IsTrue(writer.ToString().IndexOf(InvPair.CanonicalLabelKey) == -1);
         }
 
         [TestMethod()]

@@ -32,7 +32,7 @@
     public partial class Configuration
     {
         /// <summary>Type of configuration. </summary>
-        private readonly Types type;
+        private readonly ConfigurationType type;
 
         /// <summary>Symbol used to represent configuration </summary>
         private readonly string symbol;
@@ -51,7 +51,7 @@
                 int i = 1;
                 foreach (var config in Values)
                 {
-                    if (config.Type.Equals(Types.TrigonalBipyramidal))
+                    if (config.Type.Equals(ConfigurationType.TrigonalBipyramidal))
                         tbs[i++] = config;
                 }
             }
@@ -61,7 +61,7 @@
                 int i = 1;
                 foreach (var config in Values)
                 {
-                    if (config.Type.Equals(Types.Octahedral))
+                    if (config.Type.Equals(ConfigurationType.Octahedral))
                         ohs[i++] = config;
                 }
             }
@@ -84,7 +84,7 @@
         /// </summary>
         /// <returns>type of the configuration</returns>
         /// <seealso cref="Type"/>
-        public Types Type => type;
+        public ConfigurationType Type => type;
 
         /// <summary>
         /// Read a chiral configuration from a character buffer and progress the
@@ -210,7 +210,7 @@
         }
 
         /// <summary>Types of configuration.</summary>
-        public enum Types
+        public enum ConfigurationType
         {
             None,
             Implicit,
@@ -223,7 +223,7 @@
         }
 
         /// <summary>Configurations for double-bond bond-based specification. </summary>
-        public enum DoubleBonds
+        public enum ConfigurationDoubleBond
         {
             Unspecified,
             Together,

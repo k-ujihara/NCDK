@@ -42,36 +42,37 @@ namespace NCDK.Renderers.Colors
         /// </summary>
         static RasmolColors()
         {
-            colorMap = new Dictionary<string, Color>();
-
-            colorMap["C"] = Color.FromRgb(144, 144, 144);
-            colorMap["H"] = Color.FromRgb(144, 144, 144);
-            colorMap["O"] = Color.FromRgb(240, 0, 0);
-            colorMap["N"] = Color.FromRgb(143, 143, 255);
-            colorMap["S"] = Color.FromRgb(255, 200, 50);
-            colorMap["Cl"] = Color.FromRgb(0, 255, 0);
-            colorMap["B"] = Color.FromRgb(0, 255, 0);
-            colorMap["P"] = Color.FromRgb(255, 165, 0);
-            colorMap["Fe"] = Color.FromRgb(255, 165, 0);
-            colorMap["Ba"] = Color.FromRgb(255, 165, 0);
-            colorMap["Na"] = Color.FromRgb(0, 0, 255);
-            colorMap["Mg"] = Color.FromRgb(34, 139, 34);
-            colorMap["Zn"] = Color.FromRgb(165, 42, 42);
-            colorMap["Cu"] = Color.FromRgb(165, 42, 42);
-            colorMap["Ni"] = Color.FromRgb(165, 42, 42);
-            colorMap["Br"] = Color.FromRgb(165, 42, 42);
-            colorMap["Ca"] = Color.FromRgb(128, 128, 144);
-            colorMap["Mn"] = Color.FromRgb(128, 128, 144);
-            colorMap["Al"] = Color.FromRgb(128, 128, 144);
-            colorMap["Ti"] = Color.FromRgb(128, 128, 144);
-            colorMap["Cr"] = Color.FromRgb(128, 128, 144);
-            colorMap["Ag"] = Color.FromRgb(128, 128, 144);
-            colorMap["F"] = Color.FromRgb(218, 165, 32);
-            colorMap["Si"] = Color.FromRgb(218, 165, 32);
-            colorMap["Au"] = Color.FromRgb(218, 165, 32);
-            colorMap["I"] = Color.FromRgb(160, 32, 240);
-            colorMap["Li"] = Color.FromRgb(178, 34, 34);
-            colorMap["He"] = Color.FromRgb(255, 192, 203);
+            colorMap = new Dictionary<string, Color>
+            {
+                ["C"] = Color.FromRgb(144, 144, 144),
+                ["H"] = Color.FromRgb(144, 144, 144),
+                ["O"] = Color.FromRgb(240, 0, 0),
+                ["N"] = Color.FromRgb(143, 143, 255),
+                ["S"] = Color.FromRgb(255, 200, 50),
+                ["Cl"] = Color.FromRgb(0, 255, 0),
+                ["B"] = Color.FromRgb(0, 255, 0),
+                ["P"] = Color.FromRgb(255, 165, 0),
+                ["Fe"] = Color.FromRgb(255, 165, 0),
+                ["Ba"] = Color.FromRgb(255, 165, 0),
+                ["Na"] = Color.FromRgb(0, 0, 255),
+                ["Mg"] = Color.FromRgb(34, 139, 34),
+                ["Zn"] = Color.FromRgb(165, 42, 42),
+                ["Cu"] = Color.FromRgb(165, 42, 42),
+                ["Ni"] = Color.FromRgb(165, 42, 42),
+                ["Br"] = Color.FromRgb(165, 42, 42),
+                ["Ca"] = Color.FromRgb(128, 128, 144),
+                ["Mn"] = Color.FromRgb(128, 128, 144),
+                ["Al"] = Color.FromRgb(128, 128, 144),
+                ["Ti"] = Color.FromRgb(128, 128, 144),
+                ["Cr"] = Color.FromRgb(128, 128, 144),
+                ["Ag"] = Color.FromRgb(128, 128, 144),
+                ["F"] = Color.FromRgb(218, 165, 32),
+                ["Si"] = Color.FromRgb(218, 165, 32),
+                ["Au"] = Color.FromRgb(218, 165, 32),
+                ["I"] = Color.FromRgb(160, 32, 240),
+                ["Li"] = Color.FromRgb(178, 34, 34),
+                ["He"] = Color.FromRgb(255, 192, 203)
+            };
         }
 
         /// <summary>

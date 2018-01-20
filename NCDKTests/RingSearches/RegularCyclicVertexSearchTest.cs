@@ -38,7 +38,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public virtual void TestEmpty()
         {
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][] { });
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(new int[0][] { });
             Assert.IsNotNull(search);
         }
 
@@ -47,7 +47,7 @@ namespace NCDK.RingSearches
         {
             // cyclohexane like
             int[][] g = new int[][] { new[] { 5, 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5 }, new[] { 4, 0 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5 }, search.Cyclic()));
         }
 
@@ -56,7 +56,7 @@ namespace NCDK.RingSearches
         {
             // cyclohexane like
             int[][] g = new int[][] { new[] { 5, 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5 }, new[] { 4, 0 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             for (int v = 0; v < g.Length; v++)
                 Assert.IsTrue(search.Cyclic(v));
         }
@@ -65,7 +65,7 @@ namespace NCDK.RingSearches
         public virtual void TestCyclic_IntInt()
         {
             int[][] g = new int[][] { new[] { 5, 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5 }, new[] { 4, 0, 6 }, new[] { 5 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(search.Cyclic(0, 1));
             Assert.IsTrue(search.Cyclic(1, 2));
             Assert.IsTrue(search.Cyclic(2, 3));
@@ -87,7 +87,7 @@ namespace NCDK.RingSearches
               new[]  {40, 44}, new[] {43, 45}, new[] {41, 44, 47, 48}, new[] {47, 50}, new[] {45, 46}, new[] {45, 49}, new[] {48, 50}, new[] {46, 49, 52, 53},
              new[]   {52, 55}, new[] {50, 51}, new[] {50, 54}, new[] {53, 55}, new[] {51, 54, 57, 58}, new[] {57, 60}, new[] {55, 56}, new[] {55, 59}, new[] {58, 60},
              new[]   {56, 59}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[] colors = search.VertexColor();
         }
 
@@ -96,7 +96,7 @@ namespace NCDK.RingSearches
         {
             // cyclohexane like
             int[][] g = new int[][] { new[] { 5, 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5 }, new[] { 4, 0 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[][] { new[] { 0, 1, 2, 3, 4, 5 } }, search.Isolated()));
         }
 
@@ -104,14 +104,14 @@ namespace NCDK.RingSearches
         public virtual void TestIsolated_NonCyclic()
         {
             int[][] g = new int[][] { new[] { 1 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[0], search.Cyclic()));
         }
 
         [TestMethod()]
         public virtual void TestIsolated_Empty()
         {
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(Arrays.CreateJagged<int>(0, 0));
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(Arrays.CreateJagged<int>(0, 0));
             Assert.IsTrue(Compares.AreDeepEqual(new int[0], search.Cyclic()));
             Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Isolated()));
             Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Fused()));
@@ -125,7 +125,7 @@ namespace NCDK.RingSearches
         {
             // spiro cyclo hexane like
             int[][] g = new int[][] { new[] { 1, 5 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5 }, new[] { 0, 4, 7, 8 }, new[] { 7, 10 }, new[] { 5, 6 }, new[] { 5, 9 }, new[] { 8, 10 }, new[] { 6, 9 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5 }, isolated[0]));
@@ -147,7 +147,7 @@ namespace NCDK.RingSearches
                         new[] {40, 44}, new[] {43, 45}, new[] {41, 44, 47, 48}, new[] {47, 50}, new[] {45, 46}, new[] {45, 49}, new[] {48, 50}, new[] {46, 49, 52, 53},
                         new[] {52, 55}, new[] {50, 51}, new[] {50, 54}, new[] {53, 55}, new[] {51, 54, 57, 58}, new[] {57, 60}, new[] {55, 56}, new[] {55, 59}, new[] {58, 60},
                         new[] {56, 59}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             Assert.AreEqual(12, isolated.Length);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5 }, isolated[0]));
@@ -170,7 +170,7 @@ namespace NCDK.RingSearches
             // biphenyl like
             int[][] g = new int[][]{ new[] {5, 1}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0, 6}, new[] {11, 7, 5}, new[] {6, 8}, new[] {7, 9}, new[] {8, 10},
                         new[]{9, 11}, new[] {10, 7}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, search.Cyclic()));
             int[][] isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
@@ -187,7 +187,7 @@ namespace NCDK.RingSearches
             // benzylbenzene like
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4}, new[] {3, 5}, new[] {0, 4, 12}, new[] {7, 11}, new[] {6, 8}, new[] {7, 9, 12},
                         new[] {8, 10}, new[] {9, 11}, new[] {6, 10}, new[] {8, 5}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5 }, isolated[0]));
@@ -200,7 +200,7 @@ namespace NCDK.RingSearches
             // two disconnected cyclohexanes
             int[][] g = new int[][]{ new[] {5, 1}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0}, new[] {11, 7}, new[] {6, 8}, new[] {7, 9}, new[] {8, 10},
                         new[] {9, 11}, new[] {10, 7}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, search.Cyclic()));
             int[][] isolated = search.Isolated();
             Assert.AreEqual(2, isolated.Length);
@@ -215,7 +215,7 @@ namespace NCDK.RingSearches
         public virtual void TestFused()
         {
             int[][] g = new int[][] { new[] { 1, 5, 6 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4, 7 }, new[] { 3, 5 }, new[] { 0, 4 }, new[] { 0, 7 }, new[] { 6, 3 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -233,7 +233,7 @@ namespace NCDK.RingSearches
             // biocyclooctanylbiocylooctane like
             int[][] g = new int[][]{new[]{1, 5, 6}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4, 7, 8}, new[] {3, 5}, new[] {0, 4}, new[] {0, 7}, new[] {6, 3},
                         new[]{9, 13, 14, 3}, new[] {8, 10}, new[] {9, 11}, new[] {10, 12, 15}, new[] {11, 13}, new[] {8, 12}, new[] {8, 15}, new[] {11, 14}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -253,7 +253,7 @@ namespace NCDK.RingSearches
             // biocyclooctanylbiocylooctane like
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3, 6, 16}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0, 7}, new[] {2, 7}, new[] {6, 5}, new[] {9, 13},
                        new[] {8, 10}, new[] {9, 11, 14}, new[] {10, 12}, new[] {11, 13}, new[] {12, 8, 15, 16}, new[] {10, 15}, new[] {14, 13}, new[] {13, 2}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -270,7 +270,7 @@ namespace NCDK.RingSearches
         {
             // napthalene like
             int[][] g = new int[][] { new[] { 1, 5 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5, 7 }, new[] { 0, 6, 4 }, new[] { 5, 9 }, new[] { 4, 8 }, new[] { 7, 9 }, new[] { 6, 8 } };
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -287,7 +287,7 @@ namespace NCDK.RingSearches
             // 3 fused rings
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2, 10}, new[] {3, 13, 1}, new[] {2, 4}, new[] {3, 5, 7}, new[] {0, 6, 4}, new[] {5, 9}, new[] {4, 8}, new[] {7, 9},
                         new[] {6, 8}, new[] {1, 11}, new[] {10, 12}, new[] {11, 13}, new[] {2, 12}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -309,7 +309,7 @@ namespace NCDK.RingSearches
                         new[] {33, 35}, new[] {27, 34}, new[] {33, 37}, new[] {36, 38}, new[] {37, 39, 45, 41}, new[] {38, 40}, new[] {33, 39}, new[] {38, 42},
                         new[] {41, 43, 58, 59}, new[] {42, 44}, new[] {43, 45}, new[] {38, 44}, new[] {2, 47}, new[] {46, 48}, new[] {47, 49}, new[] {48, 50, 51, 55}, new[] {2, 49},
                         new[] {49, 52}, new[] {51, 53}, new[] {52, 54}, new[] {53, 55, 56, 57}, new[] {49, 54}, new[] {54, 59}, new[] {54, 58}, new[] {42, 57}, new[] {42, 56}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
@@ -332,7 +332,7 @@ namespace NCDK.RingSearches
                         new[] {42, 23, 44}, new[] {43, 26, 45}, new[] {44, 46, 57}, new[] {45, 27, 47}, new[] {46, 30, 48}, new[] {47, 49, 58}, new[] {48, 31, 50},
                         new[] {49, 34, 51}, new[] {50, 52, 59}, new[] {51, 35, 53}, new[] {52, 38, 54}, new[] {53, 40, 55}, new[] {54, 56, 59}, new[] {55, 42, 57},
                         new[] {56, 45, 58}, new[] {57, 48, 59}, new[] {58, 51, 55}};
-            CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+            ICyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
             int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);

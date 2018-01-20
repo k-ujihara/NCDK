@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Text;
 
 namespace NCDK.Groups
@@ -32,7 +33,7 @@ namespace NCDK.Groups
     // @author maclean
     // @cdk.module group
     public abstract class AbstractDiscretePartitionRefiner 
-        : DiscretePartitionRefiner
+        : IDiscretePartitionRefiner
     {
         /// <summary>
         /// The result of a comparison between the current partition
@@ -144,7 +145,7 @@ namespace NCDK.Groups
         }
 
         class AutomorphismPartitionBacktracker
-            : PermutationGroup.Backtracker
+            : PermutationGroup.IBacktracker
         {
             int n;
             DisjointSetForest forest;

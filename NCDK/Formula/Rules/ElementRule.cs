@@ -16,13 +16,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
     /// <summary>
-    /// This class validate if the occurrence of the IElements in the IMolecularFormula
+    /// This class validate if the occurrence of the <see cref="IElement"/> in the <see cref="IMolecularFormula"/>
     /// are into a limits. As default defines all elements of the periodic table with
     /// a occurrence of zero to 100.
     /// </summary>

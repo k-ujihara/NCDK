@@ -301,7 +301,7 @@ namespace NCDK
         public virtual void TestSetDirection_IReaction_Direction()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            ReactionDirections direction = ReactionDirections.Bidirectional;
+            ReactionDirection direction = ReactionDirection.Bidirectional;
             reaction.Direction = direction;
             Assert.AreEqual(direction, reaction.Direction);
         }
@@ -310,7 +310,7 @@ namespace NCDK
         public virtual void TestGetDirection()
         {
             IReaction reaction = (IReaction)NewChemObject();
-            Assert.AreEqual(ReactionDirections.Forward, reaction.Direction);
+            Assert.AreEqual(ReactionDirection.Forward, reaction.Direction);
         }
 
         /// <summary>

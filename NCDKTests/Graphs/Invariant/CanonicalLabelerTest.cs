@@ -61,14 +61,14 @@ namespace NCDK.Graphs.Invariant
             labeler.CanonLabel(molecule);
             foreach (var atom in molecule.Atoms)
             {
-                Assert.IsNotNull(atom.GetProperty<long?>(InvPair.CANONICAL_LABEL));
+                Assert.IsNotNull(atom.GetProperty<long?>(InvPair.CanonicalLabelKey));
             }
 
-            Assert.AreEqual(3, molecule.Atoms[0].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(2, molecule.Atoms[1].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(1, molecule.Atoms[2].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(4, molecule.Atoms[3].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CANONICAL_LABEL));
+            Assert.AreEqual(3, molecule.Atoms[0].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(2, molecule.Atoms[1].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(1, molecule.Atoms[2].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(4, molecule.Atoms[3].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CanonicalLabelKey));
         }
 
         /// <summary>
@@ -83,13 +83,13 @@ namespace NCDK.Graphs.Invariant
             labeler.CanonLabel(molecule);
             foreach (var atom in molecule.Atoms)
             {
-                Assert.IsNotNull(atom.GetProperty<long>(InvPair.CANONICAL_LABEL));
+                Assert.IsNotNull(atom.GetProperty<long>(InvPair.CanonicalLabelKey));
             }
-            Assert.AreEqual(1, molecule.Atoms[0].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(2, molecule.Atoms[1].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(3, molecule.Atoms[2].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(4, molecule.Atoms[3].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CANONICAL_LABEL));
+            Assert.AreEqual(1, molecule.Atoms[0].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(2, molecule.Atoms[1].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(3, molecule.Atoms[2].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(4, molecule.Atoms[3].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CanonicalLabelKey));
         }
 
         // @cdk.bug 1014344
@@ -99,7 +99,7 @@ namespace NCDK.Graphs.Invariant
         {
             string filename = "NCDK.Data.MDL.bug1014344-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             AddImplicitHydrogens(mol1);
             StringWriter output = new StringWriter();
@@ -119,7 +119,7 @@ namespace NCDK.Graphs.Invariant
                 atoms2.MoveNext();
                 IAtom atom1 = atoms1.Current;
                 IAtom atom2 = atoms2.Current;
-                Assert.AreEqual(atom1.GetProperty<long>(InvPair.CANONICAL_LABEL), atom2.GetProperty<long>(InvPair.CANONICAL_LABEL));
+                Assert.AreEqual(atom1.GetProperty<long>(InvPair.CanonicalLabelKey), atom2.GetProperty<long>(InvPair.CanonicalLabelKey));
             }
         }
 
@@ -157,10 +157,10 @@ namespace NCDK.Graphs.Invariant
             ac2.Atoms.Add(ac2.Builder.NewAtom("C"));
             ac2.AddBond(ac2.Atoms[0], ac2.Atoms[1], BondOrder.Single);
             canLabler.CanonLabel(ac2);
-            Assert.AreEqual(ac.Atoms[0].GetProperty<long>(InvPair.CANONICAL_LABEL),
-                    ac2.Atoms[1].GetProperty<long>(InvPair.CANONICAL_LABEL));
-            Assert.AreEqual(ac.Atoms[1].GetProperty<long>(InvPair.CANONICAL_LABEL),
-                    ac2.Atoms[0].GetProperty<long>(InvPair.CANONICAL_LABEL));
+            Assert.AreEqual(ac.Atoms[0].GetProperty<long>(InvPair.CanonicalLabelKey),
+                    ac2.Atoms[1].GetProperty<long>(InvPair.CanonicalLabelKey));
+            Assert.AreEqual(ac.Atoms[1].GetProperty<long>(InvPair.CanonicalLabelKey),
+                    ac2.Atoms[0].GetProperty<long>(InvPair.CanonicalLabelKey));
         }
     }
 }

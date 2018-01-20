@@ -70,11 +70,8 @@ namespace NCDK.Graphs
         {
             if (mGraph == null)
                 throw new ArgumentNullException(nameof(mGraph), "no molecule graph");
-            if (rank == null)
-                throw new ArgumentNullException(nameof(rank), "no rank provided");
-
             this.graph = new List<PathEdge>[mGraph.Length];
-            this.rank = rank;
+            this.rank = rank ?? throw new ArgumentNullException(nameof(rank), "no rank provided");
             this.limit = limit + 1; // first/last vertex repeats
             int ord = graph.Length;
 

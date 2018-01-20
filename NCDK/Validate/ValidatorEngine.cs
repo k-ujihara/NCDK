@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -25,7 +26,7 @@ namespace NCDK.Validate
     /// Engine that performs the validation by traversing the <see cref="IChemObject"/> hierarchy. 
     /// </summary>
     /// <example>
-    /// Basic use of the ValidatorEngine is:
+    /// Basic use of the <see cref="ValidatorEngine"/> is:
     /// <code>
     /// ValidatorEngine engine = new ValidatorEngine();
     /// engine.Add(new BasicValidator());

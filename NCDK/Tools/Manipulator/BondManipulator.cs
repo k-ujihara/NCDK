@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using System;
 using System.Collections.Generic;
 
@@ -40,7 +41,7 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     // @author  Egon Willighagen
     // @cdk.created 2003-08-07
-    public class BondManipulator
+    public static class BondManipulator
     {
         /// <summary>
         /// Constructs an array of Atom objects from Bond.

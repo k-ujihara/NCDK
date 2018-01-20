@@ -16,13 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers
 {
     // @cdk.module  isomorphism
     // @cdk.githash
-    public class QueryAtomContainer : Default.AtomContainer, IQueryAtomContainer
+    public class QueryAtomContainer : Silent.AtomContainer, IQueryAtomContainer
     {
         public override string ToString()
         {

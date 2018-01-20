@@ -29,7 +29,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             Vector2 foo = new Vector2(1.0, 2.0);
             Vector2 bar = new Vector2(1.0, 5.0);
-            IDifference result = Point2dDifference.Construct("Foo", foo, bar);
+            IDifference result = Point2DDifference.Construct("Foo", foo, bar);
             Assert.IsNotNull(result);
         }
 
@@ -38,14 +38,14 @@ namespace NCDK.Tools.Diff.Tree
         {
             Vector2 foo = new Vector2(1.0, 2.0);
             Vector2 bar = new Vector2(1.0, 2.0);
-            IDifference result = Point2dDifference.Construct("Foo", foo, bar);
+            IDifference result = Point2DDifference.Construct("Foo", foo, bar);
             Assert.IsNull(result);
         }
 
         [TestMethod()]
         public void TestTwoNull()
         {
-            IDifference result = Point2dDifference.Construct("Foo", null, null);
+            IDifference result = Point2DDifference.Construct("Foo", null, null);
             Assert.IsNull(result);
         }
 
@@ -53,10 +53,10 @@ namespace NCDK.Tools.Diff.Tree
         public void TestOneNull()
         {
             Vector2 bar = new Vector2(1.0, 2.0);
-            IDifference result = Point2dDifference.Construct("Foo", null, bar);
+            IDifference result = Point2DDifference.Construct("Foo", null, bar);
             Assert.IsNotNull(result);
 
-            result = Point2dDifference.Construct("Foo", bar, null);
+            result = Point2DDifference.Construct("Foo", bar, null);
             Assert.IsNotNull(result);
         }
 
@@ -64,7 +64,7 @@ namespace NCDK.Tools.Diff.Tree
         public void TestToString()
         {
             Vector2 bar = new Vector2(1.0, 5.0);
-            IDifference result = Point2dDifference.Construct("Foo", null, bar);
+            IDifference result = Point2DDifference.Construct("Foo", null, bar);
             string diffString = result.ToString();
             Assert.IsNotNull(diffString);
             AssertOneLiner(diffString);

@@ -93,7 +93,7 @@ namespace NCDK.Geometries
             string filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
             var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molOne = (IAtomContainer) reader.Read(new AtomContainer());
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(molOne));
         }
@@ -102,8 +102,8 @@ namespace NCDK.Geometries
         public void Get2DCoordinateCoverage_EmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None, GeometryUtil.Get2DCoordinateCoverage(container));
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None,
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None,
                                 GeometryUtil.Get2DCoordinateCoverage((IAtomContainer)null));
         }
 
@@ -123,7 +123,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.Partial, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get2DCoordinateCoverage(container));
         }
 
         [TestMethod()]
@@ -143,7 +143,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.Full, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get2DCoordinateCoverage(container));
         }
 
         [TestMethod()]
@@ -163,7 +163,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(container));
         }
 
         [TestMethod()]
@@ -198,11 +198,11 @@ namespace NCDK.Geometries
             IAtomContainer molOne;
             IAtomContainer molTwo;
             IDictionary<int, int> mappedAtoms = new Dictionary<int, int>();
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molOne = reader.Read(new AtomContainer());
 
             ins = ResourceLoader.GetAsStream(filenameMolTwo);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molTwo = reader.Read(new AtomContainer());
 
             mappedAtoms = AtomMappingTools.MapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
@@ -472,8 +472,8 @@ namespace NCDK.Geometries
         public void Get3DCoordinateCoverage_EmptyAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None, GeometryUtil.Get3DCoordinateCoverage(container));
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None,
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None,
                                 GeometryUtil.Get3DCoordinateCoverage((IAtomContainer)null));
         }
 
@@ -493,7 +493,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.Partial, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get3DCoordinateCoverage(container));
         }
 
         [TestMethod()]
@@ -513,7 +513,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.Full, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get3DCoordinateCoverage(container));
         }
 
         [TestMethod()]
@@ -533,7 +533,7 @@ namespace NCDK.Geometries
             container.Atoms.Add(atom2);
             container.Atoms.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverages.None, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(container));
         }
 
         [TestMethod()]

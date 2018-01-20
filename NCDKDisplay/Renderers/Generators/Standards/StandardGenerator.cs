@@ -155,11 +155,11 @@ namespace NCDK.Renderers.Generators.Standards
                     continue;
 
                 var highlight = GetHighlightColor(bond, parameters);
-                if (highlight != null && style == HighlightStyles.OuterGlow)
+                if (highlight != null && style == HighlightStyle.OuterGlow)
                 {
                     backLayer.Add(MarkedElement.Markup(OuterGlow(bondElements[i], highlight.Value, glowWidth, stroke), "outerglow"));
                 }
-                if (highlight != null && style == HighlightStyles.Colored)
+                if (highlight != null && style == HighlightStyle.Colored)
                 {
                     frontLayer.Add(MarkedElement.MarkupBond(Recolor(bondElements[i], highlight.Value), bond));
                 }
@@ -183,7 +183,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (symbols[i] == null)
                 {
                     // we add a 'ball' around atoms with no symbols (e.g. carbons)
-                    if (highlight != null && style == HighlightStyles.OuterGlow)
+                    if (highlight != null && style == HighlightStyle.OuterGlow)
                     {
                         backLayer.Add(MarkedElement.Markup(new OvalElement(ToPoint(atom.Point2D.Value), 1.75 * glowWidth * stroke, true, highlight.Value), "outerglow"));
                     }
@@ -203,12 +203,12 @@ namespace NCDK.Renderers.Generators.Standards
                     annotations.Add(MarkedElement.Markup(GeneralPath.ShapeOf(shape, annotationColor), "annotation"));
                 }
 
-                if (highlight != null && style == HighlightStyles.OuterGlow)
+                if (highlight != null && style == HighlightStyle.OuterGlow)
                 {
                     backLayer.Add(MarkedElement.Markup(OuterGlow(symbolElements, highlight.Value, glowWidth, stroke), "outerglow"));
                 }
 
-                if (highlight != null && style == HighlightStyles.Colored)
+                if (highlight != null && style == HighlightStyle.Colored)
                 {
                     frontLayer.Add(MarkedElement.MarkupAtom(symbolElements, atom));
                 }
@@ -236,10 +236,10 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         private Color GetColorOfAtom(IDictionary<IAtom, string> symbolRemap, IAtomColorer coloring, Color foreground,
-                             HighlightStyles style, IAtom atom, Color? highlight)
+                             HighlightStyle style, IAtom atom, Color? highlight)
         {
             // atom is highlighted...?
-            if (highlight != null && style == HighlightStyles.Colored)
+            if (highlight != null && style == HighlightStyle.Colored)
                 return highlight.Value;
             // abbreviations default to foreground color
             if (symbolRemap.ContainsKey(atom))
@@ -562,7 +562,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else if (element is LineElement lineElement)
             {
-                return new LineElement(lineElement.firstPoint, lineElement.secondPoint, lineElement.width, color);
+                return new LineElement(lineElement.FirstPoint, lineElement.SecondPoint, lineElement.Width, color);
             }
             else if (element is GeneralPath)
             {
@@ -592,9 +592,9 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                     return newGroup;
                 case LineElement lineElement:
-                    return new LineElement(lineElement.firstPoint, lineElement.secondPoint, stroke + (2 * (glowWidth * stroke)), color);
+                    return new LineElement(lineElement.FirstPoint, lineElement.SecondPoint, stroke + (2 * (glowWidth * stroke)), color);
                 case GeneralPath org:
-                    if (org.fill)
+                    if (org.Fill)
                     {
                         return org.Outline(2 * (glowWidth * stroke)).Recolor(color);
                     }

@@ -57,7 +57,7 @@ namespace NCDK.Renderers.Fonts
             Typeface = new Typeface(
                 new FontFamily(this.FontName),
                 WPF::FontStyles.Normal,
-                this.FontWeight == FontWeights.Bold ? WPF.FontWeights.Bold : WPF.FontWeights.Normal,
+                this.FontWeight == FontWeight.Bold ? WPF.FontWeights.Bold : WPF.FontWeights.Normal,
                 WPF::FontStretches.Normal);
             Size = 9;
 

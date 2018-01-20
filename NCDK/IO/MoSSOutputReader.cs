@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using NCDK.Smiles;
 using System;
@@ -84,9 +85,8 @@ namespace NCDK.IO
         /// <returns>the content in a <see cref="IChemObjectSet{T}"/> object</returns>
         public override T Read<T>(T obj)
         {
-            if (obj is IChemObjectSet<IAtomContainer>)
+            if (obj is IChemObjectSet<IAtomContainer> cf)
             {
-                var cf = (IChemObjectSet<IAtomContainer>)obj;
                 try
                 {
                     cf = ReadAtomContainerSet(cf);
@@ -97,9 +97,8 @@ namespace NCDK.IO
                 }
                 return (T)cf;
             }
-            else if (obj is IChemFile)
+            else if (obj is IChemFile chemFile)
             {
-                IChemFile chemFile = (IChemFile)obj;
                 IChemSequence chemSeq = obj.Builder.NewChemSequence();
                 IChemModel chemModel = obj.Builder.NewChemModel();
                 IChemObjectSet<IAtomContainer> molSet = obj.Builder.NewAtomContainerSet();

@@ -20,13 +20,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-namespace NCDK.Signatures {
+namespace NCDK.Signatures
+{
     /// <summary>
     /// A list of atom indices, and the label of the orbit.
     /// </summary>
@@ -45,9 +47,9 @@ namespace NCDK.Signatures {
         /// </summary>
         private string label;
 
-         /// <summary>
-         /// The maximum height of the signature string
-         /// </summary>
+        /// <summary>
+        /// The maximum height of the signature string
+        /// </summary>
         private int height;
 
         public Orbit(string label, int height)

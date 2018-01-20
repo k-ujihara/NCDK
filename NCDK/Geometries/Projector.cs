@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Numerics;
 using System.Collections.Generic;
 
@@ -30,7 +31,7 @@ namespace NCDK.Geometries
     /// </summary>
     // @cdk.keyword projection in 2D
     // @cdk.githash
-    public class Projector
+    public static class Projector
     {
         public static void Project2D(IAtomContainer container)
         {

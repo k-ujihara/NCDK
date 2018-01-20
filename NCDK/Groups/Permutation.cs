@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
@@ -145,8 +146,10 @@ namespace NCDK.Groups
         /// <returns>the list of elements reachable in this permutation</returns>
         public IList<int> GetOrbit(int element)
         {
-            var orbit = new List<int>();
-            orbit.Add(element);
+            var orbit = new List<int>
+            {
+                element
+            };
             int i = Values[element];
             while (i != element && orbit.Count < Values.Length)
             {

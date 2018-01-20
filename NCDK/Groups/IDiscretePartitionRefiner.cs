@@ -4,7 +4,7 @@
     /// A mechanism for refining partitions of graph-like objects.
     /// </summary>
     // @author maclean  
-    public interface DiscretePartitionRefiner
+    public interface IDiscretePartitionRefiner
     {
         /// <summary>
         /// Get the best permutation found.

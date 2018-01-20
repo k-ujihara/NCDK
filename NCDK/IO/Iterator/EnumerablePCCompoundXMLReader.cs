@@ -20,13 +20,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using NCDK.IO.PubChemXml;
 using System;
-using System.IO;
-using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Xml.Linq;
 
 namespace NCDK.IO.Iterator
 {

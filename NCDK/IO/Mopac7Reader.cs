@@ -21,9 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using NCDK.Common.Primitives;
-using NCDK.Numerics;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using System;
 using System.IO;
 using System.Text;
@@ -77,9 +78,8 @@ namespace NCDK.IO
         public override T Read<T>(T obj)
         {
             StringBuilder eigenvalues = new StringBuilder();
-            if (obj is IAtomContainer)
+            if (obj is IAtomContainer container)
             {
-                IAtomContainer container = (IAtomContainer)obj;
                 try
                 {
                     string line = input.ReadLine();

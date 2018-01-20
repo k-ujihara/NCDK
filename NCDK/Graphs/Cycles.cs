@@ -149,16 +149,16 @@ namespace NCDK.Graphs
         /// <seealso cref="FindAll(IAtomContainer)"/>
         /// <seealso cref="AllCycles"/>
         /// <seealso cref="AllRingsFinder"/>
-        public static CycleFinder AllFinder => CycleComputation.All;
+        public static ICycleFinder AllFinder => CycleComputation.All;
 
         /// <summary>
         /// All cycles of smaller than or equal to the specified length. If a length
-        /// is also provided to <see cref="CycleFinder.Find(IAtomContainer, int)"/> the
+        /// is also provided to <see cref="ICycleFinder.Find(IAtomContainer, int)"/> the
         /// minimum of the two limits is used.
         /// </summary>
         /// <param name="length">maximum size or cycle to find</param>
         /// <returns>cycle finder</returns>
-        public static CycleFinder GetAllFinder(int length)
+        public static ICycleFinder GetAllFinder(int length)
         {
             return new AllUpToLength(length);
         }
@@ -173,7 +173,7 @@ namespace NCDK.Graphs
         /// <returns>finder for all simple cycles</returns>
         /// <seealso cref="FindMCB(IAtomContainer)"/>
         /// <seealso cref="MinimumCycleBasis"/>
-        public static CycleFinder MCBFinder => CycleComputation.MCB;
+        public static ICycleFinder MCBFinder => CycleComputation.MCB;
 
         /// <summary>
         /// A cycle finder which will compute the relevant cycle basis (RC) of a molecule.
@@ -183,7 +183,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static CycleFinder RelevantFinder => CycleComputation.RELEVANT;
+        public static ICycleFinder RelevantFinder => CycleComputation.RELEVANT;
 
         /// <summary>
         /// A cycle finder which will compute the essential cycles of a molecule.
@@ -194,7 +194,7 @@ namespace NCDK.Graphs
         /// <returns>finder for essential cycles</returns>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static CycleFinder EssentialFinder => CycleComputation.ESSENTIAL;
+        public static ICycleFinder EssentialFinder => CycleComputation.ESSENTIAL;
 
         /// <summary>
         /// A cycle finder which will compute the triplet short cycles of a
@@ -209,7 +209,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindTripletShort(IAtomContainer)"/>
         /// <seealso cref="TripletShortCycles"/>
-        public static CycleFinder TripletShortFinder => CycleComputation.TRIPLET_SHORT;
+        public static ICycleFinder TripletShortFinder => CycleComputation.TRIPLET_SHORT;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -223,7 +223,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>finder for vertex short cycles</returns>
         /// <seealso cref="FindVertexShort(IAtomContainer)"/>
-        public static CycleFinder VertexShortFinder => CycleComputation.VERTEX_SHORT;
+        public static ICycleFinder VertexShortFinder => CycleComputation.VERTEX_SHORT;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -237,7 +237,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>finder for edge short cycles</returns>
         /// <seealso cref="FindEdgeShort(IAtomContainer)"/>
-        public static CycleFinder EdgeShort => CycleComputation.EDGE_SHORT;
+        public static ICycleFinder EdgeShort => CycleComputation.EDGE_SHORT;
 
         /// <summary>
         /// Finder for cdk aromatic cycles.
@@ -259,7 +259,7 @@ namespace NCDK.Graphs
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.Cycles_Example.cs+CDKAromaticSetFinder"]/*' />
         /// </example>
         /// <seealso cref="FindEdgeShort(IAtomContainer)"/>
-        public static CycleFinder CDKAromaticSetFinder => CycleComputation.CDK_AROMATIC;
+        public static ICycleFinder CDKAromaticSetFinder => CycleComputation.CDK_AROMATIC;
 
         /// <summary>
         /// Find all cycles in a fused system or if there were too many cycles
@@ -272,7 +272,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>a cycle finder which computes all cycles if possible or provides the vertex short cycles</returns>
         [Obsolete("use " + nameof(Or) + " to define a custom fall - back)")]
-        public static CycleFinder AllOrVertexShortFinder { get; } = Or(AllFinder, VertexShortFinder);
+        public static ICycleFinder AllOrVertexShortFinder { get; } = Or(AllFinder, VertexShortFinder);
 
         /// <summary>
         /// Find and mark all cyclic atoms and bonds in the provided molecule.
@@ -334,7 +334,7 @@ namespace NCDK.Graphs
         /// <param name="primary">primary cycle finding method</param>
         /// <param name="auxiliary">auxiliary cycle finding method if the primary failed</param>
         /// <returns>a new cycle finder</returns>
-        public static CycleFinder Or(CycleFinder primary, CycleFinder auxiliary)
+        public static ICycleFinder Or(ICycleFinder primary, ICycleFinder auxiliary)
         {
             return new Fallback(primary, auxiliary);
         }
@@ -478,7 +478,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="original">find the initial cycles before filtering</param>
         /// <returns>cycles or the original without chords</returns>
-        public static CycleFinder GetUnchorded(CycleFinder original)
+        public static ICycleFinder GetUnchorded(ICycleFinder original)
         {
             return new Unchorded(original);
         }
@@ -492,7 +492,7 @@ namespace NCDK.Graphs
         /// <param name="finder">the cycle finding method</param>
         /// <param name="container">the molecule to find the cycles of</param>
         /// <returns>the cycles of the molecule</returns>
-        private static Cycles _invoke(CycleFinder finder, IAtomContainer container)
+        private static Cycles _invoke(ICycleFinder finder, IAtomContainer container)
         {
             return _invoke(finder, container, container.Atoms.Count);
         }
@@ -507,7 +507,7 @@ namespace NCDK.Graphs
         /// <param name="container">the molecule to find the cycles of</param>
         /// <param name="length">maximum size or cycle to find</param>
         /// <returns>the cycles of the molecule</returns>
-        private static Cycles _invoke(CycleFinder finder, IAtomContainer container, int length)
+        private static Cycles _invoke(ICycleFinder finder, IAtomContainer container, int length)
         {
             try
             {
@@ -521,7 +521,7 @@ namespace NCDK.Graphs
 
         /// <summary>Interbank enumeration of cycle finders.</summary>
         private abstract class CycleComputation
-            : CycleFinder
+            : ICycleFinder
         {
             public static CycleComputation MCB = new MCB_CycleComputation();
             class MCB_CycleComputation
@@ -572,7 +572,7 @@ namespace NCDK.Graphs
                     if (!ac.Completed)
                         throw new IntractableException("A large number of cycles were being generated and the"
                                 + " computation was aborted. Please use AllCycles/AllRingsFinder with"
-                                + " and specify a larger threshold or use a " + nameof(CycleFinder) + " with a fall-back"
+                                + " and specify a larger threshold or use a " + nameof(ICycleFinder) + " with a fall-back"
                                 + " to a set unique cycles: e.g. " + nameof(Cycles) + "."  + nameof(Cycles.AllOrVertexShortFinder) +".");
                     return ac.GetPaths();
                 }
@@ -813,7 +813,7 @@ namespace NCDK.Graphs
         /// All cycles smaller than or equal to a specified length.
         /// </summary>
         private sealed class AllUpToLength
-            : CycleFinder
+            : ICycleFinder
         {
             private readonly int predefinedLength;
 
@@ -893,16 +893,16 @@ namespace NCDK.Graphs
         /// Find cycles using a primary cycle finder, if the computation was
         /// intractable fallback to an auxiliary cycle finder.
         /// </summary>
-        private sealed class Fallback : CycleFinder
+        private sealed class Fallback : ICycleFinder
         {
-            private CycleFinder primary, auxiliary;
+            private ICycleFinder primary, auxiliary;
 
             /// <summary>
             /// Create a fallback for two cycle finders.
             /// </summary>
             /// <param name="primary">the primary cycle finder</param>
             /// <param name="auxiliary">the auxiliary cycle finder</param>
-            internal Fallback(CycleFinder primary, CycleFinder auxiliary)
+            internal Fallback(ICycleFinder primary, ICycleFinder auxiliary)
             {
                 this.primary = primary;
                 this.auxiliary = auxiliary;
@@ -938,16 +938,16 @@ namespace NCDK.Graphs
         /// <summary>
         /// Remove cycles with a chord from an existing set of cycles.
         /// </summary>
-        private sealed class Unchorded : CycleFinder
+        private sealed class Unchorded : ICycleFinder
         {
-            private CycleFinder primary;
+            private ICycleFinder primary;
 
             /// <summary>
             /// Filter any cycles produced by the <paramref name="primary"/> cycle finder and
             /// only allow those without a chord.
             /// </summary>
             /// <param name="primary">the primary cycle finder</param>
-            internal Unchorded(CycleFinder primary)
+            internal Unchorded(ICycleFinder primary)
             {
                 this.primary = primary;
             }

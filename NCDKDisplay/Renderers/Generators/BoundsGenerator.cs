@@ -30,8 +30,6 @@ namespace NCDK.Renderers.Generators
     // @cdk.githash
     public class BoundsGenerator : IGenerator<IReaction>
     {
-        
-
         public BoundsGenerator() { }
 
         /// <inheritdoc/>

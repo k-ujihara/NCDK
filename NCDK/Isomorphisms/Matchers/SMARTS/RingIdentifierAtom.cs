@@ -15,6 +15,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>

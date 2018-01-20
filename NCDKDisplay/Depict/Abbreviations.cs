@@ -44,38 +44,14 @@ namespace NCDK.Depict
     /// <summary>
     /// Utility class for abbreviating (sub)structures. Using either self assigned structural
     /// motifs or pre-loading a common set a structure depiction can be made more concise with
-    /// the use of abbreviations (sometimes called superatoms). 
+    /// the use of abbreviations (sometimes called super atoms). 
     /// </summary>
     /// <example>
     /// Basic usage:
-    /// <code>
-    /// Abbreviations abrv = new Abbreviations();
-    ///
-    /// // add some abbreviations, when overlapping (e.g. Me,Et,tBu) first one wins
-    /// abrv.Add("[Na+].[H-] NaH");
-    /// abrv.Add("*c1ccccc1 Ph");
-    /// abrv.Add("*C(C)(C)C tBu");
-    /// abrv.Add("*CC Et");
-    /// abrv.Add("*C Me");
-    ///
-    /// // maybe we don't want 'Me' in the depiction
-    /// abrv.SetEnabled("Me", false);
-    ///
-    /// // assign abbreviations with some filters
-    /// int numAdded = abrv.Apply(mol);
-    ///
-    /// // generate all but don't assign, need to be added manually
-    /// // set/update the CDKConstants.CTAB_SGROUPS property of mol
-    /// List&lt;Sgroup&gt; sgroups = abrv.Generate(mol);
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.Abbreviations_Example.cs"]/*' />
     /// Predefined sets of abbreviations can be loaded, the following are
-    /// on the classpath.
-    ///
-    /// <code>
-    /// // https://www.github.com/openbabel/superatoms
-    /// abrv.LoadFromFile("obabel_superatoms.smi");
-    /// </code>
+    /// on the resource.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.Abbreviations_Example.cs+1"]/*' />
     /// </example>
     /// <seealso cref="CDKPropertyName.CtabSgroups"/>
     /// <seealso cref="Sgroup"/>
@@ -84,12 +60,12 @@ namespace NCDK.Depict
     // @cdk.keyword superatom
     public class Abbreviations : IEnumerable<string>
     {
-        private const int MaxFrag = 50;
+        private const int MaxFragment = 50;
 
         /// <summary>
         /// Symbol for joining disconnected fragments.
         /// </summary>
-        private const string INTERPUNCT = "·";
+        private const string String_Interpunct = "·";
 
         private readonly IDictionary<string, string> connectedAbbreviations = new SortedDictionary<string, string>();
         private readonly IDictionary<string, string> disconnectedAbbreviations = new SortedDictionary<string, string>();
@@ -274,7 +250,7 @@ namespace NCDK.Depict
 
             foreach (var cut in cuts)
             {
-                if (frags.Count >= MaxFrag)
+                if (frags.Count >= MaxFragment)
                     break;
                 frags.AddRange(MakeCut(cut, mol, atmidx, adjlist));
             }
@@ -317,7 +293,7 @@ namespace NCDK.Depict
                     {
                         Sgroup sgroup = new Sgroup
                         {
-                            Type = SgroupTypes.CtabAbbreviation,
+                            Type = SgroupType.CtabAbbreviation,
                             Subscript = label
                         };
                         foreach (var atom in mol.Atoms)
@@ -338,7 +314,7 @@ namespace NCDK.Depict
                                 {
                                     Sgroup sgroup = new Sgroup
                                     {
-                                        Type = SgroupTypes.CtabAbbreviation,
+                                        Type = SgroupType.CtabAbbreviation,
                                         Subscript = label
                                     };
                                     sgroup.Atoms.Add(atom);
@@ -354,12 +330,12 @@ namespace NCDK.Depict
                                     foreach (IAtom atom in part.Atoms)
                                         new Sgroup
                                         {
-                                            Type = SgroupTypes.CtabAbbreviation,
+                                            Type = SgroupType.CtabAbbreviation,
                                             Subscript = label
                                         }.Atoms.Add(atom);
                                     complexAbbr.Add(new Sgroup
                                     {
-                                        Type = SgroupTypes.CtabAbbreviation,
+                                        Type = SgroupType.CtabAbbreviation,
                                         Subscript = label
                                     });
                                 }
@@ -380,12 +356,12 @@ namespace NCDK.Depict
                                     if (label == null)
                                         label = sgroup.Subscript;
                                     else
-                                        label += INTERPUNCT + sgroup.Subscript;
+                                        label += String_Interpunct + sgroup.Subscript;
                                     foreach (IAtom atom in sgroup.Atoms)
                                         combined.Atoms.Add(atom);
                                 }
                                 combined.Subscript = label;
-                                combined.Type = SgroupTypes.CtabAbbreviation;
+                                combined.Type = SgroupType.CtabAbbreviation;
                                 complexAbbr.Clear();
                                 complexAbbr.Add(combined);
                             }
@@ -431,7 +407,7 @@ namespace NCDK.Depict
                     // create new abbreviation Sgroup
                     Sgroup sgroup = new Sgroup
                     {
-                        Type = SgroupTypes.CtabAbbreviation,
+                        Type = SgroupType.CtabAbbreviation,
                         Subscript = label
                     };
 
@@ -565,7 +541,7 @@ namespace NCDK.Depict
                 // create new
                 Sgroup newSgroup = new Sgroup
                 {
-                    Type = SgroupTypes.CtabAbbreviation,
+                    Type = SgroupType.CtabAbbreviation,
                     Subscript = sb.ToString()
                 };
                 foreach (IBond bond in newbonds)
@@ -682,7 +658,7 @@ namespace NCDK.Depict
             foreach (var sgroup in newSgroups)
             {
                 double coverage = sgroup.Atoms.Count / (double)mol.Atoms.Count;
-                // update javadoc if changed!
+                // update xml comment if changed!
                 if (!sgroup.Bonds.Any() || coverage < 0.4d)
                     sgroups.Add(sgroup);
             }
@@ -928,7 +904,7 @@ namespace NCDK.Depict
         /// <see href="https://www.github.com/openbabel/superatoms"/>
         /// </pre>
         /// </remarks>
-        /// <param name="path">classpath or filesystem path to a SMILES file</param>
+        /// <param name="path">resource or file system path to a SMILES file</param>
         /// <returns>the number of loaded abbreviation</returns>
         /// <exception cref="IOException"></exception>
         public int LoadFromFile(string path)

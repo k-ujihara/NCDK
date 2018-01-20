@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Setting;
 using System;
 using System.IO;
@@ -87,9 +88,8 @@ namespace NCDK.IO.Listener
                 this.output.Write("[" + setting.Name + "]: ");
                 // post the question
                 this.output.Write(setting.Question);
-                if (setting is BooleanIOSetting)
+                if (setting is BooleanIOSetting boolSet)
                 {
-                    BooleanIOSetting boolSet = (BooleanIOSetting)setting;
                     bool set = boolSet.IsSet;
                     if (set)
                     {
@@ -100,9 +100,8 @@ namespace NCDK.IO.Listener
                         this.output.Write(" [yN]");
                     }
                 }
-                else if (setting is OptionIOSetting)
+                else if (setting is OptionIOSetting optionSet)
                 {
-                    OptionIOSetting optionSet = (OptionIOSetting)setting;
                     var settings = optionSet.GetOptions();
                     for (int i = 0; i < settings.Count; i++)
                     {

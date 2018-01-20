@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Maths
@@ -37,7 +38,7 @@ namespace NCDK.Maths
     // @author Dan Gezelter
     // @cdk.module standard
     // @cdk.githash
-    public class FortranFormat
+    public static class FortranFormat
     {
         /// <summary>
         /// Converts a string of digits to an double.

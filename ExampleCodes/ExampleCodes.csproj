@@ -63,6 +63,7 @@
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\Elements_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />
+    <Compile Include="Depict\Abbreviations_Example.cs" />
     <Compile Include="Depict\Depiction_Example.cs" />
     <Compile Include="Depict\SvgDrawVisitor_Example.cs" />
     <Compile Include="Depict\DepictionGenerator_Example.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Fingerprints\Fingerprinter_Example.cs" />
     <Compile Include="ForceField\MMFF\MmffAtomTypeMatcher_Example.cs" />
     <Compile Include="ForceField\MMFF\Mmff_Example.cs" />
+    <Compile Include="Formula\FullEnumerationFormulaGenerator_Example.cs" />
     <Compile Include="Formula\MolecularFormulaGenerator_Example.cs" />
     <Compile Include="Geometries\Alignments\KabschAlignment_Example.cs" />
     <Compile Include="Geometries\CIP\CIPTool_Example.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Graphs\Invariant\ConjugatedPiSystemsDetector_Example.cs" />
     <Compile Include="Graphs\RelevantCycles_Example.cs" />
     <Compile Include="Graphs\ShortestPaths_Example.cs" />
+    <Compile Include="Groups\PartitionRefinement_Example.cs" />
     <Compile Include="Groups\AtomDiscretePartitionRefiner_Example.cs" />
     <Compile Include="Groups\BondDiscretePartitionRefiner_Example.cs" />
     <Compile Include="Hash\HashGeneratorMaker_Example.cs" />

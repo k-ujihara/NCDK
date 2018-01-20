@@ -260,7 +260,7 @@ namespace NCDK.Layout
 
             //        set up molecule reader
             Stream ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             //        read molecule
             IAtomContainer molecule = molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
@@ -583,7 +583,7 @@ namespace NCDK.Layout
 
             //        set up molecule reader
             Stream ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
             //        read molecule
             return molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
@@ -615,7 +615,7 @@ namespace NCDK.Layout
             // set up molecule reader
             string filename = "NCDK.Data.MDL.bug1772609.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             // read molecule
             IAtomContainer molecule = (IAtomContainer)molReader.Read(Silent.ChemObjectBuilder.Instance.NewAtomContainer());
@@ -650,7 +650,7 @@ namespace NCDK.Layout
             // set up molecule reader
             string filename = "NCDK.Data.MDL.bug1784850.mol";
             Stream ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
             // read molecule
             IAtomContainer molecule = molReader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
@@ -1064,9 +1064,9 @@ namespace NCDK.Layout
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
             Sgroup sgroup = new Sgroup();
-            sgroup.Type = SgroupTypes.CtabStructureRepeatUnit;
+            sgroup.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HT");
+            sgroup.PutValue(SgroupKey.CtabConnectivity, "HT");
             sgroup.Atoms.Add(mol.Atoms[1]);
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
@@ -1074,7 +1074,7 @@ namespace NCDK.Layout
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             Assert.IsNotNull(brackets);
             Assert.AreEqual(2, brackets.Count);
         }
@@ -1096,15 +1096,15 @@ namespace NCDK.Layout
             mol.AddBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single);
 
             Sgroup sgroup = new Sgroup();
-            sgroup.Type = SgroupTypes.CtabStructureRepeatUnit;
+            sgroup.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HT");
+            sgroup.PutValue(SgroupKey.CtabConnectivity, "HT");
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
-            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+            var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             Assert.IsNotNull(brackets);
             Assert.AreEqual(2, brackets.Count);
         }
@@ -1129,18 +1129,18 @@ namespace NCDK.Layout
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
 
             Sgroup sgroup1 = new Sgroup();
-            sgroup1.Type = SgroupTypes.CtabStructureRepeatUnit;
+            sgroup1.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup1.Subscript = "n";
-            sgroup1.PutValue(SgroupKeys.CtabConnectivity, "HT");
+            sgroup1.PutValue(SgroupKey.CtabConnectivity, "HT");
             sgroup1.Atoms.Add(mol.Atoms[1]);
             sgroup1.Atoms.Add(mol.Atoms[2]);
             sgroup1.Bonds.Add(mol.Bonds[1]);
             sgroup1.Bonds.Add(mol.Bonds[2]);
 
             Sgroup sgroup2 = new Sgroup();
-            sgroup2.Type = SgroupTypes.CtabStructureRepeatUnit;
+            sgroup2.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup2.Subscript = "m";
-            sgroup2.PutValue(SgroupKeys.CtabConnectivity, "HT");
+            sgroup2.PutValue(SgroupKey.CtabConnectivity, "HT");
             sgroup2.Atoms.Add(mol.Atoms[1]);
             sgroup2.Atoms.Add(mol.Atoms[2]);
             sgroup2.Atoms.Add(mol.Atoms[3]);
@@ -1149,10 +1149,10 @@ namespace NCDK.Layout
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup1, sgroup2 });
 
             Layout(mol);
-            var brackets1 = (IList<SgroupBracket>)sgroup1.GetValue(SgroupKeys.CtabBracket);
+            var brackets1 = (IList<SgroupBracket>)sgroup1.GetValue(SgroupKey.CtabBracket);
             Assert.IsNotNull(brackets1);
             Assert.AreEqual(2, brackets1.Count);
-            var brackets2 = (IList<SgroupBracket>)sgroup2.GetValue(SgroupKeys.CtabBracket);
+            var brackets2 = (IList<SgroupBracket>)sgroup2.GetValue(SgroupKey.CtabBracket);
             Assert.IsNotNull(brackets2);
             Assert.AreEqual(2, brackets2.Count);
         }
@@ -1173,7 +1173,7 @@ namespace NCDK.Layout
             IAtomContainer mol = smipar.ParseSmiles("c1ccccc1CCCC.*[R1].*C(=O)O");
 
             Sgroup sgroup1 = new Sgroup();
-            sgroup1.Type = SgroupTypes.ExtMulticenter;
+            sgroup1.Type = SgroupType.ExtMulticenter;
             Trace.Assert(mol.Bonds[10].Contains(mol.Atoms[10]));
             sgroup1.Atoms.Add(mol.Atoms[10]);
             sgroup1.Bonds.Add(mol.Bonds[10]);
@@ -1185,7 +1185,7 @@ namespace NCDK.Layout
             sgroup1.Atoms.Add(mol.Atoms[5]);
 
             Sgroup sgroup2 = new Sgroup();
-            sgroup2.Type = SgroupTypes.ExtMulticenter;
+            sgroup2.Type = SgroupType.ExtMulticenter;
             Trace.Assert(mol.Bonds[11].Contains(mol.Atoms[12]));
             sgroup2.Atoms.Add(mol.Atoms[12]);
             sgroup2.Bonds.Add(mol.Bonds[11]);
@@ -1217,7 +1217,7 @@ namespace NCDK.Layout
 
             // build multiple group Sgroup
             Sgroup sgroup = new Sgroup();
-            sgroup.Type = SgroupTypes.CtabMultipleGroup;
+            sgroup.Type = SgroupType.CtabMultipleGroup;
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
             var patoms = new List<IAtom>(6);
@@ -1227,7 +1227,7 @@ namespace NCDK.Layout
                 if (patoms.Count == 6)
                     break;
             }
-            sgroup.PutValue(SgroupKeys.CtabParentAtomList, patoms);
+            sgroup.PutValue(SgroupKey.CtabParentAtomList, patoms);
             mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
             Layout(mol);
             for (int i = 0; i < 6; i++)

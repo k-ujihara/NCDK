@@ -38,11 +38,11 @@ namespace NCDK.Renderers.Generators
     // @cdk.module renderbasic
     // @cdk.githash
     public class BasicBondGenerator : IGenerator<IAtomContainer>
-    {        
+    {
         /// <summary>
         /// Necessary for calculating inner-ring bond elements.
         /// </summary>
-        protected IRingSet ringSet;
+        private IRingSet ringSet;
 
         /// <summary>
         /// A hack to allow the HighlightGenerator to override the standard colors.
@@ -341,13 +341,27 @@ namespace NCDK.Renderers.Generators
         private IRenderingElement GenerateStereoElement(IBond bond, RendererModel model)
         {
             BondStereo stereo = bond.Stereo;
-            WedgeLineElement.Types type = WedgeLineElement.Types.Wedged;
-            Direction dir = Direction.toSecond;
-            if (stereo == BondStereo.Down || stereo == BondStereo.DownInverted) type = WedgeLineElement.Types.Dashed;
-            if (stereo == BondStereo.UpOrDown || stereo == BondStereo.UpOrDownInverted)
-                type = WedgeLineElement.Types.Indiff;
-            if (stereo == BondStereo.DownInverted || stereo == BondStereo.UpInverted
-                    || stereo == BondStereo.UpOrDownInverted) dir = Direction.toFirst;
+            WedgeLineElement.WedgeType type = WedgeLineElement.WedgeType.Wedged;
+            BondDirection dir = BondDirection.ToSecond;
+            switch (stereo)
+            {
+                case BondStereo.Down:
+                case BondStereo.DownInverted:
+                    type = WedgeLineElement.WedgeType.Dashed;
+                    break;
+                case BondStereo.UpOrDown:
+                case BondStereo.UpOrDownInverted:
+                    type = WedgeLineElement.WedgeType.Indiff;
+                    break;
+            }
+            switch (stereo)
+            {
+                case BondStereo.DownInverted:
+                case BondStereo.UpInverted:
+                case BondStereo.UpOrDownInverted:
+                    dir = BondDirection.ToFirst;
+                    break;
+            }
 
             IRenderingElement base_ = GenerateBondElement(bond, BondOrder.Single, model);
             return new WedgeLineElement((LineElement)base_, type, dir, GetColorForBond(bond, model));

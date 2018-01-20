@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Base;
 using System;
 using System.Collections.Generic;
@@ -38,13 +39,13 @@ namespace NCDK.Smiles
         public IDictionary<int, string> atomValues = null;
         public IList<double[]> AtomCoords { get; set; } = null;
         public IList<List<int>> fragGroups = null;
-        public IDictionary<int, Radicals> atomRads = null;
+        public IDictionary<int, Radical> atomRads = null;
         public IDictionary<int, IList<int>> positionVar = null;
         public IList<PolymerSgroup> sgroups = null;
         public IList<DataSgroup> dataSgroups = null;
         public bool coordFlag = false;
 
-        public enum Radicals
+        public enum Radical
         {
             Monovalent,
             Divalent,

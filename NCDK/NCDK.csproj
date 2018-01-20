@@ -169,17 +169,17 @@
     </Compile>
     <Compile Include="Formula\RoundRobinFormulaGenerator.cs" />
     <Compile Include="Graphs\InChI\JniInChIInputAdapter.cs" />
-    <Compile Include="Groups\AtomContainerDiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\IAtomContainerDiscretePartitionRefiner.cs" />
     <Compile Include="Groups\AtomContainerDiscretePartitionRefinerImpl.cs" />
     <Compile Include="Groups\AtomRefinable.cs" />
     <Compile Include="Groups\BondRefinable.cs" />
-    <Compile Include="Groups\DiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\IDiscretePartitionRefiner.cs" />
     <Compile Include="Groups\EquitablePartitionRefiner.cs" />
     <Compile Include="Groups\IntegerInvariant.cs" />
     <Compile Include="Groups\IntegerListInvariant.cs" />
-    <Compile Include="Groups\Invariant.cs" />
+    <Compile Include="Groups\IInvariant.cs" />
     <Compile Include="Groups\PartitionRefinement.cs" />
-    <Compile Include="Groups\Refinable.cs" />
+    <Compile Include="Groups\IRefinable.cs" />
     <Compile Include="IO\Iterator\IEnumerableChemObjectReader.cs" />
     <Compile Include="IHasProperties.tt.cs">
       <AutoGen>True</AutoGen>
@@ -334,8 +334,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
     </Content>
-    <Compile Include="Sgroups\SgroupKeys.cs" />
-    <Compile Include="Sgroups\SgroupTypes.cs" />
+    <Compile Include="Sgroups\SgroupKey.cs" />
+    <Compile Include="Sgroups\SgroupType.cs" />
     <Compile Include="NCDKUtil.cs" />
     <Compile Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt.cs">
       <AutoGen>True</AutoGen>
@@ -386,8 +386,11 @@
     <Compile Include="LibIO\CML\CMLScalar.cs" />
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
-    <Compile Include="ReactionRoles.cs" />
-    <Compile Include="Reactions\ReactionChain.cs" />
+    <Compile Include="ReactionRole.cs" />
+    <Content Include="TT\ReactionChain.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionChain.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteReaction.cs" />
     <Compile Include="Reactions\Types\AbstractAdductionLPReaction.cs" />
@@ -561,6 +564,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reaction.tt</DependentUpon>
     </Compile>
+    <Compile Include="TT\ReactionChain.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionChain.tt</DependentUpon>
+    </Compile>
     <Compile Include="TT\ReactionScheme.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -629,7 +637,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomType.tt.cs</LastGenOutput>
     </Content>
-    <Compile Include="Geometries\CIP\Rules\IComparator.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryAtom.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryAtomContainer.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryChemObject.cs" />
@@ -809,7 +816,7 @@
     <Compile Include="ObservableChemObjectCollection.cs" />
     <Compile Include="DoubleBondConformation.cs" />
     <Compile Include="Graphs\AllCycles.cs" />
-    <Compile Include="Graphs\CycleFinder.cs" />
+    <Compile Include="Graphs\ICycleFinder.cs" />
     <Compile Include="Graphs\Cycles.cs" />
     <Compile Include="Hybridization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1015,7 +1022,7 @@
     <Compile Include="Config\IAtomTypeConfigurator.cs" />
     <Compile Include="Config\TXTBasedAtomTypeConfigurator.cs" />
     <Compile Include="Config\AtomType\OWLAtomTypeReader.cs" />
-    <Compile Include="ReactionDirections.cs" />
+    <Compile Include="ReactionDirection.cs" />
     <Compile Include="Tools\Manipulator\BondManipulator.cs" />
     <Compile Include="Config\ImmutableAtomType.cs" />
     <Compile Include="IChemObjectListener.cs" />
@@ -1061,7 +1068,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RingSearches\RingSearch.cs" />
-    <Compile Include="RingSearches\CyclicVertexSearch.cs" />
+    <Compile Include="RingSearches\ICyclicVertexSearch.cs" />
     <Compile Include="RingSearches\JumboCyclicVertexSearch.cs" />
     <Compile Include="RingSearches\RegularCyclicVertexSearch.cs" />
   </ItemGroup>
@@ -1874,8 +1881,8 @@
     <Compile Include="Tools\Diff\Tree\IDifference.cs" />
     <Compile Include="Tools\Diff\Tree\IDifferenceList.cs" />
     <Compile Include="Tools\Diff\Tree\IntegerDifference.cs" />
-    <Compile Include="Tools\Diff\Tree\Point2dDifference.cs" />
-    <Compile Include="Tools\Diff\Tree\Point3dDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\Point2DDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\Point3DDifference.cs" />
     <Compile Include="Tools\Diff\Tree\StringDifference.cs" />
     <Compile Include="Tools\AtomTypeTools.cs" />
     <Compile Include="Tools\AtomicProperties.cs" />

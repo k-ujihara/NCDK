@@ -17,11 +17,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.IO.RandomAccess
 {
@@ -32,7 +33,7 @@ namespace NCDK.IO.RandomAccess
     // @cdk.githash
     public abstract class DefaultRandomAccessChemObjectReader : IList<IChemObject>
     {
-        protected ChemObjectReaderModes ReaderMode { get; set; } = ChemObjectReaderModes.Relaxed;
+        protected ChemObjectReaderMode ReaderMode { get; set; } = ChemObjectReaderMode.Relaxed;
 
         /// <summary>
         /// Holder of reader event listeners.
@@ -66,7 +67,7 @@ namespace NCDK.IO.RandomAccess
 
         public abstract IChemObject this[int index] { get; set; }
 
-        public void SetReaderMode(ChemObjectReaderModes mode)
+        public void SetReaderMode(ChemObjectReaderMode mode)
         {
             this.ReaderMode = mode;
         }

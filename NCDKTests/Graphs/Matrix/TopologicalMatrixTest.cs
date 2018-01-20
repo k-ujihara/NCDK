@@ -14,7 +14,7 @@ namespace NCDK.Graphs.Matrix
         {
             string filename = "NCDK.Data.MDL.chlorobenzene.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer container = (IAtomContainer)reader.Read(new AtomContainer());
             int[][] matrix = TopologicalMatrix.GetMatrix(container);
             Assert.AreEqual(12, matrix.Length);

@@ -20,10 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Geometries;
+using NCDK.Numerics;
 using System;
 using System.Diagnostics;
-using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
@@ -86,15 +87,16 @@ namespace NCDK.Layout
         /// <i>container</i> was null or the atom has connected atoms which have not been placed.</exception>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom, double bondLength)
         {
-            if (container == null) throw new ArgumentException("cannot place hydrogens, no container provided");
             if (atom.Point2D == null)
                 throw new ArgumentException("cannot place hydrogens on atom without coordinates");
 
             Debug.WriteLine("placing hydrogens connected to atom ", atom.Symbol, ": ", atom.Point2D);
             Debug.WriteLine("bond length", bondLength);
 
-            AtomPlacer atomPlacer = new AtomPlacer();
-            atomPlacer.Molecule = container;
+            AtomPlacer atomPlacer = new AtomPlacer
+            {
+                Molecule = container ?? throw new ArgumentException("cannot place hydrogens, no container provided")
+            };
 
             var connected = container.GetConnectedAtoms(atom);
             IAtomContainer placed = container.Builder.NewAtomContainer();

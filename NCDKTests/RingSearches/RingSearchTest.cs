@@ -47,14 +47,14 @@ namespace NCDK.RingSearches
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestNullContainer()
         {
-            new RingSearch(null, new Mock<CyclicVertexSearch>().Object);
+            new RingSearch(null, new Mock<ICyclicVertexSearch>().Object);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestNullCyclicSearch()
         {
-            new RingSearch(new Mock<IAtomContainer>().Object, (CyclicVertexSearch)null);
+            new RingSearch(new Mock<IAtomContainer>().Object, (ICyclicVertexSearch)null);
         }
 
         [TestMethod()]
@@ -86,8 +86,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
 
             RingSearch ringSearch = new RingSearch(container, cyclicSearch);
@@ -99,8 +99,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Int()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
 
             RingSearch ringSearch = new RingSearch(container, cyclicSearch);
@@ -112,8 +112,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_IntInt()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
 
             RingSearch ringSearch = new RingSearch(container, cyclicSearch);
@@ -125,8 +125,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Atom()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
             IAtom atom = new Mock<IAtom>().Object;
@@ -144,8 +144,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestCyclic_Bond()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
             IAtom a1 = new Mock<IAtom>().Object;
@@ -172,7 +172,7 @@ namespace NCDK.RingSearches
         public void TestCyclic_Atom_NotFound()
         {
 
-            CyclicVertexSearch cyclicSearch = new Mock<CyclicVertexSearch>().Object;
+            ICyclicVertexSearch cyclicSearch = new Mock<ICyclicVertexSearch>().Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
             IAtom atom = new Mock<IAtom>().Object;
@@ -187,8 +187,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolated()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
             IAtom atom = new Mock<IAtom>().Object;
 
@@ -202,8 +202,8 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFused()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
-            CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
+            ICyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
             IAtom atom = new Mock<IAtom>().Object;
 
@@ -217,7 +217,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestRingFragments()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
             var mock_atom = new Mock<IAtom>();
@@ -248,7 +248,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestIsolatedRingFragments()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
             var mock_atom = new Mock<IAtom>();
@@ -277,7 +277,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFusedRingFragments()
         {
-            var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
+            var mock_cyclicSearch = new Mock<ICyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
             var mock_atom = new Mock<IAtom>();

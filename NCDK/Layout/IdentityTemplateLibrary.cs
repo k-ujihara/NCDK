@@ -21,15 +21,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
+using NCDK.Numerics;
 using NCDK.Smiles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
 using System.Text;
 
 namespace NCDK.Layout

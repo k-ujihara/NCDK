@@ -137,16 +137,10 @@ namespace NCDK.Isomorphisms
             {
                 IAtom atom = g1.Atoms[0];
                 IAtom atom2 = g2.Atoms[0];
-                if (atom is IQueryAtom)
-                {
-                    IQueryAtom qAtom = (IQueryAtom)atom;
+                if (atom is IQueryAtom qAtom)
                     return qAtom.Matches(g2.Atoms[0]);
-                }
-                else if (atom2 is IQueryAtom)
-                {
-                    IQueryAtom qAtom = (IQueryAtom)atom2;
-                    return qAtom.Matches(g1.Atoms[0]);
-                }
+                else if (atom2 is IQueryAtom qAtom2)
+                    return qAtom2.Matches(g1.Atoms[0]);
                 else
                 {
                     string atomSymbol = atom2.Symbol;
@@ -278,8 +272,10 @@ namespace NCDK.Isomorphisms
             }
             else
             {
-                IList<IList<RMap>> atomsMap = new List<IList<RMap>>();
-                atomsMap.Add(list);
+                IList<IList<RMap>> atomsMap = new List<IList<RMap>>
+                {
+                    list
+                };
                 return atomsMap;
             }
         }
@@ -319,7 +315,9 @@ namespace NCDK.Isomorphisms
             if (g1 is IQueryAtomContainer)
                 throw new CDKException("The first IAtomContainer must not be an IQueryAtomContainer");
 
-            if (g2.Atoms.Count > g1.Atoms.Count) return false;
+            if (g2.Atoms.Count > g1.Atoms.Count)
+                return false;
+
             // test for single atom case
             if (g2.Atoms.Count == 1)
             {
@@ -327,24 +325,26 @@ namespace NCDK.Isomorphisms
                 for (int i = 0; i < g1.Atoms.Count; i++)
                 {
                     IAtom atom2 = g1.Atoms[i];
-                    if (atom is IQueryAtom)
+                    if (atom is IQueryAtom qAtom)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom;
-                        if (qAtom.Matches(atom2)) return true;
+                        if (qAtom.Matches(atom2))
+                            return true;
                     }
-                    else if (atom2 is IQueryAtom)
+                    else if (atom2 is IQueryAtom qAtom2)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom2;
-                        if (qAtom.Matches(atom)) return true;
+                        if (qAtom2.Matches(atom))
+                            return true;
                     }
                     else
                     {
-                        if (atom2.Symbol.Equals(atom.Symbol)) return true;
+                        if (atom2.Symbol.Equals(atom.Symbol))
+                            return true;
                     }
                 }
                 return false;
             }
-            if (!TestSubgraphHeuristics(g1, g2)) return false;
+            if (!TestSubgraphHeuristics(g1, g2))
+                return false;
             return (GetSubgraphMap(g1, g2) != null);
         }
 
@@ -438,15 +438,16 @@ namespace NCDK.Isomorphisms
                 IAtom queryAtom = g2.Atoms[0];
 
                 // we can have a IQueryAtomContainer *or* an IAtomContainer
-                if (queryAtom is IQueryAtom)
+                if (queryAtom is IQueryAtom qAtom)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)queryAtom;
                     foreach (var atom in g1.Atoms)
                     {
                         if (qAtom.Matches(atom))
                         {
-                            List<RMap> lmap = new List<RMap>();
-                            lmap.Add(new RMap(g1.Atoms.IndexOf(atom), 0));
+                            List<RMap> lmap = new List<RMap>
+                            {
+                                new RMap(g1.Atoms.IndexOf(atom), 0)
+                            };
                             matches.Add(lmap);
                         }
                     }
@@ -457,8 +458,10 @@ namespace NCDK.Isomorphisms
                     {
                         if (queryAtom.Symbol.Equals(atom.Symbol))
                         {
-                            List<RMap> lmap = new List<RMap>();
-                            lmap.Add(new RMap(g1.Atoms.IndexOf(atom), 0));
+                            List<RMap> lmap = new List<RMap>
+                            {
+                                new RMap(g1.Atoms.IndexOf(atom), 0)
+                            };
                             matches.Add(lmap);
                         }
                     }
@@ -526,8 +529,6 @@ namespace NCDK.Isomorphisms
             IAtomContainer ac = g.Builder.NewAtomContainer();
 
             IDictionary<IAtom, IAtom> table = new Dictionary<IAtom, IAtom>();
-            IAtom a1;
-            IAtom a2;
             IAtom a;
             IBond bond;
 
@@ -543,7 +544,7 @@ namespace NCDK.Isomorphisms
                 }
 
                 a = bond.Begin;
-                if (!table.TryGetValue(a, out a1))
+                if (!table.TryGetValue(a, out IAtom a1))
                 {
                     a1 = (IAtom)a.Clone();
                     ac.Atoms.Add(a1);
@@ -551,7 +552,7 @@ namespace NCDK.Isomorphisms
                 }
 
                 a = bond.End;
-                if (!table.TryGetValue(a, out a2))
+                if (!table.TryGetValue(a, out IAtom a2))
                 {
                     a2 = (IAtom)a.Clone();
                     ac.Atoms.Add(a2);
@@ -633,12 +634,12 @@ namespace NCDK.Isomorphisms
             {
                 List<RMap> arrayList = new List<RMap>();
                 IAtom atom = g2.Atoms[0];
-                if (atom is IQueryAtom)
+                if (atom is IQueryAtom qAtom)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)atom;
                     for (int i = 0; i < g1.Atoms.Count; i++)
                     {
-                        if (qAtom.Matches(g1.Atoms[i])) arrayList.Add(new RMap(i, 0));
+                        if (qAtom.Matches(g1.Atoms[i]))
+                            arrayList.Add(new RMap(i, 0));
                     }
                 }
                 else
@@ -646,7 +647,8 @@ namespace NCDK.Isomorphisms
                     string atomSymbol = atom.Symbol;
                     for (int i = 0; i < g1.Atoms.Count; i++)
                     {
-                        if (g1.Atoms[i].Symbol.Equals(atomSymbol)) arrayList.Add(new RMap(i, 0));
+                        if (g1.Atoms[i].Symbol.Equals(atomSymbol))
+                            arrayList.Add(new RMap(i, 0));
                     }
                 }
                 return arrayList;
@@ -658,14 +660,17 @@ namespace NCDK.Isomorphisms
                 for (int i = 0; i < g2.Atoms.Count; i++)
                 {
                     IAtom atom2 = g2.Atoms[i];
-                    if (atom2 is IQueryAtom)
+                    if (atom2 is IQueryAtom qAtom)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom2;
-                        if (qAtom.Matches(atom)) arrayList.Add(new RMap(0, i));
+                        if (qAtom.Matches(atom))
+                        {
+                            arrayList.Add(new RMap(0, i));
+                        }
                     }
                     else
                     {
-                        if (atom2.Symbol.Equals(atom.Symbol)) arrayList.Add(new RMap(0, i));
+                        if (atom2.Symbol.Equals(atom.Symbol))
+                            arrayList.Add(new RMap(0, i));
                     }
                 }
                 return arrayList;
@@ -795,9 +800,8 @@ namespace NCDK.Isomorphisms
                 for (int j = 0; j < ac2.Bonds.Count; j++)
                 {
                     IBond bondA2 = ac2.Bonds[j];
-                    if (bondA2 is IQueryBond)
+                    if (bondA2 is IQueryBond queryBond)
                     {
-                        IQueryBond queryBond = (IQueryBond)bondA2;
                         IQueryAtom atom1 = (IQueryAtom)(bondA2.Begin);
                         IQueryAtom atom2 = (IQueryAtom)(bondA2.End);
                         IBond bond = ac1.Bonds[i];

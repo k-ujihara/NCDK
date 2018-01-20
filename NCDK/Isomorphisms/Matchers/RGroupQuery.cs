@@ -20,8 +20,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,7 +46,7 @@ namespace NCDK.Isomorphisms.Matchers
     /// for the combination of its root,definitions and conditions.
     /// </para>
     /// <para>
-    /// This Javadoc does not contain a code sample how to create a new RGroupQuery
+    /// This document does not contain a code sample how to create a new RGroupQuery
     /// from scratch, because a sensible RGroupQuery has quite a few attributes to be set
     /// including a root plus a bunch of substituents, which are all atom containers.
     /// So that would be a lot of sample code here.
@@ -106,9 +106,8 @@ namespace NCDK.Isomorphisms.Matchers
                 for (int i = 0; i < RootStructure.Atoms.Count; i++)
                 {
                     IAtom atom = RootStructure.Atoms[i];
-                    if (atom is IPseudoAtom)
+                    if (atom is IPseudoAtom rGroup)
                     {
-                        IPseudoAtom rGroup = (IPseudoAtom)atom;
                         if (!rGroup.Label.Equals("R")
                                 && // just "R" is not a proper query atom
                                 rGroup.Label.StartsWith("R")
@@ -309,8 +308,7 @@ namespace NCDK.Isomorphisms.Matchers
                             //root cloned, substitute cloned. These now need to be attached to each other..
                             rootClone.Add(rgrpClone);
 
-                            IDictionary<int, IBond> rAttachmentPoints;
-                            if (this.RootAttachmentPoints.TryGetValue(rAtom, out rAttachmentPoints))
+                            if (this.RootAttachmentPoints.TryGetValue(rAtom, out IDictionary<int, IBond> rAttachmentPoints))
                             {
                                 // Loop over attachment points of the R# atom
                                 for (int apo = 0; apo < rAttachmentPoints.Count; apo++)

@@ -122,7 +122,7 @@ namespace NCDK.Stereo
         private readonly EdgeToBondMap bondMap;
 
         /// <summary>the type of stereo center - indexed by atom.</summary>
-        private CenterTypes[] stereocenters;
+        private CenterType[] stereocenters;
 
         /// <summary>the stereo elements - indexed by atom.</summary>
         private StereoElement[] elements;
@@ -165,7 +165,7 @@ namespace NCDK.Stereo
             this.g = graph;
             this.ringSearch = new RingSearch(container, graph);
             this.elements = new StereoElement[g.Length];
-            this.stereocenters = new CenterTypes[g.Length];
+            this.stereocenters = new CenterType[g.Length];
             this.numStereoElements = CreateElements();
         }
 
@@ -186,45 +186,45 @@ namespace NCDK.Stereo
         /// Obtain the type of stereo element support for atom at index <paramref name="v"/>.
         /// Supported elements types are:
         /// <list type="bullet"> 
-        /// <item><see cref="CoordinateTypes.Bicoordinate"/> - an central atom involved in a cumulated system (not yet supported)</item> 
-        /// <item><see cref="CoordinateTypes.Tricoordinate"/> - an atom at one end of a geometric (double-bond) stereo bond or cumulated system.</item>
-        /// <item><see cref="CoordinateTypes.Tetracoordinate"/> - a tetrahedral atom (could also be square planar in future)</item>
-        /// <item><see cref="CoordinateTypes.None"/> - the atom is not a (supported) stereo element type.</item>
+        /// <item><see cref="CoordinateType.Bicoordinate"/> - an central atom involved in a cumulated system (not yet supported)</item> 
+        /// <item><see cref="CoordinateType.Tricoordinate"/> - an atom at one end of a geometric (double-bond) stereo bond or cumulated system.</item>
+        /// <item><see cref="CoordinateType.Tetracoordinate"/> - a tetrahedral atom (could also be square planar in future)</item>
+        /// <item><see cref="CoordinateType.None"/> - the atom is not a (supported) stereo element type.</item>
         /// </list>
         /// </summary>
         /// <param name="v">atom index (vertex)</param>
         /// <returns>the type of element</returns>
-        public CoordinateTypes ElementType(int v)
+        public CoordinateType ElementType(int v)
         {
-            if (stereocenters[v] == CenterTypes.None || elements[v] == null)
-                return CoordinateTypes.None;
+            if (stereocenters[v] == CenterType.None || elements[v] == null)
+                return CoordinateType.None;
             else
                 return elements[v].type;
         }
 
         /// <summary>
-        /// Is the atom be a stereocenter (i.e. <see cref="CenterTypes.True"/> or <see cref="CenterTypes.Para"/>).
+        /// Is the atom be a stereocenter (i.e. <see cref="CenterType.True"/> or <see cref="CenterType.Para"/>).
         /// </summary>
         /// <param name="v">atom index (vertex)</param>
         /// <returns>the atom at index <paramref name="v"/> is a stereocenter</returns>
         public bool IsStereocenter(int v)
         {
-            return stereocenters[v] == CenterTypes.True || stereocenters[v] == CenterTypes.Para;
+            return stereocenters[v] == CenterType.True || stereocenters[v] == CenterType.Para;
         }
 
         /// <summary>
         /// Determine the type of stereocenter is the atom at index <paramref name="v"/>.
         /// <list type="bullet"> 
-        /// <item><see cref="CenterTypes.True"/> - the atom has constitutionally different neighbors</item> 
-        /// <item><see cref="CenterTypes.Para"/> - the atom resembles a stereo centre but has constitutionally equivalent neighbors
+        /// <item><see cref="CenterType.True"/> - the atom has constitutionally different neighbors</item> 
+        /// <item><see cref="CenterType.Para"/> - the atom resembles a stereo centre but has constitutionally equivalent neighbors
         /// (e.g. inositol, decalin). The stereocenter depends on the configuration of one or more stereocenters.</item> 
-        /// <item><see cref="CenterTypes.Potential"/> - the atom can supported stereo chemistry but has not be shown ot be a true or para center.</item> 
-        /// <item><see cref="CenterTypes.None"/> - the atom is not a stereocenter (e.g. methane).</item>
+        /// <item><see cref="CenterType.Potential"/> - the atom can supported stereo chemistry but has not be shown ot be a true or para center.</item> 
+        /// <item><see cref="CenterType.None"/> - the atom is not a stereocenter (e.g. methane).</item>
         /// </list>
         /// </summary>
         /// <param name="v">atom index.</param>
         /// <returns>the type of stereocenter</returns>
-        public CenterTypes StereocenterType(int v)
+        public CenterType StereocenterType(int v)
         {
             return stereocenters[v];
         }
@@ -243,7 +243,7 @@ namespace NCDK.Stereo
 
             // all atoms we don't define as potential are considered
             // non-stereogenic
-            Arrays.Fill(stereocenters, CenterTypes.None);
+            Arrays.Fill(stereocenters, CenterType.None);
 
             for (int i = 0; i < g.Length; i++)
             {
@@ -279,24 +279,24 @@ namespace NCDK.Stereo
                 // check the type of stereo chemistry supported
                 switch (SupportedType(i, v, d, h, x))
                 {
-                    case CoordinateTypes.Bicoordinate:
-                        stereocenters[i] = CenterTypes.Potential;
+                    case CoordinateType.Bicoordinate:
+                        stereocenters[i] = CenterType.Potential;
                         elements[i] = new Bicoordinate(i, g[i]);
                         nElements++;
                         int u = g[i][0];
                         int w = g[i][1];
                         if (tricoordinate[u])
                         {
-                            stereocenters[u] = CenterTypes.Potential;
+                            stereocenters[u] = CenterType.Potential;
                             elements[u] = new Tricoordinate(u, i, g[u]);
                         }
                         if (tricoordinate[w])
                         {
-                            stereocenters[w] = CenterTypes.Potential;
+                            stereocenters[w] = CenterType.Potential;
                             elements[w] = new Tricoordinate(w, i, g[w]);
                         }
                         break;
-                    case CoordinateTypes.Tricoordinate:
+                    case CoordinateType.Tricoordinate:
                         u = i;
                         w = piNeighbor;
 
@@ -304,29 +304,29 @@ namespace NCDK.Stereo
 
                         if (!tricoordinate[w])
                         {
-                            if (elements[w] != null && elements[w].type == CoordinateTypes.Bicoordinate)
+                            if (elements[w] != null && elements[w].type == CoordinateType.Bicoordinate)
                             {
-                                stereocenters[u] = CenterTypes.Potential;
+                                stereocenters[u] = CenterType.Potential;
                                 elements[u] = new Tricoordinate(u, w, g[u]);
                             }
                             continue;
                         }
 
-                        stereocenters[w] = CenterTypes.Potential;
-                        stereocenters[u] = CenterTypes.Potential;
+                        stereocenters[w] = CenterType.Potential;
+                        stereocenters[u] = CenterType.Potential;
                         elements[u] = new Tricoordinate(u, w, g[u]);
                         elements[w] = new Tricoordinate(w, u, g[w]);
                         nElements++;
                         break;
 
-                    case CoordinateTypes.Tetracoordinate:
+                    case CoordinateType.Tetracoordinate:
                         elements[i] = new Tetracoordinate(i, g[i]);
-                        stereocenters[i] = CenterTypes.Potential;
+                        stereocenters[i] = CenterType.Potential;
                         nElements++;
                         break;
 
                     default:
-                        stereocenters[i] = CenterTypes.None;
+                        stereocenters[i] = CenterType.None;
                         break;
                 }
 
@@ -337,12 +337,12 @@ namespace NCDK.Stereo
             // link up tetracoordinate atoms accross cumulate systems
             for (int v = 0; v < g.Length; v++)
             {
-                if (elements[v] != null && elements[v].type == CoordinateTypes.Bicoordinate)
+                if (elements[v] != null && elements[v].type == CoordinateType.Bicoordinate)
                 {
                     int u = elements[v].neighbors[0];
                     int w = elements[v].neighbors[1];
-                    if (elements[u] != null && elements[w] != null && elements[u].type == CoordinateTypes.Tricoordinate
-                            && elements[w].type == CoordinateTypes.Tricoordinate)
+                    if (elements[u] != null && elements[w] != null && elements[u].type == CoordinateType.Tricoordinate
+                            && elements[w].type == CoordinateType.Tricoordinate)
                     {
                         ((Tricoordinate)elements[u]).other = w;
                         ((Tricoordinate)elements[w]).other = u;
@@ -366,7 +366,7 @@ namespace NCDK.Stereo
 
             for (int v = 0; v < g.Length; v++)
             {
-                if (stereocenters[v] == CenterTypes.Potential)
+                if (stereocenters[v] == CenterType.Potential)
                 {
                     int[] ws = elements[v].neighbors;
                     int nUnique = 0;
@@ -392,12 +392,12 @@ namespace NCDK.Stereo
 
                     // neighbors are constitutionally different
                     if (nUnique == ws.Length)
-                        stereocenters[v] = CenterTypes.True;
+                        stereocenters[v] = CenterType.True;
 
                     // all the symmetric neighbors are terminal then 'v' can not
                     // be a stereocenter. There is an automorphism which inverts
                     // only this stereocenter
-                    else if (terminal) stereocenters[v] = CenterTypes.None;
+                    else if (terminal) stereocenters[v] = CenterType.None;
                 }
             }
         }
@@ -422,9 +422,9 @@ namespace NCDK.Stereo
                 foreach (var v in isolated)
                 {
                     cyclic.Set(v, true);
-                    if (stereocenters[v] == CenterTypes.Potential)
+                    if (stereocenters[v] == CenterType.Potential)
                         potential.Add(elements[v]);
-                    else if (stereocenters[v] == CenterTypes.True) trueCentres.Add(elements[v]);
+                    else if (stereocenters[v] == CenterType.True) trueCentres.Add(elements[v]);
                 }
 
                 // there is only 1 potential and 0 true stereocenters in this cycle
@@ -432,14 +432,14 @@ namespace NCDK.Stereo
                 if (potential.Count + trueCentres.Count < 2)
                 {
                     foreach (var element in potential)
-                        stereocenters[element.focus] = CenterTypes.None;
+                        stereocenters[element.focus] = CenterType.None;
                     continue;
                 }
 
                 List<StereoElement> paraElements = new List<StereoElement>();
                 foreach (var element in potential)
                 {
-                    if (element.type == CoordinateTypes.Tetracoordinate)
+                    if (element.type == CoordinateType.Tetracoordinate)
                     {
 
                         int[] ws = element.neighbors;
@@ -471,21 +471,21 @@ namespace NCDK.Stereo
                         if (deg == 3 || (deg == 4 && nUnique == 2)) paraElements.Add(element);
 
                         // remove those we know cannot possibly be stereocenters
-                        if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterTypes.None;
+                        if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = CenterType.None;
                     }
-                    else if (element.type == CoordinateTypes.Tricoordinate)
+                    else if (element.type == CoordinateType.Tricoordinate)
                     {
                         Tricoordinate either = (Tricoordinate)element;
-                        if (stereocenters[either.other] == CenterTypes.True) paraElements.Add(element);
+                        if (stereocenters[either.other] == CenterType.True) paraElements.Add(element);
                     }
                 }
 
                 if (paraElements.Count + trueCentres.Count >= 2)
                     foreach (var para in paraElements)
-                        stereocenters[para.focus] = CenterTypes.Para;
+                        stereocenters[para.focus] = CenterType.Para;
                 else
                     foreach (var para in paraElements)
-                        stereocenters[para.focus] = CenterTypes.None;
+                        stereocenters[para.focus] = CenterType.None;
             }
         }
 
@@ -499,7 +499,7 @@ namespace NCDK.Stereo
         /// <param name="h">hydrogen</param>
         /// <param name="x">connectivity</param>
         /// <returns>type of stereo chemistry</returns>
-        private CoordinateTypes SupportedType(int i, int v, int d, int h, int x)
+        private CoordinateType SupportedType(int i, int v, int d, int h, int x)
         {
             IAtom atom = container.Atoms[i];
 
@@ -518,69 +518,69 @@ namespace NCDK.Stereo
 
             // more than one hydrogen
             if (checkSymmetry && h > 1)
-                return CoordinateTypes.None;
+                return CoordinateType.None;
 
             switch (GetAtomicNumber(atom))
             {
                 case 0: // stop the nulls on pseudo atoms messing up anything else
-                    return CoordinateTypes.None;
+                    return CoordinateType.None;
                 case 5: // boron
-                    return q == -1 && v == 4 && x == 4 ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                    return q == -1 && v == 4 && x == 4 ? CoordinateType.Tetracoordinate : CoordinateType.None;
                 case 6: // carbon
-                    if (v != 4 || q != 0) return CoordinateTypes.None;
-                    if (x == 2) return CoordinateTypes.Bicoordinate;
-                    if (x == 3) return CoordinateTypes.Tricoordinate;
-                    if (x == 4) return CoordinateTypes.Tetracoordinate;
-                    return CoordinateTypes.None;
+                    if (v != 4 || q != 0) return CoordinateType.None;
+                    if (x == 2) return CoordinateType.Bicoordinate;
+                    if (x == 3) return CoordinateType.Tricoordinate;
+                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    return CoordinateType.None;
                 case 7: // nitrogen
-                    if (x == 2 && v == 3 && d == 2 && q == 0) return CoordinateTypes.Tricoordinate;
-                    if (x == 3 && v == 4 && q == 1) return CoordinateTypes.Tricoordinate;
+                    if (x == 2 && v == 3 && d == 2 && q == 0) return CoordinateType.Tricoordinate;
+                    if (x == 3 && v == 4 && q == 1) return CoordinateType.Tricoordinate;
                     if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     // note: bridgehead not allowed by InChI but makes sense
-                    return x == 3 && h == 0 && (IsBridgeHeadNitrogen(i) || InThreeMemberRing(i)) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                    return x == 3 && h == 0 && (IsBridgeHeadNitrogen(i) || InThreeMemberRing(i)) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                 case 14: // silicon
-                    if (v != 4 || q != 0) return CoordinateTypes.None;
-                    if (x == 3) return CoordinateTypes.Tricoordinate;
-                    if (x == 4) return CoordinateTypes.Tetracoordinate;
-                    return CoordinateTypes.None;
+                    if (v != 4 || q != 0) return CoordinateType.None;
+                    if (x == 3) return CoordinateType.Tricoordinate;
+                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    return CoordinateType.None;
                 case 15: // phosphorus
                     if (x == 4 && (q == 0 && v == 5 && h == 0 || q == 1 && v == 4))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     // note 3 valent phosphorus not documented as accepted
                     // by InChI tech manual but tests show it is
                     if (x == 3 && q == 0 && v == 3 && h == 0)
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     goto case 16;
                 case 16: // sulphur
-                    if (h > 0) return CoordinateTypes.None;
+                    if (h > 0) return CoordinateType.None;
                     if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-                    return CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
+                    return CoordinateType.None;
 
                 case 32: // germanium
-                    if (v != 4 || q != 0) return CoordinateTypes.None;
-                    if (x == 3) return CoordinateTypes.Tricoordinate;
-                    if (x == 4) return CoordinateTypes.Tetracoordinate;
-                    return CoordinateTypes.None;
+                    if (v != 4 || q != 0) return CoordinateType.None;
+                    if (x == 3) return CoordinateType.Tricoordinate;
+                    if (x == 4) return CoordinateType.Tetracoordinate;
+                    return CoordinateType.None;
                 case 33: // arsenic
-                    if (x == 4 && q == 1 && v == 4) return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-                    return CoordinateTypes.None;
+                    if (x == 4 && q == 1 && v == 4) return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
+                    return CoordinateType.None;
                 case 34: // selenium
-                    if (h > 0) return CoordinateTypes.None;
+                    if (h > 0) return CoordinateType.None;
                     if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
                     if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
-                        return VerifyTerminalHCount(i) ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
-                    return CoordinateTypes.None;
+                        return VerifyTerminalHCount(i) ? CoordinateType.Tetracoordinate : CoordinateType.None;
+                    return CoordinateType.None;
 
                 case 50: // tin
-                    return q == 0 && v == 4 && x == 4 ? CoordinateTypes.Tetracoordinate : CoordinateTypes.None;
+                    return q == 0 && v == 4 && x == 4 ? CoordinateType.Tetracoordinate : CoordinateType.None;
             }
 
-            return CoordinateTypes.None;
+            return CoordinateType.None;
         }
 
         /// <summary>
@@ -745,7 +745,7 @@ namespace NCDK.Stereo
         }
 
         /// <summary>Defines the type of a stereocenter.</summary>
-        public enum CenterTypes
+        public enum CenterType
         {
             /// <summary>Atom is a true stereo-centre.</summary>
             True,
@@ -760,7 +760,7 @@ namespace NCDK.Stereo
             None,
         }
 
-        public enum CoordinateTypes
+        public enum CoordinateType
         {
             /// <summary>An atom within a cumulated system. (not yet supported)</summary>
             Bicoordinate,
@@ -791,7 +791,7 @@ namespace NCDK.Stereo
         {
             public int focus;
             public int[] neighbors;
-            public CoordinateTypes type;
+            public CoordinateType type;
         }
 
         /// <summary>Represents a tetrahedral stereocenter with 2 neighbors.</summary>
@@ -800,7 +800,7 @@ namespace NCDK.Stereo
             public Bicoordinate(int v, int[] neighbors)
             {
                 this.focus = v;
-                this.type = CoordinateTypes.Bicoordinate;
+                this.type = CoordinateType.Bicoordinate;
                 this.neighbors = Arrays.CopyOf(neighbors, neighbors.Length);
             }
         }
@@ -811,7 +811,7 @@ namespace NCDK.Stereo
             public Tetracoordinate(int v, int[] neighbors)
             {
                 this.focus = v;
-                this.type = CoordinateTypes.Tetracoordinate;
+                this.type = CoordinateType.Tetracoordinate;
                 this.neighbors = Arrays.CopyOf(neighbors, neighbors.Length);
             }
         }
@@ -835,7 +835,7 @@ namespace NCDK.Stereo
             {
                 this.focus = v;
                 this.other = w;
-                this.type = CoordinateTypes.Tricoordinate;
+                this.type = CoordinateType.Tricoordinate;
                 this.neighbors = new int[neighbors.Length - 1];
                 int n = 0;
 

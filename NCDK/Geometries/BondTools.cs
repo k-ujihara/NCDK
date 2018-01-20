@@ -21,6 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs.Canon;
 using System;
 using System.Collections.Generic;
@@ -146,9 +147,9 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Gives the angle between two lines starting at atom from and going to to1
-        /// and to2. If bool=false the angle starts from the middle line and goes from
+        /// and to2. If <paramref name="flag"/> is <see langword="false"/> the angle starts from the middle line and goes from
         /// 0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If
-        /// bool=true the angle goes from 0 to 2PI.
+        /// <paramref name="flag"/> is <see langword="true"/> the angle goes from 0 to 2ƒÎ.
         /// </summary>
         /// <param name="from">the atom to view from.</param>
         /// <param name="to1">first direction to look in.</param>
@@ -578,7 +579,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Says if of four atoms connected two one atom the up and down bonds are
-        /// opposite or not, i. e.if it's tetrehedral or square planar. The method
+        /// opposite or not, i. e.if it's tetrahedral or square planar. The method
         /// does not check if there are four atoms and if two or up and two are down
         /// </summary>
         /// <param name="atom">The atom which is the center</param>
@@ -590,7 +591,7 @@ namespace NCDK.Geometries
             SortedDictionary<double, int> hm = new SortedDictionary<double, int>();
             for (int i = 1; i < atoms.Count; i++)
             {
-                hm.Add(giveAngle(atom, atoms[0], atoms[i]), i);
+                hm.Add(GiveAngle(atom, atoms[0], atoms[i]), i);
             }
             var ohere = hm.Values.ToArray();
             BondStereo stereoOne = container.GetBond(atom, atoms[0]).Stereo;
@@ -599,19 +600,19 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calls giveAngleBothMethods with bool = true.
+        /// Calls <see cref="GiveAngleBothMethods(Vector2, Vector2, Vector2, bool)"/> with <see langword="true"/> parameter.
         /// </summary>
         /// <param name="from">the atom to view from</param>
         /// <param name="to1">first direction to look in</param>
         /// <param name="to2">second direction to look in</param>
         /// <returns>The angle in rad from 0 to 2*PI</returns>
-        public static double giveAngle(IAtom from, IAtom to1, IAtom to2)
+        public static double GiveAngle(IAtom from, IAtom to1, IAtom to2)
         {
             return (GiveAngleBothMethods(from, to1, to2, true));
         }
 
         /// <summary>
-        /// Calls giveAngleBothMethods with bool = false.
+        /// Calls <see cref="GiveAngleBothMethods(Vector2, Vector2, Vector2, bool)"/> with <see langword="false"/> parameter.
         /// </summary>
         /// <param name="from">the atom to view from</param>
         /// <param name="to1">first direction to look in</param>

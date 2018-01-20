@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -32,7 +33,7 @@ namespace NCDK.Tools.Manipulator
     // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2005-08-19
-    public class AminoAcidManipulator
+    public static class AminoAcidManipulator
     {
         /// <summary>
         /// Removes the singly bonded oxygen from the acid group of the AminoAcid.

@@ -19,23 +19,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Utils.Xml;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
-using System;
-using System.Collections;
 
 namespace NCDK.Dict
 {
     /// <summary>
     /// Dictionary with entries.
+    /// </summary>
     /// <para>
     /// FIXME: this should be replaced by an uptodate Dictionary Schema DOM type thing.
     /// </para>
-    /// </summary>
     // @author     Egon Willighagen
     // @cdk.githash
     // @cdk.created    2003-08-23

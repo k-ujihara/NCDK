@@ -37,7 +37,7 @@ namespace NCDK.Graphs
                 // load azulene
                 string filename = "NCDK.Data.MDL.azulene.mol";
                 var ins = ResourceLoader.GetAsStream(filename);
-                MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
                 IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
                 IChemSequence seq = chemFile[0];
                 IChemModel model = seq[0];

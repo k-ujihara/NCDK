@@ -21,8 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.SMSD.Tools;
-using NCDK.Tools.Manipulator;
 using System;
 
 namespace NCDK.Normalizers
@@ -34,7 +34,7 @@ namespace NCDK.Normalizers
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
-    public class SMSDNormalizer : AtomContainerManipulator
+    public class SMSDNormalizer
     {
         /// <summary>
         /// Returns deep copy of the molecule
@@ -115,7 +115,7 @@ namespace NCDK.Normalizers
         /// <param name="container"></param>
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public new static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
+        public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
         }

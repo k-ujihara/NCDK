@@ -37,8 +37,8 @@ namespace NCDK.Graphs
     // @cdk.created 2001-06-17
     public static class PathTools
     {
-        /// <summary>bool with which debugging can be turned on.</summary>
-        public readonly static bool CanDebug = false;
+        /// <summary>flag with which debugging can be turned on.</summary>
+        private const bool CanDebug = false;
 
         /// <summary>
         /// Sums up the columns in a 2D int matrix.

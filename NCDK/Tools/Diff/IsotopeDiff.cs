@@ -29,14 +29,8 @@ namespace NCDK.Tools.Diff.Tree
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class IsotopeDiff
+    public static class IsotopeDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private IsotopeDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>

@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Formula;
 
 namespace NCDK.Tools.Manipulator
@@ -37,7 +38,7 @@ namespace NCDK.Tools.Manipulator
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-    public class MolecularFormulaSetManipulator
+    public static class MolecularFormulaSetManipulator
     {
         /// <summary>
         /// Extract from a set of MolecularFormula the maximum occurrence of each element found and

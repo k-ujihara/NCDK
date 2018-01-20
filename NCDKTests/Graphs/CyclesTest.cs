@@ -233,7 +233,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void Or()
         {
-            CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(3));
+            ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(3));
             IAtomContainer fullerene = GetFullerene();
             CheckSize(cf.Find(fullerene, fullerene.Atoms.Count), 120);
         }

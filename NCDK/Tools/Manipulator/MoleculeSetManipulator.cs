@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -29,7 +30,7 @@ namespace NCDK.Tools.Manipulator
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    public class MoleculeSetManipulator
+    public static class MoleculeSetManipulator
     {
         public static int GetAtomCount(IChemObjectSet<IAtomContainer> set)
         {

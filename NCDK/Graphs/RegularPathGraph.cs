@@ -69,11 +69,8 @@ namespace NCDK.Graphs
         {
             if (mGraph == null)
                 throw new ArgumentNullException(nameof(mGraph));
-            if (rank == null)
-                throw new ArgumentNullException(nameof(rank));
-
             this.graph = new List<PathEdge>[mGraph.Length];
-            this.rank = rank;
+            this.rank = rank ?? throw new ArgumentNullException(nameof(rank));
             this.limit = limit + 1; // first/last vertex repeats
             int ord = graph.Length;
 

@@ -82,7 +82,7 @@ namespace NCDK.Renderers
 
             AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new WPFFontManager());
             RendererModel model = renderer.GetRenderer2DModel();
-            model.SetCompactShape(AtomShapeTypes.Oval);
+            model.SetCompactShape(AtomShapeType.Oval);
             model.SetCompactAtom(true);
             model.SetKekuleStructure(true);
             model.SetShowEndCarbons(true);

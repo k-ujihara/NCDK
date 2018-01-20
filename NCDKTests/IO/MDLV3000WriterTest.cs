@@ -322,9 +322,9 @@ namespace NCDK.IO
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[2]);
-            sgroup.Type = SgroupTypes.CtabStructureRepeatUnit;
+            sgroup.Type = SgroupType.CtabStructureRepeatUnit;
             sgroup.Subscript = "n";
-            sgroup.PutValue(SgroupKeys.CtabConnectivity, "HH");
+            sgroup.PutValue(SgroupKey.CtabConnectivity, "HH");
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
             string res = WriteToStr(mol);
@@ -354,8 +354,8 @@ namespace NCDK.IO
                 sgroup.Atoms.Add(mol.Atoms[i + 1]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[mol.Bonds.Count - 1]);
-            sgroup.PutValue(SgroupKeys.CtabParentAtomList, new[] { mol.Atoms[1] });
-            sgroup.Type = SgroupTypes.CtabMultipleGroup;
+            sgroup.PutValue(SgroupKey.CtabParentAtomList, new[] { mol.Atoms[1] });
+            sgroup.Type = SgroupType.CtabMultipleGroup;
             sgroup.Subscript = repeatAtoms.ToString();
             sgroups.Add(sgroup);
             mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);

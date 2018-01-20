@@ -17,9 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
@@ -29,15 +26,8 @@ namespace NCDK.Tools.Diff.Tree
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class ElectronContainerDiff
+    public static class ElectronContainerDiff
     {
-
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private ElectronContainerDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         ///

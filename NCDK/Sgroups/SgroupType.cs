@@ -36,7 +36,7 @@ namespace NCDK.Sgroups
     /// </list>
     /// </remarks>
     [Obfuscation(ApplyToMembers = true, Exclude = true)]
-    public enum SgroupTypes
+    public enum SgroupType
     {
         Nil = 0,
 
@@ -150,24 +150,24 @@ namespace NCDK.Sgroups
 			"N/A",
 		};
 
-        private static readonly Dictionary<string, SgroupTypes> map;
+        private static readonly Dictionary<string, SgroupType> map;
 
         static SgroupTypeTools()
         {
-            map = new Dictionary<string, SgroupTypes>();
+            map = new Dictionary<string, SgroupType>();
 			for (int i = 0; i < ctabKeys.Length; i++)
             {
-                map.Add(ctabKeys[i], (SgroupTypes)i);
+                map.Add(ctabKeys[i], (SgroupType)i);
             }
         }
 
-        public static string Key(this SgroupTypes value)
+        public static string Key(this SgroupType value)
 			=> ctabKeys[(int)value];
 
-        public static SgroupTypes Parse(string str)
+        public static SgroupType Parse(string str)
         {
-            if (!map.TryGetValue(str, out SgroupTypes o))
-                return SgroupTypes.CtabGeneric;
+            if (!map.TryGetValue(str, out SgroupType o))
+                return SgroupType.CtabGeneric;
             return o;
         }
     }

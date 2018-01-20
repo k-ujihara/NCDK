@@ -21,13 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace NCDK.IO

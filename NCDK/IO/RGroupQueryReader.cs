@@ -20,8 +20,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
@@ -181,7 +181,7 @@ namespace NCDK.IO
                     Trace.TraceInformation("Process the root structure (scaffold)");
                     CheckLineBeginsWith(input.ReadLine(), "$CTAB", ++lineCount);
                     //Force header
-                    StringBuilder sb = new StringBuilder(RGroup.ROOT_LABEL + "\n\n\n");
+                    StringBuilder sb = new StringBuilder(RGroup.RootLabelKey + "\n\n\n");
                     line = input.ReadLine();
                     ++lineCount;
                     while (line != null && !line.Equals("$END CTAB"))
@@ -215,7 +215,7 @@ namespace NCDK.IO
                 }
 
                 //Let MDL reader process $CTAB block of the root structure.
-                MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ChemObjectReaderModes.Strict);
+                MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ChemObjectReaderMode.Strict);
                 IAtomContainer root = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
                 rGroupQuery.RootStructure = root;
 
@@ -250,9 +250,8 @@ namespace NCDK.IO
                 //Deal with remaining attachment points (non AAL)
                 foreach (var atom in root.Atoms)
                 {
-                    if (atom is IPseudoAtom)
+                    if (atom is IPseudoAtom rGroup)
                     {
-                        IPseudoAtom rGroup = (IPseudoAtom)atom;
                         if (rGroup.Label.StartsWith("R") && !rGroup.Label.Equals("R") && // only numbered ones
                                 !attachmentPoints.ContainsKey(rGroup))
                         {
@@ -293,9 +292,8 @@ namespace NCDK.IO
 
                 foreach (var atom in root.Atoms)
                 {
-                    if (atom is IPseudoAtom)
+                    if (atom is IPseudoAtom rGroup)
                     {
-                        IPseudoAtom rGroup = (IPseudoAtom)atom;
                         if (RGroupQuery.IsValidRgroupQueryLabel(rGroup.Label))
                         {
                             int rgroupNum = int.Parse(rGroup.Label.Substring(1));
@@ -352,10 +350,12 @@ namespace NCDK.IO
                             ++lineCount;
                         }
                         string groupStr = sb.ToString();
-                        reader = new MDLV2000Reader(new StringReader(groupStr), ChemObjectReaderModes.Strict);
+                        reader = new MDLV2000Reader(new StringReader(groupStr), ChemObjectReaderMode.Strict);
                         IAtomContainer group = reader.Read(defaultChemObjectBuilder.NewAtomContainer());
-                        RGroup rGroup = new RGroup();
-                        rGroup.Group = group;
+                        RGroup rGroup = new RGroup
+                        {
+                            Group = group
+                        };
 
                         //Parse the Rgroup's attachment points (APO)
                         using (var groupLinesReader = new StringReader(groupStr))

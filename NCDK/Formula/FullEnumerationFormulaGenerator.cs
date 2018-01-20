@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
@@ -33,41 +34,17 @@ namespace NCDK.Formula
     /// This class generates molecular formulas within given mass range and elemental
     /// composition. There is no guaranteed order in which the formulas are
     /// generated.
-    /// 
-    /// Usage:
-    /// 
-    /// <pre>
-    /// IsotopeFactory ifac = Isotopes.getInstance();
-    /// IIsotope c = ifac.getMajorIsotope(&quot;C&quot;);
-    /// IIsotope h = ifac.getMajorIsotope(&quot;H&quot;);
-    /// IIsotope n = ifac.getMajorIsotope(&quot;N&quot;);
-    /// IIsotope o = ifac.getMajorIsotope(&quot;O&quot;);
-    /// IIsotope p = ifac.getMajorIsotope(&quot;P&quot;);
-    /// IIsotope s = ifac.getMajorIsotope(&quot;S&quot;);
-    /// 
-    /// MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    /// mfRange.addIsotope(c, 0, 50);
-    /// mfRange.addIsotope(h, 0, 100);
-    /// mfRange.addIsotope(o, 0, 50);
-    /// mfRange.addIsotope(n, 0, 50);
-    /// mfRange.addIsotope(p, 0, 10);
-    /// mfRange.addIsotope(s, 0, 10);
-    /// 
-    /// MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass,
-    ///         maxMass, mfRange);
-    /// double minMass = 133.003;
-    /// double maxMass = 133.005;
-    /// IMolecularFormulaSet mfSet = mfg.getAllFormulas();
-    /// </pre>
-    /// 
+    /// </summary>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Formula.FullEnumerationFormulaGenerator_Example.cs"]/*' />
     /// The code was originally developed for a MZmine 2 framework module, published
     /// in Pluskal et al. <token>cdk-cite-Pluskal2012</token>.
-    /// </summary>
+    /// </example>
     // @cdk.module formula
     // @author Tomas Pluskal
     // @cdk.created 2014-12-28
     // @cdk.githash 
-    class FullEnumerationFormulaGenerator : IFormulaGenerator
+    internal class FullEnumerationFormulaGenerator : IFormulaGenerator
     {
         private readonly IChemObjectBuilder builder;
 

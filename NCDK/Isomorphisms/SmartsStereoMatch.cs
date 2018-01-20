@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
@@ -304,17 +305,15 @@ namespace NCDK.Isomorphisms
             int nElements = 0;
             foreach (var element in container.StereoElements)
             {
-                if (element is ITetrahedralChirality)
+                if (element is ITetrahedralChirality tc)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)element;
                     int idx = map[tc.ChiralAtom];
                     elements[idx] = element;
                     types[idx] = StereoType.Tetrahedral;
                     indices[nElements++] = idx;
                 }
-                else if (element is IDoubleBondStereochemistry)
+                else if (element is IDoubleBondStereochemistry dbs)
                 {
-                    IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry)element;
                     int idx1 = map[dbs.StereoBond.Begin];
                     int idx2 = map[dbs.StereoBond.End];
                     elements[idx2] = elements[idx1] = element;

@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 
 using System.Collections.Generic;
 
@@ -30,7 +30,7 @@ namespace NCDK.Tools.Manipulator
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    public class ReactionSetManipulator
+    public static class ReactionSetManipulator
     {
         public static int GetAtomCount(IReactionSet set)
         {
@@ -235,8 +235,10 @@ namespace NCDK.Tools.Manipulator
 
         public static List<IChemObject> GetAllChemObjects(IReactionSet set)
         {
-            List<IChemObject> list = new List<IChemObject>();
-            list.Add(set);
+            List<IChemObject> list = new List<IChemObject>
+            {
+                set
+            };
             foreach (var reaction in set)
             {
                 list.AddRange(ReactionManipulator.GetAllChemObjects(reaction));

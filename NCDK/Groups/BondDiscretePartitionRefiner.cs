@@ -20,18 +20,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
     /// <summary>
-    /// An <see cref="AtomContainerDiscretePartitionRefiner"/> for bonds.
-    /// 
+    /// An <see cref="IAtomContainerDiscretePartitionRefiner"/> for bonds.
+    /// </summary>
+    /// <remarks>
     /// If two bonds are equivalent under an automorphism in the group, then
     /// roughly speaking they are in symmetric positions in the molecule. For
     /// example, the C-C bonds attaching two methyl groups to a benzene ring
     /// are 'equivalent' in this sense.
-    /// </summary>
+    /// </remarks>
     // @author maclean
     // @cdk.module group 
     internal class BondDiscretePartitionRefiner : AtomContainerDiscretePartitionRefinerImpl
@@ -59,7 +59,7 @@ namespace NCDK.Groups
         }
 
         /// <inheritdoc/>
-        protected override Refinable CreateRefinable(IAtomContainer atomContainer)
+        protected override IRefinable CreateRefinable(IAtomContainer atomContainer)
         {
             return new BondRefinable(atomContainer, ignoreBondOrders);
         }

@@ -19,9 +19,9 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using System;
 using System.Diagnostics;
 using System.IO;

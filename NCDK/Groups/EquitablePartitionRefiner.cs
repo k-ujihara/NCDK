@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,22 +39,22 @@ namespace NCDK.Groups
     // @cdk.module group 
     public class EquitablePartitionRefiner
     {
-        private readonly Refinable refinable;
+        private readonly IRefinable refinable;
 
         /// <summary>
         /// A forward split order tends to favor partitions where the cells are
         /// refined from lowest to highest. A reverse split order is, of course, the
         /// opposite.
         /// </summary>
-        public enum SplitOrders
+        public enum SplitOrder
         {
-            FORWARD, REVERSE
-        };
+            Forward, Reverse
+        }
 
         /// <summary>
         /// The bias in splitting cells when refining
         /// </summary>
-        private SplitOrders splitOrder = SplitOrders.FORWARD;
+        private SplitOrder splitOrder = SplitOrder.Forward;
 
         /// <summary>
         /// The block of the partition that is being refined
@@ -65,7 +66,7 @@ namespace NCDK.Groups
         /// </summary>
         private Queue<ISet<int>> blocksToRefine;
 
-        public EquitablePartitionRefiner(Refinable refinable)
+        public EquitablePartitionRefiner(IRefinable refinable)
         {
             this.refinable = refinable;
         }
@@ -74,7 +75,7 @@ namespace NCDK.Groups
         /// Set the preference for splitting cells.
         /// </summary>
         /// <param name="splitOrder">either FORWARD or REVERSE</param>
-        public void SetSplitOrder(SplitOrders splitOrder)
+        public void SetSplitOrder(SplitOrder splitOrder)
         {
             this.splitOrder = splitOrder;
         }
@@ -105,7 +106,7 @@ namespace NCDK.Groups
                     if (!finer.IsDiscreteCell(currentBlockIndex))
                     {
                         // get the neighbor invariants for this block
-                        IDictionary<Invariant, SortedSet<int>> invariants = GetInvariants(finer, t);
+                        IDictionary<IInvariant, SortedSet<int>> invariants = GetInvariants(finer, t);
 
                         // split the block on the basis of these invariants
                         Split(invariants, finer);
@@ -131,20 +132,22 @@ namespace NCDK.Groups
         /// <param name="partition">the current partition</param>
         /// <param name="targetBlock">the current target block of the partition</param>
         /// <returns>a map of set intersection invariants to elements</returns>
-        private IDictionary<Invariant, SortedSet<int>> GetInvariants(Partition partition, ISet<int> targetBlock)
+        private IDictionary<IInvariant, SortedSet<int>> GetInvariants(Partition partition, ISet<int> targetBlock)
         {
-            IDictionary<Invariant, SortedSet<int>> setList = new Dictionary<Invariant, SortedSet<int>>();
+            IDictionary<IInvariant, SortedSet<int>> setList = new Dictionary<IInvariant, SortedSet<int>>();
             foreach (int u in partition.GetCell(currentBlockIndex))
             {
-                Invariant h = refinable.NeighboursInBlock(targetBlock, u);
+                IInvariant h = refinable.NeighboursInBlock(targetBlock, u);
                 if (setList.ContainsKey(h))
                 {
                     setList[h].Add(u);
                 }
                 else
                 {
-                    SortedSet<int> set = new SortedSet<int>();
-                    set.Add(u);
+                    SortedSet<int> set = new SortedSet<int>
+                    {
+                        u
+                    };
                     setList[h] = set;
                 }
             }
@@ -156,16 +159,16 @@ namespace NCDK.Groups
         /// </summary>
         /// <param name="invariants">a map of neighbor counts to elements</param>
         /// <param name="partition">the partition that is being refined</param>
-        private void Split(IDictionary<Invariant, SortedSet<int>> invariants, Partition partition)
+        private void Split(IDictionary<IInvariant, SortedSet<int>> invariants, Partition partition)
         {
             int nonEmptyInvariants = invariants.Keys.Count;
             if (nonEmptyInvariants > 1)
             {
-                List<Invariant> invariantKeys =
-                        new List<Invariant>(invariants.Keys);
+                List<IInvariant> invariantKeys =
+                        new List<IInvariant>(invariants.Keys);
                 partition.RemoveCell(currentBlockIndex);
                 int k = currentBlockIndex;
-                if (splitOrder == SplitOrders.REVERSE)
+                if (splitOrder == SplitOrder.Reverse)
                 {
                     invariantKeys.Sort();
                 }
@@ -173,7 +176,7 @@ namespace NCDK.Groups
                 {
                     invariantKeys.Sort((a, b) => -a.CompareTo(b));
                 }
-                foreach (Invariant h in invariantKeys)
+                foreach (IInvariant h in invariantKeys)
                 {
                     SortedSet<int> setH = invariants[h];
                     partition.InsertCell(k, setH);

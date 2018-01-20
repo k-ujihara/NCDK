@@ -1,5 +1,5 @@
-﻿/*
- * Copyright (c) 2016 John May <jwmay@users.sf.net>
+/*
+ * Copyright (c) 2015 John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -12,7 +12,7 @@
  * copyright notice that you may distribute with programs based on this work.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * Any WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
  *
@@ -20,13 +20,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-namespace NCDK
+
+namespace NCDK.Sgroups
 {
-    public enum ReactionRoles
+    /// <summary>
+    /// Keys for indexing common Sgroup attributes. 
+    /// </summary>
+    public enum SgroupKey
     {
-        Reactant,
-        Agent,
-        Product,
-        None
-    };
+        CtabType,
+        CtabSubType,
+        /// <summary>
+        /// Not to be confused with the subscript key
+        /// this is Sgroup label not the bracket label (e.g. 'n').
+        /// </summary>
+        CtabLabel,
+        CtabExpansion,
+        CtabCorrespondence,
+        CtabAbbreviationVector,
+        CtabAbbreviationAttachPoint,
+        CtabDisplayInfo,
+        CtabSubScript,
+        CtabConnectivity,
+        CtabBracket,
+        CtabBracketStyle,
+        CtabClass,
+        CtabParentAtomList,
+        CtabComponentNumber,
+    }
 }

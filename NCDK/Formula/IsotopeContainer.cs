@@ -4,7 +4,7 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// This class defines a isotope container. It contains in principle a
-    /// IMolecularFormula, a mass and intensity/abundance value.
+    /// <see cref="IMolecularFormula"/>, a mass and intensity/abundance value.
     /// </summary>
     // @author Miguel Rojas Cherto
     // @cdk.module  formula
@@ -59,10 +59,12 @@ namespace NCDK.Formula
         /// <returns>The cloned object</returns>
         public object Clone()
         {
-            IsotopeContainer isoClone = new IsotopeContainer();
-            isoClone.Formula = Formula;
-            isoClone.Intensity = Intensity;
-            isoClone.Mass = Mass;
+            IsotopeContainer isoClone = new IsotopeContainer
+            {
+                Formula = Formula,
+                Intensity = Intensity,
+                Mass = Mass
+            };
             return isoClone;
         }
     }

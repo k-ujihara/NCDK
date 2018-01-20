@@ -25,7 +25,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Geometries;
 using NCDK.IO.Listener;
 using NCDK.Isomorphisms.Matchers;
@@ -160,7 +160,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.ChEBI_37340.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -177,7 +177,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.MDL.massnumber.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -561,7 +561,7 @@ namespace NCDK.IO
             var ins = ResourceLoader.GetAsStream(filename);
             try
             {
-                MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
                 reader.Read(new ChemFile());
                 reader.Close();
                 Assert.Fail("Expected a CDKException");
@@ -583,7 +583,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.hisotopes.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Relaxed);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -599,7 +599,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.332727182.radical.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -646,7 +646,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.ChEBI_26120.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.AreEqual(BondStereo.EOrZ, mol.Bonds[1].Stereo);
@@ -660,7 +660,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.a-pinene-with-undefined-stereo.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.AreEqual(BondStereo.UpOrDown, mol.Bonds[1].Stereo);
@@ -676,7 +676,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.withcharges.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -718,7 +718,7 @@ namespace NCDK.IO
             var filename = "NCDK.Data.MDL.butadiene.mol";
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);
@@ -835,12 +835,12 @@ namespace NCDK.IO
         public void TestShortLines()
         {
             Trace.TraceInformation("Testing short lines ChemObjectReaderModes.Relaxed");
-            TestShortLinesForMode(ChemObjectReaderModes.Relaxed);
+            TestShortLinesForMode(ChemObjectReaderMode.Relaxed);
             Trace.TraceInformation("Testing short lines ChemObjectReaderModes.Strict");
-            TestShortLinesForMode(ChemObjectReaderModes.Strict);
+            TestShortLinesForMode(ChemObjectReaderMode.Strict);
         }
 
-        private void TestShortLinesForMode(ChemObjectReaderModes mode)
+        private void TestShortLinesForMode(ChemObjectReaderMode mode)
         {
             var filename = "NCDK.Data.MDL.glycine-short-lines.mol";
             var ins = ResourceLoader.GetAsStream(filename);
@@ -874,7 +874,7 @@ namespace NCDK.IO
             var filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
             var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             molOne = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNotNull(molOne.Atoms[0].Point2D);
@@ -900,7 +900,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.chemblMolregno5369.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Relaxed);
 
             var prop = new NameValueCollection
             {
@@ -925,7 +925,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.chemblMolregno5369.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Relaxed);
             IAtomContainer molecule = new AtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -986,7 +986,7 @@ namespace NCDK.IO
                         if (bond is CTFileQueryBond)
                         {
                             queryBondCount++;
-                            Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondTypes.Any);
+                            Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.Any);
                             Assert.AreEqual(BondOrder.Unset, bond.Order);
                         }
                     }
@@ -1013,7 +1013,7 @@ namespace NCDK.IO
                 if (bond is CTFileQueryBond)
                 {
                     queryBondCount++;
-                    Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondTypes.SingleOrAromatic);
+                    Assert.IsTrue(((CTFileQueryBond)bond).Type == CTFileQueryBond.BondType.SingleOrAromatic);
                     Assert.AreEqual(BondOrder.Unset, bond.Order);
                 }
             }
@@ -1496,7 +1496,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.chemsketch-all-labelled.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             reader.Read(new AtomContainer());
         }
 
@@ -1623,7 +1623,7 @@ namespace NCDK.IO
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
-                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Cs2CO3", sgroup.Subscript);
                 Assert.AreEqual(6, sgroup.Atoms.Count);
             }
@@ -1640,12 +1640,12 @@ namespace NCDK.IO
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
-                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
                 Assert.AreEqual("n", sgroup.Subscript);
-                Assert.AreEqual("HT", (string)sgroup.GetValue(SgroupKeys.CtabConnectivity));
+                Assert.AreEqual("HT", (string)sgroup.GetValue(SgroupKey.CtabConnectivity));
                 Assert.AreEqual(10, sgroup.Atoms.Count);
                 Assert.AreEqual(2, sgroup.Bonds.Count);
-                IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKeys.CtabBracket);
+                IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
                 Assert.AreEqual(2, brackets.Count);
                 // M  SDI   1  4    2.2579   -0.8756    1.7735   -1.6600
                 Assert.AreEqual(2.2579, brackets[0].FirstPoint.X, 0.001);
@@ -1673,17 +1673,17 @@ namespace NCDK.IO
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
                 Sgroup sgroup = sgroups[0];
-                Assert.AreEqual(SgroupTypes.CtabComponent, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabComponent, sgroup.Type);
                 Assert.AreEqual(1, sgroup.Parents.Count);
                 Assert.IsTrue(sgroup.Parents.Contains(sgroups[2]));
                 // second sgroup
                 sgroup = sgroups[1];
-                Assert.AreEqual(SgroupTypes.CtabComponent, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabComponent, sgroup.Type);
                 Assert.AreEqual(1, sgroup.Parents.Count);
                 Assert.IsTrue(sgroup.Parents.Contains(sgroups[2]));
                 // third sgroup
                 sgroup = sgroups[2];
-                Assert.AreEqual(SgroupTypes.CtabMixture, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabMixture, sgroup.Type);
                 Assert.AreEqual(0, sgroup.Parents.Count);
             }
         }
@@ -1700,19 +1700,19 @@ namespace NCDK.IO
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
                 Sgroup sgroup = sgroups[0];
-                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
                 // second sgroup
                 sgroup = sgroups[1];
-                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
                 // third sgroup
                 sgroup = sgroups[2];
-                Assert.AreEqual(SgroupTypes.CtabAbbreviation, sgroup.Type);
+                Assert.AreEqual(SgroupType.CtabAbbreviation, sgroup.Type);
                 Assert.AreEqual("Ph", sgroup.Subscript);
-                Assert.IsNotNull(sgroup.GetValue(SgroupKeys.CtabExpansion));
+                Assert.IsNotNull(sgroup.GetValue(SgroupKey.CtabExpansion));
             }
         }
 
@@ -1723,7 +1723,7 @@ namespace NCDK.IO
             using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bad-scn.mol"))
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
-                mdlr.ReaderMode = ChemObjectReaderModes.Strict;
+                mdlr.ReaderMode = ChemObjectReaderMode.Strict;
                 IAtomContainer container = mdlr.Read(new AtomContainer());
             }
         }
@@ -1735,7 +1735,7 @@ namespace NCDK.IO
             using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bad-def.mol"))
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
-                mdlr.ReaderMode = ChemObjectReaderModes.Strict;
+                mdlr.ReaderMode = ChemObjectReaderMode.Strict;
                 IAtomContainer container = mdlr.Read(new AtomContainer());
             }
         }
@@ -1751,11 +1751,11 @@ namespace NCDK.IO
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(2, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
-                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
+                Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKey.CtabBracketStyle));
                 sgroup = sgroups[1];
-                Assert.AreEqual(SgroupTypes.CtabStructureRepeatUnit, sgroup.Type);
-                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKeys.CtabBracketStyle));
+                Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
+                Assert.AreEqual(1, (int)sgroup.GetValue(SgroupKey.CtabBracketStyle));
             }
         }
 
@@ -1811,7 +1811,7 @@ namespace NCDK.IO
         {
             using (var ins = ResourceLoader.GetAsStream(GetType(), "seaborgium.mol"))
             {
-                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
                 IAtomContainer mol = mdlr.Read(new AtomContainer());
             }
         }
@@ -1821,7 +1821,7 @@ namespace NCDK.IO
         {
             using (var ins = ResourceLoader.GetAsStream(GetType(), "seaborgium_abs.mol"))
             {
-                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+                MDLV2000Reader mdlr = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
                 IAtomContainer mol = mdlr.Read(new AtomContainer());
                 Assert.AreEqual(261, mol.Atoms[0].MassNumber);
             }
@@ -1874,7 +1874,7 @@ namespace NCDK.IO
             var bytes = Encoding.UTF8.GetBytes(mol);
             MDLV2000Reader mdlv2000Reader = new MDLV2000Reader(new MemoryStream(bytes))
             {
-                ReaderMode = ChemObjectReaderModes.Relaxed
+                ReaderMode = ChemObjectReaderMode.Relaxed
             };
             var atomContainer = mdlv2000Reader.Read(new Silent.AtomContainer());
             Assert.AreEqual(17, atomContainer.Atoms.Count);

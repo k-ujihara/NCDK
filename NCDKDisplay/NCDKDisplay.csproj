@@ -57,9 +57,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RendererModelTools.tt.cs</LastGenOutput>
     </Content>
-    <Compile Include="Renderers\Generators\AtomShapeTypes.cs" />
+    <Compile Include="Renderers\Generators\AtomShapeType.cs" />
     <Compile Include="Renderers\Generators\BasicGenerator.cs" />
-    <Compile Include="Renderers\HighlightStyles.cs" />
+    <Compile Include="Renderers\HighlightStyle.cs" />
     <Compile Include="Renderers\ObserbableDictionary.cs" />
     <Compile Include="Renderers\RendererModelTools.tt.cs">
       <AutoGen>True</AutoGen>

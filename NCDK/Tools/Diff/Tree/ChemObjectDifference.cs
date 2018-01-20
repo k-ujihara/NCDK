@@ -33,7 +33,6 @@ namespace NCDK.Tools.Diff.Tree
     public class ChemObjectDifference
             : AbstractDifferenceList, IDifferenceList
     {
-
         private string name;
 
         public ChemObjectDifference(string name)

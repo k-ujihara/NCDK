@@ -19,7 +19,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles("F/C=C/F");
             Assert.AreEqual(
-                Configuration.DoubleBonds.Opposite,
+                Configuration.ConfigurationDoubleBond.Opposite,
                 BondBasedConfiguration.ConfigurationOf(g, 0, 1, 2, 3));
         }
 
@@ -28,7 +28,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles("F\\C=C\\F");
             Assert.AreEqual(
-                Configuration.DoubleBonds.Opposite,
+                Configuration.ConfigurationDoubleBond.Opposite,
                 BondBasedConfiguration.ConfigurationOf(g, 0, 1, 2, 3));
         }
 
@@ -37,7 +37,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles("F/C=C\\F");
             Assert.AreEqual(
-                Configuration.DoubleBonds.Together,
+                Configuration.ConfigurationDoubleBond.Together,
                 BondBasedConfiguration.ConfigurationOf(g, 0, 1, 2, 3));
         }
 
@@ -46,7 +46,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles("F\\C=C/F");
             Assert.AreEqual(
-                Configuration.DoubleBonds.Together,
+                Configuration.ConfigurationDoubleBond.Together,
                 BondBasedConfiguration.ConfigurationOf(g, 0, 1, 2, 3));
         }
     }

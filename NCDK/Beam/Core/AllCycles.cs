@@ -67,7 +67,6 @@ namespace NCDK.Beam
 
             ElectronDonation.Cycle cycle = new Inner_ElectronDonation_Cycle();
 
-
             BitArray cyclic = new BiconnectedComponents(g).Cyclic;
 
             for (int u = 0; u < g.Order; u++)

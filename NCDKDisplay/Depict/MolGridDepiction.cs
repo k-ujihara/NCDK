@@ -107,6 +107,9 @@ namespace NCDK.Depict
 
             IDrawVisitor visitor = WPFDrawVisitor.ForVectorGraphics(drawingContext);
 
+            if (model.GetBackgroundColor() != Colors.Transparent)
+                visitor.Visit(new RectangleElement(new Point(0, 0), total.width, total.height, true, model.GetBackgroundColor()), Transform.Identity);
+
             // compound the zoom, fitting and scaling into a single value
             double rescale = zoom * fitting * scale;
 

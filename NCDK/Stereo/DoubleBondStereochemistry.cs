@@ -46,7 +46,7 @@ namespace NCDK.Stereo
         {
         }
 
-        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement.Configurations configure)
+        public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, StereoElement.Configuration configure)
             : base(stereoBond, ligandBonds.ToList(), new StereoElement(StereoElement.Classes.CisTrans, configure))
         {
         }

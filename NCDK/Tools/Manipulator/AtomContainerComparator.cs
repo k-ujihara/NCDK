@@ -22,11 +22,9 @@
  */
 
 using NCDK.Config;
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.Tools.Manipulator
 {

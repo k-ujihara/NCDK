@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
@@ -258,7 +259,7 @@ namespace NCDK.Smiles
             if (SmiFlavors.IsSet(opts, SmiFlavor.CxRadical) &&
                 state.atomRads != null && state.atomRads.Any())
             {
-                var radinv = new SortedDictionary<CxSmilesState.Radicals, List<int>>();
+                var radinv = new SortedDictionary<CxSmilesState.Radical, List<int>>();
                 foreach (var e in state.atomRads)
                 {
                     List<int> idxs;

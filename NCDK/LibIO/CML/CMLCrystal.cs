@@ -8,7 +8,7 @@ namespace NCDK.LibIO.CML
         /// <summary>
         /// dictRef ids for 6 scalar children of crystal.
         /// </summary>
-        string[] CRYSTAL_DICT_REFS =
+        static readonly string[] CRYSTAL_DICT_REFS =
             {
                 "cml:a",
                 "cml:b",
@@ -21,7 +21,7 @@ namespace NCDK.LibIO.CML
         /// <summary>
         ///  unit refs for 6 scalar children of crystal.
         /// </summary>
-        string[] CRYSTAL_DICT_UNITS =
+        static readonly string[] CRYSTAL_DICT_UNITS =
             {
                 "units:ang",
                 "units:ang",
@@ -33,8 +33,10 @@ namespace NCDK.LibIO.CML
 
         public static CMLScalar CreateScalar(string dictRef, double param, string unitRef, double error)
         {
-            CMLScalar scalar = new CMLScalar(param);
-            scalar.DictRef = dictRef;
+            CMLScalar scalar = new CMLScalar(param)
+            {
+                DictRef = dictRef
+            };
             if (unitRef != null)
             {
                 scalar.Units = unitRef;

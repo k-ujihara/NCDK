@@ -250,11 +250,11 @@ namespace NCDK.Beam
                 int[] us = arrangement[u].ToArray();
                 var es = GetEdges(arrangement[u], u);
 
-                if (c.Type == Configuration.Types.Tetrahedral)
+                if (c.Type == Configuration.ConfigurationType.Tetrahedral)
                     us = InsertThImplicitRef(u, us); // XXX: temp fix
-                else if (c.Type == Configuration.Types.DoubleBond)
+                else if (c.Type == Configuration.ConfigurationType.DoubleBond)
                     us = InsertDbImplicitRef(u, us); // XXX: temp fix
-                else if (c.Type == Configuration.Types.ExtendedTetrahedral)
+                else if (c.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                 {
                     g.AddFlags(Graph.HAS_EXT_STRO);
                     // Extended tetrahedral is a little more complicated, note
@@ -306,15 +306,15 @@ namespace NCDK.Beam
                 for (int i = 0; i < us.Length; i++)
                     us[i] = es[i].Other(u);
 
-                if (c.Type == Configuration.Types.Tetrahedral)
+                if (c.Type == Configuration.ConfigurationType.Tetrahedral)
                 {
                     us = InsertThImplicitRef(u, us); // XXX: temp fix
                 }
-                else if (c.Type == Configuration.Types.DoubleBond)
+                else if (c.Type == Configuration.ConfigurationType.DoubleBond)
                 {
                     us = InsertDbImplicitRef(u, us); // XXX: temp fix
                 }
-                else if (c.Type == Configuration.Types.ExtendedTetrahedral)
+                else if (c.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                 {
                     g.AddFlags(Graph.HAS_EXT_STRO);
                     // Extended tetrahedral is a little more complicated, note

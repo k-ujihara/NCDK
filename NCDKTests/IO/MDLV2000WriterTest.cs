@@ -21,9 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.IO.Listener;
 using NCDK.Sgroups;
 using NCDK.Templates;
@@ -79,8 +80,10 @@ namespace NCDK.IO
         {
             StringWriter writer = new StringWriter();
             IAtomContainer molecule = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.MassNumber = 14;
+            Atom atom = new Atom("C")
+            {
+                MassNumber = 14
+            };
             molecule.Atoms.Add(atom);
 
             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -99,8 +102,10 @@ namespace NCDK.IO
             molecule.Atoms[0].Valency = 1;
             molecule.Atoms[1].Valency = 0;
             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
-            var customSettings = new NameValueCollection();
-            customSettings["WriteQueryFormatValencies"] = "true";
+            var customSettings = new NameValueCollection
+            {
+                ["WriteQueryFormatValencies"] = "true"
+            };
             mdlWriter.Listeners.Add(new PropertiesListener(customSettings));
             mdlWriter.Write(molecule);
             mdlWriter.Close();
@@ -113,8 +118,10 @@ namespace NCDK.IO
         public void NonDefaultValence_fe_iii()
         {
             IAtomContainer container = new AtomContainer();
-            IAtom fe1 = new Atom("Fe");
-            fe1.ImplicitHydrogenCount = 3;
+            IAtom fe1 = new Atom("Fe")
+            {
+                ImplicitHydrogenCount = 3
+            };
             container.Atoms.Add(fe1);
             StringWriter writer = new StringWriter();
             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
@@ -261,8 +268,10 @@ namespace NCDK.IO
             molecule.Atoms.Add(atom);
 
             MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
-            var prop = new NameValueCollection();
-            prop["ForceWriteAs2DCoordinates"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["ForceWriteAs2DCoordinates"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             mdlWriter.Listeners.Add(listener);
             mdlWriter.CustomizeJob();
@@ -408,8 +417,10 @@ namespace NCDK.IO
 
             writer = new StringWriter();
             mdlWriter = new MDLV2000Writer(writer);
-            var prop = new NameValueCollection();
-            prop["WriteAromaticBondTypes"] = "true";
+            var prop = new NameValueCollection
+            {
+                ["WriteAromaticBondTypes"] = "true"
+            };
             PropertiesListener listener = new PropertiesListener(prop);
             mdlWriter.Listeners.Add(listener);
             mdlWriter.CustomizeJob();

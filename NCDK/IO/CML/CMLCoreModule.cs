@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Primitives;
 using NCDK.Geometries;
 using NCDK.Stereo;
@@ -133,10 +133,8 @@ namespace NCDK.IO.CML
 
         public void Inherit(ICMLModule convention)
         {
-            if (convention is CMLCoreModule)
+            if (convention is CMLCoreModule conv)
             {
-                CMLCoreModule conv = (CMLCoreModule)convention;
-
                 // copy the data model
                 this.CurrentChemFile = conv.CurrentChemFile;
                 this.CurrentMolecule = conv.CurrentMolecule;
@@ -351,7 +349,7 @@ namespace NCDK.IO.CML
         internal static string AttGetValue(IEnumerable<XAttribute> atts, string name)
         {
             XAttribute attribute = atts.Where(n => n.Name.LocalName == name).FirstOrDefault();
-            return attribute == null ? null : attribute.Value;
+            return attribute?.Value;
         }
 
         public virtual void StartElement(CMLStack xpath, XElement element)
@@ -1318,8 +1316,7 @@ namespace NCDK.IO.CML
                     }
                     else
                     {
-                        IDictionary<string, string> bp;
-                        if (!BondCustomProperty.TryGetValue(BondId[BondId.Count - 1], out bp))
+                        if (!BondCustomProperty.TryGetValue(BondId[BondId.Count - 1], out IDictionary<string, string> bp))
                         {
                             bp = new Dictionary<string, string>();
                             BondCustomProperty[BondId[BondId.Count - 1]] = bp;
@@ -1927,8 +1924,7 @@ namespace NCDK.IO.CML
                     if (ExactMasses[i] != null) CurrentAtom.ExactMass = double.Parse(ExactMasses[i]);
                 }
 
-                IList<string> property;
-                if (AtomCustomProperty.TryGetValue(i, out property))
+                if (AtomCustomProperty.TryGetValue(i, out IList<string> property))
                 {
                     IEnumerator<string> it = property.GetEnumerator();
                     while (it.MoveNext())
@@ -2079,8 +2075,7 @@ namespace NCDK.IO.CML
 
                     if (CurrentBond.Id != null)
                     {
-                        IDictionary<string, string> currentBondProperties;
-                        if (BondCustomProperty.TryGetValue(CurrentBond.Id, out currentBondProperties))
+                        if (BondCustomProperty.TryGetValue(CurrentBond.Id, out IDictionary<string, string> currentBondProperties))
                         {
                             foreach (var key in currentBondProperties.Keys)
                             {

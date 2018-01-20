@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Utils.Xml;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace NCDK.Config.Isotope
 {
     /// <summary>
     /// Reads an isotope list in CML2 format. 
+    /// </summary>
+    /// <remarks>
     /// An example definition is:
     /// <![CDATA[
     /// <isotopeList id = "H">
@@ -41,7 +44,7 @@ namespace NCDK.Config.Isotope
     ///   </isotope>
     /// </isotopeList>   
     /// ]]>
-    /// </summary>
+    /// </remarks>
     // @cdk.module  extra
     // @cdk.githash
     public class IsotopeHandler : XContentHandler

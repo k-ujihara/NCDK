@@ -27,7 +27,7 @@ namespace NCDK.Groups
 {
     // @author maclean
     // @cdk.module group 
-    class IntegerListInvariant : Invariant
+    class IntegerListInvariant : IInvariant
     {
         private int[] values;
 
@@ -36,7 +36,7 @@ namespace NCDK.Groups
             this.values = values;
         }
 
-        public int CompareTo(Invariant o)
+        public int CompareTo(IInvariant o)
         {
             int[] other = ((IntegerListInvariant)o).values;
             for (int index = 0; index < values.Length; index++)

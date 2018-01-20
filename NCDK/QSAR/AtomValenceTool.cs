@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.QSAR
@@ -29,67 +30,63 @@ namespace NCDK.QSAR
     // @cdk.module  standard
     // @cdk.githash
     // @cdk.dictref valence, atom
-    public class AtomValenceTool
+    public static class AtomValenceTool
     {
-        private static IDictionary<string, int> valencesTable = null;
+        private static IDictionary<string, int> valencesTable = new Dictionary<string, int>
+        {
+            { "H", 1 },
+            { "He", 8 },
+            { "Ne", 8 },
+            { "Ar", 8 },
+            { "Kr", 8 },
+            { "Xe", 8 },
+            { "Hg", 2 },
+            { "Rn", 8 },
+            { "Li", 1 },
+            { "Be", 2 },
+            { "B", 3 },
+            { "C", 4 },
+            { "N", 5 },
+            { "O", 6 },
+            { "F", 7 },
+            { "Na", 1 },
+            { "Mg", 2 },
+            { "Al", 3 },
+            { "Si", 4 },
+            { "P", 5 },
+            { "S", 6 },
+            { "Cl", 7 },
+            { "K", 1 },
+            { "Ca", 2 },
+            { "Ga", 3 },
+            { "Ge", 4 },
+            { "As", 5 },
+            { "Se", 6 },
+            { "Br", 7 },
+            { "Rb", 1 },
+            { "Sr", 2 },
+            { "In", 3 },
+            { "Sn", 4 },
+            { "Sb", 5 },
+            { "Te", 6 },
+            { "I", 7 },
+            { "Cs", 1 },
+            { "Ba", 2 },
+            { "Tl", 3 },
+            { "Pb", 4 },
+            { "Bi", 5 },
+            { "Po", 6 },
+            { "At", 7 },
+            { "Fr", 1 },
+            { "Ra", 2 },
+            { "Cu", 2 },
+            { "Mn", 2 },
+            { "Co", 2 }
+        };
 
         public static int GetValence(IAtom atom)
         {
-            if (valencesTable == null)
-            {
-                valencesTable = new Dictionary<string, int>();
-                valencesTable.Add("H", 1);
-                valencesTable.Add("He", 8);
-                valencesTable.Add("Ne", 8);
-                valencesTable.Add("Ar", 8);
-                valencesTable.Add("Kr", 8);
-                valencesTable.Add("Xe", 8);
-                valencesTable.Add("Hg", 2);
-                valencesTable.Add("Rn", 8);
-                valencesTable.Add("Li", 1);
-                valencesTable.Add("Be", 2);
-                valencesTable.Add("B", 3);
-                valencesTable.Add("C", 4);
-                valencesTable.Add("N", 5);
-                valencesTable.Add("O", 6);
-                valencesTable.Add("F", 7);
-                valencesTable.Add("Na", 1);
-                valencesTable.Add("Mg", 2);
-                valencesTable.Add("Al", 3);
-                valencesTable.Add("Si", 4);
-                valencesTable.Add("P", 5);
-                valencesTable.Add("S", 6);
-                valencesTable.Add("Cl", 7);
-                valencesTable.Add("K", 1);
-                valencesTable.Add("Ca", 2);
-                valencesTable.Add("Ga", 3);
-                valencesTable.Add("Ge", 4);
-                valencesTable.Add("As", 5);
-                valencesTable.Add("Se", 6);
-                valencesTable.Add("Br", 7);
-                valencesTable.Add("Rb", 1);
-                valencesTable.Add("Sr", 2);
-                valencesTable.Add("In", 3);
-                valencesTable.Add("Sn", 4);
-                valencesTable.Add("Sb", 5);
-                valencesTable.Add("Te", 6);
-                valencesTable.Add("I", 7);
-                valencesTable.Add("Cs", 1);
-                valencesTable.Add("Ba", 2);
-                valencesTable.Add("Tl", 3);
-                valencesTable.Add("Pb", 4);
-                valencesTable.Add("Bi", 5);
-                valencesTable.Add("Po", 6);
-                valencesTable.Add("At", 7);
-                valencesTable.Add("Fr", 1);
-                valencesTable.Add("Ra", 2);
-                valencesTable.Add("Cu", 2);
-                valencesTable.Add("Mn", 2);
-                valencesTable.Add("Co", 2);
-            }
-
-            int ret;
-            if (!valencesTable.TryGetValue(atom.Symbol, out ret))
+            if (!valencesTable.TryGetValue(atom.Symbol, out int ret))
                 throw new System.NullReferenceException();
             return ret;
         }

@@ -16,7 +16,8 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.IO
+
+ namespace NCDK.IO
 {
     /// <summary>
     /// Signals that something has happened in a file reader. This class is

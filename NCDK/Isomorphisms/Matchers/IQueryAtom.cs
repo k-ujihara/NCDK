@@ -1,5 +1,3 @@
-using System;
-
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>

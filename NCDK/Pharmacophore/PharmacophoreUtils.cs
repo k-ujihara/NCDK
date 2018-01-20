@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -136,21 +137,24 @@ namespace NCDK.Pharmacophore
                 foreach (var bond in query.Bonds)
                 {
                     XElement elem = null;
-                    if (bond is PharmacophoreQueryBond)
+                    switch (bond)
                     {
-                        PharmacophoreQueryBond dbond = (PharmacophoreQueryBond)bond;
-                        elem = new XElement("distanceConstraint");
-                        elem.SetAttributeValue("lower", dbond.GetLower().ToString());
-                        elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
-                        elem.SetAttributeValue("units", "A");
-                    }
-                    else if (bond is PharmacophoreQueryAngleBond)
-                    {
-                        PharmacophoreQueryAngleBond dbond = (PharmacophoreQueryAngleBond)bond;
-                        elem = new XElement("angleConstraint");
-                        elem.SetAttributeValue("lower", dbond.GetLower().ToString());
-                        elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
-                        elem.SetAttributeValue("units", "degrees");
+                        case PharmacophoreQueryBond dbond:
+                            {
+                                elem = new XElement("distanceConstraint");
+                                elem.SetAttributeValue("lower", dbond.GetLower().ToString());
+                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
+                                elem.SetAttributeValue("units", "A");
+                            }
+                            break;
+                        case PharmacophoreQueryAngleBond dbond:
+                            {
+                                elem = new XElement("angleConstraint");
+                                elem.SetAttributeValue("lower", dbond.GetLower().ToString());
+                                elem.SetAttributeValue("upper", dbond.GetUpper().ToString());
+                                elem.SetAttributeValue("units", "degrees");
+                            }
+                            break;
                     }
 
                     // now add the group associated with this constraint

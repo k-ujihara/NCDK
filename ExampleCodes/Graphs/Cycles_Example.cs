@@ -10,7 +10,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region AllFinder
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -28,7 +28,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region MCB
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -46,7 +46,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region Relevant
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -64,7 +64,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region Essential
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -82,7 +82,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region TripletShort
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -100,7 +100,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region VertexShort
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -118,7 +118,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region EdgeShort
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -136,7 +136,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region CDKAromaticSetFinder
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -154,7 +154,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region AllOrVertexShortFinder
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -173,13 +173,13 @@ namespace NCDK.Graphs
             {
                 #region Or6
                 // all cycles or all cycles size <= 6
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 #endregion
             }
             {
                 #region OrARE
                 // all cycles or relevant or essential
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
                 #endregion
             }
 

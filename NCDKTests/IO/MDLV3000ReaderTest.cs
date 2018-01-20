@@ -130,7 +130,7 @@ namespace NCDK.IO
                 var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
-                Assert.AreEqual(SgroupTypes.ExtMulticenter, sgroups[0].Type);
+                Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);
             }
         }
 

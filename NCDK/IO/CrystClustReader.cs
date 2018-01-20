@@ -16,13 +16,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.IO.Formats;
-using System.IO;
-using System;
-using NCDK.Numerics;
-using System.Diagnostics;
-using NCDK.Maths;
+
 using NCDK.Geometries;
+using NCDK.IO.Formats;
+using NCDK.Maths;
+using NCDK.Numerics;
+using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.IO
 {

@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Groups
 {
     /// <summary>
@@ -28,15 +29,15 @@ namespace NCDK.Groups
     // @author maclean
     // @cdk.module group  
     internal abstract class AtomContainerDiscretePartitionRefinerImpl
-       : AbstractDiscretePartitionRefiner, AtomContainerDiscretePartitionRefiner
+       : AbstractDiscretePartitionRefiner, IAtomContainerDiscretePartitionRefiner
     {
-        private Refinable refinable;
+        private IRefinable refinable;
 
         /// <summary>
         /// Refine an atom container, which has the side effect of calculating
         /// the automorphism group.
         /// 
-        /// If the group is needed afterwards, call <see cref="DiscretePartitionRefiner.GetAutomorphismGroup()"/>
+        /// If the group is needed afterwards, call <see cref="IDiscretePartitionRefiner.GetAutomorphismGroup()"/>
         /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
         /// refine method will be called twice.
         /// </summary>
@@ -127,9 +128,9 @@ namespace NCDK.Groups
             return base.GetAutomorphismPartition();
         }
 
-        protected abstract Refinable CreateRefinable(IAtomContainer atomContainer);
+        protected abstract IRefinable CreateRefinable(IAtomContainer atomContainer);
 
-        private Refinable GetRefinable(IAtomContainer atomContainer)
+        private IRefinable GetRefinable(IAtomContainer atomContainer)
         {
             refinable = CreateRefinable(atomContainer);
             return refinable;
@@ -151,7 +152,7 @@ namespace NCDK.Groups
         {
             // have to setup the connection table before making the group
             // otherwise the size may be wrong, but only setup if it doesn't exist
-            Refinable refinable = GetRefinable(atomContainer);
+            IRefinable refinable = GetRefinable(atomContainer);
 
             int size = GetVertexCount();
             PermutationGroup group = new PermutationGroup(new Permutation(size));

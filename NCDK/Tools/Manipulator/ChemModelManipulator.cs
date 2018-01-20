@@ -39,7 +39,7 @@ namespace NCDK.Tools.Manipulator
     /// <seealso cref="IAtomContainer.RemoveAtom(IAtom)"/>
     // @cdk.module standard
     // @cdk.githash
-    public class ChemModelManipulator
+    public static class ChemModelManipulator
     {
         /// <summary>
         /// Get the total number of atoms inside an IChemModel.

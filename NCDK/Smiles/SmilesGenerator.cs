@@ -20,6 +20,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Beam;
 using NCDK.Config;
 using NCDK.Graphs;
@@ -738,17 +739,17 @@ namespace NCDK.Smiles
             // radicals
             if (mol.SingleElectrons.Count > 0)
             {
-                state.atomRads = new Dictionary<int, CxSmilesState.Radicals>();
+                state.atomRads = new Dictionary<int, CxSmilesState.Radical>();
                 foreach (ISingleElectron radical in mol.SingleElectrons)
                 {
                     // 0->1, 1->2, 2->3
-                    if (!state.atomRads.TryGetValue(EnsureNotNull(atomidx[radical.Atom]), out CxSmilesState.Radicals val))
-                        val = CxSmilesState.Radicals.Monovalent;
-                    else if (val == CxSmilesState.Radicals.Monovalent)
-                        val = CxSmilesState.Radicals.Divalent;
-                    else if (val == CxSmilesState.Radicals.Divalent)
-                        val = CxSmilesState.Radicals.Trivalent;
-                    else if (val == CxSmilesState.Radicals.Trivalent)
+                    if (!state.atomRads.TryGetValue(EnsureNotNull(atomidx[radical.Atom]), out CxSmilesState.Radical val))
+                        val = CxSmilesState.Radical.Monovalent;
+                    else if (val == CxSmilesState.Radical.Monovalent)
+                        val = CxSmilesState.Radical.Divalent;
+                    else if (val == CxSmilesState.Radical.Divalent)
+                        val = CxSmilesState.Radical.Trivalent;
+                    else if (val == CxSmilesState.Radical.Trivalent)
                         throw new ArgumentException("Invalid radical state, can not be more than trivalent");
 
                     state.atomRads[atomidx[radical.Atom]] = val;
@@ -765,25 +766,25 @@ namespace NCDK.Smiles
                     switch (sgroup.Type)
                     {
                         // polymer SRU
-                        case SgroupTypes.CtabStructureRepeatUnit:
-                        case SgroupTypes.CtabMonomer:
-                        case SgroupTypes.CtabMer:
-                        case SgroupTypes.CtabCopolymer:
-                        case SgroupTypes.CtabCrossLink:
-                        case SgroupTypes.CtabModified:
-                        case SgroupTypes.CtabMixture:
-                        case SgroupTypes.CtabFormulation:
-                        case SgroupTypes.CtabAnyPolymer:
-                        case SgroupTypes.CtabGeneric:
-                        case SgroupTypes.CtabComponent:
-                        case SgroupTypes.CtabGraft:
-                            string supscript = (string)sgroup.GetValue(SgroupKeys.CtabConnectivity);
+                        case SgroupType.CtabStructureRepeatUnit:
+                        case SgroupType.CtabMonomer:
+                        case SgroupType.CtabMer:
+                        case SgroupType.CtabCopolymer:
+                        case SgroupType.CtabCrossLink:
+                        case SgroupType.CtabModified:
+                        case SgroupType.CtabMixture:
+                        case SgroupType.CtabFormulation:
+                        case SgroupType.CtabAnyPolymer:
+                        case SgroupType.CtabGeneric:
+                        case SgroupType.CtabComponent:
+                        case SgroupType.CtabGraft:
+                            string supscript = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
                             state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
                                                                               ToAtomIdxs(sgroup.Atoms, atomidx),
                                                                               sgroup.Subscript,
                                                                               supscript));
                             break;
-                        case SgroupTypes.ExtMulticenter:
+                        case SgroupType.ExtMulticenter:
                             IAtom beg = null;
                             List<IAtom> ends = new List<IAtom>();
                             ISet<IBond> bonds = sgroup.Bonds;
@@ -806,11 +807,11 @@ namespace NCDK.Smiles
                             state.positionVar[EnsureNotNull(atomidx[beg])] =
                                                   ToAtomIdxs(ends, atomidx);
                             break;
-                        case SgroupTypes.CtabAbbreviation:
-                        case SgroupTypes.CtabMultipleGroup:
+                        case SgroupType.CtabAbbreviation:
+                        case SgroupType.CtabMultipleGroup:
                             // display shortcuts are not output
                             break;
-                        case SgroupTypes.CtabData:
+                        case SgroupType.CtabData:
                             // can be generated but currently ignored
                             break;
                         default:
@@ -826,14 +827,14 @@ namespace NCDK.Smiles
         {
             switch (sgroup.Type)
             {
-                case SgroupTypes.CtabStructureRepeatUnit:
+                case SgroupType.CtabStructureRepeatUnit:
                     return "n";
-                case SgroupTypes.CtabMonomer:
+                case SgroupType.CtabMonomer:
                     return "mon";
-                case SgroupTypes.CtabMer:
+                case SgroupType.CtabMer:
                     return "mer";
-                case SgroupTypes.CtabCopolymer:
-                    string subtype = (string)sgroup.GetValue(SgroupKeys.CtabSubType);
+                case SgroupType.CtabCopolymer:
+                    string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
                     if (subtype == null)
                         return "co";
                     switch (subtype)
@@ -845,22 +846,22 @@ namespace NCDK.Smiles
                         case "BLO":
                             return "blk";
                     }
-                    goto case SgroupTypes.CtabCrossLink;
-                case SgroupTypes.CtabCrossLink:
+                    goto case SgroupType.CtabCrossLink;
+                case SgroupType.CtabCrossLink:
                     return "xl";
-                case SgroupTypes.CtabModified:
+                case SgroupType.CtabModified:
                     return "mod";
-                case SgroupTypes.CtabMixture:
+                case SgroupType.CtabMixture:
                     return "mix";
-                case SgroupTypes.CtabFormulation:
+                case SgroupType.CtabFormulation:
                     return "f";
-                case SgroupTypes.CtabAnyPolymer:
+                case SgroupType.CtabAnyPolymer:
                     return "any";
-                case SgroupTypes.CtabGeneric:
+                case SgroupType.CtabGeneric:
                     return "gen";
-                case SgroupTypes.CtabComponent:
+                case SgroupType.CtabComponent:
                     return "c";
-                case SgroupTypes.CtabGraft:
+                case SgroupType.CtabGraft:
                     return "grf";
                 default:
                     throw new ArgumentException();

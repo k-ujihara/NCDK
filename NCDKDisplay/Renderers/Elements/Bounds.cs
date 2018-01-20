@@ -45,12 +45,12 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Minimum x/y coordinates.
         /// </summary>
-        public double minX, minY;
+        public double MinX, MinY;
 
         /// <summary>
         /// Maximum x/y coordinates.
         /// </summary>
-        public double maxX, maxY;
+        public double MaxX, MaxY;
 
         /// <summary>
         /// Know which elements are within this bound box.
@@ -66,10 +66,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="y2">max y coordinate</param>
         public Bounds(double x1, double y1, double x2, double y2)
         {
-            this.minX = x1;
-            this.minY = y1;
-            this.maxX = x2;
-            this.maxY = y2;
+            this.MinX = x1;
+            this.MinY = y1;
+            this.MaxX = x2;
+            this.MaxY = y2;
         }
 
         /// <summary>
@@ -104,10 +104,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="p">coordinate</param>
         public void Add(Point p)
         {
-            if (p.X < minX) minX = p.X;
-            if (p.Y < minY) minY = p.Y;
-            if (p.X > maxX) maxX = p.X;
-            if (p.Y > maxY) maxY = p.Y;
+            if (p.X < MinX) MinX = p.X;
+            if (p.Y < MinY) MinY = p.Y;
+            if (p.X > MaxX) MaxX = p.X;
+            if (p.Y > MaxY) MaxY = p.Y;
         }
 
         /// <summary>
@@ -116,10 +116,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="bounds">other bounds</param>
         public void Add(Bounds bounds)
         {
-            if (bounds.minX < minX) minX = bounds.minX;
-            if (bounds.minY < minY) minY = bounds.minY;
-            if (bounds.maxX > maxX) maxX = bounds.maxX;
-            if (bounds.maxY > maxY) maxY = bounds.maxY;
+            if (bounds.MinX < MinX) MinX = bounds.MinX;
+            if (bounds.MinY < MinY) MinY = bounds.MinY;
+            if (bounds.MaxX > MaxX) MaxX = bounds.MaxX;
+            if (bounds.MaxY > MaxY) MaxY = bounds.MaxY;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace NCDK.Renderers.Elements
         /// <param name="path">general path</param>
         private void Add(GeneralPath path)
         {
-            var b = path.elements.Bounds;
+            var b = path.Elements.Bounds;
             if (b.IsEmpty)
                 return;
             Add(b.BottomLeft);
@@ -153,16 +153,16 @@ namespace NCDK.Renderers.Elements
                         Add(e);
                         break;
                     case LineElement lineElem:
-                        var vec = lineElem.secondPoint - lineElem.firstPoint;
+                        var vec = lineElem.SecondPoint - lineElem.FirstPoint;
                         var ortho = new WPF::Vector(-vec.Y, vec.X);
                         ortho.Normalize();
                         vec.Normalize();
-                        ortho *= lineElem.width / 2;  // stroke width
-                        vec *= lineElem.width / 2;    // stroke rounded also makes line longer
-                        Add(lineElem.firstPoint - vec + ortho);
-                        Add(lineElem.secondPoint + vec + ortho);
-                        Add(lineElem.firstPoint - vec - ortho);
-                        Add(lineElem.secondPoint + vec - ortho);
+                        ortho *= lineElem.Width / 2;  // stroke width
+                        vec *= lineElem.Width / 2;    // stroke rounded also makes line longer
+                        Add(lineElem.FirstPoint - vec + ortho);
+                        Add(lineElem.SecondPoint + vec + ortho);
+                        Add(lineElem.FirstPoint - vec - ortho);
+                        Add(lineElem.SecondPoint + vec - ortho);
                         break;
                     case ElementGroup elementGroup:
                         stack.AddRange(elementGroup);
@@ -190,20 +190,20 @@ namespace NCDK.Renderers.Elements
         /// Specifies the width of the bounding box.
         /// </summary>
         /// <returns>the width of the bounding box</returns>
-        public double Width => maxX - minX;
+        public double Width => MaxX - MinX;
 
         /// <summary>
         /// Specifies the height of the bounding box.
         /// </summary>
         /// <returns>the height of the bounding box</returns>
-        public double Height => maxY - minY;
+        public double Height => MaxY - MinY;
 
         /// <summary>
         /// The bounds are empty and contain no elements.
         ///
         /// <returns>bounds are empty (true) or not (false)</returns>
         /// </summary>
-        public bool IsEmpty() => minX > maxX || minY > maxY;
+        public bool IsEmpty() => MinX > MaxX || MinY > MaxY;
 
         public void Accept(IRenderingVisitor visitor, Transform transform)
         {
@@ -217,7 +217,7 @@ namespace NCDK.Renderers.Elements
 
         public override string ToString()
         {
-            return "{{" + minX + ", " + minY + "} - {" + maxX + ", " + maxY + "}}";
+            return "{{" + MinX + ", " + MinY + "} - {" + MaxX + ", " + MaxY + "}}";
         }
     }
 }

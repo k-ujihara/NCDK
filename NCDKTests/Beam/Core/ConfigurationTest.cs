@@ -45,8 +45,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void TetrahedralType()
         {
-            Assert.AreEqual(Configuration.Types.Tetrahedral, Configuration.TH1.Type);
-            Assert.AreEqual(Configuration.Types.Tetrahedral, Configuration.TH2.Type);
+            Assert.AreEqual(Configuration.ConfigurationType.Tetrahedral, Configuration.TH1.Type);
+            Assert.AreEqual(Configuration.ConfigurationType.Tetrahedral, Configuration.TH2.Type);
         }
 
         [TestMethod()]

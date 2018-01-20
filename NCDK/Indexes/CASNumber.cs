@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Text.RegularExpressions;
 
 namespace NCDK.Indexes
@@ -40,7 +41,7 @@ namespace NCDK.Indexes
     // @author Nathanaël "M.Le_maudit" Mazuir
     // @cdk.created 2003-06-30
     // @cdk.keyword CAS number
-    public class CASNumber
+    public static class CASNumber
     {
         const string format = "^(\\d+)-(\\d\\d)-(\\d)$";
         static readonly Regex pattern = new Regex(format, RegexOptions.Compiled);

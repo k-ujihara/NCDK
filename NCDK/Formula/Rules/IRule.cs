@@ -16,9 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.Formula.Rules {
+
+namespace NCDK.Formula.Rules
+{
     /// <summary>
-    /// Interface which groups all method that validate a IMolecularFormula.
+    /// Interface which groups all method that validate a <see cref="IMolecularFormula"/>.
     /// </summary>
     // @cdk.module  formula
     // @author      miguelrojasch

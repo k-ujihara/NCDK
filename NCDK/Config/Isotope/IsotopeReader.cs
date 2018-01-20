@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Utils.Xml;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,7 @@ namespace NCDK.Config.Isotope
 {
     /// <summary>
     /// Reader that instantiates an XML parser and customized handler to process
-    /// the isotope information in the CML2 isotope data file. The Reader first
-    /// tries to instantiate a JAXP XML parser available from Sun JVM 1.4.0 and
-    /// later. If not found it tries the Aelfred2 parser, and as last try the
-    /// Xerces parser.
+    /// the isotope information in the CML2 isotope data file.
     /// </summary>
     // @cdk.module  extra
     // @cdk.githash

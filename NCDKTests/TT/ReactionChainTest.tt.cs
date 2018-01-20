@@ -1,0 +1,172 @@
+﻿
+
+
+/* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace NCDK.Default
+{
+    /// <summary>
+    /// Tests for IReactionChain implementations.
+    /// </summary>
+    // @cdk.module test-extra
+    [TestClass()]
+    public class ReactionChainTest : CDKTestCase
+    {
+        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
+        public ReactionChainTest() : base() { }
+
+        [TestMethod()]
+        public void TestReactionChain()
+        {
+            IReactionSet chain = new ReactionChain();
+            Assert.IsNotNull(chain);
+        }
+
+        [TestMethod()]
+        public void TestAddReaction_IReaction_int()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.IsNotNull(chain);
+        }
+
+        [TestMethod()]
+        public void TestGetReactionStep_IReaction()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            chain.Add(reaction1, 0);
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.AreEqual(1, chain.GetReactionStep(reaction2));
+        }
+
+        [TestMethod()]
+        public void TestGetReaction_int()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            chain.Add(reaction1, 0);
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.AreEqual(reaction2, chain[1]);
+        }
+    }
+}
+namespace NCDK.Silent
+{
+    /// <summary>
+    /// Tests for IReactionChain implementations.
+    /// </summary>
+    // @cdk.module test-extra
+    [TestClass()]
+    public class ReactionChainTest : CDKTestCase
+    {
+        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
+        public ReactionChainTest() : base() { }
+
+        [TestMethod()]
+        public void TestReactionChain()
+        {
+            IReactionSet chain = new ReactionChain();
+            Assert.IsNotNull(chain);
+        }
+
+        [TestMethod()]
+        public void TestAddReaction_IReaction_int()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.IsNotNull(chain);
+        }
+
+        [TestMethod()]
+        public void TestGetReactionStep_IReaction()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            chain.Add(reaction1, 0);
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.AreEqual(1, chain.GetReactionStep(reaction2));
+        }
+
+        [TestMethod()]
+        public void TestGetReaction_int()
+        {
+            ReactionChain chain = new ReactionChain();
+            IReaction reaction1 = builder.NewReaction();
+            reaction1.Id = "reaction1";
+            chain.Add(reaction1, 0);
+            IReaction reaction2 = builder.NewReaction();
+            reaction1.Id = "reaction2";
+            IReaction reaction3 = builder.NewReaction();
+            reaction1.Id = "reaction3";
+            chain.Add(reaction1, 0);
+            chain.Add(reaction2, 1);
+            chain.Add(reaction3, 2);
+
+            Assert.AreEqual(reaction2, chain[1]);
+        }
+    }
+}

@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Smiles;
 using NCDK.Tools;
 using System;
@@ -66,7 +67,7 @@ namespace NCDK.Graphs.Invariant
             if (atomContainer.Atoms.Count == 0) return;
             if (atomContainer.Atoms.Count == 1)
             {
-                atomContainer.Atoms[0].SetProperty(InvPair.CANONICAL_LABEL, 1);
+                atomContainer.Atoms[0].SetProperty(InvPair.CanonicalLabelKey, 1);
             }
 
             List<InvPair> vect = CreateInvarLabel(atomContainer);
@@ -155,7 +156,7 @@ namespace NCDK.Graphs.Invariant
                 summ = 1;
                 foreach (var a in neighbour)
                 {
-                    int next = a.GetProperty<InvPair>(InvPair.INVARIANCE_PAIR).Prime;
+                    int next = a.GetProperty<InvPair>(InvPair.InvariancePairKey).Prime;
                     summ = summ * next;
                 }
                 inv.Last = inv.Curr;

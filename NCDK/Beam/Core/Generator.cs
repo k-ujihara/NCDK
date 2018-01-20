@@ -91,7 +91,7 @@ namespace NCDK.Beam
             {
                 for (int u = 0; u < g.Order; u++)
                 {
-                    if (g.TopologyOf(u).Configuration.Type == Configuration.Types.ExtendedTetrahedral)
+                    if (g.TopologyOf(u).Configuration.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                     {
                         SetAllenalStereo(g, visitedAt, u);
                     }

@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
-using NCDK.Default;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Smiles.SMARTS.Parser;
 using System.Text;
@@ -39,7 +39,7 @@ namespace NCDK.Pharmacophore
     // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreQueryAtom : Atom, IQueryAtom
+    public class PharmacophoreQueryAtom : Silent.Atom, IQueryAtom
     {
         /// <summary>
         /// Creat a new query pharmacophore group

@@ -619,11 +619,11 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.l-ala.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             filename = "NCDK.Data.MDL.d-ala.mol";
             ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol2 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             SmilesGenerator sg = SmilesGenerator.Isomeric();
 
@@ -643,11 +643,11 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.D-mannose.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             filename = "NCDK.Data.MDL.D+-glucose.mol";
             ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol2 = reader.Read(new AtomContainer());
             SmilesGenerator sg = SmilesGenerator.Isomeric();
 
@@ -669,7 +669,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.cyclooctan.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
@@ -681,7 +681,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.cycloocten.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
@@ -696,7 +696,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.cyclooctadien.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.NewAtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
@@ -709,7 +709,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.bug1089770-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
             string moleculeSmile = sg.Create(mol1);
@@ -724,7 +724,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.bug1089770-2.mol";
         var ins = ResourceLoader.GetAsStream(filename);
-        MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
         IAtomContainer mol1 = reader.Read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
         string moleculeSmile = sg.Create(mol1);
@@ -739,7 +739,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.bug1014344-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             AddImplicitHydrogens(mol1);
             SmilesGenerator sg = new SmilesGenerator();
@@ -766,10 +766,10 @@ namespace NCDK.Smiles
             string filename_mol = "NCDK.Data.MDL.9553-with-exp-hyd.mol";
             var ins1 = ResourceLoader.GetAsStream(filename_cml);
             var ins2 = ResourceLoader.GetAsStream(filename_mol);
-            MDLV2000Reader reader1 = new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader1 = new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IAtomContainer mol1 = reader1.Read(new AtomContainer());
 
-            MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderMode.Strict);
             IAtomContainer mol2 = reader2.Read(new AtomContainer());
 
             SmilesGenerator sg = SmilesGenerator.Isomeric();
@@ -915,7 +915,7 @@ namespace NCDK.Smiles
         {
             string filename = "NCDK.Data.MDL.24763.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.IsNotNull(chemFile);

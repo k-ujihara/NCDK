@@ -19,7 +19,7 @@ namespace NCDK.FaulonSignatures.Chemistry
         }
 
         public AtomSignature(Molecule molecule, int atomNumber,
-                int height, AbstractVertexSignature.InvariantTypes invariantType)
+                int height, AbstractVertexSignature.InvariantType invariantType)
             : base(invariantType)
         {
             this.molecule = molecule;

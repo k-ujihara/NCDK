@@ -21,11 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Dict;
 using NCDK.Geometries;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -140,8 +140,10 @@ namespace NCDK.LibIO.CML
 
         private CMLCml CDKChemFileToCMLList(IChemFile file, bool setIDs)
         {
-            CMLCml cmlList = new CMLCml();
-            cmlList.Convention = "cdk:document";
+            CMLCml cmlList = new CMLCml
+            {
+                Convention = "cdk:document"
+            };
 
             if (useCMLIDs && setIDs)
             {
@@ -165,8 +167,10 @@ namespace NCDK.LibIO.CML
 
         private CMLList CDKChemSequenceToCMLList(IChemSequence sequence, bool setIDs)
         {
-            CMLList cmlList = new CMLList();
-            cmlList.Convention = "cdk:sequence";
+            CMLList cmlList = new CMLList
+            {
+                Convention = "cdk:sequence"
+            };
 
             if (useCMLIDs && setIDs)
             {
@@ -190,8 +194,10 @@ namespace NCDK.LibIO.CML
 
         private CMLList CDKChemModelToCMLList(IChemModel model, bool setIDs)
         {
-            CMLList cmlList = new CMLList();
-            cmlList.Convention = "cdk:model";
+            CMLList cmlList = new CMLList
+            {
+                Convention = "cdk:model"
+            };
 
             if (useCMLIDs && setIDs)
             {
@@ -290,8 +296,10 @@ namespace NCDK.LibIO.CML
 
         private CMLMoleculeList CDKAtomContainerSetToCMLList(IEnumerableChemObject<IAtomContainer> moleculeSet, bool setIDs)
         {
-            CMLMoleculeList cmlList = new CMLMoleculeList();
-            cmlList.Convention = "cdk:moleculeSet";
+            CMLMoleculeList cmlList = new CMLMoleculeList
+            {
+                Convention = "cdk:moleculeSet"
+            };
 
             if (useCMLIDs && setIDs)
             {
@@ -405,9 +413,11 @@ namespace NCDK.LibIO.CML
 
         private CMLMolecule CDKPDBPolymerToCMLMolecule(IPDBPolymer pdbPolymer, bool setIDs)
         {
-            CMLMolecule cmlMolecule = new CMLMolecule();
-            cmlMolecule.Convention = "PDB";
-            cmlMolecule.DictRef = "pdb:model";
+            CMLMolecule cmlMolecule = new CMLMolecule
+            {
+                Convention = "PDB",
+                DictRef = "pdb:model"
+            };
 
             IDictionary<string, IStrand> mapS = pdbPolymer.GetStrandMap();
             foreach (var key in mapS.Keys)
@@ -433,8 +443,10 @@ namespace NCDK.LibIO.CML
 
         private CMLMolecule CDKMonomerToCMLMolecule(IMonomer monomer, bool setIDs)
         {
-            CMLMolecule cmlMolecule = new CMLMolecule();
-            cmlMolecule.DictRef = "pdb:sequence";
+            CMLMolecule cmlMolecule = new CMLMolecule
+            {
+                DictRef = "pdb:sequence"
+            };
 
             if (monomer.MonomerName != null && !monomer.MonomerName.Equals(""))
                 cmlMolecule.Id = monomer.MonomerName;
@@ -478,8 +490,10 @@ namespace NCDK.LibIO.CML
             }
             if (structure.GetProperty<string>(CDKPropertyName.InChI) != null)
             {
-                CMLIdentifier ident = new CMLIdentifier();
-                ident.Convention = "iupac:inchi";
+                CMLIdentifier ident = new CMLIdentifier
+                {
+                    Convention = "iupac:inchi"
+                };
                 ident.SetAttributeValue(CMLElement.Attribute_value,  structure.GetProperty<string>(CDKPropertyName.InChI).ToString());
                 cmlMolecule.Add(ident);
             }
@@ -525,35 +539,39 @@ namespace NCDK.LibIO.CML
                 // but it should be that IMolecularFormula is a extension of IAtomContainer
                 if (key is string && !isRef && key.ToString().Equals(CDKPropertyName.Formula))
                 {
-                    if (props[key] is IMolecularFormula)
+                    switch (props[key])
                     {
-                        IMolecularFormula cdkFormula = (IMolecularFormula)props[key];
-
-                        CMLFormula cmlFormula = new CMLFormula();
-                        IList<IIsotope> isotopesList = MolecularFormulaManipulator.PutInOrder(
-                                MolecularFormulaManipulator.OrderEle, cdkFormula);
-                        foreach (var isotope in isotopesList)
-                        {
-                            cmlFormula.Add(isotope.Symbol, cdkFormula.GetCount(isotope));
-                        }
-                        cmlMolecule.Add(cmlFormula);
-                    }
-                    else if (props[key] is IMolecularFormulaSet)
-                    {
-                        IMolecularFormulaSet cdkFormulaSet = (IMolecularFormulaSet)props[key];
-                        foreach (var cdkFormula in cdkFormulaSet)
-                        {
-                            var isotopesList = MolecularFormulaManipulator.PutInOrder(
-                                    MolecularFormulaManipulator.OrderEle, cdkFormula);
-                            CMLFormula cmlFormula = new CMLFormula();
-                            cmlFormula.DictRef = "cdk:possibleMachts";
-                            foreach (var isotope in isotopesList)
+                        case IMolecularFormula cdkFormula:
                             {
-                                cmlFormula.Add(isotope.Symbol,
-                                        cdkFormula.GetCount(isotope));
+                                CMLFormula cmlFormula = new CMLFormula();
+                                IList<IIsotope> isotopesList = MolecularFormulaManipulator.PutInOrder(
+                                        MolecularFormulaManipulator.OrderEle, cdkFormula);
+                                foreach (var isotope in isotopesList)
+                                {
+                                    cmlFormula.Add(isotope.Symbol, cdkFormula.GetCount(isotope));
+                                }
+                                cmlMolecule.Add(cmlFormula);
                             }
-                            cmlMolecule.Add(cmlFormula);
-                        }
+                            break;
+                        case IMolecularFormulaSet cdkFormulaSet:
+                            {
+                                foreach (var cdkFormula in cdkFormulaSet)
+                                {
+                                    var isotopesList = MolecularFormulaManipulator.PutInOrder(
+                                            MolecularFormulaManipulator.OrderEle, cdkFormula);
+                                    CMLFormula cmlFormula = new CMLFormula
+                                    {
+                                        DictRef = "cdk:possibleMachts"
+                                    };
+                                    foreach (var isotope in isotopesList)
+                                    {
+                                        cmlFormula.Add(isotope.Symbol,
+                                                cdkFormula.GetCount(isotope));
+                                    }
+                                    cmlMolecule.Add(cmlFormula);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -579,9 +597,8 @@ namespace NCDK.LibIO.CML
             var properties = obj.GetProperties();
             foreach (var key in properties.Keys)
             {
-                if (key is string)
+                if (key is string keyName)
                 {
-                    string keyName = (string)key;
                     if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName))
                     {
                         string dictRef = (string)properties[keyName];
@@ -671,8 +688,10 @@ namespace NCDK.LibIO.CML
 
             if (cdkAtom.IsAromatic)
             {
-                CMLScalar aromAtom = new CMLScalar();
-                aromAtom.DictRef = "cdk:aromaticAtom";
+                CMLScalar aromAtom = new CMLScalar
+                {
+                    DictRef = "cdk:aromaticAtom"
+                };
                 cmlAtom.Add(aromAtom);
             }
 
@@ -752,8 +771,10 @@ namespace NCDK.LibIO.CML
             }
             if (cdkBond.IsAromatic)
             {
-                CMLBondType bType = new CMLBondType();
-                bType.DictRef = "cdk:aromaticBond";
+                CMLBondType bType = new CMLBondType
+                {
+                    DictRef = "cdk:aromaticBond"
+                };
                 cmlBond.Add(bType);
             }
 

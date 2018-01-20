@@ -39,7 +39,7 @@ namespace NCDK.Groups
             return new MockRefinable(table);
         }
 
-        public class MockRefinable : Refinable
+        public class MockRefinable : IRefinable
         {
             public int[][] connections;
 
@@ -75,7 +75,7 @@ namespace NCDK.Groups
                 return Partition.Unit(GetVertexCount());
             }
 
-            public Invariant NeighboursInBlock(ISet<int> block, int vertexIndex)
+            public IInvariant NeighboursInBlock(ISet<int> block, int vertexIndex)
             {
                 int neighbours = 0;
                 foreach (int connected in GetConnectedIndices(vertexIndex))

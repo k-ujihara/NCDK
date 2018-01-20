@@ -502,7 +502,7 @@ namespace NCDK.Renderers
         {
             if (element == null) return null;
             Bounds bounds = new Bounds(element);
-            return new Rect(bounds.minX, bounds.minY,
+            return new Rect(bounds.MinX, bounds.MinY,
                                           bounds.Width, bounds.Height);
         }
     }

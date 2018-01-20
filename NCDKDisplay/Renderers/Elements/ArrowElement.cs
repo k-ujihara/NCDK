@@ -31,15 +31,15 @@ namespace NCDK.Renderers.Elements
     public class ArrowElement : IRenderingElement
     {
         /// <summary>coordinate of the point where the arrow starts.</summary>
-        public readonly Point start;
+        public readonly Point Start;
         /// <summary>coordinate of the point where the arrow ends.</summary>
-        public readonly Point end;
+        public readonly Point End;
         /// <summary>Width of the arrow line.</summary>
-        public readonly double width;
+        public readonly double Width;
         /// <summary>Color of the arrow.</summary>
-        public readonly Color color;
-        /// <summary>bool that is true if the arrow points from start to end, false if from end to start.</summary>
-        public readonly bool direction;
+        public readonly Color Color;
+        /// <summary>boolean that is <see langword="true"/> if the arrow points from start to end, <see langword="false"/> if from end to start.</summary>
+        public readonly bool Direction;
 
         /// <summary>
         /// Constructor for an arrow element, based on starting point, end point, width,
@@ -49,14 +49,14 @@ namespace NCDK.Renderers.Elements
         /// <param name="end">Coordinate of the point where the arrow ends.</param>
         /// <param name="width">width of the arrow line.</param>
         /// <param name="direction">true is the arrow points from start to end, false if from end to start</param>
-        /// <param name="color"><see cref="Color"/> of the arrow</param>
+        /// <param name="color"><see cref="System.Windows.Media.Color"/> of the arrow</param>
         public ArrowElement(Point start, Point end, double width, bool direction, Color color)
         {
-            this.end = start;
-            this.start = end;
-            this.width = width;
-            this.color = color;
-            this.direction = direction;
+            this.Start = start;
+            this.End = end;
+            this.Width = width;
+            this.Color = color;
+            this.Direction = direction;
         }
 
         public virtual void Accept(IRenderingVisitor v, Transform transform)

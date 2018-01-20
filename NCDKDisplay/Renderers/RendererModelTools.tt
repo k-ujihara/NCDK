@@ -70,7 +70,7 @@ namespace NCDK.Renderers
 		P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Color.FromRgb(0x44, 0x44, 0x44))", "<see cref=\"IAtomColorer\"/> used to draw elements");
 		P("Visibility", "SymbolVisibility", "NCDK.Renderers.Generators.Standards.SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon)", "defines which atoms have their symbol displayed");
 		P("StrokeRatio", "double", "1", "defines the ratio of the stroke to the width of the stroke of the font used to depict atom symbols");
-		P("BondSeparation", "double", "0.18", "defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref=\"BasicRendererModel.BondLength\"/>)");
+		P("BondSeparation", "double", "0.18", "defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref=\"RendererModelTools.GetBondLength(RendererModel)\"/>)");
 		P("SymbolMarginRatio", "double", "2", "defines the margin between an atom symbol and a connected bond based on the stroke width");
 		P("WedgeRatio", "double", "6", "ratio of the wide end of wedge compared to the narrow end (stroke width)");
 		P("HashSpacing", "double", "5", "the preferred spacing between lines in hashed bonds");
@@ -79,7 +79,7 @@ namespace NCDK.Renderers
 		P("FancyBoldWedges", "bool", "true", "modify bold wedges to be flush with adjacent bonds");
 		P("FancyHashedWedges", "bool", "true", "modify hashed wedges to be flush when there is a single adjacent bond");
 		P("OuterGlowWidth", "double", "2", "the width of outer glow as a percentage of stroke width");
-		P("Highlighting", "HighlightStyles", "HighlightStyles.Colored", "the style of highlight used to emphasis atoms and bonds");
+		P("Highlighting", "HighlightStyle", "HighlightStyle.Colored", "the style of highlight used to emphasis atoms and bonds");
 		P("AnnotationColor", "WPF.Media.Color", "WPF.Media.Colors.Red", "the color of the atom numbers");
 		P("AnnotationDistance", "double", "0.25", "the distance of atom numbers from their parent atom as a percentage of bond length");
 		P("AnnotationFontScale", "double", "0.5", "annotation font size relative to element symbols");
@@ -102,7 +102,7 @@ namespace NCDK.Renderers
         P("ForegroundColor", "WPF.Media.Color", "WPF.Media.Colors.Black", "the foreground color, with which objects are drawn");
         P("UseAntiAliasing", "bool", "true", "if set to true, uses anti-aliasing for drawing");
         P("Margin", "double", "10", "area on each of the four margins to keep empty");
-        P("UsedFontStyle", "Fonts.FontWeights", "Fonts.FontWeights.Normal", "the font style to use for text");
+        P("UsedFontStyle", "Fonts.FontWeight", "Fonts.FontWeight.Normal", "the font style to use for text");
 		P("FontName", "string", "\"Arial\"", "font name to use for text");
 		P("ZoomFactor", "double", "1", "the zoom factor which is a user oriented parameter allowing the user to zoom in on parts of the molecule");
 
@@ -116,7 +116,7 @@ namespace NCDK.Renderers
 		P("AtomRadius", "double", "8", "magic number with unknown units that defines the radius around an atom, e.g. used for highlighting atoms");
 		P("CompactAtom", "bool", "false", "atoms to be drawn as  filled shapes");
 		P("KekuleStructure", "bool", "false", "whether structures should be drawn as Kekulé structures, thus giving each carbon element explicitly, instead of not displaying the element symbol. Example C-C-C instead of /\"");
-		P("CompactShape", "AtomShapeTypes", "AtomShapeTypes.Square", "Shape to be used when drawing atoms in compact mode, as defined by the <see cref=\"GetCompactAtom\"/> parameter");
+		P("CompactShape", "AtomShapeType", "AtomShapeType.Square", "Shape to be used when drawing atoms in compact mode, as defined by the <see cref=\"GetCompactAtom\"/> parameter");
 		P("ShowEndCarbons", "bool", "false", "show carbons with only one (non-hydrogen) neighbor to be drawn with an element symbol");
 		P("ShowAtomTypeNames", "bool", "false", "indicates atom type names should be given instead of element symbols");
 

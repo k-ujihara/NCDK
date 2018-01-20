@@ -223,7 +223,7 @@ namespace NCDK.Beam
             if (t != Topology.Unknown)
             {
                 g.AddFlags(Graph.HAS_ATM_STRO);
-                if (t.Configuration.Type == Configuration.Types.ExtendedTetrahedral)
+                if (t.Configuration.Type == Configuration.ConfigurationType.ExtendedTetrahedral)
                     g.AddFlags(Graph.HAS_EXT_STRO);
             }
         }
@@ -279,7 +279,7 @@ namespace NCDK.Beam
                 g.AddFlags(Graph.HAS_BND_STRO);
 
                 // unspecified only used for getting not setting configuration
-                if (builder.c == Configuration.DoubleBonds.Unspecified)
+                if (builder.c == Configuration.ConfigurationDoubleBond.Unspecified)
                     continue;
                 CheckGeometricBuilder(builder); // check required vertices are adjacent
 
@@ -295,7 +295,7 @@ namespace NCDK.Beam
                 Fix(g, v, u, pibonded);
 
                 Bond first = FirstDirectionalLabel(u, x, pibonded);
-                Bond second = builder.c == Configuration.DoubleBonds.Together ? first
+                Bond second = builder.c == Configuration.ConfigurationDoubleBond.Together ? first
                                                     : first.Inverse();
 
                 // check if the second label would cause a conflict
@@ -518,7 +518,7 @@ namespace NCDK.Beam
         {
             for (int v = 0; v < g.Order; v++)
             {
-                if (g.TopologyOf(v).Type == Configuration.Types.None)
+                if (g.TopologyOf(v).Type == Configuration.ConfigurationType.None)
                 {
                     Atom atom = g.GetAtom(v);
                     if (Suppressible(atom, valence[v]))
@@ -824,7 +824,7 @@ namespace NCDK.Beam
 
             internal int X { get; set; }
             internal int Y { get; set; }
-            internal Configuration.DoubleBonds c;
+            internal Configuration.ConfigurationDoubleBond c;
 
             public GeometricBuilder(GraphBuilder gb, int u, int v)
             {
@@ -835,15 +835,15 @@ namespace NCDK.Beam
 
             public GraphBuilder Together(int x, int y)
             {
-                return Configure(x, y, Configuration.DoubleBonds.Together);
+                return Configure(x, y, Configuration.ConfigurationDoubleBond.Together);
             }
 
             public GraphBuilder Opposite(int x, int y)
             {
-                return Configure(x, y, Configuration.DoubleBonds.Opposite);
+                return Configure(x, y, Configuration.ConfigurationDoubleBond.Opposite);
             }
 
-            public GraphBuilder Configure(int x, int y, Configuration.DoubleBonds c)
+            public GraphBuilder Configure(int x, int y, Configuration.ConfigurationDoubleBond c)
             {
                 this.X = x;
                 this.Y = y;
@@ -854,7 +854,7 @@ namespace NCDK.Beam
 
             public override string ToString()
             {
-                return X + "/" + u + "=" + v + (c == Configuration.DoubleBonds.Together ? "\\" : "/") + Y;
+                return X + "/" + u + "=" + v + (c == Configuration.ConfigurationDoubleBond.Together ? "\\" : "/") + Y;
             }
         }
     }

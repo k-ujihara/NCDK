@@ -20,8 +20,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
@@ -44,7 +44,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Standard label/title to be used for the root atom container.
         /// </summary>
-        public const string ROOT_LABEL = "Root structure";
+        public const string RootLabelKey = "Root structure";
 
         /// <summary>
         /// Makes a label/title to be used for a substituent.

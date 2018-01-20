@@ -55,7 +55,7 @@ namespace NCDK.IO
             string filename1 = "NCDK.Data.MDL.reaction_v3.rxn";
             Trace.TraceInformation("Testing: " + filename1);
             var ins1 = ResourceLoader.GetAsStream(filename1);
-            MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, ChemObjectReaderMode.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
             reader1.Close();

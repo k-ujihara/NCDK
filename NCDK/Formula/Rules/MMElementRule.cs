@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -110,6 +111,7 @@ namespace NCDK.Formula.Rules
                 params_[1] = rangeMassUsed;
                 return params_;
             }
+
             set
             {
                 if (value.Length > 2) throw new CDKException("MMElementRule only expects maximal two parameters");
@@ -174,17 +176,18 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_500()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 29;
-            map["H"] = 72;
-            map["N"] = 10;
-            map["O"] = 18;
-            map["P"] = 4;
-            map["S"] = 7;
-            map["F"] = 15;
-            map["Cl"] = 8;
-            map["Br"] = 5;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 29,
+                ["H"] = 72,
+                ["N"] = 10,
+                ["O"] = 18,
+                ["P"] = 4,
+                ["S"] = 7,
+                ["F"] = 15,
+                ["Cl"] = 8,
+                ["Br"] = 5
+            };
 
             return map;
         }
@@ -196,17 +199,18 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_1000()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 66;
-            map["H"] = 126;
-            map["N"] = 25;
-            map["O"] = 27;
-            map["P"] = 6;
-            map["S"] = 8;
-            map["F"] = 16;
-            map["Cl"] = 11;
-            map["Br"] = 8;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 66,
+                ["H"] = 126,
+                ["N"] = 25,
+                ["O"] = 27,
+                ["P"] = 6,
+                ["S"] = 8,
+                ["F"] = 16,
+                ["Cl"] = 11,
+                ["Br"] = 8
+            };
 
             return map;
         }
@@ -218,17 +222,18 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_2000()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 115;
-            map["H"] = 236;
-            map["N"] = 32;
-            map["O"] = 63;
-            map["P"] = 6;
-            map["S"] = 8;
-            map["F"] = 16;
-            map["Cl"] = 11;
-            map["Br"] = 8;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 115,
+                ["H"] = 236,
+                ["N"] = 32,
+                ["O"] = 63,
+                ["P"] = 6,
+                ["S"] = 8,
+                ["F"] = 16,
+                ["Cl"] = 11,
+                ["Br"] = 8
+            };
 
             return map;
         }
@@ -240,17 +245,18 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_3000()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 162;
-            map["H"] = 208;
-            map["N"] = 48;
-            map["O"] = 78;
-            map["P"] = 6;
-            map["S"] = 9;
-            map["F"] = 16;
-            map["Cl"] = 11;
-            map["Br"] = 8;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 162,
+                ["H"] = 208,
+                ["N"] = 48,
+                ["O"] = 78,
+                ["P"] = 6,
+                ["S"] = 9,
+                ["F"] = 16,
+                ["Cl"] = 11,
+                ["Br"] = 8
+            };
 
             return map;
         }
@@ -262,18 +268,19 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_500()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 39;
-            map["H"] = 72;
-            map["N"] = 20;
-            map["O"] = 20;
-            map["P"] = 9;
-            map["S"] = 10;
-            map["F"] = 16;
-            map["Cl"] = 10;
-            map["Br"] = 4;
-            map["Br"] = 8;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 39,
+                ["H"] = 72,
+                ["N"] = 20,
+                ["O"] = 20,
+                ["P"] = 9,
+                ["S"] = 10,
+                ["F"] = 16,
+                ["Cl"] = 10,
+                ["Br"] = 4,
+                ["Br"] = 8
+            };
 
             return map;
         }
@@ -285,18 +292,19 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_1000()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 78;
-            map["H"] = 126;
-            map["N"] = 20;
-            map["O"] = 27;
-            map["P"] = 9;
-            map["S"] = 14;
-            map["F"] = 34;
-            map["Cl"] = 12;
-            map["Br"] = 8;
-            map["Si"] = 14;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 78,
+                ["H"] = 126,
+                ["N"] = 20,
+                ["O"] = 27,
+                ["P"] = 9,
+                ["S"] = 14,
+                ["F"] = 34,
+                ["Cl"] = 12,
+                ["Br"] = 8,
+                ["Si"] = 14
+            };
 
             return map;
         }
@@ -308,18 +316,19 @@ namespace NCDK.Formula.Rules
         /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_2000()
         {
-            Dictionary<string, int> map = new Dictionary<string, int>();
-
-            map["C"] = 156;
-            map["H"] = 180;
-            map["N"] = 20;
-            map["O"] = 40;
-            map["P"] = 9;
-            map["S"] = 14;
-            map["F"] = 48;
-            map["Cl"] = 12;
-            map["Br"] = 10;
-            map["Si"] = 15;
+            Dictionary<string, int> map = new Dictionary<string, int>
+            {
+                ["C"] = 156,
+                ["H"] = 180,
+                ["N"] = 20,
+                ["O"] = 40,
+                ["P"] = 9,
+                ["S"] = 14,
+                ["F"] = 48,
+                ["Cl"] = 12,
+                ["Br"] = 10,
+                ["Si"] = 15
+            };
 
             return map;
         }

@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Dict;
 using System.Diagnostics;
 
@@ -48,9 +48,8 @@ namespace NCDK.Validate
             ValidationTest noEntry = new ValidationTest(subject, "The referenced entry does not exist in the dictionary.");
             foreach (var key in iter)
             {
-                if (key is string)
+                if (key is string keyName)
                 {
-                    string keyName = (string)key;
                     if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName))
                     {
                         string dictRef = (string)properties[keyName];

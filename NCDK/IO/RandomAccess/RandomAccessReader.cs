@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
@@ -190,8 +191,7 @@ namespace NCDK.IO.RandomAccess
             using (var ins = new StreamReader(file))
             {
                 string version = ins.ReadLine();
-                int iv;
-                if (!int.TryParse(version, out iv))
+                if (!int.TryParse(version, out int iv))
                     throw new Exception($"Invalid index version {version}");
                 if (int.Parse(version) != indexVersion)
                     throw new Exception($"Expected index version {indexVersion} instead of {version}");

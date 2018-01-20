@@ -69,7 +69,7 @@ namespace NCDK.Stereo
         public virtual StereoElement.Classes Class => value.Class;
 
         /// <inheritdoc/>
-        public virtual StereoElement.Configurations Configure
+        public virtual StereoElement.Configuration Configure
         {
             get { return value.Configure; }
             set { this.value.Configure = value; }
@@ -94,15 +94,13 @@ namespace NCDK.Stereo
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
 
-            TF newfocus;
-            if (!map.TryGetValue(focus, out newfocus))
+            if (!map.TryGetValue(focus, out TF newfocus))
                 newfocus = focus;
 
             List<TC> newcarriers = carriers;
             for (int i = 0; i < newcarriers.Count; i++)
             {
-                TC newcarrier;
-                if (map.TryGetValue(newcarriers[i], out newcarrier))
+                if (map.TryGetValue(newcarriers[i], out TC newcarrier))
                 {
                     // make a copy if this is the first change
                     if (newcarriers == carriers)

@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.Groups
@@ -42,7 +43,7 @@ namespace NCDK.Groups
         /// refined from lowest to highest. A reverse split order is, of course, the
         /// opposite.
         /// </summary>
-        public enum SplitOrders
+        public enum SplitOrder
         {
             Forward, Reverse
         }
@@ -50,7 +51,7 @@ namespace NCDK.Groups
         /// <summary>
         /// The bias in splitting cells when refining
         /// </summary>
-        private SplitOrders splitOrder = SplitOrders.Forward;
+        private SplitOrder splitOrder = SplitOrder.Forward;
 
         /// <summary>
         /// The block of the partition that is being refined
@@ -80,8 +81,8 @@ namespace NCDK.Groups
         /// <summary>
         /// Set the preference for splitting cells.
         /// </summary>
-        /// <param name="splitOrder">either <see cref="SplitOrders.Forward"/>  or <see cref="SplitOrders.Reverse"/></param>
-        public void SetSplitOrder(SplitOrders splitOrder)
+        /// <param name="splitOrder">either <see cref="SplitOrder.Forward"/>  or <see cref="SplitOrder.Reverse"/></param>
+        public void SetSplitOrder(SplitOrder splitOrder)
         {
             this.splitOrder = splitOrder;
         }
@@ -151,8 +152,10 @@ namespace NCDK.Groups
                 }
                 else
                 {
-                    SortedSet<int> set = new SortedSet<int>();
-                    set.Add(u);
+                    SortedSet<int> set = new SortedSet<int>
+                    {
+                        u
+                    };
                     setList[h] = set;
                 }
             }
@@ -173,7 +176,7 @@ namespace NCDK.Groups
                 invariantKeys.AddRange(invariants.Keys);
                 partition.RemoveCell(currentBlockIndex);
                 int k = currentBlockIndex;
-                if (splitOrder == SplitOrders.Reverse)
+                if (splitOrder == SplitOrder.Reverse)
                 {
                     invariantKeys.Sort();
                 }

@@ -69,14 +69,14 @@ namespace NCDK.RingSearches
     /// <seealso href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</seealso>
     /// <seealso cref="SpanningTree"/>
     /// <seealso cref="AllRingsFinder"/>
-    /// <seealso cref="CyclicVertexSearch"/>
+    /// <seealso cref="ICyclicVertexSearch"/>
     // @author John May
     // @cdk.module core
     // @cdk.githash
     public sealed class RingSearch
     {
         /// <summary>depending on molecule size, delegate the search to one of two sub-classes</summary>
-        private readonly CyclicVertexSearch searcher;
+        private readonly ICyclicVertexSearch searcher;
 
         /// <summary>input atom container</summary>
         private readonly IAtomContainer container;
@@ -111,24 +111,20 @@ namespace NCDK.RingSearches
         /// <param name="container">non-null input structure</param>
         /// <param name="searcher">non-null adjacency list representation of the container</param>
         /// <exception cref="ArgumentNullException">if the container or graph was null</exception>
-        public RingSearch(IAtomContainer container, CyclicVertexSearch searcher)
+        public RingSearch(IAtomContainer container, ICyclicVertexSearch searcher)
         {
-            if (container == null)
-                throw new ArgumentNullException(nameof(container), "container must not be null");
-            if (searcher == null)
-                throw new ArgumentNullException(nameof(searcher), "searcher was null");
-            this.searcher = searcher;
-            this.container = container;
+            this.searcher = searcher ?? throw new ArgumentNullException(nameof(searcher), "searcher was null");
+            this.container = container ?? throw new ArgumentNullException(nameof(container), "container must not be null");
         }
 
         /// <summary>
-        /// Utility method making a new <see cref="CyclicVertexSearch"/> during
+        /// Utility method making a new <see cref="ICyclicVertexSearch"/> during
         /// construction.
         /// </summary>
         /// <param name="graph">non-null graph</param>
         /// <returns>a new cyclic vertex search for the given graph</returns>
         /// <exception cref="ArgumentNullException">if the graph was null</exception>
-        private static CyclicVertexSearch MakeSearcher(int[][] graph)
+        private static ICyclicVertexSearch MakeSearcher(int[][] graph)
         {
             if (graph == null)
                 throw new ArgumentNullException(nameof(graph), "graph[][] must not be null");

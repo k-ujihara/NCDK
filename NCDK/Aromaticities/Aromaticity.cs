@@ -62,7 +62,7 @@ namespace NCDK.Aromaticities
     /// </list>
     /// </para>
     /// <para>
-    /// This implementation allows configuration of these via an <see cref="ElectronDonation"/> model and <see cref="CycleFinder"/>. To obtain an instance
+    /// This implementation allows configuration of these via an <see cref="ElectronDonation"/> model and <see cref="ICycleFinder"/>. To obtain an instance
     /// of the electron donation model use one of the factory methods,
     /// <see cref="ElectronDonation.CDKModel"/>, <see cref="ElectronDonation.CDKAllowingExocyclicModel"/>,
     /// <see cref="ElectronDonation.DaylightModel"/> or <see cref="ElectronDonation.PiBondsModel"/>.
@@ -86,13 +86,13 @@ namespace NCDK.Aromaticities
         private readonly ElectronDonation model;
 
         /// <summary>The method to find cycles which will be tested for aromaticity.</summary>
-        private readonly CycleFinder cycles;
+        private readonly ICycleFinder cycles;
 
         /// <summary>
         /// Create an aromaticity model using the specified electron donation
         /// <paramref name="model"/> which is tested on the <paramref name="cycles"/>. The <paramref name="model"/> defines
         /// how many π-electrons each atom may contribute to an aromatic system. The
-        /// <paramref name="cycles"/> defines the <see cref="CycleFinder"/> which is used to find
+        /// <paramref name="cycles"/> defines the <see cref="ICycleFinder"/> which is used to find
         /// cycles in a molecule. The total electron donation from each atom in each
         /// cycle is counted and checked. If the electron contribution is equal to
         /// <c>4n + 2</c> for a <c>n &gt;= 0</c> then the cycle is considered
@@ -117,7 +117,7 @@ namespace NCDK.Aromaticities
         /// <param name="cycles"></param>
         /// <seealso cref="ElectronDonation"/>
         /// <seealso cref="Cycles"/>
-        public Aromaticity(ElectronDonation model, CycleFinder cycles)
+        public Aromaticity(ElectronDonation model, ICycleFinder cycles)
         {
             this.model = CheckNotNull(model);
             this.cycles = CheckNotNull(cycles);

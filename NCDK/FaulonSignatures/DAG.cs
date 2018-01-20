@@ -16,7 +16,7 @@ namespace NCDK.FaulonSignatures
         /// <summary>
         /// The direction up and down the DAG. UP is from leaves to root.
         /// </summary>
-        public enum Direction { UP, Down };
+        public enum Direction { Up, Down };
 
         /// <summary>
         /// A node of the directed acyclic graph
@@ -142,9 +142,8 @@ namespace NCDK.FaulonSignatures
 
             public override bool Equals(object other)
             {
-                if (other is Arc)
+                if (other is Arc o)
                 {
-                    Arc o = (Arc)other;
                     return (this.a == o.a && this.b == o.b)
                         || (this.a == o.b && this.b == o.a);
                 }
@@ -653,7 +652,7 @@ namespace NCDK.FaulonSignatures
             {
                 oldInvariants = invariants.GetVertexInvariantCopy();
 
-                UpdateNodeInvariants(Direction.UP); // From the leaves to the root
+                UpdateNodeInvariants(Direction.Up); // From the leaves to the root
 
                 // This is needed here otherwise there will be cases where a node 
                 // invariant is reset when the tree is traversed down. 
@@ -693,7 +692,7 @@ namespace NCDK.FaulonSignatures
         public void UpdateNodeInvariants(DAG.Direction direction)
         {
             int start, end, increment;
-            if (direction == Direction.UP)
+            if (direction == Direction.Up)
             {
                 start = this.layers.Count - 1;
                 // The root node is not included but it doesn't matter since it
@@ -730,7 +729,7 @@ namespace NCDK.FaulonSignatures
                 List<int> relativeInvariants = new List<int>();
 
                 // If we go up we should check the children.
-                List<DAG.Node> relatives = (direction == Direction.UP) ?
+                List<DAG.Node> relatives = (direction == Direction.Up) ?
                         layerNode.children : layerNode.parents;
                 foreach (var relative in relatives)
                 {
@@ -738,7 +737,7 @@ namespace NCDK.FaulonSignatures
                     int inv = this.invariants.GetNodeInvariant(j);
                     //                Console.Out.WriteLine(layerNode.edgeColors + " getting " + relative.vertexIndex);
                     int edgeColor;
-                    if (direction == Direction.UP)
+                    if (direction == Direction.Up)
                     {
                         edgeColor = relative.edgeColors[layerNode.vertexIndex];
                     }

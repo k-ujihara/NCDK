@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
@@ -184,7 +185,7 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="CDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
+        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="NCDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
         /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
@@ -209,7 +210,7 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="CDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
+        /// to run the <see cref="IAtomContainer"/> <paramref name="ac"/> to the <see cref="NCDK.Aromaticities.CDKHueckelAromaticityDetector"/> prior to
         /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int, bool)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
@@ -709,7 +710,7 @@ namespace NCDK.Tools
                 IAtom atom = node.Atom;
                 if (atom == null) return long.MinValue;
                 // cast can be removed in master
-                long label = atom.GetProperty(InvPair.CANONICAL_LABEL, long.MinValue);
+                long label = atom.GetProperty(InvPair.CanonicalLabelKey, long.MinValue);
                 return label ;
             }
         }

@@ -20,6 +20,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.Tools.Manipulator
@@ -31,7 +32,7 @@ namespace NCDK.Tools.Manipulator
     // @author     egonw
     // @cdk.module standard
     // @cdk.githash
-    public class AtomTypeManipulator
+    public static class AtomTypeManipulator
     {
         /// <summary>
         /// Method that assign properties to an atom given a particular atomType.

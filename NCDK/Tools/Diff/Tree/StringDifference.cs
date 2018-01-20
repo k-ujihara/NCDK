@@ -16,9 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
@@ -30,7 +27,6 @@ namespace NCDK.Tools.Diff.Tree
     // @cdk.githash
     public class StringDifference : IDifference
     {
-
         private string name;
         private string first;
         private string second;
@@ -71,7 +67,7 @@ namespace NCDK.Tools.Diff.Tree
         /// </summary>
         public override string ToString()
         {
-            return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
+            return $"{name}:{first ?? "NA"}/{second ?? "NA"}";
         }
     }
 }

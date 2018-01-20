@@ -38,7 +38,7 @@ namespace NCDK.IO
         public void TestAccepts()
         {
             Mopac7Reader reader = new Mopac7Reader(new StringReader(""));
-            reader.ReaderMode = ChemObjectReaderModes.Strict;
+            reader.ReaderMode = ChemObjectReaderMode.Strict;
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
     }

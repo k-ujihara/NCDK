@@ -115,7 +115,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>a length</returns>
         public static double Length(LineElement line)
         {
-            return Distance(line.firstPoint, line.secondPoint);
+            return Distance(line.FirstPoint, line.SecondPoint);
         }
 
         /// <summary>
@@ -144,18 +144,18 @@ namespace NCDK.Renderers.Generators
                 {
                     case OvalElement o:
                         {
-                            center.X += o.coord.X;
-                            center.Y += o.coord.Y;
+                            center.X += o.Coord.X;
+                            center.Y += o.Coord.Y;
                             counter++;
                         }
                         break;
                     case LineElement e:
                         {
                             LineElement l = e;
-                            center.X += l.firstPoint.X;
-                            center.X += l.secondPoint.X;
-                            center.Y += l.firstPoint.Y;
-                            center.Y += l.secondPoint.Y;
+                            center.X += l.FirstPoint.X;
+                            center.X += l.SecondPoint.X;
+                            center.Y += l.FirstPoint.Y;
+                            center.Y += l.SecondPoint.Y;
                             counter += 2;
                         }
                         break;

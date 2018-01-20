@@ -3,7 +3,7 @@
     /// <summary>
     /// Enumeration of highlight style.
     /// </summary>
-    public enum HighlightStyles
+    public enum HighlightStyle
     {
         /// <summary>
         /// Ignore highlight hints.

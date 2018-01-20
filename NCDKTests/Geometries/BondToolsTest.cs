@@ -228,7 +228,7 @@ namespace NCDK.Geometries
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
-            Assert.AreEqual(2.0943946986086157, BondTools.giveAngle(mol.Atoms[0], mol.Atoms[2], mol.Atoms[3]),
+            Assert.AreEqual(2.0943946986086157, BondTools.GiveAngle(mol.Atoms[0], mol.Atoms[2], mol.Atoms[3]),
                     0.2);
         }
 

@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Formula;
 using System.Linq;
 
@@ -33,9 +34,8 @@ namespace NCDK.Tools.Manipulator
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-    public class MolecularFormulaRangeManipulator
+    public static class MolecularFormulaRangeManipulator
     {
-
         /// <summary>
         /// Extract from a set of MolecularFormula the range of each each element found and
         /// put the element and occurrence in a new MolecularFormulaRange.

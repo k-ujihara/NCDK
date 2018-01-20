@@ -182,7 +182,7 @@ namespace NCDK.Renderers.Generators
             var point = atom.Point2D.Value;
             double radius = model.GetAtomRadius() / model.GetScale();
             double distance = 2 * radius;
-            if (model.GetCompactShape() == AtomShapeTypes.Square)
+            if (model.GetCompactShape() == AtomShapeType.Square)
             {
                 return new RectangleElement(
                     new WPF.Point(point.X - radius, point.Y - radius),

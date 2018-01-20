@@ -118,7 +118,7 @@ namespace NCDK.Renderers.Visitors
         private void Visit(LineElement line)
         {
             // scale the stroke by zoom + scale (both included in the AffineTransform)
-            var width = line.width;
+            var width = line.Width;
             if (width < minStroke) width = minStroke;
 
             int key = (int)(width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
@@ -129,12 +129,12 @@ namespace NCDK.Renderers.Visitors
             }
             else
             {
-                Pen stroke = new Pen(new SolidColorBrush(line.color), width);
+                Pen stroke = new Pen(new SolidColorBrush(line.Color), width);
                 pen = stroke;
                 StrokeMap[key] = stroke;
             }
 
-            var linePoints = new WPF::Point[] { line.firstPoint, line.secondPoint };
+            var linePoints = new WPF::Point[] { line.FirstPoint, line.SecondPoint };
 
             linePoints[0] = linePoints[0];
             linePoints[1] = linePoints[1];
@@ -143,12 +143,12 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(OvalElement oval)
         {
-            var radius = oval.radius;
-            var diameter = oval.radius * 2;
-            var center = oval.coord;
-            var brush = new SolidColorBrush(oval.color);
+            var radius = oval.Radius;
+            var diameter = oval.Radius * 2;
+            var center = oval.Coord;
+            var brush = new SolidColorBrush(oval.Color);
 
-            if (oval.fill)
+            if (oval.Fill)
             {
                 this.graphics.DrawEllipse(
                     brush,
@@ -176,34 +176,34 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(TextElement textElement)
         {
-            var point = this.GetTextBasePoint(textElement.text, textElement.coord, this.fontManager.Typeface, this.fontManager.Size);
-            var textBounds = this.GetTextBounds(textElement.text, textElement.coord, this.fontManager.Typeface, this.fontManager.Size);
+            var point = this.GetTextBasePoint(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
+            var textBounds = this.GetTextBounds(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
             var backColor = this.BackgroundColor;
             this.graphics.DrawRectangle(new SolidColorBrush(backColor), null, textBounds);
             this.graphics.DrawText(new FormattedText(
-                textElement.text,
+                textElement.Text,
                 CultureInfo.InvariantCulture,
                 WPF.FlowDirection.LeftToRight,
                 this.fontManager.CureentTypeface,
                 this.fontManager.Size,
-                new SolidColorBrush(textElement.color)), point);
+                new SolidColorBrush(textElement.Color)), point);
         }
 
         private void Visit(WedgeLineElement wedge)
         {
             // make the vector normal to the wedge axis
-            var normal = new Vector2(wedge.firstPoint.Y - wedge.secondPoint.Y, wedge.secondPoint.X - wedge.firstPoint.X);
+            var normal = new Vector2(wedge.FirstPoint.Y - wedge.SecondPoint.Y, wedge.SecondPoint.X - wedge.FirstPoint.X);
             normal = Vector2.Normalize(normal);
             normal *= (rendererModel.GetWedgeWidth() / rendererModel.GetScale());
 
             // make the triangle corners
-            var vertexA = new Vector2(wedge.firstPoint.X, wedge.firstPoint.Y);
-            var vertexB = new Vector2(wedge.secondPoint.X, wedge.secondPoint.Y) + normal;
+            var vertexA = new Vector2(wedge.FirstPoint.X, wedge.FirstPoint.Y);
+            var vertexB = new Vector2(wedge.SecondPoint.X, wedge.SecondPoint.Y) + normal;
             var vertexC = vertexB - normal;
 
-            var brush = new SolidColorBrush(wedge.color);
+            var brush = new SolidColorBrush(wedge.Color);
 
-            if (wedge.type == WedgeLineElement.Types.Dashed)
+            if (wedge.BondType == WedgeLineElement.WedgeType.Dashed)
             {
                 var pen = new Pen(brush, 1);
 
@@ -232,7 +232,7 @@ namespace NCDK.Renderers.Visitors
                     }
                 }
             }
-            else if (wedge.type == WedgeLineElement.Types.Wedged)
+            else if (wedge.BondType == WedgeLineElement.WedgeType.Wedged)
             {
                 var pointB = ToPoint(vertexB);
                 var pointC = ToPoint(vertexC);
@@ -247,7 +247,7 @@ namespace NCDK.Renderers.Visitors
                 var g = new PathGeometry(new[] { figure });
                 this.graphics.DrawGeometry(brush, null, g);
             }
-            else if (wedge.type == WedgeLineElement.Types.Indiff)
+            else if (wedge.BondType == WedgeLineElement.WedgeType.Indiff)
             {
                 var pen = new Pen(brush, 1)
                 {
@@ -297,9 +297,9 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(AtomSymbolElement atomSymbol)
         {
-            var xy = atomSymbol.coord;
+            var xy = atomSymbol.Coord;
 
-            var bounds = GetTextBounds(atomSymbol.text, this.fontManager.CureentTypeface, this.fontManager.Size);
+            var bounds = GetTextBounds(atomSymbol.Text, this.fontManager.CureentTypeface, this.fontManager.Size);
 
             double w = bounds.Width;
             double h = bounds.Height;
@@ -310,7 +310,7 @@ namespace NCDK.Renderers.Visitors
             bounds = new WPF.Rect(xy.X - (w / 2), xy.Y - (h / 2), w, h);
 
             var backgroundBrush = new SolidColorBrush(this.BackgroundColor);
-            var atomSymbolBrush = new SolidColorBrush(atomSymbol.color);
+            var atomSymbolBrush = new SolidColorBrush(atomSymbol.Color);
 
             double padding = h / 4;
             this.graphics.DrawRoundedRectangle(
@@ -319,7 +319,7 @@ namespace NCDK.Renderers.Visitors
                     bounds.X - (padding / 2), bounds.Y - (padding / 2),
                     bounds.Width + padding, bounds.Height + padding), padding, padding);
             this.graphics.DrawText(new FormattedText(
-                    atomSymbol.text,
+                    atomSymbol.Text,
                     CultureInfo.CurrentCulture,
                     WPF.FlowDirection.LeftToRight,
                     this.fontManager.CureentTypeface,
@@ -329,25 +329,25 @@ namespace NCDK.Renderers.Visitors
 
             int offset = 10; // XXX
             string chargeString;
-            if (atomSymbol.formalCharge == 0)
+            if (atomSymbol.FormalCharge == 0)
             {
                 return;
             }
-            else if (atomSymbol.formalCharge == 1)
+            else if (atomSymbol.FormalCharge == 1)
             {
                 chargeString = "+";
             }
-            else if (atomSymbol.formalCharge > 1)
+            else if (atomSymbol.FormalCharge > 1)
             {
-                chargeString = atomSymbol.formalCharge + "+";
+                chargeString = atomSymbol.FormalCharge + "+";
             }
-            else if (atomSymbol.formalCharge == -1)
+            else if (atomSymbol.FormalCharge == -1)
             {
                 chargeString = "-";
             }
-            else if (atomSymbol.formalCharge < -1)
+            else if (atomSymbol.FormalCharge < -1)
             {
-                int absCharge = Math.Abs(atomSymbol.formalCharge);
+                int absCharge = Math.Abs(atomSymbol.FormalCharge);
                 chargeString = absCharge + "-";
             }
             else
@@ -357,7 +357,7 @@ namespace NCDK.Renderers.Visitors
 
             var xCoord = bounds.CenterX();
             var yCoord = bounds.CenterY();
-            if (atomSymbol.alignment == 1)
+            if (atomSymbol.Alignment == 1)
             { // RIGHT
                 this.graphics.DrawText(new FormattedText(
                     chargeString,
@@ -368,7 +368,7 @@ namespace NCDK.Renderers.Visitors
                     atomSymbolBrush),
                     new WPF::Point(xCoord + offset, bounds.Top));
             }
-            else if (atomSymbol.alignment == -1)
+            else if (atomSymbol.Alignment == -1)
             { // LEFT
                 this.graphics.DrawText(new FormattedText(
                     chargeString,
@@ -379,7 +379,7 @@ namespace NCDK.Renderers.Visitors
                     atomSymbolBrush),
                     new WPF::Point(xCoord - offset, bounds.Top));
             }
-            else if (atomSymbol.alignment == 2)
+            else if (atomSymbol.Alignment == 2)
             { // TOP
                 this.graphics.DrawText(new FormattedText(
                     chargeString,
@@ -390,7 +390,7 @@ namespace NCDK.Renderers.Visitors
                     atomSymbolBrush),
                     new WPF::Point(xCoord, yCoord - offset));
             }
-            else if (atomSymbol.alignment == -2)
+            else if (atomSymbol.Alignment == -2)
             { // BOT
                 this.graphics.DrawText(new FormattedText(
                     chargeString,
@@ -405,33 +405,33 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(RectangleElement rectangle)
         {
-            var width = rectangle.width;
-            var height = rectangle.height;
-            var p = rectangle.coord;
+            var width = rectangle.Width;
+            var height = rectangle.Height;
+            var p = rectangle.Coord;
             var rect = new WPF.Rect(p.X, p.Y, width, height);
-            if (rectangle.filled)
+            if (rectangle.Filled)
             {
-                this.graphics.DrawRectangle(new SolidColorBrush(rectangle.color), null, rect);
+                this.graphics.DrawRectangle(new SolidColorBrush(rectangle.Color), null, rect);
             }
             else
             {
-                this.graphics.DrawRectangle(null, new Pen(new SolidColorBrush(rectangle.color), 1), rect);
+                this.graphics.DrawRectangle(null, new Pen(new SolidColorBrush(rectangle.Color), 1), rect);
             }
         }
 
         private void Visit(GeneralPath path)
         {
-            if (path.fill)
+            if (path.Fill)
             {
                 this.graphics.DrawGeometry(
-                    new SolidColorBrush(path.color),
+                    new SolidColorBrush(path.Color),
                     null,
-                    path.elements);
+                    path.Elements);
             }
             else
             {
-                var pen = new Pen(new SolidColorBrush(path.color), path.stroke);
-                this.graphics.DrawGeometry(null, pen, path.elements);
+                var pen = new Pen(new SolidColorBrush(path.Color), path.StrokeWith);
+                this.graphics.DrawGeometry(null, pen, path.Elements);
             }
         }
 
@@ -441,33 +441,33 @@ namespace NCDK.Renderers.Visitors
 
             Pen pen = null;
             {
-                int w = (int)(line.width * scale);
+                int w = (int)(line.Width * scale);
                 if (StrokeMap.ContainsKey(w))
                 {
                     pen = StrokeMap[w];
                 }
                 else
                 {
-                    pen = new Pen(new SolidColorBrush(line.color), w);
+                    pen = new Pen(new SolidColorBrush(line.Color), w);
                     StrokeMap[w] = pen;
                 }
             }
 
-            var a = line.start;
-            var b = line.end;
+            var a = line.Start;
+            var b = line.End;
             graphics.DrawLine(pen, a, b);
             double aW = rendererModel.GetArrowHeadWidth() / scale;
-            if (line.direction)
+            if (line.Direction)
             {
-                var c = new WPF.Point(line.start.X - aW, line.start.Y - aW);
-                var d = new WPF.Point(line.start.X - aW, line.start.Y + aW);
+                var c = new WPF.Point(line.Start.X - aW, line.Start.Y - aW);
+                var d = new WPF.Point(line.Start.X - aW, line.Start.Y + aW);
                 graphics.DrawLine(pen, a, c);
                 graphics.DrawLine(pen, a, d);
             }
             else
             {
-                var c = new WPF.Point(line.end.X + aW, line.end.Y - aW);
-                var d = new WPF.Point(line.end.X + aW, line.end.Y + aW);
+                var c = new WPF.Point(line.End.X + aW, line.End.Y - aW);
+                var d = new WPF.Point(line.End.X + aW, line.End.Y + aW);
                 graphics.DrawLine(pen, b, c);
                 graphics.DrawLine(pen, b, d);
             }
@@ -475,16 +475,16 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(TextGroupElement textGroup)
         {
-            var point = GetTextBasePoint(textGroup.text, textGroup.coord, fontManager.CureentTypeface, fontManager.Size);
-            var textBounds = GetTextBounds(textGroup.text, textGroup.coord, fontManager.CureentTypeface, fontManager.Size);
+            var point = GetTextBasePoint(textGroup.Text, textGroup.Coord, fontManager.CureentTypeface, fontManager.Size);
+            var textBounds = GetTextBounds(textGroup.Text, textGroup.Coord, fontManager.CureentTypeface, fontManager.Size);
             this.graphics.DrawRectangle(new SolidColorBrush(this.BackgroundColor), null, textBounds);
             this.graphics.DrawText(new FormattedText(
-                textGroup.text,
+                textGroup.Text,
                 CultureInfo.CurrentCulture,
                 WPF.FlowDirection.LeftToRight,
                 this.fontManager.CureentTypeface,
                 this.fontManager.Size,
-                new SolidColorBrush(textGroup.color)),
+                new SolidColorBrush(textGroup.Color)),
                 new WPF::Point(point.X, point.Y));
 
             var coord = new WPF::Point(textBounds.CenterX(), textBounds.CenterY());
@@ -534,7 +534,7 @@ namespace NCDK.Renderers.Visitors
                     WPF.FlowDirection.LeftToRight,
                     this.fontManager.CureentTypeface,
                     this.fontManager.Size,
-                    new SolidColorBrush(textGroup.color)),
+                    new SolidColorBrush(textGroup.Color)),
                     p);
 
                 if (child.subscript != null)
@@ -548,7 +548,7 @@ namespace NCDK.Renderers.Visitors
                         WPF.FlowDirection.LeftToRight,
                         this.fontManager.CureentTypeface,
                         this.fontManager.Size - 2,
-                        new SolidColorBrush(textGroup.color)),
+                        new SolidColorBrush(textGroup.Color)),
                         p);
                 }
             }

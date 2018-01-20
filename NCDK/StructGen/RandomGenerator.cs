@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
@@ -71,20 +72,8 @@ namespace NCDK.StructGen
             {
                 trial = (IAtomContainer)molecule.Clone();
                 Mutate(trial);
-#if DEBUG
-                string s = "BondCounts:    ";
-                for (int f = 0; f < trial.Atoms.Count; f++)
-                {
-                    s += trial.GetConnectedBonds(trial.Atoms[f]).Count() + " ";
-                }
-                Debug.WriteLine(s);
-                s = "BondOrderSums: ";
-                for (int f = 0; f < trial.Atoms.Count; f++)
-                {
-                    s += trial.GetBondOrderSum(trial.Atoms[f]) + " ";
-                }
-                Debug.WriteLine(s);
-#endif
+                Debug.WriteLine("BondCounts:    " + string.Join(" ", trial.Atoms.Select(n => trial.GetConnectedBonds(n).Count())));
+                Debug.WriteLine("BondOrderSums: " + string.Join(" ", trial.Atoms.Select(n => trial.GetBondOrderSum(n))));
             } while (trial == null || !ConnectivityChecker.IsConnected(trial));
             proposedStructure = trial;
 

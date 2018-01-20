@@ -248,13 +248,13 @@ namespace NCDK.Depict
                 }
                 else if (element is LineElement)
                 {
-                    strokeFreq.Add(((LineElement)element).color);
-                    strokeWidthFreq.Add(Scaled(((LineElement)element).width));
+                    strokeFreq.Add(((LineElement)element).Color);
+                    strokeWidthFreq.Add(Scaled(((LineElement)element).Width));
                 }
                 else if (element is GeneralPath)
                 {
-                    if (((GeneralPath)element).fill)
-                        fillFreq.Add(((GeneralPath)element).color);
+                    if (((GeneralPath)element).Fill)
+                        fillFreq.Add(((GeneralPath)element).Color);
                 }
                 else
                 {
@@ -288,7 +288,7 @@ namespace NCDK.Depict
             sb.Append(" d='");
             Point currPoint = new Point(0, 0);
 
-            var g = elem.elements;
+            var g = elem.Elements;
             var tran = g.Transform ?? Transform.Identity;
             foreach (var pelem in g.Figures)
             {
@@ -385,24 +385,24 @@ namespace NCDK.Depict
                             break;
                     }
                 }
-                if (elem.fill)
+                if (elem.Fill)
                 {
                     sb.Append("z");
                     currPoint = new Point(0, 0);
                 }
             }
             sb.Append("'");
-            if (elem.fill)
+            if (elem.Fill)
             {
                 sb.Append(" stroke='none'");
-                if (defaultFill == null || !defaultFill.Equals(elem.color))
-                    sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
+                if (defaultFill == null || !defaultFill.Equals(elem.Color))
+                    sb.Append(" fill='").Append(ToString(elem.Color)).Append("'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
-                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.stroke))).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.Color)).Append("'");
+                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.StrokeWith))).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -433,7 +433,7 @@ namespace NCDK.Depict
 
         private void Visit(string id, string cls, LineElement elem)
         {
-            var points = new Point[] { elem.firstPoint, elem.secondPoint };
+            var points = new Point[] { elem.FirstPoint, elem.SecondPoint };
             TransformPoints(points);
             AppendIdent();
             sb.Append("<line");
@@ -443,10 +443,10 @@ namespace NCDK.Depict
               .Append(" y1='").Append(ToString(points[0].Y)).Append("'")
               .Append(" x2='").Append(ToString(points[1].X)).Append("'")
               .Append(" y2='").Append(ToString(points[1].Y)).Append("'");
-            if (defaultStroke == null || !defaultStroke.Equals(elem.color))
-                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
-            if (defaultStroke == null || !defaultStrokeWidth.Equals(ToString(Scaled(elem.width))))
-                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.width))).Append("'");
+            if (defaultStroke == null || !defaultStroke.Equals(elem.Color))
+                sb.Append(" stroke='").Append(ToString(elem.Color)).Append("'");
+            if (defaultStroke == null || !defaultStrokeWidth.Equals(ToString(Scaled(elem.Width))))
+                sb.Append(" stroke-width='").Append(ToString(Scaled(elem.Width))).Append("'");
             sb.Append("/>\n");
         }
 
@@ -504,22 +504,22 @@ namespace NCDK.Depict
         private void Visit(RectangleElement elem)
         {
             AppendIdent();
-            var points = new Point[] { elem.coord };
+            var points = new Point[] { elem.Coord };
             TransformPoints(points);
             sb.Append("<rect");
             sb.Append(" x='").Append(ToString(points[0].X)).Append("'");
-            sb.Append(" y='").Append(ToString(points[0].Y - elem.height)).Append("'");
-            sb.Append(" width='").Append(ToString(Scaled(elem.width))).Append("'");
-            sb.Append(" height='").Append(ToString(Scaled(elem.height))).Append("'");
-            if (elem.filled)
+            sb.Append(" y='").Append(ToString(points[0].Y - elem.Height)).Append("'");
+            sb.Append(" width='").Append(ToString(Scaled(elem.Width))).Append("'");
+            sb.Append(" height='").Append(ToString(Scaled(elem.Height))).Append("'");
+            if (elem.Filled)
             {
-                sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
+                sb.Append(" fill='").Append(ToString(elem.Color)).Append("'");
                 sb.Append(" stroke='none'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.Color)).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -527,22 +527,22 @@ namespace NCDK.Depict
         private void Visit(OvalElement elem)
         {
             AppendIdent();
-            var points = new Point[] { elem.coord };
+            var points = new Point[] { elem.Coord };
             TransformPoints(points);
             sb.Append("<ellipse");
             sb.Append(" cx='").Append(ToString(points[0].X)).Append("'");
             sb.Append(" cy='").Append(ToString(points[0].Y)).Append("'");
-            sb.Append(" rx='").Append(ToString(Scaled(elem.radius))).Append("'");
-            sb.Append(" ry='").Append(ToString(Scaled(elem.radius))).Append("'");
-            if (elem.fill)
+            sb.Append(" rx='").Append(ToString(Scaled(elem.Radius))).Append("'");
+            sb.Append(" ry='").Append(ToString(Scaled(elem.Radius))).Append("'");
+            if (elem.Fill)
             {
-                sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
+                sb.Append(" fill='").Append(ToString(elem.Color)).Append("'");
                 sb.Append(" stroke='none'");
             }
             else
             {
                 sb.Append(" fill='none'");
-                sb.Append(" stroke='").Append(ToString(elem.color)).Append("'");
+                sb.Append(" stroke='").Append(ToString(elem.Color)).Append("'");
             }
             sb.Append("/>\n");
         }
@@ -550,16 +550,16 @@ namespace NCDK.Depict
         private void Visit(TextElement elem)
         {
             AppendIdent();
-            Point[] points = new Point[] { elem.coord };
+            Point[] points = new Point[] { elem.Coord };
             TransformPoints(points);
             sb.Append("<text ");
             sb.Append(" x='").Append(ToString(points[0].X)).Append("'");
             sb.Append(" y='").Append(ToString(points[0].Y)).Append("'");
-            sb.Append(" fill='").Append(ToString(elem.color)).Append("'");
+            sb.Append(" fill='").Append(ToString(elem.Color)).Append("'");
             sb.Append(" text-anchor='middle'");
             // TODO need font manager for scaling...
             sb.Append(">");
-            sb.Append(System.Security.SecurityElement.Escape(elem.text));
+            sb.Append(System.Security.SecurityElement.Escape(elem.Text));
             sb.Append("</text>\n");
         }
 

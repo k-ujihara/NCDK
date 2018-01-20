@@ -200,7 +200,6 @@ namespace NCDK.Depict
         /// <summary>
         /// Internal copy constructor.
         /// </summary>
-        /// <param name="org">original depiction</param>
         public DepictionGenerator Clone()
         {
             var clone = (DepictionGenerator)this.MemberwiseClone();
@@ -674,7 +673,7 @@ namespace NCDK.Depict
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="RendererModelTools.GetAtomColorer"/>
         /// <seealso cref="RendererModelTools.GetHighlighting"/>
-        /// <seealso cref="HighlightStyles"/>
+        /// <seealso cref="HighlightStyle"/>
         /// <seealso cref="CDK2DAtomColors"/>
         public DepictionGenerator WithAtomColors()
         {
@@ -687,7 +686,7 @@ namespace NCDK.Depict
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="RendererModelTools.GetAtomColorer"/>
         /// <seealso cref="RendererModelTools.GetHighlighting"/>
-        /// <seealso cref="HighlightStyles"/>
+        /// <seealso cref="HighlightStyle"/>
         /// <seealso cref="UniColor"/>
         public DepictionGenerator WithAtomColors(IAtomColorer colorer)
         {
@@ -714,10 +713,10 @@ namespace NCDK.Depict
         /// </summary>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="RendererModelTools.SetHighlighting"/>
-        /// <seealso cref="HighlightStyles"/>
+        /// <seealso cref="HighlightStyle"/>
         public DepictionGenerator WithOuterGlowHighlight()
         {
-            templateModel.SetHighlighting(HighlightStyles.OuterGlow);
+            templateModel.SetHighlighting(HighlightStyle.OuterGlow);
             templateModel.SetOuterGlowWidth(4);
             return this;
         }
@@ -812,7 +811,7 @@ namespace NCDK.Depict
         /// title displayed.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="BasicSceneGenerator.ShowMoleculeTitle"/>
+        /// <seealso cref="RendererModelTools.SetShowMoleculeTitle(RendererModel, bool)"/>
         public DepictionGenerator WithMolecularTitle()
         {
             templateModel.SetShowMoleculeTitle(true);
@@ -825,7 +824,7 @@ namespace NCDK.Depict
         /// property on the <see cref="IReaction"/> instance.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="BasicSceneGenerator.ShowReactionTitle"/>
+        /// <seealso cref="RendererModelTools.SetShowMoleculeTitle(RendererModel, bool)"/>
         public DepictionGenerator WithReactionTitle()
         {
             templateModel.SetShowReactionTitle(true);
@@ -849,7 +848,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="color">the color of annotations</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="StandardGenerator.AnnotationColor"/>
+        /// <seealso cref="RendererModelTools.SetAnnotationColor(RendererModel, Color)"/>
         public DepictionGenerator WithAnnotationColor(Color color)
         {
             templateModel.SetAnnotationColor(color);
@@ -861,7 +860,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="scale">the scale of annotations</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="StandardGenerator.AnnotationFontScale"/>
+        /// <seealso cref="RendererModelTools.SetAnnotationFontScale(RendererModel, double)"/>
         public DepictionGenerator WithAnnotationScale(double scale)
         {
             templateModel.SetAnnotationFontScale(scale);
@@ -873,7 +872,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="color">the color of titles</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RendererModel.TitleColor"/>
+        /// <seealso cref="RendererModelTools.SetTitleColor(RendererModel, Color)"/>
         public DepictionGenerator WithTitleColor(Color color)
         {
             templateModel.SetTitleColor(color);
@@ -885,7 +884,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="scale">the scale of titles</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RendererModel.TitleFontScale"/>
+        /// <seealso cref="RendererModelTools.SetTitleFontScale(RendererModel, double)"/>
         public DepictionGenerator WithTitleScale(double scale)
         {
             templateModel.SetTitleFontScale(scale);
@@ -897,7 +896,7 @@ namespace NCDK.Depict
         /// groups.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="StandardGenerator.Visibility"/>
+        /// <seealso cref="RendererModelTools.SetVisibility(RendererModel, SymbolVisibility)"/>
         public DepictionGenerator WithTerminalCarbons()
         {
             templateModel.SetVisibility(SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations));
@@ -908,7 +907,7 @@ namespace NCDK.Depict
         /// Display atom symbols for all atoms in the molecule.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="StandardGenerator.Visibility"/>
+        /// <seealso cref="RendererModelTools.SetVisibility(RendererModel, SymbolVisibility)"/>
         public DepictionGenerator WithCarbonSymbols()
         {
             templateModel.SetVisibility(SymbolVisibility.All);
@@ -963,7 +962,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="m">margin</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="BasicSceneGenerator.Margin"/>
+        /// <seealso cref="RendererModelTools.SetMargin(RendererModel, double)"/>
         public DepictionGenerator WithMargin(double m)
         {
             templateModel.SetMargin(m);
@@ -977,7 +976,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="p">padding</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="RendererModel.Padding"/>
+        /// <seealso cref="RendererModelTools.SetPadding(RendererModel, double)"/>
         public DepictionGenerator WithPadding(double p)
         {
             templateModel.SetPadding(p);
@@ -996,7 +995,7 @@ namespace NCDK.Depict
         /// </remarks>
         /// <param name="zoom">zoom factor</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="BasicSceneGenerator.ZoomFactor"/>
+        /// <seealso cref="RendererModelTools.SetZoomFactor(RendererModel, double)"/>
         public DepictionGenerator WithZoom(double zoom)
         {
             templateModel.SetZoomFactor(zoom);
@@ -1009,7 +1008,7 @@ namespace NCDK.Depict
         /// become huge.
         /// </summary>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="BasicSceneGenerator.FitToScreen"/>
+        /// <seealso cref="RendererModelTools.SetFitToScreen(RendererModel, bool)"/>
         public DepictionGenerator WithFillToFit()
         {
             templateModel.SetFitToScreen(true);

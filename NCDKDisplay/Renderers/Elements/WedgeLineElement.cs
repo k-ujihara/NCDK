@@ -33,7 +33,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// If the bond is dashed ,wedged, or "up_or_down", i.e., not defined.
         /// </summary>
-        public enum Types
+        public enum WedgeType
         {
             Dashed, Wedged, Indiff
         }
@@ -41,20 +41,21 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// The type of the bond (dashed, wedged, not defined).
         /// </summary>
-        public readonly Types type;
+        public readonly WedgeType BondType;
 
         /// <summary>
         /// The direction indicates which way the wedge gets thicker.
         /// </summary>
-        public readonly Direction direction;
+        public readonly BondDirection Direction;
 
         /// <summary>
-        /// 'toFirst' means that the wedge gets thicker in the direction of the first
+        /// <see cref="ToFirst"/> means that the wedge gets thicker in the direction of the first
         /// point in the line.
         /// </summary>
-        public enum Direction
+        public enum BondDirection
         {
-            toFirst, toSecond,
+            ToFirst,
+            ToSecond,
         }
 
         /// <summary>
@@ -67,11 +68,11 @@ namespace NCDK.Renderers.Elements
         /// <param name="type">the bond is dashed ,wedged, or "up_or_down", i.e., not defined.</param>
         /// <param name="direction">the direction of the thickness</param>
         /// <param name="color">the color of the wedge</param>
-        public WedgeLineElement(Point firstPoint, Point secondPoint, double width, Types type, Direction direction, Color color)
+        public WedgeLineElement(Point firstPoint, Point secondPoint, double width, WedgeType type, BondDirection direction, Color color)
             : base(firstPoint, secondPoint, width, color)
         {
-            this.type = type;
-            this.direction = direction;
+            this.BondType = type;
+            this.Direction = direction;
         }
 
         /// <summary>
@@ -81,10 +82,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="type">if the bond is dashed ,wedged, or "up_or_down", i.e., not defined</param>
         /// <param name="direction">the direction of the thickness</param>
         /// <param name="color">the color of the wedge</param>
-        public WedgeLineElement(LineElement element, Types type, Direction direction, Color color)
-            : this(direction == Direction.toFirst ? element.secondPoint : element.firstPoint,
-                direction == Direction.toFirst ? element.firstPoint : element.secondPoint,
-                element.width, type, direction, color)
+        public WedgeLineElement(LineElement element, WedgeType type, BondDirection direction, Color color)
+            : this(direction == BondDirection.ToFirst ? element.SecondPoint : element.FirstPoint,
+                direction == BondDirection.ToFirst ? element.FirstPoint : element.SecondPoint,
+                element.Width, type, direction, color)
         { }
 
         /// <inheritdoc/>

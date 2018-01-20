@@ -205,22 +205,22 @@ namespace NCDK.Smiles.SMARTS.Parser
                 if (group.GetRole() != ASTGroup.ROLE_ANY)
                 {
                     IQueryAtom roleQueryAtom = null;
-                    ReactionRoles? role = null;
+                    ReactionRole? role = null;
 
                     // use single instances
                     switch (group.GetRole())
                     {
                         case ASTGroup.ROLE_REACTANT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
-                            role = ReactionRoles.Reactant;
+                            role = ReactionRole.Reactant;
                             break;
                         case ASTGroup.ROLE_AGENT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
-                            role = ReactionRoles.Agent;
+                            role = ReactionRole.Agent;
                             break;
                         case ASTGroup.ROLE_PRODUCT:
                             roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
-                            role = ReactionRoles.Product;
+                            role = ReactionRole.Product;
                             break;
                     }
 
@@ -538,19 +538,19 @@ namespace NCDK.Smiles.SMARTS.Parser
                     bond = new Smarts.RingBond(builder);
                     break;
                 case SMARTSParserConstants.UP_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Up, false);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Down, false);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Up, true);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, true);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Directions.Down, true);
+                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, true);
                     stereoBonds.Add(bond);
                     break;
                 default:

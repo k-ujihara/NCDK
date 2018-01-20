@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.LibIO.MD;
 using System.Xml.Linq;
 using static NCDK.LibIO.CML.CMLElement;
@@ -81,9 +82,11 @@ namespace NCDK.LibIO.CML
                     {
                         int number = residue.GetNumber();
 
-                        CMLMolecule resMol = new CMLMolecule();
-                        resMol.DictRef = "md:residue";
-                        resMol.Title = residue.Name;
+                        CMLMolecule resMol = new CMLMolecule
+                        {
+                            DictRef = "md:residue",
+                            Title = residue.Name
+                        };
 
                         //Append resNo
                         CMLScalar residueNumber = new CMLScalar(number);
@@ -96,15 +99,17 @@ namespace NCDK.LibIO.CML
                         CMLAtomArray ar = new CMLAtomArray();
                         for (int i = 0; i < residue.Atoms.Count; i++)
                         {
-                            CMLAtom cmlAtom = new CMLAtom();
-                            //                        Console.Out.WriteLine("atom ID: "+ residue.Atoms[i].Id);
-                            //                        cmlAtom.AddAttribute(new Attribute("ref", residue.Atoms[i].Id));
-                            // the next thing is better, but  exception
-                            //
-                            // setRef to keep consistent usage
-                            // setId to satisfy Jumbo 54. need for all atoms to have id
-                            cmlAtom.Ref = residue.Atoms[i].Id;
-                            cmlAtom.Id = rprefix + "_" + residue.Atoms[i].Id;
+                            CMLAtom cmlAtom = new CMLAtom
+                            {
+                                //                        Console.Out.WriteLine("atom ID: "+ residue.Atoms[i].Id);
+                                //                        cmlAtom.AddAttribute(new Attribute("ref", residue.Atoms[i].Id));
+                                // the next thing is better, but  exception
+                                //
+                                // setRef to keep consistent usage
+                                // setId to satisfy Jumbo 54. need for all atoms to have id
+                                Ref = residue.Atoms[i].Id,
+                                Id = rprefix + "_" + residue.Atoms[i].Id
+                            };
                             ar.Add(cmlAtom);
                         }
                         resMol.Add(ar);
@@ -121,8 +126,10 @@ namespace NCDK.LibIO.CML
                         int number = chargeGroup.GetNumber();
 
                         //FIXME: persist the ChargeGroup
-                        CMLMolecule cgMol = new CMLMolecule();
-                        cgMol.DictRef = "md:chargeGroup";
+                        CMLMolecule cgMol = new CMLMolecule
+                        {
+                            DictRef = "md:chargeGroup"
+                        };
                         // etc: add name, refs to atoms etc
 
                         //Append chgrpNo
@@ -137,17 +144,21 @@ namespace NCDK.LibIO.CML
                         CMLAtomArray ar = new CMLAtomArray();
                         for (int i = 0; i < chargeGroup.Atoms.Count; i++)
                         {
-                            CMLAtom cmlAtom = new CMLAtom();
-                            // setRef to keep consistent usage
-                            // setId to satisfy Jumbo 5.4 need for all atoms to have id
-                            cmlAtom.Ref = chargeGroup.Atoms[i].Id;
-                            cmlAtom.Id = cprefix + "_" + chargeGroup.Atoms[i].Id;
+                            CMLAtom cmlAtom = new CMLAtom
+                            {
+                                // setRef to keep consistent usage
+                                // setId to satisfy Jumbo 5.4 need for all atoms to have id
+                                Ref = chargeGroup.Atoms[i].Id,
+                                Id = cprefix + "_" + chargeGroup.Atoms[i].Id
+                            };
 
                             //Append switching atom?
                             if (chargeGroup.Atoms[i].Equals(chargeGroup.GetSwitchingAtom()))
                             {
-                                CMLScalar scalar = new CMLScalar();
-                                scalar.DictRef = "md:switchingAtom";
+                                CMLScalar scalar = new CMLScalar
+                                {
+                                    DictRef = "md:switchingAtom"
+                                };
                                 cmlAtom.Add(scalar);
                             }
                             ar.Add(cmlAtom);

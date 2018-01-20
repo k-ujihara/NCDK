@@ -1,3 +1,5 @@
+﻿<#@ include file="..\..\ChemObjectConfig.ttinclude" #>
+
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -16,9 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.Reactions
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
 {
     /// <summary>
     /// Tests for IReactionChain implementations.
@@ -92,3 +98,6 @@ namespace NCDK.Reactions
         }
     }
 }
+<#
+}
+#>

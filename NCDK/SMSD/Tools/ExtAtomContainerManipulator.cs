@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
 using NCDK.RingSearches;
@@ -29,6 +30,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static NCDK.Tools.Manipulator.AtomContainerManipulator;
 
 namespace NCDK.SMSD.Tools
 {
@@ -40,7 +42,7 @@ namespace NCDK.SMSD.Tools
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class ExtAtomContainerManipulator : AtomContainerManipulator
+    public class ExtAtomContainerManipulator
     {
         private static void PrintAtoms(IAtomContainer mol)
         {
@@ -249,7 +251,7 @@ namespace NCDK.SMSD.Tools
         /// </summary>
         /// <param name="container"></param>
         /// <exception cref="CDKException"></exception>
-        public static new void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
+        public static void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
             foreach (var atom in container.Atoms)
@@ -274,8 +276,7 @@ namespace NCDK.SMSD.Tools
                 // Process neighbours.
                 foreach (var iAtom in atomContainer.GetConnectedAtoms(aRemove))
                 {
-                    IAtom neighb;
-                    if (!map.TryGetValue(iAtom, out neighb))
+                    if (!map.TryGetValue(iAtom, out IAtom neighb))
                     {
                         continue; // since for the case of H2, neight H has atom heavy atom neighbor
                     }

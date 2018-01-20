@@ -199,15 +199,15 @@ namespace NCDK.Layout
                         IBond bond = (IBond)se.Focus;
                         IAtom beg = bond.Begin;
                         IAtom end = bond.End;
-                        StereoElement.Configurations cfg;
+                        StereoElement.Configuration cfg;
                         if (winding[(macrocycle.Atoms.IndexOf(beg) + i) % numAtoms] ==
                             winding[(macrocycle.Atoms.IndexOf(end) + i) % numAtoms])
                         {
-                            cfg = StereoElement.Configurations.Together;
+                            cfg = StereoElement.Configuration.Together;
                         }
                         else
                         {
-                            cfg = StereoElement.Configurations.Opposite;
+                            cfg = StereoElement.Configuration.Opposite;
                         }
                         if (cfg == se.Configure)
                         {

@@ -16,6 +16,7 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -206,10 +207,12 @@ namespace NCDK.IO
                                     bo = BondOrder.Quadruple;
                                     break;
                             }
-                            List<object> ar = new List<object>(3);
-                            ar.Add(atomSerial);
-                            ar.Add(s);
-                            ar.Add(bo);
+                            List<object> ar = new List<object>(3)
+                            {
+                                atomSerial,
+                                s,
+                                bo
+                            };
                             cons.Add(ar);
                         }
                         m.Atoms.Add(atom);

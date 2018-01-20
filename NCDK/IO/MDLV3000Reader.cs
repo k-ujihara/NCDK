@@ -16,20 +16,21 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
+using NCDK.Isomorphisms.Matchers;
+using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using NCDK.Isomorphisms.Matchers;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -54,10 +55,10 @@ namespace NCDK.IO
         private int lineNumber;
 
         public MDLV3000Reader(TextReader ins)
-                : this(ins, ChemObjectReaderModes.Relaxed)
+                : this(ins, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLV3000Reader(TextReader ins, ChemObjectReaderModes mode)
+        public MDLV3000Reader(TextReader ins, ChemObjectReaderMode mode)
         {
             input = ins;
             InitIOSettings();
@@ -69,10 +70,10 @@ namespace NCDK.IO
         }
 
         public MDLV3000Reader(Stream input)
-            : this(input, ChemObjectReaderModes.Relaxed)
+            : this(input, ChemObjectReaderMode.Relaxed)
         { }
 
-        public MDLV3000Reader(Stream input, ChemObjectReaderModes mode)
+        public MDLV3000Reader(Stream input, ChemObjectReaderMode mode)
             : this(new StreamReader(input), mode)
         { }
 
@@ -299,7 +300,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        if (ReaderMode == ChemObjectReaderModes.Strict)
+                        if (ReaderMode == ChemObjectReaderMode.Strict)
                         {
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
@@ -566,8 +567,10 @@ namespace NCDK.IO
                     // storing positional variation
                     if ("ANY".Equals(attach))
                     {
-                        Sgroup sgroup = new Sgroup();
-                        sgroup.Type = SgroupTypes.ExtMulticenter;
+                        Sgroup sgroup = new Sgroup
+                        {
+                            Type = SgroupType.ExtMulticenter
+                        };
                         sgroup.Atoms.Add(bond.Begin); // could be other end?
                         sgroup.Bonds.Add(bond);
                         foreach (var endpt in endpts)

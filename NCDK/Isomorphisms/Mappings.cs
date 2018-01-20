@@ -21,13 +21,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using NCDK.Isomorphisms.Matchers;
-using System.Collections.Generic;
-using System.Linq;
+
 using NCDK.Graphs;
-using System.Collections.ObjectModel;
-using System.Collections;
+using NCDK.Isomorphisms.Matchers;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
@@ -70,7 +71,7 @@ namespace NCDK.Isomorphisms
     // @cdk.githash
     public sealed class Mappings : IEnumerable<int[]>
     {
-        /// <summary>Iterable permutations of the query vertices.</summary>
+        /// <summary>Enumerable permutations of the query vertices.</summary>
         private readonly IEnumerable<int[]> iterable;
 
         /// <summary>Query and target structures.</summary>
@@ -78,11 +79,11 @@ namespace NCDK.Isomorphisms
 
         /// <summary>
         /// Create a fluent mappings instance for the provided query / target and an
-        /// iterable of permutations on the query vertices (specified as indices).
+        /// enumerable of permutations on the query vertices (specified as indices).
         /// </summary>
         /// <param name="query">the structure to be found</param>
         /// <param name="target">the structure being searched</param>
-        /// <param name="iterable">iterable of permutation</param>
+        /// <param name="iterable">enumerable of permutation</param>
         /// <seealso cref="Pattern"/>
         internal Mappings(IAtomContainer query, IAtomContainer target, IEnumerable<int[]> iterable)
         {

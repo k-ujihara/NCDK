@@ -17,11 +17,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
-using NCDK.Numerics;
 using NCDK.Config;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -80,9 +81,8 @@ namespace NCDK.IO
 
         public override T Read<T>(T obj)
         {
-            if (obj is IChemFile)
+            if (obj is IChemFile cf)
             {
-                IChemFile cf = (IChemFile)obj;
                 try
                 {
                     cf = ReadChemFile(cf);

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 
 using NCDK.Isomorphisms.Matchers;
@@ -34,7 +35,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public sealed class RecursiveSmartsAtom : SMARTSAtom
     {
         /// <summary>The IQueryAtomContainer created by parsing the recursive smarts</summary>
-        private readonly IQueryAtomContainer                  query;
+        private readonly IQueryAtomContainer query;
 
         /// <summary>Query cache.</summary>
         private readonly Dictionary<IAtomContainer, BitArray> cache;
@@ -52,14 +53,15 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            if (!((IQueryAtom) query.Atoms[0]).Matches(atom)) return false;
+            if (!((IQueryAtom)query.Atoms[0]).Matches(atom))
+                return false;
 
-            if (query.Atoms.Count == 1) return true;
+            if (query.Atoms.Count == 1)
+                return true;
 
             IAtomContainer target = Invariants(atom).Target;
 
-            BitArray v;
-            if (!cache.TryGetValue(target, out v))
+            if (!cache.TryGetValue(target, out BitArray v))
             {
                 BitArray hits = new BitArray(0);
                 foreach (var mapping in Ullmann.FindSubstructure(query).MatchAll(target)

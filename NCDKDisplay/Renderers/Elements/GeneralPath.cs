@@ -35,19 +35,19 @@ namespace NCDK.Renderers.Elements
     public class GeneralPath : IRenderingElement
     {
         /// <summary>The color of the path.</summary>
-        public readonly Color color;
+        public readonly Color Color;
 
         /// <summary>The width of the stroke.</summary>
-        public readonly double stroke;
+        public readonly double StrokeWith;
 
         /// <summary>Fill the shape instead of drawing outline.</summary>
-        public readonly bool fill;
+        public readonly bool Fill;
 
         /// <summary>The elements in the path.</summary>
-        public readonly PathGeometry elements;
+        public readonly PathGeometry Elements;
 
         /// <summary>Winding rule for determining path interior.</summary>
-        public readonly FillRule winding;
+        public readonly FillRule Winding;
 
         /// <summary>
         /// Make a path from a list of path elements.
@@ -65,10 +65,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="color">the color of the path</param>
         private GeneralPath(PathGeometry elements, Color color, double stroke, bool fill)
         {
-            this.elements = elements;
-            this.color = color;
-            this.fill = fill;
-            this.stroke = stroke;
+            this.Elements = elements;
+            this.Color = color;
+            this.Fill = fill;
+            this.StrokeWith = stroke;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace NCDK.Renderers.Elements
         /// <returns>the recolored path</returns>
         public GeneralPath Recolor(Color newColor)
         {
-            return new GeneralPath(elements, newColor, stroke, fill);
+            return new GeneralPath(Elements, newColor, StrokeWith, Fill);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace NCDK.Renderers.Elements
         /// <returns>the outlined path</returns>
         public GeneralPath Outline(double newStroke)
         {
-            return new GeneralPath(elements, color, newStroke, false);
+            return new GeneralPath(Elements, Color, newStroke, false);
         }
 
         public virtual void Accept(IRenderingVisitor v, Transform transform)
@@ -115,9 +115,9 @@ namespace NCDK.Renderers.Elements
         }
 
         /// <summary>
-        /// Create an outline path of the specified Java 2D Shape and color.
+        /// Create an outline path of the specified shape and color.
         /// </summary>
-        /// <param name="shape">Java 2D shape</param>
+        /// <param name="shape">shape</param>
         /// <param name="color">the color to draw the outline with</param>
         /// <returns>a new general path</returns>
         public static GeneralPath OutlineOf(Geometry shape, double stroke, Color color)

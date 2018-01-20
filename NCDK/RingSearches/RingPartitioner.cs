@@ -33,8 +33,7 @@ namespace NCDK.RingSearches
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
-
-    public class RingPartitioner
+    public static class RingPartitioner
     {
         /// <summary>
         ///  Debugging on/off

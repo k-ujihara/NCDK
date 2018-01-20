@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,7 +31,7 @@ namespace NCDK.Groups
     /// </summary>
     // @author maclean
     // @cdk.module group  
-    class AtomRefinable : Refinable
+    class AtomRefinable : IRefinable
     {
         private readonly IAtomContainer atomContainer;
 
@@ -79,7 +80,7 @@ namespace NCDK.Groups
             SetupConnectionTable(atomContainer);
         }
 
-        public virtual Invariant NeighboursInBlock(ISet<int> block, int vertexIndex)
+        public virtual IInvariant NeighboursInBlock(ISet<int> block, int vertexIndex)
         {
             // choose the invariant to use 
             if (ignoreBondOrders || maxBondOrder == 1)
@@ -93,7 +94,7 @@ namespace NCDK.Groups
         }
 
         /// <returns>a simple count of the neighbours of vertexIndex that are in block</returns>
-        private Invariant GetSimpleInvariant(ISet<int> block, int vertexIndex)
+        private IInvariant GetSimpleInvariant(ISet<int> block, int vertexIndex)
         {
             int neighbours = 0;
             foreach (int connected in GetConnectedIndices(vertexIndex))
@@ -107,7 +108,7 @@ namespace NCDK.Groups
         }
 
         /// <returns>a list of bond orders of connections to neighbours of vertexIndex that are in block</returns>
-        private Invariant GetMultipleInvariant(ISet<int> block, int vertexIndex)
+        private IInvariant GetMultipleInvariant(ISet<int> block, int vertexIndex)
         {
             int[] bondOrderCounts = new int[maxBondOrder];
             foreach (int connected in GetConnectedIndices(vertexIndex))

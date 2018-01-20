@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
@@ -48,16 +49,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public override bool Matches(IAtom atom)
         {
-            ReactionRoles? atomRole = atom.GetProperty<ReactionRoles?>(CDKPropertyName.ReactionRole);
+            ReactionRole? atomRole = atom.GetProperty<ReactionRole?>(CDKPropertyName.ReactionRole);
             if (atomRole == null)
                 return this.role == ROLE_ANY;
             switch (atomRole.Value)
             {
-                case ReactionRoles.Reactant:
+                case ReactionRole.Reactant:
                     return (this.role & ROLE_REACTANT) != 0;
-                case ReactionRoles.Agent:
+                case ReactionRole.Agent:
                     return (this.role & ROLE_AGENT) != 0;
-                case ReactionRoles.Product:
+                case ReactionRole.Product:
                     return (this.role & ROLE_PRODUCT) != 0;
                 default:
                     return false;

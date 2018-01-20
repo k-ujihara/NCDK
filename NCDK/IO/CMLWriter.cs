@@ -22,16 +22,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.LibIO.CML;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System;
-using NCDK.IO.Formats;
-using System.Xml.Linq;
-using System.Xml;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace NCDK.IO
 {
@@ -263,8 +264,10 @@ namespace NCDK.IO
             }
 
             var encoding = "ISO-8859-1";
-            var se = new XmlWriterSettings();
-            se.Encoding = Encoding.GetEncoding(encoding);
+            var se = new XmlWriterSettings
+            {
+                Encoding = Encoding.GetEncoding(encoding)
+            };
             if (indent.IsSet)
             {
                 Trace.TraceInformation("Indenting XML output");

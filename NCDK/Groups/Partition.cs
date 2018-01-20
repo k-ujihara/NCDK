@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
 using System;
@@ -246,7 +247,7 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Splits this partition by taking the cell at cellIndex and making two
-        /// new cells - the first with the the rest of the elements from that cell
+        /// new cells - the first with the rest of the elements from that cell
         /// and the second with the singleton splitElement.
         /// </summary>
         /// <param name="cellIndex">the index of the cell to split on</param>
@@ -322,8 +323,10 @@ namespace NCDK.Groups
         /// <param name="element">the element to add in its own cell</param>
         public void AddSingletonCell(int element)
         {
-            SortedSet<int> cell = new SortedSet<int>();
-            cell.Add(element);
+            SortedSet<int> cell = new SortedSet<int>
+            {
+                element
+            };
             this.cells.Add(cell);
         }
 

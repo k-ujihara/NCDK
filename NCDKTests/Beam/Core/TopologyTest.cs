@@ -295,7 +295,7 @@ namespace NCDK.Beam
         {
             foreach (var c in Configuration.Values)
             {
-                if (c.Type == Configuration.Types.TrigonalBipyramidal)
+                if (c.Type == Configuration.ConfigurationType.TrigonalBipyramidal)
                     Assert.AreEqual(c, Topology.ToExplicit(new Graph(0), 0, c));
             }
         }
@@ -305,7 +305,7 @@ namespace NCDK.Beam
         {
             foreach (var c in Configuration.Values)
             {
-                if (c.Type == Configuration.Types.Octahedral)
+                if (c.Type == Configuration.ConfigurationType.Octahedral)
                     Assert.AreEqual(c, Topology.ToExplicit(new Graph(0), 0, c));
             }
         }

@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Linq;
 using System.Collections.Generic;
 using NCDK.Common.Primitives;
@@ -34,7 +35,7 @@ namespace NCDK.RingSearches
     // @author John May
     // @cdk.module core
     internal class RegularCyclicVertexSearch
-        : CyclicVertexSearch
+        : ICyclicVertexSearch
     {
         /// <summary>graph representation</summary>
         private readonly int[][] g;

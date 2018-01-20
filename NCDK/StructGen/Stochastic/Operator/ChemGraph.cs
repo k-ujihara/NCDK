@@ -20,7 +20,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using NCDK.Graphs.Matrix;
 using NCDK.Maths;
 using System.Collections.Generic;
@@ -104,8 +104,10 @@ namespace NCDK.StructGen.Stochastic.Operator
                 visited[atom] = false;
             int seedAtom = RandomNumbersTool.RandomInt(0, dim - 1);
 
-            List<int> atomQueue = new List<int>();
-            atomQueue.Add(seedAtom);
+            List<int> atomQueue = new List<int>
+            {
+                seedAtom
+            };
             visited[seedAtom] = true;
 
             while (atomQueue.Count != 0 && Subgraph.Count < NumAtoms)

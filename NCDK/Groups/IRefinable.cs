@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.Groups
@@ -30,7 +31,7 @@ namespace NCDK.Groups
     /// </summary>
     // @author maclean
     // @cdk.module group  
-    public interface Refinable
+    public interface IRefinable
     {
         /// <summary>
         /// Given a block (or cell) of a partition, determine the invariant that
@@ -40,7 +41,7 @@ namespace NCDK.Groups
         /// <param name="block">a cell of the partition under refinement</param>
         /// <param name="vertexIndex">the element to compare</param>
         /// <returns>the size of the intersection between the neighbours and the block</returns>
-        Invariant NeighboursInBlock(ISet<int> block, int vertexIndex);
+        IInvariant NeighboursInBlock(ISet<int> block, int vertexIndex);
 
         /// <summary>
         /// Get the number of vertices in the graph to be refined.
@@ -50,7 +51,7 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Get the connectivity between two vertices as an integer, to allow
-        /// for multigraphs : so a single edge is 1, a double edge 2, etc. If
+        /// for multi-graphs : so a single edge is 1, a double edge 2, etc. If
         /// there is no edge, then 0 should be returned.
         /// </summary>
         /// <param name="vertexI">a vertex of the graph</param>

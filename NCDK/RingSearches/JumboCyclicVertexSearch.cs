@@ -20,10 +20,11 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
+
 using NCDK.Common.Collections;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.RingSearches
 {
@@ -33,7 +34,7 @@ namespace NCDK.RingSearches
     // @author John May
     // @cdk.module core
     internal class JumboCyclicVertexSearch
-        : CyclicVertexSearch
+        : ICyclicVertexSearch
     {
         /// <summary>graph representation</summary>
         private readonly int[][] g;

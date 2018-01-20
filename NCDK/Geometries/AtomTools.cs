@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Numerics;
 using System;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace NCDK.Geometries
     // @cdk.created 2003-06-14
     public static class AtomTools
     {
-        public readonly static double TETRAHEDRAL_ANGLE = 2.0 * Math.Acos(1.0 / Math.Sqrt(3.0));
+        public readonly static double TypicalTetrahedralAngle = 2.0 * Math.Acos(1.0 / Math.Sqrt(3.0));
 
         /// <summary>
         /// Generate coordinates for all atoms which are singly bonded and have
@@ -46,7 +47,7 @@ namespace NCDK.Geometries
         /// <param name="atomContainer">the set of atoms involved</param>
        // @cdk.keyword coordinate calculation
        // @cdk.keyword 3D model
-        public static void add3DCoordinates1(IAtomContainer atomContainer)
+        public static void Add3DCoordinates1(IAtomContainer atomContainer)
         {
             // atoms without coordinates
             IAtomContainer noCoords = atomContainer.Builder.NewAtomContainer();
@@ -77,7 +78,7 @@ namespace NCDK.Geometries
             // now add coordinates to ligands of reference atoms
             // use default length of 1.0, which can be adjusted later
             double length = 1.0;
-            double angle = TETRAHEDRAL_ANGLE;
+            double angle = TypicalTetrahedralAngle;
             foreach (var refAtom in refAtoms.Atoms)
             {
                 var noCoordLigands = noCoords.GetConnectedAtoms(refAtom).ToList();

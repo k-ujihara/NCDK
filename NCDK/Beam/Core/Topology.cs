@@ -32,7 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using static NCDK.Beam.Configuration;
-using static NCDK.Beam.Configuration.Types;
+using static NCDK.Beam.Configuration.ConfigurationType;
 
 namespace NCDK.Beam
 {
@@ -70,7 +70,7 @@ namespace NCDK.Beam
         /// DoubleBond etc).
         /// </summary>
         /// <returns>the type of the configuration</returns>
-        public virtual Configuration.Types Type => Configuration.Type;
+        public virtual Configuration.ConfigurationType Type => Configuration.Type;
 
         /// <summary>
         /// Arrange the topology relative to a given ranking of vertices.
@@ -176,8 +176,8 @@ namespace NCDK.Beam
         /// <seealso cref="Configuration"/>
         public static Topology CreateTetrahedral(int u, int[] vs, Configuration configuration)
         {
-            if (configuration.Type != Types.Implicit
-                    && configuration.Type != Types.Tetrahedral)
+            if (configuration.Type != ConfigurationType.Implicit
+                    && configuration.Type != ConfigurationType.Tetrahedral)
                 throw new ArgumentException(configuration.Type
                     + "invalid tetrahedral configuration");
 
@@ -189,7 +189,7 @@ namespace NCDK.Beam
         public static Topology CreateExtendedTetrahedral(int u, int[] vs, Configuration configuration)
         {
             if (configuration.Type != Implicit
-                    && configuration.Type != Types.ExtendedTetrahedral)
+                    && configuration.Type != ConfigurationType.ExtendedTetrahedral)
                 throw new ArgumentException(configuration.Type
                                                            + "invalid extended tetrahedral configuration");
 
@@ -211,7 +211,7 @@ namespace NCDK.Beam
         public static Topology CreateTrigonal(int u, int[] vs, Configuration configuration)
         {
             if (configuration.Type != Implicit
-                    && configuration.Type != Types.DoubleBond)
+                    && configuration.Type != ConfigurationType.DoubleBond)
                 throw new ArgumentException(configuration.Type
                                                            + "invalid tetrahedral configuration");
 
@@ -403,31 +403,31 @@ namespace NCDK.Beam
 
         public static Topology Create(int u, int[] vs, IList<Edge> es, Configuration c)
         {
-            if (c.Type == Types.Implicit)
+            if (c.Type == ConfigurationType.Implicit)
                 throw new ArgumentOutOfRangeException(nameof(c), "configuration must be explicit, @TH1/@TH2 instead of @/@@");
 
             // only tetrahedral is handled for now
-            if (c.Type == Types.Tetrahedral)
+            if (c.Type == ConfigurationType.Tetrahedral)
             {
                 return CreateTetrahedral(u, vs, c);
             }
-            else if (c.Type == Types.DoubleBond)
+            else if (c.Type == ConfigurationType.DoubleBond)
             {
                 return CreateTrigonal(u, vs, c);
             }
-            else if (c.Type == Types.ExtendedTetrahedral)
+            else if (c.Type == ConfigurationType.ExtendedTetrahedral)
             {
                 return CreateExtendedTetrahedral(u, vs, c);
             }
-            else if (c.Type == Types.SquarePlanar)
+            else if (c.Type == ConfigurationType.SquarePlanar)
             {
                 return CreateSquarePlanar(u, vs, c);
             }
-            else if (c.Type == Types.TrigonalBipyramidal)
+            else if (c.Type == ConfigurationType.TrigonalBipyramidal)
             {
                 return CreateTrigonalBipyramidal(u, vs, c);
             }
-            else if (c.Type == Configuration.Types.Octahedral)
+            else if (c.Type == Configuration.ConfigurationType.Octahedral)
             {
                 return CreateOctahedral(u, vs, c);
             }

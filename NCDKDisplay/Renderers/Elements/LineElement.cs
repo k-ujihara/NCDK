@@ -25,16 +25,16 @@ namespace NCDK.Renderers.Elements
     public class LineElement : IRenderingElement
     {
         /// <summary>The first point. </summary>
-        public readonly Point firstPoint;
+        public readonly Point FirstPoint;
 
         /// <summary>The second point. </summary>
-        public readonly Point secondPoint;
+        public readonly Point SecondPoint;
 
         /// <summary>The width of the line. </summary>
-        public readonly double width;
+        public readonly double Width;
 
         /// <summary>The color of the line. </summary>
-        public readonly Color color;
+        public readonly Color Color;
 
         /// <summary>
         /// Make a line element.
@@ -45,10 +45,10 @@ namespace NCDK.Renderers.Elements
         /// <param name="color">the color of the line</param>
         public LineElement(Point firstPoint, Point secondPoint, double width, Color color)
         {
-            this.firstPoint = firstPoint;
-            this.secondPoint = secondPoint;
-            this.width = width;
-            this.color = color;
+            this.FirstPoint = firstPoint;
+            this.SecondPoint = secondPoint;
+            this.Width = width;
+            this.Color = color;
         }
 
         public virtual void Accept(IRenderingVisitor v, Transform transform)

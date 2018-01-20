@@ -57,26 +57,26 @@ namespace NCDK
             return value;
         }
 
-        public static StereoElement.Configurations ToConfiguration(this TetrahedralStereo value)
+        public static StereoElement.Configuration ToConfiguration(this TetrahedralStereo value)
         {
             switch (value)
             {
                 case AntiClockwise:
-                    return StereoElement.Configurations.Left;
+                    return StereoElement.Configuration.Left;
                 case Clockwise:
-                    return StereoElement.Configurations.Right;
+                    return StereoElement.Configuration.Right;
                 default:
                     throw new System.ArgumentException("Unknown enum value: " + value);
             }
         }
 
-        public static TetrahedralStereo ToStereo(this StereoElement.Configurations configure)
+        public static TetrahedralStereo ToStereo(this StereoElement.Configuration configure)
         {
             switch (configure)
             {
-                case StereoElement.Configurations.Left:
+                case StereoElement.Configuration.Left:
                     return AntiClockwise;
-                case StereoElement.Configurations.Right:
+                case StereoElement.Configuration.Right:
                     return Clockwise;
                 default:
                     throw new System.ArgumentException("Cannot map to enum value: " + configure);

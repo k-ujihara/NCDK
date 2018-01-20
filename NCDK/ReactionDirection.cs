@@ -3,7 +3,7 @@
     /// <summary>
     /// Permissible reaction directions.
     /// </summary>
-    public enum ReactionDirections
+    public enum ReactionDirection
     {
         /// <summary>Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow.</summary>
         Forward,

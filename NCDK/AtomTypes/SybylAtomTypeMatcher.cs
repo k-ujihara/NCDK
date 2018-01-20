@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.AtomTypes.Mappers;
 using NCDK.Config;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -36,7 +36,6 @@ namespace NCDK.AtomTypes
     // @cdk.keyword    atom type, Sybyl
     public class SybylAtomTypeMatcher : IAtomTypeMatcher
     {
-
         private const string SYBYL_ATOM_TYPE_LIST = "NCDK.Dict.Data.sybyl-atom-types.owl";
         private const string CDK_TO_SYBYL_MAP = "NCDK.Dict.Data.cdk-sybyl-mappings.owl";
 

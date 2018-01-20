@@ -19,14 +19,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-using NCDK.Common.Mathematics;
+
 using NCDK.Config;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using NCDK.Numerics;
 using System.Xml.Linq;
 
 namespace NCDK.IO.CML

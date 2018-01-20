@@ -17,26 +17,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NCDK.Numerics;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// Difference between two bool[]'s.
+    /// Difference between two <see cref="System.Nullable{Vector2}"/>s.
     /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class Point2dDifference
+    public class Point2DDifference
         : AbstractDifferenceList, IDifferenceList
     {
         private string name;
 
-        private Point2dDifference(string name)
+        private Point2DDifference(string name)
         {
             this.name = name;
         }
@@ -52,7 +50,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             if (first == null && second == null) return null;
 
-            Point2dDifference totalDiff = new Point2dDifference(name);
+            Point2DDifference totalDiff = new Point2DDifference(name);
             totalDiff.AddChild(DoubleDifference.Construct("x", first.HasValue ? (double?)null : first.Value.X, second.HasValue ? (double?)null : second.Value.X));
             totalDiff.AddChild(DoubleDifference.Construct("y", first.HasValue ? (double?)null : first.Value.Y, second.HasValue ? (double?)null : second.Value.Y));
             if (totalDiff.ChildCount() == 0)

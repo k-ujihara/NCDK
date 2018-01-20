@@ -15,6 +15,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using System;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
@@ -28,14 +29,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public class StereoBond : SMARTSBond
     {
         private readonly bool unspecified;
-        private readonly Directions direction;
+        private readonly Direction direction;
 
-        public enum Directions
+        public enum Direction
         {
             Up, Down
         }
 
-        public StereoBond(IChemObjectBuilder builder, Directions direction, bool unspecified)
+        public StereoBond(IChemObjectBuilder builder, Direction direction, bool unspecified)
             : base(builder)
         {
             this.unspecified = unspecified;
@@ -49,7 +50,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public bool IsUnspecified => unspecified;
 
-        public Directions GetDirection(IAtom atom)
+        public Direction GetDirection(IAtom atom)
         {
             if (Begin == atom)
                 return direction;
@@ -58,9 +59,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             throw new ArgumentException("atom is not a memeber of this bond");
         }
 
-        private Directions Inv(Directions direction)
+        private Direction Inv(Direction direction)
         {
-            return direction == Directions.Up ? Directions.Down : Directions.Up;
+            return direction == Direction.Up ? Direction.Down : Direction.Up;
         }
     }
 }

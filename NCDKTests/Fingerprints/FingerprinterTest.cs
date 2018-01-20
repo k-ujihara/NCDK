@@ -144,7 +144,7 @@ namespace NCDK.Fingerprints
             string filename1 = "NCDK.Data.MDL.0002.stg01.rxn";
             Trace.TraceInformation("Testing: " + filename1);
             Stream ins1 = ResourceLoader.GetAsStream(filename1);
-            MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IReaction reaction = (IReaction)reader.Read(new Reaction());
             Assert.IsNotNull(reaction);
 
@@ -164,7 +164,7 @@ namespace NCDK.Fingerprints
             string filename1 = "NCDK.Data.MDL.boronBuckyBall.mol";
             Trace.TraceInformation("Testing: " + filename1);
             Stream ins1 = ResourceLoader.GetAsStream(filename1);
-            MDLV2000Reader reader = new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins1, ChemObjectReaderMode.Strict);
             IChemFile chemFile = reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);
             IAtomContainer mol = ChemFileManipulator.GetAllAtomContainers(chemFile).First();

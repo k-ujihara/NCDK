@@ -20,11 +20,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 
 namespace NCDK.IO
 {
-    public enum ChemObjectReaderModes
+    public enum ChemObjectReaderMode
     {
         /// <summary>Only fail on serious format problems</summary>
         Relaxed,
@@ -49,11 +50,11 @@ namespace NCDK.IO
     public interface IChemObjectReader : IChemObjectIO
     {
         /// <summary>
-        /// The reader mode. If <see cref="ChemObjectReaderModes.Strict"/>, then the reader will fail on
+        /// The reader mode. If <see cref="ChemObjectReaderMode.Strict"/>, then the reader will fail on
         /// any problem in the format of the read file, instead of trying to
         /// recover from that.
         /// </summary>
-        ChemObjectReaderModes ReaderMode { get;  set; }
+        ChemObjectReaderMode ReaderMode { get;  set; }
 
         /// <summary>
         /// An error handler that is sent events when file format issues occur.
@@ -62,14 +63,14 @@ namespace NCDK.IO
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderMode"/>.
         /// </summary>
         /// <param name="message">the error message.</param>
         void HandleError(string message);
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderMode"/>.
         /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="exception">the corresponding <see cref="Exception"/>.</param>
@@ -77,7 +78,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderMode"/>.
         /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="row">Row in the file where the error is found.</param>
@@ -87,7 +88,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in <see cref="ChemObjectReaderModes.Strict"/>.
+        /// Throws an <see cref="CDKException"/> when in <see cref="ChemObjectReaderMode.Strict"/>.
         /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="exception">the corresponding <see cref="Exception"/>.</param>

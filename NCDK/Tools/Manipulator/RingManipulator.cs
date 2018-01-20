@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,8 @@ namespace NCDK.Tools.Manipulator
 {
     // @cdk.module standard
     // @cdk.githash
-    public class RingManipulator
+    public static class RingManipulator
     {
-
         /// <summary>
         /// Marks the ring aromatic if all atoms and all bonds are aromatic.
         ///

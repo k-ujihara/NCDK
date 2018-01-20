@@ -73,12 +73,12 @@ namespace NCDK.Fingerprints
         {
             string filename = "NCDK.Data.MDL.bug853254-2.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer superstructure = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug853254-1.mol";
             ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer substructure = (IAtomContainer)reader.Read(new AtomContainer());
 
             // these molecules are different resonance forms of the same molecule
@@ -129,12 +129,12 @@ namespace NCDK.Fingerprints
         {
             string filename = "NCDK.Data.MDL.bug771485-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug771485-2.mol";
             ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
 
             // these molecules are different resonance forms of the same molecule
@@ -173,12 +173,12 @@ namespace NCDK.Fingerprints
         {
             string filename = "NCDK.Data.MDL.bug931608-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
-            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug931608-2.mol";
             ins = ResourceLoader.GetAsStream(filename);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
+            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
             IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(structure1);

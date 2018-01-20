@@ -19,11 +19,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
-using NCDK.IO.InChI;
 using System;
 using System.IO;
 

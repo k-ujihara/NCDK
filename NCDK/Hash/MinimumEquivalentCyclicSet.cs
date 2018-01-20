@@ -32,6 +32,8 @@ namespace NCDK.Hash
     /// are multiple smallest sets then the set with the lowest invariant value is
     /// returned. This class is intended to drive the systematic perturbation of the
     /// <see cref="PerturbedAtomHashGenerator"/>.
+    /// </summary>
+    /// <remarks>
     /// <para>
     /// This method will not distinguish all possible molecules but represents a good
     /// enough approximation to quickly narrow down an identity search. At the time
@@ -42,7 +44,7 @@ namespace NCDK.Hash
     /// <para>
     /// This method is currently the default used by the <see cref="HashGeneratorMaker"/> but can also be explicitly specified. 
     /// </para>
-    /// </summary>
+    /// </remarks>
     /// <example>
     /// <code>
     /// MoleculeHashGenerator generator =

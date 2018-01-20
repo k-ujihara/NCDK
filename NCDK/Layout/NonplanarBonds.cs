@@ -131,18 +131,22 @@ namespace NCDK.Layout
             int n = 0;
             foreach (var element in container.StereoElements)
             {
-                if (element is ITetrahedralChirality)
+                switch (element)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)element;
-                    int focus = atomToIndex[tc.ChiralAtom];
-                    tetrahedralElements[focus] = tc;
-                    foci[n++] = focus;
-                }
-                else if (element is IDoubleBondStereochemistry)
-                {
-                    IBond doubleBond = ((IDoubleBondStereochemistry)element).StereoBond;
-                    doubleBondElements[atomToIndex[doubleBond.Begin]] =
-                            doubleBondElements[atomToIndex[doubleBond.End]] = (IDoubleBondStereochemistry)element;
+                    case ITetrahedralChirality tc:
+                        {
+                            int focus = atomToIndex[tc.ChiralAtom];
+                            tetrahedralElements[focus] = tc;
+                            foci[n++] = focus;
+                        }
+                        break;
+                    case IDoubleBondStereochemistry dbs:
+                        {
+                            IBond doubleBond = dbs.StereoBond;
+                            doubleBondElements[atomToIndex[doubleBond.Begin]] =
+                                    doubleBondElements[atomToIndex[doubleBond.End]] = (IDoubleBondStereochemistry)element;
+                        }
+                        break;
                 }
             }
 
@@ -232,8 +236,10 @@ namespace NCDK.Layout
             double sin = Math.Sin(theta);
             double cos = Math.Cos(theta);
             bond.IsVisited = true;
-            var queue = new ArrayDeque<IAtom>();
-            queue.Add(end);
+            var queue = new ArrayDeque<IAtom>
+            {
+                end
+            };
             while (queue.Any())
             {
                 IAtom atom = queue.Poll();
@@ -522,10 +528,10 @@ namespace NCDK.Layout
             int p = 0;
             switch (element.Configure)
             {
-                case StereoElement.Configurations.Left:
+                case StereoElement.Configuration.Left:
                     p = +1;
                     break;
-                case StereoElement.Configurations.Right:
+                case StereoElement.Configuration.Right:
                     p = -1;
                     break;
             }

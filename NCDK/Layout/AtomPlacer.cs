@@ -19,18 +19,18 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Mathematics;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Layout
 {

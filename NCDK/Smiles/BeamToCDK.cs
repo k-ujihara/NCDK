@@ -26,7 +26,7 @@ using NCDK.Beam;
 using NCDK.Common.Collections;
 using NCDK.Stereo;
 using System;
-using static NCDK.Beam.Configuration.Types;
+using static NCDK.Beam.Configuration.ConfigurationType;
 
 namespace NCDK.Smiles
 {
@@ -107,7 +107,7 @@ namespace NCDK.Smiles
 
             for (int i = 0; i < g.Order; i++)
             {
-                checkAtomStereo = checkAtomStereo || g.ConfigurationOf(i).Type != Beam.Configuration.Types.None;
+                checkAtomStereo = checkAtomStereo || g.ConfigurationOf(i).Type != Beam.Configuration.ConfigurationType.None;
                 atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
             }
             ac.SetAtoms(atoms);
@@ -175,38 +175,38 @@ namespace NCDK.Smiles
                     Beam.Configuration c = g.ConfigurationOf(u);
                     switch (c.Type)
                     {
-                        case Beam.Configuration.Types.Tetrahedral:
+                        case Beam.Configuration.ConfigurationType.Tetrahedral:
                             {
                                 var se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
 
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case Beam.Configuration.Types.ExtendedTetrahedral:
+                        case Beam.Configuration.ConfigurationType.ExtendedTetrahedral:
                             {
                                 var se = NewExtendedTetrahedral(u, g, atoms);
 
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case Beam.Configuration.Types.DoubleBond:
+                        case Beam.Configuration.ConfigurationType.DoubleBond:
                             {
                                 checkBondStereo = true;
                                 break;
                             }
-                        case Beam.Configuration.Types.SquarePlanar:
+                        case Beam.Configuration.ConfigurationType.SquarePlanar:
                             {
                                 var se = NewSquarePlanar(u, g.Neighbors(u), atoms, c);
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case Beam.Configuration.Types.TrigonalBipyramidal:
+                        case Beam.Configuration.ConfigurationType.TrigonalBipyramidal:
                             {
                                 var se = NewTrigonalBipyramidal(u, g.Neighbors(u), atoms, c);
                                 if (se != null) ac.StereoElements.Add(se);
                                 break;
                             }
-                        case Beam.Configuration.Types.Octahedral:
+                        case Beam.Configuration.ConfigurationType.Octahedral:
                             {
                                 var se = NewOctahedral(u, g.Neighbors(u), atoms, c);
                                 if (se != null) ac.StereoElements.Add(se);
@@ -273,8 +273,8 @@ namespace NCDK.Smiles
                 {
                     Beam.Configuration uConf = g.ConfigurationOf(u);
                     Beam.Configuration vConf = g.ConfigurationOf(v);
-                    if (uConf.Type == Beam.Configuration.Types.DoubleBond &&
-                        vConf.Type == Beam.Configuration.Types.DoubleBond)
+                    if (uConf.Type == Beam.Configuration.ConfigurationType.DoubleBond &&
+                        vConf.Type == Beam.Configuration.ConfigurationType.DoubleBond)
                     {
 
                         int[] nbrs = new int[6];

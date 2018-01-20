@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools.Diff.Tree;
 
 namespace NCDK.Tools.Diff
@@ -26,14 +27,8 @@ namespace NCDK.Tools.Diff
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class ChemObjectDiff
+    public static class ChemObjectDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private ChemObjectDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>

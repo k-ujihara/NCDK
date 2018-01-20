@@ -13,6 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace NCDK.LibIO.CML
         public const string SMILES = "SMILES";
         public const string SMILES1 = "cml:smiles";
 
-        public enum Types
+        public enum FormulaType
         {
             /// <summary>
             /// the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.
@@ -99,7 +100,7 @@ namespace NCDK.LibIO.CML
             ANY,
         }
 
-        public enum Sorts
+        public enum SortType
         {
             /// <summary>
             /// Sort alphabetically. output only. Not sure where this is.
@@ -116,7 +117,7 @@ namespace NCDK.LibIO.CML
         /// type of hydrogen counting
         /// </summary>
         // @author pm286
-        public enum HydrogenStrategies
+        public enum HydrogenStrategyType
         {
             /// <summary>use hydrogen count attribute</summary>
             HYDROGEN_COUNT,
@@ -166,7 +167,7 @@ namespace NCDK.LibIO.CML
             else if (atomArrays.Count == 1)
             {
                 atomArray = atomArrays.First();
-                atomArray.Sort(Sorts.CHFIRST);
+                atomArray.Sort(SortType.CHFIRST);
                 atomArray2Concise = atomArray.GenerateConcise(formalCharge);
             }
 
@@ -205,7 +206,7 @@ namespace NCDK.LibIO.CML
             }
             if (atomArray != null)
             {
-                atomArray.Sort(Sorts.CHFIRST);
+                atomArray.Sort(SortType.CHFIRST);
             }
             // check consistency
             if (atomArray2Concise != null &&
@@ -355,7 +356,7 @@ namespace NCDK.LibIO.CML
                 CMLAtomArray atomArray = CreateAndAddAtomArrayAndFormalChargeFromConcise(conciseS);
                 if (atomArray != null)
                 {
-                    atomArray.Sort(Sorts.CHFIRST);
+                    atomArray.Sort(SortType.CHFIRST);
                     conciseS = atomArray.GenerateConcise(formalCharge);
                 }
             }
@@ -495,7 +496,7 @@ namespace NCDK.LibIO.CML
             "Any",
         };
 
-        public static string Name(this CMLFormula.Types value)
+        public static string Name(this CMLFormula.FormulaType value)
             => namesTypes[(int)value];
 
         private static readonly string[] namesSorts = new string[]
@@ -504,7 +505,7 @@ namespace NCDK.LibIO.CML
             "C and H first",
         };
 
-        public static string Name(this CMLFormula.Sorts value)
+        public static string Name(this CMLFormula.SortType value)
             => namesSorts[(int)value];
     }
 }

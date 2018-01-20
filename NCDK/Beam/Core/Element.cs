@@ -596,8 +596,7 @@ namespace NCDK.Beam
         {
             if (symbol == null)
                 return null;
-            Element ret;
-            if (!elementMap.TryGetValue(symbol, out ret))
+            if (!elementMap.TryGetValue(symbol, out Element ret))
                 ret = null;
             return ret;
         }
@@ -629,8 +628,7 @@ namespace NCDK.Beam
                 cs = new string(new char[] { c, buffer.Get() });
             else
                 cs = char.ToString(c);
-            Element ret;
-            if (!elementMap.TryGetValue(cs, out ret))
+            if (!elementMap.TryGetValue(cs, out Element ret))
                 ret = null;
             return ret;
         }
@@ -640,8 +638,7 @@ namespace NCDK.Beam
             IDictionary<string, ElementCheck> checks = new Dictionary<string, ElementCheck>();
             try
             {
-                using (var ins = ResourceLoader.GetAsStream(typeof(Element), "element-defaults.txt"))
-                using (var br = new StreamReader(ins))
+                using (var br = new StreamReader(ResourceLoader.GetAsStream(typeof(Element), "element-defaults.txt")))
                 {
                     string line = null;
                     while ((line = br.ReadLine()) != null)

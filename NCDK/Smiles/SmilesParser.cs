@@ -21,6 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Numerics;
@@ -510,19 +511,19 @@ namespace NCDK.Smiles
                     var aa = e.Value;
                     switch (e.Value)
                     {
-                        case CxSmilesState.Radicals.Monovalent:
+                        case CxSmilesState.Radical.Monovalent:
                             count = 1;
                             break;
                         // no distinction in CDK between singled/triplet
-                        case CxSmilesState.Radicals.Divalent:
-                        case CxSmilesState.Radicals.DivalentSinglet:
-                        case CxSmilesState.Radicals.DivalentTriplet:
+                        case CxSmilesState.Radical.Divalent:
+                        case CxSmilesState.Radical.DivalentSinglet:
+                        case CxSmilesState.Radical.DivalentTriplet:
                             count = 2;
                             break;
                         // no distinction in CDK between doublet/quartet
-                        case CxSmilesState.Radicals.Trivalent:
-                        case CxSmilesState.Radicals.TrivalentDoublet:
-                        case CxSmilesState.Radicals.TrivalentQuartet:
+                        case CxSmilesState.Radical.Trivalent:
+                        case CxSmilesState.Radical.TrivalentDoublet:
+                        case CxSmilesState.Radical.TrivalentQuartet:
                             count = 3;
                             break;
                     }
@@ -541,7 +542,7 @@ namespace NCDK.Smiles
                 foreach (var e in cxstate.positionVar)
                 {
                     Sgroup sgroup = new Sgroup();
-                    sgroup.Type = SgroupTypes.ExtMulticenter;
+                    sgroup.Type = SgroupType.ExtMulticenter;
                     IAtom beg = atoms[e.Key];
                     IAtomContainer mol = atomToMol[beg];
                     var bonds = mol.GetConnectedBonds(beg);
@@ -605,57 +606,57 @@ namespace NCDK.Smiles
                     }
 
                     sgroup.Subscript = psgroup.Subscript;
-                    sgroup.PutValue(SgroupKeys.CtabConnectivity, psgroup.Supscript);
+                    sgroup.PutValue(SgroupKey.CtabConnectivity, psgroup.Supscript);
 
                     switch (psgroup.Type)
                     {
                         case "n":
-                            sgroup.Type = SgroupTypes.CtabStructureRepeatUnit;
+                            sgroup.Type = SgroupType.CtabStructureRepeatUnit;
                             break;
                         case "mon":
-                            sgroup.Type = SgroupTypes.CtabMonomer;
+                            sgroup.Type = SgroupType.CtabMonomer;
                             break;
                         case "mer":
-                            sgroup.Type = SgroupTypes.CtabMer;
+                            sgroup.Type = SgroupType.CtabMer;
                             break;
                         case "co":
-                            sgroup.Type = SgroupTypes.CtabCopolymer;
+                            sgroup.Type = SgroupType.CtabCopolymer;
                             break;
                         case "xl":
-                            sgroup.Type = SgroupTypes.CtabCrossLink;
+                            sgroup.Type = SgroupType.CtabCrossLink;
                             break;
                         case "mod":
-                            sgroup.Type = SgroupTypes.CtabModified;
+                            sgroup.Type = SgroupType.CtabModified;
                             break;
                         case "mix":
-                            sgroup.Type = SgroupTypes.CtabMixture;
+                            sgroup.Type = SgroupType.CtabMixture;
                             break;
                         case "f":
-                            sgroup.Type = SgroupTypes.CtabFormulation;
+                            sgroup.Type = SgroupType.CtabFormulation;
                             break;
                         case "any":
-                            sgroup.Type = SgroupTypes.CtabAnyPolymer;
+                            sgroup.Type = SgroupType.CtabAnyPolymer;
                             break;
                         case "gen":
-                            sgroup.Type = SgroupTypes.CtabGeneric;
+                            sgroup.Type = SgroupType.CtabGeneric;
                             break;
                         case "c":
-                            sgroup.Type = SgroupTypes.CtabComponent;
+                            sgroup.Type = SgroupType.CtabComponent;
                             break;
                         case "grf":
-                            sgroup.Type = SgroupTypes.CtabGraft;
+                            sgroup.Type = SgroupType.CtabGraft;
                             break;
                         case "alt":
-                            sgroup.Type = SgroupTypes.CtabCopolymer;
-                            sgroup.PutValue(SgroupKeys.CtabSubType, "ALT");
+                            sgroup.Type = SgroupType.CtabCopolymer;
+                            sgroup.PutValue(SgroupKey.CtabSubType, "ALT");
                             break;
                         case "ran":
-                            sgroup.Type = SgroupTypes.CtabCopolymer;
-                            sgroup.PutValue(SgroupKeys.CtabSubType, "RAN");
+                            sgroup.Type = SgroupType.CtabCopolymer;
+                            sgroup.PutValue(SgroupKey.CtabSubType, "RAN");
                             break;
                         case "blk":
-                            sgroup.Type = SgroupTypes.CtabCopolymer;
-                            sgroup.PutValue(SgroupKeys.CtabSubType, "BLO");
+                            sgroup.Type = SgroupType.CtabCopolymer;
+                            sgroup.PutValue(SgroupKey.CtabSubType, "BLO");
                             break;
                     }
                     sgroupMap.Add(mol, sgroup);

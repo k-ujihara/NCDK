@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Common.Primitives;
-using NCDK.Numerics;
 using NCDK.Graphs.Rebond;
 using NCDK.IO.Formats;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -237,8 +237,7 @@ namespace NCDK.IO
                             Debug.WriteLine("#orders: ", bondOrders.Count);
                             foreach (var index in bondids.Keys)
                             {
-                                double order;
-                                if (!bondOrders.TryGetValue(index, out order))
+                                if (!bondOrders.TryGetValue(index, out double order))
                                     order = 1;
                                 Debug.WriteLine("index: ", index);
                                 Debug.WriteLine("ones: ", bondAtomOnes[index]);

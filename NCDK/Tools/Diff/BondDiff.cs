@@ -16,9 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
@@ -28,14 +25,8 @@ namespace NCDK.Tools.Diff.Tree
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class BondDiff
+    public static class BondDiff
     {
-        /// <summary>
-        /// Overwrite the default public constructor because this class is not
-        /// supposed to be instantiated.
-        /// </summary>
-        private BondDiff() { }
-
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
         /// </summary>

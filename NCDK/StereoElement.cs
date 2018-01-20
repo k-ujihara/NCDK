@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using System.Reflection;
@@ -39,7 +38,7 @@ namespace NCDK
         /// racemic in future but are currently undefined.
         /// </remarks>
         [Obfuscation(ApplyToMembers = true, Exclude = true)]
-        public enum Configurations
+        public enum Configuration
             : short
         {
             Unset = 0,
@@ -56,7 +55,7 @@ namespace NCDK
         /// following classes are available with varied support through out the
         /// toolkit.        
         /// </summary>
-        /// <seealso cref="Configurations"/>
+        /// <seealso cref="Configuration"/>
         [Obfuscation(ApplyToMembers = true, Exclude = true)]
         public enum Classes
             : short
@@ -98,11 +97,11 @@ namespace NCDK
         }
 
         Classes cls;
-        Configurations configure;
+        Configuration configure;
 
         public Classes Class => cls;
 
-        public Configurations Configure
+        public Configuration Configure
         {
             get { return configure; }
             set { configure = value; }
@@ -111,23 +110,23 @@ namespace NCDK
         public StereoElement(Classes cls)
         {
             this.cls = cls;
-            this.configure = Configurations.Unset;
+            this.configure = Configuration.Unset;
         }
 
-        public StereoElement(Configurations configure)
+        public StereoElement(Configuration configure)
         {
             this.cls = Classes.Unset;
             this.configure = configure;
         }
 
-        public StereoElement(Classes cls, Configurations configure)
+        public StereoElement(Classes cls, Configuration configure)
         {
             this.cls = cls;
             this.configure = configure;
         }
 
         public StereoElement(Classes cls, int configure)
-            : this(cls, (Configurations)configure)
+            : this(cls, (Configuration)configure)
         { }
 
         /*
@@ -183,12 +182,12 @@ namespace NCDK
         /// <summary>
         /// The configuration order of the stereochemistry.
         /// </summary>
-        public static short Order(this Configurations value)
+        public static short Order(this Configuration value)
             => (short)value;
 
-        public static Configurations Flip(this Configurations value)
+        public static Configuration Flip(this Configuration value)
         {
-            return (Configurations)((int)value ^ 0x3);
+            return (Configuration)((int)value ^ 0x3);
         }
     }
 }

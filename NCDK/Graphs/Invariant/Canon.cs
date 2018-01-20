@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
 using System;
 using System.Diagnostics;
@@ -395,10 +396,9 @@ namespace NCDK.Graphs.Invariant
         {
             try
             {
-                using (var srm = ResourceLoader.GetAsStream(typeof(Canon), "primes.dat"))
-                using (var br = new StreamReader(srm))
+                int[] primes = new int[N_PRIMES];
+                using (var br = new StreamReader(ResourceLoader.GetAsStream(typeof(Canon), "primes.dat")))
                 {
-                    int[] primes = new int[N_PRIMES];
                     int i = 0;
                     string line = null;
                     while ((line = br.ReadLine()) != null)
@@ -406,8 +406,8 @@ namespace NCDK.Graphs.Invariant
                         primes[i++] = int.Parse(line);
                     }
                     Trace.Assert(i == N_PRIMES);
-                    return primes;
                 }
+                return primes;
             }
             catch (FormatException)
             {

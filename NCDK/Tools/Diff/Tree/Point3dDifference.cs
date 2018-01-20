@@ -16,26 +16,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using NCDK.Numerics;
+using System.Linq;
 using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// Difference between two bool[]'s.
+    /// Difference between two <see cref="System.Nullable{Vector3}"/>s.
     /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class Point3dDifference
+    public class Point3DDifference
         : AbstractDifferenceList, IDifferenceList
     {
         private string name;
 
-        private Point3dDifference(string name)
+        private Point3DDifference(string name)
         {
             this.name = name;
         }
@@ -51,7 +50,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             if (first == null && second == null) return null;
 
-            Point3dDifference totalDiff = new Point3dDifference(name);
+            Point3DDifference totalDiff = new Point3DDifference(name);
             totalDiff.AddChild(DoubleDifference.Construct("x", first.HasValue ? (double?)null : first.Value.X, second.HasValue ? (double?)null : second.Value.X));
             totalDiff.AddChild(DoubleDifference.Construct("y", first.HasValue ? (double?)null : first.Value.Y, second.HasValue ? (double?)null : second.Value.Y));
             totalDiff.AddChild(DoubleDifference.Construct("z", first.HasValue ? (double?)null : first.Value.Z, second.HasValue ? (double?)null : second.Value.Z));

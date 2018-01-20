@@ -41,11 +41,11 @@ namespace NCDK.Groups
             }
             else
             {
-                return f(n);
+                return F(n);
             }
         }
 
-        private int f(int n)
+        private int F(int n)
         {
             if (n == 1)
             {
@@ -57,7 +57,7 @@ namespace NCDK.Groups
             }
             else
             {
-                return f(n - 1) * n;
+                return F(n - 1) * n;
             }
         }
 
@@ -68,9 +68,11 @@ namespace NCDK.Groups
             // the group of the cube
             Permutation p1 = new Permutation(1, 3, 5, 7, 0, 2, 4, 6);
             Permutation p2 = new Permutation(1, 3, 0, 2, 5, 7, 4, 6);
-            List<Permutation> generators = new List<Permutation>();
-            generators.Add(p1);
-            generators.Add(p2);
+            var generators = new List<Permutation>
+            {
+                p1,
+                p2
+            };
             return new PermutationGroup(size, generators);
         }
 
@@ -103,9 +105,11 @@ namespace NCDK.Groups
             int size = 4;
             Permutation p1 = new Permutation(1, 0, 2, 3);
             Permutation p2 = new Permutation(1, 2, 3, 0);
-            List<Permutation> generators = new List<Permutation>();
-            generators.Add(p1);
-            generators.Add(p2);
+            var generators = new List<Permutation>
+            {
+                p1,
+                p2
+            };
             PermutationGroup group = new PermutationGroup(size, generators);
             Assert.AreEqual(size, group.Count);
             Assert.AreEqual(Factorial(size), group.Order());
@@ -144,9 +148,11 @@ namespace NCDK.Groups
             // p1 = a flip across the vertical, p2 = flip across the horizontal
             Permutation p1 = new Permutation(0, 5, 4, 3, 2, 1);
             Permutation p2 = new Permutation(3, 2, 1, 0, 5, 4);
-            List<Permutation> generators = new List<Permutation>();
-            generators.Add(p1);
-            generators.Add(p2);
+            var generators = new List<Permutation>
+            {
+                p1,
+                p2
+            };
             PermutationGroup group = new PermutationGroup(size, generators);
 
             // the permutations in U0 all have 0 in the orbit of i
@@ -181,9 +187,11 @@ namespace NCDK.Groups
             // Aut(G) : make the automorphism group for a graph
             Permutation p1 = new Permutation(2, 1, 0, 3);
             Permutation p2 = new Permutation(0, 3, 2, 1);
-            List<Permutation> generators = new List<Permutation>();
-            generators.Add(p1);
-            generators.Add(p2);
+            var generators = new List<Permutation>
+            {
+                p1,
+                p2
+            };
             PermutationGroup subgroup = new PermutationGroup(size, generators);
 
             // generate the traversal
@@ -209,7 +217,7 @@ namespace NCDK.Groups
         }
 
         class NBacktracker
-            : PermutationGroup.Backtracker
+            : PermutationGroup.IBacktracker
         {
             List<Permutation> all;
 
@@ -241,7 +249,7 @@ namespace NCDK.Groups
         }
 
         class FinishEarlyBacktracker
-            : PermutationGroup.Backtracker
+            : PermutationGroup.IBacktracker
         {
             List<Permutation> all;
             int max;
