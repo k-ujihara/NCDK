@@ -79,7 +79,7 @@ namespace NCDK.Renderers
 		P("FancyBoldWedges", "bool", "true", "modify bold wedges to be flush with adjacent bonds");
 		P("FancyHashedWedges", "bool", "true", "modify hashed wedges to be flush when there is a single adjacent bond");
 		P("OuterGlowWidth", "double", "2", "the width of outer glow as a percentage of stroke width");
-		P("Highlighting", "HighlightStyle", "HighlightStyle.Colored", "the style of highlight used to emphasis atoms and bonds");
+		P("Highlighting", "HighlightStyle", "HighlightStyle.None", "the style of highlight used to emphasis atoms and bonds");
 		P("AnnotationColor", "WPF.Media.Color", "WPF.Media.Colors.Red", "the color of the atom numbers");
 		P("AnnotationDistance", "double", "0.25", "the distance of atom numbers from their parent atom as a percentage of bond length");
 		P("AnnotationFontScale", "double", "0.5", "annotation font size relative to element symbols");

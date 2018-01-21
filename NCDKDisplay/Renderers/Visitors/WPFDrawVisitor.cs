@@ -48,7 +48,7 @@ namespace NCDK.Renderers.Visitors
         /// be managed by the Renderer.
         /// </summary>
         private RendererModel rendererModel;
-        
+
         /// <inheritdoc/>
         public override RendererModel RendererModel
         {
@@ -56,8 +56,87 @@ namespace NCDK.Renderers.Visitors
             set => rendererModel = value;
         }
 
+        internal readonly Dictionary<Color, Brush> brushMap = null;
+        internal Brush GetBrush(Color color)
+        {
+            Brush brush;
+            if (brushMap == null)
+            {
+                brush = new SolidColorBrush(color);
+                brush.Freeze();
+            }
+            else
+            {
+                var key = color;
+                if (!brushMap.TryGetValue(key, out brush))
+                {
+                    brush = new SolidColorBrush(color);
+                    brush.Freeze();
+                    brushMap.Add(key, brush);
+                }
+            }
+            return brush;
+        }
+
+        internal readonly Dictionary<Color, Pen> roundPenMap;
+        internal Pen GetRoundPen(Color color)
+        {
+            Pen pen;
+            if (roundPenMap == null)
+            {
+                pen = new Pen(new SolidColorBrush(color), 1)
+                {
+                    StartLineCap = PenLineCap.Round,
+                    LineJoin = PenLineJoin.Round,
+                    EndLineCap = PenLineCap.Round
+                };
+                pen.Freeze();
+            }
+            else
+            {
+                var key = color;
+                if (!roundPenMap.TryGetValue(key, out pen))
+                {
+                    pen = new Pen(new SolidColorBrush(color), 1)
+                    {
+                        StartLineCap = PenLineCap.Round,
+                        LineJoin = PenLineJoin.Round,
+                        EndLineCap = PenLineCap.Round
+                    };
+                    pen.Freeze();
+                    roundPenMap.Add(key, pen);
+                }
+            }
+            return pen;
+        }
+
+        internal readonly Dictionary<Tuple<Color, int>, Pen> strokeMap;
+        internal Pen GetPen(Color color, double thickness)
+        {
+            Pen pen;
+            if (strokeMap == null)
+            {
+                pen = new Pen(new SolidColorBrush(color), thickness);
+                pen.Freeze();
+            }
+            else
+            {
+                var width = thickness;
+                if (width < minStroke)
+                    width = minStroke;
+                var key = new Tuple<Color, int>(color, (int)(width * 4));
+
+                if (!strokeMap.TryGetValue(key, out pen))
+                {
+                    pen = new Pen(GetBrush(color), thickness);
+                    pen.Freeze();
+                    strokeMap.Add(key, pen);
+                }
+            }
+            return pen;
+        }
+
         private readonly double minStroke;
-        private readonly bool strokeCache;
 
         /// <summary>
         /// The <see cref="DrawingContext"/> for this visitor.
@@ -71,7 +150,7 @@ namespace NCDK.Renderers.Visitors
         /// </summary>
         /// <param name="graphics"><see cref="DrawingContext"/> to which will be drawn</param>
         public WPFDrawVisitor(DrawingContext graphics)
-            : this(graphics, true, 1.5)
+            : this(graphics, true, double.NegativeInfinity)
         { }
 
         /// <summary>
@@ -85,7 +164,12 @@ namespace NCDK.Renderers.Visitors
             this.dc = dc;
             this.fontManager = null;
             this.rendererModel = null;
-            this.strokeCache = strokeCache;
+            if (strokeCache)
+            {
+                this.brushMap = new Dictionary<Color, Brush>();
+                this.strokeMap = new Dictionary<Tuple<Color, int>, Pen>();
+                this.roundPenMap = new Dictionary<Color, Pen>();
+            }
             this.minStroke = minStroke;
         }
 
@@ -97,7 +181,7 @@ namespace NCDK.Renderers.Visitors
         /// <returns>draw visitor</returns>
         public static WPFDrawVisitor ForVectorGraphics(DrawingContext dc)
         {
-            return new WPFDrawVisitor(dc, false, double.NegativeInfinity);
+            return new WPFDrawVisitor(dc, true, double.NegativeInfinity);
         }
 
         private void Visit(ElementGroup elementGroup)
@@ -111,7 +195,7 @@ namespace NCDK.Renderers.Visitors
             var width = line.Width;
             if (width < minStroke) width = minStroke;
 
-            var pen = new Pen(new SolidColorBrush(line.Color), width);
+            var pen = GetPen(line.Color, width);
 
             var linePoints = new WPF::Point[] { line.FirstPoint, line.SecondPoint };
 
@@ -125,12 +209,11 @@ namespace NCDK.Renderers.Visitors
             var radius = oval.Radius;
             var diameter = oval.Radius * 2;
             var center = oval.Coord;
-            var brush = new SolidColorBrush(oval.Color);
 
             if (oval.Fill)
             {
                 this.dc.DrawEllipse(
-                    brush,
+                    GetBrush(oval.Color),
                     null,
                     new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
             }
@@ -138,7 +221,7 @@ namespace NCDK.Renderers.Visitors
             {
                 this.dc.DrawEllipse(
                     null,
-                    new Pen(brush, 1),
+                    GetPen(oval.Color, 1),
                     new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
             }
         }
@@ -158,14 +241,14 @@ namespace NCDK.Renderers.Visitors
             var point = this.GetTextBasePoint(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
             var textBounds = this.GetTextBounds(textElement.Text, textElement.Coord, this.fontManager.Typeface, this.fontManager.Size);
             var backColor = this.BackgroundColor;
-            this.dc.DrawRectangle(new SolidColorBrush(backColor), null, textBounds);
+            this.dc.DrawRectangle(GetBrush(backColor), null, textBounds);
             this.dc.DrawText(new FormattedText(
                 textElement.Text,
                 CultureInfo.InvariantCulture,
                 WPF.FlowDirection.LeftToRight,
                 this.fontManager.CureentTypeface,
                 this.fontManager.Size,
-                new SolidColorBrush(textElement.Color)), point);
+                GetBrush(textElement.Color)), point);
         }
 
         private void Visit(WedgeLineElement wedge)
@@ -180,11 +263,9 @@ namespace NCDK.Renderers.Visitors
             var vertexB = new Vector2(wedge.SecondPoint.X, wedge.SecondPoint.Y) + normal;
             var vertexC = vertexB - normal;
 
-            var brush = new SolidColorBrush(wedge.Color);
-
             if (wedge.BondType == WedgeLineElement.WedgeType.Dashed)
             {
-                var pen = new Pen(brush, 1);
+                var pen = GetPen(wedge.Color, 1);
 
                 // calculate the distances between lines
                 double distance = Vector2.Distance(vertexB, vertexA);
@@ -224,17 +305,12 @@ namespace NCDK.Renderers.Visitors
                 figure.Segments.Add(new LineSegment(pointC, false));
                 figure.Segments.Add(new LineSegment(pointA, false));
                 var g = new PathGeometry(new[] { figure });
-                this.dc.DrawGeometry(brush, null, g);
+                this.dc.DrawGeometry(new SolidColorBrush(wedge.Color), null, g);
             }
             else if (wedge.BondType == WedgeLineElement.WedgeType.Indiff)
             {
-                var pen = new Pen(brush, 1)
-                {
-                    StartLineCap = PenLineCap.Round,
-                    LineJoin = PenLineJoin.Round,
-                    EndLineCap = PenLineCap.Round
-                };
-
+                var pen = GetRoundPen(wedge.Color);
+                
                 // calculate the distances between lines
                 double distance = Vector2.Distance(vertexB, vertexA);
                 double gapFactor = 0.05;
@@ -288,8 +364,8 @@ namespace NCDK.Renderers.Visitors
 
             bounds = new WPF.Rect(xy.X - (w / 2), xy.Y - (h / 2), w, h);
 
-            var backgroundBrush = new SolidColorBrush(this.BackgroundColor);
-            var atomSymbolBrush = new SolidColorBrush(atomSymbol.Color);
+            var backgroundBrush = GetBrush(this.BackgroundColor);
+            var atomSymbolBrush = GetBrush(atomSymbol.Color);
 
             double padding = h / 4;
             this.dc.DrawRoundedRectangle(
@@ -390,11 +466,11 @@ namespace NCDK.Renderers.Visitors
             var rect = new WPF.Rect(p.X, p.Y, width, height);
             if (rectangle.Filled)
             {
-                this.dc.DrawRectangle(new SolidColorBrush(rectangle.Color), null, rect);
+                this.dc.DrawRectangle(GetBrush(rectangle.Color), null, rect);
             }
             else
             {
-                this.dc.DrawRectangle(null, new Pen(new SolidColorBrush(rectangle.Color), 1), rect);
+                this.dc.DrawRectangle(null, GetPen(rectangle.Color, 1), rect);
             }
         }
 
@@ -403,27 +479,24 @@ namespace NCDK.Renderers.Visitors
             if (path.Fill)
             {
                 this.dc.DrawGeometry(
-                    new SolidColorBrush(path.Color),
+                    GetBrush(path.Color),
                     null,
                     path.Elements);
             }
             else
             {
-                var pen = new Pen(new SolidColorBrush(path.Color), path.StrokeWith);
-                this.dc.DrawGeometry(null, pen, path.Elements);
+                this.dc.DrawGeometry(null, GetPen(path.Color, path.StrokeWith), path.Elements);
             }
         }
 
         private void Visit(ArrowElement line)
         {
-            double scale = rendererModel.GetScale();
-
-            Pen pen = new Pen(new SolidColorBrush(line.Color), line.Width);
+            Pen pen = GetPen(line.Color, line.Width);
 
             var a = line.Start;
             var b = line.End;
             dc.DrawLine(pen, a, b);
-            double aW = rendererModel.GetArrowHeadWidth() / scale;
+            double aW = rendererModel.GetArrowHeadWidth();
             if (line.Direction)
             {
                 var c = new WPF.Point(line.Start.X - aW, line.Start.Y - aW);
@@ -444,14 +517,14 @@ namespace NCDK.Renderers.Visitors
         {
             var point = GetTextBasePoint(textGroup.Text, textGroup.Coord, fontManager.CureentTypeface, fontManager.Size);
             var textBounds = GetTextBounds(textGroup.Text, textGroup.Coord, fontManager.CureentTypeface, fontManager.Size);
-            this.dc.DrawRectangle(new SolidColorBrush(this.BackgroundColor), null, textBounds);
+            this.dc.DrawRectangle(GetBrush(this.BackgroundColor), null, textBounds);
             this.dc.DrawText(new FormattedText(
                 textGroup.Text,
                 CultureInfo.CurrentCulture,
                 WPF.FlowDirection.LeftToRight,
                 this.fontManager.CureentTypeface,
                 this.fontManager.Size,
-                new SolidColorBrush(textGroup.Color)),
+                GetBrush(textGroup.Color)),
                 new WPF::Point(point.X, point.Y));
 
             var coord = new WPF::Point(textBounds.CenterX(), textBounds.CenterY());
@@ -501,7 +574,7 @@ namespace NCDK.Renderers.Visitors
                     WPF.FlowDirection.LeftToRight,
                     this.fontManager.CureentTypeface,
                     this.fontManager.Size,
-                    new SolidColorBrush(textGroup.Color)),
+                    GetBrush(textGroup.Color)),
                     p);
 
                 if (child.subscript != null)
@@ -515,7 +588,7 @@ namespace NCDK.Renderers.Visitors
                         WPF.FlowDirection.LeftToRight,
                         this.fontManager.CureentTypeface,
                         this.fontManager.Size - 2,
-                        new SolidColorBrush(textGroup.Color)),
+                        GetBrush(textGroup.Color)),
                         p);
                 }
             }

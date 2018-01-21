@@ -161,7 +161,7 @@ namespace NCDK.Depict
         /// <summary>
         /// Object that should be highlighted
         /// </summary>
-        private Dictionary<IChemObject, Color> highlight = new Dictionary<IChemObject, Color>();
+        private readonly Dictionary<IChemObject, Color> highlight = new Dictionary<IChemObject, Color>();
 
         RendererModel templateModel = new RendererModel();
 
@@ -690,7 +690,12 @@ namespace NCDK.Depict
         public IAtomColorer AtomColorer
         {
             get => templateModel.GetAtomColorer();
-            set => templateModel.SetAtomColorer(value);
+            set
+            {
+                if (value == null)
+                    value = RendererModelTools.DefaultAtomColorer;
+                templateModel.SetAtomColorer(value);
+            }
         }
 
         /// <summary>
@@ -702,17 +707,16 @@ namespace NCDK.Depict
             set => templateModel.SetBackgroundColor(value);
         }
 
-        /// <summary>
-        /// Highlights are shown as an outer glow around the atom symbols and bonds
-        /// rather than recoloring. The width of the glow can be set but defaults to
-        /// 4x the stroke width.
-        /// </summary>
-        /// <returns>this</returns>
-        public DepictionGenerator WithOuterGlowHighlight()
+        public HighlightStyle Highlighting
         {
-            templateModel.SetHighlighting(HighlightStyle.OuterGlow);
-            templateModel.SetOuterGlowWidth(4);
-            return this;
+            get => templateModel.GetHighlighting();
+            set => templateModel.SetHighlighting(value);
+        }
+
+        public double OuterGlowWidth
+        {
+            get => templateModel.GetOuterGlowWidth();
+            set => templateModel.SetOuterGlowWidth(value);
         }
 
         /// <summary>
@@ -728,7 +732,7 @@ namespace NCDK.Depict
         /// </remarks>
         /// <seealso cref="WithAtomMapNumbers()"/>
         /// <seealso cref="StandardGenerator.AnnotationLabelKey"/>
-        public bool AnnotatehAtomNumbers
+        public bool AnnotateAtomNumbers
         {
             get => annotateAtomNumbers;
             set
@@ -1091,6 +1095,23 @@ namespace NCDK.Depict
                 for (int i = 0; i < numBonds; i++)
                     mol.Bonds[i].Stereo = btypes[i];
             }
+        }
+    }
+
+    static class DepictionGeneratorTools
+    {
+
+        /// <summary>
+        /// Highlights are shown as an outer glow around the atom symbols and bonds
+        /// rather than recoloring. The width of the glow can be set but defaults to
+        /// 4x the stroke width.
+        /// </summary>
+        /// <returns>this</returns>
+        public static DepictionGenerator WithOuterGlowHighlight(this DepictionGenerator generator)
+        {
+            generator.Highlighting = HighlightStyle.OuterGlow;
+            generator.OuterGlowWidth = 4;
+            return generator;
         }
     }
 }

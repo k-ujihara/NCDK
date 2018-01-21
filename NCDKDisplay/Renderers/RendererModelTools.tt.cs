@@ -669,10 +669,10 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
-		public static readonly HighlightStyle DefaultHighlighting = HighlightStyle.Colored;
+		public static readonly HighlightStyle DefaultHighlighting = HighlightStyle.None;
 
         /// <summary>
-        /// Get the style of highlight used to emphasis atoms and bonds. Default value is HighlightStyle.Colored.
+        /// Get the style of highlight used to emphasis atoms and bonds. Default value is HighlightStyle.None.
         /// </summary>
         /// <returns>the style of highlight used to emphasis atoms and bonds</returns>
         public static HighlightStyle GetHighlighting(this RendererModel model)

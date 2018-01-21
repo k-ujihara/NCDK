@@ -77,6 +77,15 @@ namespace NCDK.Renderers.Visitors
         }
 
         [TestMethod()]
+        public void TestGetStrokeMap()
+        {
+            DrawingVisual drawingVisual = new DrawingVisual();
+            DrawingContext g2d = drawingVisual.RenderOpen();
+            WPFDrawVisitor visitor = new WPFDrawVisitor(g2d);
+            Assert.IsNotNull(visitor.strokeMap);
+        }
+
+        [TestMethod()]
         public void TestVisit()
         {
             DrawingVisual drawingVisual = new DrawingVisual();

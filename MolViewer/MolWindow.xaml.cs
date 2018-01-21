@@ -21,141 +21,26 @@
  */
 
 using Microsoft.Win32;
-using NCDK.Default;
-using NCDK.Depict;
-using NCDK.Graphs.InChI;
 using NCDK.IO;
-using NCDK.Layout;
-using NCDK.Smiles;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace NCDK.Controls
+namespace NCDK.MolViewer
 {
     public partial class MolWindow : Window
     {
-        private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
-        private static SmilesParser parser = new SmilesParser(builder);
-        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Generic);
-        private static InChIGeneratorFactory inChIGeneratorFactory = new InChIGeneratorFactory();
-        private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static ReaderFactory readerFactory = new ReaderFactory();
-
-        private DepictionGenerator generator = new DepictionGenerator();
-        private IChemObject _chemObject = null;
-
-        private TextChangedEventHandler textSmiles_TextChangedEventHandler;
+        private AppearanceViewModel viewModel;
+        private AppearanceDialog appearanceDialog;
 
         public MolWindow()
         {
             InitializeComponent();
 
-            textSmiles_TextChangedEventHandler = new TextChangedEventHandler(this.TextSmiles_TextChanged);
-            this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
+            this.DataContext = viewModel = new AppearanceViewModel();
 
-            generator.Zoom = 1.6;
-        }
-
-        private IChemObject ChemObject
-        {
-            get => _chemObject;
-            set
-            {
-                _chemObject = value;
-
-                string smiles = null;
-
-                try
-                {
-                    switch (_chemObject)
-                    {
-                        case IAtomContainer mol:
-                            smiles = smilesGenerator.Create(mol);
-                            break;
-                        case IReaction rxn:
-                            smiles = smilesGenerator.Create(rxn);
-                            break;
-                        default:
-                            smiles = $"{_chemObject.GetType()} is not supported.";
-                            break;
-                    }
-                }
-                catch (Exception e)
-                {
-                    smiles = $"Failed to create SMILES: {e.Message}";
-                }
-
-                UpdateSmilesWithoutEvent(smiles);
-
-                objectBox.ChemObject = _chemObject;
-            }
-        }
-
-        private static bool IsReactionSmilees(string smiles)
-        {
-            return smiles.Split(' ')[0].Contains(">");
-        }
-
-        private void UpdateSmiles()
-        {
-            var text = this.textSmiles.Text;
-            if (string.IsNullOrWhiteSpace(text))
-                return;
-
-            if (IsReactionSmilees(text))
-            {
-                IReaction rxn = null;
-                try
-                {
-                    rxn = parser.ParseReactionSmiles(text);
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
-                if (rxn == null)
-                    return;
-                this._chemObject = rxn;
-            }
-            else
-            {
-                IAtomContainer mol = null;
-                try
-                {
-                    mol = parser.ParseSmiles(text);
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
-                if (mol == null)
-                    return;
-                this._chemObject = mol;
-            }
-
-            this.objectBox.ChemObject = this._chemObject;
-        }
-
-        private Depiction CreateDepiction()
-        {
-            Depiction depiction;
-            switch (ChemObject)
-            {
-                case IAtomContainer mol:
-                    depiction = generator.Depict(mol);
-                    break;
-                case IReaction rxn:
-                    depiction = generator.Depict(rxn);
-                    break;
-                default:
-                    depiction = null;
-                    break;
-            }
-
-            return depiction;
+            Toggle_appearance_Click(null, null);
         }
 
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
@@ -205,19 +90,19 @@ namespace NCDK.Controls
             if (obj == null)
                 return;
 
-            this.ChemObject = obj;
+            viewModel.ChemObject = obj;
         }
 
         private void MenuItem_SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (ChemObject == null)
+            if (viewModel.ChemObject == null)
                 return;
 
             SaveFileDialog fileDialog = new SaveFileDialog
             {
                 FilterIndex = 1,
-                Filter = 
-                    "PNG file (*.png)|*.png|" + 
+                Filter =
+                    "PNG file (*.png)|*.png|" +
                     "JPEG file (*.jpg)|*.jpg;*.jpeg|" +
                     "GIF file (*.gif)|*.gif|" +
                     "SVG file (*.svg)|*.svg|" +
@@ -227,70 +112,33 @@ namespace NCDK.Controls
             if (fileDialog.ShowDialog() != true)
                 return;
 
-            Depiction depiction = CreateDepiction();
-            depiction.WriteTo(fileDialog.FileName);
+            objectBox.depiction.WriteTo(fileDialog.FileName);
         }
 
-        private void MenuItem_PasteAsInchi_Click(object sender, RoutedEventArgs e)
+        private void Toggle_appearance_Click(object sender, RoutedEventArgs e)
         {
-            IAtomContainer mol = null;
-            if (Clipboard.ContainsText())
+            if (appearanceDialog != null && appearanceDialog.IsVisible)
             {
-                var text = Clipboard.GetText();
-                try
-                {
-                    // Get InChIToStructure
-                    InChIToStructure converter = inChIGeneratorFactory.GetInChIToStructure(text, builder);
-                    mol = converter.AtomContainer;
-                }
-                catch (Exception)
-                {
-                    // ignore
-                }
+                appearanceDialog.Close();
+                appearanceDialog = null;
             }
-            if (mol == null)
-                return;
-
-            this.ChemObject = mol;
-        }
-
-        private void Clean_structure_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.ChemObject != null)
+            else
             {
-                var clone = ChemObject.Clone();
-                switch (clone)
+                appearanceDialog = new AppearanceDialog(this.DataContext)
                 {
-                    case IAtomContainer o:
-                        sdg.GenerateCoordinates(o);
-                        ChemObject = o;
-                        break;
-                    case IReaction o:
-                        sdg.GenerateCoordinates(o);
-                        ChemObject = o;
-                        break;
-                    default:
-                        Trace.TraceWarning($"'{clone.GetType().ToString()}' is not supported.");
-                        break;
-                }
+                    Topmost = true
+                };
+                appearanceDialog.Show();
             }
         }
 
-        private object syncUpdateSmilesWithoutEvent = new object();
-
-        private void UpdateSmilesWithoutEvent(string newSmiles)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            lock (syncUpdateSmilesWithoutEvent)
+            if (appearanceDialog != null)
             {
-                this.textSmiles.TextChanged -= textSmiles_TextChangedEventHandler;
-                this.textSmiles.Text = newSmiles;
-                this.textSmiles.TextChanged += textSmiles_TextChangedEventHandler;
+                appearanceDialog.Close();
+                appearanceDialog = null;
             }
-        }
-
-        private void TextSmiles_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateSmiles();
         }
     }
 }

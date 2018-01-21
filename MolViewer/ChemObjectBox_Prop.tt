@@ -1,0 +1,64 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".tt.cs" #>
+
+<#
+	string className = "ChemObjectBox";
+
+	void P(string name, string type, string defaultValue, string backend)
+	{
+#>
+        public static readonly DependencyProperty <#= name #>Property =
+			DependencyProperty.Register(
+				"<#= name #>",
+				typeof(<#= type #>),
+				typeof(<#= className #>),
+				new FrameworkPropertyMetadata(
+					(<#= type #>)(<#= defaultValue #>),
+					new PropertyChangedCallback(On<#= name #>PropertyChanged)));
+
+        public <#= type #> <#= name #>
+        {
+            get { return (<#= type #>)GetValue(<#= name #>Property); }
+            set { SetValue(<#= name #>Property, value); }
+        }
+
+		private static void On<#= name #>PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+			if (d is <#= className #> o)
+            {
+                <#= backend #>
+				o.UpdateVisual();
+            }
+        }
+<#
+	}
+#>
+
+using System;
+using NCDK.Renderers;
+using NCDK.Renderers.Colors;
+using System.Windows;
+using WPF = System.Windows;
+
+namespace NCDK.MolViewer
+{
+    public partial class ChemObjectBox : System.Windows.Controls.UserControl
+    {
+<#
+		P("ChemObject", "IChemObject", "null", 
+			"var value = (IChemObject)e.NewValue;" +
+			"var old = o._ChemObject;" +
+			"if (old != value) {" +
+			"    o._ChemObject = value;" +
+			"    o.ChemObjectChanged?.Invoke(d, new ChemObjectChangedEventArgs(old, value));" +
+			"}"
+			);
+		P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Colors.Black)", "o.Generator.AtomColorer = (IAtomColorer)e.NewValue;");
+		P("BackgroundColor", "WPF.Media.Color", "WPF.Media.Colors.Transparent", "o.Generator.BackgroundColor = (WPF.Media.Color)e.NewValue;");
+		P("Highlighting", "HighlightStyle", "HighlightStyle.None", "o.Generator.Highlighting = (HighlightStyle)e.NewValue;");
+		P("OuterGlowWidth", "double", "RendererModelTools.DefaultOuterGlowWidth", "o.Generator.OuterGlowWidth = (double)e.NewValue;");
+		P("Zoom", "double", "1", "o.Generator.Zoom = (double)e.NewValue;");
+		P("AlignMappedReaction", "bool", "true", "o.Generator.AlignMappedReaction = (bool)e.NewValue;");
+#>
+	}
+}
