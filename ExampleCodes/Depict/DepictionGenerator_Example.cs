@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Imaging;
+﻿using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace NCDK.Depict
 {
@@ -9,7 +10,11 @@ namespace NCDK.Depict
             {
                 IChemObjectSet<IAtomContainer> mols = null;
                 #region 1
-                DepictionGenerator dg = new DepictionGenerator().WithSize(512, 512).WithAtomColors();
+                DepictionGenerator dg = new DepictionGenerator()
+                {
+                    Size = new Size(512, 512),
+                    AtomColorer = new Renderers.Colors.CDK2DAtomColors(),
+                };
                 foreach (IAtomContainer mol in mols)
                     dg.Depict(mol).WriteTo("mol.png");
                 #endregion

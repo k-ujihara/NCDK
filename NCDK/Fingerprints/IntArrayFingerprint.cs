@@ -61,9 +61,8 @@ namespace NCDK.Fingerprints
         public IntArrayFingerprint(IBitFingerprint fingerprint)
         {
             // if it is an IntArrayFingerprint we can do faster (Array.Copy)
-            if (fingerprint is IntArrayFingerprint)
+            if (fingerprint is IntArrayFingerprint iaFP)
             {
-                IntArrayFingerprint iaFP = (IntArrayFingerprint)fingerprint;
                 trueBits = new int[iaFP.trueBits.Length];
                 Array.Copy(iaFP.trueBits, 0, trueBits, 0, trueBits.Length);
             }

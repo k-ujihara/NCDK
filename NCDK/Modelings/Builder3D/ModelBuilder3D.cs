@@ -443,7 +443,7 @@ namespace NCDK.Modelings.Builder3D
 
             int stereo = -1;
             IBond unplacedBond = molecule.GetBond(atomA, unplacedAtom);
-            if (atomA.StereoParity != null && atomA.StereoParity != 0
+            if (atomA.StereoParity != 0
                     || (unplacedBond.Stereo == BondStereo.Up || unplacedBond.Stereo == BondStereo.Down)
                     && molecule.GetMaximumBondOrder(atomA) == BondOrder.Single)
             {
@@ -637,9 +637,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="templateHandler">The new templateHandler value</param>
         private void SetTemplateHandler(TemplateHandler3D templateHandler)
         {
-            if (templateHandler == null) throw new ArgumentNullException("The given template handler is null!");
-
-            this.templateHandler = templateHandler;
+            this.templateHandler = templateHandler ?? throw new ArgumentNullException("The given template handler is null!");
         }
 
         /// <summary>

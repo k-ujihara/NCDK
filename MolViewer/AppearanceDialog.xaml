@@ -22,7 +22,7 @@
         <StackPanel>
             <Grid>
                 <Label Content="Coloring:" HorizontalAlignment="Left" />
-                <ComboBox Text="{Binding Coloring, Converter={StaticResource ColoringStyleToStringConverter}}" x:Name="coloring" Margin="63,0,0.333,0" SelectionChanged="coloring_SelectionChanged">
+                <ComboBox Text="{Binding Coloring, Converter={StaticResource ColoringStyleToStringConverter}}" x:Name="coloring" Margin="63,0,0.333,0">
                     <ComboBoxItem Content="COW"/>
                     <ComboBoxItem Content="COT"/>
                     <ComboBoxItem Content="BOW"/>

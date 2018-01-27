@@ -45,7 +45,7 @@ namespace NCDK.IO.PubChemXml
         /// 
         /// </summary>
         /// <param name="builder"></param>
-        /// <exception cref="IOException">if there is error in getting the <see cref="IsotopeFactory"/></exception>
+        /// <exception cref="System.IO.IOException">if there is error in getting the <see cref="IsotopeFactory"/></exception>
         public PubChemXMLHelper(IChemObjectBuilder builder)
         {
             this.builder = builder;

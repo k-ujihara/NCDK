@@ -38,7 +38,12 @@ namespace NCDK.Beam
     /// </summary>
     /// <seealso href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</seealso>
     // @author John May
-    public partial class Configuration : System.IComparable<Configuration>, System.IComparable
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    partial class Configuration : System.IComparable<Configuration>, System.IComparable
     {
 		/// <summary>
 		/// The <see cref="Ordinal"/> values of <see cref="Configuration"/>.
@@ -364,7 +369,7 @@ namespace NCDK.Beam
         {
             if (ReferenceEquals(a, b))
                 return true;
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
             
             return a.Ordinal == b.Ordinal;
@@ -400,9 +405,6 @@ namespace NCDK.Beam
         {
             return (Ordinal).CompareTo(o.Ordinal);
         }   	
-	}
-	public partial class Configuration 
-    {
         private Configuration(int ordinal, ConfigurationType type, string symbol, Configuration shorthand)
 			: this(ordinal)
         {

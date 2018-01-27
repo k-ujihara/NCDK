@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates output from InChI generation.
     /// </summary>
     // @author Sam Adams
-    public class NInchiOutput
+    internal class NInchiOutput
     {
         public INCHI_RET ReturnStatus { get; protected internal set; }
 

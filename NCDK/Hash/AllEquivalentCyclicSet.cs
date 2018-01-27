@@ -65,13 +65,14 @@ namespace NCDK.Hash
             for (int i = 0; i < invariants.Length; i++)
             {
                 long invariant = invariants[i];
-                ISet<int> set;
-                if (!equivalent.TryGetValue(invariant, out set))
-                { 
+                if (!equivalent.TryGetValue(invariant, out ISet<int> set))
+                {
                     if (ringSearch.Cyclic(i))
                     {
-                        set = new HashSet<int>();
-                        set.Add(i);
+                        set = new HashSet<int>
+                        {
+                            i
+                        };
                         equivalent[invariant] = set;
                     }
                 }

@@ -142,24 +142,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 double order6v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph6);
                 double order7v = ChiIndexUtils.EvalValenceIndex(localAtomContainer, subgraph7);
 
-                ArrayResult<double> retval = new ArrayResult<double>();
-                retval.Add(order0s);
-                retval.Add(order1s);
-                retval.Add(order2s);
-                retval.Add(order3s);
-                retval.Add(order4s);
-                retval.Add(order5s);
-                retval.Add(order6s);
-                retval.Add(order7s);
-
-                retval.Add(order0v);
-                retval.Add(order1v);
-                retval.Add(order2v);
-                retval.Add(order3v);
-                retval.Add(order4v);
-                retval.Add(order5v);
-                retval.Add(order6v);
-                retval.Add(order7v);
+                ArrayResult<double> retval = new ArrayResult<double>
+                {
+                    order0s,
+                    order1s,
+                    order2s,
+                    order3s,
+                    order4s,
+                    order5s,
+                    order6s,
+                    order7s,
+                    order0v,
+                    order1v,
+                    order2v,
+                    order3v,
+                    order4v,
+                    order5v,
+                    order6v,
+                    order7v,
+                };
 
                 return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
             }
@@ -196,8 +197,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var fragments = new List<IList<int>>();
             foreach (var atom in atomContainer.Atoms)
             {
-                List<int> tmp = new List<int>();
-                tmp.Add(atomContainer.Atoms.IndexOf(atom));
+                List<int> tmp = new List<int>
+                {
+                    atomContainer.Atoms.IndexOf(atom)
+                };
                 fragments.Add(tmp);
             }
             return fragments;
@@ -209,9 +212,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var bond in atomContainer.Bonds)
             {
                 if (bond.Atoms.Count != 2) throw new CDKException("We only consider 2 center bonds");
-                List<int> tmp = new List<int>();
-                tmp.Add(atomContainer.Atoms.IndexOf(bond.Atoms[0]));
-                tmp.Add(atomContainer.Atoms.IndexOf(bond.Atoms[1]));
+                List<int> tmp = new List<int>
+                {
+                    atomContainer.Atoms.IndexOf(bond.Atoms[0]),
+                    atomContainer.Atoms.IndexOf(bond.Atoms[1])
+                };
                 fragments.Add(tmp);
             }
             return fragments;

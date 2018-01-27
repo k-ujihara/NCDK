@@ -25,7 +25,7 @@ namespace NCDK.NInChI
     /// Encapsulates properties of InChI Atom.  See <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public class NInchiAtom
+    internal class NInchiAtom
     {
         /// <summary>
         /// Indicates relative rather than absolute isotopic mass. Value
@@ -116,14 +116,8 @@ namespace NCDK.NInChI
             this.X = x;
             this.Y = y;
             this.Z = z;
-
-            if (el == null)
-            {
-                throw new ArgumentNullException(nameof(el), "Chemical element must not be null");
-            }
-            this.ElementType = el;
+            this.ElementType = el ?? throw new ArgumentNullException(nameof(el), "Chemical element must not be null");
         }
-
 
         /// <summary>
         /// Convenience method to create a new atom with zero coordinates.

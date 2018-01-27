@@ -149,7 +149,7 @@ namespace NCDK.NInChI
         // Generate InChIKey
         // INCHI_OPTION Key= new INCHI_OPTION("Key");
         
-        public static IEnumerable<INCHI_OPTION> Values = new[]
+        public static IReadOnlyList<INCHI_OPTION> Values { get; } = new[]
         {
             SUCF, ChiralFlagON, ChiralFlagOFF,
             SNon, SAbs, SRel, SRac, SUU, NEWPS, RecMet, FixedH,

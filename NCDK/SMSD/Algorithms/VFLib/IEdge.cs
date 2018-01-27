@@ -75,6 +75,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// Returns bond matcher.
         /// </summary>
         /// <returns>Query Bond.</returns>
-        VFBondMatcher BondMatcher { get; }
+        IVFBondMatcher BondMatcher { get; }
     }
 }

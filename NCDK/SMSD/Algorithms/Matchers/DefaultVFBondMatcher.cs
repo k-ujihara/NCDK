@@ -56,7 +56,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class DefaultVFBondMatcher : VFBondMatcher
+    public class DefaultVFBondMatcher : IVFBondMatcher
     {
         private IBond queryBond = null;
         private int unsaturation = 0;

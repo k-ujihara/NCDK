@@ -52,8 +52,10 @@ namespace NCDK.Dict
         public static EntryDictionary Unmarshal(TextReader reader)
         {
             DictionaryHandler handler = new DictionaryHandler();
-            var r = new XReader();
-            r.Handler = handler;
+            var r = new XReader
+            {
+                Handler = handler
+            };
             var doc = XDocument.Load(reader);
             r.Read(doc);
             return handler.Dictionary;

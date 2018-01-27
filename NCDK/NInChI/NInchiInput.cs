@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.NInChI
@@ -24,7 +25,7 @@ namespace NCDK.NInChI
     /// Encapsulates structure input for InChI generation.
     /// </summary>
     // @author Sam Adams
-    public class NInchiInput : NInchiStructure
+    internal class NInchiInput : NInchiStructure
     {
         /// <summary>
         /// Options string,

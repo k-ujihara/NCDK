@@ -201,8 +201,8 @@ namespace NCDK.Fingerprints
             // atom stereo parity
             foreach (var atom in container.Atoms)
             {
-                int st = atom.StereoParity ?? 0;
-                if (st != 0)
+                var st = atom.StereoParity;
+                if (st != StereoAtomParity.Undefined)
                 {
                     l.Add(atom.Symbol + st.ToString());
                 }

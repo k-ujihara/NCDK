@@ -156,18 +156,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             for (int n = ringBlock.Length - 1; n >= 0; n--)
                 nRingBlocks = Math.Max(nRingBlocks, ringBlock[n]);
 
-            ArrayResult<int> result = new ArrayResult<int>();
-            result.Add(nSmallRings);
-            result.Add(nAromRings);
-            result.Add(nRingBlocks);
-            result.Add(nAromBlocks);
-            result.Add(nRings3);
-            result.Add(nRings4);
-            result.Add(nRings5);
-            result.Add(nRings6);
-            result.Add(nRings7);
-            result.Add(nRings8);
-            result.Add(nRings9);
+            ArrayResult<int> result = new ArrayResult<int>
+            {
+                nSmallRings,
+                nAromRings,
+                nRingBlocks,
+                nAromBlocks,
+                nRings3,
+                nRings4,
+                nRings5,
+                nRings6,
+                nRings7,
+                nRings8,
+                nRings9,
+            };
             return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, result, NAMES);
         }
 

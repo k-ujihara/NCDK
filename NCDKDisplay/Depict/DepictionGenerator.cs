@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.Geometries;
 using NCDK.Layout;
 using NCDK.Numerics;
@@ -64,11 +65,11 @@ namespace NCDK.Depict
         /// Visually distinct colors for highlighting.
         /// http://stackoverflow.com/a/4382138
         /// Kenneth L. Kelly and Deanne B. Judd.
-        /// "Color: Universal Language and Dictionary of Names",
+        /// "Color: Universal Language and Dictionary of Names",/:
         /// National Bureau of Standards,
         /// Spec. Publ. 440, Dec. 1976, 189 pages.
         /// </summary>
-        private static readonly Color[] KellyMaxContrast = new Color[]
+        public static readonly IReadOnlyList<Color> KellyMaxContrast = new Color[]
         {
             Color.FromRgb(0x00, 0x53, 0x8A), // Strong Blue (sub-optimal for defective color vision)
             Color.FromRgb(0x93, 0xAA, 0x00), // Vivid Yellowish Green (sub-optimal for defective color vision)
@@ -99,17 +100,17 @@ namespace NCDK.Depict
         /// Magic value for indicating automatic parameters. These can
         /// be overridden by a caller.
         /// </summary>
-        public const double Automatic = -1;
+        public const double Automatic = double.NegativeInfinity;
 
         /// <summary>
         /// Default margin for vector graphics formats.
         /// </summary>
-        public const double DefaultMillimeterMargin = 0.56;
+        public static readonly double DefaultMillimeterMargin = 0.56;
 
         /// <summary>
         /// Default margin for raster graphics formats.
         /// </summary>
-        public const double DefaultPixelMargin = 4;
+        public static readonly double DefaultPixelMargin = 4;
 
         /// <summary>
         /// The dimensions (width x height) of the depiction.
@@ -144,24 +145,14 @@ namespace NCDK.Depict
         private bool annotateAtomMapNumbers = false;
 
         /// <summary>
-        /// Flag to indicate atom maps should be highlighted with colored.
+        /// Colors to use in atom-map highlighting. 
         /// </summary>
-        private bool highlightAtomMap = false;
-
-        /// <summary>
-        /// Colors to use in atom-map highlighting.
-        /// </summary>
-        private Color[] atomMapColors = null;
+        private IReadOnlyList<Color> atomMapColors = null;
 
         /// <summary>
         /// Reactions are aligned such that mapped atoms have the same coordinates on the left/right.
         /// </summary>
         private bool alignMappedReactions = true;
-
-        /// <summary>
-        /// Object that should be highlighted
-        /// </summary>
-        private readonly Dictionary<IChemObject, Color> highlight = new Dictionary<IChemObject, Color>();
 
         RendererModel templateModel = new RendererModel();
 
@@ -206,10 +197,7 @@ namespace NCDK.Depict
         public DepictionGenerator Clone()
         {
             var clone = (DepictionGenerator)this.MemberwiseClone();
-            clone.atomMapColors = (Color[])this.atomMapColors.Clone();
             // dimensions is stable
-            foreach (var e in this.highlight)
-                clone.highlight[e.Key] = e.Value;
             this.generators.AddRange(this.generators);
 
             return clone;
@@ -227,11 +215,12 @@ namespace NCDK.Depict
         /// Depict a single molecule.
         /// </summary>
         /// <param name="mol">molecule</param>
+        /// <param name="highlight">highlight the provided set of atoms and bonds in the depiction in the specified color</param>
         /// <returns>depiction instance</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IAtomContainer mol)
+        public Depiction Depict(IAtomContainer mol, IDictionary<IChemObject, Color> highlight = null)
         {
-            return Depict(new[] { mol }, 1, 1);
+            return Depict(new[] { mol }, 1, 1, highlight);
         }
 
         /// <summary>
@@ -242,12 +231,12 @@ namespace NCDK.Depict
         /// <param name="mols">molecules</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        /// <seealso cref="Depict(IEnumerable{IAtomContainer}, int, int)"/>
-        public Depiction Depict(IEnumerable<IAtomContainer> mols)
+        /// <seealso cref="Depict(IEnumerable{IAtomContainer}, int, int, IDictionary{IChemObject, Color})"/>
+        public Depiction Depict(IEnumerable<IAtomContainer> mols, IDictionary<IChemObject, Color> highlight = null)
         {
             var molList = mols.ToList();
             var grid = Dimensions.DetermineGrid(molList.Count());
-            return Depict(mols, grid.Height, grid.Width);
+            return Depict(mols, grid.Height, grid.Width, highlight);
         }
 
         /// <summary>
@@ -260,8 +249,11 @@ namespace NCDK.Depict
         /// <param name="ncol">number of columns</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol)
+        public Depiction Depict(IEnumerable<IAtomContainer> mols, int nrow, int ncol, IDictionary<IChemObject, Color> highlight = null)
         {
+            if (highlight == null)
+                highlight = Dictionaries.Empty<IChemObject, Color>();
+
             var layoutBackups = new List<LayoutBackup>();
             int molId = 0;
             foreach (var mol in mols)
@@ -300,9 +292,8 @@ namespace NCDK.Depict
             }
 
             // remove current highlight buffer
-            foreach (var obj in this.highlight.Keys)
+            foreach (var obj in highlight.Keys)
                 obj.RemoveProperty(StandardGenerator.HighlightColorKey);
-            this.highlight.Clear();
 
             return new MolGridDepiction(model, molElems, titles, dimensions, nrow, ncol);
         }
@@ -363,7 +354,7 @@ namespace NCDK.Depict
         /// <param name="rxn">reaction instance</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IReaction rxn)
+        public Depiction Depict(IReaction rxn, IDictionary<IChemObject, Color> highlight = null)
         {
             Ensure2DLayout(rxn); // can reorder components!
 
@@ -396,7 +387,7 @@ namespace NCDK.Depict
             }
 
             var myHighlight = new Dictionary<IChemObject, Color>();
-            if (highlightAtomMap)
+            if (atomMapColors != null)
             {
                 foreach (var e in MakeHighlightAtomMap(reactants, products))
                     myHighlight[e.Key] = e.Value;
@@ -482,7 +473,7 @@ namespace NCDK.Depict
                         if (prevPalletIdx == colorIdx)
                         {
                             colorIdx++; // select next color
-                            if (colorIdx >= atomMapColors.Length)
+                            if (colorIdx >= atomMapColors.Count)
                                 throw new ArgumentException("Not enough colors to highlight atom mapping, please provide mode");
                         }
                         Color color = atomMapColors[colorIdx];
@@ -670,19 +661,6 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Color atom symbols using typical colors, oxygens are red, nitrogens are
-        /// blue, etc.
-        /// </summary>
-        /// <returns>this</returns>
-        /// <seealso cref="HighlightStyle"/>
-        /// <seealso cref="CDK2DAtomColors"/>
-        public DepictionGenerator WithAtomColors()
-        {
-            AtomColorer = new CDK2DAtomColors();
-            return this;
-        }
-
-        /// <summary>
         /// Colorer for atom symbols.
         /// </summary>
         /// <seealso cref="HighlightStyle"/>
@@ -730,7 +708,7 @@ namespace NCDK.Depict
         /// (but this can be achieved by manually setting the annotation).
         /// </note>
         /// </remarks>
-        /// <seealso cref="WithAtomMapNumbers()"/>
+        /// <seealso cref="AnnotateAtomMapNumbers"/>
         /// <seealso cref="StandardGenerator.AnnotationLabelKey"/>
         public bool AnnotateAtomNumbers
         {
@@ -753,7 +731,7 @@ namespace NCDK.Depict
         /// (but this can be achieved by manually setting the annotation).
         /// </note>
         /// </remarks>
-        /// <seealso cref="WithAtomMapNumbers()"/>
+        /// <seealso cref="AnnotateAtomMapNumbers"/>
         /// <seealso cref="StandardGenerator.AnnotationLabelKey"/>
         public bool AnnotateAtomValues
         {
@@ -777,7 +755,7 @@ namespace NCDK.Depict
         /// the annotation).
         /// </note>
         /// </remarks>
-        /// <seealso cref="WithAtomNumbers"/>
+        /// <seealso cref="AnnotateAtomNumbers"/>
         /// <seealso cref="CDKPropertyName.AtomAtomMapping"/>
         /// <seealso cref="StandardGenerator.AnnotationLabelKey"/>
         public bool AnnotateAtomMapNumbers
@@ -797,14 +775,11 @@ namespace NCDK.Depict
         /// highlight. If none is provided a set of high-contrast colors
         /// will be used.
         /// </summary>
-        /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="WithAtomMapNumbers"/>
-        /// <seealso cref="WithAtomMapHighlight"/>
-        public DepictionGenerator WithAtomMapHighlight()
+        /// <seealso cref="AnnotateAtomMapNumbers"/>
+        public IReadOnlyList<Color> AtomMapColors
         {
-            highlightAtomMap = true;
-            atomMapColors = (Color[])KellyMaxContrast.Clone();
-            return this;
+            get => atomMapColors;
+            set => atomMapColors = value;
         }
 
         /// <summary>
@@ -877,68 +852,34 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Display atom symbols for terminal carbons (i.e. Methyl)
-        /// groups.
+        /// Atom symbol visibility.
         /// </summary>
-        /// <returns>this</returns>
-        /// <seealso cref="RendererModelTools.SetVisibility(RendererModel, SymbolVisibility)"/>
-        public DepictionGenerator WithTerminalCarbons()
+        public SymbolVisibility SymbolVisibility
         {
-            templateModel.SetVisibility(SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendations));
-            return this;
-        }
-
-        /// <summary>
-        /// Display atom symbols for all atoms in the molecule.
-        /// </summary>
-        /// <returns>this</returns>
-        /// <seealso cref="RendererModelTools.SetVisibility(RendererModel, SymbolVisibility)"/>
-        public DepictionGenerator WithCarbonSymbols()
-        {
-            templateModel.SetVisibility(SymbolVisibility.All);
-            return this;
-        }
-
-        /// <summary>
-        /// Highlight the provided set of atoms and bonds in the depiction in the
-        /// specified color.
-        /// </summary>
-        /// <remarks>
-        /// Calling this methods appends to the current highlight buffer. The buffer
-        /// is cleared after each depiction is generated (e.g. <see cref="Depict(IAtomContainer)"/>).
-        /// </remarks>
-        /// <param name="chemObjs">set of atoms and bonds</param>
-        /// <param name="color">the color to highlight</param>
-        /// <returns>this</returns>
-        /// <seealso cref="StandardGenerator.HighlightColorKey"/>
-        public DepictionGenerator WithHighlight(IEnumerable<IChemObject> chemObjs, Color color)
-        {
-            foreach (var chemObj in chemObjs)
-                highlight[chemObj] = color;
-            return this;
+            get => templateModel.GetVisibility();
+            set => templateModel.SetVisibility(value);
         }
 
         /// <summary>
         /// Specify a desired size of depiction. The units depend on the output format with
         /// raster images using pixels and vector graphics using millimeters. By default depictions
         /// are only ever made smaller if you would also like to make depictions fill all available
-        /// space use the <see cref="WithFillToFit"/> option. 
+        /// space use the <see cref="FillToFit"/> option. 
         /// </summary>
         /// <remarks>
         /// Currently the size must either both be precisely specified (e.g. 256x256) or
         /// automatic (e.g. <see cref="Automatic"/>x<see cref="Automatic"/>) you cannot for example
         /// specify a fixed height and automatic width.
         /// </remarks>
-        /// <param name="w">max width</param>
-        /// <param name="h">max height</param>
-        /// <returns>this</returns>
         /// <seealso cref="FillToFit"/>
-        public DepictionGenerator WithSize(double w, double h)
+        public WPF.Size Size
         {
-            if (w < 0 && h >= 0 || h < 0 && w >= 0)
-                throw new ArgumentException("Width and height must either both be automatic or both specified");
-            dimensions = w == Automatic ? Dimensions.Automatic : new Dimensions(w, h);
-            return this;
+            get => new WPF.Size(dimensions.width, dimensions.height);
+
+            set
+            {
+                dimensions = value.IsEmpty ? Dimensions.Automatic : new Dimensions(value.Width, value.Height);
+            }
         }
 
         /// <summary>
@@ -966,7 +907,7 @@ namespace NCDK.Depict
         /// The desired zoom factor - this changes the base size of a
         /// depiction and is used for uniformly making depictions bigger. If
         /// you would like to simply fill all available space (not recommended)
-        /// use <see cref="WithFillToFit"/>.
+        /// use <see cref="FillToFit"/>.
         /// </summary>
         /// <remarks>
         /// The zoom is a scaling factor, specifying a zoom of 2 is double size,
@@ -995,11 +936,9 @@ namespace NCDK.Depict
         /// <typeparam name="T">option value type</typeparam>
         /// <param name="key">option key</param>
         /// <param name="value">option value</param>
-        /// <returns>this</returns>
-        public DepictionGenerator WithParam<T>(string key, T value)
+        public void SetParameter<T>(string key, T value)
         {
             templateModel.Parameters[key] = value;
-            return this;
         }
 
         private double CaclModelScale(IEnumerable<IAtomContainer> mols)
@@ -1095,23 +1034,6 @@ namespace NCDK.Depict
                 for (int i = 0; i < numBonds; i++)
                     mol.Bonds[i].Stereo = btypes[i];
             }
-        }
-    }
-
-    static class DepictionGeneratorTools
-    {
-
-        /// <summary>
-        /// Highlights are shown as an outer glow around the atom symbols and bonds
-        /// rather than recoloring. The width of the glow can be set but defaults to
-        /// 4x the stroke width.
-        /// </summary>
-        /// <returns>this</returns>
-        public static DepictionGenerator WithOuterGlowHighlight(this DepictionGenerator generator)
-        {
-            generator.Highlighting = HighlightStyle.OuterGlow;
-            generator.OuterGlowWidth = 4;
-            return generator;
         }
     }
 }

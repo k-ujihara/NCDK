@@ -40,7 +40,12 @@ namespace NCDK.Beam
     /// Defines the relative topology around a vertex (atom).
     /// </summary>
     // @author John May
-    public abstract class Topology
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    abstract class Topology
     {
         /// <summary>
         /// The vertex/atom which this topology describes.

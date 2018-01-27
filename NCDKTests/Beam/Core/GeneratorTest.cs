@@ -287,7 +287,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void ReusingNumbering()
         {
-            Generator.RingNumbering rnums = new Generator.ReuseRingNumbering(0);
+            Generator.IRingNumbering rnums = new Generator.ReuseRingNumbering(0);
             for (int i = 0; i < 50; i++)
             {
                 int rnum = rnums.Next();
@@ -314,7 +314,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void IterativeNumbering()
         {
-            Generator.RingNumbering rnums = new Generator.IterativeRingNumbering(0);
+            Generator.IRingNumbering rnums = new Generator.IterativeRingNumbering(0);
             for (int i = 0; i < 50; i++)
             {
                 int rnum = rnums.Next();
@@ -351,7 +351,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(InvalidSmilesException))]
         public void MaxRingNumbers()
         {
-            Generator.RingNumbering rnums = new Generator.IterativeRingNumbering(0);
+            Generator.IRingNumbering rnums = new Generator.IterativeRingNumbering(0);
             for (int i = 0; i < 101; i++)
             {
                 int rnum = rnums.Next();

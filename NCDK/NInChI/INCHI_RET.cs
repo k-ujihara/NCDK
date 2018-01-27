@@ -78,6 +78,6 @@ namespace NCDK.NInChI
         /// <summary>
         /// Previuos call to InChI has not returned yet.
         /// </summary>
-        BUSY = 5
+        BUSY = 5,
     }
 }

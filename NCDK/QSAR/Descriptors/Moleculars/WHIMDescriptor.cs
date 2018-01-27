@@ -412,28 +412,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
                 double d = eta[0] + eta[1] + eta[2];
 
                 // return all the stuff we calculated
-                ArrayResult<double> retval = new ArrayResult<double>(11 + 6);
-                retval.Add(lambda[0]);
-                retval.Add(lambda[1]);
-                retval.Add(lambda[2]);
+                ArrayResult<double> retval = new ArrayResult<double>(11 + 6)
+                {
+                    lambda[0],
+                    lambda[1],
+                    lambda[2],
 
-                retval.Add(nu[0]);
-                retval.Add(nu[1]);
+                    nu[0],
+                    nu[1],
 
-                retval.Add(gamma[0]);
-                retval.Add(gamma[1]);
-                retval.Add(gamma[2]);
+                    gamma[0],
+                    gamma[1],
+                    gamma[2],
 
-                retval.Add(eta[0]);
-                retval.Add(eta[1]);
-                retval.Add(eta[2]);
+                    eta[0],
+                    eta[1],
+                    eta[2],
 
-                retval.Add(t);
-                retval.Add(a);
-                retval.Add(v);
-                retval.Add(k);
-                retval.Add(g);
-                retval.Add(d);
+                    t,
+                    a,
+                    v,
+                    k,
+                    g,
+                    d
+                };
 
                 return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
             }

@@ -597,11 +597,11 @@ namespace NCDK.Smiles
             string cname = "NCDK.Graphs.Invariant.InChINumbersTools";
             string mname = "GetUSmilesNumbers";
 
-            var rgrps = GetRgrps(container, Elements.Rutherfordium);
+            var rgrps = GetRgrps(container, ChemicalElements.Rutherfordium);
             foreach (IAtom rgrp in rgrps)
             {
-                rgrp.AtomicNumber = Elements.Rutherfordium.AtomicNumber;
-                rgrp.Symbol = Elements.Rutherfordium.Symbol;
+                rgrp.AtomicNumber = ChemicalElements.Rutherfordium.AtomicNumber;
+                rgrp.Symbol = ChemicalElements.Rutherfordium.Symbol;
             }
 
             try
@@ -627,13 +627,13 @@ namespace NCDK.Smiles
             {
                 foreach (IAtom rgrp in rgrps)
                 {
-                    rgrp.AtomicNumber = Elements.Unknown.AtomicNumber;
+                    rgrp.AtomicNumber = ChemicalElements.Unknown.AtomicNumber;
                     rgrp.Symbol = "*";
                 }
             }
         }
 
-        private static IList<IAtom> GetRgrps(IAtomContainer container, Elements reversed)
+        private static IList<IAtom> GetRgrps(IAtomContainer container, Config.ChemicalElement reversed)
         {
             List<IAtom> res = new List<IAtom>();
             foreach (IAtom atom in container.Atoms)

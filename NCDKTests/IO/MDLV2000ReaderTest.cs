@@ -1113,7 +1113,7 @@ namespace NCDK.IO
             foreach (var atom in atoms)
             {
                 var parity = atom.StereoParity;
-                if (parity == 1)
+                if (parity == (StereoAtomParity)1)
                 {
                     chiralCentre = true;
                 }

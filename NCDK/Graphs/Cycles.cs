@@ -183,7 +183,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static ICycleFinder RelevantFinder => CycleComputation.RELEVANT;
+        public static ICycleFinder RelevantFinder => CycleComputation.Relevant;
 
         /// <summary>
         /// A cycle finder which will compute the essential cycles of a molecule.
@@ -194,7 +194,7 @@ namespace NCDK.Graphs
         /// <returns>finder for essential cycles</returns>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static ICycleFinder EssentialFinder => CycleComputation.ESSENTIAL;
+        public static ICycleFinder EssentialFinder => CycleComputation.Essential;
 
         /// <summary>
         /// A cycle finder which will compute the triplet short cycles of a
@@ -209,7 +209,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindTripletShort(IAtomContainer)"/>
         /// <seealso cref="TripletShortCycles"/>
-        public static ICycleFinder TripletShortFinder => CycleComputation.TRIPLET_SHORT;
+        public static ICycleFinder TripletShortFinder => CycleComputation.TripletShort;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -223,7 +223,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>finder for vertex short cycles</returns>
         /// <seealso cref="FindVertexShort(IAtomContainer)"/>
-        public static ICycleFinder VertexShortFinder => CycleComputation.VERTEX_SHORT;
+        public static ICycleFinder VertexShortFinder => CycleComputation.VertexShort;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -237,7 +237,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>finder for edge short cycles</returns>
         /// <seealso cref="FindEdgeShort(IAtomContainer)"/>
-        public static ICycleFinder EdgeShort => CycleComputation.EDGE_SHORT;
+        public static ICycleFinder EdgeShort => CycleComputation.EdgeShort;
 
         /// <summary>
         /// Finder for cdk aromatic cycles.
@@ -259,7 +259,7 @@ namespace NCDK.Graphs
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.Cycles_Example.cs+CDKAromaticSetFinder"]/*' />
         /// </example>
         /// <seealso cref="FindEdgeShort(IAtomContainer)"/>
-        public static ICycleFinder CDKAromaticSetFinder => CycleComputation.CDK_AROMATIC;
+        public static ICycleFinder CDKAromaticSetFinder => CycleComputation.CdkAromatic;
 
         /// <summary>
         /// Find all cycles in a fused system or if there were too many cycles
@@ -523,8 +523,8 @@ namespace NCDK.Graphs
         private abstract class CycleComputation
             : ICycleFinder
         {
-            public static CycleComputation MCB = new MCB_CycleComputation();
-            class MCB_CycleComputation
+            public static CycleComputation MCB = new MCBCycleComputation();
+            class MCBCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -535,8 +535,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation ESSENTIAL = new ESSENTIAL_CycleComputation();
-            class ESSENTIAL_CycleComputation
+            public static CycleComputation Essential = new EssentialCycleComputation();
+            class EssentialCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -548,8 +548,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation RELEVANT = new RELEVANT_CycleComputation();
-            class RELEVANT_CycleComputation
+            public static CycleComputation Relevant = new RelevantCycleComputation();
+            class RelevantCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -560,8 +560,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation All = new ALL_CycleComputation();
-            class ALL_CycleComputation
+            public static CycleComputation All = new AllCycleComputation();
+            class AllCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -578,8 +578,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation TRIPLET_SHORT = new TRIPLET_SHORT_CycleComputation();
-            class TRIPLET_SHORT_CycleComputation
+            public static CycleComputation TripletShort = new TripletShortCycleComputation();
+            class TripletShortCycleComputation
                   : CycleComputation
             {
                 /// <inheritdoc/>
@@ -590,8 +590,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation VERTEX_SHORT = new VERTEX_SHORT_CycleComputation();
-            class VERTEX_SHORT_CycleComputation
+            public static CycleComputation VertexShort = new VertexShortCycleComputation();
+            class VertexShortCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -602,8 +602,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation EDGE_SHORT = new EDGE_SHORT_CycleComputation();
-            class EDGE_SHORT_CycleComputation
+            public static CycleComputation EdgeShort = new EdgeShortCycleComputation();
+            class EdgeShortCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -614,8 +614,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation CDK_AROMATIC = new CDK_AROMATIC_CycleComputation();
-            class CDK_AROMATIC_CycleComputation
+            public static CycleComputation CdkAromatic = new CdkAromaticCycleComputation();
+            class CdkAromaticCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -638,8 +638,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation ALL_OR_VERTEX_SHORT = new ALL_OR_VERTEX_SHORT_CycleComputation();
-            class ALL_OR_VERTEX_SHORT_CycleComputation
+            public static CycleComputation AllOrVertexShort = new AllOrVertexShortCycleComputation();
+            class AllOrVertexShortCycleComputation
                 : CycleComputation
             {
                 /// <inheritdoc/>
@@ -648,7 +648,7 @@ namespace NCDK.Graphs
                     int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
                     AllCycles ac = new AllCycles(graph, Math.Min(length, graph.Length), threshold);
 
-                    return ac.Completed ? ac.GetPaths() : VERTEX_SHORT.Apply(graph, length);
+                    return ac.Completed ? ac.GetPaths() : VertexShort.Apply(graph, length);
                 }
             }
 

@@ -44,7 +44,8 @@ namespace NCDK.Hash
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    public partial class BasicAtomEncoder : System.IComparable<BasicAtomEncoder>, System.IComparable
+	public
+    partial class BasicAtomEncoder : System.IComparable<BasicAtomEncoder>, System.IComparable
 			 , IAtomEncoder 
     {
 		/// <summary>
@@ -148,7 +149,7 @@ namespace NCDK.Hash
         {
             if (ReferenceEquals(a, b))
                 return true;
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
             
             return a.Ordinal == b.Ordinal;
@@ -184,9 +185,6 @@ namespace NCDK.Hash
         {
             return (Ordinal).CompareTo(o.Ordinal);
         }   	
-	}
-	public partial class BasicAtomEncoder 
-    {
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);
         private static EncodeDelegate[] listOnEncode;
 
@@ -210,5 +208,5 @@ namespace NCDK.Hash
                 };
             listOnEncode[O.FreeRadicals] = (atom, container) => container.GetConnectedSingleElectrons(atom).Count();
         }
-    }
+	}
 }

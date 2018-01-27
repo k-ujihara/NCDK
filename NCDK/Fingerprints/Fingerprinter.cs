@@ -291,8 +291,7 @@ namespace NCDK.Fingerprints
 
             internal List<IBond> GetBonds(IAtom atom)
             {
-                List<IBond> bonds;
-                if (!cache.TryGetValue(atom, out bonds))
+                if (!cache.TryGetValue(atom, out List<IBond> bonds))
                 {
                     bonds = mol.GetConnectedBonds(atom).ToList();
                     cache[atom] = bonds;

@@ -165,11 +165,7 @@ namespace NCDK.Common.Util
         /// <param name="r">a Reader object providing the input stream.</param>
         public StreamTokenizer(TextReader r) : this()
         {
-            if (r == null)
-            {
-                throw new ArgumentNullException();
-            }
-            reader = r;
+            reader = r ?? throw new ArgumentNullException();
         }
 
         /// <summary>

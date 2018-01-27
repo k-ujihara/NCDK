@@ -95,12 +95,16 @@ namespace NCDK.Reactions.Types
                                         && atomR.IsReactiveCenter
                                         && atomCheck(atomR))
                                 {
-                                    var atomList = new List<IAtom>();
-                                    atomList.Add(atomR);
-                                    atomList.Add(atomi);
-                                    atomList.Add(atoml);
-                                    var bondList = new List<IBond>();
-                                    bondList.Add(reactant.GetBond(atomR, atoml));
+                                    var atomList = new List<IAtom>
+                                    {
+                                        atomR,
+                                        atomi,
+                                        atoml
+                                    };
+                                    var bondList = new List<IBond>
+                                    {
+                                        reactant.GetBond(atomR, atoml)
+                                    };
 
                                     IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
 

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System;
@@ -29,18 +30,18 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public abstract class FormulaRuleTest : CDKTestCase
     {
-        protected IRule rule;
+        protected static IRule rule;
 
-        public void SetRule(Type ruleClass)
+        public static void SetRule(Type ruleClass)
         {
-            if (this.rule == null)
+            if (FormulaRuleTest.rule == null)
             {
                 object rule = (object)ruleClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
                 if (!(rule is IRule))
                 {
                     throw new CDKException("The passed rule class must be a IRule");
                 }
-                this.rule = (IRule)rule;
+                FormulaRuleTest.rule = (IRule)rule;
             }
         }
 
@@ -69,6 +70,8 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestGetParameters()
         {
+            TestValidate_IMolecularFormula();
+
             object[] params_ = rule.Parameters;
             //        FIXME: the next would be nice, but not currently agreed-upon policy
             //        Assert.IsNotNull(
@@ -86,6 +89,8 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestSetParameters_arrayObject()
         {
+            TestValidate_IMolecularFormula();
+
             object[] defaultParams = rule.Parameters;
             rule.Parameters = defaultParams;
         }

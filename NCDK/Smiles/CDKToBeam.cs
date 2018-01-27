@@ -23,7 +23,6 @@
  */
 
 using NCDK.Beam;
-using NCDK.Config;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
@@ -77,7 +76,7 @@ namespace NCDK.Smiles
             return ToBeamGraph(ac, flavour);
         }
 
-        internal Atom ToBeamAtom(IAtom atom)
+        internal Beam.IAtom ToBeamAtom(IAtom atom)
         {
             return ToBeamAtom(atom, flavour);
         }
@@ -161,7 +160,7 @@ namespace NCDK.Smiles
                     case 17: return 35;
                     case 53: return 127;
                     default:
-                        IsotopeFactory isotopes = Isotopes.Instance;
+                        Config.IsotopeFactory isotopes = Config.Isotopes.Instance;
                         IIsotope isotope = isotopes.GetMajorIsotope(e.Symbol);
                         if (isotope != null)
                             return isotope.MassNumber;
@@ -183,7 +182,7 @@ namespace NCDK.Smiles
         /// <param name="a">cdk Atom instance</param>
         /// <returns>a Beam atom</returns>
         /// <exception cref="NullReferenceException">the atom had an undefined symbol or implicit hydrogen count</exception>
-        static Atom ToBeamAtom(IAtom a, SmiFlavor flavour)
+        static Beam.IAtom ToBeamAtom(IAtom a, SmiFlavor flavour)
         {
             bool aromatic = SmiFlavors.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && a.IsAromatic;
             int? charge = a.FormalCharge;

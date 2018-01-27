@@ -43,7 +43,7 @@ namespace NCDK.Graphs.InChI
     /// check whether or not the native code required is available. If the native
     /// code cannot be loaded during the first call to <see cref="Instance"/>
     /// method (when the instance is created) a <see cref="CDKException"/> will be thrown. The
-    /// most common problem is that the native code is not in the * the correct
+    /// most common problem is that the native code is not in the correct
     /// location. Java searches the locations in the PATH environmental
     /// variable, under Windows, and LD_LIBRARY_PATH under Linux, so the JNI-InChI
     /// native libraries must be in one of these locations. If the JNI-InChI jar file
@@ -114,7 +114,8 @@ namespace NCDK.Graphs.InChI
         /// <exception cref="CDKException">if the generator cannot be instantiated</exception>
         public InChIGenerator GetInChIGenerator(IAtomContainer container, IList<INCHI_OPTION> options)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
             return (new InChIGenerator(container, options, IgnoreAromaticBonds));
         }
 

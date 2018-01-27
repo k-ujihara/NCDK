@@ -172,28 +172,28 @@ namespace NCDK.Beam
             Assert.AreEqual(Parse("[CH4:2]").AtomClass, 2);
         }
 
-        private Atom Parse(string str)
+        private IAtom Parse(string str)
         {
             CharBuffer buffer = CharBuffer.FromString(str);
             return new Parser(buffer, false).Molecule().GetAtom(0);
         }
 
-        private Atom GetAtom(Element e)
+        private IAtom GetAtom(Element e)
         {
             return new AtomImpl.BracketAtom(e, 0, 0);
         }
 
-        private Atom GetAtom(Element e, int hCount)
+        private IAtom GetAtom(Element e, int hCount)
         {
             return new AtomImpl.BracketAtom(e, hCount, 0);
         }
 
-        private Atom GetAtom(Element e, int hCount, int charge)
+        private IAtom GetAtom(Element e, int hCount, int charge)
         {
             return new AtomImpl.BracketAtom(e, hCount, charge);
         }
 
-        private Atom GetAtom(int isotope, Element e, int hCount, int charge)
+        private IAtom GetAtom(int isotope, Element e, int hCount, int charge)
         {
             return new AtomImpl.BracketAtom(isotope, e, hCount, charge, 0, false);
         }

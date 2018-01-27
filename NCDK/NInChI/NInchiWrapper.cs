@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace NCDK.NInChI
     /// </remarks>
     // @author Sam Adams
     // @author Kazuya Ujihara
-    unsafe public class NInchiWrapper
+    unsafe internal class NInchiWrapper
     {
         private const string DllName_libinchi = "ncdk_libinchi.dll";
 
@@ -431,9 +432,11 @@ namespace NCDK.NInChI
                 }
             }
 
-            var pre = new Set_inchi_Input_();
-            pre.atoms = atoms;
-            pre.stereos = stereos;
+            var pre = new Set_inchi_Input_
+            {
+                atoms = atoms,
+                stereos = stereos
+            };
             return pre;
         }
 
@@ -599,14 +602,16 @@ namespace NCDK.NInChI
             for (int i = 0; i < numatoms; i++)
             {
                 Inchi_Atom iatom = iatoms[i];
-                var natom = new NInchiAtom(iatom.X, iatom.Y, iatom.Z, new string(iatom.elname));
-                natom.Charge = iatom.charge;
-                natom.Radical = (INCHI_RADICAL)iatom.radical;
-                natom.ImplicitH = iatom.num_iso_H[0];
-                natom.ImplicitProtium = iatom.num_iso_H[1];
-                natom.ImplicitDeuterium = iatom.num_iso_H[2];
-                natom.ImplicitTritium = iatom.num_iso_H[3];
-                natom.IsotopicMass = iatom.isotopic_mass;
+                var natom = new NInchiAtom(iatom.X, iatom.Y, iatom.Z, new string(iatom.elname))
+                {
+                    Charge = iatom.charge,
+                    Radical = (INCHI_RADICAL)iatom.radical,
+                    ImplicitH = iatom.num_iso_H[0],
+                    ImplicitProtium = iatom.num_iso_H[1],
+                    ImplicitDeuterium = iatom.num_iso_H[2],
+                    ImplicitTritium = iatom.num_iso_H[3],
+                    IsotopicMass = iatom.isotopic_mass
+                };
                 output.Atoms.Add(natom);
             }
         }

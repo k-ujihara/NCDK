@@ -74,13 +74,13 @@ namespace NCDK.Smiles.SMARTS.Parser
         public object JJTGetValue() { return value; }
 
         /// <summary>Accept the visitor. </summary>
-        public virtual object JjtAccept(SMARTSParserVisitor visitor, object data)
+        public virtual object JjtAccept(ISMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }
 
         /// <summary>Accept the visitor. </summary>
-        public virtual object childrenAccept(SMARTSParserVisitor visitor, object data)
+        public virtual object ChildrenAccept(ISMARTSParserVisitor visitor, object data)
         {
             if (children != null)
             {

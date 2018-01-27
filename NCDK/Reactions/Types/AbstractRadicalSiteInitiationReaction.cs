@@ -70,13 +70,17 @@ namespace NCDK.Reactions.Types
                                         if (atomk.IsReactiveCenter && atomk.Symbol.Equals(atomSymbol)
                                                 && atomk.FormalCharge == 0)
                                         {
-                                            var atomList = new List<IAtom>();
-                                            atomList.Add(atomi);
-                                            atomList.Add(atomj);
-                                            atomList.Add(atomk);
-                                            var bondList = new List<IBond>();
-                                            bondList.Add(bondi);
-                                            bondList.Add(bondj);
+                                            var atomList = new List<IAtom>
+                                            {
+                                                atomi,
+                                                atomj,
+                                                atomk
+                                            };
+                                            var bondList = new List<IBond>
+                                            {
+                                                bondi,
+                                                bondj
+                                            };
 
                                             IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                             moleculeSet.Add(reactant);

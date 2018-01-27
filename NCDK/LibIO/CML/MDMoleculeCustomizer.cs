@@ -133,8 +133,10 @@ namespace NCDK.LibIO.CML
                         // etc: add name, refs to atoms etc
 
                         //Append chgrpNo
-                        CMLScalar cgNo = new CMLScalar(number);
-                        cgNo.DictRef = "md:cgNumber";
+                        CMLScalar cgNo = new CMLScalar(number)
+                        {
+                            DictRef = "md:cgNumber"
+                        };
                         cgMol.Add(cgNo);
 
                         // prefix for residue atom id

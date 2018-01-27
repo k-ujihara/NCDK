@@ -26,7 +26,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class Smarts2MQLVisitor : SMARTSParserVisitor
+    public class Smarts2MQLVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
         {
@@ -45,7 +45,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(SimpleNode node, object data)
         {
-            return node.childrenAccept(this, data);
+            return node.ChildrenAccept(this, data);
         }
 
         public object Visit(ASTStart node, object data)

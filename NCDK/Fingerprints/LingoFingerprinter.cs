@@ -85,8 +85,7 @@ namespace NCDK.Fingerprints
             for (int i = 0, l = smiles.Length - n + 1; i < l; i++)
             {
                 string subsmi = smiles.Substring(i, n);
-                int count;
-                if (!map.TryGetValue(subsmi, out count))
+                if (!map.TryGetValue(subsmi, out int count))
                     map[subsmi] = 1;
                 else
                     map[subsmi] = count + 1;

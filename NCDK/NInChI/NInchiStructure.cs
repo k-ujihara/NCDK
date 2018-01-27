@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.NInChI
 {
     // @author Sam Adams
-    public class NInchiStructure
+    internal class NInchiStructure
     {
         /// <summary>
         /// List of atoms.

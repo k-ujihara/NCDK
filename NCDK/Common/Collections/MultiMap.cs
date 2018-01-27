@@ -42,8 +42,7 @@ namespace NCDK.Common.Collections
 
         public void Add(T key, V value)
         {
-            ICollection<V> list;
-            if (!BaseMap.TryGetValue(key, out list))
+            if (!BaseMap.TryGetValue(key, out ICollection<V> list))
             {
                 list = new HashSet<V>();
                 BaseMap.Add(key, list);
@@ -53,8 +52,7 @@ namespace NCDK.Common.Collections
 
         public void Remove(T key, V value)
         {
-            ICollection<V> list;
-            if (BaseMap.TryGetValue(key, out list))
+            if (BaseMap.TryGetValue(key, out ICollection<V> list))
             {
                 list.Remove(value);
             }
@@ -100,8 +98,7 @@ namespace NCDK.Common.Collections
         {
             get
             {
-                ICollection<V> v;
-                if (!BaseMap.TryGetValue(key, out v))
+                if (!BaseMap.TryGetValue(key, out ICollection<V> v))
                 {
                     return empty;
                 }

@@ -23,9 +23,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.Config
 {
     /// <summary>
@@ -37,19 +34,19 @@ namespace NCDK.Config
     // @author      john may
     // @cdk.module  core
     // @cdk.githash
-    public sealed partial class Elements
+    public sealed partial class ChemicalElement
     {
         public string Name { get; private set; }
 
         /// <summary>
-        /// The atomic number of the element. An <see cref="Unknown"/> element
+        /// The atomic number of the element. An <see cref="ChemicalElements.Unknown"/> element
         /// has an atomic number of '0'.
         /// </summary>
         public int AtomicNumber { get; private set; }
 
         /// <summary>
         /// Return the period in the periodic table this element belongs to. If
-        /// the element is <see cref="Unknown"/> it's period is 0.
+        /// the element is <see cref="ChemicalElements.Unknown"/> it's period is 0.
         /// </summary>
         public int Period { get; private set; }
 
@@ -61,7 +58,7 @@ namespace NCDK.Config
 
         /// <summary>
         /// The element symbol, C for carbon, N for nitrogen, Na for sodium, etc. An
-        /// <see cref="Unknown"/> element has no symbol.
+        /// <see cref="ChemicalElements.Unknown"/> element has no symbol.
         /// </summary>
         public string Symbol { get; private set; }
 
@@ -89,42 +86,6 @@ namespace NCDK.Config
         private readonly IElement instance;
 
         /// <summary>
-        /// Lookup elements by symbol / name.
-        /// </summary>
-        internal static readonly IDictionary<string, Elements> symbolMap = new Dictionary<string, Elements>();
-
-        static Elements()
-        {
-            for (var i = 0; i < Values.Length; i++)
-            {
-                var elm = Values[i];
-                symbolMap.Add(elm.Symbol.ToLowerInvariant(), elm);
-                symbolMap.Add(elm.Name.ToLowerInvariant(), elm);
-            }
-
-            // recently named elements
-            symbolMap.Add("uub", Copernicium); // 2009
-            symbolMap.Add("ununbium", Copernicium);
-
-            symbolMap.Add("uuq", Flerovium); // 2012
-            symbolMap.Add("ununquadium", Flerovium);
-
-            symbolMap.Add("uuh", Livermorium); // 2012
-            symbolMap.Add("ununhexium", Livermorium);
-
-            // 2016
-            symbolMap["uut"] = Nihonium;
-            symbolMap["uup"] = Moscovium;
-            symbolMap["uus"] = Tennessine;
-            symbolMap["uuo"] = Oganesson;
-
-            // alternative spellings
-            symbolMap.Add("sulphur", Sulfur);
-            symbolMap.Add("cesium", Caesium);
-            symbolMap.Add("aluminum", Aluminium);
-        }
-
-        /// <summary>
         /// Internal constructor.
         /// </summary>
         /// <param name="name">name</param>
@@ -135,7 +96,7 @@ namespace NCDK.Config
         /// <param name="rCov">covalent radius</param>
         /// <param name="rW">van der Waals radius</param>
         /// <param name="electronegativity">Pauling electronegativity</param>
-        private Elements(string name, int number, string symbol, int period, int group, double? rCov, double? rW, double? electronegativity)
+        internal ChemicalElement(string name, int number, string symbol, int period, int group, double? rCov, double? rW, double? electronegativity)
         {
             this.Name = name;
             this.AtomicNumber = number;
@@ -159,34 +120,36 @@ namespace NCDK.Config
 
         /// <summary>
         /// Obtain the element with the specified atomic number. If no element had
-        /// the specified atomic number then <see cref="Unknown"/> is returned.
+        /// the specified atomic number then <see cref="ChemicalElements.Unknown"/> is returned.
         /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfNumber"]/*' />
         /// </example>
-        /// <param name="number">number atomic number</param>
-        /// <returns>an element, or <see cref="Unknown"/></returns>
-        public static Elements OfNumber(int number)
+        /// <param name="number">atomic number</param>
+        /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>
+        public static ChemicalElement OfNumber(int number)
         {
-            if (number < 0 || number >= Values.Length) return Unknown;
+            if (number < 0 || number >= Values.Count)
+                return ChemicalElements.Unknown;
             return Values[number];
         }
 
         /// <summary>
         /// Obtain the element with the specified symbol or name. If no element had
-        /// the specified symbol or name then <see cref="Unknown"/> is returned. The
+        /// the specified symbol or name then <see cref="ChemicalElements.Unknown"/> is returned. The
         /// input is case-insensitive.
         /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfString"]/*' />
         /// </example>
         /// <param name="str">input string</param>
-        /// <returns>an element, or <see cref="Unknown"/></returns>
-        public static Elements OfString(string str)
+        /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>
+        public static ChemicalElement OfString(string str)
         {
-            if (str == null) return Unknown;
-            if (!symbolMap.TryGetValue(str.ToLowerInvariant(), out Elements e))
-                e = Unknown;
+            if (str == null)
+                return ChemicalElements.Unknown;
+            if (!symbolMap.TryGetValue(str.ToLowerInvariant(), out ChemicalElement e))
+                e = ChemicalElements.Unknown;
             return e;
         }
     }

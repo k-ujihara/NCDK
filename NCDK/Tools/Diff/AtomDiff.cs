@@ -66,7 +66,7 @@ namespace NCDK.Tools.Diff
             totalDiff.AddChild(IntegerDifference.Construct("H", firstElem.ImplicitHydrogenCount,
                     secondElem.ImplicitHydrogenCount));
             totalDiff
-                    .AddChild(IntegerDifference.Construct("SP", firstElem.StereoParity, secondElem.StereoParity));
+                    .AddChild(IntegerDifference.Construct("SP", (int)firstElem.StereoParity, (int)secondElem.StereoParity));
             totalDiff.AddChild(Point2DDifference.Construct("2D", firstElem.Point2D, secondElem.Point2D));
             totalDiff.AddChild(Point3DDifference.Construct("3D", firstElem.Point3D, secondElem.Point3D));
             totalDiff.AddChild(Point3DDifference.Construct("F3D", firstElem.FractionalPoint3D,

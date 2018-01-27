@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates output from InChI to structure conversion.
     /// </summary>
     // @author Sam Adams
-    public class NInchiOutputStructure : NInchiStructure
+    internal class NInchiOutputStructure : NInchiStructure
     {
         /// <summary>
         /// Return status from conversion.

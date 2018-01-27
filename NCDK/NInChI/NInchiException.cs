@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System;
 
 namespace NCDK.NInChI
@@ -25,7 +26,7 @@ namespace NCDK.NInChI
     /// Exception thrown by JniInchi.
     /// </summary>
     // @author Sam Adams
-    public class NInchiException : Exception
+    internal class NInchiException : Exception
     {
 
 

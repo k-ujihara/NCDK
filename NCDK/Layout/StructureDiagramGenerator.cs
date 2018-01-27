@@ -36,6 +36,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using static NCDK.Config.ChemicalElement;
 
 namespace NCDK.Layout
 {
@@ -1000,18 +1001,18 @@ namespace NCDK.Layout
             // isolated atoms, HCl vs NH4+ etc
             if (!bonds.Any())
             {
-                Elements elem = Elements.OfNumber(atom.AtomicNumber.Value);
+                var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
                 // see HydrogenPosition for canonical list
                 switch (elem.AtomicNumber)
                 {
-                    case Elements.O.Oxygen:
-                    case Elements.O.Sulfur:
-                    case Elements.O.Selenium:
-                    case Elements.O.Tellurium:
-                    case Elements.O.Fluorine:
-                    case Elements.O.Chlorine:
-                    case Elements.O.Bromine:
-                    case Elements.O.Iodine:
+                    case AtomicNumbers.Oxygen:
+                    case AtomicNumbers.Sulfur:
+                    case AtomicNumbers.Selenium:
+                    case AtomicNumbers.Tellurium:
+                    case AtomicNumbers.Fluorine:
+                    case AtomicNumbers.Chlorine:
+                    case AtomicNumbers.Bromine:
+                    case AtomicNumbers.Iodine:
                         pos = -1; // left
                         break;
                     default:

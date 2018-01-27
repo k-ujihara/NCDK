@@ -40,7 +40,7 @@ namespace NCDK.Beam
             return sum;
         }
 
-        public static Atom FromSubset(Atom a, int sum, int deg)
+        public static IAtom FromSubset(IAtom a, int sum, int deg)
         {
             // atom is already a non-subset atom
             if (!a.Subset)

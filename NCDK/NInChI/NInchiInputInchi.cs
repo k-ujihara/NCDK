@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.NInChI
@@ -24,7 +25,7 @@ namespace NCDK.NInChI
     /// Encapsulates input for InChI to structure conversion.
     /// </summary>
     // @author Sam Adams
-    public class NInchiInputInchi
+    internal class NInchiInputInchi
     {
         /// <summary>
         /// InChI ASCIIZ string to be converted to a strucure

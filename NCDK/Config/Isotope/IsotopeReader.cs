@@ -69,9 +69,11 @@ namespace NCDK.Config.Isotope
             reader.Handler = handler;
             try
             {
-                var settings = new XmlReaderSettings();
-                settings.ValidationType = ValidationType.None;
-                settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
+                var settings = new XmlReaderSettings
+                {
+                    ValidationType = ValidationType.None,
+                    ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None
+                };
                 XmlReader xreader = XmlReader.Create(input, settings);
                 var doc = XDocument.Load(xreader);
                 reader.Read(doc);

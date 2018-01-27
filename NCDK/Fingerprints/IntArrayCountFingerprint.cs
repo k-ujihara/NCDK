@@ -49,8 +49,7 @@ namespace NCDK.Fingerprints
             foreach (var key in rawFingerprint.Keys)
             {
                 int hashedKey = key.GetHashCode();
-                int count;
-                if (!hashedFP.TryGetValue(hashedKey, out count))
+                if (!hashedFP.TryGetValue(hashedKey, out int count))
                     count = 0;
                 hashedFP.Add(hashedKey, count + rawFingerprint[key]);
             }
@@ -113,8 +112,7 @@ namespace NCDK.Fingerprints
             {
                 for (int i = 0; i < fp.GetNumberOfPopulatedBins(); i++)
                 {
-                    int count;
-                    if (!newFp.TryGetValue(fp.GetHash(i), out count))
+                    if (!newFp.TryGetValue(fp.GetHash(i), out int count))
                         count = 0;
                     newFp[fp.GetHash(i)] = count + fp.GetCount(i);
                 }

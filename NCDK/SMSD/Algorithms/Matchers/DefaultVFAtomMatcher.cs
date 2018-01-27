@@ -56,7 +56,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class DefaultVFAtomMatcher : VFAtomMatcher
+    public class DefaultVFAtomMatcher : IVFAtomMatcher
     {
         private int maximumNeighbors;
         private string symbol = null;

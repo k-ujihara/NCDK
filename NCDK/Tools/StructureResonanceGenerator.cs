@@ -107,8 +107,10 @@ namespace NCDK.Tools
         private void CallDefaultReactions()
         {
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
 
             IReactionProcess type = new SharingLonePairReaction();
@@ -124,8 +126,10 @@ namespace NCDK.Tools
 
             type = new PiBondingMovementReaction();
             List<IParameterReaction> paramList2 = new List<IParameterReaction>();
-            IParameterReaction param2 = new SetReactionCenter();
-            param2.IsSetParameter = false;
+            IParameterReaction param2 = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList2.Add(param2);
             try
             {
@@ -264,8 +268,10 @@ namespace NCDK.Tools
             int maxGroup = 1;
 
             /* Analysis if the bond are linked together */
-            List<IBond> newBondList = new List<IBond>();
-            newBondList.Add(bondList[0]);
+            List<IBond> newBondList = new List<IBond>
+            {
+                bondList[0]
+            };
 
             int pos = 0;
             for (int i = 0; i < newBondList.Count; i++)

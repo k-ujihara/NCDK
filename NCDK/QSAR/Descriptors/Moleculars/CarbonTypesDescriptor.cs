@@ -145,16 +145,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 else if (maxBondOrder == BondOrder.Single && cc == 4) c4sp3++;
             }
 
-            ArrayResult<int> retval = new ArrayResult<int>(9);
-            retval.Add(c1sp1);
-            retval.Add(c2sp1);
-            retval.Add(c1sp2);
-            retval.Add(c2sp2);
-            retval.Add(c3sp2);
-            retval.Add(c1sp3);
-            retval.Add(c2sp3);
-            retval.Add(c3sp3);
-            retval.Add(c4sp3);
+            ArrayResult<int> retval = new ArrayResult<int>(9)
+            {
+                c1sp1,
+                c2sp1,
+                c1sp2,
+                c2sp2,
+                c3sp2,
+                c1sp3,
+                c2sp3,
+                c3sp3,
+                c4sp3
+            };
 
             return new DescriptorValue<ArrayResult<int>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }

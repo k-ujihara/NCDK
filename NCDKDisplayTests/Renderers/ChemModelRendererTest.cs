@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
@@ -33,10 +34,12 @@ namespace NCDK.Renderers
         [TestMethod()]
         public void TestConstructor()
         {
-            var generators = new List<IGenerator<IAtomContainer>>();
-            generators.Add(new BasicSceneGenerator());
-            generators.Add(new BasicAtomGenerator());
-            generators.Add(new BasicBondGenerator());
+            var generators = new List<IGenerator<IAtomContainer>>
+            {
+                new BasicSceneGenerator(),
+                new BasicAtomGenerator(),
+                new BasicBondGenerator()
+            };
 
             ChemModelRenderer renderer = new ChemModelRenderer(generators, new WPFFontManager());
             Assert.IsNotNull(renderer);

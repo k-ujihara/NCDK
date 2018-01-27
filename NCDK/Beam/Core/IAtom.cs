@@ -26,6 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project. 
  */
+
 using System.ComponentModel;
 
 namespace NCDK.Beam
@@ -35,7 +36,12 @@ namespace NCDK.Beam
     /// built using the <see cref="AtomBuilder"/> class.
     /// </summary>
     // @author John May
-    public interface Atom
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    interface IAtom
     {
         /// <summary>
         /// The isotope number of the atom. If the isotope is undefined (default) a
@@ -89,7 +95,7 @@ namespace NCDK.Beam
         /// then the same atom is returned.
         /// </summary>
         /// <returns>the aromatic form of this atom (or if it can't be aromatic just this atom)</returns>
-        Atom AsAromaticForm();
+        IAtom AsAromaticForm();
 
         /// <summary>
         /// (internal) Is the atom a member of the organic (aromatic/aliphatic)
@@ -102,7 +108,7 @@ namespace NCDK.Beam
         /// Access an aliphatic form of this atom. 
         /// </summary>
         /// <returns>the aliphatic form of this atom</returns>
-        Atom AsAliphaticForm();
+        IAtom AsAliphaticForm();
 
         /// <summary>
         /// (internal) The number of hydrogens this atom would have if it were vertex
@@ -118,6 +124,6 @@ namespace NCDK.Beam
         /// string.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        Generator.AtomToken Token { get; }
+        Generator.IAtomToken Token { get; }
     }
 }

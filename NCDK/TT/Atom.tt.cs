@@ -26,6 +26,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.Numerics;
 using System;
@@ -71,7 +72,7 @@ namespace NCDK.Default
         internal Vector2? point2D;
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
-        internal int? stereoParity;
+        internal StereoAtomParity stereoParity;
         internal bool isSingleOrDouble;
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace NCDK.Default
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = Elements.OfNumber(elem).Symbol;
+            Symbol = ChemicalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -270,7 +271,7 @@ namespace NCDK.Default
         /// <summary>
         /// The stereo parity for this atom.
         /// </summary>
-        public virtual int? StereoParity
+        public virtual StereoAtomParity StereoParity
         {
             get { return stereoParity; }
             set 
@@ -312,7 +313,7 @@ namespace NCDK.Default
                 sb.Append(", S:").Append(Symbol);
             if (ImplicitHydrogenCount != null)
                 sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != null)
+            if (StereoParity != StereoAtomParity.Undefined)
                 sb.Append(", SP:").Append(StereoParity);
             if (Point2D != null)
                 sb.Append(", 2D:[").Append(Point2D).Append(']');
@@ -355,7 +356,7 @@ namespace NCDK.Default
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-			Elements elem;
+			ChemicalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -409,8 +410,8 @@ namespace NCDK.Default
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = Elements.OfString(str.Substring(beg, pos - beg));
-                if (elem == Elements.Unknown)
+                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
+                if (elem == ChemicalElements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
 
@@ -473,7 +474,7 @@ namespace NCDK.Default
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = Elements.OfNumber(anum).Symbol;
+            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 
@@ -534,7 +535,7 @@ namespace NCDK.Silent
         internal Vector2? point2D;
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
-        internal int? stereoParity;
+        internal StereoAtomParity stereoParity;
         internal bool isSingleOrDouble;
 
         /// <summary>
@@ -570,7 +571,7 @@ namespace NCDK.Silent
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = Elements.OfNumber(elem).Symbol;
+            Symbol = ChemicalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -728,7 +729,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The stereo parity for this atom.
         /// </summary>
-        public virtual int? StereoParity
+        public virtual StereoAtomParity StereoParity
         {
             get { return stereoParity; }
             set 
@@ -768,7 +769,7 @@ namespace NCDK.Silent
                 sb.Append(", S:").Append(Symbol);
             if (ImplicitHydrogenCount != null)
                 sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != null)
+            if (StereoParity != StereoAtomParity.Undefined)
                 sb.Append(", SP:").Append(StereoParity);
             if (Point2D != null)
                 sb.Append(", 2D:[").Append(Point2D).Append(']');
@@ -811,7 +812,7 @@ namespace NCDK.Silent
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-			Elements elem;
+			ChemicalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -822,8 +823,8 @@ namespace NCDK.Silent
             int chg = 0;
 
             {
-                elem = Elements.OfString(str);
-                if (elem != Elements.Unknown)
+                elem = ChemicalElement.OfString(str);
+                if (elem != ChemicalElements.Unknown)
                 {
                     atom.AtomicNumber = elem.AtomicNumber;
                     atom.Symbol = elem.Symbol;
@@ -872,8 +873,8 @@ namespace NCDK.Silent
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = Elements.OfString(str.Substring(beg, pos - beg));
-                if (elem == Elements.Unknown)
+                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
+                if (elem == ChemicalElements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
 
@@ -936,7 +937,7 @@ namespace NCDK.Silent
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = Elements.OfNumber(anum).Symbol;
+            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 

@@ -52,7 +52,12 @@ namespace NCDK.Beam
     ///     .Build();
     /// </code></example>
     // @author John May
-    public sealed class GraphBuilder
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class GraphBuilder
     {
         /// <summary>Current we just use the non-public methods of the actual graph object.</summary>
         private readonly Graph g;
@@ -94,7 +99,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="a">the atom to add</param>
         /// <returns>graph builder for adding more atoms/connections</returns>
-        public GraphBuilder Add(Atom a)
+        public GraphBuilder Add(IAtom a)
         {
             if (g.Order >= valence.Length)
                 valence = Arrays.CopyOf(valence, valence.Length * 2);
@@ -520,7 +525,7 @@ namespace NCDK.Beam
             {
                 if (g.TopologyOf(v).Type == Configuration.ConfigurationType.None)
                 {
-                    Atom atom = g.GetAtom(v);
+                    IAtom atom = g.GetAtom(v);
                     if (Suppressible(atom, valence[v]))
                     {
                         g.SetAtom(v, ToSubset(atom));
@@ -529,7 +534,7 @@ namespace NCDK.Beam
             }
         }
 
-        private Atom ToSubset(Atom a)
+        private IAtom ToSubset(IAtom a)
         {
             if (a.IsAromatic())
                 return AtomImpl.AromaticSubset.OfElement(a.Element);
@@ -537,7 +542,7 @@ namespace NCDK.Beam
                 return AtomImpl.AliphaticSubset.OfElement(a.Element);
         }
 
-        private bool Suppressible(Atom a, int v)
+        private bool Suppressible(IAtom a, int v)
         {
             if (!a.Subset
                     && a.Element.IsOrganic()

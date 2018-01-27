@@ -94,8 +94,10 @@ namespace NCDK.Hash
         public static IAtomEncoder Create(IAtomEncoder encoder, params IAtomEncoder[] encoders)
         {
             if (encoder == null || encoders == null) throw new ArgumentNullException("null encoders provided");
-            List<IAtomEncoder> tmp = new List<IAtomEncoder>(encoders.Length + 1);
-            tmp.Add(encoder);
+            List<IAtomEncoder> tmp = new List<IAtomEncoder>(encoders.Length + 1)
+            {
+                encoder
+            };
             foreach (var e in encoders)
                 tmp.Add(e);
             return new ConjugatedAtomEncoder(tmp);

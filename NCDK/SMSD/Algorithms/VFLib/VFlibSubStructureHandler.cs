@@ -317,7 +317,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         private IAtomContainer GetReactantMol()
         {
-            return queryMol == null ? mol1 : queryMol;
+            return queryMol ?? mol1;
         }
 
         private IAtomContainer GetProductMol()

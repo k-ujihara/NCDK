@@ -93,14 +93,11 @@ namespace NCDK.Hash
                IStereoEncoderFactory factory, EquivalentSetFinder finder, AtomSuppression suppression)
                 : base(pseudorandom)
         {
-            if (simple == null) throw new ArgumentNullException("no simple generator provided");
-            if (seeds == null) throw new ArgumentNullException("no seed generator provided");
-            if (suppression == null) throw new ArgumentNullException("no suppression provided, use AtomSuppression.None()");
             this.finder = finder;
             this.factory = factory;
-            this.simple = simple;
-            this.seeds = seeds;
-            this.suppression = suppression;
+            this.simple = simple ?? throw new ArgumentNullException("no simple generator provided");
+            this.seeds = seeds ?? throw new ArgumentNullException("no seed generator provided");
+            this.suppression = suppression ?? throw new ArgumentNullException("no suppression provided, use AtomSuppression.None()");
         }
 
         public long[] Generate(IAtomContainer container)

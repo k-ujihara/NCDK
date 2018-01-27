@@ -77,7 +77,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
         /// Returns Query Atom.
         /// <returns>Query Atom.</returns>
         /// </summary>
-        VFAtomMatcher AtomMatcher { get; }
+        IVFAtomMatcher AtomMatcher { get; }
 
         /// <summary>
         /// Returns List of Edges.

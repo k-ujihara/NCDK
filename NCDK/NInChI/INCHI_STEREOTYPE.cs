@@ -24,7 +24,7 @@ namespace NCDK.NInChI
     /// Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_STEREOTYPE
+    internal enum INCHI_STEREOTYPE
     {
         /// <summary>
         /// None.

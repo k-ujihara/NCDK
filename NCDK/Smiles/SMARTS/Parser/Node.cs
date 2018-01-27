@@ -53,7 +53,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         int JjtGetNumChildren();
 
         /// <summary>Accept the visitor. </summary>
-        object JjtAccept(SMARTSParserVisitor visitor, object data);
+        object JjtAccept(ISMARTSParserVisitor visitor, object data);
 
         /// <summary>
         /// Removes a child from this node

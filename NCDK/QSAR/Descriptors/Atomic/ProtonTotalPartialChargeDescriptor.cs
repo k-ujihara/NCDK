@@ -97,8 +97,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             try
             {
-                peoe = new GasteigerMarsiliPartialCharges();
-                peoe.MaxGasteigerIterations = 6;
+                peoe = new GasteigerMarsiliPartialCharges
+                {
+                    MaxGasteigerIterations = 6
+                };
                 //    HydrogenAdder hAdder = new HydrogenAdder();
                 //    hAdder.AddExplicitHydrogensToSatisfyValency(mol);
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(clone, true);

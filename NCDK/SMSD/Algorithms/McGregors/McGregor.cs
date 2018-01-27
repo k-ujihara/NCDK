@@ -688,8 +688,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
                     if (currentStructure.NotEqual == null)
                     {
-                        currentStructure.NotEqual = new BinaryTree(matrix[index]);
-                        currentStructure.NotEqual.NotEqual = null;
+                        currentStructure.NotEqual = new BinaryTree(matrix[index])
+                        {
+                            NotEqual = null
+                        };
                         int yIndex = 0;
 
                         BinaryTree lastOne = currentStructure.NotEqual;

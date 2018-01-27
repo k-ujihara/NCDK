@@ -138,7 +138,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         /// Add and return a node for a query atom
         /// </summary>
         /// <returns>added Node</returns>
-        public INode AddNode(VFAtomMatcher matcher, IAtom atom)
+        public INode AddNode(IVFAtomMatcher matcher, IAtom atom)
         {
             NodeBuilder node = new NodeBuilder(matcher);
             nodesList.Add(node);
@@ -165,7 +165,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         /// Construct and return an edge for a given query and target node
         /// </summary>
         /// <returns>connected edges</returns>
-        public IEdge Connect(INode source, INode target, VFBondMatcher matcher)
+        public IEdge Connect(INode source, INode target, IVFBondMatcher matcher)
         {
             NodeBuilder sourceImpl = (NodeBuilder)source;
             NodeBuilder targetImpl = (NodeBuilder)target;

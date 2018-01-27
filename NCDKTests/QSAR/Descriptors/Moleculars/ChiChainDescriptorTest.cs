@@ -1,11 +1,12 @@
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using System;
 
-namespace NCDK.QSAR.Descriptors.Moleculars {
+namespace NCDK.QSAR.Descriptors.Moleculars
+{
     /// <summary>
     /// TestSuite that runs all QSAR tests.
     /// </summary>

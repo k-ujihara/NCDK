@@ -29,7 +29,7 @@ namespace NCDK.NInChI
         private static NInchiAtom at2 = new NInchiAtom(0, 0, 0, "S");
         private static NInchiAtom at3 = new NInchiAtom(0, 0, 0, "F");
 
-        protected internal static NInchiStereo0D GetTestStereo0D()
+        internal static NInchiStereo0D GetTestStereo0D()
         {
             return new NInchiStereo0D(atC, at0, at1, at2, at3, INCHI_STEREOTYPE.Tetrahedral, INCHI_PARITY.Odd);
         }

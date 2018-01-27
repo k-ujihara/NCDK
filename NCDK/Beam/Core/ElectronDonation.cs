@@ -29,7 +29,6 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using static NCDK.Beam.Element;
 
 namespace NCDK.Beam
@@ -61,7 +60,7 @@ namespace NCDK.Beam
         /// <param name="cyclic">all cyclic vertices</param>
         /// <returns>the number of p electrons contributed to if the element or -1 if
         ///         the vertex should not be used</returns>
-        public abstract int Contribution(int u, Graph g, Cycle cycle, BitArray cyclic);
+        public abstract int Contribution(int u, Graph g, ICycle cycle, BitArray cyclic);
 
         /// <summary>
         /// The Daylight aromatic model (aprox).
@@ -71,7 +70,7 @@ namespace NCDK.Beam
         public static ElectronDonation Daylight => DAYLIGHT;
 
         /// <summary>The cyclic vertices.</summary>
-        public interface Cycle
+        public interface ICycle
         {
             bool Contains(int u);
         }
@@ -83,13 +82,13 @@ namespace NCDK.Beam
         private sealed class DaylightImpl : ElectronDonation
         {
             /// <inheritdoc/>
-            public override int Contribution(int u, Graph g, Cycle cycle, BitArray cyclic)
+            public override int Contribution(int u, Graph g, ICycle cycle, BitArray cyclic)
             {
 
                 if (!cyclic[u])
                     return -1;
 
-                Atom atom = g.GetAtom(u);
+                IAtom atom = g.GetAtom(u);
                 Element elem = atom.Element;
 
                 // the element isn't allow to be aromatic (Daylight spec)
@@ -215,7 +214,7 @@ namespace NCDK.Beam
             /// <param name="charge"> charge on the cyclic atom</param>
             /// <returns>number of donated electrons</returns>
             /// </summary>
-            int AcyclicContribution(Atom cyclic, Atom acyclic, int charge)
+            int AcyclicContribution(IAtom cyclic, IAtom acyclic, int charge)
             {
                 var aa = cyclic.Element;
                 if (aa == Carbon)

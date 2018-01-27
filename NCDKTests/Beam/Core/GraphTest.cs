@@ -43,32 +43,32 @@ namespace NCDK.Beam
         public void AddAtoms()
         {
             Graph g = new Graph(5);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 0);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 1);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 2);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 3);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 4);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 0);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 1);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 2);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 3);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 4);
         }
 
         [TestMethod()]
         public void AddAtomsResize()
         {
             Graph g = new Graph(2);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 0);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 1);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 2);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 3);
-            Assert.AreEqual(g.AddAtom(new Mock<Atom>().Object), 4);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 0);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 1);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 2);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 3);
+            Assert.AreEqual(g.AddAtom(new Mock<IAtom>().Object), 4);
         }
 
         [TestMethod()]
         public void AtomAccess()
         {
-            Atom[] atoms = new Atom[]{
-                new Mock<Atom>().Object,
-                new Mock<Atom>().Object,
-                new Mock<Atom>().Object,
-                new Mock<Atom>().Object,
+            IAtom[] atoms = new IAtom[]{
+                new Mock<IAtom>().Object,
+                new Mock<IAtom>().Object,
+                new Mock<IAtom>().Object,
+                new Mock<IAtom>().Object,
             };
             Graph g = new Graph(5);
             foreach (var a in atoms)
@@ -84,15 +84,15 @@ namespace NCDK.Beam
         {
             Graph g = new Graph(5);
             Assert.AreEqual(g.Order, 0);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             Assert.AreEqual(g.Order, 1);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             Assert.AreEqual(g.Order, 2);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             Assert.AreEqual(g.Order, 3);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             Assert.AreEqual(g.Order, 4);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             Assert.AreEqual(g.Order, 5);
         }
 
@@ -100,9 +100,9 @@ namespace NCDK.Beam
         public void TestSize()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
 
             Edge e1 = new Edge(0, 1, Bond.Implicit);
             Edge e2 = new Edge(0, 1, Bond.Implicit);
@@ -118,9 +118,9 @@ namespace NCDK.Beam
         public void TestEdges()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.AreEqual(g.GetEdges(0).Count, 1);
@@ -139,9 +139,9 @@ namespace NCDK.Beam
         public void TestEdgesResize()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.AreEqual(g.GetEdges(0).Count, 1);
@@ -160,9 +160,9 @@ namespace NCDK.Beam
         public void TestEdgesIterable()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
 
@@ -179,9 +179,9 @@ namespace NCDK.Beam
         public void TestDegree()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.AreEqual(g.Degree(0), 1);
@@ -192,9 +192,9 @@ namespace NCDK.Beam
         public void Adjacent()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.IsTrue(g.Adjacent(0, 1));
@@ -206,9 +206,9 @@ namespace NCDK.Beam
         public void CreateEdge()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.AreEqual(g.CreateEdge(0, 1), new Edge(0, 1, Bond.Implicit));
@@ -220,9 +220,9 @@ namespace NCDK.Beam
         public void EdgeNone()
         {
             Graph g = new Graph(5);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             g.CreateEdge(0, 2);
@@ -257,9 +257,9 @@ namespace NCDK.Beam
         public void ClearTest()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             Assert.AreEqual(g.Order, 3);
@@ -284,10 +284,10 @@ namespace NCDK.Beam
         public void Permute()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             g.AddEdge(new Edge(2, 3, Bond.Implicit));
@@ -313,10 +313,10 @@ namespace NCDK.Beam
         public void InvalidPermutation()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(0, 1, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             g.AddEdge(new Edge(2, 3, Bond.Implicit));
@@ -327,10 +327,10 @@ namespace NCDK.Beam
         public void SortTest()
         {
             Graph g = new Graph(2);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
             g.AddEdge(new Edge(3, 2, Bond.Implicit));
             g.AddEdge(new Edge(1, 2, Bond.Implicit));
             g.AddEdge(new Edge(0, 3, Bond.Implicit));
@@ -367,12 +367,12 @@ namespace NCDK.Beam
         public void Atoms()
         {
             Graph g = new Graph(20);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            g.AddAtom(new Mock<Atom>().Object);
-            IEnumerable<Atom> atoms = g.GetAtoms_();
-            IEnumerator<Atom> it = atoms.GetEnumerator();
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            g.AddAtom(new Mock<IAtom>().Object);
+            IEnumerable<IAtom> atoms = g.GetAtoms_();
+            IEnumerator<IAtom> it = atoms.GetEnumerator();
             Assert.IsTrue(it.MoveNext());
             Assert.IsNotNull(it.Current);
             Assert.IsTrue(it.MoveNext());

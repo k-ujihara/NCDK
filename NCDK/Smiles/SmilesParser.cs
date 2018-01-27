@@ -541,8 +541,10 @@ namespace NCDK.Smiles
             {
                 foreach (var e in cxstate.positionVar)
                 {
-                    Sgroup sgroup = new Sgroup();
-                    sgroup.Type = SgroupType.ExtMulticenter;
+                    Sgroup sgroup = new Sgroup
+                    {
+                        Type = SgroupType.ExtMulticenter
+                    };
                     IAtom beg = atoms[e.Key];
                     IAtomContainer mol = atomToMol[beg];
                     var bonds = mol.GetConnectedBonds(beg);

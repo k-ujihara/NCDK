@@ -125,8 +125,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 acc.Parameters = hBondparams;
                 int acceptors = ((Result<int>)acc.Calculate(mol).Value).Value;
 
-                IMolecularDescriptor don = new HBondDonorCountDescriptor();
-                don.Parameters = hBondparams;
+                IMolecularDescriptor don = new HBondDonorCountDescriptor
+                {
+                    Parameters = hBondparams
+                };
                 int donors = ((Result<int>)don.Calculate(mol).Value).Value;
 
                 IMolecularDescriptor mw = new WeightDescriptor();

@@ -70,10 +70,12 @@ namespace NCDK.FaulonSignatures
 
         public virtual Invariants Clone()
         {
-            Invariants copy = new Invariants(colors.Length, vertexInvariants.Length);
-            copy.colors = (int[])colors.Clone();
-            copy.nodeInvariants = (int[])nodeInvariants.Clone();
-            copy.vertexInvariants = (int[])vertexInvariants.Clone();
+            Invariants copy = new Invariants(colors.Length, vertexInvariants.Length)
+            {
+                colors = (int[])colors.Clone(),
+                nodeInvariants = (int[])nodeInvariants.Clone(),
+                vertexInvariants = (int[])vertexInvariants.Clone()
+            };
             return copy;
         }
 

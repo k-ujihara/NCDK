@@ -354,7 +354,7 @@ namespace NCDK.Stereo
 
         private static bool HasUnspecifiedParity(IAtom atom)
         {
-            return atom.StereoParity == 3;
+            return (int)atom.StereoParity == 3;
         }
 
         /// <summary>Create stereo-elements from 2D coordinates.</summary>

@@ -29,8 +29,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System;
 using System.Text;
 
@@ -138,8 +138,7 @@ namespace NCDK.Default
         public AtomType(IElement element)
             : base(element)
         {
-            var aa = element as IAtomType;
-            if (aa != null)
+            if (element is IAtomType aa)
             {
                 maxBondOrder = aa.MaxBondOrder;
                 bondOrderSum = aa.BondOrderSum;
@@ -464,8 +463,7 @@ namespace NCDK.Silent
         public AtomType(IElement element)
             : base(element)
         {
-            var aa = element as IAtomType;
-            if (aa != null)
+            if (element is IAtomType aa)
             {
                 maxBondOrder = aa.MaxBondOrder;
                 bondOrderSum = aa.BondOrderSum;

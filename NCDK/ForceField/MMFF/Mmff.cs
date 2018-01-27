@@ -161,7 +161,7 @@ namespace NCDK.ForceField.MMFF
         /// <seealso cref="AssignAtomTypes(IAtomContainer)"/>
         public bool PartialCharges(IAtomContainer mol)
         {
-            int[][] adjList = mol.GetProperty<int[][]> (MMFF_ADJLIST_CACHE);
+            int[][] adjList = mol.GetProperty<int[][]>(MMFF_ADJLIST_CACHE);
             GraphUtil.EdgeToBondMap edgeMap = mol.GetProperty<GraphUtil.EdgeToBondMap>(MMFF_EDGEMAP_CACHE);
 
             if (adjList == null || edgeMap == null)
@@ -253,7 +253,7 @@ namespace NCDK.ForceField.MMFF
                     foreach (var w in adjList[v])
                     {
                         int elem = mol.Atoms[w].AtomicNumber.Value;
-                        if (elem == Elements.Sulfur.AtomicNumber|| elem == Elements.Phosphorus.AtomicNumber)
+                        if (elem == ChemicalElements.Sulfur.AtomicNumber || elem == ChemicalElements.Phosphorus.AtomicNumber)
                         {
                             if (focus >= 0)
                             {
@@ -299,11 +299,12 @@ namespace NCDK.ForceField.MMFF
                     if (atom.Charge != 0)
                         continue;
 
-                   var eqiv = new HashSet<IAtom>();
-                  var visit = new HashSet<int>();
-                 var queue = new Deque<int>();
-
-                    queue.Add(v);
+                    var eqiv = new HashSet<IAtom>();
+                    var visit = new HashSet<int>();
+                    var queue = new Deque<int>
+                    {
+                        v
+                    };
 
                     while (queue.Count != 0)
                     {

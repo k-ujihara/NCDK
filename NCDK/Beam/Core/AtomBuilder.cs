@@ -32,7 +32,7 @@ using System;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// A builder for <see cref="Atom"/> instantiation.
+    /// A builder for <see cref="IAtom"/> instantiation.
     /// </summary>
     /// <example><code>
     /// // [C]
@@ -69,7 +69,12 @@ namespace NCDK.Beam
     ///                     .Build();
     /// </code></example>
     // @author John May
-    public sealed class AtomBuilder
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class AtomBuilder
     {
         private readonly Element element;
         private int isotope = -1,
@@ -84,7 +89,7 @@ namespace NCDK.Beam
             this.aromatic = aromatic;
         }
 
-        public static AtomBuilder FromExisting(Atom a)
+        public static AtomBuilder FromExisting(IAtom a)
         {
             if (a == null)
                 throw new ArgumentNullException(nameof(a), "no atom provided");
@@ -216,7 +221,7 @@ namespace NCDK.Beam
         private static Element OfSymbolOrUnknown(string symbol)
         {
             Element e = Element.OfSymbol(symbol);
-            return e != null ? e : Element.Unknown;
+            return e ?? Element.Unknown;
         }
 
         /// <summary>
@@ -286,7 +291,7 @@ namespace NCDK.Beam
         /// Create the atom with the configured attributed.
         /// </summary>
         /// <returns>an atom</returns>
-        public Atom Build()
+        public IAtom Build()
         {
             return new AtomImpl.BracketAtom(isotope,
                                             element,
@@ -301,7 +306,7 @@ namespace NCDK.Beam
         /// hydrogens.
         /// </summary>
         /// <returns>an explicit hydrogen to be used in assembly molecules</returns>
-        public static Atom ExplicitHydrogen()
+        public static IAtom ExplicitHydrogen()
         {
             return AtomImpl.EXPLICIT_HYDROGEN;
         }

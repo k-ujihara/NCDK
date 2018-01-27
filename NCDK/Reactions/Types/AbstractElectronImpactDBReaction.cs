@@ -73,8 +73,10 @@ namespace NCDK.Reactions.Types
                             atomList.Add(atom2);
                             atomList.Add(atom1);
                         }
-                        var bondList = new List<IBond>();
-                        bondList.Add(bondi);
+                        var bondList = new List<IBond>
+                        {
+                            bondi
+                        };
 
                         IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                         moleculeSet.Add(reactant);

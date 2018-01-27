@@ -26,6 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
+
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,12 @@ namespace NCDK.Beam
     /// </example>
     /// <seealso href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms, OpenSMILES Specification</seealso>
     // @author John May
-    public class Element
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    class Element
     {
         /// <summary>Unspecified/Unknown element (*)</summary>
         public static readonly Element Unknown = new Element(0, "*", 0);

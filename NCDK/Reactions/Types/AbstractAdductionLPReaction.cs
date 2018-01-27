@@ -56,8 +56,10 @@ namespace NCDK.Reactions.Types
                    && reactant.GetConnectedLonePairs(atomi).Any()
                    && !reactant.GetConnectedSingleElectrons(atomi).Any())
                 {
-                    var atomList = new List<IAtom>();
-                    atomList.Add(atomi);
+                    var atomList = new List<IAtom>
+                    {
+                        atomi
+                    };
                     IAtom atomH = reactant.Builder.NewAtom(atomSymbol);
                     atomH.FormalCharge = 1;
                     atomList.Add(atomH);

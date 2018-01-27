@@ -12,7 +12,7 @@ namespace NCDK.FaulonSignatures
     public class ColoredTree
     {
 
-        public class Node : VisitableColoredTree
+        public class Node : IVisitableColoredTree
         {
 
             public List<Node> children = new List<Node>();
@@ -67,7 +67,7 @@ namespace NCDK.FaulonSignatures
                 }
             }
 
-            public void Accept(ColoredTreeVisitor visitor)
+            public void Accept(IColoredTreeVisitor visitor)
             {
                 visitor.Visit(this);
                 foreach (var child in this.children)
@@ -122,7 +122,7 @@ namespace NCDK.FaulonSignatures
             this.height = 1;
         }
 
-        public void Accept(ColoredTreeVisitor visitor)
+        public void Accept(IColoredTreeVisitor visitor)
         {
             this.root.Accept(visitor);
         }

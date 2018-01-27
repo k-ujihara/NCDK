@@ -394,8 +394,7 @@ namespace NCDK.Hash.Stereo
             /// <returns>list of bonds, empty if none stored</returns>
             public IEnumerable<IBond> GetBonds(IAtom a)
             {
-                List<IBond> bs;
-                if (!bonds.TryGetValue(a, out bs))
+                if (!bonds.TryGetValue(a, out List<IBond> bs))
                     return new IBond[0];
                 return bs;
             }

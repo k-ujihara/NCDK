@@ -35,21 +35,14 @@ namespace NCDK.NInChI
     /// </para>
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_KEY
+    internal enum INCHI_KEY
     {
-
         OK = 0,
-
         UNKNOWN_ERROR = 1,
-
         EMPTY_INPUT = 2,
-
         INVALID_INCHI_PREFIX = 3,
-
         NOT_ENOUGH_MEMORY = 4,
-
         INVALID_INCHI = 20,
-
         INVALID_STD_INCHI = 21,
     }
 }

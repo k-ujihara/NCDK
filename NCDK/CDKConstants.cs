@@ -28,17 +28,14 @@ using System;
 namespace NCDK
 {
     [Obsolete]
-    public static class CDKConstants
+    public enum StereoAtomParity
     {
         /// <summary>A positive atom parity.</summary>
-        [Obsolete]
-        public const int STEREO_ATOM_PARITY_PLUS = 1;
+        Plus = 1,
         /// <summary>A negative atom parity.</summary>
-        [Obsolete]
-        public const int STEREO_ATOM_PARITY_MINUS = -1;
+        Minus = -1,
         /// <summary>A undefined atom parity.</summary>
-        [Obsolete]
-        public const int STEREO_ATOM_PARITY_UNDEFINED = 0;
+        Undefined = 0,
     }
 
     public static class CDKPropertyName
@@ -142,18 +139,16 @@ namespace NCDK
         /// </summary>
         public const string EssentialRings = "cdk:EssentialRings";
 
-        /// <summary>The relevant rings computed for this molecule.
-        ///  The concept of relevant Rings is defined in
-        ///  SSSRFinder
+        /// <summary>
+        /// The relevant rings computed for this molecule.
+        /// The concept of relevant rings is defined in SSSRFinder.
         /// </summary>
         public const string RelevantRings = "cdk:RelevantRings";
-
 
         /// <summary>
         /// Property used for reactions when converted to/from molecules. It defines what role and atom
         /// has an a reaction.
-        /// 
-        /// Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
+        /// Used in <see cref="NCDK.Tools.Manipulator.ReactionManipulator.ToMolecule(IReaction)"/> and <see cref="NCDK.Tools.Manipulator.ReactionManipulator.ToReaction(IAtomContainer)"/>.
         /// </summary>
         public const string ReactionRole = "cdk:ReactionRole";
 
@@ -193,11 +188,11 @@ namespace NCDK
         public const string TotalHCount = "cdk:TotalHydrogenCount";
 
         /// <summary>The Isotropic Shielding, usually calculated by
-         /// a quantum chemistry program like Gaussian.
-         /// This is a property used for calculating NMR chemical
-         /// shifts by subtracting the value from the
-         /// isotropic shielding value of a standard (e.g. TMS).
-         /// </summary>
+        /// a quantum chemistry program like Gaussian.
+        /// This is a property used for calculating NMR chemical
+        /// shifts by subtracting the value from the
+        /// isotropic shielding value of a standard (e.g. TMS).
+        /// </summary>
         public const string IsotropicShielding = "cdk:IsotropicShielding";
 
         /// <summary>

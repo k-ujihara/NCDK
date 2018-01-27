@@ -21,7 +21,7 @@ namespace NCDK.FaulonSignatures
         /// <summary>
         /// A node of the directed acyclic graph
         /// </summary>
-        public class Node : VisitableDAG
+        public class Node : IVisitableDAG
         {
             /// <summary>
             /// The index of the vertex in the graph. Note that for signatures that
@@ -84,7 +84,7 @@ namespace NCDK.FaulonSignatures
                 this.edgeColors[partnerIndex] = edgeColor;
             }
 
-            public void Accept(DAGVisitor visitor)
+            public void Accept(IDAGVisitor visitor)
             {
                 visitor.Visit(this);
             }
@@ -543,7 +543,7 @@ namespace NCDK.FaulonSignatures
             return this.invariants.GetColor(vertexIndex);
         }
 
-        public void Accept(DAGVisitor visitor)
+        public void Accept(IDAGVisitor visitor)
         {
             this.GetRoot().Accept(visitor);
         }

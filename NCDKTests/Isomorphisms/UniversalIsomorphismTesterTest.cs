@@ -24,10 +24,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
-using NCDK.Silent;
 using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Silent;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools;

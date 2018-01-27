@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.bug     1632419
     public partial class RDFProtonDescriptor_GHR_topol : IAtomicDescriptor
     {
-        private int desc_length => 15;
+        private const int desc_length = 15;
 
         public RDFProtonDescriptor_GHR_topol()
         {

@@ -25,6 +25,7 @@
 
 using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
+using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
@@ -1365,13 +1366,13 @@ namespace NCDK.Renderers.Generators.Standards
             public RingBondOffsetComparator()
             { }
 
-            private static readonly Config.Elements[] preferedElements = new []
+            private static readonly Config.ChemicalElement[] preferedElements = new []
             {
-                Config.Elements.Carbon,
-                Config.Elements.Nitrogen,
-                Config.Elements.Oxygen,
-                Config.Elements.Sulfur,
-                Config.Elements.Phosphorus
+                ChemicalElements.Carbon,
+                ChemicalElements.Nitrogen,
+                ChemicalElements.Oxygen,
+                ChemicalElements.Sulfur,
+                ChemicalElements.Phosphorus
             };
 
             /// <inheritdoc/>

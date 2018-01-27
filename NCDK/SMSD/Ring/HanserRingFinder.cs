@@ -44,8 +44,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System.Collections.Generic;
 
 namespace NCDK.SMSD.Ring
@@ -66,7 +66,7 @@ namespace NCDK.SMSD.Ring
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
-    public class HanserRingFinder : RingFinder
+    public class HanserRingFinder : IRingFinder
     {
 
         private IList<IList<IAtom>> rings;
@@ -81,7 +81,7 @@ namespace NCDK.SMSD.Ring
         /// </summary>
         /// <param name="molecule"></param>
         /// <returns>a <see cref="IEnumerable{T}"/> of <see cref="IList{T}"/>s containing one ring each</returns>
-        /// <seealso cref="RingFinder.FindRings(IAtomContainer)"/>
+        /// <seealso cref="IRingFinder.FindRings(IAtomContainer)"/>
         public IEnumerable<IList<IAtom>> FindRings(IAtomContainer molecule)
         {
             if (molecule == null) return null;
@@ -107,7 +107,7 @@ namespace NCDK.SMSD.Ring
         /// <param name="molecule"></param>
         /// </summary>
         /// <returns>report collected the rings</returns>
-        /// <seealso cref="RingFinder.GetRingSet(IAtomContainer)"/>
+        /// <seealso cref="IRingFinder.GetRingSet(IAtomContainer)"/>
         public IRingSet GetRingSet(IAtomContainer molecule)
         {
             var cycles = FindRings(molecule);

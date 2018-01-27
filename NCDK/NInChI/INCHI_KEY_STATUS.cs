@@ -33,16 +33,12 @@ namespace NCDK.NInChI
     /// <para>See <tt>inchi_api.h</tt>.</para>
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_KEY_STATUS
+    internal enum INCHI_KEY_STATUS
     {
         VALID_STANDARD = 0,
-
         VALID_NON_STANDARD = -1,
-
         INVALID_LENGTH = 1,
-
         INVALID_LAYOUT = 2,
-
         INVALID_VERSION = 3,
     }
 }

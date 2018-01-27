@@ -36,6 +36,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using static NCDK.Config.ChemicalElement;
 using static NCDK.Graphs.GraphUtil;
 using static NCDK.Isomorphisms.Matchers.SMARTS.LogicalOperatorAtom;
 
@@ -595,8 +596,8 @@ namespace NCDK.Depict
         private string NewSymbol(int atomnum, int hcount, bool prefix)
         {
             StringBuilder sb = new StringBuilder();
-            Elements elem = Elements.OfNumber(atomnum);
-            if (elem == Elements.Carbon && hcount == 3)
+            var elem = ChemicalElement.OfNumber(atomnum);
+            if (elem == ChemicalElements.Carbon && hcount == 3)
                 return "Me";
             if (prefix)
             {
@@ -847,19 +848,19 @@ namespace NCDK.Depict
                 return null;
             var hcnt = atom.ImplicitHydrogenCount;
             if (hcnt == null) return null;
-            Elements elem = Elements.OfNumber(atom.AtomicNumber.Value);
+            var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
             string hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
             // see HydrogenPosition for canonical list
             switch (elem.AtomicNumber)
             {
-                case Elements.O.Oxygen:
-                case Elements.O.Sulfur:
-                case Elements.O.Selenium:
-                case Elements.O.Tellurium:
-                case Elements.O.Fluorine:
-                case Elements.O.Chlorine:
-                case Elements.O.Bromine:
-                case Elements.O.Iodine:
+                case AtomicNumbers.Oxygen:
+                case AtomicNumbers.Sulfur:
+                case AtomicNumbers.Selenium:
+                case AtomicNumbers.Tellurium:
+                case AtomicNumbers.Fluorine:
+                case AtomicNumbers.Chlorine:
+                case AtomicNumbers.Bromine:
+                case AtomicNumbers.Iodine:
                     return hsym + elem.Symbol;
                 default:
                     return elem.Symbol + hsym;

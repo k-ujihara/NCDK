@@ -48,7 +48,7 @@ namespace NCDK.Geometries.CIP
         public int? ImplicitHydrogenCount { get { return null; } set { } }
         public Vector2? Point2D { get { return null; } set { } }
         public Vector3? Point3D { get { return null; } set { } }
-        public int? StereoParity { get { return null; } set { } }
+        public StereoAtomParity StereoParity { get { return StereoAtomParity.Undefined; } set { } }
         public string AtomTypeName { get { return null; } set { } }
         public double? BondOrderSum { get { return null; } set { } }
         public double? GetCovalentRadius { get { return null; } set { } }

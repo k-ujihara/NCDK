@@ -35,9 +35,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     {
         private NodeBuilder source;
         private NodeBuilder target;
-        private VFBondMatcher matcher;
+        private IVFBondMatcher matcher;
 
-        protected internal EdgeBuilder(NodeBuilder source, NodeBuilder target, VFBondMatcher matcher)
+        protected internal EdgeBuilder(NodeBuilder source, NodeBuilder target, IVFBondMatcher matcher)
         {
             this.source = source;
             this.target = target;
@@ -48,6 +48,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
         public INode Target => target;
 
-        public VFBondMatcher BondMatcher => matcher;
+        public IVFBondMatcher BondMatcher => matcher;
     }
 }

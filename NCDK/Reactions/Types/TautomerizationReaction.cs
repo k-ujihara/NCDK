@@ -93,15 +93,19 @@ namespace NCDK.Reactions.Types
                                                     if (atoml.IsReactiveCenter
                                                             && atoml.Symbol.Equals("H"))
                                                     {
-                                                        var atomList = new List<IAtom>();
-                                                        atomList.Add(atomi);
-                                                        atomList.Add(atomj);
-                                                        atomList.Add(atomk);
-                                                        atomList.Add(atoml);
-                                                        var bondList = new List<IBond>();
-                                                        bondList.Add(bondi);
-                                                        bondList.Add(bondj);
-                                                        bondList.Add(bondk);
+                                                        var atomList = new List<IAtom>
+                                                        {
+                                                            atomi,
+                                                            atomj,
+                                                            atomk,
+                                                            atoml
+                                                        };
+                                                        var bondList = new List<IBond>
+                                                        {
+                                                            bondi,
+                                                            bondj,
+                                                            bondk
+                                                        };
 
                                                         IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                                         moleculeSet.Add(reactant);

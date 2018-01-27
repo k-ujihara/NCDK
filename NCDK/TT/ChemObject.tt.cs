@@ -204,8 +204,7 @@ namespace NCDK.Default
 #endif
             if (this.properties == null)
                 return defaultValue;
-            object property;
-            if (properties.TryGetValue(description, out property) && property != null)
+            if (properties.TryGetValue(description, out object property) && property != null)
                 return (T)property;
             return defaultValue;
         }
@@ -443,8 +442,7 @@ namespace NCDK.Silent
 #endif
             if (this.properties == null)
                 return defaultValue;
-            object property;
-            if (properties.TryGetValue(description, out property) && property != null)
+            if (properties.TryGetValue(description, out object property) && property != null)
                 return (T)property;
             return defaultValue;
         }

@@ -90,9 +90,8 @@ namespace NCDK.Hash
                 IStereoEncoderFactory factory, int depth)
                 : base(pseudorandom)
         {
-            if (seedGenerator == null) throw new ArgumentNullException("seed generator cannot be null");
             if (depth < 0) throw new ArgumentOutOfRangeException("depth cannot be less then 0");
-            this.seedGenerator = seedGenerator;
+            this.seedGenerator = seedGenerator ?? throw new ArgumentNullException("seed generator cannot be null");
             this.factory = factory;
             this.depth = depth;
         }

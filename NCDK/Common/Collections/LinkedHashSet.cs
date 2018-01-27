@@ -276,8 +276,7 @@ namespace NCDK.Common.Collections
 
         public bool Remove(T item)
         {
-            LinkedListNode<T> node;
-            if (!this.dict.TryGetValue(item, out node))
+            if (!this.dict.TryGetValue(item, out LinkedListNode<T> node))
             {
                 return false;
             }

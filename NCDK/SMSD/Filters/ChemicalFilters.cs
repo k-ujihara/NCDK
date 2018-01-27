@@ -541,9 +541,11 @@ namespace NCDK.SMSD.Filters
             {
                 subgraphContainer.RemoveAtomAndConnectedElectronContainers(atoms);
             }
-            List<object> l = new List<object>();
-            l.Add(list);
-            l.Add(subgraphContainer);
+            List<object> l = new List<object>
+            {
+                list,
+                subgraphContainer
+            };
             return l;
         }
 

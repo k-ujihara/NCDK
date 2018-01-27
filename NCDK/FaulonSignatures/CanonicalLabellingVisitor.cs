@@ -4,7 +4,7 @@ using static NCDK.FaulonSignatures.DAG;
 
 namespace NCDK.FaulonSignatures
 {
-    public class CanonicalLabellingVisitor : DAGVisitor
+    public class CanonicalLabellingVisitor : IDAGVisitor
     {
         private int[] labelling;
         private int currentLabel;

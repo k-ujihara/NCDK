@@ -133,8 +133,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("C");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Triple);
@@ -286,8 +285,7 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom1 = new Atom("C");
-            IAtom atom2 = new Atom("O");
-            atom2.FormalCharge = -1;
+            IAtom atom2 = new Atom("O") { FormalCharge = -1 };
             IAtom atom3 = new Atom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom1);
@@ -305,8 +303,7 @@ namespace NCDK.AtomTypes
         public void TestFormaldehydeRadicalKation()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("O") { FormalCharge = +1 };
             IAtom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
@@ -3849,8 +3846,8 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestPine()
         {
-            IAtom atomP = new Atom(Elements.Phosphorus.ToIElement());
-            IAtomType atomTypeP = new AtomType(Elements.Phosphorus.ToIElement());
+            IAtom atomP = new Atom(ChemicalElements.Phosphorus.ToIElement());
+            IAtomType atomTypeP = new AtomType(ChemicalElements.Phosphorus.ToIElement());
             AtomTypeManipulator.Configure(atomP, atomTypeP);
 
             IAtomContainer ac = atomP.Builder.NewAtomContainer();

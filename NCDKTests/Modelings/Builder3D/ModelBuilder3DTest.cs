@@ -17,22 +17,23 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Geometries;
 using NCDK.IO;
 using NCDK.Layout;
+using NCDK.Numerics;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.Modelings.Builder3D
 {
-   /// <summary>
+    /// <summary>
     /// Description of the Class
     /// </summary>
     // @cdk.module test-builder3d
@@ -291,7 +292,7 @@ namespace NCDK.Modelings.Builder3D
             var inputList = new List<IAtomContainer>();
 
             ////////////////////////////////////////////////////////////////////////////////////////////
-            //generate the input molecules. This are molecules without x, y, z coordinats
+            //generate the input molecules. This are molecules without x, y, z coordinates
 
             string[] smiles = new string[]{"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C", "OCC=CCc1ccccc1(C=C)",
                 "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
@@ -310,8 +311,10 @@ namespace NCDK.Modelings.Builder3D
             List<IAtomContainer> resultList = new List<IAtomContainer>();
             foreach (var molecule in inputList)
             {
-                str = new StructureDiagramGenerator();
-                str.Molecule = molecule;
+                str = new StructureDiagramGenerator()
+                {
+                    Molecule = molecule
+                };
                 str.GenerateCoordinates();
                 resultList.Add(str.Molecule);
             }

@@ -17,9 +17,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Config;
 using System;
 using System.Windows.Media;
-using static NCDK.Config.Elements;
+using static NCDK.Config.ChemicalElement;
+using static NCDK.Config.ChemicalElements;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Colors
@@ -157,228 +159,228 @@ namespace NCDK.Renderers.Colors
 
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            var elem = Config.Elements.OfString(atom.Symbol);
-            if (elem == Unknown)
-                elem = Config.Elements.OfNumber(atom.AtomicNumber.Value);
+            var elem = ChemicalElement.OfString(atom.Symbol);
+            if (elem == ChemicalElements.Unknown)
+                elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
             switch (elem.AtomicNumber)
             {
-                case O.Helium:
+                case AtomicNumbers.Helium:
                     return hexD9FFFF;
-                case O.Lithium:
+                case AtomicNumbers.Lithium:
                     return hexCC80FF;
-                case O.Beryllium:
+                case AtomicNumbers.Beryllium:
                     return hexC2FF00;
-                case O.Boron:
+                case AtomicNumbers.Boron:
                     return hexFFB5B5;
-                case O.Hydrogen:
-                case O.Carbon:
-                case O.Unknown:
+                case AtomicNumbers.Hydrogen:
+                case AtomicNumbers.Carbon:
+                case AtomicNumbers.Unknown:
                     return WPF.Media.Colors.Black;
-                case O.Nitrogen:
+                case AtomicNumbers.Nitrogen:
                     return hex3050F8;
-                case O.Oxygen:
+                case AtomicNumbers.Oxygen:
                     return hexFF0D0D;
-                case O.Fluorine:
+                case AtomicNumbers.Fluorine:
                     return hex90E050;
-                case O.Neon:
+                case AtomicNumbers.Neon:
                     return hexB3E3F5;
-                case O.Sodium:
+                case AtomicNumbers.Sodium:
                     return hexAB5CF2;
-                case O.Magnesium:
+                case AtomicNumbers.Magnesium:
                     return hex8AFF00;
-                case O.Aluminium:
+                case AtomicNumbers.Aluminium:
                     return hexBFA6A6;
-                case O.Silicon:
+                case AtomicNumbers.Silicon:
                     return hexF0C8A0;
-                case O.Phosphorus:
+                case AtomicNumbers.Phosphorus:
                     return hexFF8000;
-                case O.Sulfur:
+                case AtomicNumbers.Sulfur:
                     return hexFFFF30;
-                case O.Chlorine:
+                case AtomicNumbers.Chlorine:
                     return hex1FF01F;
-                case O.Argon:
+                case AtomicNumbers.Argon:
                     return hex80D1E3;
-                case O.Potassium:
+                case AtomicNumbers.Potassium:
                     return hex8F40D4;
-                case O.Calcium:
+                case AtomicNumbers.Calcium:
                     return hex3DFF00;
-                case O.Scandium:
+                case AtomicNumbers.Scandium:
                     return hexE6E6E6;
-                case O.Titanium:
+                case AtomicNumbers.Titanium:
                     return hexBFC2C7;
-                case O.Vanadium:
+                case AtomicNumbers.Vanadium:
                     return hexA6A6AB;
-                case O.Chromium:
+                case AtomicNumbers.Chromium:
                     return hex8A99C7;
-                case O.Manganese:
+                case AtomicNumbers.Manganese:
                     return hex9C7AC7;
-                case O.Iron:
+                case AtomicNumbers.Iron:
                     return hexE06633;
-                case O.Cobalt:
+                case AtomicNumbers.Cobalt:
                     return hexF090A0;
-                case O.Nickel:
+                case AtomicNumbers.Nickel:
                     return hex50D050;
-                case O.Copper:
+                case AtomicNumbers.Copper:
                     return hexC88033;
-                case O.Zinc:
+                case AtomicNumbers.Zinc:
                     return hex7D80B0;
-                case O.Gallium:
+                case AtomicNumbers.Gallium:
                     return hexC28F8F;
-                case O.Germanium:
+                case AtomicNumbers.Germanium:
                     return hex668F8F;
-                case O.Arsenic:
+                case AtomicNumbers.Arsenic:
                     return hexBD80E3;
-                case O.Selenium:
+                case AtomicNumbers.Selenium:
                     return hexFFA100;
-                case O.Bromine:
+                case AtomicNumbers.Bromine:
                     return hexA62929;
-                case O.Krypton:
+                case AtomicNumbers.Krypton:
                     return hex5CB8D1;
-                case O.Rubidium:
+                case AtomicNumbers.Rubidium:
                     return hex702EB0;
-                case O.Strontium:
+                case AtomicNumbers.Strontium:
                     return hex00FF00;
-                case O.Yttrium:
+                case AtomicNumbers.Yttrium:
                     return hex94FFFF;
-                case O.Zirconium:
+                case AtomicNumbers.Zirconium:
                     return hex94E0E0;
-                case O.Niobium:
+                case AtomicNumbers.Niobium:
                     return hex73C2C9;
-                case O.Molybdenum:
+                case AtomicNumbers.Molybdenum:
                     return hex54B5B5;
-                case O.Technetium:
+                case AtomicNumbers.Technetium:
                     return hex3B9E9E;
-                case O.Ruthenium:
+                case AtomicNumbers.Ruthenium:
                     return hex248F8F;
-                case O.Rhodium:
+                case AtomicNumbers.Rhodium:
                     return hex0A7D8C;
-                case O.Palladium:
+                case AtomicNumbers.Palladium:
                     return hex006985;
-                case O.Silver:
+                case AtomicNumbers.Silver:
                     return hexC0C0C0;
-                case O.Cadmium:
+                case AtomicNumbers.Cadmium:
                     return hexFFD98F;
-                case O.Indium:
+                case AtomicNumbers.Indium:
                     return hexA67573;
-                case O.Tin:
+                case AtomicNumbers.Tin:
                     return hex668080;
-                case O.Antimony:
+                case AtomicNumbers.Antimony:
                     return hex9E63B5;
-                case O.Tellurium:
+                case AtomicNumbers.Tellurium:
                     return hexD47A00;
-                case O.Iodine:
+                case AtomicNumbers.Iodine:
                     return hex940094;
-                case O.Xenon:
+                case AtomicNumbers.Xenon:
                     return hex429EB0;
-                case O.Caesium:
+                case AtomicNumbers.Caesium:
                     return hex57178F;
-                case O.Barium:
+                case AtomicNumbers.Barium:
                     return hex00C900;
-                case O.Lanthanum:
+                case AtomicNumbers.Lanthanum:
                     return hex70D4FF;
-                case O.Cerium:
+                case AtomicNumbers.Cerium:
                     return hexFFFFC7;
-                case O.Praseodymium:
+                case AtomicNumbers.Praseodymium:
                     return hexD9FFC7;
-                case O.Neodymium:
+                case AtomicNumbers.Neodymium:
                     return hexC7FFC7;
-                case O.Promethium:
+                case AtomicNumbers.Promethium:
                     return hexA3FFC7;
-                case O.Samarium:
+                case AtomicNumbers.Samarium:
                     return hex8FFFC7;
-                case O.Europium:
+                case AtomicNumbers.Europium:
                     return hex61FFC7;
-                case O.Gadolinium:
+                case AtomicNumbers.Gadolinium:
                     return hex45FFC7;
-                case O.Terbium:
+                case AtomicNumbers.Terbium:
                     return hex30FFC7;
-                case O.Dysprosium:
+                case AtomicNumbers.Dysprosium:
                     return hex1FFFC7;
-                case O.Holmium:
+                case AtomicNumbers.Holmium:
                     return hex00FF9C;
-                case O.Erbium:
+                case AtomicNumbers.Erbium:
                     return hex00E675;
-                case O.Thulium:
+                case AtomicNumbers.Thulium:
                     return hex00D452;
-                case O.Ytterbium:
+                case AtomicNumbers.Ytterbium:
                     return hex00BF38;
-                case O.Lutetium:
+                case AtomicNumbers.Lutetium:
                     return hex00AB24;
-                case O.Hafnium:
+                case AtomicNumbers.Hafnium:
                     return hex4DC2FF;
-                case O.Tantalum:
+                case AtomicNumbers.Tantalum:
                     return hex4DA6FF;
-                case O.Tungsten:
+                case AtomicNumbers.Tungsten:
                     return hex2194D6;
-                case O.Rhenium:
+                case AtomicNumbers.Rhenium:
                     return hex267DAB;
-                case O.Osmium:
+                case AtomicNumbers.Osmium:
                     return hex266696;
-                case O.Iridium:
+                case AtomicNumbers.Iridium:
                     return hex175487;
-                case O.Platinum:
+                case AtomicNumbers.Platinum:
                     return hexD0D0E0;
-                case O.Gold:
+                case AtomicNumbers.Gold:
                     return hexFFD123;
-                case O.Mercury:
+                case AtomicNumbers.Mercury:
                     return hexB8B8D0;
-                case O.Thallium:
+                case AtomicNumbers.Thallium:
                     return hexA6544D;
-                case O.Lead:
+                case AtomicNumbers.Lead:
                     return hex575961;
-                case O.Bismuth:
+                case AtomicNumbers.Bismuth:
                     return hex9E4FB5;
-                case O.Polonium:
+                case AtomicNumbers.Polonium:
                     return hexAB5C00;
-                case O.Astatine:
+                case AtomicNumbers.Astatine:
                     return hex754F45;
-                case O.Radon:
+                case AtomicNumbers.Radon:
                     return hex428296;
-                case O.Francium:
+                case AtomicNumbers.Francium:
                     return hex420066;
-                case O.Radium:
+                case AtomicNumbers.Radium:
                     return hex007D00;
-                case O.Actinium:
+                case AtomicNumbers.Actinium:
                     return hex70ABFA;
-                case O.Thorium:
+                case AtomicNumbers.Thorium:
                     return hex00BAFF;
-                case O.Protactinium:
+                case AtomicNumbers.Protactinium:
                     return hex00A1FF;
-                case O.Uranium:
+                case AtomicNumbers.Uranium:
                     return hex008FFF;
-                case O.Neptunium:
+                case AtomicNumbers.Neptunium:
                     return hex0080FF;
-                case O.Plutonium:
+                case AtomicNumbers.Plutonium:
                     return hex006BFF;
-                case O.Americium:
+                case AtomicNumbers.Americium:
                     return hex545CF2;
-                case O.Curium:
+                case AtomicNumbers.Curium:
                     return hex785CE3;
-                case O.Berkelium:
+                case AtomicNumbers.Berkelium:
                     return hex8A4FE3;
-                case O.Californium:
+                case AtomicNumbers.Californium:
                     return hexA136D4;
-                case O.Einsteinium:
+                case AtomicNumbers.Einsteinium:
                     return hexB31FD4;
-                case O.Fermium:
+                case AtomicNumbers.Fermium:
                     return hexB31FBA;
-                case O.Mendelevium:
+                case AtomicNumbers.Mendelevium:
                     return hexB30DA6;
-                case O.Nobelium:
+                case AtomicNumbers.Nobelium:
                     return hexBD0D87;
-                case O.Lawrencium:
+                case AtomicNumbers.Lawrencium:
                     return hexC70066;
-                case O.Rutherfordium:
+                case AtomicNumbers.Rutherfordium:
                     return hexCC0059;
-                case O.Dubnium:
+                case AtomicNumbers.Dubnium:
                     return hexD1004F;
-                case O.Seaborgium:
+                case AtomicNumbers.Seaborgium:
                     return hexD90045;
-                case O.Bohrium:
+                case AtomicNumbers.Bohrium:
                     return hexE00038;
-                case O.Hassium:
+                case AtomicNumbers.Hassium:
                     return hexE6002E;
-                case O.Meitnerium:
+                case AtomicNumbers.Meitnerium:
                     return hexEB0026;
                 default:
                     return defaultColor;

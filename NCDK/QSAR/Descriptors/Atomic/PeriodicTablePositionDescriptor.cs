@@ -51,45 +51,47 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             if (periodicTable == null)
             {
-                periodicTable = new Dictionary<string, int>();
-                periodicTable["H"] = 1;
-                periodicTable["Li"] = 2;
-                periodicTable["Be"] = 2;
-                periodicTable["B"] = 2;
-                periodicTable["C"] = 2;
-                periodicTable["N"] = 2;
-                periodicTable["O"] = 2;
-                periodicTable["F"] = 2;
-                periodicTable["Na"] = 3;
-                periodicTable["Mg"] = 3;
-                periodicTable["Al"] = 3;
-                periodicTable["Si"] = 3;
-                periodicTable["P"] = 3;
-                periodicTable["S"] = 3;
-                periodicTable["Cl"] = 3;
-                periodicTable["K"] = 4;
-                periodicTable["Ca"] = 4;
-                periodicTable["Ga"] = 4;
-                periodicTable["Ge"] = 4;
-                periodicTable["As"] = 4;
-                periodicTable["Se"] = 4;
-                periodicTable["Br"] = 4;
-                periodicTable["Rb"] = 5;
-                periodicTable["Sr"] = 5;
-                periodicTable["In"] = 5;
-                periodicTable["Sn"] = 5;
-                periodicTable["Sb"] = 5;
-                periodicTable["Te"] = 5;
-                periodicTable["I"] = 5;
-                periodicTable["Cs"] = 6;
-                periodicTable["Ba"] = 6;
-                periodicTable["Tl"] = 6;
-                periodicTable["Pb"] = 6;
-                periodicTable["Bi"] = 6;
-                periodicTable["Po"] = 6;
-                periodicTable["At"] = 6;
-                periodicTable["Fr"] = 7;
-                periodicTable["Ra"] = 7;
+                periodicTable = new Dictionary<string, int>
+                {
+                    ["H"] = 1,
+                    ["Li"] = 2,
+                    ["Be"] = 2,
+                    ["B"] = 2,
+                    ["C"] = 2,
+                    ["N"] = 2,
+                    ["O"] = 2,
+                    ["F"] = 2,
+                    ["Na"] = 3,
+                    ["Mg"] = 3,
+                    ["Al"] = 3,
+                    ["Si"] = 3,
+                    ["P"] = 3,
+                    ["S"] = 3,
+                    ["Cl"] = 3,
+                    ["K"] = 4,
+                    ["Ca"] = 4,
+                    ["Ga"] = 4,
+                    ["Ge"] = 4,
+                    ["As"] = 4,
+                    ["Se"] = 4,
+                    ["Br"] = 4,
+                    ["Rb"] = 5,
+                    ["Sr"] = 5,
+                    ["In"] = 5,
+                    ["Sn"] = 5,
+                    ["Sb"] = 5,
+                    ["Te"] = 5,
+                    ["I"] = 5,
+                    ["Cs"] = 6,
+                    ["Ba"] = 6,
+                    ["Tl"] = 6,
+                    ["Pb"] = 6,
+                    ["Bi"] = 6,
+                    ["Po"] = 6,
+                    ["At"] = 6,
+                    ["Fr"] = 7,
+                    ["Ra"] = 7
+                };
             }
         }
 

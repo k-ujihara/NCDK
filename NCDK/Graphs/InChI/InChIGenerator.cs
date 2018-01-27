@@ -46,8 +46,8 @@ namespace NCDK.Graphs.InChI
     // @cdk.githash
     public class InChIGenerator
     {
-        protected internal NInchiInput Input { get; set; }
-        protected internal NInchiOutput Output { get; set; }
+        internal NInchiInput Input { get; set; }
+        internal NInchiOutput Output { get; set; }
         private readonly bool auxNone;
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
         /// <param name="options">List of INCHI_OPTION.</param>
         /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
-        protected internal InChIGenerator(IAtomContainer atomContainer, IEnumerable<INCHI_OPTION> options, bool ignoreAromaticBonds)
+        internal InChIGenerator(IAtomContainer atomContainer, IEnumerable<INCHI_OPTION> options, bool ignoreAromaticBonds)
         {
             try
             {

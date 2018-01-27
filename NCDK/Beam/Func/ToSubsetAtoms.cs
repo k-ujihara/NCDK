@@ -13,7 +13,6 @@ namespace NCDK.Beam
     {
         public override Graph Apply(Graph g)
         {
-
             Graph h = new Graph(g.Order);
 
             for (int u = 0; u < g.Order; u++)
@@ -40,7 +39,7 @@ namespace NCDK.Beam
             return h;
         }
 
-        public static Atom ToSubset(Atom a, Graph g, int u)
+        public static IAtom ToSubset(IAtom a, Graph g, int u)
         {
             // atom is already a subset atom
             if (a.Subset)
@@ -54,7 +53,7 @@ namespace NCDK.Beam
             if (a.Charge != 0 || a.AtomClass != 0 || a.Isotope >= 0)
                 return a;
 
-            Atom subset = a.IsAromatic() ? AtomImpl.AromaticSubset.OfElement(a.Element)
+            IAtom subset = a.IsAromatic() ? AtomImpl.AromaticSubset.OfElement(a.Element)
                                        : AtomImpl.AliphaticSubset.OfElement(a.Element);
 
             // does the implied availableElectrons from the bond Order sum match that

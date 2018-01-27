@@ -21,8 +21,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.Config;
 using System;
 using System.Collections.Generic;
@@ -36,11 +36,8 @@ namespace NCDK.Default
     /// <example>
     /// Use the IsotopeFactory to get a ready-to-use elements
     /// by symbol or atomic number:
-    /// <code>
-    ///   IsotopeFactory f = IsotopeFactory.getInstance(new Element().Builder);
-    ///   Element e1 = f.GetElement("C");
-    ///   Element e2 = f.GetElement(12);
-    /// </code></example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs"]/*' />
+    /// </example>
     // @cdk.githash 
     // @cdk.keyword element 
     [Serializable]
@@ -78,7 +75,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="symbol">The element symbol that this element should have.</param>
         public Element(string symbol)
-            : this(symbol, Elements.OfString(symbol).AtomicNumber)
+            : this(symbol, ChemicalElement.OfString(symbol).AtomicNumber)
         {
         }
 
@@ -102,11 +99,7 @@ namespace NCDK.Default
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Elements can be configured by using
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
-        /// <code>
-        ///   Element element = new Element("C");
-        ///   IsotopeFactory f = IsotopeFactory.GetInstance(element.Builder);
-        ///   f.Configure(element);
-        /// </code>
+	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
         public virtual int? AtomicNumber
         {
@@ -172,11 +165,8 @@ namespace NCDK.Silent
     /// <example>
     /// Use the IsotopeFactory to get a ready-to-use elements
     /// by symbol or atomic number:
-    /// <code>
-    ///   IsotopeFactory f = IsotopeFactory.getInstance(new Element().Builder);
-    ///   Element e1 = f.GetElement("C");
-    ///   Element e2 = f.GetElement(12);
-    /// </code></example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs"]/*' />
+    /// </example>
     // @cdk.githash 
     // @cdk.keyword element 
     [Serializable]
@@ -214,7 +204,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="symbol">The element symbol that this element should have.</param>
         public Element(string symbol)
-            : this(symbol, Elements.OfString(symbol).AtomicNumber)
+            : this(symbol, ChemicalElement.OfString(symbol).AtomicNumber)
         {
         }
 
@@ -238,11 +228,7 @@ namespace NCDK.Silent
         /// Once instantiated all field not filled by passing parameters
         /// to the constructor are null. Elements can be configured by using
         /// the <see cref="IsotopeFactory.Configure(IAtom)"/> method:
-        /// <code>
-        ///   Element element = new Element("C");
-        ///   IsotopeFactory f = IsotopeFactory.GetInstance(element.Builder);
-        ///   f.Configure(element);
-        /// </code>
+	    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.TT.Element_Example.cs+AtomicNumber"]/*' />
         /// </example>
         public virtual int? AtomicNumber
         {

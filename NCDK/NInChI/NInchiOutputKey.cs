@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using System;
 
 namespace NCDK.NInChI
 {
-    public class NInchiOutputKey
+    internal class NInchiOutputKey
     {
         public INCHI_KEY ReturnStatus { get; private set; }
         public string Key { get; private set; }

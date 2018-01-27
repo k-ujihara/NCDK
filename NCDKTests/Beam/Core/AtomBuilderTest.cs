@@ -11,7 +11,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_element_c()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -23,7 +23,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_element_n()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Nitrogen)
+            IAtom a = AtomBuilder.Aliphatic(Element.Nitrogen)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Nitrogen);
             Assert.AreEqual(a.Isotope, -1);
@@ -36,14 +36,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentNullException))]
         public void Aliphatic_element_null()
         {
-            Atom a = AtomBuilder.Aliphatic((Element)null)
+            IAtom a = AtomBuilder.Aliphatic((Element)null)
                                 .Build();
         }
 
         [TestMethod()]
         public void IsAromatic_element_c()
         {
-            Atom a = AtomBuilder.Aromatic(Carbon)
+            IAtom a = AtomBuilder.Aromatic(Carbon)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -55,7 +55,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void IsAromatic_element_n()
         {
-            Atom a = AtomBuilder.Aromatic(Nitrogen)
+            IAtom a = AtomBuilder.Aromatic(Nitrogen)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Nitrogen);
             Assert.AreEqual(a.Isotope, -1);
@@ -68,7 +68,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentException))]
         public void IsAromatic_element_cl()
         {
-            Atom a = AtomBuilder.Aromatic(Chlorine)
+            IAtom a = AtomBuilder.Aromatic(Chlorine)
                                 .Build();
         }
 
@@ -76,14 +76,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentNullException))]
         public void IsAromatic_element_null()
         {
-            Atom a = AtomBuilder.Aromatic((Element)null)
+            IAtom a = AtomBuilder.Aromatic((Element)null)
                                 .Build();
         }
 
         [TestMethod()]
         public void Aliphatic_symbol_c()
         {
-            Atom a = AtomBuilder.Aliphatic("C")
+            IAtom a = AtomBuilder.Aliphatic("C")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -95,7 +95,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_symbol_n()
         {
-            Atom a = AtomBuilder.Aliphatic("N")
+            IAtom a = AtomBuilder.Aliphatic("N")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Nitrogen);
             Assert.AreEqual(a.Isotope, -1);
@@ -108,14 +108,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentNullException))]
         public void Aliphatic_symbol_null()
         {
-            Atom a = AtomBuilder.Aliphatic((string)null)
+            IAtom a = AtomBuilder.Aliphatic((string)null)
                                 .Build();
         }
 
         [TestMethod()]
         public void IsAromatic_symbol_c()
         {
-            Atom a = AtomBuilder.Aromatic("C")
+            IAtom a = AtomBuilder.Aromatic("C")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -127,7 +127,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void IsAromatic_symbol_n()
         {
-            Atom a = AtomBuilder.Aromatic("N")
+            IAtom a = AtomBuilder.Aromatic("N")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Nitrogen);
             Assert.AreEqual(a.Isotope, -1);
@@ -140,7 +140,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentException))]
         public void IsAromatic_symbol_cl()
         {
-            Atom a = AtomBuilder.Aromatic("Cl")
+            IAtom a = AtomBuilder.Aromatic("Cl")
                                 .Build();
         }
 
@@ -148,14 +148,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentNullException))]
         public void IsAromatic_symbol_null()
         {
-            Atom a = AtomBuilder.Aromatic((string)null)
+            IAtom a = AtomBuilder.Aromatic((string)null)
                                 .Build();
         }
 
         [TestMethod()]
         public void Create_symbol_aliphatic_c()
         {
-            Atom a = AtomBuilder.Create("C")
+            IAtom a = AtomBuilder.Create("C")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -167,7 +167,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Create_symbol_IsAromatic_c()
         {
-            Atom a = AtomBuilder.Create("c")
+            IAtom a = AtomBuilder.Create("c")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
             Assert.AreEqual(a.Isotope, -1);
@@ -180,14 +180,14 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentException))]
         public void Create_symbol_non_IsAromatic()
         {
-            Atom a = AtomBuilder.Create("cl")
+            IAtom a = AtomBuilder.Create("cl")
                                 .Build();
         }
 
         [TestMethod()]
         public void Create_symbol_defaultToUnknown()
         {
-            Atom a = AtomBuilder.Create("N/A")
+            IAtom a = AtomBuilder.Create("N/A")
                                 .Build();
             Assert.AreEqual(a.Element, Element.Unknown);
         }
@@ -195,7 +195,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Create_symbol_null()
         {
-            Atom a = AtomBuilder.Create((string)null)
+            IAtom a = AtomBuilder.Create((string)null)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Unknown);
         }
@@ -203,7 +203,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_charged_carbon_minus2()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Charge(-2)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -213,7 +213,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_charged_carbon_plus2()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Charge(+2)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -223,7 +223,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_charged_carbon_anion()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Anion
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -233,7 +233,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_charged_carbon_plus1()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Cation
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -243,7 +243,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon_13()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Isotope(13)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -253,7 +253,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon_14()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .Isotope(13)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -263,7 +263,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon_class1()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .AtomClass(1)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -274,7 +274,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Aliphatic_carbon_class_negative()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .AtomClass(-10)
                                 .Build();
         }
@@ -282,7 +282,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon_3_hydrogens()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .NumOfHydrogens(3)
                                 .Build();
             Assert.AreEqual(a.Element, Element.Carbon);
@@ -293,7 +293,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Aliphatic_carbon_negative_hydrogens()
         {
-            Atom a = AtomBuilder.Aliphatic(Element.Carbon)
+            IAtom a = AtomBuilder.Aliphatic(Element.Carbon)
                                 .NumOfHydrogens(-3)
                                 .Build();
         }

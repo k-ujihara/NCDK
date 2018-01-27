@@ -50,13 +50,7 @@ namespace NCDK.MolViewer
 
         public ChemObjectBox()
         {
-            generator = new DepictionGenerator()
-            {
-                AnnotationFontScale = 0.7,
-                AnnotationColor = Colors.Red,
-                AlignMappedReaction = true,
-                
-            }; 
+            generator = new DepictionGenerator();
         }
 
         public DepictionGenerator Generator => generator;

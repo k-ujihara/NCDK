@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
@@ -46,7 +47,7 @@ namespace NCDK.Formula.Rules
             IRule rule = new MMElementRule();
             object[] objects = rule.Parameters;
 
-            Assert.AreSame(MMElementRule.Database.WILEY, objects[0]);
+            Assert.AreSame(MMElementRule.Database.Wiley, objects[0]);
             Assert.AreSame(MMElementRule.RangeMass.Minus500, objects[1]);
         }
 
@@ -57,13 +58,13 @@ namespace NCDK.Formula.Rules
 
             object[] params_ = new object[2];
 
-            params_[0] = MMElementRule.Database.DNP;
+            params_[0] = MMElementRule.Database.DictionaryNaturalProductsOnline;
             params_[1] = MMElementRule.RangeMass.Minus1000;
 
             rule.Parameters = params_;
             object[] objects = rule.Parameters;
 
-            Assert.AreSame(MMElementRule.Database.DNP, objects[0]);
+            Assert.AreSame(MMElementRule.Database.DictionaryNaturalProductsOnline, objects[0]);
             Assert.AreSame(MMElementRule.RangeMass.Minus1000, objects[1]);
         }
 

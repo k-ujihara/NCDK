@@ -44,7 +44,7 @@ namespace NCDK.MolViewer
         private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
         private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Generic);
-        private static InChIGeneratorFactory inChIGeneratorFactory = new InChIGeneratorFactory();
+        private static InChIGeneratorFactory inChIGeneratorFactory = InChIGeneratorFactory.Instance;
 
         private string _Smiles = null;
         private IChemObject _ChemObject = null;
@@ -358,6 +358,40 @@ namespace NCDK.MolViewer
             if (parameter is string p)
                 return (ColoringStyle)Enum.Parse(typeof(ColoringStyle), p);
             return (ColoringStyle)0;
+        }
+    }
+
+    public class F2Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is double))
+                throw new ApplicationException();
+            return ((double)value).ToString("F2");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is string))
+                throw new ApplicationException();
+            return double.Parse((string)value);
+        }
+    }
+
+    public class Power10Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (!(value is double))
+                throw new ApplicationException();
+            return Math.Log10((double)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (!(value is double))
+                throw new ApplicationException();
+            return Math.Pow(10, (double)value);
         }
     }
 }

@@ -23,6 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Formula;
 using NCDK.Stereo;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace NCDK.Default
     public sealed class ChemObjectBuilder
         : IChemObjectBuilder
     {
-        public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
+        public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
 
         public T New<T>() where T : IAtomContainer, new() => new T();
 
@@ -141,15 +142,19 @@ namespace NCDK.Default
         // stereo components (requires some modification after instantiation)
         public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
-            var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
-            o.Builder = this;
+            var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality)
+			{
+				Builder = this,
+			};
             return o;
         }
 
         public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
-            var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo);
-            o.Builder = this;
+            var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo)
+			{
+				Builder = this,
+			};
             return o;
         }
 
@@ -180,7 +185,7 @@ namespace NCDK.Silent
     public sealed class ChemObjectBuilder
         : IChemObjectBuilder
     {
-        public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
+        public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
 
         public T New<T>() where T : IAtomContainer, new() => new T();
 
@@ -272,15 +277,19 @@ namespace NCDK.Silent
         // stereo components (requires some modification after instantiation)
         public ITetrahedralChirality NewTetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
-            var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality);
-            o.Builder = this;
+            var o = new TetrahedralChirality(chiralAtom, ligandAtoms, chirality)
+			{
+				Builder = this,
+			};
             return o;
         }
 
         public IDoubleBondStereochemistry CreateDoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
-            var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo);
-            o.Builder = this;
+            var o = new DoubleBondStereochemistry(stereoBond, ligandBonds, stereo)
+			{
+				Builder = this,
+			};
             return o;
         }
 

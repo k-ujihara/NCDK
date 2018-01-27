@@ -152,8 +152,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void AromaticType()
         {
-            var mock_a = new Mock<Atom>();
-            var mock_b = new Mock<Atom>();
+            var mock_a = new Mock<IAtom>();
+            var mock_b = new Mock<IAtom>();
             mock_a.Setup(n => n.IsAromatic()).Returns(true);
             mock_b.Setup(n => n.IsAromatic()).Returns(true);
             Assert.AreEqual(Bond.Aromatic, ImplicitToExplicit.Type(mock_a.Object, mock_b.Object));
@@ -162,8 +162,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void SingleType()
         {
-            var mock_a = new Mock<Atom>();
-            var mock_b = new Mock<Atom>();
+            var mock_a = new Mock<IAtom>();
+            var mock_b = new Mock<IAtom>();
             mock_a.Setup(n => n.IsAromatic()).Returns(true);
             mock_b.Setup(n => n.IsAromatic()).Returns(false);
             Assert.AreEqual(Bond.Single, ImplicitToExplicit.Type(mock_a.Object, mock_b.Object));
@@ -197,8 +197,8 @@ namespace NCDK.Beam
         {
             Graph g = new Graph(2);
 
-            var mock_u = new Mock<Atom>();
-            var mock_v = new Mock<Atom>();
+            var mock_u = new Mock<IAtom>();
+            var mock_v = new Mock<IAtom>();
 
             mock_u.Setup(n => n.IsAromatic()).Returns(false);
             mock_v.Setup(n => n.IsAromatic()).Returns(false);

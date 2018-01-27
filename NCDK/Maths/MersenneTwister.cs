@@ -75,7 +75,7 @@ namespace NCDK.Maths
     /// </remarks>
     // @version $Id: MersenneTwister.java 1244107 2012-02-14 16:17:55Z erans $
     // @since 2.0
-    public class MersenneTwister : BitsStreamGenerator
+    internal class MersenneTwister : BitsStreamGenerator
     {
         /// <summary>Size of the bytes pool. </summary>
         private const int N = 624;

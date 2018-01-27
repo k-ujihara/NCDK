@@ -28,7 +28,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace NCDK.Beam
@@ -48,7 +47,12 @@ namespace NCDK.Beam
     /// </code></example>
     /// <seealso cref="Bond"/>
     // @author John May
-    public sealed class Edge
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class Edge
     {
         /// <summary>Endpoints of the edge.</summary>
         private readonly int u, v, xor;

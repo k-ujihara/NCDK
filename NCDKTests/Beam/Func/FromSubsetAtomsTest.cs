@@ -53,8 +53,8 @@ namespace NCDK.Beam
         public void BracketAtom()
         {
             // should provide identity of bracket atom
-            Atom input = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
-            Atom output = FromSubsetAtoms.FromSubset(input, 0, 0);
+            IAtom input = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
+            IAtom output = FromSubsetAtoms.FromSubset(input, 0, 0);
 
             Assert.AreSame(output, input);
         }
@@ -62,18 +62,18 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon()
         {
-            Atom actual = FromSubsetAtoms
+            IAtom actual = FromSubsetAtoms
                     .FromSubset(AtomImpl.AliphaticSubset.Carbon, 3, 0);
-            Atom expect = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
+            IAtom expect = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
             Assert.AreEqual(actual, expect);
         }
 
         [TestMethod()]
         public void Aromatic_carbon()
         {
-            Atom actual = FromSubsetAtoms
+            IAtom actual = FromSubsetAtoms
                     .FromSubset(AtomImpl.AromaticSubset.Carbon, 2, 0);
-            Atom expect = new AtomImpl.BracketAtom(-1, Element.Carbon, 1, 0, 0, true);
+            IAtom expect = new AtomImpl.BracketAtom(-1, Element.Carbon, 1, 0, 0, true);
             Assert.AreEqual(expect, actual);
         }
 

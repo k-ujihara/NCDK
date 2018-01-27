@@ -26,7 +26,7 @@ namespace NCDK.NInChI
         private static NInchiAtom atO = new NInchiAtom(0, 0, 0, "O");
         private static NInchiAtom atT = new NInchiAtom(1.21, 0, 0, "O");
 
-        protected internal static NInchiBond GetTestBond()
+        internal static NInchiBond GetTestBond()
         {
             return new NInchiBond(atO, atT, INCHI_BOND_TYPE.Double);
         }

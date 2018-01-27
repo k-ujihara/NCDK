@@ -55,7 +55,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     public class DefaultMatcher
     {
 
-        public static bool IsBondMatch(BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
+        public static bool IsBondMatch(IBondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
                 bool shouldMatchBonds)
         {
 
@@ -69,7 +69,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         }
 
-        public static bool IsAtomMatch(AtomMatcher atomMatcher1, AtomMatcher atomMatcher2, IAtomContainer ac2,
+        public static bool IsAtomMatch(IAtomMatcher atomMatcher1, IAtomMatcher atomMatcher2, IAtomContainer ac2,
                 IBond bondA2, bool shouldMatchBonds)
         {
 

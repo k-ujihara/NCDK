@@ -3,13 +3,11 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
-
-using NCDK.Templates;
+<#@ output extension=".tt.cs" #>
 
 namespace NCDK.Graphs
 {
-    public class Cycles_Example1
+    public class Cycles_Example
     {
         public void Main()
         {
@@ -20,7 +18,7 @@ namespace NCDK.Graphs
             {
                 IChemObjectSet<IAtomContainer> containers = null;
                 #region <#= nc.Name #>
-                CycleFinder cf = Cycles.AllFinder;
+                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -42,13 +40,13 @@ namespace NCDK.Graphs
             {
                 #region Or6
                 // all cycles or all cycles size <= 6
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 #endregion
             }
             {
                 #region OrARE
                 // all cycles or relevant or essential
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
                 #endregion
             }
 

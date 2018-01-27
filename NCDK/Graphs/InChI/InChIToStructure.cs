@@ -46,8 +46,8 @@ namespace NCDK.Graphs.InChI
     // @cdk.githash
     public class InChIToStructure
     {
-        protected NInchiInputInchi input;
-        protected NInchiOutputStructure output;
+        internal NInchiInputInchi input;
+        internal NInchiOutputStructure output;
         protected IAtomContainer molecule;
 
         // magic number - indicates isotope mass is relative

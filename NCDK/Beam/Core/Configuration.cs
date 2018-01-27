@@ -29,7 +29,12 @@
  
  namespace NCDK.Beam
 {
-    public partial class Configuration
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    partial class Configuration
     {
         /// <summary>Type of configuration. </summary>
         private readonly ConfigurationType type;

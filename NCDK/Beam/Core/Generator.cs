@@ -41,7 +41,12 @@ namespace NCDK.Beam
     /// </summary>
     // @author John May
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class Generator
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class Generator
     {
         private readonly Graph g;
         private readonly StringBuilder sb;
@@ -49,16 +54,16 @@ namespace NCDK.Beam
         private readonly int[] visitedAt;
         private readonly int[] tmp;
         private int nVisit;
-        private readonly AtomToken[] tokens;
+        private readonly IAtomToken[] tokens;
         private readonly IDictionary<int, IList<RingClosure>> rings;
-        private readonly RingNumbering rnums;
+        private readonly IRingNumbering rnums;
 
         /// <summary>
         /// Create a new generator the given chemical graph.
         /// </summary>
         /// <param name="g">chemical graph</param>
         /// <param name="rnums"></param>
-        public Generator(Graph g, RingNumbering rnums)
+        public Generator(Graph g, IRingNumbering rnums)
             : this(g, new int[g.Order], rnums)
         {
         }
@@ -69,14 +74,14 @@ namespace NCDK.Beam
         /// <param name="g">chemical graph</param>
         /// <param name="visitedAt">the index of the atom in the output</param>
         /// <param name="rnums"></param>
-        Generator(Graph g, int[] visitedAt, RingNumbering rnums)
+        Generator(Graph g, int[] visitedAt, IRingNumbering rnums)
         {
             this.g = g;
             this.rnums = rnums;
             this.sb = new StringBuilder(g.Order * 2);
             this.visitedAt = visitedAt;
             this.tmp = new int[4];
-            this.tokens = new AtomToken[g.Order];
+            this.tokens = new IAtomToken[g.Order];
             this.rings = new Dictionary<int, IList<RingClosure>>();
 
             // prepare ring closures and topologies
@@ -202,8 +207,7 @@ namespace NCDK.Beam
             Topology topology = g.TopologyOf(u);
             if (topology != Topology.Unknown)
             {
-                IList<RingClosure> closures;
-                if (rings.TryGetValue(u, out closures))
+                if (rings.TryGetValue(u, out IList<RingClosure> closures))
                 {
                     // most of time we only have a single closure, we can
                     // handle this easily by moving the ranks of the prev
@@ -271,8 +275,7 @@ namespace NCDK.Beam
                 remaining--;
 
             // assign ring numbers
-            IList<RingClosure> closures;
-            if (rings.TryGetValue(u, out closures))
+            if (rings.TryGetValue(u, out IList<RingClosure> closures))
             {
                 foreach (var rc in closures)
                 {
@@ -340,8 +343,7 @@ namespace NCDK.Beam
         /// <param name="rc">ring closure</param>
         private void AddRing(int u, RingClosure rc)
         {
-            IList<RingClosure> closures;
-            if (!rings.TryGetValue(u, out closures))
+            if (!rings.TryGetValue(u, out IList<RingClosure> closures))
                 if (closures == null)
                 {
                     closures = new List<RingClosure>(2);
@@ -418,14 +420,14 @@ namespace NCDK.Beam
             }
         }
 
-        public interface AtomToken
+        public interface IAtomToken
         {
             void Configure(Configuration c);
 
             void Append(StringBuilder sb);
         }
 
-        public sealed class SubsetToken : AtomToken
+        public sealed class SubsetToken : IAtomToken
         {
             private readonly string str;
 
@@ -445,12 +447,12 @@ namespace NCDK.Beam
             }
         }
 
-        public sealed class BracketToken : AtomToken
+        public sealed class BracketToken : IAtomToken
         {
-            private Atom atom;
+            private IAtom atom;
             private Configuration c = Configuration.Unknown;
 
-            public BracketToken(Atom a)
+            public BracketToken(IAtom a)
             {
                 this.atom = a;
             }
@@ -488,11 +490,11 @@ namespace NCDK.Beam
             }
         }
 
-        abstract class TokenAdapter : AtomToken
+        abstract class TokenAdapter : IAtomToken
         {
-            private AtomToken parent;
+            private IAtomToken parent;
 
-            public TokenAdapter(AtomToken parent)
+            public TokenAdapter(IAtomToken parent)
             {
                 this.parent = parent;
             }
@@ -512,7 +514,7 @@ namespace NCDK.Beam
         {
             int rnum;
 
-            public RingNumberToken(AtomToken p, int rnum)
+            public RingNumberToken(IAtomToken p, int rnum)
                 : base(p)
             {
                 this.rnum = rnum;
@@ -531,7 +533,7 @@ namespace NCDK.Beam
         {
             Bond bond;
 
-            public RingBondToken(AtomToken p, Bond bond)
+            public RingBondToken(IAtomToken p, Bond bond)
             : base(p)
             {
                 this.bond = bond;
@@ -545,7 +547,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>Defines how ring numbering proceeds.</summary>
-        public interface RingNumbering
+        public interface IRingNumbering
         {
             /// <summary>
             /// The next ring number in the sequence.
@@ -573,7 +575,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>Labelling of ring opening/closures always using the lowest ring number.</summary>
-        public sealed class ReuseRingNumbering : RingNumbering
+        public sealed class ReuseRingNumbering : IRingNumbering
         {
 
             private bool[] used = new bool[100];
@@ -616,7 +618,7 @@ namespace NCDK.Beam
         /// Iterative labelling of ring opening/closures. Once the number 99 has been
         /// used the number restarts using any free numbers.
         /// </summary>
-        public sealed class IterativeRingNumbering : RingNumbering
+        public sealed class IterativeRingNumbering : IRingNumbering
         {
             private bool[] used = new bool[100];
             private int offset;

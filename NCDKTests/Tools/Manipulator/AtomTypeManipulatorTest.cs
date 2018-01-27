@@ -34,9 +34,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigure_IAtom_IAtomType()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            IAtomType atomType = new AtomType(Elements.Carbon.ToIElement());
-            atomType.IsHydrogenBondAcceptor = true;
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
+            {
+                IsHydrogenBondAcceptor = true
+            };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.AreEqual(atomType.IsHydrogenBondAcceptor, atom.IsHydrogenBondAcceptor);
         }
@@ -44,10 +46,14 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigureUnSetProperties_DontOverwriterSetProperties()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            atom.ExactMass = 13.0;
-            IAtomType atomType = new AtomType(Elements.Carbon.ToIElement());
-            atomType.ExactMass = 12.0;
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
+            {
+                ExactMass = 13.0
+            };
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
+            {
+                ExactMass = 12.0
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(13.0, atom.ExactMass.Value, 0.1);
         }
@@ -55,9 +61,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigureUnSetProperties()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            IAtomType atomType = new AtomType(Elements.Carbon.ToIElement());
-            atomType.ExactMass = 12.0;
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
+            {
+                ExactMass = 12.0
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(12.0, atom.ExactMass.Value, 0.1);
         }
@@ -66,7 +74,7 @@ namespace NCDK.Tools.Manipulator
         [ExpectedException(typeof(ArgumentException))]
         public void TestConfigure_IAtom_Null()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
             IAtomType atomType = null;
             AtomTypeManipulator.Configure(atom, atomType);
         }
@@ -74,9 +82,11 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void UnknownAtomTypeDoesNotModifyProperties()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            IAtomType atomType = new AtomType(Elements.Unknown.ToIElement());
-            atomType.AtomTypeName = "X";
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
+            IAtomType atomType = new AtomType(ChemicalElements.Unknown.ToIElement())
+            {
+                AtomTypeName = "X"
+            };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.AreEqual("C", atom.Symbol);
             Assert.AreEqual(6, atom.AtomicNumber);
@@ -86,11 +96,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AromaticityIsNotOverwritten()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            atom.IsAromatic = true;
-            IAtomType atomType = new AtomType(Elements.Unknown.ToIElement());
-            atomType.IsAromatic = false;
-            atomType.AtomTypeName = "C.sp3";
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
+            {
+                IsAromatic = true
+            };
+            IAtomType atomType = new AtomType(ChemicalElements.Unknown.ToIElement())
+            {
+                IsAromatic = false,
+                AtomTypeName = "C.sp3"
+            };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.IsTrue(atom.IsAromatic);
         }
@@ -99,11 +113,15 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void AromaticitySetIfForType()
         {
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            atom.IsAromatic = false;
-            IAtomType atomType = new AtomType(Elements.Unknown.ToIElement());
-            atomType.IsAromatic = true;
-            atomType.AtomTypeName = "C.am";
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
+            {
+                IsAromatic = false
+            };
+            IAtomType atomType = new AtomType(ChemicalElements.Unknown.ToIElement())
+            {
+                IsAromatic = true,
+                AtomTypeName = "C.am"
+            };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.IsTrue(atom.IsAromatic);
         }

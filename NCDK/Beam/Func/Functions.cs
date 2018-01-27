@@ -7,7 +7,12 @@ namespace NCDK.Beam
     /// Collection of utilities for transforming chemical graphs.
     /// </summary>
     // @author John May
-    public sealed class Functions
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class Functions
     {
         // convert to atom-based double-bond configurations
         private static readonly ToTrigonalTopology ttt = new ToTrigonalTopology();

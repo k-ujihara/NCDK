@@ -81,9 +81,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
-            ArrayResult<double> result = new ArrayResult<double>(2);
-            result.Add(double.NaN);
-            result.Add(double.NaN);
+            ArrayResult<double> result = new ArrayResult<double>(2)
+            {
+                double.NaN,
+                double.NaN
+            };
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames, e);
         }
 
@@ -157,9 +159,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            ArrayResult<double> result = new ArrayResult<double>(2);
-            result.Add(maxLOB);
-            result.Add(mmLOB);
+            ArrayResult<double> result = new ArrayResult<double>(2)
+            {
+                maxLOB,
+                mmLOB
+            };
 
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }

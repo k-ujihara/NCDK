@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.bug     1632419
     public partial class RDFProtonDescriptor_G3R : IAtomicDescriptor
     {
-        private int desc_length => 13;
+        private const int desc_length = 13;
 
         /// <summary>
         /// Constructor for the RDFProtonDescriptor object

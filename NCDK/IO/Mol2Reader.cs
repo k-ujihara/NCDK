@@ -331,7 +331,7 @@ namespace NCDK.IO
                                 AtomTypeManipulator.Configure(atom, atomType);
                             }
 
-                            atom.AtomicNumber = Elements.OfString(atom.Symbol).AtomicNumber;
+                            atom.AtomicNumber = ChemicalElement.OfString(atom.Symbol).AtomicNumber;
                             atom.Id = nameStr;
                             atom.AtomTypeName = atomTypeStr;
                             try

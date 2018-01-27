@@ -307,8 +307,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         protected List<CDKRMap> RemoveRedundantMappingsForSingleAtomCase(List<CDKRMap> overlaps)
         {
-            List<CDKRMap> reducedList = new List<CDKRMap>();
-            reducedList.Add(overlaps[0]);
+            List<CDKRMap> reducedList = new List<CDKRMap>
+            {
+                overlaps[0]
+            };
             //reducedList.Add(overlaps[1]);
             return reducedList;
         }
@@ -398,8 +400,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
                         }
                     }
                 }
-                result = new List<IList<CDKRMap>>();
-                result.Add(resultLocal);
+                result = new List<IList<CDKRMap>>
+                {
+                    resultLocal
+                };
             }
             return result;
         }

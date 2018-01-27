@@ -167,18 +167,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(new CDKException("Error in substructure search: " + e.Message));
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>();
-            retval.Add(order3s);
-            retval.Add(order4s);
-            retval.Add(order5s);
-            retval.Add(order6s);
-            retval.Add(order7s);
-
-            retval.Add(order3v);
-            retval.Add(order4v);
-            retval.Add(order5v);
-            retval.Add(order6v);
-            retval.Add(order7v);
+            ArrayResult<double> retval = new ArrayResult<double>
+            {
+                order3s,
+                order4s,
+                order5s,
+                order6s,
+                order7s,
+                order3v,
+                order4v,
+                order5v,
+                order6v,
+                order7v,
+            };
 
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }

@@ -31,7 +31,8 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections;
 
-<#    foreach (var ns in namespaces) 
+<#
+foreach (var ns in namespaces) 
 {
 #>
 namespace <#= ns.NS #>

@@ -34,7 +34,7 @@
             <local:ChemObjectBox 
                 x:Name="objectBox"
                 ChemObject="{Binding ChemObject}"
-                Zoom="{Binding Zoom}"
+                DepictionZoom="{Binding Zoom}"
                 AlignMappedReaction="{Binding AlignMappedReaction}" 
                 BackgroundColor="{Binding BackgroundColor}"
                 AtomColorer="{Binding AtomColorer}"

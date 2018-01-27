@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Linq;
 
 namespace NCDK.Config
@@ -45,8 +44,7 @@ namespace NCDK.Config
         {
             lock (syncLock)
             {
-                AtomTypeFactory factory;
-                if (!tables.TryGetValue(configFile, out factory))
+                if (!tables.TryGetValue(configFile, out AtomTypeFactory factory))
                 {
                     factory = new AtomTypeFactory(configFile, builder);
                     tables.Add(configFile, factory);
@@ -123,8 +121,7 @@ namespace NCDK.Config
 
         public IAtomType GetAtomType(string identifier)
         {
-            IAtomType type;
-            if (identifier != null && atomTypes.TryGetValue(identifier, out type))
+            if (identifier != null && atomTypes.TryGetValue(identifier, out IAtomType type))
                 return type;
             throw new NoSuchAtomTypeException($"The AtomType {identifier} could not be found");
         }

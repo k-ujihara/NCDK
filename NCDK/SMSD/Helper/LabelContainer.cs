@@ -43,9 +43,11 @@ namespace NCDK.SMSD.Helper
         protected internal LabelContainer()
         {
             // Console.Error.WriteLine("List Initialized");
-            labelMap = new List<string>();
-            labelMap.Add("X");
-            labelMap.Add("R");
+            labelMap = new List<string>
+            {
+                "X",
+                "R"
+            };
         }
 
         /// <summary>

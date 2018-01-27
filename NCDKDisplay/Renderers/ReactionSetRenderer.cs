@@ -29,8 +29,6 @@ using System.Windows;
 
 namespace NCDK.Renderers
 {
-    /*
-     */
     /// <summary>
     /// A general renderer for <see cref="IChemModel"/>s, <see cref="IReaction"/>s, and
     /// <see cref="IAtomContainer"/>s. The chem object

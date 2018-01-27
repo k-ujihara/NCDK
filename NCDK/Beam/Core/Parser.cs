@@ -32,7 +32,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using static NCDK.Beam.Configuration;
 using static NCDK.Beam.Element;
 
 namespace NCDK.Beam
@@ -389,7 +388,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="a">an atom to add</param>
         /// <param name="buffer"></param>
-        private void AddAtom(Atom a, CharBuffer buffer)
+        private void AddAtom(IAtom a, CharBuffer buffer)
         {
             int v = g.AddAtom(a);
             if (!stack.IsEmpty)
@@ -639,7 +638,7 @@ namespace NCDK.Beam
         /// <param name="buffer">a character buffer</param>
         /// <returns>a bracket atom</returns>
         /// <exception cref="InvalidSmilesException">if the bracket atom did not match the grammar, invalid symbol, missing closing bracket or invalid chiral specification.</exception>
-        public Atom ReadBracketAtom(CharBuffer buffer)
+        public IAtom ReadBracketAtom(CharBuffer buffer)
         {
             int start = buffer.Position;
 
@@ -841,8 +840,7 @@ namespace NCDK.Beam
         /// <returns>current local arrangement</returns>
         private LocalArrangement CreateArrangement(int u)
         {
-            LocalArrangement la;
-            if (!arrangement.TryGetValue(u, out la))
+            if (!arrangement.TryGetValue(u, out LocalArrangement la))
             {
                 la = new LocalArrangement();
                 int d = g.Degree(u);

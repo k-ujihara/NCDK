@@ -46,19 +46,15 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void TestHas2DCoordinates_IAtomContainer()
         {
-            Atom atom1 = new Atom("C");
-            atom1.Point2D = new Vector2(1, 1);
-            Atom atom2 = new Atom("C");
-            atom2.Point2D = new Vector2(1, 0);
+            Atom atom1 = new Atom("C") { Point2D = new Vector2(1, 1) };
+            Atom atom2 = new Atom("C") { Point2D = new Vector2(1, 0) };
             IAtomContainer container = new AtomContainer();
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(container));
 
-            atom1 = new Atom("C");
-            atom1.Point3D = new Vector3(1, 1, 1);
-            atom2 = new Atom("C");
-            atom2.Point3D = new Vector3(1, 0, 5);
+            atom1 = new Atom("C") { Point3D = new Vector3(1, 1, 1) };
+            atom2 = new Atom("C") { Point3D = new Vector3(1, 0, 5) };
             container = new AtomContainer();
             container.Atoms.Add(atom1);
             container.Atoms.Add(atom2);
@@ -170,8 +166,8 @@ namespace NCDK.Geometries
         public void TestTranslateAllPositive_IAtomContainer()
         {
             IAtomContainer container = new AtomContainer();
-            IAtom atom = new Atom(Elements.Carbon.ToIElement());
-            atom.Point2D = new Vector2(-3, -2);
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
+                { Point2D = new Vector2(-3, -2) };
             container.Atoms.Add(atom);
             GeometryUtil.TranslateAllPositive(container);
             Assert.IsTrue(0 <= atom.Point2D.Value.X);

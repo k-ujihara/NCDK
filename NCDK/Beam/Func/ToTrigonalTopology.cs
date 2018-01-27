@@ -85,7 +85,7 @@ namespace NCDK.Beam
 
             for (int u = 0; u < g.Order; u++)
             {
-                Atom a = g.GetAtom(u);
+                IAtom a = g.GetAtom(u);
                 if (a.Subset && h.TopologyOf(u) != Topology.Unknown)
                 {
                     h.AddAtom(AsBracketAtom(u, g));
@@ -104,8 +104,7 @@ namespace NCDK.Beam
                     if (e.Other(u) > u)
                     {
                         Edge ee = e;
-                        Edge replacement;
-                        if (replacements.TryGetValue(e, out replacement))
+                        if (replacements.TryGetValue(e, out Edge replacement))
                             ee = replacement;
                         h.AddEdge(ee);
                     }
@@ -115,9 +114,9 @@ namespace NCDK.Beam
             return h;
         }
 
-        private Atom AsBracketAtom(int u, Graph g)
+        private IAtom AsBracketAtom(int u, Graph g)
         {
-            Atom a = g.GetAtom(u);
+            IAtom a = g.GetAtom(u);
             int sum = a.IsAromatic() ? 1 : 0;
             foreach (var e in g.GetEdges(u))
             {

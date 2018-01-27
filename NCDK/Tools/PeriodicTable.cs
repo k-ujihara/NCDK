@@ -29,7 +29,7 @@ namespace NCDK.Tools
     /// Represents elements of the Periodic Table.  This utility class was
     /// previously useful when one wants generic properties of elements such as
     /// atomic number, VdW radius etc. The new approach to this is to use the
-    /// <see cref="Elements"/> enumeration.
+    /// <see cref="ChemicalElement"/> enumeration.
     /// </summary>
     // @author Rajarshi Guha
     // @cdk.created 2008-06-12
@@ -51,7 +51,7 @@ namespace NCDK.Tools
         /// <returns>the Van der waals radius</returns>
         public static double? GetVdwRadius(string symbol)
         {
-            return Elements.OfString(symbol).VdwRadius;
+            return ChemicalElement.OfString(symbol).VdwRadius;
         }
         
         /// <summary>
@@ -61,7 +61,7 @@ namespace NCDK.Tools
         /// <returns>the covalent radius</returns>
         public static double? GetCovalentRadius(string symbol)
         {
-            return Elements.OfString(symbol).CovalentRadius;
+            return ChemicalElement.OfString(symbol).CovalentRadius;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace NCDK.Tools
         /// <returns>the CAS ID</returns>
         public static string GetCASId(string symbol)
         {
-            return MapToCasId[Elements.OfString(symbol).AtomicNumber]; 
+            return MapToCasId[ChemicalElement.OfString(symbol).AtomicNumber]; 
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace NCDK.Tools
         /// <returns>the chemical series of the element</returns>
         public static string GetChemicalSeries(string symbol)
         {
-            if (!MapToSeries.TryGetValue(Elements.OfString(symbol).AtomicNumber, out string series))
+            if (!MapToSeries.TryGetValue(ChemicalElement.OfString(symbol).AtomicNumber, out string series))
                 return "";
             return series;
         }
@@ -93,7 +93,7 @@ namespace NCDK.Tools
         /// <returns>the group</returns>
         public static int GetGroup(string symbol)
         {
-            return Elements.OfString(symbol).Group;
+            return ChemicalElement.OfString(symbol).Group;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NCDK.Tools
         /// <returns>the name of the element</returns>
         public static string GetName(string symbol)
         {
-            return Elements.OfString(symbol).Name;
+            return ChemicalElement.OfString(symbol).Name;
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace NCDK.Tools
         /// <returns>the period</returns>
         public static int GetPeriod(string symbol)
         {
-            return Elements.OfString(symbol).Period;
+            return ChemicalElement.OfString(symbol).Period;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace NCDK.Tools
         /// <returns>the phase of the element</returns>
         public static string GetPhase(string symbol)
         {
-            if (!MapToPhase.TryGetValue(Elements.OfString(symbol).AtomicNumber, out string phase))
+            if (!MapToPhase.TryGetValue(ChemicalElement.OfString(symbol).AtomicNumber, out string phase))
                 return "";
             return phase;
         }
@@ -135,7 +135,7 @@ namespace NCDK.Tools
         /// <returns>the atomic number</returns>
         public static int GetAtomicNumber(string symbol)
         {
-            return Elements.OfString(symbol).AtomicNumber;
+            return ChemicalElement.OfString(symbol).AtomicNumber;
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace NCDK.Tools
         /// <returns>the Pauling electronegativity</returns>
         public static double? GetPaulingElectronegativity(string symbol)
         {
-            return Elements.OfString(symbol).Electronegativity;
+            return ChemicalElement.OfString(symbol).Electronegativity;
         }
 
         /// <summary>
@@ -155,13 +155,13 @@ namespace NCDK.Tools
         /// <returns>the corresponding symbol</returns>
         public static string GetSymbol(int atomicNumber)
         {
-            return Elements.OfNumber(atomicNumber).Symbol;
+            return ChemicalElement.OfNumber(atomicNumber).Symbol;
         }
 
         /// <summary>
         /// The number of elements in the periodic table
         /// </summary>
-        public static int ElementCount => Elements.Values.Length;
+        public static int ElementCount => ChemicalElement.Values.Count;
 
         private static Dictionary<int, string> MapTo(ref Dictionary<int, string> mapTo, Func<Dictionary<int, string>> mapMaker)
         {
@@ -178,7 +178,7 @@ namespace NCDK.Tools
             return result;
         }
         
-        private static void AddToMap(Dictionary<int, string> ids, string name, params Elements[] elements)
+        private static void AddToMap(Dictionary<int, string> ids, string name, params ChemicalElement[] elements)
         {
             foreach (var elm in elements)
                 ids.Add(elm.AtomicNumber, name);
@@ -200,125 +200,125 @@ namespace NCDK.Tools
         {
             var ids = new Dictionary<int, string>
             {
-                { Elements.Unknown.AtomicNumber, "" },
-                { Elements.Hydrogen.AtomicNumber, "1333-74-0" },
-                { Elements.Helium.AtomicNumber, "7440-59-7" },
-                { Elements.Lithium.AtomicNumber, "7439-93-2" },
-                { Elements.Beryllium.AtomicNumber, "7440-41-7" },
-                { Elements.Boron.AtomicNumber, "7440-42-8" },
-                { Elements.Carbon.AtomicNumber, "7440-44-0" },
-                { Elements.Nitrogen.AtomicNumber, "7727-37-9" },
-                { Elements.Oxygen.AtomicNumber, "7782-44-7" },
-                { Elements.Fluorine.AtomicNumber, "7782-41-4" },
-                { Elements.Neon.AtomicNumber, "7440-01-9" },
-                { Elements.Sodium.AtomicNumber, "7440-23-5" },
-                { Elements.Magnesium.AtomicNumber, "7439-95-4" },
-                { Elements.Aluminium.AtomicNumber, "7429-90-5" },
-                { Elements.Silicon.AtomicNumber, "7440-21-3" },
-                { Elements.Phosphorus.AtomicNumber, "7723-14-0" },
-                { Elements.Sulfur.AtomicNumber, "7704-34-9" },
-                { Elements.Chlorine.AtomicNumber, "7782-50-5" },
-                { Elements.Argon.AtomicNumber, "7440-37-1" },
-                { Elements.Potassium.AtomicNumber, "7440-09-7" },
-                { Elements.Calcium.AtomicNumber, "7440-70-2" },
-                { Elements.Scandium.AtomicNumber, "7440-20-2" },
-                { Elements.Titanium.AtomicNumber, "7440-32-6" },
-                { Elements.Vanadium.AtomicNumber, "7440-62-2" },
-                { Elements.Chromium.AtomicNumber, "7440-47-3" },
-                { Elements.Manganese.AtomicNumber, "7439-96-5" },
-                { Elements.Iron.AtomicNumber, "7439-89-6" },
-                { Elements.Cobalt.AtomicNumber, "7440-48-4" },
-                { Elements.Nickel.AtomicNumber, "7440-02-0" },
-                { Elements.Copper.AtomicNumber, "7440-50-8" },
-                { Elements.Zinc.AtomicNumber, "7440-66-6" },
-                { Elements.Gallium.AtomicNumber, "7440-55-3" },
-                { Elements.Germanium.AtomicNumber, "7440-56-4" },
-                { Elements.Arsenic.AtomicNumber, "7440-38-2" },
-                { Elements.Selenium.AtomicNumber, "7782-49-2" },
-                { Elements.Bromine.AtomicNumber, "7726-95-6" },
-                { Elements.Krypton.AtomicNumber, "7439-90-9" },
-                { Elements.Rubidium.AtomicNumber, "7440-17-7" },
-                { Elements.Strontium.AtomicNumber, "7440-24-6" },
-                { Elements.Yttrium.AtomicNumber, "7440-65-5" },
-                { Elements.Zirconium.AtomicNumber, "7440-67-7" },
-                { Elements.Niobium.AtomicNumber, "7440-03-1" },
-                { Elements.Molybdenum.AtomicNumber, "7439-98-7" },
-                { Elements.Technetium.AtomicNumber, "7440-26-8" },
-                { Elements.Ruthenium.AtomicNumber, "7440-18-8" },
-                { Elements.Rhodium.AtomicNumber, "7440-16-6" },
-                { Elements.Palladium.AtomicNumber, "7440-05-3" },
-                { Elements.Silver.AtomicNumber, "7440-22-4" },
-                { Elements.Cadmium.AtomicNumber, "7440-43-9" },
-                { Elements.Indium.AtomicNumber, "7440-74-6" },
-                { Elements.Tin.AtomicNumber, "7440-31-5" },
-                { Elements.Antimony.AtomicNumber, "7440-36-0" },
-                { Elements.Tellurium.AtomicNumber, "13494-80-9" },
-                { Elements.Iodine.AtomicNumber, "7553-56-2" },
-                { Elements.Xenon.AtomicNumber, "7440-63-3" },
-                { Elements.Caesium.AtomicNumber, "7440-46-2" },
-                { Elements.Barium.AtomicNumber, "7440-39-3" },
-                { Elements.Lanthanum.AtomicNumber, "7439-91-0" },
-                { Elements.Cerium.AtomicNumber, "7440-45-1" },
-                { Elements.Praseodymium.AtomicNumber, "7440-10-0" },
-                { Elements.Neodymium.AtomicNumber, "7440-00-8" },
-                { Elements.Promethium.AtomicNumber, "7440-12-2" },
-                { Elements.Samarium.AtomicNumber, "7440-19-9" },
-                { Elements.Europium.AtomicNumber, "7440-53-1" },
-                { Elements.Gadolinium.AtomicNumber, "7440-54-2" },
-                { Elements.Terbium.AtomicNumber, "7440-27-9" },
-                { Elements.Dysprosium.AtomicNumber, "7429-91-6" },
-                { Elements.Holmium.AtomicNumber, "7440-60-0" },
-                { Elements.Erbium.AtomicNumber, "7440-52-0" },
-                { Elements.Thulium.AtomicNumber, "7440-30-4" },
-                { Elements.Ytterbium.AtomicNumber, "7440-64-4" },
-                { Elements.Lutetium.AtomicNumber, "7439-94-3" },
-                { Elements.Hafnium.AtomicNumber, "7440-58-6" },
-                { Elements.Tantalum.AtomicNumber, "7440-25-7" },
-                { Elements.Tungsten.AtomicNumber, "7440-33-7" },
-                { Elements.Rhenium.AtomicNumber, "7440-15-5" },
-                { Elements.Osmium.AtomicNumber, "7440-04-2" },
-                { Elements.Iridium.AtomicNumber, "7439-88-5" },
-                { Elements.Platinum.AtomicNumber, "7440-06-4" },
-                { Elements.Gold.AtomicNumber, "7440-57-5" },
-                { Elements.Mercury.AtomicNumber, "7439-97-6" },
-                { Elements.Thallium.AtomicNumber, "7440-28-0" },
-                { Elements.Lead.AtomicNumber, "7439-92-1" },
-                { Elements.Bismuth.AtomicNumber, "7440-69-9" },
-                { Elements.Polonium.AtomicNumber, "7440-08-6" },
-                { Elements.Astatine.AtomicNumber, "7440-08-6" },
-                { Elements.Radon.AtomicNumber, "10043-92-2" },
-                { Elements.Francium.AtomicNumber, "7440-73-5" },
-                { Elements.Radium.AtomicNumber, "7440-14-4" },
-                { Elements.Actinium.AtomicNumber, "7440-34-8" },
-                { Elements.Thorium.AtomicNumber, "7440-29-1" },
-                { Elements.Protactinium.AtomicNumber, "7440-13-3" },
-                { Elements.Uranium.AtomicNumber, "7440-61-1" },
-                { Elements.Neptunium.AtomicNumber, "7439-99-8" },
-                { Elements.Plutonium.AtomicNumber, "7440-07-5" },
-                { Elements.Americium.AtomicNumber, "7440-35-9" },
-                { Elements.Curium.AtomicNumber, "7440-51-9" },
-                { Elements.Berkelium.AtomicNumber, "7440-40-6" },
-                { Elements.Californium.AtomicNumber, "7440-71-3" },
-                { Elements.Einsteinium.AtomicNumber, "7429-92-7" },
-                { Elements.Fermium.AtomicNumber, "7440-72-4" },
-                { Elements.Mendelevium.AtomicNumber, "7440-11-1" },
-                { Elements.Nobelium.AtomicNumber, "10028-14-5" },
-                { Elements.Lawrencium.AtomicNumber, "22537-19-5" },
-                { Elements.Rutherfordium.AtomicNumber, "53850-36-5" },
-                { Elements.Dubnium.AtomicNumber, "53850-35-4" },
-                { Elements.Seaborgium.AtomicNumber, "54038-81-2" },
-                { Elements.Bohrium.AtomicNumber, "54037-14-8" },
-                { Elements.Hassium.AtomicNumber, "54037-57-9" },
-                { Elements.Meitnerium.AtomicNumber, "54038-01-6" },
-                { Elements.Darmstadtium.AtomicNumber, "54083-77-1" },
-                { Elements.Roentgenium.AtomicNumber, "54386-24-2" },
-                { Elements.Copernicium.AtomicNumber, "54084-26-3" },
-                { Elements.Ununtrium.AtomicNumber, "" },
-                { Elements.Flerovium.AtomicNumber, "54085-16-4" },
-                { Elements.Ununpentium.AtomicNumber, "" },
-                { Elements.Livermorium.AtomicNumber, "54100-71-9" },
-                { Elements.Ununseptium.AtomicNumber, "" },
-                { Elements.Ununoctium.AtomicNumber, "" }
+                { ChemicalElements.Unknown.AtomicNumber, "" },
+                { ChemicalElements.Hydrogen.AtomicNumber, "1333-74-0" },
+                { ChemicalElements.Helium.AtomicNumber, "7440-59-7" },
+                { ChemicalElements.Lithium.AtomicNumber, "7439-93-2" },
+                { ChemicalElements.Beryllium.AtomicNumber, "7440-41-7" },
+                { ChemicalElements.Boron.AtomicNumber, "7440-42-8" },
+                { ChemicalElements.Carbon.AtomicNumber, "7440-44-0" },
+                { ChemicalElements.Nitrogen.AtomicNumber, "7727-37-9" },
+                { ChemicalElements.Oxygen.AtomicNumber, "7782-44-7" },
+                { ChemicalElements.Fluorine.AtomicNumber, "7782-41-4" },
+                { ChemicalElements.Neon.AtomicNumber, "7440-01-9" },
+                { ChemicalElements.Sodium.AtomicNumber, "7440-23-5" },
+                { ChemicalElements.Magnesium.AtomicNumber, "7439-95-4" },
+                { ChemicalElements.Aluminium.AtomicNumber, "7429-90-5" },
+                { ChemicalElements.Silicon.AtomicNumber, "7440-21-3" },
+                { ChemicalElements.Phosphorus.AtomicNumber, "7723-14-0" },
+                { ChemicalElements.Sulfur.AtomicNumber, "7704-34-9" },
+                { ChemicalElements.Chlorine.AtomicNumber, "7782-50-5" },
+                { ChemicalElements.Argon.AtomicNumber, "7440-37-1" },
+                { ChemicalElements.Potassium.AtomicNumber, "7440-09-7" },
+                { ChemicalElements.Calcium.AtomicNumber, "7440-70-2" },
+                { ChemicalElements.Scandium.AtomicNumber, "7440-20-2" },
+                { ChemicalElements.Titanium.AtomicNumber, "7440-32-6" },
+                { ChemicalElements.Vanadium.AtomicNumber, "7440-62-2" },
+                { ChemicalElements.Chromium.AtomicNumber, "7440-47-3" },
+                { ChemicalElements.Manganese.AtomicNumber, "7439-96-5" },
+                { ChemicalElements.Iron.AtomicNumber, "7439-89-6" },
+                { ChemicalElements.Cobalt.AtomicNumber, "7440-48-4" },
+                { ChemicalElements.Nickel.AtomicNumber, "7440-02-0" },
+                { ChemicalElements.Copper.AtomicNumber, "7440-50-8" },
+                { ChemicalElements.Zinc.AtomicNumber, "7440-66-6" },
+                { ChemicalElements.Gallium.AtomicNumber, "7440-55-3" },
+                { ChemicalElements.Germanium.AtomicNumber, "7440-56-4" },
+                { ChemicalElements.Arsenic.AtomicNumber, "7440-38-2" },
+                { ChemicalElements.Selenium.AtomicNumber, "7782-49-2" },
+                { ChemicalElements.Bromine.AtomicNumber, "7726-95-6" },
+                { ChemicalElements.Krypton.AtomicNumber, "7439-90-9" },
+                { ChemicalElements.Rubidium.AtomicNumber, "7440-17-7" },
+                { ChemicalElements.Strontium.AtomicNumber, "7440-24-6" },
+                { ChemicalElements.Yttrium.AtomicNumber, "7440-65-5" },
+                { ChemicalElements.Zirconium.AtomicNumber, "7440-67-7" },
+                { ChemicalElements.Niobium.AtomicNumber, "7440-03-1" },
+                { ChemicalElements.Molybdenum.AtomicNumber, "7439-98-7" },
+                { ChemicalElements.Technetium.AtomicNumber, "7440-26-8" },
+                { ChemicalElements.Ruthenium.AtomicNumber, "7440-18-8" },
+                { ChemicalElements.Rhodium.AtomicNumber, "7440-16-6" },
+                { ChemicalElements.Palladium.AtomicNumber, "7440-05-3" },
+                { ChemicalElements.Silver.AtomicNumber, "7440-22-4" },
+                { ChemicalElements.Cadmium.AtomicNumber, "7440-43-9" },
+                { ChemicalElements.Indium.AtomicNumber, "7440-74-6" },
+                { ChemicalElements.Tin.AtomicNumber, "7440-31-5" },
+                { ChemicalElements.Antimony.AtomicNumber, "7440-36-0" },
+                { ChemicalElements.Tellurium.AtomicNumber, "13494-80-9" },
+                { ChemicalElements.Iodine.AtomicNumber, "7553-56-2" },
+                { ChemicalElements.Xenon.AtomicNumber, "7440-63-3" },
+                { ChemicalElements.Caesium.AtomicNumber, "7440-46-2" },
+                { ChemicalElements.Barium.AtomicNumber, "7440-39-3" },
+                { ChemicalElements.Lanthanum.AtomicNumber, "7439-91-0" },
+                { ChemicalElements.Cerium.AtomicNumber, "7440-45-1" },
+                { ChemicalElements.Praseodymium.AtomicNumber, "7440-10-0" },
+                { ChemicalElements.Neodymium.AtomicNumber, "7440-00-8" },
+                { ChemicalElements.Promethium.AtomicNumber, "7440-12-2" },
+                { ChemicalElements.Samarium.AtomicNumber, "7440-19-9" },
+                { ChemicalElements.Europium.AtomicNumber, "7440-53-1" },
+                { ChemicalElements.Gadolinium.AtomicNumber, "7440-54-2" },
+                { ChemicalElements.Terbium.AtomicNumber, "7440-27-9" },
+                { ChemicalElements.Dysprosium.AtomicNumber, "7429-91-6" },
+                { ChemicalElements.Holmium.AtomicNumber, "7440-60-0" },
+                { ChemicalElements.Erbium.AtomicNumber, "7440-52-0" },
+                { ChemicalElements.Thulium.AtomicNumber, "7440-30-4" },
+                { ChemicalElements.Ytterbium.AtomicNumber, "7440-64-4" },
+                { ChemicalElements.Lutetium.AtomicNumber, "7439-94-3" },
+                { ChemicalElements.Hafnium.AtomicNumber, "7440-58-6" },
+                { ChemicalElements.Tantalum.AtomicNumber, "7440-25-7" },
+                { ChemicalElements.Tungsten.AtomicNumber, "7440-33-7" },
+                { ChemicalElements.Rhenium.AtomicNumber, "7440-15-5" },
+                { ChemicalElements.Osmium.AtomicNumber, "7440-04-2" },
+                { ChemicalElements.Iridium.AtomicNumber, "7439-88-5" },
+                { ChemicalElements.Platinum.AtomicNumber, "7440-06-4" },
+                { ChemicalElements.Gold.AtomicNumber, "7440-57-5" },
+                { ChemicalElements.Mercury.AtomicNumber, "7439-97-6" },
+                { ChemicalElements.Thallium.AtomicNumber, "7440-28-0" },
+                { ChemicalElements.Lead.AtomicNumber, "7439-92-1" },
+                { ChemicalElements.Bismuth.AtomicNumber, "7440-69-9" },
+                { ChemicalElements.Polonium.AtomicNumber, "7440-08-6" },
+                { ChemicalElements.Astatine.AtomicNumber, "7440-08-6" },
+                { ChemicalElements.Radon.AtomicNumber, "10043-92-2" },
+                { ChemicalElements.Francium.AtomicNumber, "7440-73-5" },
+                { ChemicalElements.Radium.AtomicNumber, "7440-14-4" },
+                { ChemicalElements.Actinium.AtomicNumber, "7440-34-8" },
+                { ChemicalElements.Thorium.AtomicNumber, "7440-29-1" },
+                { ChemicalElements.Protactinium.AtomicNumber, "7440-13-3" },
+                { ChemicalElements.Uranium.AtomicNumber, "7440-61-1" },
+                { ChemicalElements.Neptunium.AtomicNumber, "7439-99-8" },
+                { ChemicalElements.Plutonium.AtomicNumber, "7440-07-5" },
+                { ChemicalElements.Americium.AtomicNumber, "7440-35-9" },
+                { ChemicalElements.Curium.AtomicNumber, "7440-51-9" },
+                { ChemicalElements.Berkelium.AtomicNumber, "7440-40-6" },
+                { ChemicalElements.Californium.AtomicNumber, "7440-71-3" },
+                { ChemicalElements.Einsteinium.AtomicNumber, "7429-92-7" },
+                { ChemicalElements.Fermium.AtomicNumber, "7440-72-4" },
+                { ChemicalElements.Mendelevium.AtomicNumber, "7440-11-1" },
+                { ChemicalElements.Nobelium.AtomicNumber, "10028-14-5" },
+                { ChemicalElements.Lawrencium.AtomicNumber, "22537-19-5" },
+                { ChemicalElements.Rutherfordium.AtomicNumber, "53850-36-5" },
+                { ChemicalElements.Dubnium.AtomicNumber, "53850-35-4" },
+                { ChemicalElements.Seaborgium.AtomicNumber, "54038-81-2" },
+                { ChemicalElements.Bohrium.AtomicNumber, "54037-14-8" },
+                { ChemicalElements.Hassium.AtomicNumber, "54037-57-9" },
+                { ChemicalElements.Meitnerium.AtomicNumber, "54038-01-6" },
+                { ChemicalElements.Darmstadtium.AtomicNumber, "54083-77-1" },
+                { ChemicalElements.Roentgenium.AtomicNumber, "54386-24-2" },
+                { ChemicalElements.Copernicium.AtomicNumber, "54084-26-3" },
+                { ChemicalElements.Ununtrium.AtomicNumber, "" },
+                { ChemicalElements.Flerovium.AtomicNumber, "54085-16-4" },
+                { ChemicalElements.Ununpentium.AtomicNumber, "" },
+                { ChemicalElements.Livermorium.AtomicNumber, "54100-71-9" },
+                { ChemicalElements.Ununseptium.AtomicNumber, "" },
+                { ChemicalElements.Ununoctium.AtomicNumber, "" }
             };
 
             return ids;
@@ -327,42 +327,42 @@ namespace NCDK.Tools
         private static Dictionary<int, string> MakeMapToSeries()
         {
             var ids = new Dictionary<int, string>();
-            AddToMap(ids, "Non Metal", Elements.Sulfur, Elements.Selenium, Elements.Oxygen, Elements.Carbon, Elements.Phosphorus, Elements.Hydrogen, Elements.Nitrogen);
-            AddToMap(ids, "Noble Gas", Elements.Helium, Elements.Krypton, Elements.Xenon, Elements.Argon, Elements.Radon, Elements.Neon);
-            AddToMap(ids, "Alkali Metal", Elements.Sodium, Elements.Rubidium, Elements.Potassium, Elements.Caesium, Elements.Francium, Elements.Lithium);
-            AddToMap(ids, "Alkali Earth Metal", Elements.Strontium, Elements.Radium, Elements.Calcium, Elements.Magnesium, Elements.Barium, Elements.Beryllium);
-            AddToMap(ids, "Metalloid", Elements.Silicon, Elements.Arsenic, Elements.Tellurium, Elements.Germanium, Elements.Antimony, Elements.Polonium, Elements.Boron);
-            AddToMap(ids, "Halogen", Elements.Fluorine, Elements.Iodine, Elements.Chlorine, Elements.Astatine, Elements.Bromine);
-            AddToMap(ids, "Metal", Elements.Gallium, Elements.Indium, Elements.Aluminium, Elements.Thallium, Elements.Tin, Elements.Lead, Elements.Bismuth);
-            AddToMap(ids, "Transition Metal", Elements.Seaborgium, Elements.Hafnium,
-                Elements.Roentgenium, Elements.Iridium, Elements.Nickel, Elements.Meitnerium, Elements.Yttrium, Elements.Copper, Elements.Rutherfordium, Elements.Tungsten, Elements.Copernicium,
-                Elements.Rhodium, Elements.Cobalt, Elements.Zinc, Elements.Platinum, Elements.Gold, Elements.Cadmium, Elements.Manganese, Elements.Darmstadtium, Elements.Dubnium, Elements.Palladium, Elements.Vanadium,
-                Elements.Titanium, Elements.Tantalum, Elements.Chromium, Elements.Molybdenum, Elements.Ruthenium, Elements.Zirconium, Elements.Osmium, Elements.Bohrium, Elements.Rhenium, Elements.Niobium,
-                Elements.Scandium, Elements.Technetium, Elements.Hassium, Elements.Mercury, Elements.Iron, Elements.Silver);
-            AddToMap(ids, "Lanthanide", Elements.Terbium, Elements.Samarium, Elements.Lutetium,
-                Elements.Neodymium, Elements.Cerium, Elements.Europium, Elements.Gadolinium, Elements.Thulium, Elements.Lanthanum, Elements.Erbium, Elements.Promethium, Elements.Holmium, Elements.Praseodymium,
-                Elements.Dysprosium, Elements.Ytterbium);
-            AddToMap(ids, "Actinide", Elements.Fermium, Elements.Protactinium, Elements.Plutonium, Elements.Thorium, Elements.Lawrencium, Elements.Einsteinium,
-                Elements.Nobelium, Elements.Actinium, Elements.Americium, Elements.Curium, Elements.Berkelium, Elements.Mendelevium, Elements.Uranium, Elements.Californium, Elements.Neptunium);
+            AddToMap(ids, "Non Metal", ChemicalElements.Sulfur, ChemicalElements.Selenium, ChemicalElements.Oxygen, ChemicalElements.Carbon, ChemicalElements.Phosphorus, ChemicalElements.Hydrogen, ChemicalElements.Nitrogen);
+            AddToMap(ids, "Noble Gas", ChemicalElements.Helium, ChemicalElements.Krypton, ChemicalElements.Xenon, ChemicalElements.Argon, ChemicalElements.Radon, ChemicalElements.Neon);
+            AddToMap(ids, "Alkali Metal", ChemicalElements.Sodium, ChemicalElements.Rubidium, ChemicalElements.Potassium, ChemicalElements.Caesium, ChemicalElements.Francium, ChemicalElements.Lithium);
+            AddToMap(ids, "Alkali Earth Metal", ChemicalElements.Strontium, ChemicalElements.Radium, ChemicalElements.Calcium, ChemicalElements.Magnesium, ChemicalElements.Barium, ChemicalElements.Beryllium);
+            AddToMap(ids, "Metalloid", ChemicalElements.Silicon, ChemicalElements.Arsenic, ChemicalElements.Tellurium, ChemicalElements.Germanium, ChemicalElements.Antimony, ChemicalElements.Polonium, ChemicalElements.Boron);
+            AddToMap(ids, "Halogen", ChemicalElements.Fluorine, ChemicalElements.Iodine, ChemicalElements.Chlorine, ChemicalElements.Astatine, ChemicalElements.Bromine);
+            AddToMap(ids, "Metal", ChemicalElements.Gallium, ChemicalElements.Indium, ChemicalElements.Aluminium, ChemicalElements.Thallium, ChemicalElements.Tin, ChemicalElements.Lead, ChemicalElements.Bismuth);
+            AddToMap(ids, "Transition Metal", ChemicalElements.Seaborgium, ChemicalElements.Hafnium,
+                ChemicalElements.Roentgenium, ChemicalElements.Iridium, ChemicalElements.Nickel, ChemicalElements.Meitnerium, ChemicalElements.Yttrium, ChemicalElements.Copper, ChemicalElements.Rutherfordium, ChemicalElements.Tungsten, ChemicalElements.Copernicium,
+                ChemicalElements.Rhodium, ChemicalElements.Cobalt, ChemicalElements.Zinc, ChemicalElements.Platinum, ChemicalElements.Gold, ChemicalElements.Cadmium, ChemicalElements.Manganese, ChemicalElements.Darmstadtium, ChemicalElements.Dubnium, ChemicalElements.Palladium, ChemicalElements.Vanadium,
+                ChemicalElements.Titanium, ChemicalElements.Tantalum, ChemicalElements.Chromium, ChemicalElements.Molybdenum, ChemicalElements.Ruthenium, ChemicalElements.Zirconium, ChemicalElements.Osmium, ChemicalElements.Bohrium, ChemicalElements.Rhenium, ChemicalElements.Niobium,
+                ChemicalElements.Scandium, ChemicalElements.Technetium, ChemicalElements.Hassium, ChemicalElements.Mercury, ChemicalElements.Iron, ChemicalElements.Silver);
+            AddToMap(ids, "Lanthanide", ChemicalElements.Terbium, ChemicalElements.Samarium, ChemicalElements.Lutetium,
+                ChemicalElements.Neodymium, ChemicalElements.Cerium, ChemicalElements.Europium, ChemicalElements.Gadolinium, ChemicalElements.Thulium, ChemicalElements.Lanthanum, ChemicalElements.Erbium, ChemicalElements.Promethium, ChemicalElements.Holmium, ChemicalElements.Praseodymium,
+                ChemicalElements.Dysprosium, ChemicalElements.Ytterbium);
+            AddToMap(ids, "Actinide", ChemicalElements.Fermium, ChemicalElements.Protactinium, ChemicalElements.Plutonium, ChemicalElements.Thorium, ChemicalElements.Lawrencium, ChemicalElements.Einsteinium,
+                ChemicalElements.Nobelium, ChemicalElements.Actinium, ChemicalElements.Americium, ChemicalElements.Curium, ChemicalElements.Berkelium, ChemicalElements.Mendelevium, ChemicalElements.Uranium, ChemicalElements.Californium, ChemicalElements.Neptunium);
             return ids;
         }
 
         private static Dictionary<int, string> MakeMapToPhase()
         {
             var ids = new Dictionary<int, string>();
-            AddToMap(ids, "Solid", Elements.Sulfur, Elements.Hafnium, Elements.Terbium, Elements.Calcium, Elements.Gadolinium, Elements.Nickel, Elements.Cerium, Elements.Germanium, Elements.Phosphorus, Elements.Copper, Elements.Polonium,
-                Elements.Lead, Elements.Gold, Elements.Iodine, Elements.Cadmium, Elements.Ytterbium, Elements.Manganese, Elements.Lithium, Elements.Palladium, Elements.Vanadium, Elements.Chromium, Elements.Molybdenum,
-                Elements.Potassium, Elements.Ruthenium, Elements.Osmium, Elements.Boron, Elements.Bismuth, Elements.Rhenium, Elements.Holmium, Elements.Niobium, Elements.Praseodymium, Elements.Barium,
-                Elements.Antimony, Elements.Thallium, Elements.Iron, Elements.Silver, Elements.Silicon, Elements.Caesium, Elements.Astatine, Elements.Iridium, Elements.Francium, Elements.Lutetium, Elements.Yttrium,
-                Elements.Rubidium, Elements.Lanthanum, Elements.Tungsten, Elements.Erbium, Elements.Selenium, Elements.Gallium, Elements.Carbon, Elements.Rhodium, Elements.Uranium, Elements.Dysprosium, Elements.Cobalt,
-                Elements.Zinc, Elements.Platinum, Elements.Protactinium, Elements.Titanium, Elements.Arsenic, Elements.Tantalum, Elements.Thorium, Elements.Samarium, Elements.Europium, Elements.Neodymium,
-                Elements.Zirconium, Elements.Radium, Elements.Thulium, Elements.Sodium, Elements.Scandium, Elements.Tellurium, Elements.Indium, Elements.Beryllium, Elements.Aluminium, Elements.Strontium, Elements.Tin,
-                Elements.Magnesium);
-            AddToMap(ids, "Liquid", Elements.Bromine, Elements.Mercury);
-            AddToMap(ids, "Gas", Elements.Fluorine, Elements.Oxygen, Elements.Xenon, Elements.Argon, Elements.Chlorine, Elements.Helium, Elements.Krypton, Elements.Hydrogen, Elements.Radon, Elements.Nitrogen, Elements.Neon);
-            AddToMap(ids, "Synthetic", Elements.Fermium, Elements.Seaborgium, Elements.Plutonium, Elements.Roentgenium, Elements.Lawrencium, Elements.Meitnerium, Elements.Einsteinium, Elements.Nobelium, Elements.Actinium,
-                Elements.Rutherfordium, Elements.Americium, Elements.Curium, Elements.Bohrium, Elements.Berkelium, Elements.Promethium, Elements.Copernicium, Elements.Technetium, Elements.Hassium,
-                Elements.Californium, Elements.Mendelevium, Elements.Neptunium, Elements.Darmstadtium, Elements.Dubnium);
+            AddToMap(ids, "Solid", ChemicalElements.Sulfur, ChemicalElements.Hafnium, ChemicalElements.Terbium, ChemicalElements.Calcium, ChemicalElements.Gadolinium, ChemicalElements.Nickel, ChemicalElements.Cerium, ChemicalElements.Germanium, ChemicalElements.Phosphorus, ChemicalElements.Copper, ChemicalElements.Polonium,
+                ChemicalElements.Lead, ChemicalElements.Gold, ChemicalElements.Iodine, ChemicalElements.Cadmium, ChemicalElements.Ytterbium, ChemicalElements.Manganese, ChemicalElements.Lithium, ChemicalElements.Palladium, ChemicalElements.Vanadium, ChemicalElements.Chromium, ChemicalElements.Molybdenum,
+                ChemicalElements.Potassium, ChemicalElements.Ruthenium, ChemicalElements.Osmium, ChemicalElements.Boron, ChemicalElements.Bismuth, ChemicalElements.Rhenium, ChemicalElements.Holmium, ChemicalElements.Niobium, ChemicalElements.Praseodymium, ChemicalElements.Barium,
+                ChemicalElements.Antimony, ChemicalElements.Thallium, ChemicalElements.Iron, ChemicalElements.Silver, ChemicalElements.Silicon, ChemicalElements.Caesium, ChemicalElements.Astatine, ChemicalElements.Iridium, ChemicalElements.Francium, ChemicalElements.Lutetium, ChemicalElements.Yttrium,
+                ChemicalElements.Rubidium, ChemicalElements.Lanthanum, ChemicalElements.Tungsten, ChemicalElements.Erbium, ChemicalElements.Selenium, ChemicalElements.Gallium, ChemicalElements.Carbon, ChemicalElements.Rhodium, ChemicalElements.Uranium, ChemicalElements.Dysprosium, ChemicalElements.Cobalt,
+                ChemicalElements.Zinc, ChemicalElements.Platinum, ChemicalElements.Protactinium, ChemicalElements.Titanium, ChemicalElements.Arsenic, ChemicalElements.Tantalum, ChemicalElements.Thorium, ChemicalElements.Samarium, ChemicalElements.Europium, ChemicalElements.Neodymium,
+                ChemicalElements.Zirconium, ChemicalElements.Radium, ChemicalElements.Thulium, ChemicalElements.Sodium, ChemicalElements.Scandium, ChemicalElements.Tellurium, ChemicalElements.Indium, ChemicalElements.Beryllium, ChemicalElements.Aluminium, ChemicalElements.Strontium, ChemicalElements.Tin,
+                ChemicalElements.Magnesium);
+            AddToMap(ids, "Liquid", ChemicalElements.Bromine, ChemicalElements.Mercury);
+            AddToMap(ids, "Gas", ChemicalElements.Fluorine, ChemicalElements.Oxygen, ChemicalElements.Xenon, ChemicalElements.Argon, ChemicalElements.Chlorine, ChemicalElements.Helium, ChemicalElements.Krypton, ChemicalElements.Hydrogen, ChemicalElements.Radon, ChemicalElements.Nitrogen, ChemicalElements.Neon);
+            AddToMap(ids, "Synthetic", ChemicalElements.Fermium, ChemicalElements.Seaborgium, ChemicalElements.Plutonium, ChemicalElements.Roentgenium, ChemicalElements.Lawrencium, ChemicalElements.Meitnerium, ChemicalElements.Einsteinium, ChemicalElements.Nobelium, ChemicalElements.Actinium,
+                ChemicalElements.Rutherfordium, ChemicalElements.Americium, ChemicalElements.Curium, ChemicalElements.Bohrium, ChemicalElements.Berkelium, ChemicalElements.Promethium, ChemicalElements.Copernicium, ChemicalElements.Technetium, ChemicalElements.Hassium,
+                ChemicalElements.Californium, ChemicalElements.Mendelevium, ChemicalElements.Neptunium, ChemicalElements.Darmstadtium, ChemicalElements.Dubnium);
             return ids;
         }
     }

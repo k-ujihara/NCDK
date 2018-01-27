@@ -38,7 +38,7 @@ namespace NCDK.Beam
     // @author John May
     internal sealed class AtomImpl
     {
-        public sealed class AliphaticSubset : Atom
+        public sealed class AliphaticSubset : IAtom
         {
             public static readonly AliphaticSubset Unknown = new AliphaticSubset(Element.Unknown);
             public static readonly AliphaticSubset Boron = new AliphaticSubset(Element.Boron);
@@ -68,9 +68,9 @@ namespace NCDK.Beam
             };
 
             private Element element;
-            private Generator.AtomToken token;
+            private Generator.IAtomToken token;
 
-            private static readonly IDictionary<Element, Atom> atoms = new Dictionary<Element, Atom>();
+            private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
             static AliphaticSubset()
             {
@@ -101,12 +101,12 @@ namespace NCDK.Beam
 
             public bool Subset => true;
 
-            public Atom AsAromaticForm()
+            public IAtom AsAromaticForm()
             {
                 return element.IsAromatic() ? AromaticSubset.OfElement(element) : this;
             }
 
-            public Atom AsAliphaticForm() 
+            public IAtom AsAliphaticForm() 
             {
                 return this;
             }
@@ -116,18 +116,17 @@ namespace NCDK.Beam
                 return Element.NumOfImplicitHydrogens(element, g.BondedValence(u));
             }
 
-            public Generator.AtomToken Token => token;
+            public Generator.IAtomToken Token => token;
 
-            public static Atom OfElement(Element e)
+            public static IAtom OfElement(Element e)
             {
-                Atom a;
-                if (!atoms.TryGetValue(e, out a))
+                if (!atoms.TryGetValue(e, out IAtom a))
                     throw new ArgumentException(e + "can not be an aliphatic subset atom");
                 return a;
             }
         }
 
-        public sealed class AromaticSubset : Atom
+        public sealed class AromaticSubset : IAtom
         {
             public static readonly AromaticSubset Boron = new AromaticSubset(Element.Boron);
             public static readonly AromaticSubset Carbon = new AromaticSubset(Element.Carbon);
@@ -142,9 +141,9 @@ namespace NCDK.Beam
             };
 
             private Element element;
-            private readonly Generator.AtomToken token;
+            private readonly Generator.IAtomToken token;
 
-            private static readonly IDictionary<Element, Atom> atoms = new Dictionary<Element, Atom>();
+            private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
             static AromaticSubset()
             {
@@ -174,13 +173,13 @@ namespace NCDK.Beam
 
             public int AtomClass => 0;
 
-            public Generator.AtomToken Token => token;
+            public Generator.IAtomToken Token => token;
 
             public bool Subset => true;
 
-            public Atom AsAromaticForm() => this;
+            public IAtom AsAromaticForm() => this;
 
-            public Atom AsAliphaticForm() => AliphaticSubset.OfElement(element);
+            public IAtom AsAliphaticForm() => AliphaticSubset.OfElement(element);
 
             public int GetNumberOfHydrogens(Graph g, int u)
             {
@@ -195,16 +194,15 @@ namespace NCDK.Beam
                 return Element.NumOfAromaticImplicitHydrogens(element, v);
             }
 
-            public static Atom OfElement(Element e)
+            public static IAtom OfElement(Element e)
             {
-                Atom a;
-                if (!atoms.TryGetValue(e, out a))
+                if (!atoms.TryGetValue(e, out IAtom a))
                     throw new ArgumentException(e + "can not be an aromatic subset atom");
                 return a;
             }
         }
 
-        public class BracketAtom : Atom
+        public class BracketAtom : IAtom
         {
             private readonly Element element;
             private readonly int hCount, charge, atomClass, isotope;
@@ -248,7 +246,7 @@ namespace NCDK.Beam
 
             public int AtomClass => atomClass;
 
-            public Generator.AtomToken Token => new Generator.BracketToken(this);
+            public Generator.IAtomToken Token => new Generator.BracketToken(this);
 
             public bool Subset => false;
 
@@ -257,7 +255,7 @@ namespace NCDK.Beam
                 return NumOfHydrogens;
             }
 
-            public Atom AsAromaticForm()
+            public IAtom AsAromaticForm()
             {
                 return aromatic || !element.IsAromatic() ? this
                                                        : new BracketAtom(isotope,
@@ -269,7 +267,7 @@ namespace NCDK.Beam
                                                                          true);
             }
 
-            public Atom AsAliphaticForm()
+            public IAtom AsAliphaticForm()
             {
                 return !aromatic ? this
                                  : new BracketAtom(isotope,
@@ -315,13 +313,13 @@ namespace NCDK.Beam
             }
         }
 
-        public static Atom EXPLICIT_HYDROGEN = new BracketAtom(Element.Hydrogen, 0, 0);
+        public static IAtom EXPLICIT_HYDROGEN = new BracketAtom(Element.Hydrogen, 0, 0);
 
-        public static Atom DEUTERIUM = AtomBuilder.Aliphatic(Element.Hydrogen)
+        public static IAtom DEUTERIUM = AtomBuilder.Aliphatic(Element.Hydrogen)
                                    .Isotope(2)
                                    .Build();
 
-        public static Atom TRITIUM = AtomBuilder.Aliphatic(Element.Hydrogen)
+        public static IAtom TRITIUM = AtomBuilder.Aliphatic(Element.Hydrogen)
                                  .Isotope(3)
                                  .Build();
     }

@@ -44,8 +44,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using NCDK.SMSD.Algorithms.Matchers;
 using System;
 using System.Collections.Generic;
@@ -58,12 +58,12 @@ namespace NCDK.SMSD.Ring
     [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK and a newer, more recent version of SMSD is available at http://github.com/asad/smsd .")]
     public class RingFilter
     {
-        private RingFinder ringFinder;
+        private IRingFinder ringFinder;
         private static readonly IComparer<IList<IAtom>> comparator = new RingSizeComparator();
-        private AtomMatcher filter;
+        private IAtomMatcher filter;
         private IAtomContainer mol;
 
-        public RingFilter(AtomMatcher filter, RingFinder finder)
+        public RingFilter(IAtomMatcher filter, IRingFinder finder)
         {
             ringFinder = finder;
             this.filter = filter;

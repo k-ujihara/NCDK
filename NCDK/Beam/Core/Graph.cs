@@ -30,7 +30,6 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using static NCDK.Beam.Element;
 
@@ -41,7 +40,12 @@ namespace NCDK.Beam
     /// labels. Topological information around atoms can also be stored.
     /// </summary>
     // @author John May
-    public sealed class Graph
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    sealed class Graph
     {
         /// <summary>
         /// Indicate the graph has one or aromatic atoms.
@@ -58,7 +62,7 @@ namespace NCDK.Beam
         public const int HAS_STRO = HAS_ATM_STRO | HAS_EXT_STRO | HAS_BND_STRO;
 
         /// <summary> The vertex labels, atoms.</summary>
-        private Atom[] atoms;
+        private IAtom[] atoms;
 
         private int[] degrees;
 
@@ -90,7 +94,7 @@ namespace NCDK.Beam
             this.edges = new Edge[expSize][];
             for (int i = 0; i < expSize; i++)
                 edges[i] = new Edge[4];
-            this.atoms = new Atom[expSize];
+            this.atoms = new IAtom[expSize];
             this.degrees = new int[expSize];
             this.valences = new int[expSize];
             this.topologies = new Topology[expSize];
@@ -135,7 +139,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="i">index</param>
         /// <param name="a">atom</param>
-        internal void SetAtom(int i, Atom a)
+        internal void SetAtom(int i, IAtom a)
         {
             atoms[i] = a;
         }
@@ -160,7 +164,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="a">add an atom</param>
         /// <returns>index of the atom in the graph (vertex)</returns>
-        internal int AddAtom(Atom a)
+        internal int AddAtom(IAtom a)
         {
             EnsureCapacity();
             atoms[order++] = a;
@@ -173,7 +177,7 @@ namespace NCDK.Beam
         /// <param name="i">index of the atom to access</param>
         /// <returns>the atom at that index</returns>
         /// <exception cref="ArgumentException">no atom exists</exception>"
-        public Atom GetAtom(int i)
+        public IAtom GetAtom(int i)
         {
             return atoms[i];
         }
@@ -567,10 +571,12 @@ namespace NCDK.Beam
             if (p.Length != order)
                 throw new ArgumentException("permuation size should equal |V| (Order)");
 
-            Graph cpy = new Graph(order);
-            cpy.flags = flags;
-            cpy.order = order;
-            cpy.size = size;
+            Graph cpy = new Graph(order)
+            {
+                flags = flags,
+                order = order,
+                size = size
+            };
 
             for (int u = 0; u < order; u++)
             {
@@ -615,9 +621,9 @@ namespace NCDK.Beam
         /// }
         /// </code></example>
         /// <returns>iterable of atoms</returns>
-        public IEnumerable<Atom> GetAtoms() => GetAtoms_();
+        public IEnumerable<IAtom> GetAtoms() => GetAtoms_();
 
-        internal IEnumerable<Atom> GetAtoms_() => atoms.Take(Order);
+        internal IEnumerable<IAtom> GetAtoms_() => atoms.Take(Order);
 
         /// <summary>
         /// Access the edges of the chemical graph.
@@ -690,7 +696,7 @@ namespace NCDK.Beam
         /// <param name="comparator">Ordering on edges</param>
         /// <returns>the graph</returns>
         /// </summary>
-        public Graph Sort(EdgeComparator comparator)
+        public Graph Sort(IEdgeComparator comparator)
         {
             for (int u = 0; u < order; u++)
             {
@@ -715,9 +721,8 @@ namespace NCDK.Beam
         /// <summary>
         /// Defines a method for arranging the neighbors of an atom.
         /// </summary>
-        public interface EdgeComparator
+        public interface IEdgeComparator
         {
-
             /// <summary>
             /// Should the edge, e, be visited before f.
             /// 
@@ -734,7 +739,7 @@ namespace NCDK.Beam
         /// Sort the neighbors of each atom such that hydrogens are visited first and
         /// deuterium before tritium. 
         /// </summary>
-        public sealed class VisitHydrogenFirst : EdgeComparator
+        public sealed class VisitHydrogenFirst : IEdgeComparator
         {
             public bool Less(Graph g, int u, Edge e, Edge f)
             {
@@ -757,7 +762,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Visit high Order bonds before low Order bonds.
         /// </summary>
-        public sealed class VisitHighOrderFirst : EdgeComparator
+        public sealed class VisitHighOrderFirst : IEdgeComparator
         {
             public bool Less(Graph g, int u, Edge e, Edge f)
             {
@@ -768,7 +773,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Arrange neighbors in canonical Order.
         /// </summary>
-        internal sealed class CanOrderFirst : EdgeComparator
+        internal sealed class CanOrderFirst : IEdgeComparator
         {
             public bool Less(Graph g, int u, Edge e, Edge f)
             {

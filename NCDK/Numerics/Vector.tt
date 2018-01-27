@@ -7,6 +7,8 @@
 <#@ import namespace="System.Runtime.InteropServices" #>
 <#@ include file="GenerationConfig.ttinclude" #><# GenerateCopyrightHeader(); #>
 
+#pragma warning disable 3021
+
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;

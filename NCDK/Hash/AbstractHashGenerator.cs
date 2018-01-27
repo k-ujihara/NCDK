@@ -47,8 +47,7 @@ namespace NCDK.Hash
         /// <exception cref="ArgumentNullException">the pseudorandom number generator was null</exception>
         public AbstractHashGenerator(Pseudorandom pseudorandom)
         {
-            if (pseudorandom == null) throw new ArgumentNullException("null pseduorandom number generator provided");
-            this.pseudorandom = pseudorandom;
+            this.pseudorandom = pseudorandom ?? throw new ArgumentNullException("null pseduorandom number generator provided");
         }
 
         /// <summary>

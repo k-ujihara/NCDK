@@ -25,13 +25,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-<#    foreach (var ns in namespaces) 
+<#
+foreach (var ns in namespaces) 
 {
 #>
 namespace <#= ns.NS #>
@@ -73,7 +75,7 @@ namespace <#= ns.NS #>
         internal Vector2? point2D;
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
-        internal int? stereoParity;
+        internal StereoAtomParity stereoParity;
         internal bool isSingleOrDouble;
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace <#= ns.NS #>
         public Atom(int elem, int hcnt, int fchg) : base((string)null)
         {
             AtomicNumber = elem;
-            Symbol = Elements.OfNumber(elem).Symbol;
+            Symbol = ChemicalElement.OfNumber(elem).Symbol;
             ImplicitHydrogenCount = hcnt;
             FormalCharge = fchg;
         }
@@ -181,8 +183,7 @@ namespace <#= ns.NS #>
         public Atom(IElement element)
             : base(element)
         {
-            IAtom a = element as IAtom;
-            if (a != null)
+            if (element is IAtom a)
             {
                 this.point2D = a.Point2D;
                 this.point3D = a.Point3D;
@@ -283,7 +284,7 @@ namespace <#= ns.NS #>
         /// <summary>
         /// The stereo parity for this atom.
         /// </summary>
-        public virtual int? StereoParity
+        public virtual StereoAtomParity StereoParity
         {
             get { return stereoParity; }
             set 
@@ -329,7 +330,7 @@ namespace <#= ns.NS #>
                 sb.Append(", S:").Append(Symbol);
             if (ImplicitHydrogenCount != null)
                 sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != null)
+            if (StereoParity != StereoAtomParity.Undefined)
                 sb.Append(", SP:").Append(StereoParity);
             if (Point2D != null)
                 sb.Append(", 2D:[").Append(Point2D).Append(']');
@@ -348,8 +349,7 @@ namespace <#= ns.NS #>
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
-            IAtom clone;
-            if (map.TryGetValue(this, out clone))
+            if (map.TryGetValue(this, out IAtom clone))
                 return clone;
             clone = (Atom)base.Clone(map);
             map.Add(this, clone);
@@ -373,7 +373,7 @@ namespace <#= ns.NS #>
 
         private static bool ParseAtomSymbol(IAtom atom, string str)
         {
-			Elements elem;
+			ChemicalElement elem;
 
             int len = str.Length;
             int pos = 0;
@@ -393,8 +393,8 @@ namespace <#= ns.NS #>
 						mass = 10 * mass + (str[pos++] - '0');
 				}
 <# } else { #>
-                elem = Elements.OfString(str);
-                if (elem != Elements.Unknown)
+                elem = ChemicalElement.OfString(str);
+                if (elem != ChemicalElements.Unknown)
                 {
                     atom.AtomicNumber = elem.AtomicNumber;
                     atom.Symbol = elem.Symbol;
@@ -446,8 +446,8 @@ namespace <#= ns.NS #>
                 pos++;
                 while (pos < len && IsLower(str[pos]))
                     pos++;
-                elem = Elements.OfString(str.Substring(beg, pos - beg));
-                if (elem == Elements.Unknown)
+                elem = ChemicalElement.OfString(str.Substring(beg, pos - beg));
+                if (elem == ChemicalElements.Unknown)
                     return false;
                 anum = elem.AtomicNumber;
 
@@ -510,7 +510,7 @@ namespace <#= ns.NS #>
             else
                 atom.MassNumber = mass;
             atom.AtomicNumber = anum;
-            atom.Symbol = Elements.OfNumber(anum).Symbol;
+            atom.Symbol = ChemicalElement.OfNumber(anum).Symbol;
             atom.ImplicitHydrogenCount = hcnt;
             atom.FormalCharge = chg;
 

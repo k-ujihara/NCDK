@@ -59,6 +59,7 @@
     </Content>
     <Compile Include="Renderers\Generators\AtomShapeType.cs" />
     <Compile Include="Renderers\Generators\BasicGenerator.cs" />
+    <Compile Include="Renderers\Generators\BasicSceneGenerator.cs" />
     <Compile Include="Renderers\HighlightStyle.cs" />
     <Compile Include="Renderers\ObserbableDictionary.cs" />
     <Compile Include="Renderers\RendererModelTools.tt.cs">
@@ -129,7 +130,6 @@
     <Compile Include="Renderers\Generators\AtomNumberGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicAtomGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicBondGenerator.cs" />
-    <Compile Include="Renderers\Generators\BasicSceneGenerator.cs" />
     <Compile Include="Renderers\Generators\BoundsGenerator.cs" />
     <Compile Include="Renderers\Generators\ExtendedAtomGenerator.cs" />
     <Compile Include="Renderers\Generators\HighlightGenerator.cs" />

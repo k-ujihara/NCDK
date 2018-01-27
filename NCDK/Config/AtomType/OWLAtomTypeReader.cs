@@ -1,8 +1,8 @@
+using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
-using NCDK.Tools.Manipulator;
 using static NCDK.Config.AtomType.OWLConstants;
 
 namespace NCDK.Config.AtomType

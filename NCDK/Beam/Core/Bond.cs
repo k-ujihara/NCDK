@@ -56,7 +56,12 @@ namespace NCDK.Beam
     /// </remarks>
     /// <seealso href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</seealso>
     // @author John May
-    public class Bond
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
+    class Bond
     {
         /// <summary>Atoms are not bonded. </summary>
         public static readonly Bond Dot = new Bond(O.Dot, ".", 0);

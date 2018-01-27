@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-
 using NCDK.Config.AtomType;
 
 namespace NCDK.Config

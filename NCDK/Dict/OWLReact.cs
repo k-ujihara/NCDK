@@ -171,11 +171,13 @@ namespace NCDK.Dict
                     value = eparamSubt2 == null ? "" : eparamSubt2.Value;
                     dataType = eparamSubt2.Attribute("dataType")?.Value;
                     dataType = dataType.Substring(dataType.IndexOf(':') + 1);
-                    List<string> pp = new List<string>();
-                    pp.Add(paramClass);
-                    pp.Add(needsToSet);
-                    pp.Add(dataType);
-                    pp.Add(value);
+                    var pp = new List<string>
+                    {
+                        paramClass,
+                        needsToSet,
+                        dataType,
+                        value
+                    };
                     dbEntry.AddParameter(pp);
                 }
             }

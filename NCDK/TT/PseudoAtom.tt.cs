@@ -25,8 +25,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System;
 using NCDK.Numerics;
 using System.Text;
@@ -71,8 +71,7 @@ namespace NCDK.Default
         public PseudoAtom(IElement element)
             : base(element)
         {
-            var aa = element as IPseudoAtom;
-            if (aa != null)
+            if (element is IPseudoAtom aa)
                 this.label = aa.Label;
             else
             {
@@ -120,7 +119,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override int? StereoParity
+        public override StereoAtomParity StereoParity
         {
             get { return base.StereoParity; }
             set { /* this is undefined, always */}
@@ -184,8 +183,7 @@ namespace NCDK.Silent
         public PseudoAtom(IElement element)
             : base(element)
         {
-            var aa = element as IPseudoAtom;
-            if (aa != null)
+            if (element is IPseudoAtom aa)
                 this.label = aa.Label;
             else
             {
@@ -233,7 +231,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public override int? StereoParity
+        public override StereoAtomParity StereoParity
         {
             get { return base.StereoParity; }
             set { /* this is undefined, always */}

@@ -113,8 +113,10 @@ namespace NCDK.Reactions.Types
                             atomH.FormalCharge = 1;
                             atomList.Add(atomH);
 
-                            var bondList = new List<IBond>();
-                            bondList.Add(bondi);
+                            var bondList = new List<IBond>
+                            {
+                                bondi
+                            };
 
                             IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                             moleculeSet.Add(reactant);

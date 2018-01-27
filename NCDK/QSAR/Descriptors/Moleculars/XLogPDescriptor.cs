@@ -1181,14 +1181,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             //         ortho oxygen pair
             //AtomContainer orthopair = sp.ParseSmiles("OCCO");
             QueryAtomContainer orthopair = new QueryAtomContainer(atomContainer.Builder);
-            AromaticAtom atom1 = new AromaticAtom(atomContainer.Builder);
-            atom1.Symbol = "C";
-            AromaticAtom atom2 = new AromaticAtom(atomContainer.Builder);
-            atom2.Symbol = "C";
-            SymbolQueryAtom atom3 = new SymbolQueryAtom(atomContainer.Builder);
-            atom3.Symbol = "O";
-            SymbolQueryAtom atom4 = new SymbolQueryAtom(atomContainer.Builder);
-            atom4.Symbol = "O";
+            AromaticAtom atom1 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
+            AromaticAtom atom2 = new AromaticAtom(atomContainer.Builder) { Symbol = "C" };
+            SymbolQueryAtom atom3 = new SymbolQueryAtom(atomContainer.Builder) { Symbol = "O" };
+            SymbolQueryAtom atom4 = new SymbolQueryAtom(atomContainer.Builder) { Symbol = "O" };
 
             orthopair.Atoms.Add(atom1);
             orthopair.Atoms.Add(atom2);

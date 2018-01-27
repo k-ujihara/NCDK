@@ -39,13 +39,13 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     {
         private List<INode> neighborsList;
         private List<IEdge> edgesList;
-        private VFAtomMatcher matcher;
+        private IVFAtomMatcher matcher;
 
         /// <summary>
         /// Construct a node for a query atom
         /// <param name="matcher"></param>
         /// </summary>
-        protected internal NodeBuilder(VFAtomMatcher matcher)
+        protected internal NodeBuilder(IVFAtomMatcher matcher)
         {
             edgesList = new List<IEdge>();
             neighborsList = new List<INode>();
@@ -59,7 +59,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             return new ReadOnlyCollection<INode>(neighborsList);
         }
 
-        public VFAtomMatcher AtomMatcher => matcher;
+        public IVFAtomMatcher AtomMatcher => matcher;
 
         public IList<IEdge> GetEdges() => new ReadOnlyCollection<IEdge>(edgesList);
 

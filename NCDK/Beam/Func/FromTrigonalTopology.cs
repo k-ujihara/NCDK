@@ -12,7 +12,6 @@ namespace NCDK.Beam
     // @author John May
     internal sealed class FromTrigonalTopology : AbstractFunction<Graph, Graph>
     {
-
         public override Graph Apply(Graph g)
         {
             Graph h = new Graph(g.Order);
@@ -42,8 +41,7 @@ namespace NCDK.Beam
                     if (e.Other(u) > u)
                     {
                         Edge ee = e;
-                        Edge replacement;
-                        if (replacements.TryGetValue(e, out replacement))
+                        if (replacements.TryGetValue(e, out Edge replacement))
                             ee = replacement;
                         h.AddEdge(ee);
                     }
@@ -53,9 +51,9 @@ namespace NCDK.Beam
             return h;
         }
 
-        private Atom ReducedAtom(Graph g, int u)
+        private IAtom ReducedAtom(Graph g, int u)
         {
-            Atom a = g.GetAtom(u);
+            IAtom a = g.GetAtom(u);
 
             int sum = 0;
             foreach (var e in g.GetEdges(u))
@@ -150,8 +148,7 @@ namespace NCDK.Beam
                         Edge f = new Edge(u,
                                           e.Other(u),
                                           label);
-                        Edge existing;
-                        if (replacement.TryGetValue(e, out existing))
+                        if (replacement.TryGetValue(e, out Edge existing))
                         {
                             // check for conflict - need to rewrite existing labels
                             if (existing.GetBond(u) != label)
@@ -176,8 +173,7 @@ namespace NCDK.Beam
                     int v = e.Other(u);
                     if (!visited[v])
                     {
-                        Edge f;
-                        if (replacement.TryGetValue(e, out f))
+                        if (replacement.TryGetValue(e, out Edge f))
                         {
                             replacement[e] = f.Inverse();
                         }

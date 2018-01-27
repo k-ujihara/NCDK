@@ -21,8 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>0612,0618</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
@@ -76,7 +75,7 @@
     <Compile Include="AtomRef.cs" />
     <Compile Include="Beam\Core\AllCycles.cs" />
     <Compile Include="Beam\Core\ArbitraryMatching.cs" />
-    <Compile Include="Beam\Core\Atom.cs" />
+    <Compile Include="Beam\Core\IAtom.cs" />
     <Compile Include="Beam\Core\AtomBuilder.cs" />
     <Compile Include="Beam\Core\AtomImpl.cs" />
     <Compile Include="Beam\Core\BiconnectedComponents.cs" />
@@ -142,10 +141,10 @@
     <Compile Include="Common\Hash\Crc32.cs" />
     <Compile Include="Common\Mathematics\BitsStreamGenerator.cs" />
     <Compile Include="Common\Mathematics\JavaRandom.cs" />
-    <Compile Include="Config\Elements.tt.cs">
+    <Compile Include="Config\ChemicalElement.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Elements.tt</DependentUpon>
+      <DependentUpon>ChemicalElement.tt</DependentUpon>
     </Compile>
     <Compile Include="Hash\BasicAtomEncoder.tt.cs">
       <AutoGen>True</AutoGen>
@@ -224,9 +223,9 @@
     <Compile Include="FaulonSignatures\Chemistry\MoleculeWriter.cs" />
     <Compile Include="FaulonSignatures\Chemistry\SDFToSignatures.cs" />
     <Compile Include="FaulonSignatures\ColoredTree.cs" />
-    <Compile Include="FaulonSignatures\ColoredTreeVisitor.cs" />
+    <Compile Include="FaulonSignatures\IColoredTreeVisitor.cs" />
     <Compile Include="FaulonSignatures\DAG.cs" />
-    <Compile Include="FaulonSignatures\DAGVisitor.cs" />
+    <Compile Include="FaulonSignatures\IDAGVisitor.cs" />
     <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraph.cs" />
     <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphBuilder.cs" />
     <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphFactory.cs" />
@@ -250,13 +249,13 @@
     <Compile Include="FaulonSignatures\Simple\SimpleVertexSignature.cs" />
     <Compile Include="FaulonSignatures\SymmetryClass.cs" />
     <Compile Include="FaulonSignatures\VirtualGraphBuilder.cs" />
-    <Compile Include="FaulonSignatures\VisitableColoredTree.cs" />
-    <Compile Include="FaulonSignatures\VisitableDAG.cs" />
+    <Compile Include="FaulonSignatures\IVisitableColoredTree.cs" />
+    <Compile Include="FaulonSignatures\IVisitableDAG.cs" />
     <Compile Include="LibIO\CML\CMLLabel.cs" />
     <Compile Include="LibIO\CML\CMLAtomArray.cs" />
     <Compile Include="LibIO\CML\CMLCrystal.cs" />
     <Compile Include="LibIO\CML\CMLFormula.cs" />
-    <Compile Include="Config\Elements.cs" />
+    <Compile Include="Config\ChemicalElement.cs" />
     <Compile Include="Events\ICDKChangeListener.cs" />
     <EmbeddedResource Include="Beam\Core\Configuration.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -289,11 +288,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmptyCollections.tt.cs</LastGenOutput>
     </Content>
-    <Content Include="Config\Elements.tt">
+    <Content Include="Config\ChemicalElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Elements.tt.cs</LastGenOutput>
+      <LastGenOutput>ChemicalElement.tt.cs</LastGenOutput>
     </Content>
-    <None Include="Config\Elements.txt" />
+    <None Include="Config\Element.txt" />
     <Content Include="Formula\MolecularFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MolecularFormula.tt.cs</LastGenOutput>
@@ -901,11 +900,11 @@
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParserConstants.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParserTokenManager.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParserTreeConstants.cs" />
-    <Compile Include="Smiles\SMARTS\Parser\SMARTSParserVisitor.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ISMARTSParserVisitor.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitor.cs" />
     <Compile Include="Smiles\SMARTS\Parser\Token.cs" />
     <Compile Include="Smiles\SMARTS\Parser\TokenMgrError.cs" />
-    <Compile Include="SMSD\Algorithms\Matchers\VFBondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\IVFBondMatcher.cs" />
     <Compile Include="SMSD\Algorithms\MCSPluses\BKKCKCF.cs" />
     <Compile Include="SMSD\Algorithms\MCSPluses\ExactMapping.cs" />
     <Compile Include="SMSD\Algorithms\MCSPluses\GenerateCompatibilityGraph.cs" />
@@ -1008,7 +1007,7 @@
     <Compile Include="Graphs\Matrix\IGraphMatrix.cs" />
     <Compile Include="Hash\IAtomEncoder.cs" />
     <Compile Include="Hash\IAtomHashGenerator.cs" />
-    <Compile Include="Hash\EnsembleHashGenerator.cs" />
+    <Compile Include="Hash\IEnsembleHashGenerator.cs" />
     <Compile Include="Hash\IMoleculeHashGenerator.cs" />
     <Compile Include="LibIO\CML\ICMLCustomizer.cs" />
     <Compile Include="CDKException.cs" />
@@ -1779,15 +1778,15 @@
     <Compile Include="Similarity\Tanimoto.cs" />
     <Compile Include="Smiles\SMARTS\SmartsPattern.cs" />
     <Compile Include="Smiles\SMARTS\SMARTSQueryTool.cs" />
-    <Compile Include="SMSD\Algorithms\Matchers\AtomMatcher.cs" />
-    <Compile Include="SMSD\Algorithms\Matchers\BondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\IAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\IBondMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultBondMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultMCSPlusAtomMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultRGraphAtomMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultVFAtomMatcher.cs" />
     <Compile Include="SMSD\Algorithms\Matchers\DefaultVFBondMatcher.cs" />
-    <Compile Include="SMSD\Algorithms\Matchers\VFAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\IVFAtomMatcher.cs" />
     <Compile Include="SMSD\Algorithms\McGregors\McGregor.cs" />
     <Compile Include="SMSD\Algorithms\McGregors\McGregorChecks.cs" />
     <Compile Include="SMSD\Algorithms\McGregors\McgregorHelper.cs" />
@@ -1841,7 +1840,7 @@
     <Compile Include="SMSD\Ring\PathEdge.cs" />
     <Compile Include="SMSD\Ring\PathGraph.cs" />
     <Compile Include="SMSD\Ring\RingFilter.cs" />
-    <Compile Include="SMSD\Ring\RingFinder.cs" />
+    <Compile Include="SMSD\Ring\IRingFinder.cs" />
     <Compile Include="SMSD\Tools\BondEnergies.cs" />
     <Compile Include="SMSD\Tools\ExtAtomContainerManipulator.cs" />
     <Compile Include="SMSD\Tools\MoleculeSanityCheck.cs" />

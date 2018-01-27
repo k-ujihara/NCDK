@@ -24,7 +24,7 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiAtom
     {
-        protected internal static NInchiAtom GetNewTestAtom()
+        internal static NInchiAtom GetNewTestAtom()
         {
             return new NInchiAtom(1, 2, 3, "C");
         }

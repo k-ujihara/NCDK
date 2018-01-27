@@ -45,27 +45,30 @@ namespace NCDK.Depict
             this.height = height;
         }
 
-        public Dimensions Add(double width, double height)
+        public double Width => width;
+        public double Height => height;
+
+        internal Dimensions Add(double width, double height)
         {
             return new Dimensions(this.width + width, this.height + height);
         }
 
-        public Dimensions Scale(double coef)
+        internal Dimensions Scale(double coef)
         {
             return new Dimensions(coef * width, coef * height);
         }
 
-        public static Dimensions OfRow(IList<Bounds> elems)
+        internal static Dimensions OfRow(IList<Bounds> elems)
         {
             return OfGrid(elems, 1, elems.Count);
         }
 
-        public static Dimensions OfCol(IList<Bounds> elems)
+        internal static Dimensions OfCol(IList<Bounds> elems)
         {
             return OfGrid(elems, elems.Count, 1);
         }
 
-        public static Dimensions OfGrid(IList<Bounds> bounds, int nRow, int nCol)
+        internal static Dimensions OfGrid(IList<Bounds> bounds, int nRow, int nCol)
         {
             return OfGrid(bounds, new double[nRow + 1], new double[nCol + 1]);
         }
@@ -81,7 +84,7 @@ namespace NCDK.Depict
         /// <param name="yOffset">array for col offsets</param>
         /// <param name="xOffset">array for row offset</param>
         /// <returns>the dimensions required</returns>
-        public static Dimensions OfGrid(IList<Bounds> bounds, double[] yOffset, double[] xOffset)
+        internal static Dimensions OfGrid(IList<Bounds> bounds, double[] yOffset, double[] xOffset)
         {
             int nRow = yOffset.Length - 1;
             int nCol = xOffset.Length - 1;
@@ -155,4 +158,3 @@ namespace NCDK.Depict
         }
     }
 }
-

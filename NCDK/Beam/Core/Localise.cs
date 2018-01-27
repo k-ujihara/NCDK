@@ -1,7 +1,6 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using static NCDK.Beam.Element;
 
 namespace NCDK.Beam
@@ -185,7 +184,7 @@ namespace NCDK.Beam
 
         internal static bool Predetermined(Graph g, int v)
         {
-            Atom a = g.GetAtom(v);
+            IAtom a = g.GetAtom(v);
 
             int q = a.Charge;
             int deg = g.Degree(v) + g.ImplHCount(v);

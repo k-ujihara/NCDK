@@ -25,12 +25,8 @@ using System;
 
 namespace NCDK.Maths
 {
-    public interface IRandomNumbersTool
-    {
-    }
-
     [Serializable]
-    public class Random
+    internal class Random
     {
         public Random()
             : this(DateTime.Now.Ticks)

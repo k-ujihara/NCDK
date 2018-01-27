@@ -19,7 +19,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public int Count { get; set; }
 
         /// <summary>Accept the visitor. </summary>
-        public override object JjtAccept(SMARTSParserVisitor visitor, object data)
+        public override object JjtAccept(ISMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }

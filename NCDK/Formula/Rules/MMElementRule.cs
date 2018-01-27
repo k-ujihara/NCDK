@@ -43,12 +43,12 @@ namespace NCDK.Formula.Rules
     /// </listheader>
     /// <item>
     ///   <term>database</term>
-    ///   <term>willey</term>
+    ///   <term><see cref="Database.Wiley"/></term>
     ///   <term>Mass spectral databases extraction</term>
     /// </item>
     /// <item>
     ///   <term>massRange</term>
-    ///   <term>&lt; 500</term>
+    ///   <term><see cref="RangeMass.Minus500"/></term>
     ///   <term>Mass to take account</term>
     /// </item>
     /// </list>
@@ -60,7 +60,7 @@ namespace NCDK.Formula.Rules
     public class MMElementRule : IRule
     {
         /// <summary> Database used. As default Willey.</summary>
-        private Database databaseUsed = Database.WILEY;
+        private Database databaseUsed = Database.Wiley;
 
         /// <summary> Mass range used. As default lower than 500.</summary>
         private RangeMass rangeMassUsed = RangeMass.Minus500;
@@ -84,9 +84,9 @@ namespace NCDK.Formula.Rules
         public class Database
         {
             /// <summary>Wiley mass spectral database.</summary>
-            public static readonly Database WILEY = new Database();
+            public static readonly Database Wiley = new Database();
             /// <summary>Dictionary of Natural Products Online mass spectral database.</summary>
-            public static readonly Database DNP = new Database();
+            public static readonly Database DictionaryNaturalProductsOnline = new Database();
         }
 
         /// <summary>
@@ -130,19 +130,19 @@ namespace NCDK.Formula.Rules
                     rangeMassUsed = (RangeMass)value[1];
                 }
 
-                if ((databaseUsed == Database.DNP) && (rangeMassUsed == RangeMass.Minus500))
+                if ((databaseUsed == Database.DictionaryNaturalProductsOnline) && (rangeMassUsed == RangeMass.Minus500))
                     this.hashMap = GetDNP_500();
-                else if ((databaseUsed == Database.DNP) && (rangeMassUsed == RangeMass.Minus1000))
+                else if ((databaseUsed == Database.DictionaryNaturalProductsOnline) && (rangeMassUsed == RangeMass.Minus1000))
                     this.hashMap = GetDNP_1000();
-                else if ((databaseUsed == Database.DNP) && (rangeMassUsed == RangeMass.Minus2000))
+                else if ((databaseUsed == Database.DictionaryNaturalProductsOnline) && (rangeMassUsed == RangeMass.Minus2000))
                     this.hashMap = GetDNP_2000();
-                else if ((databaseUsed == Database.DNP) && (rangeMassUsed == RangeMass.Minus3000))
+                else if ((databaseUsed == Database.DictionaryNaturalProductsOnline) && (rangeMassUsed == RangeMass.Minus3000))
                     this.hashMap = GetDNP_3000();
-                else if ((databaseUsed == Database.WILEY) && (rangeMassUsed == RangeMass.Minus500))
+                else if ((databaseUsed == Database.Wiley) && (rangeMassUsed == RangeMass.Minus500))
                     this.hashMap = GetWisley_500();
-                else if ((databaseUsed == Database.WILEY) && (rangeMassUsed == RangeMass.Minus1000))
+                else if ((databaseUsed == Database.Wiley) && (rangeMassUsed == RangeMass.Minus1000))
                     this.hashMap = GetWisley_1000();
-                else if ((databaseUsed == Database.WILEY) && (rangeMassUsed == RangeMass.Minus2000))
+                else if ((databaseUsed == Database.Wiley) && (rangeMassUsed == RangeMass.Minus2000))
                     this.hashMap = GetWisley_2000();
             }
         }

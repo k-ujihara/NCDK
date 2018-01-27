@@ -57,13 +57,17 @@ namespace NCDK.Config.AtomType
         {
             IDictionary<string, string> mappings = null;
 
-            XmlReaderSettings setting = new XmlReaderSettings();
-            setting.DtdProcessing = DtdProcessing.Parse;
-            setting.ValidationFlags = XmlSchemaValidationFlags.None;
+            XmlReaderSettings setting = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Parse,
+                ValidationFlags = XmlSchemaValidationFlags.None
+            };
             OWLAtomTypeMappingHandler handler = new OWLAtomTypeMappingHandler();
             XmlReader parser = XmlReader.Create(input, setting);
-            var reader = new XReader();
-            reader.Handler = handler;
+            var reader = new XReader
+            {
+                Handler = handler
+            };
             try
             {
                 XDocument doc = XDocument.Load(parser);
@@ -80,7 +84,7 @@ namespace NCDK.Config.AtomType
                 Trace.TraceError(nameof(XmlException) + ": " + saxe.Message);
                 Debug.WriteLine(saxe);
             }
-            return mappings == null ? new Dictionary<string, string>() : mappings;
+            return mappings ?? new Dictionary<string, string>();
         }
     }
 }

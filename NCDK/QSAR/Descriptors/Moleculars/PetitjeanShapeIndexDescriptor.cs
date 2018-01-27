@@ -106,8 +106,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             int tradius = PathTools.GetMolecularGraphRadius(local);
             int tdiameter = PathTools.GetMolecularGraphDiameter(local);
 
-            ArrayResult<double> retval = new ArrayResult<double>();
-            retval.Add((double)(tdiameter - tradius) / (double)tradius);
+            ArrayResult<double> retval = new ArrayResult<double>
+            {
+                (double)(tdiameter - tradius) / (double)tradius
+            };
 
             // get the 3D distance matrix
             if (GeometryUtil.Has3DCoordinates(container))

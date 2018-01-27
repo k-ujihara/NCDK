@@ -37,87 +37,91 @@ namespace NCDK.Beam
     /// </summary>
     /// <seealso href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</seealso>
     // @author John May
+#if PUBLIC_BEAM
+    public
+#else
+    internal
+#endif
 <# 
     GenerateEnumBody(
         "Configuration", 
             new[]
         {
-            "Unknown{**Types.None, \"\"**}:An atoms has Unknown/no configuration.",
-			"AntiClockwise{**Types.Implicit, \"@\"**}:Shorthand for TH1, AL1, DB1, TB1 or OH1 configurations.",
-			"Clockwise{**Types.Implicit, \"@@\"**}:Shorthand for TH2, AL2, DB2, TB2 or OH2 configurations.",
-			"TH1{**Types.Tetrahedral, \"@TH1\", AntiClockwise**}:Tetrahedral, neighbors proceed anti-clockwise looking from the first atom.",
-			"TH2{**Types.Tetrahedral, \"@TH2\", Clockwise**}:Tetrahedral, neighbors proceed clockwise looking from the first atom. ",
-			"DB1{**Types.DoubleBond, \"@DB1\", AntiClockwise**}:Atom-based double bond configuration, neighbors proceed anti-clockwise in a plane. <i>Note - this configuration is currently specific to grins.</i>",
-			"DB2{**Types.DoubleBond, \"@DB2\", Clockwise**}:Atom-based double bond configuration, neighbors proceed clockwise in a plane.<i>Note - this configuration is currently specific to grins.</i>",
+            "Unknown{**ConfigurationType.None, \"\"**}:An atoms has Unknown/no configuration.",
+			"AntiClockwise{**ConfigurationType.Implicit, \"@\"**}:Shorthand for TH1, AL1, DB1, TB1 or OH1 configurations.",
+			"Clockwise{**ConfigurationType.Implicit, \"@@\"**}:Shorthand for TH2, AL2, DB2, TB2 or OH2 configurations.",
+			"TH1{**ConfigurationType.Tetrahedral, \"@TH1\", AntiClockwise**}:Tetrahedral, neighbors proceed anti-clockwise looking from the first atom.",
+			"TH2{**ConfigurationType.Tetrahedral, \"@TH2\", Clockwise**}:Tetrahedral, neighbors proceed clockwise looking from the first atom. ",
+			"DB1{**ConfigurationType.DoubleBond, \"@DB1\", AntiClockwise**}:Atom-based double bond configuration, neighbors proceed anti-clockwise in a plane. <i>Note - this configuration is currently specific to grins.</i>",
+			"DB2{**ConfigurationType.DoubleBond, \"@DB2\", Clockwise**}:Atom-based double bond configuration, neighbors proceed clockwise in a plane.<i>Note - this configuration is currently specific to grins.</i>",
 
 			// extended tetrahedral, allene-like = new Configuration(Sp)
-			"AL1{**Types.ExtendedTetrahedral, \"@AL1\", AntiClockwise**}",
-			"AL2{**Types.ExtendedTetrahedral, \"@AL2\", Clockwise**}",
+			"AL1{**ConfigurationType.ExtendedTetrahedral, \"@AL1\", AntiClockwise**}",
+			"AL2{**ConfigurationType.ExtendedTetrahedral, \"@AL2\", Clockwise**}",
 
 			// square planar
-			"SP1{**Types.SquarePlanar, \"@SP1\"**}",
-			"SP2{**Types.SquarePlanar, \"@SP2\"**}",
-			"SP3{**Types.SquarePlanar, \"@SP3\"**}",
+			"SP1{**ConfigurationType.SquarePlanar, \"@SP1\"**}",
+			"SP2{**ConfigurationType.SquarePlanar, \"@SP2\"**}",
+			"SP3{**ConfigurationType.SquarePlanar, \"@SP3\"**}",
 
 			// trigonal bipyramidal
-			"TB1{**Types.TrigonalBipyramidal, \"@TB1\", AntiClockwise**}",
-			"TB2{**Types.TrigonalBipyramidal, \"@TB2\", Clockwise**}",
-			"TB3{**Types.TrigonalBipyramidal, \"@TB3\"**}",
-			"TB4{**Types.TrigonalBipyramidal, \"@TB4\"**}",
-			"TB5{**Types.TrigonalBipyramidal, \"@TB5\"**}",
-			"TB6{**Types.TrigonalBipyramidal, \"@TB6\"**}",
-			"TB7{**Types.TrigonalBipyramidal, \"@TB7\"**}",
-			"TB8{**Types.TrigonalBipyramidal, \"@TB8\"**}",
-			"TB9{**Types.TrigonalBipyramidal, \"@TB9\"**}",
-			"TB10{**Types.TrigonalBipyramidal, \"@TB10\"**}",
-			"TB11{**Types.TrigonalBipyramidal, \"@TB11\"**}",
-			"TB12{**Types.TrigonalBipyramidal, \"@TB12\"**}",
-			"TB13{**Types.TrigonalBipyramidal, \"@TB13\"**}",
-			"TB14{**Types.TrigonalBipyramidal, \"@TB14\"**}",
-			"TB15{**Types.TrigonalBipyramidal, \"@TB15\"**}",
-			"TB16{**Types.TrigonalBipyramidal, \"@TB16\"**}",
-			"TB17{**Types.TrigonalBipyramidal, \"@TB17\"**}",
-			"TB18{**Types.TrigonalBipyramidal, \"@TB18\"**}",
-			"TB19{**Types.TrigonalBipyramidal, \"@TB19\"**}",
-			"TB20{**Types.TrigonalBipyramidal, \"@TB20\"**}",
+			"TB1{**ConfigurationType.TrigonalBipyramidal, \"@TB1\", AntiClockwise**}",
+			"TB2{**ConfigurationType.TrigonalBipyramidal, \"@TB2\", Clockwise**}",
+			"TB3{**ConfigurationType.TrigonalBipyramidal, \"@TB3\"**}",
+			"TB4{**ConfigurationType.TrigonalBipyramidal, \"@TB4\"**}",
+			"TB5{**ConfigurationType.TrigonalBipyramidal, \"@TB5\"**}",
+			"TB6{**ConfigurationType.TrigonalBipyramidal, \"@TB6\"**}",
+			"TB7{**ConfigurationType.TrigonalBipyramidal, \"@TB7\"**}",
+			"TB8{**ConfigurationType.TrigonalBipyramidal, \"@TB8\"**}",
+			"TB9{**ConfigurationType.TrigonalBipyramidal, \"@TB9\"**}",
+			"TB10{**ConfigurationType.TrigonalBipyramidal, \"@TB10\"**}",
+			"TB11{**ConfigurationType.TrigonalBipyramidal, \"@TB11\"**}",
+			"TB12{**ConfigurationType.TrigonalBipyramidal, \"@TB12\"**}",
+			"TB13{**ConfigurationType.TrigonalBipyramidal, \"@TB13\"**}",
+			"TB14{**ConfigurationType.TrigonalBipyramidal, \"@TB14\"**}",
+			"TB15{**ConfigurationType.TrigonalBipyramidal, \"@TB15\"**}",
+			"TB16{**ConfigurationType.TrigonalBipyramidal, \"@TB16\"**}",
+			"TB17{**ConfigurationType.TrigonalBipyramidal, \"@TB17\"**}",
+			"TB18{**ConfigurationType.TrigonalBipyramidal, \"@TB18\"**}",
+			"TB19{**ConfigurationType.TrigonalBipyramidal, \"@TB19\"**}",
+			"TB20{**ConfigurationType.TrigonalBipyramidal, \"@TB20\"**}",
 
 	        // octahedral
-			"OH1{**Types.Octahedral, \"@OH1\", AntiClockwise**}",
-			"OH2{**Types.Octahedral, \"@OH2\", Clockwise**}",
-			"OH3{**Types.Octahedral, \"@OH3\"**}",
-			"OH4{**Types.Octahedral, \"@OH4\"**}",
-			"OH5{**Types.Octahedral, \"@OH5\"**}",
-			"OH6{**Types.Octahedral, \"@OH6\"**}",
-			"OH7{**Types.Octahedral, \"@OH7\"**}",
-			"OH8{**Types.Octahedral, \"@OH8\"**}",
-			"OH9{**Types.Octahedral, \"@OH9\"**}",
-			"OH10{**Types.Octahedral, \"@OH10\"**}",
-			"OH11{**Types.Octahedral, \"@OH11\"**}",
-			"OH12{**Types.Octahedral, \"@OH12\"**}",
-			"OH13{**Types.Octahedral, \"@OH13\"**}",
-			"OH14{**Types.Octahedral, \"@OH14\"**}",
-			"OH15{**Types.Octahedral, \"@OH15\"**}",
-			"OH16{**Types.Octahedral, \"@OH16\"**}",
-			"OH17{**Types.Octahedral, \"@OH17\"**}",
-			"OH18{**Types.Octahedral, \"@OH18\"**}",
-			"OH19{**Types.Octahedral, \"@OH19\"**}",
-			"OH20{**Types.Octahedral, \"@OH20\"**}",
-			"OH21{**Types.Octahedral, \"@OH21\"**}",
-			"OH22{**Types.Octahedral, \"@OH22\"**}",
-			"OH23{**Types.Octahedral, \"@OH23\"**}",
-			"OH24{**Types.Octahedral, \"@OH24\"**}",
-			"OH25{**Types.Octahedral, \"@OH25\"**}",
-			"OH26{**Types.Octahedral, \"@OH26\"**}",
-			"OH27{**Types.Octahedral, \"@OH27\"**}",
-			"OH28{**Types.Octahedral, \"@OH28\"**}",
-			"OH29{**Types.Octahedral, \"@OH29\"**}",
-			"OH30{**Types.Octahedral, \"@OH30\"**}",
+			"OH1{**ConfigurationType.Octahedral, \"@OH1\", AntiClockwise**}",
+			"OH2{**ConfigurationType.Octahedral, \"@OH2\", Clockwise**}",
+			"OH3{**ConfigurationType.Octahedral, \"@OH3\"**}",
+			"OH4{**ConfigurationType.Octahedral, \"@OH4\"**}",
+			"OH5{**ConfigurationType.Octahedral, \"@OH5\"**}",
+			"OH6{**ConfigurationType.Octahedral, \"@OH6\"**}",
+			"OH7{**ConfigurationType.Octahedral, \"@OH7\"**}",
+			"OH8{**ConfigurationType.Octahedral, \"@OH8\"**}",
+			"OH9{**ConfigurationType.Octahedral, \"@OH9\"**}",
+			"OH10{**ConfigurationType.Octahedral, \"@OH10\"**}",
+			"OH11{**ConfigurationType.Octahedral, \"@OH11\"**}",
+			"OH12{**ConfigurationType.Octahedral, \"@OH12\"**}",
+			"OH13{**ConfigurationType.Octahedral, \"@OH13\"**}",
+			"OH14{**ConfigurationType.Octahedral, \"@OH14\"**}",
+			"OH15{**ConfigurationType.Octahedral, \"@OH15\"**}",
+			"OH16{**ConfigurationType.Octahedral, \"@OH16\"**}",
+			"OH17{**ConfigurationType.Octahedral, \"@OH17\"**}",
+			"OH18{**ConfigurationType.Octahedral, \"@OH18\"**}",
+			"OH19{**ConfigurationType.Octahedral, \"@OH19\"**}",
+			"OH20{**ConfigurationType.Octahedral, \"@OH20\"**}",
+			"OH21{**ConfigurationType.Octahedral, \"@OH21\"**}",
+			"OH22{**ConfigurationType.Octahedral, \"@OH22\"**}",
+			"OH23{**ConfigurationType.Octahedral, \"@OH23\"**}",
+			"OH24{**ConfigurationType.Octahedral, \"@OH24\"**}",
+			"OH25{**ConfigurationType.Octahedral, \"@OH25\"**}",
+			"OH26{**ConfigurationType.Octahedral, \"@OH26\"**}",
+			"OH27{**ConfigurationType.Octahedral, \"@OH27\"**}",
+			"OH28{**ConfigurationType.Octahedral, \"@OH28\"**}",
+			"OH29{**ConfigurationType.Octahedral, \"@OH29\"**}",
+			"OH30{**ConfigurationType.Octahedral, \"@OH30\"**}",
         },
         false
 	);
 #>
-    {
-        private Configuration(int ordinal, Types type, string symbol, Configuration shorthand)
+        private Configuration(int ordinal, ConfigurationType type, string symbol, Configuration shorthand)
 			: this(ordinal)
         {
             this.type = type;
@@ -125,12 +129,14 @@ namespace NCDK.Beam
             this.shorthand = shorthand;
         }
 
-        private Configuration(int ordinal, Types type, string symbol)
+        private Configuration(int ordinal, ConfigurationType type, string symbol)
 			: this(ordinal)
         {
             this.type = type;
             this.symbol = symbol;
             this.shorthand = this;
         }
-	}
+<#
+	EndGenerateEnumBody();
+#>
 }

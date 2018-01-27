@@ -1,6 +1,6 @@
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using System;

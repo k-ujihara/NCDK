@@ -91,11 +91,15 @@ namespace NCDK.Reactions.Types
                             if (atomj.IsReactiveCenter && atomj.FormalCharge == 0)
                                 if (!reactant.GetConnectedSingleElectrons(atomj).Any())
                                 {
-                                    var atomList = new List<IAtom>();
-                                    atomList.Add(atomj);
-                                    atomList.Add(atomi);
-                                    var bondList = new List<IBond>();
-                                    bondList.Add(bondi);
+                                    var atomList = new List<IAtom>
+                                    {
+                                        atomj,
+                                        atomi
+                                    };
+                                    var bondList = new List<IBond>
+                                    {
+                                        bondi
+                                    };
 
                                     IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
 

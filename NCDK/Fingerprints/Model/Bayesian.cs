@@ -200,8 +200,10 @@ namespace NCDK.Fingerprints.Model
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
-            CircularFingerprinter circ = new CircularFingerprinter(ClassType);
-            circ.PerceiveStereo = this.PerceiveStereo;
+            var circ = new CircularFingerprinter(ClassType)
+            {
+                PerceiveStereo = this.PerceiveStereo
+            };
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints into a sorted set
@@ -226,8 +228,7 @@ namespace NCDK.Fingerprints.Model
             activity.Add(active);
             foreach (var h in hashes)
             {
-                int[] stash;
-                if (!inHash.TryGetValue(h, out stash))
+                if (!inHash.TryGetValue(h, out int[] stash))
                     stash = new int[] { 0, 0 };
                 if (active) stash[0]++;
                 stash[1]++;
@@ -291,8 +292,10 @@ namespace NCDK.Fingerprints.Model
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
 
-            CircularFingerprinter circ = new CircularFingerprinter(ClassType);
-            circ.PerceiveStereo = this.PerceiveStereo;
+            var circ = new CircularFingerprinter(ClassType)
+            {
+                PerceiveStereo = this.PerceiveStereo
+            };
             circ.Calculate(mol);
 
             // gather all of the (folded) fingerprints (eliminating duplicates)
@@ -539,9 +542,11 @@ namespace NCDK.Fingerprints.Model
             if (folding < 0)
                 throw new IOException("Fingerprint folding " + bits[1] + " invalid: must be 0 or power of 2.");
 
-            Bayesian model = new Bayesian(classType, folding);
-            model.LowThreshold = double.Parse(bits[2]);
-            model.HighThreshold = double.Parse(bits[3]);
+            var model = new Bayesian(classType, folding)
+            {
+                LowThreshold = double.Parse(bits[2]),
+                HighThreshold = double.Parse(bits[3])
+            };
             model.range = model.HighThreshold - model.LowThreshold;
             model.invRange = model.range > 0 ? 1 / model.range : 0;
 
@@ -641,7 +646,7 @@ namespace NCDK.Fingerprints.Model
             return model;
         }
 
-        /// ----------------- private methods -----------------
+        // ----------------- private methods -----------------
 
         /// <summary>
         /// estimate leave-one-out predictor for a given training entry
@@ -712,8 +717,7 @@ namespace NCDK.Fingerprints.Model
                     nt++;
                     foreach (var h in training[order[n]])
                     {
-                        int[] stash;
-                        if (!ih.TryGetValue(h, out stash))
+                        if (!ih.TryGetValue(h, out int[] stash))
                             stash = new int[] { 0, 0 };
                         if (active) stash[0]++;
                         stash[1]++;
@@ -745,8 +749,7 @@ namespace NCDK.Fingerprints.Model
             double val = 0;
             foreach (var h in training[order[N]])
             {
-                double c;
-                if (segContrib.TryGetValue(h, out c))
+                if (segContrib.TryGetValue(h, out double c))
                     val += c;
             }
             return val;

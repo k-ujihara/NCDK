@@ -1,3 +1,5 @@
+#pragma warning disable 0162
+
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * This library is free software; you can redistribute it and/or
@@ -15,6 +17,7 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
+
 using NCDK.Common.Collections;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
@@ -43,7 +46,7 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class SmartsQueryVisitor : SMARTSParserVisitor
+    public class SmartsQueryVisitor : ISMARTSParserVisitor
     {
         // current atoms with a ring identifier
         private RingIdentifierAtom[] ringAtoms;

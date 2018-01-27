@@ -359,11 +359,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                 bool shouldMatchBonds)
         {
             //Bond Matcher
-            BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+            IBondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[0], shouldMatchBonds);
+            IAtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[0], shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[1], shouldMatchBonds);
+            IAtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.Atoms[1], shouldMatchBonds);
 
             if (DefaultMatcher.IsBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                     && DefaultMatcher.IsAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds))

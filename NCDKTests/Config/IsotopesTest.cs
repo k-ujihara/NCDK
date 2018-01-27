@@ -163,7 +163,7 @@ namespace NCDK.Config
         public void TestGetNaturalMass_IElement()
         {
             Isotopes isofac = Isotopes.Instance;
-            Assert.AreEqual(1.0079760, isofac.GetNaturalMass(new Element("H")), 0.1);
+            Assert.AreEqual(1.0079760, isofac.GetNaturalMass(new Default.Element("H")), 0.1);
         }
 
         [TestMethod()]

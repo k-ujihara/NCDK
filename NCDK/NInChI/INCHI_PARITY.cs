@@ -24,9 +24,8 @@ namespace NCDK.NInChI
     /// Corresponds to <tt>inchi_StereoParity0D</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_PARITY
+    internal enum INCHI_PARITY
     {
-
         /// <summary>
         /// None.
         /// </summary>

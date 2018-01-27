@@ -19,17 +19,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
-using NCDK.Numerics;
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.LibIO.CML;
+using NCDK.Numerics;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 using System.Linq;
 
-namespace NCDK.IO.CML {
+namespace NCDK.IO.CML
+{
     /// <summary>
     /// TestCase for reading CML 2 files using a few test files in data/cmltest.
     /// </summary>
@@ -62,8 +64,7 @@ namespace NCDK.IO.CML {
         public void TestAtomId()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("N");
-            atom.Id = "N1";
+            Atom atom = new Atom("N") { Id = "N1" };
             mol.Atoms.Add(atom);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -144,8 +145,7 @@ namespace NCDK.IO.CML {
         public void TestPseudoAtom()
         {
             IAtomContainer mol = new AtomContainer();
-            PseudoAtom atom = new PseudoAtom("N");
-            atom.Label = "Glu55";
+            PseudoAtom atom = new PseudoAtom("N") { Label = "Glu55" };
             mol.Atoms.Add(atom);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -157,9 +157,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual("Glu55", ((IPseudoAtom)roundTrippedAtom).Label);
         }
 
-        /// <summary>
         // @cdk.bug 1455346
-        /// </summary>
         [TestMethod()]
         public void TestChemModel()
         {
@@ -197,15 +195,12 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.FormalCharge, roundTrippedAtom.FormalCharge);
         }
 
-        /// <summary>
         // @cdk.bug 1713398
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("N");
-            atom.ImplicitHydrogenCount = 3;
+            Atom atom = new Atom("N") { ImplicitHydrogenCount = 3 };
             mol.Atoms.Add(atom);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -215,9 +210,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.ImplicitHydrogenCount, roundTrippedAtom.ImplicitHydrogenCount);
         }
 
-        /// <summary>
         // @cdk.bug 1713398
-        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount_UNSET()
         {
@@ -254,7 +247,7 @@ namespace NCDK.IO.CML {
         {
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom("C");
-            int stereo = CDKConstants.STEREO_ATOM_PARITY_PLUS;
+            var stereo = StereoAtomParity.Plus;
             atom.StereoParity = stereo;
             mol.Atoms.Add(atom);
 
@@ -278,10 +271,8 @@ namespace NCDK.IO.CML {
             IAtom roundTrippedAtom = roundTrippedMol.Atoms[0];
             Assert.AreEqual(atom.MassNumber, roundTrippedAtom.MassNumber);
         }
-
-        /// <summary>
+        
         // @cdk.bug 1014344
-        /// </summary>
         [TestMethod(), Ignore()] // Functionality not yet implemented - exact mass can not be written/read
         public void TestIsotope_ExactMass()
         {
@@ -298,9 +289,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.ExactMass.Value, roundTrippedAtom.ExactMass.Value, 0.01);
         }
 
-        /// <summary>
         // @cdk.bug 1014344
-        /// </summary>
         [TestMethod(), Ignore()] // Functionality not yet implemented - natural abundance can not be written/read
         public void TestIsotope_Abundance()
         {
@@ -319,7 +308,6 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Test roundtripping of MassNumber.
-        // @
         /// </summary>
         [TestMethod()]
         public void TestMassNumber()
@@ -419,9 +407,7 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(bond.Order, roundTrippedBond.Order);
         }
 
-        /// <summary>
         // @cdk.bug 1713398
-        /// </summary>
         [TestMethod()]
         public void TestBondAromatic_Double()
         {
@@ -561,8 +547,6 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Tests of bond order information is stored even when aromaticity is given.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestAromaticity()
@@ -601,10 +585,8 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Tests whether the custom atom properties survive the CML round-trip
-        // @
-        ///
-        // @cdk.bug 1930029
         /// </summary>
+        // @cdk.bug 1930029
         [TestMethod()]
         public void TestAtomProperty()
         {
@@ -635,10 +617,8 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Tests whether the custom bond properties survive the CML round-trip
-        // @
-        ///
-        // @cdk.bug 1930029
         /// </summary>
+        // @cdk.bug 1930029
         [TestMethod()]
         public void TestBondProperty()
         {
@@ -668,10 +648,8 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Tests whether the custom molecule properties survive the CML round-trip
-        // @
-        ///
-        // @cdk.bug 1930029
         /// </summary>
+        // @cdk.bug 1930029
         [TestMethod()]
         public void TestMoleculeProperty()
         {
@@ -711,9 +689,7 @@ namespace NCDK.IO.CML {
             Assert.IsNotNull(newList[1]);
         }
 
-        /// <summary>
         // @cdk.bug 1930029
-        /// </summary>
         [TestMethod()]
         public void TestAtomProperties()
         {
@@ -732,7 +708,6 @@ namespace NCDK.IO.CML {
 
         /// <summary>
         /// Test roundtripping of Unset property (Hydrogencount).
-        // @
         /// </summary>
         [TestMethod()]
         public void TestUnSetHydrogenCount()

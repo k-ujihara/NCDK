@@ -1,6 +1,6 @@
 namespace NCDK.FaulonSignatures
 {
-    public interface DAGVisitor
+    public interface IDAGVisitor
     {
          void Visit(DAG.Node node);
     }

@@ -27,15 +27,14 @@ using System;
 namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
-    /// Interface for the BondMatcher (bonds) in graph.
+    /// Interface for the AtomMatcher (atoms) in graph.
     /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("This class is part of SMSD and either duplicates functionality elsewhere in the CDK or provides public access to internal implementation details. SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd.")]
-    public interface VFBondMatcher
+    public interface IVFAtomMatcher
     {
-        bool Matches(TargetProperties container, IBond atom);
+        bool Matches(TargetProperties container, IAtom atom);
     }
 }
-

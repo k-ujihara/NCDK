@@ -1,9 +1,7 @@
+using NCDK.Config.AtomType;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using NCDK.Config.AtomType;
 
 namespace NCDK.Config
 {

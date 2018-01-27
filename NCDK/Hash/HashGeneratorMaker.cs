@@ -267,11 +267,11 @@ namespace NCDK.Hash
         }
 
         /// <summary>
-        /// Given the current configuration create an <see cref="EnsembleHashGenerator"/>.
+        /// Given the current configuration create an <see cref="IEnsembleHashGenerator"/>.
         /// </summary>
         /// <returns>instance of the generator</returns>
         /// <exception cref="ArgumentException">no depth or encoders were configured</exception>
-        public EnsembleHashGenerator Ensemble()
+        public IEnsembleHashGenerator Ensemble()
         {
             throw new NotSupportedException("not yet supported");
         }

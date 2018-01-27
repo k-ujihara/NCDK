@@ -58,15 +58,8 @@ namespace NCDK.Smiles.SMARTS
             int nmatch = querytool.MatchesCount;
             Assert.AreEqual(2, nmatch);
 
-            List<int> map1 = new List<int>();
-            map1.Add(1);
-            map1.Add(2);
-            map1.Add(3);
-
-            List<int> map2 = new List<int>();
-            map2.Add(3);
-            map2.Add(4);
-            map2.Add(5);
+            List<int> map1 = new List<int> { 1, 2, 3, };
+            List<int> map2 = new List<int> { 3, 4, 5, };
 
             var mappings = querytool.GetMatchingAtoms();
             var ret1 = mappings[0].OrderBy(n => n).ToList();
@@ -186,7 +179,7 @@ namespace NCDK.Smiles.SMARTS
         public void TestMethane()
         {
             IAtomContainer methane = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
-            IAtom carbon = methane.Builder.NewAtom(Elements.Carbon.ToIElement());
+            IAtom carbon = methane.Builder.NewAtom(ChemicalElements.Carbon.ToIElement());
             carbon.ImplicitHydrogenCount = 4;
             methane.Atoms.Add(carbon);
 

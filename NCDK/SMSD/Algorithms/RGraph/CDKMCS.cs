@@ -48,6 +48,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.Matchers;
 using NCDK.SMSD.Global;
@@ -106,8 +107,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
     // @cdk.githash
     public class CDKMCS
     {
-        const int ID1 = 0;
-        const int ID2 = 1;
+        const int Id1 = 0;
+        const int Id2 = 1;
         private static TimeManager timeManager = null;
 
         ///////////////////////////////////////////////////////////////////////////
@@ -144,15 +145,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             {
                 IAtom atom = sourceGraph.Atoms[0];
                 IAtom atom2 = targetGraph.Atoms[0];
-                if (atom is IQueryAtom)
+                if (atom is IQueryAtom qAtom)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)atom;
                     return qAtom.Matches(targetGraph.Atoms[0]);
                 }
-                else if (atom2 is IQueryAtom)
+                else if (atom2 is IQueryAtom qAtom2)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)atom2;
-                    return qAtom.Matches(sourceGraph.Atoms[0]);
+                    return qAtom2.Matches(sourceGraph.Atoms[0]);
                 }
                 else
                 {
@@ -297,8 +296,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
             else
             {
-                IList<IList<CDKRMap>> atomsMap = new List<IList<CDKRMap>>();
-                atomsMap.Add(list);
+                IList<IList<CDKRMap>> atomsMap = new List<IList<CDKRMap>>
+                {
+                    list
+                };
                 return atomsMap;
             }
         }
@@ -356,18 +357,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 for (int i = 0; i < sourceGraph.Atoms.Count; i++)
                 {
                     IAtom atom2 = sourceGraph.Atoms[i];
-                    if (atom is IQueryAtom)
+                    if (atom is IQueryAtom qAtom)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom;
                         if (qAtom.Matches(atom2))
                         {
                             return true;
                         }
                     }
-                    else if (atom2 is IQueryAtom)
+                    else if (atom2 is IQueryAtom qAtom2)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom2;
-                        if (qAtom.Matches(atom))
+                        if (qAtom2.Matches(atom))
                         {
                             return true;
                         }
@@ -405,7 +404,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 shouldMatchBonds);
 
             // projection on G1
-            IList<IAtomContainer> graphList = ProjectList(rMapsList, sourceGraph, ID1);
+            IList<IAtomContainer> graphList = ProjectList(rMapsList, sourceGraph, Id1);
 
             // reduction of set of solution (isomorphism and substructure
             // with different 'mappings'
@@ -487,15 +486,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 IAtom queryAtom = targetGraph.Atoms[0];
 
                 // we can have a IQueryAtomContainer *or* an IAtomContainer
-                if (queryAtom is IQueryAtom)
+                if (queryAtom is IQueryAtom qAtom)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)queryAtom;
                     foreach (var atom in sourceGraph.Atoms)
                     {
                         if (qAtom.Matches(atom))
                         {
-                            List<CDKRMap> lmap = new List<CDKRMap>();
-                            lmap.Add(new CDKRMap(sourceGraph.Atoms.IndexOf(atom), 0));
+                            List<CDKRMap> lmap = new List<CDKRMap>
+                            {
+                                new CDKRMap(sourceGraph.Atoms.IndexOf(atom), 0)
+                            };
                             matches.Add(lmap);
                         }
                     }
@@ -506,8 +506,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
                     {
                         if (queryAtom.Symbol.Equals(atom.Symbol))
                         {
-                            List<CDKRMap> lmap = new List<CDKRMap>();
-                            lmap.Add(new CDKRMap(sourceGraph.Atoms.IndexOf(atom), 0));
+                            List<CDKRMap> lmap = new List<CDKRMap>
+                            {
+                                new CDKRMap(sourceGraph.Atoms.IndexOf(atom), 0)
+                            };
                             matches.Add(lmap);
                         }
                     }
@@ -547,14 +549,12 @@ namespace NCDK.SMSD.Algorithms.RGraph
             IAtomContainer atomContainer = graph.Builder.NewAtomContainer();
 
             IDictionary<IAtom, IAtom> table = new Dictionary<IAtom, IAtom>();
-            IAtom atom1;
-            IAtom atom2;
             IAtom atom;
             IBond bond;
 
             foreach (var rMap in rMapList)
             {
-                if (key == CDKMCS.ID1)
+                if (key == CDKMCS.Id1)
                 {
                     bond = graph.Bonds[rMap.Id1];
                 }
@@ -564,7 +564,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 }
 
                 atom = bond.Atoms[0];
-                if (!table.TryGetValue(atom, out atom1))
+                if (!table.TryGetValue(atom, out IAtom atom1))
                 {
                     atom1 = (IAtom)atom.Clone();
                     atomContainer.Atoms.Add(atom1);
@@ -572,7 +572,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 }
 
                 atom = bond.Atoms[1];
-                if (!table.TryGetValue(atom, out atom2))
+                if (!table.TryGetValue(atom, out IAtom atom2))
                 {
                     atom2 = (IAtom)atom.Clone();
                     atomContainer.Atoms.Add(atom2);
@@ -655,9 +655,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
             {
                 List<CDKRMap> arrayList = new List<CDKRMap>();
                 IAtom atom = targetGraph.Atoms[0];
-                if (atom is IQueryAtom)
+                if (atom is IQueryAtom qAtom)
                 {
-                    IQueryAtom qAtom = (IQueryAtom)atom;
                     for (int i = 0; i < sourceGraph.Atoms.Count; i++)
                     {
                         if (qAtom.Matches(sourceGraph.Atoms[i]))
@@ -686,9 +685,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 for (int i = 0; i < targetGraph.Atoms.Count; i++)
                 {
                     IAtom atom2 = targetGraph.Atoms[i];
-                    if (atom2 is IQueryAtom)
+                    if (atom2 is IQueryAtom qAtom)
                     {
-                        IQueryAtom qAtom = (IQueryAtom)atom2;
                         if (qAtom.Matches(atom))
                         {
                             arrayList.Add(new CDKRMap(0, i));
@@ -840,9 +838,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 for (int j = 0; j < ac2.Bonds.Count; j++)
                 {
                     IBond bondA2 = ac2.Bonds[j];
-                    if (bondA2 is IQueryBond)
+                    if (bondA2 is IQueryBond queryBond)
                     {
-                        IQueryBond queryBond = (IQueryBond)bondA2;
                         IQueryAtom atom1 = (IQueryAtom)(bondA2.Atoms[0]);
                         IQueryAtom atom2 = (IQueryAtom)(bondA2.Atoms[1]);
                         if (queryBond.Matches(bondA1))
@@ -877,11 +874,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
         private static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2, bool shouldMatchBonds)
         {
             //Bond Matcher
-            BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+            IBondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.Atoms[0], shouldMatchBonds);
+            IAtomMatcher atomMatcher1 = new DefaultRGraphAtomMatcher(ac1, bondA1.Atoms[0], shouldMatchBonds);
             //Atom Matcher
-            AtomMatcher atomMatcher2 = new DefaultRGraphAtomMatcher(ac1, bondA1.Atoms[1], shouldMatchBonds);
+            IAtomMatcher atomMatcher2 = new DefaultRGraphAtomMatcher(ac1, bondA1.Atoms[1], shouldMatchBonds);
 
             if (DefaultMatcher.IsBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                     && DefaultMatcher.IsAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds))
@@ -1315,7 +1312,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /// <summary></summary>
         /// <returns>the timeout</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static double GetTimeOut()
@@ -1323,7 +1319,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return TimeOut.Instance.Time;
         }
 
-        /// <summary></summary>
         /// <returns>the time manager</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static TimeManager GetTimeManager()

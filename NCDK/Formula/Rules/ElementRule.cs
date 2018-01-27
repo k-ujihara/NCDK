@@ -67,11 +67,12 @@ namespace NCDK.Formula.Rules
                 parameters[0] = mfRange;
                 return parameters;
             }
+
             set
             {
                 if (value.Length != 1) throw new CDKException("ElementRule expects one parameters");
 
-                if (!(value[0] is MolecularFormulaRange))
+                if (!(value[0] is null || value[0] is MolecularFormulaRange))
                     throw new CDKException("The parameter must be of type MolecularFormulaExpand");
 
                 mfRange = (MolecularFormulaRange)value[0];

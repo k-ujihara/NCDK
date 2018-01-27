@@ -20,13 +20,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
     /// <summary>
-    /// A read-only class used by <see cref="Elements"/> for the natural elements. This class is not to be used than by only <see cref="Elements"/>.
+    /// A read-only class used by <see cref="ChemicalElement"/> for the natural elements. This class is not to be used than by only <see cref="ChemicalElement"/>.
     /// </summary>
     // @author      egonw
     // @cdk.module  core

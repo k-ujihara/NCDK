@@ -1,6 +1,6 @@
 namespace NCDK.FaulonSignatures
 {
-    public interface ColoredTreeVisitor
+    public interface IColoredTreeVisitor
     {
         void Visit(ColoredTree.Node node);
     }

@@ -20,7 +20,7 @@
 namespace NCDK.NInChI
 {
     // @author sea36
-    public enum INCHI_STATUS
+    internal enum INCHI_STATUS
     {
         INCHI_VALID_STANDARD = 0,
         INCHI_VALID_NON_STANDARD = 1,

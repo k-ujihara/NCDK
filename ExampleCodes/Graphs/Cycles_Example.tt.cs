@@ -1,9 +1,7 @@
 ﻿
-using NCDK.Templates;
-
 namespace NCDK.Graphs
 {
-    public class Cycles_Example1
+    public class Cycles_Example
     {
         public void Main()
         {

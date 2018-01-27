@@ -518,7 +518,7 @@ namespace NCDK.Smiles
         /// <param name="beamAtom">an Atom from the Beam ChemicalGraph</param>
         /// <param name="hCount">hydrogen count for the atom</param>
         /// <returns>the CDK atom to have it's properties set</returns>
-        public IAtom ToCDKAtom(Atom beamAtom, int hCount)
+        public IAtom ToCDKAtom(Beam.IAtom beamAtom, int hCount)
         {
             IAtom cdkAtom = NewCDKAtom(beamAtom);
 
@@ -540,7 +540,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="atom">an Atom from the Beam Graph</param>
         /// <returns>the CDK atom to have it's properties set</returns>
-        public IAtom NewCDKAtom(Atom atom)
+        public IAtom NewCDKAtom(Beam.IAtom atom)
         {
             Element element = atom.Element;
             bool unknown = element == Element.Unknown;

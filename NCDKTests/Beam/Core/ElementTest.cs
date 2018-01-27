@@ -28,6 +28,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Config;
 using System;
 using static NCDK.Beam.Element;
 
@@ -224,8 +225,8 @@ namespace NCDK.Beam
         [TestMethod()]
         public void OfNumber()
         {
-            Assert.AreEqual(Element.OfNumber(6), Element.Carbon);
-            Assert.AreEqual(Element.OfNumber(8), Element.Oxygen);
+            Assert.AreEqual(ChemicalElement.OfNumber(6), ChemicalElements.Carbon);
+            Assert.AreEqual(ChemicalElement.OfNumber(8), ChemicalElements.Oxygen);
         }
 
         // Read() is no longer used.

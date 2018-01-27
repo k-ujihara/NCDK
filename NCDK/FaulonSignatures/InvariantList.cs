@@ -58,9 +58,8 @@ namespace NCDK.FaulonSignatures
 
         public override bool Equals(object o)
         {
-            if (o is InvariantList)
+            if (o is InvariantList other)
             {
-                InvariantList other = (InvariantList)o;
                 return this.Equals(other.invariants);
             }
             return false;

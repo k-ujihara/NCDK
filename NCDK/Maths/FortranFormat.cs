@@ -38,7 +38,7 @@ namespace NCDK.Maths
     // @author Dan Gezelter
     // @cdk.module standard
     // @cdk.githash
-    public static class FortranFormat
+    internal static class FortranFormat
     {
         /// <summary>
         /// Converts a string of digits to an double.

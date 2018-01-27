@@ -818,7 +818,6 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
-        [CLSCompliant(false)]
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Vector<UInt64> AsVectorUInt64<T>(Vector<T> value) where T : struct
         {

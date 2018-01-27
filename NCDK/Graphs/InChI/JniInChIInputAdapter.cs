@@ -30,17 +30,17 @@ using System.Text;
 
 namespace NCDK.Graphs.InChI
 {
-    public class JniInChIInputAdapter : NInchiInput
+    internal class JniInChIInputAdapter : NInchiInput
     {
         /// <summary>
         /// Flag indicating windows or linux.
         /// </summary>
-        private static readonly bool IS_WINDOWS = Environment.OSVersion.Platform < PlatformID.Unix;
+        private static bool IsWindows { get; } = Environment.OSVersion.Platform < PlatformID.Unix;
 
         /// <summary>
         /// Switch character for passing options. / in windows, - on other systems.
         /// </summary>
-        private static readonly string FLAG_CHAR = IS_WINDOWS ? "/" : "-";
+        private static readonly string FLAG_CHAR = IsWindows ? "/" : "-";
 
         public static readonly string FIVE_SECOND_TIMEOUT = FLAG_CHAR + "W5";
 

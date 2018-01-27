@@ -101,7 +101,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
         /// Return molecule
         /// <returns>Atom Container</returns>
         /// </summary>
-        private IAtomContainer Molecule => queryMolecule == null ? molecule : queryMolecule;
+        private IAtomContainer Molecule => queryMolecule ?? molecule;
 
         public IQuery Compile()
         {
@@ -113,7 +113,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             VFQueryBuilder result = new VFQueryBuilder();
             foreach (var atom in queryMolecule.Atoms)
             {
-                VFAtomMatcher matcher = CreateAtomMatcher(queryMolecule, atom);
+                IVFAtomMatcher matcher = CreateAtomMatcher(queryMolecule, atom);
                 if (matcher != null)
                 {
                     result.AddNode(matcher, atom);
@@ -135,7 +135,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             foreach (var atoms in queryMolecule.Atoms)
             {
                 IQueryAtom atom = (IQueryAtom)atoms;
-                VFAtomMatcher matcher = CreateAtomMatcher(atom, queryMolecule);
+                IVFAtomMatcher matcher = CreateAtomMatcher(atom, queryMolecule);
                 if (matcher != null)
                 {
                     result.AddNode(matcher, atom);
@@ -151,22 +151,22 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             return result;
         }
 
-        private VFAtomMatcher CreateAtomMatcher(IAtomContainer mol, IAtom atom)
+        private IVFAtomMatcher CreateAtomMatcher(IAtomContainer mol, IAtom atom)
         {
             return new DefaultVFAtomMatcher(mol, atom, IsBondMatchFlag);
         }
 
-        private VFBondMatcher CreateBondMatcher(IAtomContainer mol, IBond bond)
+        private IVFBondMatcher CreateBondMatcher(IAtomContainer mol, IBond bond)
         {
             return new DefaultVFBondMatcher(mol, bond, IsBondMatchFlag);
         }
 
-        private VFAtomMatcher CreateAtomMatcher(IQueryAtom atom, IQueryAtomContainer container)
+        private IVFAtomMatcher CreateAtomMatcher(IQueryAtom atom, IQueryAtomContainer container)
         {
             return new DefaultVFAtomMatcher(atom, container);
         }
 
-        private VFBondMatcher CreateBondMatcher(IQueryBond bond)
+        private IVFBondMatcher CreateBondMatcher(IQueryBond bond)
         {
             return new DefaultVFBondMatcher(bond);
         }

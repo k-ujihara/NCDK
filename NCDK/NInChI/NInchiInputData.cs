@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace NCDK.NInChI
 {
     // @author sea36
-    public class NInchiInputData
+    internal class NInchiInputData
     {
         public NInchiInput Input { get; private set; }
         public INCHI_RET ReturnStatus { get; private set; }

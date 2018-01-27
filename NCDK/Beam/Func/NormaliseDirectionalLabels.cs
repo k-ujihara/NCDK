@@ -214,8 +214,7 @@ namespace NCDK.Beam
                     int v = e.Other(u);
                     if (!visited[v])
                     {
-                        Edge f;
-                        if (replacement.TryGetValue(e, out f))
+                        if (replacement.TryGetValue(e, out Edge f))
                         {
                             replacement[e] = f.Inverse();
                         }

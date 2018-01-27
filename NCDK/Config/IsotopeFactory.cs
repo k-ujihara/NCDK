@@ -17,11 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using NCDK.Tools;
 
 namespace NCDK.Config
 {
@@ -34,7 +33,6 @@ namespace NCDK.Config
     // @cdk.created    2001-08-29
     public abstract class IsotopeFactory
     {
-        public static readonly IIsotope[] EMPTY_ISOTOPE_ARRAY = new IIsotope[0];
         private List<IIsotope>[] isotopes = new List<IIsotope>[256];
         private IIsotope[] majorIsotope = new IIsotope[256];
 
@@ -79,7 +77,7 @@ namespace NCDK.Config
         /// <returns><see cref="IIsotope"/>s that matches the given element symbol</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(string symbol)
         {
-    int elem = Elements.OfString(symbol).AtomicNumber;
+            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
             if (isotopes[elem] == null)
                 yield break;
             List<IIsotope> list = new List<IIsotope>();
@@ -137,7 +135,7 @@ namespace NCDK.Config
         /// <returns>the corresponding isotope</returns>
         public virtual IIsotope GetIsotope(string symbol, int massNumber)
         {
-            int elem = Elements.OfString(symbol).AtomicNumber;
+            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
             var isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
@@ -162,7 +160,7 @@ namespace NCDK.Config
         {
             IIsotope ret = null;
             double minDiff = double.MaxValue;
-            int elem = Elements.OfString(symbol).AtomicNumber;
+            int elem = ChemicalElement.OfString(symbol).AtomicNumber;
             List<IIsotope> isotopes = this.isotopes[elem];
             if (isotopes == null)
                 return null;
@@ -242,7 +240,7 @@ namespace NCDK.Config
         /// <returns>The Major Isotope value</returns>
         public virtual IIsotope GetMajorIsotope(string symbol)
         {
-            return GetMajorIsotope(Elements.OfString(symbol).AtomicNumber);
+            return GetMajorIsotope(ChemicalElement.OfString(symbol).AtomicNumber);
         }
 
         /// <summary>

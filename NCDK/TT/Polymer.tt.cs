@@ -25,7 +25,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 
 using System;
 using System.Collections.Generic;
@@ -88,8 +88,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
-            IMonomer ret;
-            if (!monomers.TryGetValue(cName, out ret))
+            if (!monomers.TryGetValue(cName, out IMonomer ret))
                 ret = null;
             return ret;
         }
@@ -103,8 +102,7 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
-            IMonomer monomer;
-            if (monomers.TryGetValue(name, out monomer))
+            if (monomers.TryGetValue(name, out IMonomer monomer))
             {
                 Remove(monomer);
                 monomers.Remove(name);
@@ -192,8 +190,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
-            IMonomer ret;
-            if (!monomers.TryGetValue(cName, out ret))
+            if (!monomers.TryGetValue(cName, out IMonomer ret))
                 ret = null;
             return ret;
         }
@@ -207,8 +204,7 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
-            IMonomer monomer;
-            if (monomers.TryGetValue(name, out monomer))
+            if (monomers.TryGetValue(name, out IMonomer monomer))
             {
                 Remove(monomer);
                 monomers.Remove(name);

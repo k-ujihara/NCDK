@@ -31,7 +31,8 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
 
-<#    foreach (var ns in namespaces) 
+<#
+foreach (var ns in namespaces) 
 {
     bool addNofityChanged =  !ns.IsSilent;
 #>

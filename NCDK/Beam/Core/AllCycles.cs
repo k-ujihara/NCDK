@@ -50,7 +50,7 @@ namespace NCDK.Beam
         private readonly Graph org;
 
         private const int MAX_VERTEX_DEGREE = 684;
-        class Inner_ElectronDonation_Cycle : ElectronDonation.Cycle
+        class Inner_ElectronDonation_Cycle : ElectronDonation.ICycle
         {
             public bool Contains(int u)
             {
@@ -65,7 +65,7 @@ namespace NCDK.Beam
             this.pathGraph = new IList<PathEdge>[g.Order];
             this.aromatic = new bool[g.Order];
 
-            ElectronDonation.Cycle cycle = new Inner_ElectronDonation_Cycle();
+            ElectronDonation.ICycle cycle = new Inner_ElectronDonation_Cycle();
 
             BitArray cyclic = new BiconnectedComponents(g).Cyclic;
 

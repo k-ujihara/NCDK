@@ -24,7 +24,7 @@ namespace NCDK.NInChI
     /// Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_RADICAL
+    internal enum INCHI_RADICAL
     {
         /// <summary>
         /// No radical status recorded.

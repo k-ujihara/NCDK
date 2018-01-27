@@ -25,7 +25,7 @@ namespace NCDK.NInChI
     /// Encapsulates properties of InChI Bond.  See <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public class NInchiBond
+    internal class NInchiBond
     {
         /// <summary>
         /// Origin atom in bond.

@@ -95,7 +95,7 @@ namespace NCDK.Beam
         /// <param name="u">an atom</param>
         /// <param name="v">another atom </param>(connected to u)
         /// <returns>the bond type</returns>
-        public static Bond Type(Atom u, Atom v)
+        public static Bond Type(IAtom u, IAtom v)
         {
             return u.IsAromatic() && v.IsAromatic() ? Bond.Aromatic : Bond.Single;
         }

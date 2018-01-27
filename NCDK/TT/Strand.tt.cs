@@ -63,9 +63,11 @@ namespace NCDK.Default
         public Strand()
             : base()
         {
-            Monomer oMonomer = new Monomer();
-            oMonomer.MonomerName = "";
-            oMonomer.MonomerType = "Unknown";
+		    Monomer oMonomer = new Monomer
+            {
+                MonomerName = "",
+                MonomerType = "Unknown"
+            };
             monomers.Add("", oMonomer);
         }
 
@@ -133,8 +135,7 @@ namespace NCDK.Default
 
         public IMonomer GetMonomer(string cName)
         {
-            IMonomer monomer;
-            if (monomers.TryGetValue(cName, out monomer))
+            if (monomers.TryGetValue(cName, out IMonomer monomer))
                 return monomer;
             return null;
         }
@@ -213,9 +214,11 @@ namespace NCDK.Silent
         public Strand()
             : base()
         {
-            Monomer oMonomer = new Monomer();
-            oMonomer.MonomerName = "";
-            oMonomer.MonomerType = "Unknown";
+		    Monomer oMonomer = new Monomer
+            {
+                MonomerName = "",
+                MonomerType = "Unknown"
+            };
             monomers.Add("", oMonomer);
         }
 
@@ -283,8 +286,7 @@ namespace NCDK.Silent
 
         public IMonomer GetMonomer(string cName)
         {
-            IMonomer monomer;
-            if (monomers.TryGetValue(cName, out monomer))
+            if (monomers.TryGetValue(cName, out IMonomer monomer))
                 return monomer;
             return null;
         }

@@ -46,7 +46,7 @@ namespace NCDK.Tools
         {
             // First we create a simple carbon ring to play with...
             IAtomContainer mol = new AtomContainer();
-            IAtomType carbon = new AtomType(Elements.Carbon.ToIElement());
+            IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
             IAtom a0 = new Atom("C");
             a0.Hybridization = Hybridization.SP2;
@@ -614,7 +614,7 @@ namespace NCDK.Tools
         public void TestButadiene()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtomType carbon = new AtomType(Elements.Carbon.ToIElement());
+            IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
             IAtom a0 = new Atom("C");
             a0.Hybridization = Hybridization.SP2;

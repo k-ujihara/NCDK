@@ -55,7 +55,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public class DefaultBondMatcher : BondMatcher
+    public class DefaultBondMatcher : IBondMatcher
     {
         private IBond queryBond = null;
         private IQueryBond smartQueryBond = null;

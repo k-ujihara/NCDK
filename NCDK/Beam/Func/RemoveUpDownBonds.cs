@@ -90,8 +90,7 @@ namespace NCDK.Beam
                     if (e.Other(u) > u)
                     {
                         Edge ee = e;
-                        Edge replacement;
-                        if (replacements.TryGetValue(e, out replacement))
+                        if (replacements.TryGetValue(e, out Edge replacement))
                             ee = replacement;
                         h.AddEdge(ee);
                     }

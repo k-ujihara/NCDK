@@ -27,9 +27,6 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.Beam
 {
     /// <summary>
@@ -94,7 +91,7 @@ namespace NCDK.Beam
         /// <param name="v">another atom </param>(connected to u)
         /// <param name="b">explicit bond type</param>
         /// <returns>the bond type</returns>
-        static Bond GetBondType(Atom u, Atom v, Bond b) {
+        static Bond GetBondType(IAtom u, IAtom v, Bond b) {
             if (u.IsAromatic() && v.IsAromatic())
                 return b == Bond.Aromatic ? Bond.Implicit : b;
             else

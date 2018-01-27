@@ -65,9 +65,11 @@ namespace NCDK.Config.AtomType
         /// <returns><see cref="IEnumerable{T}"/> with atom types. Is empty if some reading error occurred.</returns>
         public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
-            var settings = new XmlReaderSettings();
-            settings.ValidationType = ValidationType.None;
-            settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
+            var settings = new XmlReaderSettings
+            {
+                ValidationType = ValidationType.None,
+                ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None
+            };
             XmlReader reader = XmlReader.Create(input, settings);
 
             var doc = XElement.Load(reader);

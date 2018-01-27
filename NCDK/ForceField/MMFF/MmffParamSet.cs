@@ -58,23 +58,23 @@ namespace NCDK.ForceField.MMFF
 
         MmffParamSet()
         {
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFCHG.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFCHG.PAR"))
             {
                 ParseMMFFCHARGE(ins, bcis);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFFORMCHG.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFFORMCHG.PAR"))
             {
                 ParseMMFFFORMCHG(ins, fCharges);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFPROP.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFPROP.PAR"))
             {
                 ParseMMFFPPROP(ins, properties);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFPBCI.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "MMFFPBCI.PAR"))
             {
                 ParseMMFFPBCI(ins, properties);
             }
-            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "mmff-symb-mapping.tsv"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv"))
             {
                 ParseMMFFTypeMap(ins, typeMap);
             }
@@ -87,8 +87,7 @@ namespace NCDK.ForceField.MMFF
         /// <returns>integer MMFF type</returns>
         public int IntType(string sym)
         {
-            int i;
-            if (!typeMap.TryGetValue(sym, out i))
+            if (!typeMap.TryGetValue(sym, out int i))
                 return 0;
             return i;
         }
@@ -103,8 +102,7 @@ namespace NCDK.ForceField.MMFF
         /// <returns>bci</returns>
         public decimal? GetBondChargeIncrement(int cls, int type1, int type2)
         {
-            decimal ret;
-            if (!bcis.TryGetValue(new BondKey(cls, type1, type2), out ret))
+            if (!bcis.TryGetValue(new BondKey(cls, type1, type2), out decimal ret))
                 return null;
             return ret;
         }
@@ -148,8 +146,7 @@ namespace NCDK.ForceField.MMFF
         /// <returns>formal charge</returns>
         public decimal? GetFormalCharge(string symb)
         {
-            decimal ret;
-            if (!fCharges.TryGetValue(symb, out ret))
+            if (!fCharges.TryGetValue(symb, out decimal ret))
                 return null;
             return ret;
         }
@@ -236,7 +233,7 @@ namespace NCDK.ForceField.MMFF
                     if (cols.Count != 9)
                         throw new IOException("Malformed MMFFPROP.PAR file.");
                     int type = int.Parse(cols[0]);
-                    props[type] = new MmffProp(int.Parse(cols[1]), 
+                    props[type] = new MmffProp(int.Parse(cols[1]),
                                                int.Parse(cols[2]),
                                                int.Parse(cols[3]),
                                                int.Parse(cols[4]),

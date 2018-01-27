@@ -21,7 +21,8 @@
 
 using System.Collections.Generic;
 
-<#    foreach (var ns in namespaces) 
+<#
+foreach (var ns in namespaces) 
 {
 #>
 namespace <#= ns.NS #>

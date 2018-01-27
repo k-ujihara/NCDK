@@ -21,9 +21,9 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
- using System;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -334,8 +334,7 @@ namespace NCDK.Default
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
 
-            IBond iclone;
-            if (map.TryGetValue(this, out iclone))
+            if (map.TryGetValue(this, out IBond iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms
@@ -708,8 +707,7 @@ namespace NCDK.Silent
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
 
-            IBond iclone;
-            if (map.TryGetValue(this, out iclone))
+            if (map.TryGetValue(this, out IBond iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms

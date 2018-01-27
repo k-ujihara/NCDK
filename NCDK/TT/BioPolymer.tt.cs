@@ -25,8 +25,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -103,8 +103,7 @@ namespace NCDK.Default
 
         public IMonomer GetMonomer(string monomerName, string strandName)
         {
-            IStrand strand;
-            if (!strands.TryGetValue(strandName, out strand))
+            if (!strands.TryGetValue(strandName, out IStrand strand))
                 return null;
             return strand.GetMonomer(monomerName);
         }
@@ -148,8 +147,7 @@ namespace NCDK.Default
 
         public IStrand GetStrand(string cName)
         {
-            IStrand strand;
-            if (strands.TryGetValue(cName, out strand))
+            if (strands.TryGetValue(cName, out IStrand strand))
                 return strand;
             return null;
         }
@@ -266,8 +264,7 @@ namespace NCDK.Silent
 
         public IMonomer GetMonomer(string monomerName, string strandName)
         {
-            IStrand strand;
-            if (!strands.TryGetValue(strandName, out strand))
+            if (!strands.TryGetValue(strandName, out IStrand strand))
                 return null;
             return strand.GetMonomer(monomerName);
         }
@@ -311,8 +308,7 @@ namespace NCDK.Silent
 
         public IStrand GetStrand(string cName)
         {
-            IStrand strand;
-            if (strands.TryGetValue(cName, out strand))
+            if (strands.TryGetValue(cName, out IStrand strand))
                 return strand;
             return null;
         }

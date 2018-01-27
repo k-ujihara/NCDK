@@ -87,11 +87,8 @@ namespace NCDK.Hash
         public SeedGenerator(IAtomEncoder encoder, Pseudorandom pseudorandom, AtomSuppression suppression)
             : base(pseudorandom)
         {
-            if (encoder == null) throw new ArgumentNullException("encoder cannot be null");
-            if (suppression == null)
-                throw new ArgumentNullException("suppression cannot be null, use AtomSuppression.Unsuppressed()");
-            this.encoder = encoder;
-            this.suppression = suppression;
+            this.encoder = encoder ?? throw new ArgumentNullException("encoder cannot be null");
+            this.suppression = suppression ?? throw new ArgumentNullException("suppression cannot be null, use AtomSuppression.Unsuppressed()");
         }
 
         public long[] Generate(IAtomContainer container)

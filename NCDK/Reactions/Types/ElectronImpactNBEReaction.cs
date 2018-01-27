@@ -83,8 +83,10 @@ namespace NCDK.Reactions.Types
                 if (atom.IsReactiveCenter && reactant.GetConnectedLonePairs(atom).Any()
                         && !reactant.GetConnectedSingleElectrons(atom).Any())
                 {
-                    var atomList = new List<IAtom>();
-                    atomList.Add(atom);
+                    var atomList = new List<IAtom>
+                    {
+                        atom
+                    };
                     IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
                     moleculeSet.Add(reactant);
                     IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, null);

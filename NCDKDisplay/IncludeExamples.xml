@@ -2,7 +2,7 @@
 <Comments>
   <Codes id="NCDK.Aromaticities.Aromaticity_Example.cs">
     <code>                ElectronDonation model = ElectronDonation.DaylightModel;
-                CycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cycles = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
                 Aromaticity aromaticity = new Aromaticity(model, cycles);
 
                 // apply our configured model to each molecule
@@ -79,18 +79,18 @@
     <code>                    atom.GetProperty&lt;double&gt;("MMFF94charge")
 </code>
   </Codes>
-  <Codes id="NCDK.Config.Elements_Example.cs+OfNumber">
+  <Codes id="NCDK.Config.ChemicalElement_Example.cs+OfNumber">
     <code>                // carbon
-                Elements c = Elements.OfNumber(6);
+                var c = ChemicalElement.OfNumber(6);
                 // oxygen
-                Elements o = Elements.OfNumber(8);
+                var o = ChemicalElement.OfNumber(8);
 </code>
   </Codes>
-  <Codes id="NCDK.Config.Elements_Example.cs+OfString">
-    <code>                 Elements a = Elements.OfString("c");
-                 Elements b = Elements.OfString("C");
-                 Elements c = Elements.OfString("Carbon");
-                 Elements d = Elements.OfString("carbon");
+  <Codes id="NCDK.Config.ChemicalElement_Example.cs+OfString">
+    <code>                var a = ChemicalElement.OfString("c");
+                var b = ChemicalElement.OfString("C");
+                var c = ChemicalElement.OfString("Carbon");
+                var d = ChemicalElement.OfString("carbon");
 </code>
   </Codes>
   <Codes id="NCDK.Config.XMLIsotopeFactory_Example.cs+1">
@@ -102,8 +102,36 @@
                 IIsotope major = factory.GetMajorIsotope("H");
 </code>
   </Codes>
+  <Codes id="NCDK.Depict.Abbreviations_Example.cs">
+    <code>            Abbreviations abrv = new Abbreviations
+            {
+                // add some abbreviations, when overlapping (e.g. Me,Et,tBu) first one wins
+                "[Na+].[H-] NaH",
+                "*c1ccccc1 Ph",
+                "*C(C)(C)C tBu",
+                "*CC Et",
+                "*C Me"
+            };
+            // maybe we don't want 'Me' in the depiction
+            abrv.SetEnabled("Me", false);
+            // assign abbreviations with some filters
+            int numAdded = abrv.Apply(mol);
+            // generate all but don't assign, need to be added manually
+            // set/update the CDKPropertyName.CtabSgroups property of mol
+            var sgroups = abrv.Generate(mol);
+</code>
+  </Codes>
+  <Codes id="NCDK.Depict.Abbreviations_Example.cs+1">
+    <code>            // https://www.github.com/openbabel/superatoms
+            abrv.LoadFromFile("obabel_superatoms.smi");
+</code>
+  </Codes>
   <Codes id="NCDK.Depict.DepictionGenerator_Example.cs+1">
-    <code>                DepictionGenerator dg = new DepictionGenerator().WithSize(512, 512).WithAtomColors();
+    <code>                DepictionGenerator dg = new DepictionGenerator()
+                {
+                    Size = new Size(512, 512),
+                    AtomColorer = new Renderers.Colors.CDK2DAtomColors(),
+                };
                 foreach (IAtomContainer mol in mols)
                     dg.Depict(mol).WriteTo("mol.png");
 </code>
@@ -122,7 +150,7 @@
                 depiction.WriteTo("mol.jpg");
                  
                 // manually specify the format
-                depiction.WriteTo(Depiction.SVG_FMT, "~/mol");
+                depiction.WriteTo(Depiction.SvgFormatKey, "~/mol");
 
                 // convert to a Java buffered image
                 RenderTargetBitmap img = depiction.ToBitmap();
@@ -132,7 +160,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Depict.Depiction_Example.cs+EnsureSuffix">
-    <code>            depiction.WriteTo(Depiction.SVG_FMT, "~/chemical"); // create a file "~/chemical.svg" 
+    <code>            depiction.WriteTo(Depiction.SvgFormatKey, "~/chemical"); // create a file "~/chemical.svg" 
 </code>
   </Codes>
   <Codes id="NCDK.Depict.SvgDrawVisitor_Example.cs">
@@ -198,6 +226,29 @@
                 mmff.ClearProps(mol); // optional
 </code>
   </Codes>
+  <Codes id="NCDK.Formula.FullEnumerationFormulaGenerator_Example.cs">
+    <code>            IsotopeFactory ifac = Isotopes.Instance;
+            IIsotope c = ifac.GetMajorIsotope("C");
+            IIsotope h = ifac.GetMajorIsotope("H");
+            IIsotope n = ifac.GetMajorIsotope("N");
+            IIsotope o = ifac.GetMajorIsotope("O");
+            IIsotope p = ifac.GetMajorIsotope("P");
+            IIsotope s = ifac.GetMajorIsotope("S");
+
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.AddIsotope(c, 0, 50);
+            mfRange.AddIsotope(h, 0, 100);
+            mfRange.AddIsotope(o, 0, 50);
+            mfRange.AddIsotope(n, 0, 50);
+            mfRange.AddIsotope(p, 0, 10);
+            mfRange.AddIsotope(s, 0, 10);
+
+            double minMass = 133.003;
+            double maxMass = 133.005;
+            MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
+            IMolecularFormulaSet mfSet = mfg.GetAllFormulas();
+</code>
+  </Codes>
   <Codes id="NCDK.Formula.MolecularFormulaGenerator_Example.cs">
     <code>            IsotopeFactory ifac = Isotopes.Instance;
              IIsotope c = ifac.GetMajorIsotope("C");
@@ -257,7 +308,7 @@
   <Codes id="NCDK.Geometries.CIP.CIPTool_Example.cs">
     <code>            IAtom[] ligandAtoms = mol.GetConnectedAtoms(centralAtom).ToArray();
             ITetrahedralChirality tetraStereo = new TetrahedralChirality(centralAtom, ligandAtoms, TetrahedralStereo.AntiClockwise);
-            CIPChiralities cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
+            CIPChirality cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
 </code>
   </Codes>
   <Codes id="NCDK.Geometries.RDFCalculator_Example.cs">
@@ -463,8 +514,8 @@ namespace NCDK.Graphs
             int fragmentCount = fragments.Count;
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+AllFinder">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+AllFinder">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -479,8 +530,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+MCB">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+MCB">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -495,8 +546,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+Relevant">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Relevant">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -511,8 +562,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+Essential">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Essential">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -527,8 +578,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+TripletShort">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+TripletShort">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -543,8 +594,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+VertexShort">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+VertexShort">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -559,8 +610,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+EdgeShort">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+EdgeShort">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -575,8 +626,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+CDKAromaticSetFinder">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+CDKAromaticSetFinder">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -591,8 +642,8 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+AllOrVertexShortFinder">
-    <code>                CycleFinder cf = Cycles.AllFinder;
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+AllOrVertexShortFinder">
+    <code>                ICycleFinder cf = Cycles.AllFinder;
                 foreach (var container in containers) 
                 {
                     try
@@ -607,17 +658,17 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+Or6">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+Or6">
     <code>                // all cycles or all cycles size &lt;= 6
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.GetAllFinder(6));
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+OrARE">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+OrARE">
     <code>                // all cycles or relevant or essential
-                CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
+                ICycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.RelevantFinder, Cycles.EssentialFinder));
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindAll">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindAll">
     <code>                foreach (var container in containers)
                 {
                     try
@@ -632,37 +683,37 @@ namespace NCDK.Graphs
                 }
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindMCB">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindMCB">
     <code>                        Cycles cycles = Cycles.FindMCB(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindSSSR">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindSSSR">
     <code>                        Cycles cycles = Cycles.FindSSSR(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindRelevant">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindRelevant">
     <code>                        Cycles cycles = Cycles.FindRelevant(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindEssential">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindEssential">
     <code>                        Cycles cycles = Cycles.FindEssential(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindTripletShort">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindTripletShort">
     <code>                        Cycles cycles = Cycles.FindTripletShort(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindVertexShort">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindVertexShort">
     <code>                        Cycles cycles = Cycles.FindVertexShort(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
   </Codes>
-  <Codes id="NCDK.Graphs.Cycles_Example.cs+FindEdgeShort">
+  <Codes id="NCDK.Graphs.Cycles_Example.tt.cs+FindEdgeShort">
     <code>                        Cycles cycles = Cycles.FindEdgeShort(container);
                         IRingSet rings = cycles.ToRingSet();
 </code>
@@ -947,6 +998,10 @@ namespace NCDK.Graphs
                 refiner.Refine(ac);
                 bool isCanon = refiner.IsCanonical();
                 PermutationGroup autG = refiner.GetAutomorphismGroup();
+</code>
+  </Codes>
+  <Codes id="NCDK.Groups.PartitionRefinement_Example.cs">
+    <code>                IAtomContainerDiscretePartitionRefiner refiner = PartitionRefinement.ForAtoms().Create();
 </code>
   </Codes>
   <Codes id="NCDK.Hash.HashGeneratorMaker_Example.cs">
@@ -1499,6 +1554,12 @@ namespace NCDK.Graphs
                 engine.Process(someAtomContainer);
 </code>
   </Codes>
+  <Codes id="NCDK.Renderers.Elements.MarkedElement_Example.cs">
+    <code>            atom.SetProperty(MarkedElement.IdKey, "my_atm_id");
+            atom.SetProperty(MarkedElement.ClassKey, "h_donor");
+            atom.SetProperty(MarkedElement.ClassKey, "h_acceptor");
+</code>
+  </Codes>
   <Codes id="NCDK.RingSearches.AllRingsFinder_Example.cs">
     <code>                AllRingsFinder arf = new AllRingsFinder();
                 foreach (var m in ms)
@@ -2042,7 +2103,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Tools.DataFeatures_Example.cs+1">
-    <code>            int features = new XYZFormat().SupportedDataFeatures;
+    <code>            var features = new XYZFormat().SupportedDataFeatures;
             bool has3DCoords = (features &amp; HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
 </code>
   </Codes>
@@ -2053,6 +2114,34 @@ namespace NCDK.Smiles
   </Codes>
   <Codes id="NCDK.Tools.StructureResonanceGenerator_Example.cs+2">
     <code>            molecule.Atoms[0].IsReactiveCenter = true;
+</code>
+  </Codes>
+  <Codes id="NCDK.TT.Element_Example.cs">
+    <code>                IsotopeFactory f = XMLIsotopeFactory.GetInstance(new Element().Builder);
+                IElement e1 = f.GetElement("C");
+                IElement e2 = f.GetElement(12);
+</code>
+  </Codes>
+  <Codes id="NCDK.TT.Element_Example.cs+AtomicNumber">
+    <code>                IAtom element = new Atom("C");
+                IsotopeFactory f = XMLIsotopeFactory.GetInstance(element.Builder);
+                f.Configure(element);
+</code>
+  </Codes>
+  <Codes id="NCDK.TT.Isotope_Example.cs+1">
+    <code>                Isotope carbon = new Isotope("C", 13);
+</code>
+  </Codes>
+  <Codes id="NCDK.TT.Isotope_Example.cs+2">
+    <code>                // make deuterium
+                Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
+</code>
+  </Codes>
+  <Codes id="NCDK.TT.Isotope_Example.cs+NaturalAbundance">
+    <code>                IAtom atom = new Atom();
+                Isotope isotope = new Isotope("C", 13);
+                XMLIsotopeFactory f = XMLIsotopeFactory.GetInstance(isotope.Builder);
+                f.Configure(atom, isotope);
 </code>
   </Codes>
   <Codes id="NCDK.ConformerContainer_Example.cs">

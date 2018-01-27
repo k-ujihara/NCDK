@@ -345,7 +345,7 @@ namespace NCDK.FaulonSignatures
             return externalLabels;
         }
 
-        public void Accept(DAGVisitor visitor)
+        public void Accept(IDAGVisitor visitor)
         {
             dag.Accept(visitor);
         }

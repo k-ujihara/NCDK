@@ -241,18 +241,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 allheavysum += (mass1 * mass2) / dist;
             }
 
-            ArrayResult<double> retval = new ArrayResult<double>(9);
-            retval.Add(heavysum);
-            retval.Add(Math.Sqrt(heavysum));
-            retval.Add(Math.Pow(heavysum, 1.0 / 3.0));
+            ArrayResult<double> retval = new ArrayResult<double>(9)
+            {
+                heavysum,
+                Math.Sqrt(heavysum),
+                Math.Pow(heavysum, 1.0 / 3.0),
 
-            retval.Add(sum);
-            retval.Add(Math.Sqrt(sum));
-            retval.Add(Math.Pow(sum, 1.0 / 3.0));
+                sum,
+                Math.Sqrt(sum),
+                Math.Pow(sum, 1.0 / 3.0),
 
-            retval.Add(allheavysum);
-            retval.Add(Math.Sqrt(allheavysum));
-            retval.Add(Math.Pow(allheavysum, 1.0 / 3.0));
+                allheavysum,
+                Math.Sqrt(allheavysum),
+                Math.Pow(allheavysum, 1.0 / 3.0)
+            };
 
             return new DescriptorValue<ArrayResult<double>>(_Specification, ParameterNames, Parameters, retval,
                     DescriptorNames);

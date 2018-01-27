@@ -24,15 +24,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using NCDK.Default;
 using System.Text;
 
-<#    foreach (var ns in namespaces) 
+<#
+foreach (var ns in namespaces) 
 {
 #>
 namespace <#= ns.NS #>

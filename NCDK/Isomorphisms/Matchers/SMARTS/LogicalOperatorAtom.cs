@@ -44,7 +44,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         {
         }
 
-        [Obsolete]
+        [Obsolete("use static utility methods to create logical atom matcher, " + nameof(And) + ", " + nameof(Or) + " or " + nameof(Not) + ".")]
         public virtual IQueryAtom Left
         {
             get { return left; }
@@ -58,7 +58,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             set { operator_ = value; }
         }
 
-        [Obsolete]
+        [Obsolete("use static utility methods to create logical atom matcher, " + nameof(And) + ", " + nameof(Or) + " or " + nameof(Not) + ".")]
         public virtual IQueryAtom Right
         {
             get { return right; }
@@ -156,18 +156,21 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                 base.Operator = "and";
             }
 
+            [Obsolete]
             public override IQueryAtom Left
             {
                 get { return base.Left; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override string Operator
             {
                 get { return base.Operator; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override IQueryAtom Right
             {
                 get { return base.Right; }
@@ -214,18 +217,21 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                 base.Operator = "or";
             }
 
+            [Obsolete]
             public override IQueryAtom Left
             {
                 get { return base.Left; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override string Operator
             {
                 get { return base.Operator; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override IQueryAtom Right
             {
                 get { return base.Right; }
@@ -271,18 +277,21 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
                 base.Operator = "not";
             }
 
+            [Obsolete]
             public override IQueryAtom Left
             {
                 get { return base.Left; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override string Operator
             {
                 get { return base.Operator; }
                 set { throw new InvalidOperationException("create a new logical atom"); }
             }
 
+            [Obsolete]
             public override IQueryAtom Right
             {
                 get { return base.Right; }

@@ -156,8 +156,7 @@ namespace NCDK.Tools.Manipulator
         public void TestGetTotalHydrogenCount_ImplicitHydrogens()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom carbon = new Atom("C");
-            carbon.ImplicitHydrogenCount = 4;
+            Atom carbon = new Atom("C") { ImplicitHydrogenCount = 4 };
             mol.Atoms.Add(carbon);
             Assert.AreEqual(4, AtomContainerManipulator.GetTotalHydrogenCount(mol));
         }
@@ -268,7 +267,7 @@ namespace NCDK.Tools.Manipulator
         {
 
             IAtomContainer molecule = GetChiralMolTemplate();
-            molecule.Atoms[1].StereoParity = CDKConstants.STEREO_ATOM_PARITY_MINUS;
+            molecule.Atoms[1].StereoParity = StereoAtomParity.Minus;
 
             Assert.AreEqual(8, molecule.Atoms.Count);
             IAtomContainer ac = AtomContainerManipulator.RemoveNonChiralHydrogens(molecule);
@@ -572,8 +571,7 @@ namespace NCDK.Tools.Manipulator
         public void GetNaturalExactMassNeedsHydrogens()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("C");
-            atom.ImplicitHydrogenCount = null;
+            IAtom atom = new Atom("C") { ImplicitHydrogenCount = null };
             mol.Atoms.Add(atom);
             AtomContainerManipulator.GetNaturalExactMass(mol);
         }
@@ -705,12 +703,13 @@ namespace NCDK.Tools.Manipulator
         public void TestPerceiveAtomTypesAndConfigureUnSetProperties()
         {
             IAtomContainer container = new AtomContainer();
-            IAtom atom = new Atom("C");
-            atom.ExactMass = 13.0;
+            IAtom atom = new Atom("C") { ExactMass = 13.0 };
             container.Atoms.Add(atom);
-            IAtomType type = new AtomType("C");
-            type.AtomTypeName = "C.sp3";
-            type.ExactMass = 12.0;
+            IAtomType type = new AtomType("C")
+            {
+                AtomTypeName = "C.sp3",
+                ExactMass = 12.0
+            };
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(container);
             Assert.IsNotNull(atom.ExactMass);

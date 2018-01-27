@@ -362,9 +362,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     }
                 }
             }
-            List<string> objec = new List<string>();
-            objec.Add(idEdited.ToString());
-            objec.Add(valEdited.ToString());
+            List<string> objec = new List<string>
+            {
+                idEdited.ToString(),
+                valEdited.ToString()
+            };
             return objec;
         }
     }

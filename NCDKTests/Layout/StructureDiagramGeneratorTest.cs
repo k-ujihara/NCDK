@@ -18,20 +18,21 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Mathematics;
 using NCDK.Default;
 using NCDK.Geometries;
 using NCDK.IO;
+using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Smiles;
+using NCDK.Stereo;
 using NCDK.Templates;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using NCDK.Numerics;
-using NCDK.Stereo;
 
 namespace NCDK.Layout
 {

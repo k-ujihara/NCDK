@@ -77,6 +77,13 @@
 		return isStruct ? "struct" : "class";
 	}
 
+	public void EndGenerateEnumBody()
+	{
+#>
+	}
+<#+
+	}
+
 	public void GenerateEnumBody(string name, string[] entities, bool isStruct)
 	{
 		GenerateEnumBody(name, entities, isStruct, null);
@@ -90,7 +97,7 @@
 	public void GenerateEnumBody(string name, string[] entities, bool isStruct, string implements)
     {
 #>
-    public partial <#= StructOrClass(isStruct)  #> <#= name #> : System.IComparable<<#= name #>>, System.IComparable
+    partial <#= StructOrClass(isStruct)  #> <#= name #> : System.IComparable<<#= name #>>, System.IComparable
 <#+
 		if (implements != null)
 		{
@@ -233,7 +240,7 @@ foreach (var s in entities)
 #>
             if (ReferenceEquals(a, b))
                 return true;
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
                 return false;
 <#+
         }
@@ -277,8 +284,6 @@ foreach (var s in entities)
         {
             return (Ordinal).CompareTo(o.Ordinal);
         }   	
-	}
-	public partial <#= StructOrClass(isStruct)  #> <#= name #> 
 <#+
     }
 #>

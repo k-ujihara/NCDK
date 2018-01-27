@@ -88,11 +88,15 @@ namespace NCDK.Reactions.Types
                                         IAtom atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter && atomk.FormalCharge == 0)
                                         {
-                                            var atomList = new List<IAtom>();
-                                            atomList.Add(atomk);
-                                            atomList.Add(atomj);
-                                            var bondList = new List<IBond>();
-                                            bondList.Add(bondj);
+                                            var atomList = new List<IAtom>
+                                            {
+                                                atomk,
+                                                atomj
+                                            };
+                                            var bondList = new List<IBond>
+                                            {
+                                                bondj
+                                            };
 
                                             IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                             moleculeSet.Add(reactant);

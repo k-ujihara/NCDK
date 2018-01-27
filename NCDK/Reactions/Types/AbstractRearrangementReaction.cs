@@ -76,13 +76,17 @@ namespace NCDK.Reactions.Types
                                                 && checkAtom(atomk)
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any())
                                         {
-                                            var atomList = new List<IAtom>();
-                                            atomList.Add(atomi);
-                                            atomList.Add(atomj);
-                                            atomList.Add(atomk);
-                                            var bondList = new List<IBond>();
-                                            bondList.Add(bondi);
-                                            bondList.Add(bondj);
+                                            var atomList = new List<IAtom>
+                                            {
+                                                atomi,
+                                                atomj,
+                                                atomk
+                                            };
+                                            var bondList = new List<IBond>
+                                            {
+                                                bondi,
+                                                bondj
+                                            };
 
                                             IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
 

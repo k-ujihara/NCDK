@@ -19,13 +19,12 @@
 
 namespace NCDK.NInChI
 {
-
     /// <summary>
     /// Enumeration of InChI bond type definitions.
     /// Corresponds to <tt>inchi_BondType</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    public enum INCHI_BOND_TYPE
+    internal enum INCHI_BOND_TYPE
     {
         None = 0,
 

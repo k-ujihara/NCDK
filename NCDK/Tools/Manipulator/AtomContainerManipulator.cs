@@ -219,7 +219,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 Isotopes isotopes = Isotopes.Instance;
-                double hmass = isotopes.GetNaturalMass(Elements.Hydrogen.ToIElement());
+                double hmass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
                 double mw = 0.0;
                 foreach (IAtom atom in mol.Atoms)
                 {
@@ -261,7 +261,7 @@ namespace NCDK.Tools.Manipulator
             try
             {
                 Isotopes isotopes = Isotopes.Instance;
-                double hydgrogenMass = isotopes.GetNaturalMass(Elements.Hydrogen.ToIElement());
+                double hydgrogenMass = isotopes.GetNaturalMass(ChemicalElements.Hydrogen.ToIElement());
 
                 double mass = 0.0;
                 foreach (var atom in atomContainer.Atoms)
@@ -272,7 +272,7 @@ namespace NCDK.Tools.Manipulator
                     if (atom.ImplicitHydrogenCount == null)
                         throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
 
-                    mass += isotopes.GetNaturalMass(Elements.OfNumber(atom.AtomicNumber.Value).ToIElement());
+                    mass += isotopes.GetNaturalMass(ChemicalElement.OfNumber(atom.AtomicNumber.Value).ToIElement());
                     mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
                 }
                 return mass;
@@ -378,7 +378,7 @@ namespace NCDK.Tools.Manipulator
             int hydrogens = 0;
             foreach (var atom in container.Atoms)
             {
-                if (Elements.Hydrogen.Symbol.Equals(atom.Symbol))
+                if (ChemicalElements.Hydrogen.Symbol.Equals(atom.Symbol))
                 {
                     hydrogens++;
                 }
@@ -432,7 +432,7 @@ namespace NCDK.Tools.Manipulator
             int hCount = 0;
             foreach (var connected in atomContainer.GetConnectedAtoms(atom))
             {
-                if (Elements.Hydrogen.Symbol.Equals(connected.Symbol))
+                if (ChemicalElements.Hydrogen.Symbol.Equals(connected.Symbol))
                 {
                     hCount++;
                 }
@@ -594,8 +594,8 @@ namespace NCDK.Tools.Manipulator
                     {
                         IAtom neighbour = org.GetConnectedAtoms(atom).ElementAt(0);
                         // keep if the neighbouring hetero atom has stereo information, otherwise continue checking
-                        int? stereoParity = neighbour.StereoParity;
-                        if (stereoParity == null || stereoParity == 0)
+                        var stereoParity = neighbour.StereoParity;
+                        if (stereoParity == StereoAtomParity.Undefined)
                         {
                             addToRemove = true;
                             // keep if any of the bonds of the hetero atom have stereo information

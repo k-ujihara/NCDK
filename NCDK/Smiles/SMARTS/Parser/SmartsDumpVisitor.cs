@@ -27,13 +27,13 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    public class SmartsDumpVisitor : SMARTSParserVisitor
+    public class SmartsDumpVisitor : ISMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -42,7 +42,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -63,7 +63,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + ": acceptor not unimplemented in subclass?");
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -72,7 +72,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -81,7 +81,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -90,7 +90,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -99,7 +99,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -108,7 +108,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -117,7 +117,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " [" + node.BondType + "]");
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -126,7 +126,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -135,7 +135,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -144,7 +144,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -153,7 +153,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -162,7 +162,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Symbol);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -171,7 +171,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -180,7 +180,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -189,7 +189,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Count);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -198,7 +198,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Count);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -207,7 +207,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.NumOfConnection);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -216,7 +216,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Number);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -225,7 +225,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.HybridizationNumber);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -234,7 +234,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Charge);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -243,7 +243,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.NumOfConnection);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -252,7 +252,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.GroupNumber);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -261,7 +261,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.NumOfConnection);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -270,7 +270,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Order);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -279,7 +279,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.NumOfMembership);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -288,7 +288,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Size);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -297,7 +297,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -306,7 +306,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -315,7 +315,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -324,7 +324,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -333,7 +333,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Mass);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -342,7 +342,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -351,7 +351,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -360,7 +360,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -369,7 +369,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -378,7 +378,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -387,7 +387,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
@@ -396,7 +396,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             System.Console.Out.WriteLine(IndentString() + node + " " + node.Symbol);
             ++indent;
-            data = node.childrenAccept(this, data);
+            data = node.ChildrenAccept(this, data);
             --indent;
             return data;
         }
