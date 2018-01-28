@@ -356,6 +356,9 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">a depiction could not be generated</exception>
         public Depiction Depict(IReaction rxn, IDictionary<IChemObject, Color> highlight = null)
         {
+            if (highlight == null)
+                highlight = Dictionaries.Empty<IChemObject, Color>();
+
             Ensure2DLayout(rxn); // can reorder components!
 
             Color fgcol = templateModel.GetAtomColorer().GetAtomColor(rxn.Builder.NewAtom("C"));
@@ -395,7 +398,6 @@ namespace NCDK.Depict
             // user highlight buffer pushes out the atom-map highlight if provided
             foreach (var e in highlight)
                 myHighlight[e.Key] = e.Value;
-            highlight.Clear();
 
             PrepareCoords(reactants);
             PrepareCoords(products);
