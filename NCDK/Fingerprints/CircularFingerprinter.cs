@@ -65,7 +65,7 @@ namespace NCDK.Fingerprints
     ///  binary compatibility with formerly identical implementations on other platforms.</para>
     ///
     ///  <para>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
-    ///  Green et al <token>cdk-cite-Green1994</token>.</para>
+    ///  Green et al (1994).</para>
     ///  
     ///  <para>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
     ///  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",

@@ -36,12 +36,12 @@ namespace NCDK.Smiles.SMARTS
 {
     /// <summary>
     /// This class provides a easy to use wrapper around SMARTS matching functionality. 
-    /// <para>
-    /// User code that wants to do
-    /// SMARTS matching should use this rather than using SMARTSParser (and UniversalIsomorphismTester) directly.
-    /// </para>
     /// </summary>
     /// <remarks>
+    /// <para>
+    /// User code that wants to do
+    /// SMARTS matching should use this rather than using SMARTSParser (and <see cref="UniversalIsomorphismTester"/>) directly.
+    /// </para>
     /// <list type="bullet">
     /// <listheader><description>Unsupported Features</description></listheader>
     /// <item><description>Component level grouping</description></item>
@@ -84,24 +84,24 @@ namespace NCDK.Smiles.SMARTS
     /// <item>
     /// <term>
     /// As <see href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</see>
-    /// by Craig James the <pre>h&lt;n&gt;</pre> SMARTS pattern should not be used. It was included in the Daylight spec
-    /// for backwards compatibility. To match hydrogens, use the <pre>H&lt;n&gt;</pre> pattern.
+    /// by Craig James the "h&lt;n&gt;" SMARTS pattern should not be used. It was included in the Daylight spec
+    /// for backwards compatibility. To match hydrogens, use the "H&lt;n&gt;" pattern.
     /// </term>
     /// <term>
-    /// The wild card pattern (<pre>*</pre>) will not match hydrogens (explicit or implicit) unless an isotope is specified. In other
-    /// words, <pre>*</pre> gives two hits against <pre>C[2H]</pre> but 1 hit against <pre>C[H]</pre>. This also means
-    /// that it gives no hits against <pre>[H][H]</pre>. This is contrary to what is shown by Daylights 
+    /// The wild card pattern ("*") will not match hydrogens (explicit or implicit) unless an isotope is specified. In other
+    /// words, "*" gives two hits against "C[2H]" but 1 hit against "C[H]". This also means
+    /// that it gives no hits against "[H][H]". This is contrary to what is shown by Daylights 
     /// <see href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</see> service, but is based on this 
     /// <see href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</see>. A
-    /// work around to get <pre>*</pre> to match <pre>[H][H]</pre> is to write it in the form <pre>[1H][1H]</pre>.
+    /// work around to get "*" to match "[H][H]" is to write it in the form "[1H][1H]".
     /// <para>
     /// It's not entirely clear what the behavior of * should be with respect to hydrogens. it is possible that the code will
-    /// be updated so that <pre>*</pre> will not match <i>any</i> hydrogen in the future.</para>
+    /// be updated so that "*" will not match <i>any</i> hydrogen in the future.</para>
     /// </term>
     /// <term>
     /// The CDKHueckelAromaticityDetector only considers single rings and two fused non-spiro
     /// rings. As a result, it does not properly detect aromaticity in polycyclic systems such as
-    /// <pre>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</pre>. Thus SMARTS patterns that depend on proper aromaticity
+    /// "[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24". Thus SMARTS patterns that depend on proper aromaticity
     /// detection may not work correctly in such polycyclic systems
     /// </term>
     /// </item>

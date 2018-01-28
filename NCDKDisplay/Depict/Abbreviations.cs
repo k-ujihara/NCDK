@@ -794,10 +794,10 @@ namespace NCDK.Depict
         /// <item><b>Linker</b> - [NOT SUPPORTED YET] two attachments, covers long repeated chains (e.g. PEG4)</item>
         /// </list>
         /// Attachment points (if present) must be specified with zero element atoms. 
-        /// <code>
+        /// <pre>
         /// *c1ccccc1 Ph
         /// *OC(=O)C OAc
-        /// </code>
+        /// </pre>
         /// </summary>
         /// <param name="mol">the fragment to abbreviate</param>
         /// <param name="label">the label of the fragment</param>

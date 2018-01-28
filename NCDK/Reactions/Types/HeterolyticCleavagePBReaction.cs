@@ -19,9 +19,13 @@
 namespace NCDK.Reactions.Types
 {
     /// <summary>
-    /// <para>IReactionProcess which a bond is broken displacing the electron to one of the
+    /// IReactionProcess which a bond is broken displacing the electron to one of the
     /// atoms. The mechanism will produce one atom with excess of charge and the other one deficiency.
-    /// Depending of the bond order, the bond will be removed or simply the order decreased.</para>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Depending of the bond order, the bond will be removed or simply the order decreased.
+    /// </para>
     /// <para>
     /// As there are two directions for displacing a bond in a polar manner,
     /// each case is investigated twice:</para>
@@ -30,7 +34,7 @@ namespace NCDK.Reactions.Types
     /// <pre>A=B =&gt; |[A-]-[B+]</pre>
     ///
     /// <para>It will not be created structures no possible, e.g; C=O =&gt; [C-][O+].</para>
-    /// </summary>
+    /// </remarks>
     /// <seealso cref="Mechanisms.HeterolyticCleavageMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-06-09

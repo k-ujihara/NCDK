@@ -47,7 +47,7 @@ namespace NCDK.Tautomers
                 : base()
         { }
 
-        private List<IAtomContainer> UnitTestWithInchiProvided(string smiles, string inchi, int tautCountExpected)
+        private ICollection<IAtomContainer> UnitTestWithInchiProvided(string smiles, string inchi, int tautCountExpected)
         {
             IAtomContainer container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
@@ -56,12 +56,12 @@ namespace NCDK.Tautomers
             return tautomers;
         }
 
-        private List<IAtomContainer> UnitTestWithoutInchiProvided(string smiles, int flags, int tautCountExpected)
+        private ICollection<IAtomContainer> UnitTestWithoutInchiProvided(string smiles, InChITautomerGenerator.Options flags, int tautCountExpected)
         {
             IAtomContainer container = smilesParser.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
             InChITautomerGenerator tautegen = new InChITautomerGenerator(flags);
-            List<IAtomContainer> tautomers = tautegen.GetTautomers(container);
+            var tautomers = tautegen.GetTautomers(container);
             Assert.AreEqual(tautCountExpected, tautomers.Count);
             return tautomers;
         }
@@ -143,7 +143,7 @@ namespace NCDK.Tautomers
         public void Test6_fast()
         {
             //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
-            UnitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.KETO_ENOL, 6);
+            UnitTestWithoutInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", InChITautomerGenerator.Options.KetoEnol, 6);
         }
 
         [TestMethod()]

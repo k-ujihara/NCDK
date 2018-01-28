@@ -54,7 +54,7 @@ namespace NCDK.AtomTypes
         public void TestGetInstance_IChemObjectBuilder_int()
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance,
-                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
+                    CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
             Assert.IsNotNull(matcher);
         }
 
@@ -650,10 +650,8 @@ namespace NCDK.AtomTypes
         public void TestDMSOCharged()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            atom.FormalCharge = -1;
-            IAtom atom2 = new Atom("S");
-            atom2.FormalCharge = 1;
+            IAtom atom = new Atom("O") { FormalCharge = -1 };
+            IAtom atom2 = new Atom("S") { FormalCharge = 1 };
             IAtom atom3 = new Atom("C");
             IAtom atom4 = new Atom("C");
             mol.Atoms.Add(atom);
@@ -1099,8 +1097,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("P");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("P") { FormalCharge = +1 };
             IAtom atom3 = new Atom("C");
             IAtom atom4 = new Atom("C");
             IAtom atom5 = new Atom("O");
@@ -1122,10 +1119,8 @@ namespace NCDK.AtomTypes
         public void TestPhosphateCharged()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            atom.FormalCharge = -1;
-            IAtom atom2 = new Atom("P");
-            atom2.FormalCharge = 1;
+            IAtom atom = new Atom("O") { FormalCharge = -1 };
+            IAtom atom2 = new Atom("P") { FormalCharge = 1 };
             IAtom atom3 = new Atom("O");
             IAtom atom4 = new Atom("O");
             IAtom atom5 = new Atom("O");
@@ -1250,8 +1245,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("As");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("As") { FormalCharge = +1 };
             IAtom atom3 = new Atom("C");
             IAtom atom4 = new Atom("C");
             IAtom atom5 = new Atom("C");
@@ -1363,8 +1357,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("H");
-            IAtom atom2 = new Atom("C");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             IAtom atom3 = new Atom("H");
             IAtom atom4 = new Atom("H");
             mol.Atoms.Add(atom);
@@ -1383,8 +1376,7 @@ namespace NCDK.AtomTypes
         public void TestCarbokation_implicitHydrogen()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom2 = new Atom("C");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             mol.Atoms.Add(atom2);
 
             string[] expectedTypes = { "C.plus.sp2" }; // FIXME: compare with previous test... same compound!
@@ -1407,8 +1399,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("H");
-            IAtom oxygen = new Atom("O");
-            oxygen.FormalCharge = -1;
+            IAtom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(oxygen);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
@@ -1421,8 +1412,7 @@ namespace NCDK.AtomTypes
         public void TestHydroxyl2()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom oxygen = new Atom("O");
-            oxygen.FormalCharge = -1;
+            IAtom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(oxygen);
 
             string[] expectedTypes = { "O.minus" };
@@ -1436,8 +1426,7 @@ namespace NCDK.AtomTypes
             IAtom atom = new Atom("H");
             IAtom atom1 = new Atom("H");
             IAtom atom2 = new Atom("H");
-            IAtom oxygen = new Atom("O");
-            oxygen.FormalCharge = +1;
+            IAtom oxygen = new Atom("O") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
@@ -1478,8 +1467,7 @@ namespace NCDK.AtomTypes
         public void TestProton()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("H");
-            atom.FormalCharge = 1;
+            IAtom atom = new Atom("H") { FormalCharge = 1 };
             mol.Atoms.Add(atom);
 
             string[] expectedTypes = { "H.plus" };
@@ -1491,29 +1479,25 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom = new Atom("Cl");
-            atom.FormalCharge = -1;
+            IAtom atom = new Atom("Cl") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             string[] expectedTypes = { "Cl.minus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("F");
-            atom.FormalCharge = -1;
+            atom = new Atom("F") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "F.minus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Br");
-            atom.FormalCharge = -1;
+            atom = new Atom("Br") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Br.minus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("I");
-            atom.FormalCharge = -1;
+            atom = new Atom("I") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "I.minus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -1627,8 +1611,7 @@ namespace NCDK.AtomTypes
         public void TestHydride()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("H");
-            atom.FormalCharge = -1;
+            IAtom atom = new Atom("H") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
 
             string[] expectedTypes = new string[] { "H.minus" };
@@ -1652,10 +1635,8 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
-            IAtom atom2 = new Atom("N");
-            atom2.FormalCharge = -1;
-            IAtom atom3 = new Atom("N");
-            atom3.FormalCharge = +1;
+            IAtom atom2 = new Atom("N") { FormalCharge = -1 };
+            IAtom atom3 = new Atom("N") { FormalCharge = +1 };
             IAtom atom4 = new Atom("N");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
@@ -1692,10 +1673,8 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("C");
             IAtom atom2 = new Atom("N");
-            IAtom atom3 = new Atom("N");
-            atom3.FormalCharge = +1;
-            IAtom atom4 = new Atom("N");
-            atom4.FormalCharge = -1;
+            IAtom atom3 = new Atom("N") { FormalCharge = +1 };
+            IAtom atom4 = new Atom("N") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -1713,10 +1692,8 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom = new Atom("Hg");
-            atom.FormalCharge = -1;
-            IAtom atom1 = new Atom("O");
-            atom1.FormalCharge = +1;
+            IAtom atom = new Atom("Hg") { FormalCharge = -1 };
+            IAtom atom1 = new Atom("O") { FormalCharge = +1 };
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
             IAtom atom4 = new Atom("N");
@@ -1883,71 +1860,61 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom = new Atom("Na");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("Na") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             string[] expectedTypes = new string[] { "Na.plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("K");
-            atom.FormalCharge = +1;
+            atom = new Atom("K") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "K.plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Ca");
-            atom.FormalCharge = +2;
+            atom = new Atom("Ca") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Ca.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Mg");
-            atom.FormalCharge = +2;
+            atom = new Atom("Mg") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Mg.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Ni");
-            atom.FormalCharge = +2;
+            atom = new Atom("Ni") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Ni.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Pt");
-            atom.FormalCharge = +2;
+            atom = new Atom("Pt") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Pt.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Co");
-            atom.FormalCharge = +2;
+            atom = new Atom("Co") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Co.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Co");
-            atom.FormalCharge = +3;
+            atom = new Atom("Co") { FormalCharge = +3 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Co.3plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Cu");
-            atom.FormalCharge = +2;
+            atom = new Atom("Cu") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Cu.2plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Al");
-            atom.FormalCharge = +3;
+            atom = new Atom("Al") { FormalCharge = +3 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Al.3plus" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
@@ -2109,16 +2076,11 @@ namespace NCDK.AtomTypes
         public void TestGallate()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            atom.FormalCharge = -1;
-            IAtom atom2 = new Atom("Ga");
-            atom2.FormalCharge = +3;
-            IAtom atom3 = new Atom("O");
-            atom3.FormalCharge = -1;
-            IAtom atom4 = new Atom("O");
-            atom4.FormalCharge = -1;
-            IAtom atom5 = new Atom("O");
-            atom5.FormalCharge = -1;
+            IAtom atom = new Atom("O") { FormalCharge = -1 };
+            IAtom atom2 = new Atom("Ga") { FormalCharge = +3 };
+            IAtom atom3 = new Atom("O") { FormalCharge = -1 };
+            IAtom atom4 = new Atom("O") { FormalCharge = -1 };
+            IAtom atom5 = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -2203,8 +2165,7 @@ namespace NCDK.AtomTypes
         public void TestOxide()
         {
             IAtomContainer mol = new AtomContainer();
-            IAtom atom = new Atom("O");
-            atom.FormalCharge = -2;
+            IAtom atom = new Atom("O") { FormalCharge = -2 };
             mol.Atoms.Add(atom);
 
             string[] expectedTypes = new string[] { "O.minus2" };
@@ -2619,8 +2580,7 @@ namespace NCDK.AtomTypes
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
 
-            IAtom atom = new Atom("F");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("F") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(carbon1);
             mol.Atoms.Add(carbon2);
@@ -2639,8 +2599,7 @@ namespace NCDK.AtomTypes
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
 
-            IAtom atom = new Atom("Cl");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("Cl") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(carbon1);
             mol.Atoms.Add(carbon2);
@@ -2659,8 +2618,7 @@ namespace NCDK.AtomTypes
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
 
-            IAtom atom = new Atom("Br");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("Br") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(carbon1);
             mol.Atoms.Add(carbon2);
@@ -2679,8 +2637,7 @@ namespace NCDK.AtomTypes
             IAtom carbon1 = new Atom("C");
             IAtom carbon2 = new Atom("C");
 
-            IAtom atom = new Atom("I");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("I") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(carbon1);
             mol.Atoms.Add(carbon2);
@@ -2696,8 +2653,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom carbon1 = new Atom("C");
-            carbon1.FormalCharge = +1;
+            IAtom carbon1 = new Atom("C") { FormalCharge = +1 };
             IAtom carbon2 = new Atom("C");
             IAtom carbon3 = new Atom("C");
 
@@ -2716,10 +2672,8 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom1 = new Atom("C");
-            atom1.FormalCharge = -1;
-            IAtom atom2 = new Atom("O");
-            atom2.FormalCharge = +1;
+            IAtom atom1 = new Atom("C") { FormalCharge = -1 };
+            IAtom atom2 = new Atom("O") { FormalCharge = +1 };
 
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
@@ -2735,11 +2689,9 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom1 = new Atom("O");
-            atom1.FormalCharge = 1;
+            IAtom atom1 = new Atom("O") { FormalCharge = +1 };
             IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("C");
-            atom3.FormalCharge = -1;
+            IAtom atom3 = new Atom("C") { FormalCharge = -1 };
 
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
@@ -2757,8 +2709,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom1 = new Atom("C");
-            atom1.FormalCharge = -1;
+            IAtom atom1 = new Atom("C") { FormalCharge = -1 };
             IAtom atom2 = new Atom("C");
             IAtom atom3 = new Atom("C");
 
@@ -2779,10 +2730,8 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
 
             IAtom atom1 = new Atom("C");
-            IAtom atom2 = new Atom("N");
-            atom2.FormalCharge = 1;
-            IAtom atom3 = new Atom("C");
-            atom3.FormalCharge = -1;
+            IAtom atom2 = new Atom("N") { FormalCharge = +1 };
+            IAtom atom3 = new Atom("C") { FormalCharge = -1 };
 
             mol.Atoms.Add(atom1);
             mol.Atoms.Add(atom2);
@@ -3174,7 +3123,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(mol.Builder,
-                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
+                    CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
 
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms[0].FormalCharge = +1;
@@ -3415,10 +3364,8 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("F");
-            IAtom atom2 = new Atom("C");
-            atom2.FormalCharge = +1;
-            IAtom atom3 = new Atom("C");
-            atom3.FormalCharge = -1;
+            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
+            IAtom atom3 = new Atom("C") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);

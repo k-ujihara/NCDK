@@ -73,12 +73,11 @@ namespace NCDK.ForceField.MMFF
         /// <summary>
         /// Assign MMFF Symbolic atom types. The symbolic type can be accessed with
         /// <see cref="IAtomType.AtomTypeName"/>. An atom of unknown type is assigned the
-        /// symbolic type <pre>(UNK'</pre>.
+        /// symbolic type <c>"UNK"</c>.
         /// All atoms, including hydrogens must be explicitly represented.
-        ///
+        /// </summary>
         /// <param name="mol">molecule</param>
         /// <returns>all atoms had a type assigned</returns>
-        /// </summary>
         public bool AssignAtomTypes(IAtomContainer mol)
         {
             // preconditions need explicit hydrogens

@@ -58,11 +58,11 @@ namespace NCDK.Fingerprints
     /// were based on explicit H matching. As a result, we replace the explicit H's
     /// with a query of the '#&lt;N&gt;&amp;!H0' where '&lt;N&gt;' is the atomic number. Thus bit 344 was
     /// with a query of the #N&amp;!H0 where N is the atomic number. Thus bit 344 was
-    /// originally '[#6](~[#6])([H])' but is written here as
-    /// '[#6&amp;!H0]~[#6]'. In some cases, where the H count can be reduced
+    /// originally "[#6](~[#6])([H])" but is written here as
+    /// "[#6&amp;!H0]~[#6]". In some cases, where the H count can be reduced
     /// to single possibility we directly use that H count. An example is bit 35,
-    /// which was <c>[#6](~[#6])(~[#6])(~[#6])([H])</c> and is rewritten as
-    /// <pre>[#6H1](~[#6])(~[#6])(~[#6])</pre>.
+    /// which was "[#6](~[#6])(~[#6])(~[#6])([H])" and is rewritten as
+    /// "[#6H1](~[#6])(~[#6])(~[#6])".
     /// </para>
     /// <note type="warning">
     /// This class is not thread-safe and uses stores intermediate steps

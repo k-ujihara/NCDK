@@ -40,12 +40,12 @@ namespace NCDK.Geometries
     // @cdk.githash
     public static class BondTools
     {
-        /// FIXME: class JavaDoc should use <token>cdk-cite-BLA</token> for the CDK News article
+        // FIXME: class JavaDoc should use <token>cdk-cite-BLA</token> for the CDK News article
 
         /// <summary>
         /// Tells if a certain bond is center of a valid double bond configuration.
         /// </summary>
-        /// <param name="container">The atomcontainer.</param>
+        /// <param name="container">The atom container.</param>
         /// <param name="bond">The bond.</param>
         /// <returns>true=is a potential configuration, false=is not.</returns>
         public static bool IsValidDoubleBondConfiguration(IAtomContainer container, IBond bond)

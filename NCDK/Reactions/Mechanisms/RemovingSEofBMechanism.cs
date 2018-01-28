@@ -46,7 +46,7 @@ namespace NCDK.Reactions.Mechanisms
         public IReaction Initiate(IChemObjectSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder,
-                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
+                    CDKAtomTypeMatcher.Mode.RequireExplicitHydrogens);
             if (atomContainerSet.Count != 1)
             {
                 throw new CDKException("RemovingSEofBMechanism only expects one IAtomContainer");

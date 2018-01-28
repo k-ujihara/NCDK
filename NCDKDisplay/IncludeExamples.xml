@@ -79,6 +79,14 @@
     <code>                    atom.GetProperty&lt;double&gt;("MMFF94charge")
 </code>
   </Codes>
+  <Codes id="NCDK.Config.AtomTypeFactory_Example.cs+1">
+    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance(someChemObjectBuilder);
+</code>
+  </Codes>
+  <Codes id="NCDK.Config.AtomTypeFactory_Example.cs+2">
+    <code>                AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt", someChemObjectBuilder);
+</code>
+  </Codes>
   <Codes id="NCDK.Config.ChemicalElement_Example.cs+OfNumber">
     <code>                // carbon
                 var c = ChemicalElement.OfNumber(6);
@@ -322,13 +330,13 @@
             // Get InChIGenerator
             InChIGenerator gen = factory.GetInChIGenerator(container);
 
-            INCHI_RET ret = gen.ReturnStatus;
-            if (ret == INCHI_RET.WARNING)
+            InChIReturnCode ret = gen.ReturnStatus;
+            if (ret == InChIReturnCode.Warning)
             {
                 // InChI generated, but with warning message
                 Console.WriteLine($"InChI warning: {gen.Message}");
             }
-            else if (ret != INCHI_RET.OKAY)
+            else if (ret != InChIReturnCode.Ok)
             {
                 // InChI generation failed
                 throw new CDKException($"InChI failed: {ret.ToString()} [{gen.Message}]");
@@ -344,13 +352,13 @@
             // Get InChIToStructure
             InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
 
-            INCHI_RET ret = intostruct.ReturnStatus;
-            if (ret == INCHI_RET.WARNING)
+            InChIReturnCode ret = intostruct.ReturnStatus;
+            if (ret == InChIReturnCode.Warning)
             {
                 // Structure generated, but with warning message
                 Console.WriteLine($"InChI warning: {intostruct.Message}");
             }
-            else if (ret != INCHI_RET.OKAY)
+            else if (ret != InChIReturnCode.Ok)
             {
                 // Structure generation failed
                 throw new CDKException($"Structure generation failed: {ret.ToString()} [{intostruct.Message}]");
@@ -2172,16 +2180,7 @@ namespace NCDK.Smiles
 </code>
   </Codes>
   <Codes id="NCDK.Property_Example.cs">
-    <code>using NCDK.Default;
-using System;
-
-namespace NCDK
-{
-    class Property_Example
-    {
-        static void Main(string[] args)
-        {
-            IAtom atom = new Atom("C");
+    <code>            IAtom atom = new Atom("C");
             atom.SetProperty("number", 1); // set an integer property
             {
                 // access the property and cast to an int
@@ -2198,9 +2197,6 @@ namespace NCDK
                     Console.WriteLine($"{nameof(InvalidCastException)} is thrown");
                 }
             }
-        }
-    }
-}
 </code>
   </Codes>
 </Comments>

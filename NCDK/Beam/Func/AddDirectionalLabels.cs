@@ -34,16 +34,16 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Given a molecule with bond-based double bond configurations - add directional labels to edges
-    /// which do not have it assigned.For example the molecule <pre>NC(/C)=C\C</pre>
+    /// which do not have it assigned.For example the molecule "NC(/C)=C\C"
     /// has no directional
     /// label between the nitrogen and the carbon.Applying this procedure will 'fill-in' missing
-    /// directional information on the edge - <pre>N/C(/C)=C\C</pre>.
+    /// directional information on the edge - "N/C(/C)=C\C".
     /// </summary>
     /// <remarks>
     /// If required the directional labels in conjugated systems may be adjusted to allow for
     /// full-specification. Attempting to assign a directional label to the central carbon of 
-    /// <pre>F/C=C(/F)C(/F)=C/F</pre> creates a conflict. This conflict will be resolved by flipping the labels on
-    /// the second double-bond - <pre>F/C=C(/F)\C(\F)=C\F</pre>.
+    /// "F/C=C(/F)C(/F)=C/F" creates a conflict. This conflict will be resolved by flipping the labels on
+    /// the second double-bond - "F/C=C(/F)\C(\F)=C\F".
     /// </remarks>
     // @author John May
     internal sealed class AddDirectionalLabels

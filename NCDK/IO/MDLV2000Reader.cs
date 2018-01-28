@@ -646,7 +646,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Parse an atom line from the atom block using the format: 
-        /// <pre>xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee</pre>
+        /// "xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee"
         /// where: <list type="bullet"> <item>x: x coordinate</item> <item>y: y coordinate</item> <item>z: z
         /// coordinate</item> <item>a: atom symbol</item> <item>d: mass difference</item>
         /// <item>c: charge</item> <item>s: stereo parity</item> <item>h: hydrogen count + 1
@@ -748,7 +748,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Read a bond from a line in the MDL bond block. The bond block is
-        /// formatted as follows, <pre>111222tttsssxxxrrrccc</pre>, where:
+        /// formatted as follows, "111222tttsssxxxrrrccc", where:
         /// <list type="bullet">
         ///     <item>111: first atom number</item>
         ///     <item>222: second atom number</item>

@@ -267,7 +267,7 @@ namespace NCDK.Graphs.Invariant
         /// The labels use the invariants described in <token>cdk-cite-WEI89</token>. 
         /// </summary>
         /// <remarks>
-        /// The bits in the low 32-bits are: <pre>0000000000xxxxXXXXeeeeeeescchhhh</pre>
+        /// The bits in the low 32-bits are: "0000000000xxxxXXXXeeeeeeescchhhh"
         /// where:
         /// <list type="bullet">
         ///     <item>0: padding</item>

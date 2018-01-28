@@ -77,7 +77,7 @@ namespace NCDK.Stereo
     /// <para>
     /// <i>N, P, As, S or Se are not stereogenic if they have a terminal H neighbor
     /// or if they have 2 neighbors of the same element (O, S, Se, Te, N) which
-    /// have at least one hydrogen. Consider: <pre>P(O)(=O)(OC)OCCC</pre>. Phosphines and
+    /// have at least one hydrogen. Consider: "P(O)(=O)(OC)OCCC". Phosphines and
     /// arsines are always stereogenic regardless of H neighbors</i>
     /// </para>
     /// <para>
@@ -94,17 +94,17 @@ namespace NCDK.Stereo
     /// <para>
     /// <b>Examples of Para Stereocenters</b>
     /// <list type="bullet"> 
-    /// <item>inositol - has 9 stereo isomers, <pre>O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O myo-inositol</pre></item> 
-    /// <item>decalin - has 2 stereo isomers, <pre>C1CC[C@H]2CCCC[C@H]2C1</pre> (not currently identified)</item> 
-    /// <item>spiro/double-bond linked ring - <pre>InChI=1/C14H24/c1-11-3-7-13(8-4-11)14-9-5-12(2)6-10-14/h11-12H,3-10H2,1-2H3/b14-13-/t11-,12-</pre> (not currently identified)</item> 
-    /// <item>An example of a para-center not in a cycle <pre>C[C@@H](O)[C@H](C)[C@H](C)O</pre> (not currently identified)</item>
+    /// <item>inositol - has 9 stereo isomers, "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O myo-inositol"</item> 
+    /// <item>decalin - has 2 stereo isomers, "C1CC[C@H]2CCCC[C@H]2C1" (not currently identified)</item> 
+    /// <item>spiro/double-bond linked ring - "InChI=1/C14H24/c1-11-3-7-13(8-4-11)14-9-5-12(2)6-10-14/h11-12H,3-10H2,1-2H3/b14-13-/t11-,12-" (not currently identified)</item> 
+    /// <item>An example of a para-center not in a cycle "C[C@@H](O)[C@H](C)[C@H](C)O" (not currently identified)</item>
     /// </list>
     /// </para>
     /// <para>
     /// It should be noted that para-centers may not actually have a configuration. A
     /// simple example of this is seen that by changing the configuration of one
-    /// center in <pre>C[C@@H](O)[C@H:1](C)[C@H](C)O</pre> removes the central
-    /// configuration as the ligands are now equivalent <pre>C[C@@H](O)[CH:1]](C)[C@@H](C)O</pre>
+    /// center in "C[C@@H](O)[C@H:1](C)[C@H](C)O" removes the central
+    /// configuration as the ligands are now equivalent "C[C@@H](O)[CH:1]](C)[C@@H](C)O"
     /// </para>
     /// </remarks>
     // @author John May

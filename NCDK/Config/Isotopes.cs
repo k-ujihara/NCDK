@@ -33,9 +33,9 @@ namespace NCDK.Config
     /// The data set is described in the first Blue Obelisk paper <token>cdk-cite-Guha2006</token>.
     /// </summary>
     /// <remarks>
-    /// <para>The <pre>isotopes.dat</pre> file that is used by this class is a binary class
+    /// <para>The "isotopes.dat" file that is used by this class is a binary class
     /// of this data, improving loading times over the BODR XML representation. It is created
-    /// from the original BODR files using tools from the <pre>cdk-build-util</pre>
+    /// from the original BODR files using tools from the "cdk-build-util"
     /// repository.</para>
     /// </remarks>
     // @author      egonw

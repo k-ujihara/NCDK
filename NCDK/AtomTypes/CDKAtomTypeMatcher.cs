@@ -40,17 +40,20 @@ namespace NCDK.AtomTypes
     public class CDKAtomTypeMatcher
         : IAtomTypeMatcher
     {
-        public const int RequireNothing = 1;
-        public const int RequireExplicitHydrogens = 2;
+        public enum Mode
+        {
+            RequireNothing = 1,
+            RequireExplicitHydrogens = 2,
+        }
 
         private AtomTypeFactory factory;
-        private int mode;
+        private Mode mode;
 
         private static readonly object syncLock = new object();
 
-        private static IDictionary<int, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>> factories = new ConcurrentDictionary<int, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>>();
+        private static IDictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>> factories = new ConcurrentDictionary<Mode, IDictionary<IChemObjectBuilder, CDKAtomTypeMatcher>>();
 
-        private CDKAtomTypeMatcher(IChemObjectBuilder builder, int mode)
+        private CDKAtomTypeMatcher(IChemObjectBuilder builder, Mode mode)
         {
             factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", builder);
             this.mode = mode;
@@ -58,10 +61,10 @@ namespace NCDK.AtomTypes
 
         public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder)
         {
-            return GetInstance(builder, RequireNothing);
+            return GetInstance(builder, Mode.RequireNothing);
         }
 
-        public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder, int mode)
+        public static CDKAtomTypeMatcher GetInstance(IChemObjectBuilder builder, Mode mode)
         {
             lock (syncLock)
             {
@@ -3524,7 +3527,7 @@ namespace NCDK.AtomTypes
         private bool IsAcceptable(IAtom atom, IAtomContainer container, IAtomType type, IList<IBond> connectedBonds)
         {
             if (connectedBonds == null) connectedBonds = container.GetConnectedBonds(atom).ToList();
-            if (mode == RequireExplicitHydrogens)
+            if (mode == Mode.RequireExplicitHydrogens)
             {
                 // make sure no implicit hydrogens were assumed
                 int actualContainerCount = connectedBonds.Count;

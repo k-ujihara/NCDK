@@ -80,7 +80,7 @@ namespace NCDK.Pharmacophore
     /// <b>|</b> - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
     /// be a pharmacophore group that is meant to match a 5 membered ring or a 6 membered ring. This cannot be
     /// written in a single ordinary SMARTS pattern. However using this one extension one can write
-    /// <pre>A1AAAA1|A1AAAAA1</pre>.
+    /// "A1AAAA1|A1AAAAA1".
     /// </remarks>
     /// <seealso cref="PharmacophoreAtom"/>
     /// <seealso cref="PharmacophoreBond"/>

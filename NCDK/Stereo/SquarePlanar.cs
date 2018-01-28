@@ -34,7 +34,8 @@ namespace NCDK.Stereo
     /// The configuration around a square
     /// planar is described by 3 possible values (1:U, 2:4, or 3:Z) based on the
     /// ordering of the planar carries around the focus:
-    /// <pre>Configurations:
+    /// <pre>
+    /// Configurations:
     /// 
     ///     a                a                a
     ///     |                |                |

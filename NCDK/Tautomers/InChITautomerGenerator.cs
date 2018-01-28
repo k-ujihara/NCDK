@@ -1,4 +1,4 @@
-/* Copyright (C) 2011 Mark Rijnbeek <markr@ebi.ac.uk>
+﻿/* Copyright (C) 2011 Mark Rijnbeek <markr@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -39,7 +39,7 @@ namespace NCDK.Tautomers
     /// Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
     /// Algorithm described in <token>cdk-cite-Thalheim2010</token>.
     /// <para>
-    /// <b>Provide your input molecules in Kekule form, and make sure atom type are perceived.</b>
+    /// <b>Provide your input molecules in Kekulé form, and make sure atom type are perceived.</b>
     /// </para>
     /// <para>
     /// When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
@@ -52,25 +52,31 @@ namespace NCDK.Tautomers
     {
         private static readonly SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavor.Canonical);
 
-        /// <summary>Generate InChI with -KET (keto-enol tautomers) option.</summary>
-        public const int KETO_ENOL = 0x1;
+        [Flags]
+        public enum Options
+        {
+            /// <summary>Generate InChI with -KET (keto-enol tautomers) option.</summary>
+            KetoEnol = 0x1,
 
-        /// <summary>Generate InChI with -15T (1,5-shift tautomers) option.</summary>
-        public const int ONE_FIVE_SHIFT = 0x2;
+            /// <summary>Generate InChI with -15T (1,5-shift tautomers) option.</summary>
+            OneFiveShift = 0x2,
+        }
 
-        private readonly int flags;
+        private readonly Options flags;
 
         /// <summary>
         /// Create a tautomer generator specifygin whether to enable, keto-enol (-KET) and 1,5-shifts (-15T).
-        /// 
-        /// <pre><code>// enabled -KET option
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// // enabled -KET option
         /// InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL);
         /// // enabled both -KET and -15T
         /// InChITautomerGenerator tautgen = new InChITautomerGenerator(InChITautomerGenerator.KETO_ENOL | InChITautomerGenerator.ONE_FIVE_SHIFT);
-        /// </code></pre>
-        /// </summary>
+        /// </code>
+        /// </example>
         /// <param name="flags">the options</param>
-        public InChITautomerGenerator(int flags)
+        public InChITautomerGenerator(Options flags)
         {
             this.flags = flags;
         }
@@ -83,17 +89,17 @@ namespace NCDK.Tautomers
         }
 
         /// <summary>
-        /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by .NET prot of JNI-InChI..
+        /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by .NET prot of JNI-InChI.
         /// </summary>
         /// <param name="mol">molecule for which to generate tautomers</param>
         /// <returns>a list of tautomers, if any</returns>
         /// <exception cref="CDKException"></exception>
-        public List<IAtomContainer> GetTautomers(IAtomContainer mol)
+        public ICollection<IAtomContainer> GetTautomers(IAtomContainer mol)
         {
             string opt = "";
-            if ((flags & KETO_ENOL) != 0)
+            if ((flags & Options.KetoEnol) != 0)
                 opt += " -KET";
-            if ((flags & ONE_FIVE_SHIFT) != 0)
+            if ((flags & Options.OneFiveShift) != 0)
                 opt += " -15T";
 
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol, opt);
@@ -118,7 +124,7 @@ namespace NCDK.Tautomers
         /// <returns></returns>
         /// <exception cref="CDKException"></exception>
         [Obsolete("use " + nameof(GetTautomers) + "(" + nameof(IAtomContainer) + ")" + " directly ")]
-        public List<IAtomContainer> GetTautomers(IAtomContainer mol, string inchi)
+        public ICollection<IAtomContainer> GetTautomers(IAtomContainer mol, string inchi)
         {
             return GetTautomers(mol, inchi, null);
         }

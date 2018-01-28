@@ -276,7 +276,6 @@ namespace NCDK.Beam
         /// </summary>
         /// <remarks>
         /// Implicit Valence Explicit Example
-        /// <pre>
         /// <list type="table">
         /// <item><term>@ 4</term><term>@TH1</term><term>@TH1</term></item>
         /// <item><term>@@ 4</term><term>@TH2</term><term>@TH2</term></item>
@@ -289,7 +288,6 @@ namespace NCDK.Beam
         /// <item><term>@ 5</term><term>@OH1</term><term>@OH1</term></item>
         /// <item><term>@@ 5</term><term>@OH2</term><term>@OH2</term></item>
         /// </list>
-        /// </pre>
         /// </remarks>
         /// <param name="g">chemical graph</param>
         /// <param name="u">the atom to which the configuration is associated</param>

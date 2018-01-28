@@ -31,10 +31,10 @@ namespace NCDK
         /// configurations (e.g. left vs right) more complex geometries like square
         /// planar and octahedral require more to describe. For convenience the
         /// constants <see cref="Left"/> and <see cref="Right"/> are provided but are synonymous
-        /// with the values <pre>1</pre> (odd) and <pre>2</pre> (even).
+        /// with the values <c>1</c> (odd) and <c>2</c> (even).
         /// </summary>
         /// <remarks>
-        /// Special values (e.g. <pre>0</pre>) may be used to represent unknown/unspecified or
+        /// Special values (e.g. <c>0</c>) may be used to represent unknown/unspecified or
         /// racemic in future but are currently undefined.
         /// </remarks>
         [Obfuscation(ApplyToMembers = true, Exclude = true)]

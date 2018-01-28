@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity.
-    /// The used approach is given by <pre>X = a + bq + c(q*q)</pre> where a, b, and c are
+    /// The used approach is given by "X = a + bq + c(q*q)" where a, b, and c are
     /// the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
     /// calculation it uses the <see cref="Electronegativity"/> class.
     /// </summary>

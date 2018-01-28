@@ -23,14 +23,16 @@ using System.Linq;
 namespace NCDK.Reactions.Types
 {
     /// <summary>
-    /// <para>HyperconjugationReaction is the stabilizing interaction that results
+    /// HyperconjugationReaction is the stabilizing interaction that results
     /// from the interaction of the electrons in a s-bond (for our case only C-H)
-    /// with an adjacent empty (or partially filled) p-orbital.</para>
+    /// with an adjacent empty (or partially filled) p-orbital.
+    /// </summary>
+    /// <remarks>
     /// <para>Based on the valence bond model of bonding, hyperconjugation can be described as
     /// "double bond - no bond resonance"</para>
     /// <para>This reaction could be represented like</para>
     /// <pre>[C+]-C =&gt; C=C + [H+] </pre>
-    /// </summary>
+    /// </remarks>
     // @author         Miguel Rojas
     // @cdk.created    2006-07-04
     // @cdk.module     reaction

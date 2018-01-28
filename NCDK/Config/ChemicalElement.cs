@@ -63,15 +63,18 @@ namespace NCDK.Config
         public string Symbol { get; private set; }
 
         /// <summary>
-        /// Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius
-        /// (<i>r<sub>w</sub></i>) and Pauling electronegativity.
+        /// Covalent radius (<i>r<sub>cov</sub></i>).
         /// </summary>
         /// <seealso href="http://en.wikipedia.org/wiki/Covalent_radius">Covalent radius</seealso>
         public double? CovalentRadius { get; private set; }
+
+        /// <summary>
+        /// van der Waals radius (<i>r<sub>w</sub></i>).
+        /// </summary>
         public double? VdwRadius { get; private set; }
 
         /// <summary>
-        /// Electronegativity, symbol χ, is a chemical property that describes
+        /// Pauling electronegativity, symbol χ, is a chemical property that describes
         /// the tendency of an atom or a functional group to attract electrons
         /// (or electron density) towards itself. This method provides access to the
         /// Pauling electronegativity value for a chemical element. If no value is
@@ -123,7 +126,7 @@ namespace NCDK.Config
         /// the specified atomic number then <see cref="ChemicalElements.Unknown"/> is returned.
         /// </summary>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfNumber"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+OfNumber"]/*' />
         /// </example>
         /// <param name="number">atomic number</param>
         /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>
@@ -140,7 +143,7 @@ namespace NCDK.Config
         /// input is case-insensitive.
         /// </summary>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfString"]/*' />
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.ChemicalElement_Example.cs+OfString"]/*' />
         /// </example>
         /// <param name="str">input string</param>
         /// <returns>an element, or <see cref="ChemicalElements.Unknown"/></returns>

@@ -1,5 +1,4 @@
-﻿using NCDK.NInChI;
-using System;
+﻿using System;
 
 namespace NCDK.Graphs.InChI
 {

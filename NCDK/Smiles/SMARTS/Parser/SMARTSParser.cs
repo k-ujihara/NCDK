@@ -34,13 +34,8 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <see href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the Daylight website</see>. 
     /// </summary>
     /// <example>
-    /// <para>
     /// Example code using SMARTS substructure search looks like:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+1"]/*' />
-    /// </para>
-    /// <para>See the <see cref="NCDK.Smiles.SMARTS.Parser.ParserTest"/> for examples of the implemented
-    /// subset.
-    /// </para>
     /// </example>
     /// <remarks>
     /// This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)

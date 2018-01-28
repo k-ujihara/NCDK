@@ -62,7 +62,7 @@ namespace NCDK.Smiles
     /// for the following is equivalent to <see cref="SmiFlavor.Isomeric"/>:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+SmiFlavor_Isomeric"]/*' />
     /// Bitwise logic can be used such that we can remove options:
-    /// <see cref="SmiFlavor.Isomeric"/> <pre>^</pre> <see cref="SmiFlavor.AtomicMass"/>
+    /// <see cref="SmiFlavor.Isomeric"/> "^" <see cref="SmiFlavor.AtomicMass"/>
     /// will generate isomeric SMILES without atomic mass.
     /// </remarks>
     /// <example>
@@ -200,7 +200,7 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Convenience method for creating an isomeric generator. Isomeric SMILES
-        /// are non-unique but contain isotope numbers (e.g. <pre>[13C]</pre>) and
+        /// are non-unique but contain isotope numbers (e.g. "[13C]") and
         /// stereo-chemistry.
         /// </summary>
         /// <returns>a new isomeric SMILES generator</returns>

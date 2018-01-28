@@ -60,6 +60,7 @@
     <Compile Include="Aromaticities\Aromaticity_Example.cs" />
     <Compile Include="Aromaticities\ElectronDonation_Example.cs" />
     <Compile Include="Charges\MMFF94PartialCharges_Example.cs" />
+    <Compile Include="Config\AtomTypeFactory_Example.cs" />
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
     <Compile Include="Config\ChemicalElement_Example.cs" />
     <Compile Include="ConformerContainer_Example.cs" />

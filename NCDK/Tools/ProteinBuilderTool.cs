@@ -31,10 +31,9 @@ using System.Linq;
 namespace NCDK.Tools
 {
     /// <summary>
-    /// Class that facilitates building protein structures. Building DNA and RNA
-    /// is done by a complementary class <see cref="NucleicAcidBuilderTool"/> (to be
-    /// written).
+    /// Class that facilitates building protein structures.
     /// </summary>
+    // Building DNA and RNA is done by a complementary class <see cref="NucleicAcidBuilderTool"/> (to be written).
     // @cdk.module pdb
     // @cdk.githash
     public static class ProteinBuilderTool

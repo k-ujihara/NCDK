@@ -7,6 +7,7 @@ namespace NCDK
     {
         static void Main(string[] args)
         {
+            #region
             IAtom atom = new Atom("C");
             atom.SetProperty("number", 1); // set an integer property
             {
@@ -24,6 +25,7 @@ namespace NCDK
                     Console.WriteLine($"{nameof(InvalidCastException)} is thrown");
                 }
             }
+            #endregion
         }
     }
 }

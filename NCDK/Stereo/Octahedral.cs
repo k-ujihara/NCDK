@@ -36,9 +36,9 @@ namespace NCDK.Stereo
     /// atom ordering to be described.
     /// Normalizing the representation (with <see cref="Normalize()"/> returns a
     /// configuration reordered such that the configuration order is 1. For example
-    /// <pre>C[Co@OH8](F)(Br)(Cl)(I)S</pre>
+    /// "C[Co@OH8](F)(Br)(Cl)(I)S"
     /// is the same as
-    /// <pre>C[Co@OH1](F)(Cl)(Br)(I)S</pre>. The normalised form is easy to work
+    /// "C[Co@OH1](F)(Cl)(Br)(I)S". The normalised form is easy to work
     /// with as the first and last carriers form an axis, the middle four equatorial
     /// carriers are arranged anti-clockwise looking from the first carrier.
     /// 
@@ -290,13 +290,16 @@ namespace NCDK.Stereo
         { }
 
         /// <summary>
-        /// Normalize the configuration to the lowest order (1). For example
-        /// <pre>C[Co@OH8](F)(Br)(Cl)(I)S</pre>
+        /// Normalize the configuration to the lowest order (1). 
+        /// </summary>
+        /// <remarks>
+        /// For example
+        /// "C[Co@OH8](F)(Br)(Cl)(I)S"
         /// is the same as
-        /// <pre>C[Co@OH1](F)(Cl)(Br)(I)S</pre>. The normalised form is easy to
+        /// "C[Co@OH1](F)(Cl)(Br)(I)S". The normalised form is easy to
         /// work with as the first and last carriers form an axis, the middle four
         /// equatorial carriers are arranged anti-clockwise looking from the first carrier.
-        /// </summary>
+        /// </remarks>
         /// <returns>the normalized form</returns>
         public Octahedral Normalize()
         {

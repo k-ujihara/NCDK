@@ -44,13 +44,13 @@ namespace NCDK.SMARTS
     /// </para>
     /// <para>
     /// The difference is easily demonstrated for methyl. Consider the compound
-    /// of 2-methylpentane <pre>CC(C)CCC</pre>, if we extract one of the methyl atoms
-    /// depending on the mode we obtain <pre>[CH3v4X4+0]</pre> or <pre>C*</pre>. The first
+    /// of 2-methylpentane "CC(C)CCC", if we extract one of the methyl atoms
+    /// depending on the mode we obtain "[CH3v4X4+0]" or "C*". The first
     /// of these patterns (obtained by <see cref="MODE_EXACT"/>) matches the compound in
     /// <b>three places</b> (the three methyl groups). The second matches <b>six</b>
     /// times (every atom) because the substituion on the carbon is not locked.
     /// A further complication is introduced by the inclusion of the peripheral atoms,
-    /// for 1H-indole <pre>[nH]1ccc2c1cccc2</pre> we can obtain the SMARTS <pre>n(ccc(a)a)a</pre>
+    /// for 1H-indole "[nH]1ccc2c1cccc2" we can obtain the SMARTS "n(ccc(a)a)a"
     /// that doesn't match at all. This is because one of the aromatic atoms ('a')
     /// needs to match the nitrogen.
     /// </para>

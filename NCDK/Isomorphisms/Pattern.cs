@@ -61,18 +61,21 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        /// Determine if there is a mapping of this pattern in the <code>target</code>
+        /// Determine if there is a mapping of this pattern in the <paramref name="target"/>
         /// reaction.
-        /// 
-        /// <blockquote><pre>
+        /// </summary>
+        /// <example>
+        /// <code>
         /// Pattern pattern = ...; // create pattern
-        /// for (IReaction r : rs) {
-        ///     if (pattern.matches(r)) {
+        /// foreach (IReaction r in rs) 
+        /// {
+        ///     if (pattern.Matches(r)) 
+        ///     {
         ///         // found mapping!
         ///     }
         /// }
-        /// </pre></blockquote>
-        /// </summary>
+        /// </code>
+        /// </example>
         /// <param name="target">the reaction to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>
         public bool Matches(IReaction target)
@@ -99,20 +102,22 @@ namespace NCDK.Isomorphisms
 
         /// <summary>
         /// Find all mappings of this pattern in the <code>target</code> reaction.
-        /// 
-        /// <blockquote><pre>
-        /// Pattern pattern = Pattern.findSubstructure(query);
-        /// for (IReaction r : rs) {
-        ///     for (int[] mapping : pattern.matchAll(r)) {
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Pattern pattern = Pattern.FindSubstructure(query);
+        /// foreach (IReaction r in rs) 
+        /// {
+        ///     foreach (var mapping in pattern.MatchAll(r))
+        ///     {
         ///         // found mapping
         ///     }
         /// }
-        /// </pre></blockquote>
-        /// 
+        /// </code>
+        /// </example>
         /// The reaction is inlined into a molecule and vs mapped id's correspond
         /// to the absolute atom index in the reaction when considered as reactants, agents,
         /// products <see cref="ReactionManipulator.ToMolecule(IReaction)"/>.
-        /// </summary>
         /// <param name="target">the reaction to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>
         /// <seealso cref="Mappings"/>

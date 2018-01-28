@@ -83,16 +83,16 @@ namespace NCDK.Smiles
         StereoTetrahedral = 0x100,
 
         /// <summary>
-        /// Output <i>cis</i>-<i>trans</i> stereochemistry specified by directional <code>\</code>
-        /// of <code>/</code> bonds.
+        /// Output <i>cis</i>-<i>trans</i> stereochemistry specified by directional "\"
+        /// of "/" bonds.
         /// </summary>
         /// <seealso cref="Stereo"/>
         StereoCisTrans = 0x200,
 
         /// <summary>
-        /// Output extended tetrahedral stereochemistry on atoms as <pre>@</pre> and
-        /// <pre>@@</pre>. Extended tetrahedral captures rotations around a cumulated
-        /// carbon: <pre>CC=[C@]=CC</pre>.
+        /// Output extended tetrahedral stereochemistry on atoms as "@" and
+        /// "@@". Extended tetrahedral captures rotations around a cumulated
+        /// carbon: "CC=[C@]=CC".
         /// </summary>
         /// <seealso cref="Stereo"/>
         StereoExTetrahedral = 0x400,
