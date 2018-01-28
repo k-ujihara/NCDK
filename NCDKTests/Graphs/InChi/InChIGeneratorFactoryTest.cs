@@ -18,13 +18,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
-using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
 
@@ -52,7 +52,7 @@ namespace NCDK.Graphs.InChI
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac);
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
@@ -67,7 +67,7 @@ namespace NCDK.Graphs.InChI
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
@@ -82,7 +82,7 @@ namespace NCDK.Graphs.InChI
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (string)null);
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
@@ -96,10 +96,10 @@ namespace NCDK.Graphs.InChI
             IAtom a = new Atom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
-            List<INCHI_OPTION> options = new List<INCHI_OPTION>();
-            options.Add(INCHI_OPTION.FixedH);
+            List<InChIOption> options = new List<InChIOption>();
+            options.Add(InChIOption.FixedH);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, options);
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
@@ -114,7 +114,7 @@ namespace NCDK.Graphs.InChI
             IAtom a = new Atom("Cl");
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
-            InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (List<INCHI_OPTION>)null);
+            InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (List<InChIOption>)null);
         }
 
         [TestMethod()]
@@ -209,10 +209,10 @@ namespace NCDK.Graphs.InChI
                 InChIGenerator genAromaticity2 = inchiFactory.GetInChIGenerator(tetrazole);
 
                 // with the aromatic bonds included, no InChI can be generated
-                Assert.AreEqual(INCHI_RET.ERROR, genAromaticity1.ReturnStatus, "return status was not in error");
-                Assert.AreEqual(INCHI_RET.ERROR, genAromaticity2.ReturnStatus, "return status was not in error");
+                Assert.AreEqual(InChIReturnCode.Error, genAromaticity1.ReturnStatus, "return status was not in error");
+                Assert.AreEqual(InChIReturnCode.Error, genAromaticity2.ReturnStatus, "return status was not in error");
                 // excluding the aromatic bonds gives the normal InChI
-                Assert.AreEqual(INCHI_RET.OKAY, genNoAromaticity.ReturnStatus, "return status was not okay");
+                Assert.AreEqual(InChIReturnCode.Ok, genNoAromaticity.ReturnStatus, "return status was not okay");
                 Assert.AreEqual("InChI=1S/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)",
                         genNoAromaticity.InChI, "InChIs did not match");
             }

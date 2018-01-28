@@ -27,8 +27,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
 using NCDK.Numerics;
+using System;
 using System.Text;
 
 namespace NCDK.Default
@@ -119,7 +119,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override StereoAtomParity StereoParity
+        public override int StereoParity
         {
             get { return base.StereoParity; }
             set { /* this is undefined, always */}
@@ -231,7 +231,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public override StereoAtomParity StereoParity
+        public override int StereoParity
         {
             get { return base.StereoParity; }
             set { /* this is undefined, always */}

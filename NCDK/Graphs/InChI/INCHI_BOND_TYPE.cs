@@ -17,33 +17,35 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
-    /// Enumeration of InChI radical definitions.
-    /// Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
+    /// Enumeration of InChI bond type definitions.
+    /// Corresponds to <tt>inchi_BondType</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    internal enum INCHI_RADICAL
+    internal enum INCHI_BOND_TYPE
     {
-        /// <summary>
-        /// No radical status recorded.
-        /// </summary>
         None = 0,
 
         /// <summary>
-        /// Singlet.
+        /// Single bond.
         /// </summary>
-        Singlet = 1,
+        Single = 1,
 
         /// <summary>
-        /// Doublet.
+        /// Double bond.
         /// </summary>
-        Doublet = 2,
+        Double = 2,
 
         /// <summary>
-        /// Triplet.
+        /// Triple bond.
         /// </summary>
-        Triplet = 3,
+        Triple = 3,
+
+        /// <summary>
+        /// Alternating (single-double) bond. Avoid where possible.
+        /// </summary>
+        Altern = 4
     }
 }

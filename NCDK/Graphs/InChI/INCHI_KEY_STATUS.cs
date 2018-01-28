@@ -17,20 +17,28 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
-    // @author sea36
-    internal class NInchiInputData
+    /// <summary>
+    /// <para>Type-safe enumeration of InChIKey check return codes.</para>
+    ///
+    /// <para>InChI library return values:
+    /// <list type="bullet">
+    /// <item>VALID_STANDARD            (0)</item>
+    /// <item>INVALID_LENGTH     (1)</item>
+    /// <item>INVALID_LAYOUT     (2)</item>
+    /// <item>INVALID_VERSION    (3)</item>
+    /// </list>
+    /// </para>
+    /// <para>See <tt>inchi_api.h</tt>.</para>
+    /// </summary>
+    // @author Sam Adams
+    internal enum INCHI_KEY_STATUS
     {
-        public NInchiInput Input { get; private set; }
-        public INCHI_RET ReturnStatus { get; private set; }
-        public string ErrorMessag { get; private set; }
-
-        public NInchiInputData(int returnValue, NInchiInput input, int chiral, string errorMessage)
-        {
-            this.Input = input;
-            this.ReturnStatus = (INCHI_RET)returnValue;
-            this.ErrorMessag = errorMessage;
-        }
+        VALID_STANDARD = 0,
+        VALID_NON_STANDARD = -1,
+        INVALID_LENGTH = 1,
+        INVALID_LAYOUT = 2,
+        INVALID_VERSION = 3,
     }
 }

@@ -17,33 +17,32 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
-    /// Enumeration of InChI 0D parity types.
-    /// Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
+    /// <para>Type-safe enumeration of InChI return codes.</para>
+    ///
+    /// <para>InChI library return values:
+    /// <list type="bullet">
+    /// <item>OK                      = 0</item>
+    /// <item>UNKNOWN_ERROR          = 1</item>
+    /// <item>EMPTY_INPUT              = 2</item>
+    /// <item>NOT_INCHI_INPUT          = 3</item>
+    /// <item>NOT_ENOUGH_MEMORY     = 4</item>
+    /// <item>ERROR_IN_FLAG_CHAR      = 5</item>
+    /// </list> 
+    /// <para>See <tt>inchi_api.h</tt>.</para>
+    /// </para>
     /// </summary>
     // @author Sam Adams
-    internal enum INCHI_STEREOTYPE
+    internal enum INCHI_KEY
     {
-        /// <summary>
-        /// None.
-        /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Stereogenic bond &gt;A=B&lt; or cumulene &gt;A=C=C=B&lt;.
-        /// </summary>
-        DoubleBond = 1,
-
-        /// <summary>
-        /// Tetrahedral atom.
-        /// </summary>
-        Tetrahedral = 2,
-
-        /// <summary>
-        /// Allene.
-        /// </summary>
-        Allene = 3,
+        OK = 0,
+        UNKNOWN_ERROR = 1,
+        EMPTY_INPUT = 2,
+        INVALID_INCHI_PREFIX = 3,
+        NOT_ENOUGH_MEMORY = 4,
+        INVALID_INCHI = 20,
+        INVALID_STD_INCHI = 21,
     }
 }

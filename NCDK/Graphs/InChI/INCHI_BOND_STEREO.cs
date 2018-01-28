@@ -17,38 +17,53 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
-    /// Enumeration of InChI 0D parities.
-    /// Corresponds to <tt>inchi_StereoParity0D</tt> in <tt>inchi_api.h</tt>.
+    /// Enumeration of InChI 2D stereo definitions.
+    /// Corresponds to <tt>inchi_BondStereo2D</tt> in <tt>inchi_api.h</tt>.
     /// </summary>
     // @author Sam Adams
-    internal enum INCHI_PARITY
+    internal enum INCHI_BOND_STEREO
     {
         /// <summary>
-        /// None.
+        /// No 2D stereo definition recorded.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Odd.
+        /// Stereocenter-related; positive: the sharp end points to this atom.
         /// </summary>
-        Odd = 1,
+        Single1Up = 1,
 
         /// <summary>
-        /// Even.
+        /// Stereocenter-related; positive: the sharp end points to this atom.
         /// </summary>
-        Even = 2,
+        Single1Either = 4,
 
         /// <summary>
-        /// Unknown.
+        /// Stereocenter-related; positive: the sharp end points to this atom.
         /// </summary>
-        Unknown = 3,
+        Single1Down = 6,
 
         /// <summary>
-        /// Undefined.
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
         /// </summary>
-        Undefined = 4,
+        Single2Up = -1,
+
+        /// <summary>
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
+        /// </summary>
+        Single2Either = -4,
+
+        /// <summary>
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
+        /// </summary>
+        Single2Down = -6,
+
+        /// <summary>
+        /// Unknown stereobond geometry.
+        /// </summary>
+        DoubleEither = 3,
     }
 }

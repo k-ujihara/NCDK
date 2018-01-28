@@ -17,7 +17,7 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Encapsulates output from InChI to structure conversion.
@@ -28,7 +28,7 @@ namespace NCDK.NInChI
         /// <summary>
         /// Return status from conversion.
         /// </summary>
-        public INCHI_RET ReturnStatus { get; protected set; }
+        public InChIReturnCode ReturnStatus { get; protected set; }
 
         /// <summary>
         /// Error/warning messages generated.
@@ -66,14 +66,14 @@ namespace NCDK.NInChI
         } = new ulong[2, 2];
         
         public NInchiOutputStructure(int ret, string message, string log, ulong w00, ulong w01, ulong w10, ulong w11)
-            : this((INCHI_RET)ret)
+            : this((InChIReturnCode)ret)
         {
             Message = message;
             Log = log;
             WarningFlags = new[,] { { w00, w01, }, { w10, w11 } };
         }
 
-        public NInchiOutputStructure(INCHI_RET value)
+        public NInchiOutputStructure(InChIReturnCode value)
         {
             this.ReturnStatus = value;
         }

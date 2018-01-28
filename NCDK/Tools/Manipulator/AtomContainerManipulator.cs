@@ -595,7 +595,7 @@ namespace NCDK.Tools.Manipulator
                         IAtom neighbour = org.GetConnectedAtoms(atom).ElementAt(0);
                         // keep if the neighbouring hetero atom has stereo information, otherwise continue checking
                         var stereoParity = neighbour.StereoParity;
-                        if (stereoParity == StereoAtomParity.Undefined)
+                        if (stereoParity == StereoAtomParities.Undefined)
                         {
                             addToRemove = true;
                             // keep if any of the bonds of the hetero atom have stereo information

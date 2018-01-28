@@ -17,35 +17,43 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+using System;
+
+namespace NCDK.Graphs.InChI
 {
+
     /// <summary>
-    /// Enumeration of InChI bond type definitions.
-    /// Corresponds to <tt>inchi_BondType</tt> in <tt>inchi_api.h</tt>.
+    /// Exception thrown by JniInchi.
     /// </summary>
     // @author Sam Adams
-    internal enum INCHI_BOND_TYPE
+    internal class NInchiException : Exception
     {
-        None = 0,
+
 
         /// <summary>
-        /// Single bond.
+        /// Constructor.
         /// </summary>
-        Single = 1,
+        public NInchiException()
+
+                : base()
+        { }
 
         /// <summary>
-        /// Double bond.
+        /// Constructs a new exception with the specified detail message.
+        ///
+        /// <param name="message">the detail message.</param>
         /// </summary>
-        Double = 2,
+        public NInchiException(string message)
+                : base(message)
+        { }
 
         /// <summary>
-        /// Triple bond.
+        /// Constructs a new exception with the specified cause.
+        ///
+        /// <param name="ex">the cause.</param>
         /// </summary>
-        Triple = 3,
-
-        /// <summary>
-        /// Alternating (single-double) bond. Avoid where possible.
-        /// </summary>
-        Altern = 4
+        public NInchiException(Exception ex)
+                : base(ex.Message, ex)
+        { }
     }
 }

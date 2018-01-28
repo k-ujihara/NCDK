@@ -17,33 +17,35 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Type-safe enumeration of InChI return codes.
+    /// </summary>
+    /// <remarks>
     /// <para>
     /// InChI library return values:
     /// <list type="bullet">
-    /// <item>SKIP     (-2)    Not used in InChI library</item>
-    /// <item>EOF      (-1)    No structural data has been provided</item>
-    /// <item>OKAY     (0)     Success, no errors or warnings</item>
-    /// <item>WARNING  (1)     Success, Warning(s) issued</item>
-    /// <item>ERROR    (2)     Error: no InChI has been created</item>
-    /// <item>FATAL    (3)     Severe error: no InChI has been created (typically,
+    /// <item><see cref="Skip"/>     (-2)    Not used in InChI library</item>
+    /// <item><see cref="EOF"/>      (-1)    No structural data has been provided</item>
+    /// <item><see cref="Ok"/>       (0)     Success, no errors or warnings</item>
+    /// <item><see cref="Warning"/>  (1)     Success, Warning(s) issued</item>
+    /// <item><see cref="Error"/>    (2)     Error: no InChI has been created</item>
+    /// <item><see cref="Fatal"/>    (3)     Severe error: no InChI has been created (typically,
     ///                  memory allocation failure)</item>
-    /// <item>Unknown  (4)     Unknown program error</item>
-    /// <item>BUSY     (5)     Previous call to InChI has not returned yet</item>
-    /// </list> 
+    /// <item><see cref="Unknown"/>  (4)     Unknown program error</item>
+    /// <item><see cref="Busy"/>     (5)     Previous call to InChI has not returned yet</item>
+    /// </list>
     /// </para>
     /// <para>See <tt>inchi_api.h</tt>.</para>
-    /// </summary>
+    /// </remarks>
     // @author Sam Adams
-    public enum INCHI_RET
+    public enum InChIReturnCode
     {
         /// <summary>
         /// Not used in InChI library.
         /// </summary>
-        SKIP = -2,
+        Skip = -2,
 
         /// <summary>
         /// No structural data has been provided.
@@ -53,22 +55,22 @@ namespace NCDK.NInChI
         /// <summary>
         /// Success; no errors or warnings.
         /// </summary>
-        OKAY = 0,
+        Ok = 0,
 
         /// <summary>
         /// Success; Warning(s) issued.
         /// </summary>
-        WARNING = 1,
+        Warning = 1,
 
         /// <summary>
         /// Error: no InChI has been created.
         /// </summary>
-        ERROR = 2,
+        Error = 2,
 
         /// <summary>
         /// Severe error: no InChI has been created (typically, memory allocation failure).
         /// </summary>
-        FATAL = 3,
+        Fatal = 3,
 
         /// <summary>
         /// Unknown program error.
@@ -76,8 +78,8 @@ namespace NCDK.NInChI
         Unknown = 4,
 
         /// <summary>
-        /// Previuos call to InChI has not returned yet.
+        /// Previous call to InChI has not returned yet.
         /// </summary>
-        BUSY = 5,
+        Busy = 5,
     }
 }

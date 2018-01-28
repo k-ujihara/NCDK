@@ -174,7 +174,7 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public StereoAtomParity StereoParity
+        public int StereoParity
         {
             get { return atom.StereoParity; }
             set { atom.StereoParity = value; }

@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestNInchiOutput
@@ -29,8 +29,8 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetReturnStatus()
         {
-            NInchiOutput output = new NInchiOutput(INCHI_RET.OKAY, null, null, null, null);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            NInchiOutput output = new NInchiOutput(InChIReturnCode.Ok, null, null, null, null);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchi()
         {
-            NInchiOutput output = new NInchiOutput(INCHI_RET.Unknown, "Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", null, null, null);
+            NInchiOutput output = new NInchiOutput(InChIReturnCode.Unknown, "Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", null, null, null);
             Assert.AreEqual("Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", output.InChI);
         }
 
@@ -49,7 +49,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetAuxInfo()
         {
-            NInchiOutput output = new NInchiOutput(INCHI_RET.Unknown, null, "AuxInfo=1/0/N:1,2,6,3,5,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:d1;s2;d3;s4;s1d5;/rC:-.7145,.4125,0;-.7145,-.4125,0;0,-.825,0;.7145,-.4125,0;.7145,.4125,0;0,.825,0;", null, null);
+            NInchiOutput output = new NInchiOutput(InChIReturnCode.Unknown, null, "AuxInfo=1/0/N:1,2,6,3,5,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:d1;s2;d3;s4;s1d5;/rC:-.7145,.4125,0;-.7145,-.4125,0;0,-.825,0;.7145,-.4125,0;.7145,.4125,0;0,.825,0;", null, null);
             Assert.AreEqual("AuxInfo=1/0/N:1,2,6,3,5,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:d1;s2;d3;s4;s1d5;/rC:-.7145,.4125,0;-.7145,-.4125,0;0,-.825,0;.7145,-.4125,0;.7145,.4125,0;0,.825,0;", output.AuxInfo);
         }
 
@@ -59,7 +59,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetMessage()
         {
-            NInchiOutput output = new NInchiOutput(INCHI_RET.Unknown, null, null, "Test message", null);
+            NInchiOutput output = new NInchiOutput(InChIReturnCode.Unknown, null, null, "Test message", null);
             Assert.AreEqual("Test message", output.Message);
         }
 
@@ -69,7 +69,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetLog()
         {
-            NInchiOutput output = new NInchiOutput(INCHI_RET.Unknown, null, null, null, "Test log");
+            NInchiOutput output = new NInchiOutput(InChIReturnCode.Unknown, null, null, null, "Test log");
             Assert.AreEqual("Test log", output.Log);
         }
     }

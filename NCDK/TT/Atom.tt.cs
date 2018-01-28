@@ -72,7 +72,7 @@ namespace NCDK.Default
         internal Vector2? point2D;
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
-        internal StereoAtomParity stereoParity;
+        internal int stereoParity;
         internal bool isSingleOrDouble;
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace NCDK.Default
         /// <summary>
         /// The stereo parity for this atom.
         /// </summary>
-        public virtual StereoAtomParity StereoParity
+        public virtual int StereoParity
         {
             get { return stereoParity; }
             set 
@@ -313,7 +313,7 @@ namespace NCDK.Default
                 sb.Append(", S:").Append(Symbol);
             if (ImplicitHydrogenCount != null)
                 sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != StereoAtomParity.Undefined)
+            if (StereoParity != 0)
                 sb.Append(", SP:").Append(StereoParity);
             if (Point2D != null)
                 sb.Append(", 2D:[").Append(Point2D).Append(']');
@@ -535,7 +535,7 @@ namespace NCDK.Silent
         internal Vector2? point2D;
         internal Vector3? point3D;
         internal Vector3? fractionalPoint3D;
-        internal StereoAtomParity stereoParity;
+        internal int stereoParity;
         internal bool isSingleOrDouble;
 
         /// <summary>
@@ -729,7 +729,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The stereo parity for this atom.
         /// </summary>
-        public virtual StereoAtomParity StereoParity
+        public virtual int StereoParity
         {
             get { return stereoParity; }
             set 
@@ -769,7 +769,7 @@ namespace NCDK.Silent
                 sb.Append(", S:").Append(Symbol);
             if (ImplicitHydrogenCount != null)
                 sb.Append(", H:").Append(ImplicitHydrogenCount);
-            if (StereoParity != StereoAtomParity.Undefined)
+            if (StereoParity != 0)
                 sb.Append(", SP:").Append(StereoParity);
             if (Point2D != null)
                 sb.Append(", 2D:[").Append(Point2D).Append(']');

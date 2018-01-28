@@ -9,29 +9,41 @@
  * (at your option) any later version.
  *
  * JNI-InChI is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Graphs.InChI
 {
-    [TestClass()]
-    public class TestNInchiInput
+    /// <summary>
+    /// Enumeration of InChI radical definitions.
+    /// Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
+    /// </summary>
+    // @author Sam Adams
+    internal enum INCHI_RADICAL
     {
         /// <summary>
-        /// Test method for 'net.sf.jniinchi.JniInchiInput.Options'
+        /// No radical status recorded.
         /// </summary>
-        [TestMethod()]
-        public void TestGetOptions()
-        {
-            NInchiInput input = new NInchiInput();
-            input.Options = NInchiWrapper.FlagChar + "compress";
-            Assert.AreEqual(NInchiWrapper.FlagChar + "compress", input.Options);
-        }
+        None = 0,
+
+        /// <summary>
+        /// Singlet.
+        /// </summary>
+        Singlet = 1,
+
+        /// <summary>
+        /// Doublet.
+        /// </summary>
+        Doublet = 2,
+
+        /// <summary>
+        /// Triplet.
+        /// </summary>
+        Triplet = 3,
     }
 }

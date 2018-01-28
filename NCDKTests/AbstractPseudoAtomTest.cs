@@ -94,7 +94,7 @@ namespace NCDK
         public override void TestSetStereoParity_Integer()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
-            atom.StereoParity = (StereoAtomParity)(-1);
+            atom.StereoParity = -1;
             Assert.AreEqual(0, atom.StereoParity);
         }
 
@@ -197,11 +197,11 @@ namespace NCDK
         public override void TestClone_StereoParity()
         {            
             IAtom atom = (IAtom)NewChemObject();
-            atom.StereoParity = (StereoAtomParity)3;
+            atom.StereoParity = 3;
             IAtom clone = (IAtom)atom.Clone();
 
             // test cloning
-            atom.StereoParity = (StereoAtomParity)4;
+            atom.StereoParity = 4;
             Assert.AreEqual(0, clone.StereoParity);
         }
 

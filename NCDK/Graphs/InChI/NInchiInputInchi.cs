@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Encapsulates input for InChI to structure conversion.
@@ -67,7 +67,7 @@ namespace NCDK.NInChI
         /// <param name="inchi">InChI string</param>
         /// <param name="opts">Options</param>
         /// </summary>
-        public NInchiInputInchi(string inchi, IList<INCHI_OPTION> opts)
+        public NInchiInputInchi(string inchi, IList<InChIOption> opts)
         {
             Inchi = inchi;
             Options = NInchiWrapper.CheckOptions(opts);

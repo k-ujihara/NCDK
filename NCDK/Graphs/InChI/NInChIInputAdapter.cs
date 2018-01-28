@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +29,7 @@ using System.Text;
 
 namespace NCDK.Graphs.InChI
 {
-    internal class JniInChIInputAdapter : NInchiInput
+    internal class NInChIInputAdapter : NInchiInput
     {
         /// <summary>
         /// Flag indicating windows or linux.
@@ -44,12 +43,12 @@ namespace NCDK.Graphs.InChI
 
         public static readonly string FIVE_SECOND_TIMEOUT = FLAG_CHAR + "W5";
 
-        public JniInChIInputAdapter(string options)
+        public NInChIInputAdapter(string options)
         {
             this.Options = options == null ? "" : CheckOptions(options);
         }
 
-        public JniInChIInputAdapter(IList<INCHI_OPTION> options)
+        public NInChIInputAdapter(IList<InChIOption> options)
         {
             this.Options = options == null ? "" : CheckOptions(options);
         }
@@ -89,7 +88,7 @@ namespace NCDK.Graphs.InChI
                         op = op.Substring(1);
                     }
 
-                    INCHI_OPTION option = INCHI_OPTION.ValueOfIgnoreCase(op);
+                    InChIOption option = InChIOption.ValueOfIgnoreCase(op);
                     if (option != null)
                     {
                         return FLAG_CHAR + option.Name;
@@ -124,7 +123,7 @@ namespace NCDK.Graphs.InChI
             return options;
         }
 
-        private static string CheckOptions(IList<INCHI_OPTION> ops)
+        private static string CheckOptions(IList<InChIOption> ops)
         {
             if (ops == null)
             {

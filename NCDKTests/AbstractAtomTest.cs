@@ -141,7 +141,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetStereoParity_Integer()
         {
-            var parity = StereoAtomParity.Plus;
+            var parity = StereoAtomParities.Plus;
             IAtom a = (IAtom)NewChemObject();
             a.StereoParity = parity;
             Assert.AreEqual(parity, a.StereoParity);
@@ -227,11 +227,11 @@ namespace NCDK
         public virtual void TestClone_StereoParity()
         {
             IAtom atom = (IAtom)NewChemObject();
-            atom.StereoParity = (StereoAtomParity)3;
+            atom.StereoParity = 3;
             IAtom clone = (IAtom)atom.Clone();
 
             // test cloning
-            atom.StereoParity = (StereoAtomParity)4;
+            atom.StereoParity = 4;
             Assert.AreEqual(3, clone.StereoParity);
         }
 

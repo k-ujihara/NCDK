@@ -253,7 +253,7 @@ namespace NCDK.IO
         private IAtomContainer ReadAtomContainer(IAtomContainer molecule)
         {
             IAtomContainer outputContainer = null;
-            var parities = new Dictionary<IAtom, StereoAtomParity>();
+            var parities = new Dictionary<IAtom, int>();
 
             int linecount = 0;
             string title = null;
@@ -428,7 +428,7 @@ namespace NCDK.IO
                     foreach (var e in parities)
                     {
                         var parity = e.Value;
-                        if (parity != (StereoAtomParity)1 && parity != (StereoAtomParity)2)
+                        if (parity != 1 && parity != 2)
                             continue; // 3=unspec
                         int idx = 0;
                         IAtom focus = e.Key;
@@ -454,7 +454,7 @@ namespace NCDK.IO
 
                         if (idx == 4)
                         {
-                            TetrahedralStereo winding = parity == (StereoAtomParity)1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
+                            TetrahedralStereo winding = parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
                             // H is always at back, even if explicit! At least this seems to be the case.
                             // we adjust the winding as needed
                             if (hidx == 0 || hidx == 2)
@@ -637,7 +637,7 @@ namespace NCDK.IO
             return sb.ToString();
         }
 
-        private static readonly IDictionary<IAtom, StereoAtomParity> EmptyMap = new ReadOnlyDictionary<IAtom, StereoAtomParity>(new Dictionary<IAtom, StereoAtomParity>());
+        private static readonly IDictionary<IAtom, int> EmptyMap = new ReadOnlyDictionary<IAtom, int>(new Dictionary<IAtom, int>());
 
         internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, int lineNum)
         {
@@ -663,7 +663,7 @@ namespace NCDK.IO
         /// <param name="parities">map of atom parities for creation 0D stereochemistry</param>
         /// <param name="lineNum">the line number - for printing error messages</param>
         /// <returns>a new atom instance</returns>
-        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, IDictionary<IAtom, StereoAtomParity> parities, int lineNum)
+        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, IDictionary<IAtom, int> parities, int lineNum)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths:
@@ -675,7 +675,7 @@ namespace NCDK.IO
             string symbol;
             double x = 0, y = 0, z = 0;
             int massDiff = 0, charge = 0;
-            StereoAtomParity parity = 0;
+            int parity = 0;
             int valence = 0, mapping = 0;
 
             int length = GetLength(line);
@@ -700,7 +700,7 @@ namespace NCDK.IO
                 case 48: // bbb: stereo care [query]
                 case 45: // hhh: hydrogen count + 1 [query]
                 case 42: // sss: stereo parity
-                    parity = (StereoAtomParity)ToInt(line[41]);
+                    parity = ToInt(line[41]);
                     goto case 39;
                 case 39: // ccc: charge
                     charge = ToCharge(line[38]);
@@ -1778,7 +1778,7 @@ namespace NCDK.IO
             }
 
             // set the stereo partiy
-            StereoAtomParity parity = (StereoAtomParity)(line.Length > 41 ? int.Parse(line[41].ToString()) : 0);
+            var parity = line.Length > 41 ? int.Parse(line[41].ToString()) : 0;
             atom.StereoParity = parity;
 
             if (line.Length >= 51)

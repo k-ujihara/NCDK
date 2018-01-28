@@ -18,7 +18,6 @@
  */
 
 using NCDK.Config;
-using NCDK.NInChI;
 using NCDK.Stereo;
 using NCDK.Tools;
 using System;
@@ -103,7 +102,7 @@ namespace NCDK.Graphs.InChI
 
             try
             {
-                input = new NInchiInputInchi(inchi, options.Select(n => INCHI_OPTION.ValueOfIgnoreCase(n)).ToList());
+                input = new NInchiInputInchi(inchi, options.Select(n => InChIOption.ValueOfIgnoreCase(n)).ToList());
             }
             catch (NInchiException jie)
             {
@@ -400,7 +399,7 @@ namespace NCDK.Graphs.InChI
         /// Return status from InChI process.  OKAY and WARNING indicate
         /// InChI has been generated, in all other cases InChI generation has failed.
         /// </summary>
-        public INCHI_RET ReturnStatus => output.ReturnStatus;
+        public InChIReturnCode ReturnStatus => output.ReturnStatus;
 
         /// <summary>
         /// Generated (error/warning) messages.

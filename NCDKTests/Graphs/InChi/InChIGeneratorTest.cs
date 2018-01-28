@@ -17,10 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
-using NCDK.NInChI;
 using NCDK.Numerics;
 using NCDK.Smiles;
 using NCDK.Stereo;
@@ -57,7 +57,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
@@ -120,7 +120,7 @@ namespace NCDK.Graphs.InChI
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/Li/q+1", gen.InChI);
         }
 
@@ -135,7 +135,7 @@ namespace NCDK.Graphs.InChI
             a.MassNumber = 37;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H/i1+2", gen.InChI);
         }
 
@@ -150,7 +150,7 @@ namespace NCDK.Graphs.InChI
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
@@ -166,7 +166,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a);
             ac.SingleElectrons.Add(new SingleElectron(a));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/CH3/h1H3", gen.InChI);
         }
 
@@ -185,7 +185,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
         }
@@ -207,15 +207,15 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a1);
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
-            List<INCHI_OPTION> options = new List<INCHI_OPTION>();
-            options.Add(INCHI_OPTION.FixedH);
-            options.Add(INCHI_OPTION.SAbs);
-            options.Add(INCHI_OPTION.SAsXYZ);
-            options.Add(INCHI_OPTION.SPXYZ);
-            options.Add(INCHI_OPTION.FixSp3Bug);
-            options.Add(INCHI_OPTION.AuxNone);
+            List<InChIOption> options = new List<InChIOption>();
+            options.Add(InChIOption.FixedH);
+            options.Add(InChIOption.SAbs);
+            options.Add(InChIOption.SAsXYZ);
+            options.Add(InChIOption.SPXYZ);
+            options.Add(InChIOption.FixSp3Bug);
+            options.Add(InChIOption.AuxNone);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, options);
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInChIKey());
         }
@@ -235,7 +235,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Double));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H4/c1-2/h1-2H2", gen.InChI);
         }
 
@@ -254,7 +254,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Triple));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac, "FixedH");
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2/c1-2/h1-2H", gen.InChI);
         }
 
@@ -283,7 +283,7 @@ namespace NCDK.Graphs.InChI
             acE.Bonds.Add(new Bond(a2E, a4E, BondOrder.Single));
 
             InChIGenerator genE = GetFactory().GetInChIGenerator(acE, "FixedH");
-            Assert.AreEqual(genE.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(genE.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
 
             // (Z)-1,2-dichloroethene
@@ -305,7 +305,7 @@ namespace NCDK.Graphs.InChI
             acZ.Bonds.Add(new Bond(a2Z, a4Z, BondOrder.Single));
 
             InChIGenerator genZ = GetFactory().GetInChIGenerator(acZ, "FixedH");
-            Assert.AreEqual(genZ.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(genZ.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.InChI);
         }
 
@@ -341,7 +341,7 @@ namespace NCDK.Graphs.InChI
             acL.Bonds.Add(new Bond(a2L, a6L, BondOrder.Double));
 
             InChIGenerator genL = GetFactory().GetInChIGenerator(acL, "FixedH");
-            Assert.AreEqual(genL.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(genL.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1/f/h5H", genL.InChI);
 
             // D-Alanine
@@ -370,7 +370,7 @@ namespace NCDK.Graphs.InChI
             acD.Bonds.Add(new Bond(a2D, a6D, BondOrder.Double));
 
             InChIGenerator genD = GetFactory().GetInChIGenerator(acD, "FixedH");
-            Assert.AreEqual(genD.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(genD.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1/f/h5H", genD.InChI);
         }
 
@@ -382,7 +382,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(new Atom("O"));
             ac.Atoms[0].ImplicitHydrogenCount = 0;
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/O", gen.InChI);
         }
 
@@ -395,7 +395,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
@@ -410,7 +410,7 @@ namespace NCDK.Graphs.InChI
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/Li/q+1", gen.InChI);
         }
 
@@ -425,7 +425,7 @@ namespace NCDK.Graphs.InChI
             a.MassNumber = 37;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i1+2", gen.InChI);
         }
 
@@ -440,7 +440,7 @@ namespace NCDK.Graphs.InChI
             a.ImplicitHydrogenCount = 1;
             ac.Atoms.Add(a);
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
+            Assert.AreEqual(gen.ReturnStatus, InChIReturnCode.Ok);
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
@@ -456,7 +456,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a);
             ac.SingleElectrons.Add(new SingleElectron(a));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/CH3/h1H3", gen.InChI);
         }
 
@@ -475,7 +475,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Single));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H6/c1-2/h1-2H3", gen.InChI);
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYSA-N", gen.GetInChIKey());
         }
@@ -495,7 +495,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Double));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H4/c1-2/h1-2H2", gen.InChI);
         }
 
@@ -514,7 +514,7 @@ namespace NCDK.Graphs.InChI
             ac.Atoms.Add(a2);
             ac.Bonds.Add(new Bond(a1, a2, BondOrder.Triple));
             InChIGenerator gen = GetFactory().GetInChIGenerator(ac);
-            Assert.AreEqual(INCHI_RET.OKAY, gen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, gen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2/c1-2/h1-2H", gen.InChI);
         }
 
@@ -544,7 +544,7 @@ namespace NCDK.Graphs.InChI
             acE.Bonds.Add(new Bond(a2E, a4E, BondOrder.Single));
 
             InChIGenerator genE = GetFactory().GetInChIGenerator(acE);
-            Assert.AreEqual(INCHI_RET.OKAY, genE.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
 
             // (Z)-1,2-dichloroethene
@@ -566,7 +566,7 @@ namespace NCDK.Graphs.InChI
             acZ.Bonds.Add(new Bond(a2Z, a4Z, BondOrder.Single));
 
             InChIGenerator genZ = GetFactory().GetInChIGenerator(acZ);
-            Assert.AreEqual(INCHI_RET.OKAY, genZ.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.InChI);
         }
 
@@ -605,7 +605,7 @@ namespace NCDK.Graphs.InChI
             acL.Bonds.Add(new Bond(a2L, a6L, BondOrder.Double));
 
             InChIGenerator genL = GetFactory().GetInChIGenerator(acL);
-            Assert.AreEqual(INCHI_RET.OKAY, genL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genL.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.InChI);
 
             // D-Alanine
@@ -634,7 +634,7 @@ namespace NCDK.Graphs.InChI
             acD.Bonds.Add(new Bond(a2D, a6D, BondOrder.Double));
 
             InChIGenerator genD = GetFactory().GetInChIGenerator(acD);
-            Assert.AreEqual(INCHI_RET.OKAY, genD.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genD.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", genD.InChI);
         }
 
@@ -678,7 +678,7 @@ namespace NCDK.Graphs.InChI
             acL.StereoElements.Add(chirality);
 
             InChIGenerator genL = GetFactory().GetInChIGenerator(acL);
-            Assert.AreEqual(INCHI_RET.OKAY, genL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genL.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", genL.InChI);
         }
 
@@ -710,7 +710,7 @@ namespace NCDK.Graphs.InChI
             acE.StereoElements.Add(stereo);
 
             InChIGenerator genE = GetFactory().GetInChIGenerator(acE);
-            Assert.AreEqual(INCHI_RET.OKAY, genE.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, genE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.InChI);
         }
 
@@ -906,7 +906,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator generator = inchiFact.GetInChIGenerator(mol, "W0.01");
-            Assert.AreEqual(INCHI_RET.ERROR, generator.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Error, generator.ReturnStatus);
             Assert.IsTrue(
                 generator.Log.Contains("Time limit exceeded") ||
                 generator.Log.Contains("Structure normalization timeout"));
@@ -925,7 +925,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol);
-            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)", inchigen.InChI);
         }
 
@@ -942,7 +942,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "KET");
-            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)", inchigen.InChI);
         }
 
@@ -959,10 +959,10 @@ namespace NCDK.Graphs.InChI
             IAtomContainer mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator stdinchi = inchiFact.GetInChIGenerator(mol);
-            Assert.AreEqual(INCHI_RET.OKAY, stdinchi.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, stdinchi.ReturnStatus);
             Assert.AreEqual("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-", stdinchi.InChI);
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
-            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
         }
 
@@ -979,7 +979,7 @@ namespace NCDK.Graphs.InChI
             IAtomContainer mol = smipar.ParseSmiles(smiles);
             InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
             InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
-            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, inchigen.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
         }
 

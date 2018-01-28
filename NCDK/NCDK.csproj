@@ -146,6 +146,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemicalElement.tt</DependentUpon>
     </Compile>
+    <Compile Include="Graphs\InChI\INCHI_BOND_STEREO.cs" />
+    <Compile Include="Graphs\InChI\INCHI_BOND_TYPE.cs" />
+    <Compile Include="Graphs\InChI\INCHI_KEY.cs" />
+    <Compile Include="Graphs\InChI\INCHI_KEY_STATUS.cs" />
+    <Compile Include="Graphs\InChI\InChIOption.cs" />
+    <Compile Include="Graphs\InChI\INCHI_PARITY.cs" />
+    <Compile Include="Graphs\InChI\INCHI_RADICAL.cs" />
+    <Compile Include="Graphs\InChI\InChIReturnCode.cs" />
+    <Compile Include="Graphs\InChI\INCHI_STATUS.cs" />
+    <Compile Include="Graphs\InChI\INCHI_STEREOTYPE.cs" />
+    <Compile Include="Graphs\InChI\NInchiAtom.cs" />
+    <Compile Include="Graphs\InChI\NInchiBond.cs" />
+    <Compile Include="Graphs\InChI\NInchiException.cs" />
+    <Compile Include="Graphs\InChI\NInchiInput.cs" />
+    <Compile Include="Graphs\InChI\NInchiInputData.cs" />
+    <Compile Include="Graphs\InChI\NInchiInputInchi.cs" />
+    <Compile Include="Graphs\InChI\NInchiOutput.cs" />
+    <Compile Include="Graphs\InChI\NInchiOutputKey.cs" />
+    <Compile Include="Graphs\InChI\NInchiOutputStructure.cs" />
+    <Compile Include="Graphs\InChI\NInchiStereo0D.cs" />
+    <Compile Include="Graphs\InChI\NInchiStructure.cs" />
+    <Compile Include="Graphs\InChI\NInchiWrapper.cs" />
     <Compile Include="Hash\BasicAtomEncoder.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -167,7 +189,7 @@
       <DependentUpon>MolecularFormula.tt</DependentUpon>
     </Compile>
     <Compile Include="Formula\RoundRobinFormulaGenerator.cs" />
-    <Compile Include="Graphs\InChI\JniInChIInputAdapter.cs" />
+    <Compile Include="Graphs\InChI\NInChIInputAdapter.cs" />
     <Compile Include="Groups\IAtomContainerDiscretePartitionRefiner.cs" />
     <Compile Include="Groups\AtomContainerDiscretePartitionRefinerImpl.cs" />
     <Compile Include="Groups\AtomRefinable.cs" />
@@ -413,28 +435,6 @@
     <Compile Include="Stereo\SquarePlanar.cs" />
     <Compile Include="Stereo\TrigonalBipyramidal.cs" />
     <Compile Include="Templates\IsoAlkanes.cs" />
-    <Compile Include="NInChI\INCHI_BOND_STEREO.cs" />
-    <Compile Include="NInChI\INCHI_BOND_TYPE.cs" />
-    <Compile Include="NInChI\INCHI_KEY.cs" />
-    <Compile Include="NInChI\INCHI_KEY_STATUS.cs" />
-    <Compile Include="NInChI\INCHI_OPTION.cs" />
-    <Compile Include="NInChI\INCHI_PARITY.cs" />
-    <Compile Include="NInChI\INCHI_RADICAL.cs" />
-    <Compile Include="NInChI\INCHI_RET.cs" />
-    <Compile Include="NInChI\INCHI_STATUS.cs" />
-    <Compile Include="NInChI\INCHI_STEREOTYPE.cs" />
-    <Compile Include="NInChI\NInchiAtom.cs" />
-    <Compile Include="NInChI\NInchiBond.cs" />
-    <Compile Include="NInChI\NInchiException.cs" />
-    <Compile Include="NInChI\NInchiInput.cs" />
-    <Compile Include="NInChI\NInchiInputData.cs" />
-    <Compile Include="NInChI\NInchiInputInchi.cs" />
-    <Compile Include="NInChI\NInchiOutput.cs" />
-    <Compile Include="NInChI\NInchiOutputKey.cs" />
-    <Compile Include="NInChI\NInchiOutputStructure.cs" />
-    <Compile Include="NInChI\NInchiStereo0D.cs" />
-    <Compile Include="NInChI\NInchiStructure.cs" />
-    <Compile Include="NInChI\NInchiWrapper.cs" />
     <Compile Include="Numerics\ConstantHelper.tt.cs">
       <DependentUpon>ConstantHelper.tt</DependentUpon>
       <AutoGen>True</AutoGen>

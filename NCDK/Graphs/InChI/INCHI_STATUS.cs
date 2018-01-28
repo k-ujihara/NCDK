@@ -17,30 +17,17 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
-
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
-    internal class NInchiOutputKey
+    // @author sea36
+    internal enum INCHI_STATUS
     {
-        public INCHI_KEY ReturnStatus { get; private set; }
-        public string Key { get; private set; }
-
-        public NInchiOutputKey(int ret, string key)
-        : this((INCHI_KEY)ret, key)
-        { }
-
-        public NInchiOutputKey(INCHI_KEY retStatus, string key)
-        {
-            if (retStatus == INCHI_KEY.OK)
-            {
-                if (key == null)
-                {
-                    throw new ArgumentNullException(nameof(key), "Null InChIkey");
-                }
-            }
-            ReturnStatus = retStatus;
-            Key = key;
-        }
+        INCHI_VALID_STANDARD = 0,
+        INCHI_VALID_NON_STANDARD = 1,
+        INCHI_VALID_BETA = 2,
+        INCHI_INVALID_PREFIX = 3,
+        INCHI_INVALID_VERSION = 4,
+        INCHI_INVALID_LAYOUT = 5,
+        INCHI_FAIL_I2I = 6,
     }
 }

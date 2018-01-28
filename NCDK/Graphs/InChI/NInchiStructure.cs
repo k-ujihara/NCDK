@@ -17,43 +17,45 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System;
+using System.Collections.Generic;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
-
-    /// <summary>
-    /// Exception thrown by JniInchi.
-    /// </summary>
     // @author Sam Adams
-    internal class NInchiException : Exception
+    internal class NInchiStructure
     {
-
+        /// <summary>
+        /// List of atoms.
+        /// </summary>
+        public IList<NInchiAtom> Atoms { get; private set; } = new List<NInchiAtom>();
 
         /// <summary>
-        /// Constructor.
+        /// List of bonds.
         /// </summary>
-        public NInchiException()
-
-                : base()
-        { }
+        public IList<NInchiBond> Bonds { get; private set; } = new List<NInchiBond>();
 
         /// <summary>
-        /// Constructs a new exception with the specified detail message.
-        ///
-        /// <param name="message">the detail message.</param>
+        /// List of stero parities.
         /// </summary>
-        public NInchiException(string message)
-                : base(message)
-        { }
+        public IList<NInchiStereo0D> Stereos { get; private set; } = new List<NInchiStereo0D>();
 
-        /// <summary>
-        /// Constructs a new exception with the specified cause.
-        ///
-        /// <param name="ex">the cause.</param>
-        /// </summary>
-        public NInchiException(Exception ex)
-                : base(ex.Message, ex)
-        { }
+        public void SetStructure(NInchiStructure structure)
+        {
+            this.Atoms = structure.Atoms;
+            this.Bonds = structure.Bonds;
+            this.Stereos = structure.Stereos;
+        }
+
+        public NInchiAtom Add(NInchiAtom atom)
+        {
+            Atoms.Add(atom);
+            return atom;
+        }
+
+        public NInchiBond Add(NInchiBond bond)
+        {
+            Bonds.Add(bond);
+            return bond;
+        }
     }
 }

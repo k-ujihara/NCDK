@@ -15,13 +15,13 @@ namespace NCDK.Graphs.InChI
             // Get InChIGenerator
             InChIGenerator gen = factory.GetInChIGenerator(container);
 
-            INCHI_RET ret = gen.ReturnStatus;
-            if (ret == INCHI_RET.WARNING)
+            InChIReturnCode ret = gen.ReturnStatus;
+            if (ret == InChIReturnCode.Warning)
             {
                 // InChI generated, but with warning message
                 Console.WriteLine($"InChI warning: {gen.Message}");
             }
-            else if (ret != INCHI_RET.OKAY)
+            else if (ret != InChIReturnCode.Ok)
             {
                 // InChI generation failed
                 throw new CDKException($"InChI failed: {ret.ToString()} [{gen.Message}]");

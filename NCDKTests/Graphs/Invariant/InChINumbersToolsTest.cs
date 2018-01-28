@@ -16,12 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using NCDK.Smiles;
-using NCDK.NInChI;
 using Moq;
+using NCDK.Common.Base;
+using NCDK.Default;
+using NCDK.Graphs.InChI;
+using NCDK.Smiles;
 
 namespace NCDK.Graphs.Invariant
 {
@@ -97,7 +98,7 @@ namespace NCDK.Graphs.Invariant
         {
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
-            string auxInfo = InChINumbersTools.AuxInfo(atomContainer, INCHI_OPTION.FixedH);
+            string auxInfo = InChINumbersTools.AuxInfo(atomContainer, InChIOption.FixedH);
             string expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"
                     + "rA:9NCNCCCCCC/" + "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" + "rC:;;;;;;;;;";
             Assert.AreEqual(expected, auxInfo);

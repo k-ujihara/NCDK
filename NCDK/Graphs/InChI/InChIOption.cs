@@ -19,17 +19,18 @@
 
 using System.Collections.Generic;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
-    /// Type-safe enumeration of InChI options.  See <tt>inchi_api.h</tt>.
+    /// Type-safe enumeration of InChI options.
     /// </summary>
+    /// <remarks>See <tt>inchi_api.h</tt>.</remarks>
     // @author Sam Adams
-    public class INCHI_OPTION
+    public class InChIOption
     {
         public string Name { get; private set; }
 
-        private INCHI_OPTION(string name)
+        private InChIOption(string name)
         {
             Name = name;
         }
@@ -37,119 +38,119 @@ namespace NCDK.NInChI
         /// <summary>
         /// Use Chiral Flag.
         /// </summary>
-        public static readonly INCHI_OPTION SUCF = new INCHI_OPTION("SUCF");
+        public static readonly InChIOption SUCF = new InChIOption("SUCF");
 
         /// <summary>
         /// Set Chiral Flag.
         /// </summary>
-        public static readonly INCHI_OPTION ChiralFlagON = new INCHI_OPTION("ChiralFlagON");
+        public static readonly InChIOption ChiralFlagON = new InChIOption("ChiralFlagON");
 
         /// <summary>
         /// Set Not-Chiral Flag.
         /// </summary>
-        public static readonly INCHI_OPTION ChiralFlagOFF = new INCHI_OPTION("ChiralFlagOFF");
+        public static readonly InChIOption ChiralFlagOFF = new InChIOption("ChiralFlagOFF");
 
         /// <summary>
         /// Exclude stereo (Default: Include Absolute stereo).
         /// </summary>
-        public static readonly INCHI_OPTION SNon = new INCHI_OPTION("SNon");
+        public static readonly InChIOption SNon = new InChIOption("SNon");
 
         /// <summary>
         /// Absolute stereo.
         /// </summary>
-        public static readonly INCHI_OPTION SAbs = new INCHI_OPTION("SAbs");
+        public static readonly InChIOption SAbs = new InChIOption("SAbs");
         
         /// <summary>
         /// Relative stereo.
         /// </summary>
-        public static readonly INCHI_OPTION SRel = new INCHI_OPTION("SRel");
+        public static readonly InChIOption SRel = new InChIOption("SRel");
         
         /// <summary>
         /// Racemic stereo.
         /// </summary>
-        public static readonly INCHI_OPTION SRac = new INCHI_OPTION("SRac");
+        public static readonly InChIOption SRac = new InChIOption("SRac");
 
         /// <summary>
         /// Include omitted unknown/undefined stereo.
         /// </summary>
-        public static readonly INCHI_OPTION SUU = new INCHI_OPTION("SUU");
+        public static readonly InChIOption SUU = new InChIOption("SUU");
 
         /// <summary>
         /// Narrow end of wedge points to stereocentre (default: both).
         /// </summary>
-        public static readonly INCHI_OPTION NEWPS = new INCHI_OPTION("NEWPS");
+        public static readonly InChIOption NEWPS = new InChIOption("NEWPS");
         
         /// <summary>
         /// Include reconnected bond to metal results.
         /// </summary>
-        public static readonly INCHI_OPTION RecMet = new INCHI_OPTION("RecMet");
+        public static readonly InChIOption RecMet = new InChIOption("RecMet");
 
         /// <summary>
         /// Mobile H Perception Off (Default: On).
         /// </summary>
-        public static readonly INCHI_OPTION FixedH = new INCHI_OPTION("FixedH");
+        public static readonly InChIOption FixedH = new InChIOption("FixedH");
         
         /// <summary>
         /// Omit auxiliary information (default: Include).
         /// </summary>
-        public static readonly INCHI_OPTION AuxNone = new INCHI_OPTION("AuxNone");
+        public static readonly InChIOption AuxNone = new InChIOption("AuxNone");
 
         /// <summary>
         /// Disable Aggressive Deprotonation (for testing only).
         /// </summary>
-        public static readonly INCHI_OPTION NoADP = new INCHI_OPTION("NoADP");
+        public static readonly InChIOption NoADP = new InChIOption("NoADP");
 
         /// <summary>
         /// Compressed output.
         /// </summary>
-        public static readonly INCHI_OPTION Compress = new INCHI_OPTION("Compress");
+        public static readonly InChIOption Compress = new InChIOption("Compress");
 
         /// <summary>
         /// Overrides inchi_Atom::num_iso_H[0] == -1.
         /// </summary>
-        public static readonly INCHI_OPTION DoNotAddH = new INCHI_OPTION("DoNotAddH");
+        public static readonly InChIOption DoNotAddH = new InChIOption("DoNotAddH");
         
         /// <summary>
         /// Set time-out per structure in seconds; W0 means unlimited. In InChI
         /// library the default value is unlimited
         /// </summary>
-        public static readonly INCHI_OPTION Wnumber = new INCHI_OPTION("Wnumber");
+        public static readonly InChIOption Wnumber = new InChIOption("Wnumber");
 
         /// <summary>
         /// Output SDfile instead of InChI.
         /// </summary>
-        public static readonly INCHI_OPTION OutputSDF = new INCHI_OPTION("OutputSDF");
+        public static readonly InChIOption OutputSDF = new InChIOption("OutputSDF");
 
         /// <summary>
         /// Warn and produce empty InChI for empty structure.
         /// </summary>
-        public static readonly INCHI_OPTION WarnOnEmptyStructure = new INCHI_OPTION("WarnOnEmptyStructure");
+        public static readonly InChIOption WarnOnEmptyStructure = new InChIOption("WarnOnEmptyStructure");
         
         /// <summary>
         /// Fix bug leading to missing or undefined sp3 parity.
         /// </summary>
-        public static readonly INCHI_OPTION FixSp3Bug = new INCHI_OPTION("FixSp3Bug");
+        public static readonly InChIOption FixSp3Bug = new InChIOption("FixSp3Bug");
 
         /// <summary>
         /// Same as FixSp3Bug.
         /// </summary>
-        public static readonly INCHI_OPTION FB = new INCHI_OPTION("FB");
+        public static readonly InChIOption FB = new InChIOption("FB");
 
         /// <summary>
         /// Include Phosphines Stereochemistry.
         /// </summary>
-        public static readonly INCHI_OPTION SPXYZ = new INCHI_OPTION("SPXYZ");
+        public static readonly InChIOption SPXYZ = new InChIOption("SPXYZ");
 
         /// <summary>
         /// Include Arsines Stereochemistry
         /// </summary>
-        public static readonly INCHI_OPTION SAsXYZ = new INCHI_OPTION("SAsXYZ");
+        public static readonly InChIOption SAsXYZ = new InChIOption("SAsXYZ");
 
         // -- DOESN'T WORK
         // Generate InChIKey
         // INCHI_OPTION Key= new INCHI_OPTION("Key");
         
-        public static IReadOnlyList<INCHI_OPTION> Values { get; } = new[]
+        public static IReadOnlyList<InChIOption> Values { get; } = new[]
         {
             SUCF, ChiralFlagON, ChiralFlagOFF,
             SNon, SAbs, SRel, SRac, SUU, NEWPS, RecMet, FixedH,
@@ -158,7 +159,7 @@ namespace NCDK.NInChI
             WarnOnEmptyStructure, FixSp3Bug, FB, SPXYZ, SAsXYZ
         };
 
-        public static INCHI_OPTION ValueOfIgnoreCase(string str)
+        public static InChIOption ValueOfIgnoreCase(string str)
         {
             str = str.ToUpperInvariant();
             foreach (var option in Values)

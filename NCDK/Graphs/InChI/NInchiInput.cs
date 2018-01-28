@@ -19,7 +19,7 @@
 
 using System.Collections.Generic;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Encapsulates structure input for InChI generation.
@@ -56,7 +56,7 @@ namespace NCDK.NInChI
         /// Constructor.
         /// </summary>
         /// <param name="opts">List of options.</param>
-        public NInchiInput(IList<INCHI_OPTION> opts)
+        public NInchiInput(IList<InChIOption> opts)
         {
             Options = NInchiWrapper.CheckOptions(opts);
         }

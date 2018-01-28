@@ -17,11 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Stereo;
-using NCDK.NInChI;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.Graphs.InChI
@@ -81,9 +79,9 @@ namespace NCDK.Graphs.InChI
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S", Default.ChemObjectBuilder.Instance);
             var container = parser.AtomContainer;
-            INCHI_RET returnStatus = parser.ReturnStatus;
+            InChIReturnCode returnStatus = parser.ReturnStatus;
             Assert.IsNotNull(returnStatus);
-            Assert.AreEqual(INCHI_RET.EOF, returnStatus);
+            Assert.AreEqual(InChIReturnCode.EOF, returnStatus);
         }
 
         [TestMethod()]

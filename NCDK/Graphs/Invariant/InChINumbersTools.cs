@@ -21,7 +21,6 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.NInChI;
 using NCDK.Graphs.InChI;
 
 namespace NCDK.Graphs.Invariant
@@ -71,7 +70,7 @@ namespace NCDK.Graphs.Invariant
         /// <returns>the atom numbers</returns>
         public static long[] GetUSmilesNumbers(IAtomContainer container)
         {
-            string aux = AuxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
+            string aux = AuxInfo(container, InChIOption.RecMet, InChIOption.FixedH);
             return ParseUSmilesNumbers(aux, container);
         }
 
@@ -245,14 +244,14 @@ namespace NCDK.Graphs.Invariant
         /// <param name="options"></param>
         /// <returns>auxiliary info</returns>
         /// <exception cref="CDKException">the inchi could not be generated</exception>
-        public static string AuxInfo(IAtomContainer container, params INCHI_OPTION[] options)
+        public static string AuxInfo(IAtomContainer container, params InChIOption[] options)
         {
             InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;
             bool org = factory.IgnoreAromaticBonds;
             factory.IgnoreAromaticBonds = true;
-            InChIGenerator gen = factory.GetInChIGenerator(container, new List<INCHI_OPTION>(options));
+            InChIGenerator gen = factory.GetInChIGenerator(container, new List<InChIOption>(options));
             factory.IgnoreAromaticBonds = org; // an option on the singleton so we should reset for others
-            if (gen.ReturnStatus != INCHI_RET.OKAY && gen.ReturnStatus != INCHI_RET.WARNING)
+            if (gen.ReturnStatus != InChIReturnCode.Ok && gen.ReturnStatus != InChIReturnCode.Warning)
                 throw new CDKException("Could not generate InChI Numbers: " + gen.Message);
             return gen.AuxInfo;
         }

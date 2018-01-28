@@ -37,7 +37,7 @@ namespace NCDK.Geometries.CIP
     // @cdk.githash
     class ImmutableHydrogen : IAtom, ICloneable
     {
-        private const string SYMBOL = "H";
+        private const string SymbolH = "H";
 
         /// <summary>
         /// This field is not used by this immutable hydrogen.
@@ -48,7 +48,7 @@ namespace NCDK.Geometries.CIP
         public int? ImplicitHydrogenCount { get { return null; } set { } }
         public Vector2? Point2D { get { return null; } set { } }
         public Vector3? Point3D { get { return null; } set { } }
-        public StereoAtomParity StereoParity { get { return StereoAtomParity.Undefined; } set { } }
+        public int StereoParity { get { return StereoAtomParities.Undefined; } set { } }
         public string AtomTypeName { get { return null; } set { } }
         public double? BondOrderSum { get { return null; } set { } }
         public double? GetCovalentRadius { get { return null; } set { } }
@@ -62,7 +62,7 @@ namespace NCDK.Geometries.CIP
         public double? NaturalAbundance { get { return null; } set { } }
         public double? CovalentRadius { get { return null; } set { } }
         public int? AtomicNumber { get { return 1; } set { } }
-        public string Symbol { get { return SYMBOL; } set { } }
+        public string Symbol { get { return SymbolH; } set { } }
         public bool IsHydrogenBondAcceptor { get { return false; } set { } }
         public bool IsHydrogenBondDonor { get { return false; } set { } }
         public bool IsAliphatic { get { return false; } set { } }

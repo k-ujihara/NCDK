@@ -202,7 +202,7 @@ namespace NCDK.Fingerprints
             foreach (var atom in container.Atoms)
             {
                 var st = atom.StereoParity;
-                if (st != StereoAtomParity.Undefined)
+                if (st != StereoAtomParities.Undefined)
                 {
                     l.Add(atom.Symbol + st.ToString());
                 }

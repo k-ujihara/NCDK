@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestNInchiWrapper
@@ -852,7 +852,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetChlorineAtom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl", output.InChI);
         }
 
@@ -864,7 +864,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetChlorineIon("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/q-1", output.InChI);
         }
 
@@ -876,7 +876,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetChlorine37Atom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/i1+2", output.InChI);
         }
 
@@ -888,7 +888,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetChlorine37ByIsotopicMassShiftAtom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/i1+2", output.InChI);
         }
 
@@ -899,7 +899,7 @@ namespace NCDK.NInChI
             NInchiInput input = GetSodiumHydroxide("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual("InChI=1S/Na.H2O/h;1H2/q+1;/p-1", output.InChI);
-            Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Metal was disconnected; Proton(s) added/removed", output.Message);
         }
 
@@ -911,7 +911,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetHydrogenChlorideImplicitH("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H", output.InChI);
         }
 
@@ -923,7 +923,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetHydrogenChlorideImplicitP("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hH", output.InChI);
         }
 
@@ -935,7 +935,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetHydrogenChlorideImplicitD("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hD", output.InChI);
         }
 
@@ -947,7 +947,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetHydrogenChlorideImplicitT("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hT", output.InChI);
         }
 
@@ -959,7 +959,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetMethylRadical("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/CH3/h1H3", output.InChI);
         }
 
@@ -973,7 +973,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetEthane("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H6/c1-2/h1-2H3", output.InChI);
         }
 
@@ -985,7 +985,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetEthene("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H4/c1-2/h1-2H2", output.InChI);
         }
 
@@ -997,7 +997,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetEthyne("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2/c1-2/h1-2H", output.InChI);
         }
 
@@ -1011,13 +1011,13 @@ namespace NCDK.NInChI
         {
             NInchiInput inputE = GetE12dichloroethene2D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
-            Assert.AreEqual(INCHI_RET.OKAY, outputE.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
                     .InChI);
 
             NInchiInput inputZ = GetZ12dichloroethene2D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
-            Assert.AreEqual(INCHI_RET.OKAY, outputZ.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
                     .InChI);
         }
@@ -1033,14 +1033,14 @@ namespace NCDK.NInChI
         {
             NInchiInput inputL = GetLAlanine3D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
-            Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.InChI);
 
             NInchiInput inputD = GetDAlanine3D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
-            Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
                     outputD.InChI);
@@ -1057,7 +1057,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetAlanine2D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)",
                     output.InChI);
@@ -1068,7 +1068,7 @@ namespace NCDK.NInChI
         {
             NInchiInput inputL = GetLAlanine2Da("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
-            Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.InChI);
@@ -1079,7 +1079,7 @@ namespace NCDK.NInChI
         {
             NInchiInput inputD = GetDAlanine2D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
-            Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
                     outputD.InChI);
@@ -1095,7 +1095,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetLAlanine2Da("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     output.InChI);
@@ -1106,7 +1106,7 @@ namespace NCDK.NInChI
         {
             NInchiInput inputL = GetLAlanine2Db("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
-            Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.InChI);
@@ -1123,21 +1123,21 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetAlanine0D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)",
                     output.InChI);
 
             NInchiInput inputL = GetLAlanine0D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
-            Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.InChI);
 
             NInchiInput inputD = GetDAlanine0D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
-            Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
                     outputD.InChI);
@@ -1152,20 +1152,20 @@ namespace NCDK.NInChI
         {
             NInchiInput input = Get12dichloroethene0D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H", output
                             .InChI);
 
             NInchiInput inputE = GetE12dichloroethene0D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
-            Assert.AreEqual(INCHI_RET.OKAY, outputE.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
                     .InChI);
 
             NInchiInput inputZ = GetZ12dichloroethene0D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
-            Assert.AreEqual(INCHI_RET.OKAY, outputZ.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
                     .InChI);
         }
@@ -1177,7 +1177,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetNSC7414a("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual(
                     "InChI=1S/C11H20/c1-3-10(2)11-8-6-4-5-7-9-11/h4-5,10-11H,3,6-9H2,1-2H3",
@@ -1194,9 +1194,9 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestCheckOptionsList()
         {
-            var opList = new List<INCHI_OPTION>();
-            opList.Add(INCHI_OPTION.Compress);
-            opList.Add(INCHI_OPTION.SNon);
+            var opList = new List<InChIOption>();
+            opList.Add(InChIOption.Compress);
+            opList.Add(InChIOption.SNon);
             string options = NInchiWrapper.CheckOptions(opList);
             string flag = NInchiWrapper.FlagChar;
             Assert.AreEqual(flag + "Compress " + flag + "SNon ", options);
@@ -1220,7 +1220,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetLAlanine3D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     output.InChI);
@@ -1228,21 +1228,21 @@ namespace NCDK.NInChI
             input = GetLAlanine3D("-compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
                     output.InChI);
 
             input = GetLAlanine3D("/compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
                     output.InChI);
 
             input = GetLAlanine3D("-cOMprEsS");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
                     output.InChI);
         }
@@ -1258,7 +1258,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/Cl");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1280,7 +1280,7 @@ namespace NCDK.NInChI
             Assert.AreEqual(0, output.Stereos.Count);
             Assert.AreEqual("InChI Atom: Na [0.0,0.0,0.0] Charge:1 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
             Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:-1 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
         }
 
         /// <summary>
@@ -1292,7 +1292,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/Cl/i1+2");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1310,7 +1310,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/ClH/h1H");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1329,7 +1329,7 @@ namespace NCDK.NInChI
                     "InChI=1/ClH/h1H/i/hH");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1348,7 +1348,7 @@ namespace NCDK.NInChI
                     "InChI=1/ClH/h1H/i/hD");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1367,7 +1367,7 @@ namespace NCDK.NInChI
                     "InChI=1/ClH/h1H/i/hT");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1386,7 +1386,7 @@ namespace NCDK.NInChI
 
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/CH3/h1H3");
             NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1407,7 +1407,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H6/c1-2/h1-2H3");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1431,7 +1431,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H4/c1-2/h1-2H2");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1455,7 +1455,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H2/c1-2/h1-2H");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1482,7 +1482,7 @@ namespace NCDK.NInChI
                     "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(6, output.Atoms.Count);
             Assert.AreEqual(5, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1519,7 +1519,7 @@ namespace NCDK.NInChI
                     "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
             NInchiOutputStructure outputL = NInchiWrapper
                     .GetStructureFromInchi(inputL);
-            Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(7, outputL.Atoms.Count);
             Assert.AreEqual(6, outputL.Bonds.Count);
             Assert.AreEqual(1, outputL.Stereos.Count);
@@ -1559,7 +1559,7 @@ namespace NCDK.NInChI
                     "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
             NInchiOutputStructure outputD = NInchiWrapper
                     .GetStructureFromInchi(inputD);
-            Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
             Assert.AreEqual(7, outputD.Atoms.Count);
             Assert.AreEqual(6, outputD.Bonds.Count);
             Assert.AreEqual(1, outputD.Stereos.Count);
@@ -1607,7 +1607,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(4, output.Atoms.Count);
             Assert.AreEqual(3, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
@@ -1634,7 +1634,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
             NInchiOutputStructure outputE = NInchiWrapper
                     .GetStructureFromInchi(inputE);
-            Assert.AreEqual(INCHI_RET.OKAY, outputE.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
             Assert.AreEqual(6, outputE.Atoms.Count);
             Assert.AreEqual(5, outputE.Bonds.Count);
             Assert.AreEqual(1, outputE.Stereos.Count);
@@ -1670,7 +1670,7 @@ namespace NCDK.NInChI
                     "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
             NInchiOutputStructure outputZ = NInchiWrapper
                     .GetStructureFromInchi(inputZ);
-            Assert.AreEqual(INCHI_RET.OKAY, outputZ.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
             Assert.AreEqual(6, outputZ.Atoms.Count);
             Assert.AreEqual(5, outputZ.Bonds.Count);
             Assert.AreEqual(1, outputZ.Stereos.Count);
@@ -1849,9 +1849,9 @@ namespace NCDK.NInChI
                             {
                                 NInchiOutput output = NInchiWrapper.GetInchi(input);
 
-                                if (INCHI_RET.OKAY != output.ReturnStatus)
+                                if (InChIReturnCode.Ok != output.ReturnStatus)
                                 {
-                                    if (INCHI_RET.BUSY != output.ReturnStatus)
+                                    if (InChIReturnCode.Busy != output.ReturnStatus)
                                     {
                                         failCount++;
                                     }
@@ -1913,7 +1913,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/C24H33N3O5/c1-23(2,3)26-21(29)20(17-11-8-7-9-12-17)27(16-18-13-10-14-31-18)19(28)15-25-22(30)32-24(4,5)6/h7-14,20H,15-16H2,1-6H3,(H,25,30)(H,26,29)");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
         }
 
         [TestMethod()]
@@ -1922,7 +1922,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/C24H33N3O5/c1-23(2,3)26-21(29)20(17-11-8-7-9-12-17)27(16-18-13-10-14-31-18)19(28)15-25-22(30)32-24(4,5)6/h7-14,20H,15-16H2,1-6H3,(H,25,30)(H,26,29) ");
             NInchiOutputStructure output = NInchiWrapper
                     .GetStructureFromInchi(input);
-            Assert.AreEqual(INCHI_RET.EOF, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.EOF, output.ReturnStatus);
         }
 
 
@@ -1931,7 +1931,7 @@ namespace NCDK.NInChI
         {
             NInchiInput input = GetLAlanine0D("");
             NInchiOutput output = NInchiWrapper.GetStdInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     output.InChI);
@@ -1950,7 +1950,7 @@ namespace NCDK.NInChI
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestCheckOptionsListNull()
         {
-            NInchiWrapper.CheckOptions((List<INCHI_OPTION>)null);
+            NInchiWrapper.CheckOptions((List<InChIOption>)null);
         }
 
         [TestMethod()]
@@ -1999,7 +1999,7 @@ namespace NCDK.NInChI
         public void TestGetInputFromAuxInfoLAlanine3D()
         {
             NInchiInputData data = NInchiWrapper.GetInputFromAuxInfo("AuxInfo=1/1/N:4,1,2,3,5,6/E:(5,6)/it:im/rA:6CCNCOO/rB:s1;s1;s1;s2;d2;/rC:-.358,.819,20.655;-1.598,-.032,20.905;-.275,2.014,21.574;.952,.043,20.838;-2.678,.479,21.093;-1.596,-1.239,20.958;");
-            Assert.AreEqual(INCHI_RET.OKAY, data.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, data.ReturnStatus);
             NInchiInput input = data.Input;
             Assert.AreEqual(6, input.Atoms.Count);
             Assert.AreEqual("InChI Atom: C [-0.358,0.819,20.655] Charge:0 // Iso Mass:0 // Implicit H:-1 P:0 D:0 T:0 // Radical: None", input.Atoms[0].ToDebugString());
@@ -2021,7 +2021,7 @@ namespace NCDK.NInChI
         public void TestGetInputFromAuxInfoE12DiChloroEthane()
         {
             NInchiInputData data = NInchiWrapper.GetInputFromAuxInfo("AuxInfo=1/0/N:1,2,3,4/E:(1,2)(3,4)/rA:4CCClCl/rB:d+1;s1;s2;/rC:;;;;");
-            Assert.AreEqual(INCHI_RET.OKAY, data.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, data.ReturnStatus);
             NInchiInput input = data.Input;
             Assert.AreEqual(4, input.Atoms.Count);
             Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:-1 P:0 D:0 T:0 // Radical: None", input.Atoms[0].ToDebugString());
@@ -2040,7 +2040,7 @@ namespace NCDK.NInChI
         public void TestGetInputFromLAlanine2D()
         {
             NInchiInputData data = NInchiWrapper.GetInputFromAuxInfo("AuxInfo=1/1/N:4,1,2,3,5,6/E:(5,6)/it:im/rA:6CCNCOO/rB:s1;N1;s1;s2;d2;/rC:264,968,0;295,985,0;233,986,0;264,932,0;326,967,0;295,1021,0;");
-            Assert.AreEqual(INCHI_RET.OKAY, data.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, data.ReturnStatus);
             NInchiInput input = data.Input;
             Assert.AreEqual(6, input.Atoms.Count);
             Assert.AreEqual("InChI Atom: C [264.0,968.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:-1 P:0 D:0 T:0 // Radical: None", input.Atoms[0].ToDebugString());
@@ -2105,7 +2105,7 @@ namespace NCDK.NInChI
             string inchi = "InChI=1S/C4H6/c1-3-4-2/h3-4H,1-2H2";
             NInchiInputInchi input = new NInchiInputInchi(inchi);
             NInchiOutput output = NInchiWrapper.GetInchiFromInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(inchi, output.InChI);
         }
     }

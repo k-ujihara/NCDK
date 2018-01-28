@@ -299,7 +299,7 @@ namespace NCDK.IO.CML
             IAtomContainer mol = builder.NewAtomContainer();
             IAtom atom = builder.NewAtom("C");
             atom.Id = "a1";
-            atom.StereoParity = (StereoAtomParity)(-1);
+            atom.StereoParity = -1;
             mol.Atoms.Add(atom);
             IAtomContainer copy = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
             string difference = AtomDiff.Diff(atom, copy.Atoms[0]);

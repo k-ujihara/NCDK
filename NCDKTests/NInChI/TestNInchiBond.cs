@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestNInchiBond

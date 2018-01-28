@@ -215,8 +215,7 @@ namespace NCDK.IO.CML
         public void TestHydrogenCount_UNSET()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("N");
-            atom.ImplicitHydrogenCount = null;
+            Atom atom = new Atom("N") { ImplicitHydrogenCount = null };
             mol.Atoms.Add(atom);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -247,7 +246,7 @@ namespace NCDK.IO.CML
         {
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom("C");
-            var stereo = StereoAtomParity.Plus;
+            var stereo = StereoAtomParities.Plus;
             atom.StereoParity = stereo;
             mol.Atoms.Add(atom);
 
@@ -262,8 +261,7 @@ namespace NCDK.IO.CML
         public void TestIsotope()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.MassNumber = 13;
+            Atom atom = new Atom("C") { MassNumber = 13 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
 
@@ -271,14 +269,13 @@ namespace NCDK.IO.CML
             IAtom roundTrippedAtom = roundTrippedMol.Atoms[0];
             Assert.AreEqual(atom.MassNumber, roundTrippedAtom.MassNumber);
         }
-        
+
         // @cdk.bug 1014344
         [TestMethod(), Ignore()] // Functionality not yet implemented - exact mass can not be written/read
         public void TestIsotope_ExactMass()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.ExactMass = 13.0;
+            Atom atom = new Atom("C") { ExactMass = 13.0 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
 
@@ -294,8 +291,7 @@ namespace NCDK.IO.CML
         public void TestIsotope_Abundance()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.NaturalAbundance = 1.0;
+            Atom atom = new Atom("C") { NaturalAbundance = 1.0 };
             mol.Atoms.Add(atom);
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
 
@@ -313,8 +309,7 @@ namespace NCDK.IO.CML
         public void TestMassNumber()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.MassNumber = 12;
+            Atom atom = new Atom("C") { MassNumber = 12 };
             mol.Atoms.Add(atom);
             Assert.AreEqual(12, atom.MassNumber.Value);
 
@@ -355,8 +350,7 @@ namespace NCDK.IO.CML
             Atom atom2 = new Atom("O");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
-            Bond bond = new Bond(atom, atom2, BondOrder.Single);
-            bond.Id = "b1";
+            Bond bond = new Bond(atom, atom2, BondOrder.Single) { Id = "b1" };
             mol.Bonds.Add(bond);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -394,8 +388,7 @@ namespace NCDK.IO.CML
             Atom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
-            Bond bond = new Bond(atom, atom2, BondOrder.Single);
-            bond.IsAromatic = true;
+            Bond bond = new Bond(atom, atom2, BondOrder.Single) { IsAromatic = true };
             mol.Bonds.Add(bond);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -417,8 +410,7 @@ namespace NCDK.IO.CML
             Atom atom2 = new Atom("C");
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
-            Bond bond = new Bond(atom, atom2, BondOrder.Double);
-            bond.IsAromatic = true;
+            Bond bond = new Bond(atom, atom2, BondOrder.Double) { IsAromatic = true };
             mol.Bonds.Add(bond);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
@@ -479,8 +471,7 @@ namespace NCDK.IO.CML
         public void TestReaction()
         {
             Debug.WriteLine("********** TEST REACTION **********");
-            IReaction reaction = new Reaction();
-            reaction.Id = "reaction.1";
+            IReaction reaction = new Reaction { Id = "reaction.1" };
             IAtomContainer reactant = reaction.Builder.NewAtomContainer();
             reactant.Id = "react";
             IAtom atom = reaction.Builder.NewAtom("C");
@@ -675,11 +666,12 @@ namespace NCDK.IO.CML
         [TestMethod()]
         public void TestMoleculeSet()
         {
-            var list = new ChemObjectSet<IAtomContainer>();
-            list.Add(new AtomContainer());
-            list.Add(new AtomContainer());
-            IChemModel model = new ChemModel();
-            model.MoleculeSet = list;
+            var list = new ChemObjectSet<IAtomContainer>
+            {
+                new AtomContainer(),
+                new AtomContainer()
+            };
+            IChemModel model = new ChemModel { MoleculeSet = list };
 
             IChemModel roundTripped = CMLRoundTripTool.RoundTripChemModel(convertor, model);
             var newList = roundTripped.MoleculeSet;
@@ -713,8 +705,7 @@ namespace NCDK.IO.CML
         public void TestUnSetHydrogenCount()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.ImplicitHydrogenCount = null;
+            Atom atom = new Atom("C") { ImplicitHydrogenCount = null };
             Assert.IsNull(atom.ImplicitHydrogenCount);
             mol.Atoms.Add(atom);
 

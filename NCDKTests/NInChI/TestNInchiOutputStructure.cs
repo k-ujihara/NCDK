@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestNInchiOutputStructure
@@ -29,8 +29,8 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetReturnStatus()
         {
-            NInchiOutputStructure output = new NInchiOutputStructure(INCHI_RET.OKAY);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+            NInchiOutputStructure output = new NInchiOutputStructure(InChIReturnCode.Ok);
+            Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetMessage()
         {
-            NInchiOutputStructure output = new NInchiOutputStructure(INCHI_RET.OKAY);
+            NInchiOutputStructure output = new NInchiOutputStructure(InChIReturnCode.Ok);
             output.Message = "Test message";
             Assert.AreEqual("Test message", output.Message);
         }
@@ -50,7 +50,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetLog()
         {
-            NInchiOutputStructure output = new NInchiOutputStructure(INCHI_RET.OKAY);
+            NInchiOutputStructure output = new NInchiOutputStructure(InChIReturnCode.Ok);
             output.Log = "Test log";
             Assert.AreEqual("Test log", output.Log);
         }
@@ -61,7 +61,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetWarningFlags()
         {
-            NInchiOutputStructure output = new NInchiOutputStructure(INCHI_RET.OKAY);
+            NInchiOutputStructure output = new NInchiOutputStructure(InChIReturnCode.Ok);
             ulong[,] flags = new ulong[,] { { 1, 2 }, { 3, 4 } };
             output.WarningFlags = flags;
             Assert.AreEqual(flags, output.WarningFlags);

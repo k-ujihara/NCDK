@@ -14,13 +14,13 @@ namespace NCDK.Graphs.InChI
             // Get InChIToStructure
             InChIToStructure intostruct = factory.GetInChIToStructure(inchi, Default.ChemObjectBuilder.Instance);
 
-            INCHI_RET ret = intostruct.ReturnStatus;
-            if (ret == INCHI_RET.WARNING)
+            InChIReturnCode ret = intostruct.ReturnStatus;
+            if (ret == InChIReturnCode.Warning)
             {
                 // Structure generated, but with warning message
                 Console.WriteLine($"InChI warning: {intostruct.Message}");
             }
-            else if (ret != INCHI_RET.OKAY)
+            else if (ret != InChIReturnCode.Ok)
             {
                 // Structure generation failed
                 throw new CDKException($"Structure generation failed: {ret.ToString()} [{intostruct.Message}]");

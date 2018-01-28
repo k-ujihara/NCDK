@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.NInChI;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
@@ -64,7 +63,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
         /// <exception cref="CDKException">if there is an error during InChI generation</exception>
         protected internal InChIGenerator(IAtomContainer atomContainer, bool ignoreAromaticBonds)
-            : this(atomContainer, new[] { INCHI_OPTION.AuxNone }, ignoreAromaticBonds)
+            : this(atomContainer, new[] { InChIOption.AuxNone }, ignoreAromaticBonds)
         { }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace NCDK.Graphs.InChI
         {
             try
             {
-                Input = new JniInChIInputAdapter(options);
+                Input = new NInChIInputAdapter(options);
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
                 auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
             }
@@ -98,11 +97,11 @@ namespace NCDK.Graphs.InChI
         /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
         /// <param name="options">List of INCHI_OPTION.</param>
         /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
-        internal InChIGenerator(IAtomContainer atomContainer, IEnumerable<INCHI_OPTION> options, bool ignoreAromaticBonds)
+        internal InChIGenerator(IAtomContainer atomContainer, IEnumerable<InChIOption> options, bool ignoreAromaticBonds)
         {
             try
             {
-                Input = new JniInChIInputAdapter(new List<INCHI_OPTION>(options));
+                Input = new NInChIInputAdapter(new List<InChIOption>(options));
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
                 auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
             }
@@ -510,11 +509,11 @@ namespace NCDK.Graphs.InChI
         }
 
         /// <summary>
-        /// Gets return status from InChI process. <see cref="INCHI_RET.OKAY"/> and <see cref="INCHI_RET.WARNING"/> indicate
+        /// Gets return status from InChI process. <see cref="InChIReturnCode.Ok"/> and <see cref="InChIReturnCode.Warning"/> indicate
         /// InChI has been generated, in all other cases InChI generation
         /// has failed.
         /// </summary>
-        public INCHI_RET ReturnStatus => Output.ReturnStatus;
+        public InChIReturnCode ReturnStatus => Output.ReturnStatus;
 
         /// <summary>
         /// Gets generated InChI string.

@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// <para>.NET Framework Wrapper for International Chemical Identifier (InChI) C++ library.</para>
@@ -282,7 +282,7 @@ namespace NCDK.NInChI
         /// Checks and canonicalises options.
         /// </summary>
         /// <param name="ops">List of INCHI_OPTION</param>
-        protected internal static string CheckOptions(IList<INCHI_OPTION> ops)
+        protected internal static string CheckOptions(IList<InChIOption> ops)
         {
             if (ops == null)
             {
@@ -292,7 +292,7 @@ namespace NCDK.NInChI
 
             for (int i = 0; i < ops.Count; i++)
             {
-                INCHI_OPTION op = ops[i];
+                InChIOption op = ops[i];
                 sbOptions.Append(FlagChar + op.Name + " ");
             }
 
@@ -320,7 +320,7 @@ namespace NCDK.NInChI
                 {
                     op = op.Substring(1);
                 }
-                INCHI_OPTION option = INCHI_OPTION.ValueOfIgnoreCase(op);
+                InChIOption option = InChIOption.ValueOfIgnoreCase(op);
                 if (option != null)
                 {
                     return FlagChar + option.Name;

@@ -62,7 +62,7 @@ namespace NCDK
         /// The stereo parity of this atom. It uses the predefined values found in CDKConstants.
         /// </summary>
         [Obsolete("Use " + nameof(IStereoElement<IChemObject, IChemObject>) + " for storing stereochemistry")]
-        StereoAtomParity StereoParity { get; set; }
+        int StereoParity { get; set; }
 
         /// <summary>
         /// Access the <see cref="IAtomContainer"/> of which this atom is a member of. Because atoms

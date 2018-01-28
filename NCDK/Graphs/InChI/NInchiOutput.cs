@@ -17,7 +17,7 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Encapsulates output from InChI generation.
@@ -25,7 +25,7 @@ namespace NCDK.NInChI
     // @author Sam Adams
     internal class NInchiOutput
     {
-        public INCHI_RET ReturnStatus { get; protected internal set; }
+        public InChIReturnCode ReturnStatus { get; protected internal set; }
 
         /// <summary>
         /// InChI ASCIIZ string
@@ -50,11 +50,11 @@ namespace NCDK.NInChI
 
 
         public NInchiOutput(int ret, string inchi, string auxInfo, string message, string log)
-            : this((INCHI_RET)ret, inchi, auxInfo, message, log)
+            : this((InChIReturnCode)ret, inchi, auxInfo, message, log)
         {
         }
 
-        public NInchiOutput(INCHI_RET ret, string inchi, string auxInfo, string message, string log)
+        public NInchiOutput(InChIReturnCode ret, string inchi, string auxInfo, string message, string log)
         {
             ReturnStatus = ret;
             InChI = inchi;

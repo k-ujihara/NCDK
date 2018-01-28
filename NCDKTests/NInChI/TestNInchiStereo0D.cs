@@ -18,7 +18,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestNInchiStereo0D

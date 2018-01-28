@@ -19,7 +19,7 @@
 
 using System;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Encapsulates properites of InChI Stereo Parity.  See <tt>inchi_api.h</tt>.

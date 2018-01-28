@@ -267,7 +267,7 @@ namespace NCDK.Tools.Manipulator
         {
 
             IAtomContainer molecule = GetChiralMolTemplate();
-            molecule.Atoms[1].StereoParity = StereoAtomParity.Minus;
+            molecule.Atoms[1].StereoParity = StereoAtomParities.Minus;
 
             Assert.AreEqual(8, molecule.Atoms.Count);
             IAtomContainer ac = AtomContainerManipulator.RemoveNonChiralHydrogens(molecule);

@@ -28,14 +28,16 @@ using System;
 namespace NCDK
 {
     [Obsolete]
-    public enum StereoAtomParity
+    public static class StereoAtomParities
     {
         /// <summary>A positive atom parity.</summary>
-        Plus = 1,
+        public const int Plus = 1;
+
         /// <summary>A negative atom parity.</summary>
-        Minus = -1,
+        public const int Minus = -1;
+
         /// <summary>A undefined atom parity.</summary>
-        Undefined = 0,
+        public const int Undefined = 0;
     }
 
     public static class CDKPropertyName

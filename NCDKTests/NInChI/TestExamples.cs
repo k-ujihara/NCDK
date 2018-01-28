@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
     [TestClass()]
     public class TestExamples
@@ -107,7 +107,7 @@ namespace NCDK.NInChI
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/C2H6/c1-2/h1-2H3");
             NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             //
-            INCHI_RET retStatus = output.ReturnStatus;
+            InChIReturnCode retStatus = output.ReturnStatus;
             int nat = output.Atoms.Count;
             int nbo = output.Bonds.Count;
             int nst = output.Stereos.Count;
@@ -150,7 +150,7 @@ namespace NCDK.NInChI
             NInchiInputData data = NInchiWrapper.GetInputFromAuxInfo("AuxInfo=1/1/N:4,1,2,3,5,6/"
                         + "E:(5,6)/it:im/rA:6CCNCOO/rB:s1;N1;s1;s2;d2;/rC:264,968,0;295,985,0;233,986,0;"
                         + "264,932,0;326,967,0;295,1021,0;");
-            INCHI_RET ret = data.ReturnStatus;
+            InChIReturnCode ret = data.ReturnStatus;
             NInchiInput input = data.Input;
             // END SNIPPET: auxinfo2input
         }

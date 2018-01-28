@@ -17,45 +17,33 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-using System.Collections.Generic;
-
-namespace NCDK.NInChI
+namespace NCDK.Graphs.InChI
 {
+    /// <summary>
+    /// Enumeration of InChI 0D parity types.
+    /// Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
+    /// </summary>
     // @author Sam Adams
-    internal class NInchiStructure
+    internal enum INCHI_STEREOTYPE
     {
         /// <summary>
-        /// List of atoms.
+        /// None.
         /// </summary>
-        public IList<NInchiAtom> Atoms { get; private set; } = new List<NInchiAtom>();
+        None = 0,
 
         /// <summary>
-        /// List of bonds.
+        /// Stereogenic bond &gt;A=B&lt; or cumulene &gt;A=C=C=B&lt;.
         /// </summary>
-        public IList<NInchiBond> Bonds { get; private set; } = new List<NInchiBond>();
+        DoubleBond = 1,
 
         /// <summary>
-        /// List of stero parities.
+        /// Tetrahedral atom.
         /// </summary>
-        public IList<NInchiStereo0D> Stereos { get; private set; } = new List<NInchiStereo0D>();
+        Tetrahedral = 2,
 
-        public void SetStructure(NInchiStructure structure)
-        {
-            this.Atoms = structure.Atoms;
-            this.Bonds = structure.Bonds;
-            this.Stereos = structure.Stereos;
-        }
-
-        public NInchiAtom Add(NInchiAtom atom)
-        {
-            Atoms.Add(atom);
-            return atom;
-        }
-
-        public NInchiBond Add(NInchiBond bond)
-        {
-            Bonds.Add(bond);
-            return bond;
-        }
+        /// <summary>
+        /// Allene.
+        /// </summary>
+        Allene = 3,
     }
 }
