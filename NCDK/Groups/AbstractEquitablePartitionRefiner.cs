@@ -88,7 +88,7 @@ namespace NCDK.Groups
         }
 
         /// <summary>
-        /// Refines the coarse partition <c>a</c> into a finer one.
+        /// Refines the coarse partition "a" into a finer one.
         /// </summary>
         /// <param name="coarser">the partition to refine</param>
         /// <returns>a finer partition</returns>

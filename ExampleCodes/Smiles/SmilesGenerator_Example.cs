@@ -38,8 +38,7 @@ namespace NCDK.Smiles
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic |
-                                                                 SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
                     smi = sg.Create(benzene); // C1=CC=CC=C1 flags not set!
 
                     // Note, in practice we'd use an aromaticity algorithm
@@ -52,8 +51,7 @@ namespace NCDK.Smiles
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic |
-                                                                 SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
                     smi = sg.Create(benzene); // c1ccccc1
                     #endregion
                 }
@@ -77,6 +75,24 @@ namespace NCDK.Smiles
 
                 // SMILES string suffixed by the coordinates
                 string smi2d = smi + " " + Arrays.ToJavaString(coords);
+                #endregion
+            }
+            {
+                #region 5 ctor_SmiFlavor
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo | SmiFlavor.Canonical);
+                #endregion
+            }
+            {
+                #region Aromatic
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+                #endregion
+            }
+
+            {
+                IAtomContainer container = null;
+                #region WithAtomClasses
+                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.AtomAtomMap);
+                smigen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
                 #endregion
             }
 

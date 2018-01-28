@@ -95,7 +95,7 @@ namespace NCDK.Aromaticities
         /// <paramref name="cycles"/> defines the <see cref="ICycleFinder"/> which is used to find
         /// cycles in a molecule. The total electron donation from each atom in each
         /// cycle is counted and checked. If the electron contribution is equal to
-        /// <c>4n + 2</c> for a <c>n &gt;= 0</c> then the cycle is considered
+        /// "4n + 2" for a "n &gt;= 0" then the cycle is considered
         /// aromatic. 
         /// </summary>
         /// <remarks>
@@ -233,10 +233,10 @@ namespace NCDK.Aromaticities
         }
 
         /// <summary>
-        /// Given the number of pi electrons verify that <c>sum = 4n + 2</c> for <c>n >= 0</c>.
+        /// Given the number of pi electrons verify that "sum = 4n + 2" for "n ≧ 0".
         /// </summary>
         /// <param name="sum">π-electron sum</param>
-        /// <returns>there is an <c>n</c> such that <c>sum = 4n + 2</c> is equal to the provided <c>sum</c>.</returns>
+        /// <returns>there is an "n" such that "<paramref name="sum"/> = 4n + 2" is equal to the provided <paramref name="sum"/>.</returns>
         internal static bool ValidSum(int sum)
         {
             return (sum - 2) % 4 == 0;

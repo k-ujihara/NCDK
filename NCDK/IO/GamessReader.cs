@@ -153,7 +153,7 @@ namespace NCDK.IO
         /// field, parses data and feeds the ChemFile object with the extracted data.
         /// </summary>
         /// <returns>A ChemFile containing the data parsed from input.</returns>
-        /// <exception cref="IOException">   may be thrown buy the <c>this.input.ReadLine()</c> instruction.</exception>
+        /// <exception cref="IOException">may be thrown buy the <c>this.input.ReadLine()</c> instruction.</exception>
         /// <seealso cref="GamessReader.input"/>
         //TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)?
         private IChemFile ReadChemFile(IChemFile file)

@@ -20,7 +20,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This query is found in a specified number of ring. The ring membership is
-    /// specified with the SMARTS <c>R&lt;NUMBER&gt;</c>. The membership depends on the
+    /// specified with the SMARTS "R&lt;NUMBER&gt;". The membership depends on the
     /// ring set used and as such is not a portable term. If the Smallest Set of
     /// Smallest Rings (SSSR) is used then changing the order of atoms
     /// <i>may</i> change which atoms match in a pattern.

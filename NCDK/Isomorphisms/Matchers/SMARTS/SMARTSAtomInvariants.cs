@@ -109,10 +109,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public IAtomContainer Target => target;
 
         /// <summary>
-        /// Access the valence of this atom. The valence is matched by the <c>v&lt;NUMBER&gt;</c>
+        /// Access the valence of this atom. The valence is matched by the "v&lt;NUMBER&gt;"
         /// SMARTS token. The valence is the total number of bonds formed
         /// by this atom and <b>NOT</b> the number of valence electrons. As such
-        /// <c>[v3]</c> will match a 3 valent nitrogen and <c>[v5]</c> will match a
+        /// "[v3]" will match a 3 valent nitrogen and "[v5]" will match a
         /// 5 valent nitrogen. The value is separate from <see cref="IAtomType.Valency"/> 
         /// so it can be cleaned up after matching and avoid confusion with what the
         /// value should be.
@@ -122,7 +122,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// The number of rings this atom belong to. The value is matched by the
-        /// <c>R&lt;NUMBER&gt;</c> token and depends on the ring set used. The Daylight
+        /// "R&lt;NUMBER&gt;" token and depends on the ring set used. The Daylight
         /// implementation uses the non-unique Smallest Set of Smallest Rings (SSSR)
         /// which can lead to inconsistent matches.
         /// </summary>
@@ -131,7 +131,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// The sizes of rings this atoms belongs to. The value is matched by the
-        /// <c>r&lt;NUMBER&gt;</c> token and depends on the ring set used. The Daylight
+        /// "r&lt;NUMBER&gt;" token and depends on the ring set used. The Daylight
         /// implementation uses this value to match the smallest ring to which this
         /// atom is a member. It may be beneficial to match multiple ring sizes (not
         /// yet defined by OpenSMARTS).
@@ -141,7 +141,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// The number of connected ring bonds (or atoms). This value is matched by
-        /// the <c>x&lt;NUMBER&gt;</c> token. The Daylight implementation counts the
+        /// the "x&lt;NUMBER&gt;" token. The Daylight implementation counts the
         /// number of connected ring bonds but it may be beneficial to match the atom
         /// ring connectivity (not yet defined by OpenSMARTS).
         /// </summary>
@@ -150,7 +150,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// The number of connected bonds including those to hydrogens. This value is
-        /// matched by the <c>X&lt;NUMBER&gt;</c> token. This value depends on whether the
+        /// matched by the "X&lt;NUMBER&gt;" token. This value depends on whether the
         /// hydrogens have been suppressed or are represented as explicit atoms.
         /// </summary>
         /// <returns>connectivity</returns>
@@ -158,7 +158,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// The degree of a vertex defined as the number of explicit connected bonds.
-        /// This value is matched by the <c>D&lt;NUMBER&gt;</c> token. This value depends
+        /// This value is matched by the "D&lt;NUMBER&gt;" token. This value depends
         /// on whether the hydrogens have been suppressed or are represented as
         /// explicit atoms.
         /// </summary>

@@ -1,4 +1,4 @@
-/*  Copyright (C)  2012  Kevin Lawson <kevin.lawson@syngenta.com>
+﻿/*  Copyright (C)  2012  Kevin Lawson <kevin.lawson@syngenta.com>
  *                       Lucy Entwistle <lucy.entwistle@syngenta.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -30,12 +30,12 @@ using System.Collections.Generic;
 namespace NCDK.Smiles
 {
     /// <summary>
-    /// Class to Fix bond orders at present for Aromatic Rings only.
+    /// Class to Fix bond orders at present for aromatic rings only.
     /// </summary>
     /// <remarks>
     /// Contains one public function: KekuliseAromaticRings(IAtomContainer molecule)
     /// <list type="bullet">
-    /// <item>Analyses which rings are marked aromatic/SP2/Planar3</item>
+    /// <item>Analyses which rings are marked <see cref="IMolecularEntity.IsAromatic"/>/<see cref="Hybridization.SP2"/>/<see cref="Hybridization.Planar3"/></item>
     /// <item>Splits rings into groups containing independent sets of single/fused rings</item>
     /// <item>Loops over each ring group</item>
     /// <item>Uses an adjacency matrix of bonds (rows) and atoms (columns) to represent
@@ -49,7 +49,7 @@ namespace NCDK.Smiles
     /// (not forced by previous choices) - either choice is consistent with correct solution</item>
     ///
     /// <item>Requires molecule with all rings to be solved being marked aromatic
-    /// (SP2/Planar3 atoms). All bonds to non-ring atoms need to be fully defined
+    /// (<see cref="Hybridization.SP2"/>/<see cref="Hybridization.Planar3"/> atoms). All bonds to non-ring atoms need to be fully defined
     /// (including implicit H atoms)</item>
     /// </list>
     /// </remarks>
@@ -144,21 +144,14 @@ namespace NCDK.Smiles
         public FixBondOrdersTool() { }
 
         /// <summary>
-        /// kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
+        /// Function to add double/single bond order information for molecules having rings containing all atoms marked <see cref="Hybridization.SP2"/> or <see cref="Hybridization.Planar3"/> hybridisation.
         /// </summary>
         /// <param name="molecule">The <see cref="IAtomContainer"/> to kekulise</param>
-        /// <returns>The <see cref="IAtomContainer"/> with kekule structure</returns>
+        /// <returns>The <see cref="IAtomContainer"/> with Kekulé structure</returns>
         public IAtomContainer KekuliseAromaticRings(IAtomContainer molecule)
         {
             IAtomContainer mNew = null;
-            try
-            {
-                mNew = (IAtomContainer)molecule.Clone();
-            }
-            catch (Exception)
-            {
-                throw new CDKException("Failed to clone source molecule");
-            }
+            mNew = (IAtomContainer)molecule.Clone();
 
             IRingSet ringSet;
 
@@ -184,7 +177,7 @@ namespace NCDK.Smiles
             IList<int[]> rBondsArray = null;
             IList<IList<int>> ringGroups = null;
 
-            //Start by getting a list (same dimensions and ordering as ringset) of all the ring bond numbers in the reduced ring set
+            //Start by getting a list (same dimensions and ordering as ring set) of all the ring bond numbers in the reduced ring set
             rBondsArray = GetRingSystem(mNew, ringSet);
             //Now find out which share a bond and assign them accordingly to groups
             ringGroups = AssignRingGroups(rBondsArray);
@@ -207,7 +200,7 @@ namespace NCDK.Smiles
                 IList<int[]> atomNoPairs = null;
                 atomNoPairs = GetAtomNoPairsForRingGroup(mNew, bondNos);
 
-                //Set up ajacency Matrix
+                //Set up adjacency Matrix
                 Matrix M = new Matrix(atomNos.Count, bondNos.Count);
                 for (int x = 0; x < M.GetRows(); x++)
                 {
@@ -268,7 +261,7 @@ namespace NCDK.Smiles
         {
             IRingSet rs = Cycles.FindSSSR(m).ToRingSet();
 
-            //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
+            //remove rings which don't have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
             var rToRemove = new List<int>();
             for (int i = 0; i < rs.Count; i++)
             {
@@ -331,13 +324,11 @@ namespace NCDK.Smiles
             { //for each ring except the last in rBondsArray
                 for (int j = 0; j < rBondsArray[i].Length; j++)
                 { //for each bond in each ring
-
                     //check there's no shared bond with any other ring already in ringGroups
                     for (int k = i + 1; k < rBondsArray.Count; k++)
                     {
                         for (int l = 0; l < rBondsArray[k].Length; l++)
                         { //for each ring in each ring
-
                             //Is there a bond in common? Then add both rings
                             if (rBondsArray[i][j] == rBondsArray[k][l])
                             {

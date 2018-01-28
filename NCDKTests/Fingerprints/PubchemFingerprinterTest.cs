@@ -327,8 +327,8 @@ namespace NCDK.Fingerprints
         /// <summary>
         /// Using PubChem/CACTVS Substr keys, these molecules are not considered
         /// substructures and should only be used for similarity. This is because the
-        /// PubChem fragments match hydrogen counts. In this case the <c>599</c>
-        /// bit (<c>[#1]-C-C=C-[#1]</c>) is found in the substructure but not the
+        /// PubChem fragments match hydrogen counts. In this case the "599"
+        /// bit ("[#1]-C-C=C-[#1]") is found in the substructure but not the
         /// superstructure.
         /// </summary>
         [TestMethod()]

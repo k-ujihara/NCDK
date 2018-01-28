@@ -36,10 +36,10 @@ using System.Reflection;
 namespace NCDK.Smiles
 {
     /// <summary>
-    /// Generate a SMILES <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token>provides a compact representation of
-    /// chemical structures and reactions.
+    /// Generate a SMILES provides a compact representation of chemical structures and reactions. 
     /// </summary>
     /// <remarks>
+    /// SMILES: <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token>
     /// Different <i>flavours</i> of SMILES can be generated and are fully configurable.
     /// The standard flavours of SMILES defined by Daylight are:
     /// <list type="bullet">
@@ -140,10 +140,7 @@ namespace NCDK.Smiles
         /// Create a SMILES generator with the specified <see cref="SmiFlavor"/>.
         /// </summary>
         /// <example>
-        /// <code>
-        /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
-        ///                                              SmiFlavor.Canonical);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+ctor_SmiFlavor"]/*' />
         /// </example>
         /// <param name="flavour">SMILES flavour flags <see cref="SmiFlavor"/></param>
         public SmilesGenerator(SmiFlavor flavour)
@@ -156,9 +153,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <example>
         /// The preferred way of doing this is now to use the <see cref="SmilesGenerator(SmiFlavor)"/> constructor:
-        /// <code>
-        /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Aromatic"]/*' />
         /// </example>
         /// <returns>a generator for aromatic SMILES</returns>
         [Obsolete("Configure with " + nameof(SmilesGenerator))]
@@ -173,11 +168,8 @@ namespace NCDK.Smiles
         /// property. This method returns a new SmilesGenerator to use.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer container = ...;
-        /// SmilesGenerator smilesGen = SmilesGenerator.WithAtomClasses();
-        /// smilesGen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
-        /// </code>
+        /// The preferred way of doing this is now to use the <see cref="SmilesGenerator(SmiFlavor)"/> constructor:
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses"]/*' />
         /// </example>
         /// <returns>a generator for SMILES with atom classes</returns>
         [Obsolete("Configure with " + nameof(SmilesGenerator))]
@@ -275,7 +267,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Generate SMILES for the provided <code>molecule</code>.
+        /// Generate SMILES for the provided <paramref name="molecule"/>.
         /// </summary>
         /// <param name="molecule">The molecule to evaluate</param>
         /// <returns>the SMILES string</returns>

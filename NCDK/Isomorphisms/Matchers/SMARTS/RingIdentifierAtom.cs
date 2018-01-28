@@ -20,7 +20,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This encapsulates an atom with a ring identifier, with an optional ring
-    /// bond specified. For example, <c>C=1CCCCC1</c>.
+    /// bond specified. For example, "C=1CCCCC1".
     /// </summary>
     // @cdk.module  smarts
     // @cdk.githash

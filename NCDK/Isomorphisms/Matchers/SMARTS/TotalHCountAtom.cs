@@ -23,7 +23,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// SMARTS query atom for matching the total hydrogen count. This count is
-    /// specified in SMARTS using <c>H&lt;NUMBER&gt;</c>.
+    /// specified in SMARTS using "H&lt;NUMBER&gt;".
     /// </summary>
     // @cdk.module  smarts
     // @cdk.keyword SMARTS

@@ -35,7 +35,7 @@ namespace NCDK.Geometries
     /// </summary>
     /// <example>
     /// By default, the RDF is unweighted. By implementing and registering a
-    /// <c>RDFWeightFunction</c>, the RDF can become weighted. For example,
+    /// <see cref="WeightFunction"/>, the RDF can become weighted. For example,
     /// to weight according to partial charge interaction, this code could be used:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.RDFCalculator_Example.cs"]/*' />
     /// </example>

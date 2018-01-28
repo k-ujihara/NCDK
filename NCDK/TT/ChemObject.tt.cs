@@ -145,6 +145,7 @@ namespace NCDK.Default
             typeof(string),
             typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
+			typeof(Guid),
         };
 #endif
 
@@ -386,6 +387,7 @@ namespace NCDK.Silent
             typeof(string),
             typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
+			typeof(Guid),
         };
 #endif
 

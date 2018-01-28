@@ -6,7 +6,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
+<#@ output extension=".tt.cs" #>
 
 <#
     string[]  interfaceNames = new string[] { "IChemObject", "IMolecularFormula", };

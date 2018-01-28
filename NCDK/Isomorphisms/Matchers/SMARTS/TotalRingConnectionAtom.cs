@@ -26,7 +26,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <summary>
     /// This matcher checks the number of ring connections of the checked Atom with
     /// other Atom's. This cannot be matched without prepossessing Atom - <see cref="SMARTSAtomInvariants"/>.
-    /// The ring connectivity is encoded in smarts using <c>x&lt;NUMBER&gt;</c>.
+    /// The ring connectivity is encoded in smarts using "x&lt;NUMBER&gt;".
     /// </summary>
     // @cdk.module smarts
     // @cdk.githash

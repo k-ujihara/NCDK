@@ -2,12 +2,12 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("NCDK: Chemistry Development Kit for .NET Framework based on cdk-2.0.")]
-[assembly: AssemblyDescription("NCDK 1.1.2")]
+[assembly: AssemblyTitle("NCDK: Chemistry Development Kit for .NET Framework based on cdk-2.1.")]
+[assembly: AssemblyDescription("NCDK 1.2.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Kazuya Ujihara")]
 [assembly: AssemblyProduct("NCDK")]
-[assembly: AssemblyCopyright("Copyright © 2016-2017 Kazuya Ujihara")]
+[assembly: AssemblyCopyright("Copyright © 2016-2018 Kazuya Ujihara")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

@@ -33,7 +33,7 @@ namespace NCDK.Formula
     /// <remarks>
     /// Examples:
     /// <list type="bullet">
-    /// <item><c>[C(1-5)H(4-10)]-</c></item>
+    /// <item>"[C(1-5)H(4-10)]-"</item>
     /// </list>
     /// </remarks>
     // @cdk.module  formula

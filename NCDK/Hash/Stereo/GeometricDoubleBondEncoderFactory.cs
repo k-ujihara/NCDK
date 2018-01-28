@@ -32,7 +32,7 @@ namespace NCDK.Hash.Stereo
     /// <summary>
     /// A stereo encoder factory encoding double bond configurations by 2D and 3D
     /// coordinates. This factory will attempt to encode all double bonds that meet
-    /// the following conditions. Are not <c>-N=N-</c> bonds, non-cumulated,
+    /// the following conditions. Are not "-N=N-" bonds, non-cumulated,
     /// non-query and have each double bonded atom has at least one substituent. In
     /// future the encoding rules may be more strict or even configurable but
     /// currently they may be over zealous when encoding configurations with 3D

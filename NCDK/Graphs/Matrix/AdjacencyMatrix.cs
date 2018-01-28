@@ -22,10 +22,10 @@ using NCDK.Common.Collections;
 namespace NCDK.Graphs.Matrix
 {
     /// <summary>
-    /// Calculator for a adjacency matrix representation of this AtomContainer. An
+    /// Calculator for a adjacency matrix representation of this <see cref="IAtomContainer"/>. An
     /// adjacency matrix is a matrix of square NxN matrix, where N is the number of
-    /// atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
-    /// and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
+    /// atoms in the <see cref="IAtomContainer"/>. The element i,j of the matrix is 1, if the i-th
+    /// and the j-th atom in the <see cref="IAtomContainer"/> share a bond. Otherwise it is zero.
     /// See <token>cdk-cite-TRI92</token>.
     /// </summary>
     // @cdk.module  core
@@ -38,10 +38,10 @@ namespace NCDK.Graphs.Matrix
         : IGraphMatrix
     {
         /// <summary>
-        /// Returns the adjacency matrix for the given AtomContainer.
+        /// Returns the adjacency matrix for the given <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The AtomContainer for which the matrix is calculated</param>
-        /// <returns>An adjacency matrix representing this AtomContainer</returns>
+        /// <param name="container">The <see cref="IAtomContainer"/> for which the matrix is calculated</param>
+        /// <returns>An adjacency matrix representing this <see cref="IAtomContainer"/></returns>
         public static int[][] GetMatrix(IAtomContainer container)
         {
             IBond bond;

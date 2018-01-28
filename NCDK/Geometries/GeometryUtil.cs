@@ -312,7 +312,7 @@ namespace NCDK.Geometries
         /// <summary>
         /// Returns the minimum and maximum X and Y coordinates of the atoms in the
         /// <see cref="IAtomContainer"/>. The output is returned as: 
-        /// <c>double[] {minX, minY, maxX, maxY }</c>.
+        /// <c>double[] { minX, minY, maxX, maxY }</c>.
         /// </summary>
         /// <param name="container"></param>
         /// <returns>An four int array as defined above.</returns>

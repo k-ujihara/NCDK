@@ -24,12 +24,12 @@
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
-    /// Match an atom in a specific size ring. The ring size is specified by <c>r&lt;NUMBER&gt;</c>
+    /// Match an atom in a specific size ring. The ring size is specified by "r&lt;NUMBER&gt;"
     /// in a SMARTS pattern. This term is non-portable, depending on the
     /// set of rings chosen and which ring sizes are used. The default implementation
     /// (Daylight) only stores the smallest ring each atom belongs to whilst other
     /// implementations may store multiple values. A more portable term is the
-    /// ring connectivity which is specified as <c>x&lt;NUMBER&gt;</c>.
+    /// ring connectivity which is specified as "x&lt;NUMBER&gt;".
     /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS

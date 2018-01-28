@@ -50,8 +50,8 @@ namespace NCDK.Stereo
     /// </pre>
     /// <para>
     /// The data structure stores, the central 'focus' atom and the four peripheral
-    /// atoms. The peripheral atoms are stored in a single array, <c>{p0, p1,
-    /// p2, p3}</c>, the first two and last two entries should be attached to the same
+    /// atoms. The peripheral atoms are stored in a single array, "{p0, p1, p2, p3}", 
+    /// the first two and last two entries should be attached to the same
     /// terminal atom (t0 or t1). For convenience the terminal atoms can be found with
     /// <see cref="FindTerminalAtoms(IAtomContainer)"/> .
     /// </para>
@@ -64,9 +64,9 @@ namespace NCDK.Stereo
     /// </pre>
     /// <para>
     /// The configuration treats the focus and terminal atoms as a single atom, the
-    /// neighbours <c>{p1, p2, p3}</c> then proceeded either clockwise or
+    /// neighbours "{ p1, p2, p3 }" then proceeded either clockwise or
     /// anti-clockwise when the centre (t0/f/t1) is viewed from the first peripheral
-    /// atom <c>p0</c>.
+    /// atom "p0".
     /// </para>
     /// <para>
     /// If any of the peripherals are implicit hydrogen atoms, then the terminal atom

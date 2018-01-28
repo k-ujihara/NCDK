@@ -80,10 +80,14 @@ namespace NCDK.Geometries
         {
             RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, Returns1);
             AtomContainer h2mol = new AtomContainer();
-            Atom h1 = new Atom("H");
-            h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
-            Atom h2 = new Atom("H");
-            h2.Point3D = new Vector3(0.5, 0.0, 0.0);
+            Atom h1 = new Atom("H")
+            {
+                Point3D = new Vector3(-0.5, 0.0, 0.0)
+            };
+            Atom h2 = new Atom("H")
+            {
+                Point3D = new Vector3(0.5, 0.0, 0.0)
+            };
             h2mol.Atoms.Add(h1);
             h2mol.Atoms.Add(h2);
 

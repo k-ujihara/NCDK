@@ -27,7 +27,7 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     /// <remarks>
     /// Note that some generators have explicit empty constructors (like:
-    /// <c>public MyGenerator() {}</c>) which can be useful in some situations where
+    /// <c>public MyGenerator() { }</c>) which can be useful in some situations where
     /// reflection is required. It is not, however, necessary for most normal
     /// drawing situations.
     /// </remarks>

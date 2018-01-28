@@ -30,7 +30,7 @@ namespace NCDK.AtomTypes
 {
     /// <summary>
     /// Atom Type matcher that perceives atom types as defined in the CDK atom type list
-    /// <c>NCDK.Dict.Data.cdk-atom-types.owl</c>.
+    /// "NCDK.Dict.Data.cdk-atom-types.owl".
     ///  If there is not an atom type defined for the tested atom, then <see langword="null"/> is returned.
     /// </summary>
     // @author         egonw

@@ -497,7 +497,7 @@ namespace NCDK.Beam
         /// implicit hydrogens. This include electrons donated from the hydrogen.
         /// </summary>
         /// <remarks>
-        /// The central carbon of <c>C-C=C</c> 6 bonded electrons - using SMILES
+        /// The central carbon of "C-C=C" 6 bonded electrons - using SMILES
         /// default valence there must be 2 electrons involved in bonding an implicit
         /// hydrogen (i.e. there is a single bond to a hydrogen).
         /// </remarks>

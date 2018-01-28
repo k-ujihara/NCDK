@@ -165,7 +165,7 @@ namespace NCDK.Isomorphisms
 
         /// <summary>
         /// Verify the geometric stereochemistry (cis/trans) of the double bond
-        /// <c>u1=u2</c> is preserved in the target when the <paramref name="mapping"/> is
+        /// <c><paramref name="u1"/>=<paramref name="u2"/></c> is preserved in the target when the <paramref name="mapping"/> is
         /// used.
         /// </summary>
         /// <param name="u1">one index of the double bond</param>

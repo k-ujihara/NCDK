@@ -127,17 +127,17 @@ namespace NCDK.Common.Primitives
         /// </summary>
         /// <remarks>
         /// <para>Note that this method is closely related to the logarithm base 2.
-        /// For all positive <see cref="int"/> values x:
+        /// For all positive <see cref="Int32"/> values x:
         /// <list type="bullet">
-        /// <item>floor(log<sub>2</sub>(x)) = <c>31 - numberOfLeadingZeros(x)</c></item>
-        /// <item>ceil(log<sub>2</sub>(x)) = <c>32 - numberOfLeadingZeros(x - 1)</c></item>
+        /// <item>floor(log<sub>2</sub>(x)) = <c>31 - NumberOfLeadingZeros(x)</c></item>
+        /// <item>ceil(log<sub>2</sub>(x)) = <c>32 - NumberOfLeadingZeros(x - 1)</c></item>
         /// </list> 
         /// </para>
         /// </remarks>
         /// <param name="i"></param>
         /// <returns>the number of zero bits preceding the highest-order
         ///     ("leftmost") one-bit in the two's complement binary representation
-        ///     of the specified <see cref="int"/> value, or 32 if the value
+        ///     of the specified <see cref="Int32"/> value, or 32 if the value
         ///     is equal to zero.</returns>
         public static int NumberOfLeadingZeros(int i)
         {

@@ -43,8 +43,7 @@ namespace NCDK.Depict
     /// <example>
     /// <b>General Usage</b>
     /// <para>
-    /// Create a generator and reuse it for multiple depictions. Configure how
-    /// the depiction will look using <c>With...()</c> methods.
+    /// Create a generator and reuse it for multiple depictions. 
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Depict.DepictionGenerator_Example.cs+1"]/*' />
     /// </para>
     /// <b>One Line Quick Use</b>
@@ -725,7 +724,7 @@ namespace NCDK.Depict
 
         /// <summary>
         /// Display atom values on the molecule or reaction. The values need to be assigned by 
-        /// <c>atom.SetProperty(CDKConstants.COMMENT, myValueToBeDisplayedNextToAtom);</c>
+        /// <c>atom.SetProperty(CDKPropertyName.Comment, myValueToBeDisplayedNextToAtom);</c>
         /// </summary>
         /// <remarks>
         /// <note type="note">
@@ -738,6 +737,7 @@ namespace NCDK.Depict
         public bool AnnotateAtomValues
         {
             get => annotateAtomValues;
+
             set
             {
                 if (value && (annotateAtomNumbers || annotateAtomMapNumbers))

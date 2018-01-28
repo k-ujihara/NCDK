@@ -51,7 +51,7 @@ namespace NCDK.Smiles
     // @cdk.bug 1895805
     // @cdk.bug 1931262
     // @cdk.threadnonsafe
-    [Obsolete("Use the newer" + nameof(Kekulization))]
+    [Obsolete("Use the newer " + nameof(Kekulization))]
     public class DeduceBondSystemTool
     {
         private AllRingsFinder allRingsFinder;

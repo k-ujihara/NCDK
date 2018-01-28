@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NCDK</RootNamespace>
     <AssemblyName>NCDK</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -47,18 +47,17 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="dotNetRDF, Version=0.0.0.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
-      <HintPath>..\packages\dotNetRDF.2.0.0-pre0010\lib\net40\dotNetRDF.dll</HintPath>
+    <Reference Include="dotNetRDF, Version=2.0.1.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
+      <HintPath>..\packages\dotNetRDF.2.0.1\lib\net40\dotNetRDF.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.6.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.6.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.Signed.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.Signed.3.20.2\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -67,8 +66,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="VDS.Common, Version=1.9.0.0, Culture=neutral, PublicKeyToken=ab5f4eb908061bf0, processorArchitecture=MSIL">
-      <HintPath>..\packages\VDS.Common.1.9.0-pre0001\lib\net40-client\VDS.Common.dll</HintPath>
+    <Reference Include="VDS.Common">
+      <HintPath>..\packages\VDS.Common.1.9.0\lib\net40-client\VDS.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -293,7 +293,9 @@
     <Content Include="x86\ncdk_libinchi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Beam\Snap.txt" />
     <None Include="cheminf.bibx" />
     <None Include="cheminf.tokens">
@@ -1963,7 +1965,9 @@
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE.db" />
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE_S.db" />
     <None Include="Numerics\GenerationConfig.ttinclude" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="reaction-types.set" />
   </ItemGroup>
   <ItemGroup>

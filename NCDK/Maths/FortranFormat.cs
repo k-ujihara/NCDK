@@ -29,7 +29,7 @@ namespace NCDK.Maths
     /// Converts a string representation of a Fortran double to a double.
     /// </summary>
     /// <remarks>
-    /// A modified version of the <c>atof</c> method provided in the Core Java
+    /// A modified version of the "atof" method provided in the Core Java
     /// books by Cay S. Horstmann &amp; Gary Cornell.  The main difference
     /// here is that we scan for Fortran double precision characters
     /// ('D' and 'd') which often cause the C versions of atof to

@@ -180,7 +180,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <c>low &lt;= <i>c</i> &lt;= high</c>
+        /// "low &lt;= <i>c</i> &lt;= high"
         /// are word constituents. A word token consists of a word constituent
         /// followed by zero or more word constituents or number constituents.
         /// </summary>
@@ -204,7 +204,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <c>low &lt;= <i>c</i> &lt;= high</c>
+        /// "low &lt;= <i>c</i> &lt;= high"
         /// are white space characters. White space characters serve only to
         /// separate tokens in the input stream.
         /// <para>
@@ -232,7 +232,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <c>low &lt;= <i>c</i> &lt;= high</c>
+        /// "low &lt;= <i>c</i> &lt;= high"
         /// are "ordinary" in this tokenizer. See the
         /// <see cref="OrdinaryChar(int)"/> method for more information on a
         /// character being ordinary.

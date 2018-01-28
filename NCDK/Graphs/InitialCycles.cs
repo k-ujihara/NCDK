@@ -402,12 +402,12 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Given two paths from a common start vertex <c>r</c> check whether there
+        /// Given two paths from a common start vertex "r" check whether there
         /// are any intersects. If the paths are different length the shorter of the
         /// two should be given as <paramref name="p"/>.
         /// </summary>
-        /// <param name="p">a path from <c>r</c></param>
-        /// <param name="q">a path from <c>r</c></param>
+        /// <param name="p">a path from "r"</param>
+        /// <param name="q">a path from "r"</param>
         /// <returns>whether the only intersect is <c>r</c></returns>
         public static bool GetSingletonIntersect(int[] p, int[] q)
         {

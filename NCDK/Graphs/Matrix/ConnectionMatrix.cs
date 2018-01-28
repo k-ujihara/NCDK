@@ -38,10 +38,10 @@ namespace NCDK.Graphs.Matrix
     public class ConnectionMatrix : IGraphMatrix
     {
         /// <summary>
-        /// Returns the connection matrix representation of this AtomContainer.
+        /// Returns the connection matrix representation of this <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="container">The AtomContainer for which the matrix is calculated</param>
-        /// <returns>A connection matrix representing this AtomContainer</returns>
+        /// <param name="container">The <see cref="IAtomContainer"/> for which the matrix is calculated</param>
+        /// <returns>A connection matrix representing this <see cref="IAtomContainer"/></returns>
         public static double[][] GetMatrix(IAtomContainer container)
         {
             IBond bond = null;

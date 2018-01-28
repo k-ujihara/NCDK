@@ -29,8 +29,8 @@ namespace NCDK.Isomorphisms
     /// Vento-Foggia (VF) state for matching subgraph-monomorphisms. The original
     /// algorithm <token>cdk-cite-Cordella04</token> is for matching vertex-induced
     /// subgraph-isomorphisms. A matching is vertex-induced if adjacency relation of
-    /// mapped vertices is isomorphic. Under such a procedure propane (<c>CCC</c>)
-    /// is not considered a substructure of cyclopropane (<c>C1CC1</c>). The term
+    /// mapped vertices is isomorphic. Under such a procedure propane ("CCC")
+    /// is not considered a substructure of cyclopropane ("C1CC1"). The term
     /// subgraph-isomorphism is often conflated and it is really
     /// subgraph-monomorphism that is required for substructure matching.
     /// </summary>
