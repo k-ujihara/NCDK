@@ -471,7 +471,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     continue_READ:
                     ;
                 }
-                Assert.AreEqual(137, nmol);
+                Assert.AreEqual(141, nmol);
                 Assert.AreEqual(4, nmatch);
             }
         }
