@@ -18,6 +18,7 @@
  */
 
 using NCDK.Utils.Xml;
+using System;
 using System.Xml.Linq;
 
 namespace NCDK.Dict
@@ -108,7 +109,7 @@ namespace NCDK.Dict
                             break;
                         case "content":
                             string content = att.Value;
-                            if (content.StartsWith("qsar-descriptors-metadata:"))
+                            if (content.StartsWith("qsar-descriptors-metadata:", StringComparison.Ordinal))
                             {
                                 entry.AddDescriptorMetadata(dictRefValue + "/" + content);
                             }

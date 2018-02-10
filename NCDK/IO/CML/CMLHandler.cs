@@ -18,6 +18,7 @@
  */
 
 using NCDK.Utils.Xml;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
@@ -109,7 +110,7 @@ namespace NCDK.IO.CML
             xpath.Push(element.Name.LocalName);
             Debug.WriteLine($"<{element.Value}> -> {xpath}");
             // Detect CML modules, like CRML and CCML
-            if (local.StartsWith("reaction"))
+            if (local.StartsWith("reaction", StringComparison.Ordinal))
             {
                 // e.g. reactionList, reaction -> CRML module
                 Trace.TraceInformation("Detected CRML module");
@@ -119,7 +120,7 @@ namespace NCDK.IO.CML
                 }
                 conventionStack.Push("CMLR");
             }
-            else if (string.IsNullOrEmpty(uri) || uri.StartsWith("http://www.xml-cml.org/"))
+            else if (string.IsNullOrEmpty(uri) || uri.StartsWith("http://www.xml-cml.org/", StringComparison.Ordinal))
             {
                 // assume CML Core
 

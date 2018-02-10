@@ -147,12 +147,12 @@ namespace NCDK.IO
                 string line = ReadLine();
                 while (line != null)
                 {
-                    if (line.StartsWith("%%Header Start"))
+                    if (line.StartsWith("%%Header Start", StringComparison.Ordinal))
                     {
                         // parse Header section
-                        while (line != null && !(line.StartsWith("%%Header End")))
+                        while (line != null && !(line.StartsWith("%%Header End", StringComparison.Ordinal)))
                         {
-                            if (line.StartsWith("%%Version Number"))
+                            if (line.StartsWith("%%Version Number", StringComparison.Ordinal))
                             {
                                 string version = ReadLine().Trim();
                                 if (!version.Equals("3.00"))
@@ -164,11 +164,11 @@ namespace NCDK.IO
                             line = ReadLine();
                         }
                     }
-                    else if (line.StartsWith("%%Model Start"))
+                    else if (line.StartsWith("%%Model Start", StringComparison.Ordinal))
                     {
                         // parse Model section
                         modelStructure = chemFile.Builder.NewAtomContainer();
-                        while (line != null && !(line.StartsWith("%%Model End")))
+                        while (line != null && !(line.StartsWith("%%Model End", StringComparison.Ordinal)))
                         {
                             var objHeaderMatcher = objHeader.Match(line);
                             if (objHeaderMatcher.Success)
@@ -222,7 +222,7 @@ namespace NCDK.IO
                             }
                             line = ReadLine();
                         }
-                        if (line.StartsWith("%%Model End"))
+                        if (line.StartsWith("%%Model End", StringComparison.Ordinal))
                         {
                             // during the Model Start, all bonds are cached as PMP files might
                             // define bonds *before* the involved atoms :(
@@ -264,22 +264,22 @@ namespace NCDK.IO
                             }
                         }
                     }
-                    else if (line.StartsWith("%%Traj Start"))
+                    else if (line.StartsWith("%%Traj Start", StringComparison.Ordinal))
                     {
                         chemSequence = chemFile.Builder.NewChemSequence();
                         double energyFragment = 0.0;
                         double energyTotal = 0.0;
                         int Z = 1;
-                        while (line != null && !(line.StartsWith("%%Traj End")))
+                        while (line != null && !(line.StartsWith("%%Traj End", StringComparison.Ordinal)))
                         {
-                            if (line.StartsWith("%%Start Frame"))
+                            if (line.StartsWith("%%Start Frame", StringComparison.Ordinal))
                             {
                                 chemModel = chemFile.Builder.NewChemModel();
                                 crystal = chemFile.Builder.NewCrystal();
-                                while (line != null && !(line.StartsWith("%%End Frame")))
+                                while (line != null && !(line.StartsWith("%%End Frame", StringComparison.Ordinal)))
                                 {
                                     // process frame data
-                                    if (line.StartsWith("%%Atom Coords"))
+                                    if (line.StartsWith("%%Atom Coords", StringComparison.Ordinal))
                                     {
                                         // calculate Z: as it is not explicitely given, try to derive it from the
                                         // energy per fragment and the total energy
@@ -308,17 +308,17 @@ namespace NCDK.IO
                                             crystal.Add(clone);
                                         }
                                     }
-                                    else if (line.StartsWith("%%E/Frag"))
+                                    else if (line.StartsWith("%%E/Frag", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
                                         energyFragment = double.Parse(line);
                                     }
-                                    else if (line.StartsWith("%%Tot E"))
+                                    else if (line.StartsWith("%%Tot E", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
                                         energyTotal = double.Parse(line);
                                     }
-                                    else if (line.StartsWith("%%Lat Vects"))
+                                    else if (line.StartsWith("%%Lat Vects", StringComparison.Ordinal))
                                     {
                                         line = ReadLine();
                                         IList<string> st;
@@ -331,7 +331,7 @@ namespace NCDK.IO
                                         st = Strings.Tokenize(line, ' ');
                                         crystal.C = new Vector3(double.Parse(st[0]), double.Parse(st[1]), double.Parse(st[2]));
                                     }
-                                    else if (line.StartsWith("%%Space Group"))
+                                    else if (line.StartsWith("%%Space Group", StringComparison.Ordinal))
                                     {
                                         line = ReadLine().Trim();
                                         

@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
 			string line;
 			while ((line = reader.ReadLine()) != null)
 			{
-				if (line.StartsWith("#"))
+				if (line.StartsWith("#", StringComparison.Ordinal))
 					continue;
 				line = line.Trim();
 				if (string.IsNullOrEmpty(line))

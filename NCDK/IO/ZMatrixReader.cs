@@ -93,7 +93,7 @@ namespace NCDK.IO
             try
             {
                 string line = input.ReadLine();
-                while (line.StartsWith("#"))
+                while (line.StartsWith("#", StringComparison.Ordinal))
                     line = input.ReadLine();
                 
                 // while (input.Ready() && line != null) {
@@ -124,7 +124,7 @@ namespace NCDK.IO
                     line = input.ReadLine();
                     //          Debug.WriteLine("line:\""+line+"\"");
                     if (line == null) break;
-                    if (line.StartsWith("#"))
+                    if (line.StartsWith("#", StringComparison.Ordinal))
                     {
                         // skip comment in file
                     }

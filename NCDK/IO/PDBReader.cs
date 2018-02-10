@@ -804,7 +804,7 @@ namespace NCDK.IO
                 if (frag.Length > 0)
                 {
                     // see Format_v33_A4.pdf, p. 178
-                    if (frag.EndsWith("-") || frag.EndsWith("+"))
+                    if (frag.EndsWith("-", StringComparison.Ordinal) || frag.EndsWith("+", StringComparison.Ordinal))
                     {
                         var aa = frag.ToCharArray();
                         Array.Reverse(aa);

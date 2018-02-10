@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -58,7 +59,7 @@ namespace NCDK.IO.CML
         public override void CharacterData(CMLStack xpath, XElement element)
         {
             string s = element.Value.Trim();
-            if (xpath.ToString().EndsWith("string/") && BUILTIN.Equals("stereo"))
+            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && BUILTIN.Equals("stereo"))
             {
                 StereoGiven = true;
                 if (s.Trim().Equals("W"))

@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("!Header mm1gp"))
+            if (line.StartsWith("!Header mm1gp", StringComparison.Ordinal))
             {
                 return true;
             }

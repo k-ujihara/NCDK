@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.IO.Formats
@@ -64,13 +65,13 @@ namespace NCDK.IO.Formats
         public MatchResult Matches(IList<string> lines)
         {
             // if the first line doesn't have '$RXN' then it can't match
-            if (lines.Count < 1 || !lines[0].StartsWith("$RXN V3000"))
+            if (lines.Count < 1 || !lines[0].StartsWith("$RXN V3000", StringComparison.Ordinal))
                 return MatchResult.NO_MATCH;
 
             // check the header (fifth line)
             string header = lines.Count > 4 ? lines[4] : "";
 
-            if (!header.StartsWith("M  V30 "))
+            if (!header.StartsWith("M  V30 ", StringComparison.Ordinal))
                 return MatchResult.NO_MATCH;
 
             return new MatchResult(true, this, 0);

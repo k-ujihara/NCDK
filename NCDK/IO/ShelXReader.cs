@@ -155,13 +155,13 @@ namespace NCDK.IO
 
                 Debug.WriteLine("command: " + command);
                 var u_command = command.ToUpperInvariant();
-                if (u_command.StartsWith("REM"))
+                if (u_command.StartsWith("REM", StringComparison.Ordinal))
                 {
                     /* line is comment, disregard */
 
                     /* 7.1 Crystal data and general instructions */
                 }
-                else if (u_command.StartsWith("END"))
+                else if (u_command.StartsWith("END", StringComparison.Ordinal))
                 {
                     end_found = true;
                 }

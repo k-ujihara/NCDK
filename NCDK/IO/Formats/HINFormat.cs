@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -55,8 +56,8 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("atom ")
-                    && (line.EndsWith(" s") || line.EndsWith(" d") || line.EndsWith(" t") || line.EndsWith(" a")))
+            if (line.StartsWith("atom ", StringComparison.Ordinal)
+                    && (line.EndsWith(" s", StringComparison.Ordinal) || line.EndsWith(" d", StringComparison.Ordinal) || line.EndsWith(" t", StringComparison.Ordinal) || line.EndsWith(" a", StringComparison.Ordinal)))
             {
                 var tokens = line.Split(' ');
                 if ((tokens.Length % 2) == 0)

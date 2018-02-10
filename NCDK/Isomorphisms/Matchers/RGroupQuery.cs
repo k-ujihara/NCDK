@@ -110,7 +110,7 @@ namespace NCDK.Isomorphisms.Matchers
                     {
                         if (!rGroup.Label.Equals("R")
                                 && // just "R" is not a proper query atom
-                                rGroup.Label.StartsWith("R")
+                                rGroup.Label.StartsWith("R", StringComparison.Ordinal)
                                 && (rgroupNumber == null || int.Parse(rGroup.Label.Substring(1)).Equals(
                                         rgroupNumber))) rGroupQueryAtoms.Add(atom);
                     }
@@ -179,7 +179,7 @@ namespace NCDK.Isomorphisms.Matchers
                 bool represented = false;
                 foreach (var rootAtom in this.RootStructure.Atoms)
                 {
-                    if (rootAtom is IPseudoAtom && rootAtom.Symbol.StartsWith("R"))
+                    if (rootAtom is IPseudoAtom && rootAtom.Symbol.StartsWith("R", StringComparison.Ordinal))
                     {
                         IPseudoAtom pseudo = (IPseudoAtom)rootAtom;
                         if (pseudo.Label.Length > 1)

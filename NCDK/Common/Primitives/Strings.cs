@@ -49,16 +49,16 @@ namespace NCDK.Common.Primitives
             var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString()));
             if (!isZeroLeading)
             {
-                if (s.StartsWith("0"))
+                if (s.StartsWith("0", StringComparison.Ordinal))
                     s = s.Substring(1);
-                else if (s.StartsWith("-0"))
+                else if (s.StartsWith("-0", StringComparison.Ordinal))
                     s = "-" + s.Substring(2);
             }
             if (!s.Contains("."))
                 return s;
-            while (s.EndsWith("0"))
+            while (s.EndsWith("0", StringComparison.Ordinal))
                 s = s.Substring(0, s.Length - 1);
-            if (s.EndsWith("."))
+            if (s.EndsWith(".", StringComparison.Ordinal))
                 s = s.Substring(0, s.Length - 1);
             if (s == "" || s == "-")
                 s = "0";
@@ -122,11 +122,11 @@ namespace NCDK.Common.Primitives
                 throw new ArgumentOutOfRangeException(nameof(maxZeroLength));
 
             var v = value.ToString("F" + maxZeroLength.ToString());
-            bool needToCutZeros = v.StartsWith(value.ToString());
+            bool needToCutZeros = v.StartsWith(value.ToString(), StringComparison.Ordinal);
 
-            if (v.StartsWith("0."))
+            if (v.StartsWith("0.", StringComparison.Ordinal))
                 v = v.Substring(1);
-            else if (v.StartsWith("-0."))
+            else if (v.StartsWith("-0.", StringComparison.Ordinal))
                 v = "-" + v.Substring(2);
             if (needToCutZeros)
             {
@@ -141,7 +141,7 @@ namespace NCDK.Common.Primitives
                     }
                 }
             }
-            if (v.EndsWith("."))
+            if (v.EndsWith(".", StringComparison.Ordinal))
                 v = v.Substring(0, v.Length - 1);
             switch (v)
             {

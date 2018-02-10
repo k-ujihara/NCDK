@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace NCDK.Dict
 {
@@ -33,7 +34,7 @@ namespace NCDK.Dict
         [TestCleanup()]
         public void TestTestedClass()
         {
-            Assert.IsTrue(base.GetTestClass().GetType().FullName.EndsWith(".Entry"));
+            Assert.IsTrue(base.GetTestClass().GetType().FullName.EndsWith(".Entry", StringComparison.Ordinal));
         }
 
         [TestMethod()]

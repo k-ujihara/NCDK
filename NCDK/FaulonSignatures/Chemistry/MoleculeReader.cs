@@ -71,7 +71,7 @@ namespace NCDK.FaulonSignatures.Chemistry
                     List<string> block = new List<string>();
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.StartsWith("$$$$"))
+                        if (line.StartsWith("$$$$", StringComparison.Ordinal))
                         {
                             Molecule molecule;
                             try

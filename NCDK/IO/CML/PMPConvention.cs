@@ -22,6 +22,7 @@
  */
 
 using NCDK.Numerics;
+using System;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -66,7 +67,7 @@ namespace NCDK.IO.CML
             string s = element.Value.Trim();
             Debug.WriteLine($"Start PMP chardata ({CurrentElement}) :{s}");
             Debug.WriteLine($" ElTitle: {ElementTitle}");
-            if (xpath.ToString().EndsWith("string/") && BUILTIN.Equals("spacegroup"))
+            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal) && BUILTIN.Equals("spacegroup"))
             {
                 string sg = "P1";
                 // standardize space group names (see Crystal.java)
@@ -77,7 +78,7 @@ namespace NCDK.IO.CML
                 //            cdo.SetObjectProperty("Crystal", "spacegroup", sg);
                 ((ICrystal)CurrentMolecule).SpaceGroup = sg;
             }
-            else if (xpath.ToString().EndsWith("floatArray/")
+            else if (xpath.ToString().EndsWith("floatArray/", StringComparison.Ordinal)
                   && (ElementTitle.Equals("a") || ElementTitle.Equals("b") || ElementTitle.Equals("c")))
             {
                 var tokens = s.Split(' ');

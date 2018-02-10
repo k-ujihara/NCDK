@@ -517,7 +517,7 @@ namespace NCDK.Fingerprints.Model
         public static Bayesian Deserialise(TextReader rdr)
         {
             string line = rdr.ReadLine();
-            if (line == null || !line.StartsWith("Bayesian!(") || !line.EndsWith(")"))
+            if (line == null || !line.StartsWith("Bayesian!(", StringComparison.Ordinal) || !line.EndsWith(")", StringComparison.Ordinal))
                 throw new IOException("Not a serialised Bayesian model.");
             string[] bits = line.Substring(10, line.Length - 11).Split(',');
             if (bits.Length < 4) throw new IOException("Invalid header content");
@@ -563,7 +563,7 @@ namespace NCDK.Fingerprints.Model
                     double c = double.Parse(m.Groups[2].Value);
                     model.contribs[hash] = c;
                 }
-                else if (line.StartsWith("training:size="))
+                else if (line.StartsWith("training:size=", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -574,7 +574,7 @@ namespace NCDK.Fingerprints.Model
                         throw new IOException("Invalid training info line: " + line);
                     }
                 }
-                else if (line.StartsWith("training:actives="))
+                else if (line.StartsWith("training:actives=", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -585,7 +585,7 @@ namespace NCDK.Fingerprints.Model
                         throw new IOException("Invalid training info line: " + line);
                     }
                 }
-                else if (line.StartsWith("roc:auc="))
+                else if (line.StartsWith("roc:auc=", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -596,9 +596,9 @@ namespace NCDK.Fingerprints.Model
                         throw new IOException("Invalid AUC line: " + line);
                     }
                 }
-                else if (line.StartsWith("roc:type="))
+                else if (line.StartsWith("roc:type=", StringComparison.Ordinal))
                     model.RocType = line.Substring(9);
-                else if (line.StartsWith("roc:x="))
+                else if (line.StartsWith("roc:x=", StringComparison.Ordinal))
                 {
                     string[] nums = line.Substring(6).Split(',');
                     model.RocX = new double[nums.Length];
@@ -614,7 +614,7 @@ namespace NCDK.Fingerprints.Model
                         }
                     }
                 }
-                else if (line.StartsWith("roc:y="))
+                else if (line.StartsWith("roc:y=", StringComparison.Ordinal))
                 {
                     string[] nums = line.Substring(6).Split(',');
                     model.RocY = new double[nums.Length];
@@ -630,11 +630,11 @@ namespace NCDK.Fingerprints.Model
                         }
                     }
                 }
-                else if (line.StartsWith("note:title="))
+                else if (line.StartsWith("note:title=", StringComparison.Ordinal))
                     model.noteTitle = line.Substring(11);
-                else if (line.StartsWith("note:origin="))
+                else if (line.StartsWith("note:origin=", StringComparison.Ordinal))
                     model.noteOrigin = line.Substring(12);
-                else if (line.StartsWith("note:comment="))
+                else if (line.StartsWith("note:comment=", StringComparison.Ordinal))
                 {
                     model.noteComments = model.noteComments == null ? new string[1] : Arrays.CopyOf(model.noteComments,
                             model.noteComments.Length + 1);

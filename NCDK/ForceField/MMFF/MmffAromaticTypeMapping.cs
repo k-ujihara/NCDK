@@ -230,7 +230,7 @@ namespace NCDK.ForceField.MMFF
                     symbs[v] = "NPOX";
                 else if ("N=C".Equals(symbs[v]) || "N=N".Equals(symbs[v]))
                     symbs[v] = "NPYD";
-                else if (symbs[v].StartsWith("C")) symbs[v] = "CB";
+                else if (symbs[v].StartsWith("C", StringComparison.Ordinal)) symbs[v] = "CB";
             }
         }
 
@@ -303,7 +303,7 @@ namespace NCDK.ForceField.MMFF
         /// <returns>the aromatic type</returns>
         public static string GetAromaticType(IDictionary<string, string> map, char suffix, string symb, bool imidazolium, bool anion)
         {
-            if (anion && symb.StartsWith("N")) symb = "N5M";
+            if (anion && symb.StartsWith("N", StringComparison.Ordinal)) symb = "N5M";
             if (map.ContainsKey(symb)) symb = map[symb];
             if ((imidazolium || anion) && symb[symb.Length - 1] == suffix)
                 symb = symb.Substring(0, symb.Length - 1);

@@ -189,7 +189,7 @@ namespace NCDK.IO
                         sb.Append(line).Append('\n');
 
                         //LOG lines: Logic, Unsatisfied Sites, Range of Occurrence.
-                        if (line.StartsWith("M  LOG"))
+                        if (line.StartsWith("M  LOG", StringComparison.Ordinal))
                         {
                             var tokens = Strings.Tokenize(line);
                             RGroupLogic log = null;
@@ -224,7 +224,7 @@ namespace NCDK.IO
                 { 
                     while ((line = rootLinesReader.ReadLine()) != null)
                     {
-                        if (line.StartsWith("M  AAL"))
+                        if (line.StartsWith("M  AAL", StringComparison.Ordinal))
                         {
                             var stAAL = Strings.Tokenize(line);
                             int pos = int.Parse(stAAL[2]);
@@ -252,7 +252,7 @@ namespace NCDK.IO
                 {
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (rGroup.Label.StartsWith("R") && !rGroup.Label.Equals("R") && // only numbered ones
+                        if (rGroup.Label.StartsWith("R", StringComparison.Ordinal) && !rGroup.Label.Equals("R") && // only numbered ones
                                 !attachmentPoints.ContainsKey(rGroup))
                         {
                             //Order reflects the order of atoms in the Atom Block
@@ -343,7 +343,7 @@ namespace NCDK.IO
                         CheckLineBeginsWith(line, "$CTAB", lineCount);
                         var sb = new StringBuilder(RGroup.MakeLabel(rgroupNum) + "\n\n\n");
                         line = input.ReadLine();
-                        while (line != null && !line.StartsWith("$END CTAB"))
+                        while (line != null && !line.StartsWith("$END CTAB", StringComparison.Ordinal))
                         {
                             sb.Append(line).Append('\n');
                             line = input.ReadLine();
@@ -362,7 +362,7 @@ namespace NCDK.IO
                         {
                             while ((line = groupLinesReader.ReadLine()) != null)
                             {
-                                if (line.StartsWith("M  APO"))
+                                if (line.StartsWith("M  APO", StringComparison.Ordinal))
                                 {
                                     var stAPO = Strings.Tokenize(line);
                                     for (int i = 3; i < stAPO.Count; i += 2)
@@ -400,7 +400,7 @@ namespace NCDK.IO
                         }
                         line = input.ReadLine();
                         ++lineCount;
-                        if (line.StartsWith("$END RGP"))
+                        if (line.StartsWith("$END RGP", StringComparison.Ordinal))
                         {
                             Trace.TraceInformation("end of RGP block");
                             hasMoreCTAB = false;
@@ -409,7 +409,7 @@ namespace NCDK.IO
 
                     line = input.ReadLine();
                     ++lineCount;
-                    if (line.StartsWith("$END MOL"))
+                    if (line.StartsWith("$END MOL", StringComparison.Ordinal))
                     {
                         hasMoreRGP = false;
                     }
@@ -451,7 +451,7 @@ namespace NCDK.IO
             {
                 throw new CDKException("RGFile invalid, empty/null line at #" + lineCount);
             }
-            if (!line.StartsWith(expect))
+            if (!line.StartsWith(expect, StringComparison.Ordinal))
             {
                 throw new CDKException("RGFile invalid, line #" + lineCount + " should start with:" + expect + ".");
             }

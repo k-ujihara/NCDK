@@ -673,7 +673,7 @@ namespace NCDK.IO.CML
                     if (att.Equals("dictRef"))
                     {
                         string value = attribute.Value;
-                        if (value.StartsWith("cml:") && value.Length > 4)
+                        if (value.StartsWith("cml:", StringComparison.Ordinal) && value.Length > 4)
                         {
                             BondStereo.Add(value.Substring(4));
                             StereoGiven = true;
@@ -1051,7 +1051,7 @@ namespace NCDK.IO.CML
                     Trace.TraceWarning("formalCharge BUILTIN accepted but violating CML DTD");
                     Debug.WriteLine("Charge: ", cData.Trim());
                     string charge = cData.Trim();
-                    if (charge.StartsWith("+") && charge.Length > 1)
+                    if (charge.StartsWith("+", StringComparison.Ordinal) && charge.Length > 1)
                     {
                         charge = charge.Substring(1);
                     }

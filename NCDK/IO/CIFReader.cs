@@ -134,7 +134,7 @@ namespace NCDK.IO
                     Trace.TraceWarning("Skipping comment: ", line);
                     // skip comment lines
                 }
-                else if (!(line[0] == '_' || line.StartsWith("loop_")))
+                else if (!(line[0] == '_' || line.StartsWith("loop_", StringComparison.Ordinal)))
                 {
                     Trace.TraceWarning("Skipping unrecognized line: ", line);
                     // skip line
@@ -164,7 +164,7 @@ namespace NCDK.IO
                     }
 
                     Debug.WriteLine("command: ", command);
-                    if (command.StartsWith("_cell"))
+                    if (command.StartsWith("_cell", StringComparison.Ordinal))
                     {
                         ProcessCellParameter(command, line);
                     }
@@ -182,7 +182,7 @@ namespace NCDK.IO
                         // skip command
                         Trace.TraceWarning("Skipping command: ", command);
                         line = input.ReadLine();
-                        if (line.StartsWith(";"))
+                        if (line.StartsWith(";", StringComparison.Ordinal))
                         {
                             Debug.WriteLine("Skipping block content");
                             line = input.ReadLine();
@@ -263,7 +263,7 @@ namespace NCDK.IO
         private void ProcessLoopBlock()
         {
             string line = input.ReadLine().Trim();
-            if (line.StartsWith("_atom"))
+            if (line.StartsWith("_atom", StringComparison.Ordinal))
             {
                 Trace.TraceInformation("Found atom loop block");
                 ProcessAtomLoopBlock(line);
@@ -307,19 +307,19 @@ namespace NCDK.IO
                     hasParsableInformation = true;
                     Trace.TraceInformation("label found in col: ", atomLabel);
                 }
-                else if (line.StartsWith("_atom_site_fract_x"))
+                else if (line.StartsWith("_atom_site_fract_x", StringComparison.Ordinal))
                 {
                     atomFractX = headerCount;
                     hasParsableInformation = true;
                     Trace.TraceInformation("frac x found in col: ", atomFractX);
                 }
-                else if (line.StartsWith("_atom_site_fract_y"))
+                else if (line.StartsWith("_atom_site_fract_y", StringComparison.Ordinal))
                 {
                     atomFractY = headerCount;
                     hasParsableInformation = true;
                     Trace.TraceInformation("frac y found in col: ", atomFractY);
                 }
-                else if (line.StartsWith("_atom_site_fract_z"))
+                else if (line.StartsWith("_atom_site_fract_z", StringComparison.Ordinal))
                 {
                     atomFractZ = headerCount;
                     hasParsableInformation = true;

@@ -114,7 +114,7 @@ namespace NCDK.IO
                     {
                         line = input.ReadLine();
                         if (line == null) break;
-                        if (line.StartsWith("#") && line.Length > 1)
+                        if (line.StartsWith("#", StringComparison.Ordinal) && line.Length > 1)
                         {
                             var comment = m.GetProperty(CDKPropertyName.Comment, "");
                             comment = comment + line.Substring(1).Trim();

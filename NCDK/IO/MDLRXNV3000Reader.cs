@@ -98,10 +98,10 @@ namespace NCDK.IO
         private string ReadCommand()
         {
             string line = ReadLine();
-            if (line.StartsWith("M  V30 "))
+            if (line.StartsWith("M  V30 ", StringComparison.Ordinal))
             {
                 string command = line.Substring(7);
-                if (command.EndsWith("-"))
+                if (command.EndsWith("-", StringComparison.Ordinal))
                 {
                     command = command.Substring(0, command.Length - 1);
                     command += ReadCommand();
@@ -146,7 +146,7 @@ namespace NCDK.IO
             while (!foundCOUNTS)
             {
                 string command = ReadCommand();
-                if (command.StartsWith("COUNTS"))
+                if (command.StartsWith("COUNTS", StringComparison.Ordinal))
                 {
                     var tokenizer = Strings.Tokenize(command);
                     try
@@ -181,7 +181,7 @@ namespace NCDK.IO
                     throw new CDKException(error);
                 }
                 string molFileLine = "";
-                while (!molFileLine.EndsWith("END REACTANT"))
+                while (!molFileLine.EndsWith("END REACTANT", StringComparison.Ordinal))
                 {
                     molFileLine = ReadLine();
                     molFile.Append(molFileLine);
@@ -223,7 +223,7 @@ namespace NCDK.IO
                     throw new CDKException(error);
                 }
                 string molFileLine = "";
-                while (!molFileLine.EndsWith("END PRODUCT"))
+                while (!molFileLine.EndsWith("END PRODUCT", StringComparison.Ordinal))
                 {
                     molFileLine = ReadLine();
                     molFile.Append(molFileLine);

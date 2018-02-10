@@ -18,6 +18,7 @@
  */
 
 using NCDK.Dict;
+using System;
 using System.Diagnostics;
 
 namespace NCDK.Validate
@@ -50,7 +51,7 @@ namespace NCDK.Validate
             {
                 if (key is string keyName)
                 {
-                    if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName))
+                    if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName, StringComparison.Ordinal))
                     {
                         string dictRef = (string)properties[keyName];
                         string details = "Dictref being anaylyzed: " + dictRef + ". ";

@@ -23,6 +23,7 @@
 
 using NCDK.Common.Primitives;
 using NCDK.Tools.Manipulator;
+using System;
 using System.Diagnostics;
 using System.Xml.Linq;
 
@@ -55,7 +56,7 @@ namespace NCDK.IO.CML
         public override void StartElement(CMLStack xpath, XElement element)
         {
             isBond = false;
-            if (xpath.ToString().EndsWith("string/"))
+            if (xpath.ToString().EndsWith("string/", StringComparison.Ordinal))
             {
                 var a_buildin = element.Attribute("buildin");
                 if (a_buildin != null && a_buildin.Value.Equals("order"))

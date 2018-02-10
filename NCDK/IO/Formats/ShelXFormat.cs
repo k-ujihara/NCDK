@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -62,7 +63,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("ZERR ") || line.StartsWith("TITL "))
+            if (line.StartsWith("ZERR ", StringComparison.Ordinal) || line.StartsWith("TITL ", StringComparison.Ordinal))
             {
                 return true;
             }

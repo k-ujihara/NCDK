@@ -928,97 +928,97 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_st = Strings.Tokenize(s, '\t', ' ', ';'); st = e_st.GetEnumerator(); st.MoveNext();
                     int nt = e_st.Count;
-                    if (s.StartsWith(">") & nt > 1)
+                    if (s.StartsWith(">", StringComparison.Ordinal) & nt > 1)
                     {
                         SetForceFieldDefinitions();
                         a[0]++;
                     }
-                    else if (s.StartsWith("atom") & nt <= 8)
+                    else if (s.StartsWith("atom", StringComparison.Ordinal) & nt <= 8)
                     {
                         a[0]++;
                         SetAtomTypes(builder);
                     }
-                    else if (s.StartsWith("vdw ") & nt <= 5)
+                    else if (s.StartsWith("vdw ", StringComparison.Ordinal) & nt <= 5)
                     {
                         SetvdWaals();
                         a[1]++;
                     }
-                    else if (s.StartsWith("vdwpr ") & nt <= 6)
+                    else if (s.StartsWith("vdwpr ", StringComparison.Ordinal) & nt <= 6)
                     {
                         SetvdWaalpr();
                         a[2]++;
                     }
-                    else if (s.StartsWith("bond ") & nt <= 7)
+                    else if (s.StartsWith("bond ", StringComparison.Ordinal) & nt <= 7)
                     {
                         SetBond();
                         a[3]++;
                     }
-                    else if (s.StartsWith("bond4 ") & nt == 5)
+                    else if (s.StartsWith("bond4 ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetBond4();
                         a[4]++;
                     }
-                    else if (s.StartsWith("bond3 ") & nt == 5)
+                    else if (s.StartsWith("bond3 ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetBond3();
                         a[5]++;
                     }
-                    else if (s.StartsWith("angle ") & nt == 8)
+                    else if (s.StartsWith("angle ", StringComparison.Ordinal) & nt == 8)
                     {
                         SetAngle();
                         a[6]++;
                     }
-                    else if (s.StartsWith("angle4 ") & nt == 8)
+                    else if (s.StartsWith("angle4 ", StringComparison.Ordinal) & nt == 8)
                     {
                         SetAngle4();
                         a[17]++;
                     }
-                    else if (s.StartsWith("angle3 ") & nt == 8)
+                    else if (s.StartsWith("angle3 ", StringComparison.Ordinal) & nt == 8)
                     {
                         SetAngle3();
                         a[7]++;
                     }
-                    else if (s.StartsWith("strbnd ") & nt == 5)
+                    else if (s.StartsWith("strbnd ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetStrBnd();
                         a[8]++;
                     }
-                    else if (s.StartsWith("opbend ") & nt == 4)
+                    else if (s.StartsWith("opbend ", StringComparison.Ordinal) & nt == 4)
                     {
                         SetOpBend();
                         a[9]++;
                     }
-                    else if (s.StartsWith("torsion ") & nt == 14)
+                    else if (s.StartsWith("torsion ", StringComparison.Ordinal) & nt == 14)
                     {
                         SetTorsion();
                         a[10]++;
                     }
-                    else if (s.StartsWith("torsion4 ") & nt == 14)
+                    else if (s.StartsWith("torsion4 ", StringComparison.Ordinal) & nt == 14)
                     {
                         SetTorsion4();
                         a[11]++;
                     }
-                    else if (s.StartsWith("charge ") & nt == 3)
+                    else if (s.StartsWith("charge ", StringComparison.Ordinal) & nt == 3)
                     {
                         SetCharge();
                         a[12]++;
                     }
-                    else if (s.StartsWith("dipole ") & nt == 5)
+                    else if (s.StartsWith("dipole ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetDipole();
                         a[13]++;
                     }
-                    else if (s.StartsWith("dipole3 ") & nt == 5)
+                    else if (s.StartsWith("dipole3 ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetDipole3();
                         a[14]++;
                     }
-                    else if (s.StartsWith("piatom ") & nt == 5)
+                    else if (s.StartsWith("piatom ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetPiAtom();
                         a[15]++;
                     }
-                    else if (s.StartsWith("pibond ") & nt == 5)
+                    else if (s.StartsWith("pibond ", StringComparison.Ordinal) & nt == 5)
                     {
                         SetPiBond();
                         a[16]++;

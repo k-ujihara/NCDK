@@ -179,7 +179,7 @@ namespace NCDK.IO.Iterator
                     }
                 }
 
-                if (currentLine.StartsWith(M_END))
+                if (currentLine.StartsWith(M_END, StringComparison.Ordinal))
                 {
                     Debug.WriteLine("MDL file part read: ", buffer);
 
@@ -193,7 +193,7 @@ namespace NCDK.IO.Iterator
                     catch (Exception exception)
                     {
                         Trace.TraceError("Error while reading next molecule: " + exception.Message);
-                            Debug.WriteLine(exception);
+                        Debug.WriteLine(exception);
                     }
 
                     if (molecule != null)
@@ -207,7 +207,7 @@ namespace NCDK.IO.Iterator
                         string line;
                         while ((line = input.ReadLine()) != null)
                         {
-                            if (line.StartsWith(SDF_RECORD_SEPARATOR))
+                            if (line.StartsWith(SDF_RECORD_SEPARATOR, StringComparison.Ordinal))
                             {
                                 break;
                             }
@@ -227,7 +227,7 @@ namespace NCDK.IO.Iterator
                 // in ReadDataBlockInto()) the buffer is cleared and the iterator continues reading
                 if (currentLine == null)
                     break;
-                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR))
+                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR, StringComparison.Ordinal))
                 {
                     buffer.Clear();
                     lineNum = 0;
@@ -243,18 +243,18 @@ namespace NCDK.IO.Iterator
             currentLine = input.ReadLine();
             while (currentLine != null)
             {
-                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR))
+                if (currentLine.StartsWith(SDF_RECORD_SEPARATOR, StringComparison.Ordinal))
                     break;
                 Debug.WriteLine("looking for data header: ", currentLine);
                 string str = currentLine;
-                if (str.StartsWith(SDF_DATA_HEADER))
+                if (str.StartsWith(SDF_DATA_HEADER, StringComparison.Ordinal))
                 {
                     dataHeader = ExtractFieldName(str);
                     SkipOtherFieldHeaderLines(str);
                     string data = ExtractFieldData(sb);
                     if (dataHeader != null)
                     {
-                        Trace.TraceInformation("fieldName, data: ", dataHeader, ", ", data);
+                        Trace.TraceInformation($"fieldName, data: {dataHeader}, {data}");
                         m.SetProperty(dataHeader, data);
                     }
                 }
@@ -275,11 +275,11 @@ namespace NCDK.IO.Iterator
         private string ExtractFieldData(StringBuilder data)
         {
             data.Clear();
-            while (currentLine != null && !currentLine.StartsWith(SDF_RECORD_SEPARATOR))
+            while (currentLine != null && !currentLine.StartsWith(SDF_RECORD_SEPARATOR, StringComparison.Ordinal))
             {
-                if (currentLine.StartsWith(SDF_DATA_HEADER))
+                if (currentLine.StartsWith(SDF_DATA_HEADER, StringComparison.Ordinal))
                     break;
-                Debug.WriteLine("data line: ", currentLine);
+                Debug.WriteLine($"data line: {currentLine}");
                 if (data.Length > 0)
                     data.Append('\n');
                 data.Append(currentLine);
@@ -294,9 +294,9 @@ namespace NCDK.IO.Iterator
 
         private string SkipOtherFieldHeaderLines(string str)
         {
-            while (str.StartsWith(SDF_DATA_HEADER))
+            while (str.StartsWith(SDF_DATA_HEADER, StringComparison.Ordinal))
             {
-                Debug.WriteLine("data header line: ", currentLine);
+                Debug.WriteLine($"data header line: {currentLine}");
                 currentLine = input.ReadLine();
                 str = currentLine;
             }

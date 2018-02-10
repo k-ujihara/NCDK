@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -67,7 +68,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 1 && line.StartsWith("PC-Compound")) return true;
+            if (lineNumber == 1 && line.StartsWith("PC-Compound", StringComparison.Ordinal)) return true;
             return false;
         }
     }

@@ -210,7 +210,7 @@ namespace NCDK.IO
                         {
                             // ok, the first lines should start with '>'
                             string fieldName = null;
-                            if (str.StartsWith("> "))
+                            if (str.StartsWith("> ", StringComparison.Ordinal))
                             {
                                 // ok, should extract the field name
                                 str.Substring(2); // string content =
@@ -224,7 +224,7 @@ namespace NCDK.IO
                                     }
                                 }
                                 // end skip all other lines
-                                while ((line = input.ReadLine()) != null && line.StartsWith(">"))
+                                while ((line = input.ReadLine()) != null && line.StartsWith(">", StringComparison.Ordinal))
                                 {
                                     Debug.WriteLine($"data header line: {line}");
                                 }
@@ -324,7 +324,7 @@ namespace NCDK.IO
                 }
                 Debug.WriteLine("Line " + linecount + ": " + line);
 
-                if (line.StartsWith("$$$$"))
+                if (line.StartsWith("$$$$", StringComparison.Ordinal))
                 {
                     Debug.WriteLine("File is empty, returning empty molecule");
                     return molecule;

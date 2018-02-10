@@ -61,7 +61,7 @@ namespace NCDK.Config
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("#"))
+                    if (line.StartsWith("#", StringComparison.Ordinal))
                         continue;
                     var tokens = line.Split("\t ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (tokens.Length != 9)

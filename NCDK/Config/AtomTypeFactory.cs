@@ -156,7 +156,7 @@ namespace NCDK.Config
 
         private IAtomTypeConfigurator ConstructConfigurator(string format)
         {
-            if (!format.StartsWith("."))
+            if (!format.StartsWith(".", StringComparison.Ordinal))
                 format = "." + format;
             switch (format)
             {

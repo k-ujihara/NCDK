@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -61,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("PREFIX") && line.Contains("http://cdk.sourceforge.net/model.owl#"))
+            if (line.StartsWith("PREFIX", StringComparison.Ordinal) && line.Contains("http://cdk.sourceforge.net/model.owl#"))
             {
                 return true;
             }

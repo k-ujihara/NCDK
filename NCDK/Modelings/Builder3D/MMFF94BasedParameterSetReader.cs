@@ -514,37 +514,37 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_st = Strings.Tokenize(s, '\t', ';', ' '); st = e_st.GetEnumerator(); st.MoveNext();
                     int nt = e_st.Count;
-                    if (s.StartsWith("atom") & nt <= 8)
+                    if (s.StartsWith("atom", StringComparison.Ordinal) & nt <= 8)
                     {
                         SetAtomTypes(builder);
                         a[0]++;
                     }
-                    else if (s.StartsWith("bond") & nt == 9)
+                    else if (s.StartsWith("bond", StringComparison.Ordinal) & nt == 9)
                     {
                         SetBond();
                         a[1]++;
                     }
-                    else if (s.StartsWith("angle") & nt <= 10)
+                    else if (s.StartsWith("angle", StringComparison.Ordinal) & nt <= 10)
                     {
                         SetAngle();
                         a[2]++;
                     }
-                    else if (s.StartsWith("strbnd") & nt == 7)
+                    else if (s.StartsWith("strbnd", StringComparison.Ordinal) & nt == 7)
                     {
                         SetStrBnd();
                         a[3]++;
                     }
-                    else if (s.StartsWith("torsion") & nt == 11)
+                    else if (s.StartsWith("torsion", StringComparison.Ordinal) & nt == 11)
                     {
                         SetTorsion();
                         a[4]++;
                     }
-                    else if (s.StartsWith("opbend") & nt == 6)
+                    else if (s.StartsWith("opbend", StringComparison.Ordinal) & nt == 6)
                     {
                         SetOpBend();
                         a[5]++;
                     }
-                    else if (s.StartsWith("data") & nt == 10)
+                    else if (s.StartsWith("data", StringComparison.Ordinal) & nt == 10)
                     {
                         while (true)
                         {
@@ -556,7 +556,7 @@ namespace NCDK.Modelings.Builder3D
                             var e_stvdW = Strings.Tokenize(svdW, '\t', ';', ' '); stvdW = e_stvdW.GetEnumerator(); stvdW.MoveNext();
                             ntvdW = e_stvdW.Count;
                             Debug.WriteLine("ntvdW : " + ntvdW);
-                            if (svdW.StartsWith("vdw") & ntvdW == 9)
+                            if (svdW.StartsWith("vdw", StringComparison.Ordinal) & ntvdW == 9)
                             {
                                 st.MoveNext();
                                 sid = st.Current; st.MoveNext();
@@ -598,7 +598,7 @@ namespace NCDK.Modelings.Builder3D
                     var e_stDFSB = Strings.Tokenize(sDFSB, '\t', ';', ' '); stDFSB = e_stDFSB.GetEnumerator(); stDFSB.MoveNext();
                     ntDFSB = e_stDFSB.Count;
                     Debug.WriteLine("ntDFSB : " + ntDFSB);
-                    if (sDFSB.StartsWith("DFSB") & ntDFSB == 6)
+                    if (sDFSB.StartsWith("DFSB", StringComparison.Ordinal) & ntDFSB == 6)
                     {
                         SetDefaultStrBnd();
                     }

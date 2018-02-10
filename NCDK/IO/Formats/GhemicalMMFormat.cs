@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -61,7 +62,7 @@ namespace NCDK.IO.Formats
 
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("!Header gpr"))
+            if (line.StartsWith("!Header gpr", StringComparison.Ordinal))
             {
                 return true;
             }

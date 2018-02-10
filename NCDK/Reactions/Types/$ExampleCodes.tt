@@ -13,7 +13,7 @@ namespace NCDK.Reactions.Types
             var source = new FileInfo(this.Host.TemplateFile).Directory;
             foreach (var cs in source.GetFiles()               
                 .Where(fn => fn.Extension == ".cs")
-                .Where(fn => !fn.Name.StartsWith("Abstract") && !fn.Name.StartsWith("$")))
+                .Where(fn => !fn.Name.StartsWith("Abstract", StringComparison.Ordinal) && !fn.Name.StartsWith("$", StringComparison.Ordinal)))
             {
                 string name = Path.GetFileNameWithoutExtension(cs.Name);
                 #>

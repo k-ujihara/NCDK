@@ -270,7 +270,7 @@ namespace NCDK.IO
                     return null;
                 }
 
-                if (line.StartsWith("$$$$"))
+                if (line.StartsWith("$$$$", StringComparison.Ordinal))
                 {
                     return molecule;
                 }
@@ -305,7 +305,7 @@ namespace NCDK.IO
                         {
                             return null;
                         }
-                        if (line.StartsWith("$$$$"))
+                        if (line.StartsWith("$$$$", StringComparison.Ordinal))
                         {
                             return molecule; // an empty molecule
                         }
@@ -2044,10 +2044,10 @@ namespace NCDK.IO
                 {
                     HandleError("The expected property block is missing!", linecount, 0, 0);
                 }
-                if (line.StartsWith("M  END")) break;
+                if (line.StartsWith("M  END", StringComparison.Ordinal)) break;
 
                 bool lineRead = false;
-                if (line.StartsWith("M  CHG"))
+                if (line.StartsWith("M  CHG", StringComparison.Ordinal))
                 {
                     // FIXME: if this is encountered for the first time, all
                     // atom charges should be set to zero first!
@@ -2087,7 +2087,7 @@ namespace NCDK.IO
                     if (aliasAtom.Point3D != null) newPseudoAtom.Point3D = aliasAtom.Point3D;
                     AtomContainerManipulator.ReplaceAtomByAtom(container, aliasAtom, newPseudoAtom);
                 }
-                else if (line.StartsWith("M  ISO"))
+                else if (line.StartsWith("M  ISO", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -2115,7 +2115,7 @@ namespace NCDK.IO
                         HandleError("FormatException in isotope information.", linecount, 7, 11, exception);
                     }
                 }
-                else if (line.StartsWith("M  RAD"))
+                else if (line.StartsWith("M  RAD", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -2148,7 +2148,7 @@ namespace NCDK.IO
                         HandleError("FormatException in radical information", linecount, 7, 10, exception);
                     }
                 }
-                else if (line.StartsWith("G  "))
+                else if (line.StartsWith("G  ", StringComparison.Ordinal))
                 {
                     try
                     {
@@ -2179,7 +2179,7 @@ namespace NCDK.IO
                         HandleError("FormatException in group information", linecount, 4, 7, exception);
                     }
                 }
-                else if (line.StartsWith("M  RGP"))
+                else if (line.StartsWith("M  RGP", StringComparison.Ordinal))
                 {
                     var st = ((IEnumerable<string>)line.Split(' ', '\t')).GetEnumerator();
                     //Ignore first 3 tokens (overhead).
@@ -2201,7 +2201,7 @@ namespace NCDK.IO
                         }
                     }
                 }
-                if (line.StartsWith("V  "))
+                if (line.StartsWith("V  ", StringComparison.Ordinal))
                 {
                     int atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim());
                     IAtom atomWithComment = container.Atoms[atomNumber - 1];

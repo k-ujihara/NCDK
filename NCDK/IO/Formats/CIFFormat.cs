@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -59,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("_cell_length_a") || line.StartsWith("_audit_creation_date") || line.StartsWith("loop_"))
+            if (line.StartsWith("_cell_length_a", StringComparison.Ordinal) || line.StartsWith("_audit_creation_date", StringComparison.Ordinal) || line.StartsWith("loop_", StringComparison.Ordinal))
             {
                 return true;
             }

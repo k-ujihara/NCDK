@@ -305,7 +305,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 {
                     while ((line = input.ReadLine()) != null)
                     {
-                        if (line.StartsWith("#")) continue;
+                        if (line.StartsWith("#", StringComparison.Ordinal)) continue;
                         List<string> values = ExtractInfo(line);
                         if (values[1].Equals("")) continue;
                         hoseVSenergy[values[0]] = double.Parse(values[1]);

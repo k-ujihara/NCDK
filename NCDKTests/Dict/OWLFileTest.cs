@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace NCDK.Dict
 {
@@ -34,7 +35,7 @@ namespace NCDK.Dict
         [TestCleanup()]
         public void TestTestClass()
         {
-            Assert.IsTrue(GetTestClass().GetType().FullName.EndsWith(".OWLFile"));
+            Assert.IsTrue(GetTestClass().GetType().FullName.EndsWith(".OWLFile", StringComparison.Ordinal));
         }
     }
 }

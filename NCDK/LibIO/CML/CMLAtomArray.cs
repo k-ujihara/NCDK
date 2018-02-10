@@ -64,13 +64,13 @@ namespace NCDK.LibIO.CML
             {
                 var temp = new List<string>();
                 foreach (var s in sortS)
-                    if (s.StartsWith("C "))
+                    if (s.StartsWith("C ", StringComparison.Ordinal))
                         temp.Add(s);
                 foreach (var s in sortS)
-                    if (s.StartsWith("H "))
+                    if (s.StartsWith("H ", StringComparison.Ordinal))
                         temp.Add(s);
                 foreach (var s in sortS)
-                    if (!(s.StartsWith("C ") || s.StartsWith("H ")))
+                    if (!(s.StartsWith("C ", StringComparison.Ordinal) || s.StartsWith("H ", StringComparison.Ordinal)))
                         temp.Add(s);
                 sortS = temp;
             }

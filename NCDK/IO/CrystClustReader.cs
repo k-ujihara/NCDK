@@ -79,7 +79,7 @@ namespace NCDK.IO
                 while (line != null)
                 {
                     Debug.WriteLine($"{lineNumber++}: {line}");
-                    if (line.StartsWith("frame:"))
+                    if (line.StartsWith("frame:", StringComparison.Ordinal))
                     {
                         Debug.WriteLine("found new frame");
                         model = file.Builder.NewChemModel();
@@ -179,7 +179,7 @@ namespace NCDK.IO
                     else
                     {
                         Debug.WriteLine("Format seems broken. Skipping these lines:");
-                        while (line != null && !line.StartsWith("frame:"))
+                        while (line != null && !line.StartsWith("frame:", StringComparison.Ordinal))
                         {
                             line = input.ReadLine();
                             Debug.WriteLine($"{lineNumber++}: {line}");

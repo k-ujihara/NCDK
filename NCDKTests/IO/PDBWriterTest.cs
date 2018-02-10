@@ -222,7 +222,7 @@ namespace NCDK.IO
         {
             IAtomContainer mol = SingleAtomMolecule("", 1);
             var lines = GetAsStringArray(mol).ToArray();
-            Assert.IsTrue(lines[lines.Length - 2].EndsWith("+1"));
+            Assert.IsTrue(lines[lines.Length - 2].EndsWith("+1", StringComparison.Ordinal));
         }
 
         [TestMethod()]

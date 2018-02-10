@@ -265,7 +265,7 @@ namespace NCDK.Smiles
         {
             CxSmilesState cxstate;
             int pos;
-            if (title != null && title.StartsWith("|"))
+            if (title != null && title.StartsWith("|", StringComparison.Ordinal))
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
@@ -296,7 +296,7 @@ namespace NCDK.Smiles
         {
             CxSmilesState cxstate;
             int pos;
-            if (title != null && title.StartsWith("|"))
+            if (title != null && title.StartsWith("|", StringComparison.Ordinal))
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
@@ -453,9 +453,9 @@ namespace NCDK.Smiles
                     string val = e.Value;
 
                     // specialised label handling
-                    if (val.EndsWith("_p")) // pseudo label
+                    if (val.EndsWith("_p", StringComparison.Ordinal)) // pseudo label
                         val = val.Substring(0, val.Length - 2);
-                    else if (val.StartsWith("_AP")) // attachment point
+                    else if (val.StartsWith("_AP", StringComparison.Ordinal)) // attachment point
                         pseudo.AttachPointNum = ParseIntSafe(val.Substring(3));
 
                     pseudo.Label = val;
@@ -563,7 +563,7 @@ namespace NCDK.Smiles
             {
                 foreach (var dsgroup in cxstate.dataSgroups)
                 {
-                    if (dsgroup.Field != null && dsgroup.Field.StartsWith("cdk:"))
+                    if (dsgroup.Field != null && dsgroup.Field.StartsWith("cdk:", StringComparison.Ordinal))
                     {
                         chemObj.SetProperty(dsgroup.Field, dsgroup.Value);
                     }

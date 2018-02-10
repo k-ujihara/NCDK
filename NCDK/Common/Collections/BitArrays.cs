@@ -49,7 +49,7 @@ namespace NCDK.Common.Collections
         public static BitArray FromString(string str)
         {
             str = str.Trim();
-            if (str.StartsWith("{") && str.EndsWith("}"))
+            if (str.StartsWith("{", StringComparison.Ordinal) && str.EndsWith("}", StringComparison.Ordinal))
             {
                 var ret = new BitArray(0);
                 str = str.Substring(1, str.Length - 2);

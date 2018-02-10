@@ -136,7 +136,7 @@ namespace NCDK.IO
                 while (true)
                 {
                     line = input.ReadLine();
-                    if (line.StartsWith("mol"))
+                    if (line.StartsWith("mol", StringComparison.Ordinal))
                     {
                         info = GetMolName(line);
                         break;
@@ -148,9 +148,9 @@ namespace NCDK.IO
                 while (true)
                 {
                     if (line == null) break; // end of file
-                    if (line.StartsWith(";")) continue; // comment line
+                    if (line.StartsWith(";", StringComparison.Ordinal)) continue; // comment line
 
-                    if (line.StartsWith("mol"))
+                    if (line.StartsWith("mol", StringComparison.Ordinal))
                     {
                         info = GetMolName(line);
                         line = input.ReadLine();
@@ -172,7 +172,7 @@ namespace NCDK.IO
                         {
                             break;
                         }
-                        if (line.StartsWith(";")) continue; // comment line
+                        if (line.StartsWith(";", StringComparison.Ordinal)) continue; // comment line
 
                         string[] toks = line.Split(' ');
 
@@ -243,8 +243,10 @@ namespace NCDK.IO
                     while (true)
                     {
                         line = input.ReadLine();
-                        if (line == null || line.StartsWith("mol")) break;
-                        if (line.StartsWith("aromaticring")) aroringText.Add(line.Trim());
+                        if (line == null || line.StartsWith("mol", StringComparison.Ordinal))
+                            break;
+                        if (line.StartsWith("aromaticring", StringComparison.Ordinal))
+                            aroringText.Add(line.Trim());
                     }
                 }
 

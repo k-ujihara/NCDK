@@ -61,7 +61,7 @@ namespace NCDK.Config
 					var inner = match.Groups["inner"].Value;
 					var number = int.Parse(match.Groups["number"].Value);
 					var symbol = match.Groups["symbol"].Value;
-					var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete");
+					var isObsolete = prevLine != null && prevLine.StartsWith("[Obsolete", StringComparison.Ordinal);
 					name_and_numbers.Add(new NameAndNumber(name, number, symbol, isObsolete));
 					line = "public static readonly ChemicalElement " + name + " = new ChemicalElement(\"" + name + "\", " + inner + ");";
 #>

@@ -599,7 +599,7 @@ namespace NCDK.LibIO.CML
             {
                 if (key is string keyName)
                 {
-                    if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName))
+                    if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName, StringComparison.Ordinal))
                     {
                         string dictRef = (string)properties[keyName];
                         cmlElement.SetAttributeValue("dictRef", dictRef);
@@ -835,7 +835,7 @@ namespace NCDK.LibIO.CML
                     {
                         // don't output this one. It's covered by AddTitle()
                     }
-                    else if (!(stringKey.StartsWith("org.openscience.cdk")))
+                    else if (!(stringKey.StartsWith("org.openscience.cdk", StringComparison.Ordinal)))
                     {
                         object value = props[key];
                         CMLScalar scalar = new CMLScalar();

@@ -204,7 +204,7 @@ namespace NCDK.IO
                         {
                             // ok, the first lines should start with '>'
                             string fieldName = null;
-                            if (line.StartsWith("> "))
+                            if (line.StartsWith("> ", StringComparison.Ordinal))
                             {
                                 // ok, should extract the field name
                                 int index = line.IndexOf('<');
@@ -217,9 +217,9 @@ namespace NCDK.IO
                                     }
                                 }
                                 // end skip all other lines
-                                while ((line = input.ReadLine()) != null && line.StartsWith(">"))
+                                while ((line = input.ReadLine()) != null && line.StartsWith(">", StringComparison.Ordinal))
                                 {
-                                    Debug.WriteLine("data header line: ", line);
+                                    Debug.WriteLine($"data header line: {line}");
                                 }
                             }
                             if (line == null)
@@ -231,10 +231,10 @@ namespace NCDK.IO
                             {
                                 if (line.Equals("$$$$"))
                                 {
-                                    Trace.TraceError("Expecting data line here, but found end of molecule: ", line);
+                                    Trace.TraceError($"Expecting data line here, but found end of molecule: {line}");
                                     break;
                                 }
-                                Debug.WriteLine("data line: ", line);
+                                Debug.WriteLine($"data line: {line}");
                                 data += line;
                                 // preserve newlines, unless the line is exactly 80 chars; in that case it
                                 // is assumed to continue on the next line. See MDL documentation.
@@ -242,7 +242,7 @@ namespace NCDK.IO
                             }
                             if (fieldName != null)
                             {
-                                Trace.TraceInformation("fieldName, data: ", fieldName, ", ", data);
+                                Trace.TraceInformation($"fieldName, data: {fieldName}, {data}");
                                 r.SetProperty(fieldName, data);
                             }
                         }
@@ -298,7 +298,7 @@ namespace NCDK.IO
                     return null;
                 }
                 Debug.WriteLine("Line " + linecount + ": " + countsLine);
-                if (countsLine.StartsWith("$$$$"))
+                if (countsLine.StartsWith("$$$$", StringComparison.Ordinal))
                 {
                     Debug.WriteLine("File is empty, returning empty reaction");
                     return reaction;

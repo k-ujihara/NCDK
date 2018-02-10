@@ -605,7 +605,7 @@ namespace NCDK.QSAR
             {
                 foreach (var type in asm.GetTypes())
                 {
-                    if (type.FullName.StartsWith(namespaceId))
+                    if (type.FullName.StartsWith(namespaceId, StringComparison.Ordinal))
                     {
                         if (type.IsNested) continue;
                         if (type.FullName.Contains("Test")) continue;

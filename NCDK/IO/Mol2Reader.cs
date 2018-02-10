@@ -222,8 +222,10 @@ namespace NCDK.IO
                 {
                     line = input.ReadLine();
                     if (line == null) return null;
-                    if (line.StartsWith("@<TRIPOS>MOLECULE")) break;
-                    if (!line.StartsWith("#") && line.Trim().Length > 0) break;
+                    if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
+                        break;
+                    if (!line.StartsWith("#", StringComparison.Ordinal) && line.Trim().Length > 0)
+                        break;
                 }
 
                 // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
@@ -277,18 +279,18 @@ namespace NCDK.IO
                 bool molend = false;
                 while (line != null)
                 {
-                    if (line.StartsWith("@<TRIPOS>MOLECULE"))
+                    if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                     {
                         molend = true;
                         break;
                     }
-                    else if (line.StartsWith("@<TRIPOS>ATOM"))
+                    else if (line.StartsWith("@<TRIPOS>ATOM", StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading atom block");
                         for (int i = 0; i < atomCount; i++)
                         {
                             line = input.ReadLine().Trim();
-                            if (line.StartsWith("@<TRIPOS>MOLECULE"))
+                            if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                             {
                                 molend = true;
                                 break;
@@ -351,13 +353,13 @@ namespace NCDK.IO
                             molecule.Atoms.Add(atom);
                         }
                     }
-                    else if (line.StartsWith("@<TRIPOS>BOND"))
+                    else if (line.StartsWith("@<TRIPOS>BOND", StringComparison.Ordinal))
                     {
                         Trace.TraceInformation("Reading bond block");
                         for (int i = 0; i < bondCount; i++)
                         {
                             line = input.ReadLine();
-                            if (line.StartsWith("@<TRIPOS>MOLECULE"))
+                            if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                             {
                                 molend = true;
                                 break;

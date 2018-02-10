@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System;
 using System.Collections.Generic;
 using static NCDK.Smiles.CxSmilesState;
 using static NCDK.Smiles.CxSmilesState.Radical;
@@ -675,7 +676,7 @@ namespace NCDK.Smiles
             internal bool NextIf(string prefix)
             {
                 bool res;
-                if (res = this.str.Substring(pos).StartsWith(prefix))
+                if (res = this.str.Substring(pos).StartsWith(prefix, StringComparison.Ordinal))
                     pos += prefix.Length;
                 return res;
             }

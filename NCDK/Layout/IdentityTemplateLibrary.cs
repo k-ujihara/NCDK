@@ -234,7 +234,7 @@ namespace NCDK.Layout
         /// <returns>array of coordinates</returns>
         public static Vector2[] DecodeCoordinates(string str)
         {
-            if (str.StartsWith("|("))
+            if (str.StartsWith("|(", StringComparison.Ordinal))
             {
                 int end = str.IndexOf(')', 2);
                 if (end < 0)

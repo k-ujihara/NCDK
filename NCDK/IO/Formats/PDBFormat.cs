@@ -18,6 +18,7 @@
  */
 
 using NCDK.Tools;
+using System;
 
 namespace NCDK.IO.Formats
 {
@@ -62,7 +63,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("HEADER") || line.StartsWith("HETATM ") || line.StartsWith("ATOM  "))
+            if (line.StartsWith("HEADER", StringComparison.Ordinal) || line.StartsWith("HETATM ", StringComparison.Ordinal) || line.StartsWith("ATOM  ", StringComparison.Ordinal))
             {
                 return true;
             }

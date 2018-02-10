@@ -184,7 +184,7 @@ namespace NCDK.IO
             }
             if (line1.Length > 0)
             {
-                if (line1.StartsWith("M  V30"))
+                if (line1.StartsWith("M  V30", StringComparison.Ordinal))
                 {
                     // no header
                     return line1;
@@ -624,7 +624,7 @@ namespace NCDK.IO
                     }
 
                     // now interpret line
-                    if (type.StartsWith("SUP"))
+                    if (type.StartsWith("SUP", StringComparison.Ordinal))
                     {
                         var keys = options.Keys;
                         int atomID = -1;
@@ -688,10 +688,10 @@ namespace NCDK.IO
         /// <returns>Returns the command on this line.</returns>
         private string ReadCommand(string line)
         {
-            if (line.StartsWith("M  V30 "))
+            if (line.StartsWith("M  V30 ", StringComparison.Ordinal))
             {
                 string command = line.Substring(7);
-                if (command.EndsWith("-"))
+                if (command.EndsWith("-", StringComparison.Ordinal))
                 {
                     command = command.Substring(0, command.Length - 1);
                     command += ReadCommand(ReadLine());

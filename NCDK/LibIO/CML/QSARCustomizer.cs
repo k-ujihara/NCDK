@@ -24,6 +24,7 @@
 
 using NCDK.QSAR;
 using NCDK.QSAR.Results;
+using System;
 using System.Text;
 using System.Xml.Linq;
 
@@ -129,7 +130,7 @@ namespace NCDK.LibIO.CML
                     metadataList.SetAttributeValue(XNamespace.Xmlns + QSAR_NAMESPACE, QSAR_URI);
                     property.SetAttributeValue(CMLElement.Attribute_convention, QSAR_NAMESPACE + ":" + "DescriptorValue");
                     string specsRef = specs.SpecificationReference;
-                    if (specsRef.StartsWith(QSAR_URI))
+                    if (specsRef.StartsWith(QSAR_URI, StringComparison.Ordinal))
                     {
                         property.SetAttributeValue(XNamespace.Xmlns + QSAR_NAMESPACE, QSAR_URI);
                     }

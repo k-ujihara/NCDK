@@ -113,7 +113,7 @@ namespace NCDK.IO
                 string line = null;
                 while ((line = input.ReadLine()) != null)
                 {
-                    if (line.StartsWith("INChI=") || line.StartsWith("InChI="))
+                    if (line.StartsWith("INChI=", StringComparison.Ordinal) || line.StartsWith("InChI=", StringComparison.Ordinal))
                     {
                         // ok, the fun starts
                         cf = cf.Builder.NewChemFile();
