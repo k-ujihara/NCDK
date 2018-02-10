@@ -151,7 +151,7 @@ namespace NCDK.Config
         {
             if (str == null)
                 return ChemicalElements.Unknown;
-            if (!symbolMap.TryGetValue(str.ToLowerInvariant(), out ChemicalElement e))
+            if (!SymbolMap.TryGetValue(str.ToLowerInvariant(), out ChemicalElement e))
                 e = ChemicalElements.Unknown;
             return e;
         }

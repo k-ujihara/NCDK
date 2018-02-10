@@ -136,7 +136,7 @@ namespace NCDK.Config.AtomType
                                                 atomType.IsHydrogenBondDonor |= true;
                                                 break;
                                             default:
-                                                Trace.TraceWarning($"Unrecognized H-bond donor/acceptor pattern in config file: {value}");
+                                                Trace.TraceWarning($"Unrecognized H-bond donor/acceptor pattern in configuration file: {value}");
                                                 break;
                                         }
                                         break;

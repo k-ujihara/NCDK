@@ -117,7 +117,7 @@ namespace NCDK.IO
                 {
                     // that's fine
                 }
-                else if ("COUNTS".Equals(command))
+                else if (command.Equals("COUNTS"))
                 {
                     // don't think I need to parse this
                 }

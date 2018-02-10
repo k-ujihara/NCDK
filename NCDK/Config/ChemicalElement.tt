@@ -89,38 +89,49 @@ namespace NCDK.Config
 #>
         }
 
+		private static IReadOnlyDictionary<string, ChemicalElement> symbolMap;
+		
 		/// <summary>
         /// Lookup elements by symbol / name.
         /// </summary>
-        internal static readonly IDictionary<string, ChemicalElement> symbolMap = new Dictionary<string, ChemicalElement>()
+        internal static IReadOnlyDictionary<string, ChemicalElement> SymbolMap
         {
+            get
+            {
+                if (symbolMap == null)
+                {
+                    symbolMap = new Dictionary<string, ChemicalElement>()
+                    {
 <#
         foreach (var nn in name_and_numbers)
 		{
 #>
-            ["<#= nn.Name.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
-            ["<#= nn.Symbol.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
+                        ["<#= nn.Name.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
+                        ["<#= nn.Symbol.ToLowerInvariant() #>"] = ChemicalElements.<#= nn.Name #>,
 <#
         }
 #>
-			// recently named elements
-            ["uub"] = ChemicalElements.Copernicium, // 2009
-            ["ununbium"] = ChemicalElements.Copernicium,
-            ["uuq"] = ChemicalElements.Flerovium, // 2012
-            ["ununquadium"] = ChemicalElements.Flerovium,
-            ["uuh"] = ChemicalElements.Livermorium, // 2012
-            ["ununhexium"] = ChemicalElements.Livermorium,
-            // 2016
-            ["uut"] = ChemicalElements.Nihonium,
-            ["uup"] = ChemicalElements.Moscovium,
-            ["uus"] = ChemicalElements.Tennessine,
-            ["uuo"] = ChemicalElements.Oganesson,
-            // alternative spellings
-            ["sulphur"] = ChemicalElements.Sulfur,
-            ["cesium"] = ChemicalElements.Caesium,
-            ["aluminum"] = ChemicalElements.Aluminium,
-        };
-
+                        // recently named elements
+                        ["uub"] = ChemicalElements.Copernicium, // 2009
+						["ununbium"] = ChemicalElements.Copernicium,
+						["uuq"] = ChemicalElements.Flerovium, // 2012
+						["ununquadium"] = ChemicalElements.Flerovium,
+						["uuh"] = ChemicalElements.Livermorium, // 2012
+						["ununhexium"] = ChemicalElements.Livermorium,
+						// 2016
+						["uut"] = ChemicalElements.Nihonium,
+						["uup"] = ChemicalElements.Moscovium,
+						["uus"] = ChemicalElements.Tennessine,
+						["uuo"] = ChemicalElements.Oganesson,
+						// alternative spellings
+						["sulphur"] = ChemicalElements.Sulfur,
+						["cesium"] = ChemicalElements.Caesium,
+						["aluminum"] = ChemicalElements.Aluminium,
+                    };
+                }
+                return symbolMap;
+            }
+        }
 <#
 		int maxAtomicNumber = name_and_numbers.Select(n => n.Number).Max();
 		string[] uniq_atoms = new string[maxAtomicNumber + 1];
@@ -133,20 +144,32 @@ namespace NCDK.Config
 		}
 #>
 
+        private static IReadOnlyList<ChemicalElement> values;
+
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        public static IReadOnlyList<ChemicalElement> Values { get; } = new ChemicalElement[] 
+        public static IReadOnlyList<ChemicalElement> Values
         {
+			get
+			{
+				if (values == null)
+				{
+					values = new ChemicalElement[] 
+					{
 <#
         foreach (var name in uniq_atoms)
         {
 #>
-            <#= name == null ? "null" : "ChemicalElements." + name #>,
+			        <#= name == null ? "null" : "ChemicalElements." + name #>,
 <#
         }
 #>
-        };
+					};
+				}
+				return values;
+			}
+		}
     }
 }
 
