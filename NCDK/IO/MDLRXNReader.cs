@@ -217,7 +217,7 @@ namespace NCDK.IO
                                     }
                                 }
                                 // end skip all other lines
-                                while ((line = input.ReadLine()) != null && line.StartsWith(">", StringComparison.Ordinal))
+                                while ((line = input.ReadLine()) != null && line.StartsWithChar('>'))
                                 {
                                     Debug.WriteLine($"data header line: {line}");
                                 }

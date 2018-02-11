@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.Default;
 using NCDK.Graphs.Rebond;
@@ -804,7 +805,7 @@ namespace NCDK.IO
                 if (frag.Length > 0)
                 {
                     // see Format_v33_A4.pdf, p. 178
-                    if (frag.EndsWith("-", StringComparison.Ordinal) || frag.EndsWith("+", StringComparison.Ordinal))
+                    if (frag.EndsWithChar('-') || frag.EndsWithChar('+'))
                     {
                         var aa = frag.ToCharArray();
                         Array.Reverse(aa);

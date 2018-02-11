@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,7 +62,7 @@ namespace NCDK.Config
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("#", StringComparison.Ordinal))
+                    if (line.StartsWithChar('#'))
                         continue;
                     var tokens = line.Split("\t ,;".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                     if (tokens.Length != 9)

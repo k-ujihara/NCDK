@@ -50,8 +50,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -103,8 +105,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -156,8 +160,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -209,8 +215,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
@@ -262,8 +270,10 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {

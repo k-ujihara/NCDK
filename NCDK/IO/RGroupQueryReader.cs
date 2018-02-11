@@ -252,7 +252,7 @@ namespace NCDK.IO
                 {
                     if (atom is IPseudoAtom rGroup)
                     {
-                        if (rGroup.Label.StartsWith("R", StringComparison.Ordinal) && !rGroup.Label.Equals("R") && // only numbered ones
+                        if (rGroup.Label.StartsWithChar('R') && !rGroup.Label.Equals("R") && // only numbered ones
                                 !attachmentPoints.ContainsKey(rGroup))
                         {
                             //Order reflects the order of atoms in the Atom Block

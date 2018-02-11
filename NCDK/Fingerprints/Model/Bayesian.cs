@@ -29,6 +29,7 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -517,7 +518,7 @@ namespace NCDK.Fingerprints.Model
         public static Bayesian Deserialise(TextReader rdr)
         {
             string line = rdr.ReadLine();
-            if (line == null || !line.StartsWith("Bayesian!(", StringComparison.Ordinal) || !line.EndsWith(")", StringComparison.Ordinal))
+            if (line == null || !line.StartsWith("Bayesian!(", StringComparison.Ordinal) || !line.EndsWithChar(')'))
                 throw new IOException("Not a serialised Bayesian model.");
             string[] bits = line.Substring(10, line.Length - 11).Split(',');
             if (bits.Length < 4) throw new IOException("Invalid header content");

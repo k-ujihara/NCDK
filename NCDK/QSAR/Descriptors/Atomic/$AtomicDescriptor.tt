@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 			string line;
 			while ((line = reader.ReadLine()) != null)
 			{
-				if (line.StartsWith("#", StringComparison.Ordinal))
+				if (line.Length > 0 && line[0] == '#')
 					continue;
 				line = line.Trim();
 				if (string.IsNullOrEmpty(line))
@@ -71,8 +71,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             if (cachedDescriptorValues == null)
             {
-                cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PreviousAtomContainer] = container;
+                cachedDescriptorValues = new Dictionary<object, object>()
+				{
+					[PreviousAtomContainer] = container,
+				};
             }
             else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {

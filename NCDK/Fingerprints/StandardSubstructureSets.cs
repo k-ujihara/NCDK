@@ -1,3 +1,4 @@
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,8 @@ namespace NCDK.Fingerprints
         /// <exception cref="Exception">if there is an error parsing SMILES for the functional groups</exception>
         public static string[] GetFunctionalGroupSMARTS()
         {
-            if (smarts != null) return smarts;
+            if (smarts != null)
+                return smarts;
 
             string filename = "NCDK.Fingerprints.Data.SMARTS_InteLigand.txt";
             Stream ins = ResourceLoader.GetAsStream(filename);
@@ -32,7 +34,8 @@ namespace NCDK.Fingerprints
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                if (line.StartsWith("#", StringComparison.Ordinal) || line.Trim().Length == 0) continue;
+                if (line.StartsWithChar('#') || line.Trim().Length == 0)
+                    continue;
                 string[] toks = line.Split(':');
                 StringBuilder s = new StringBuilder();
                 for (int i = 1; i < toks.Length - 1; i++)

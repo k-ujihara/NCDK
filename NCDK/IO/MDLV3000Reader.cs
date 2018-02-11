@@ -691,7 +691,7 @@ namespace NCDK.IO
             if (line.StartsWith("M  V30 ", StringComparison.Ordinal))
             {
                 string command = line.Substring(7);
-                if (command.EndsWith("-", StringComparison.Ordinal))
+                if (command.EndsWithChar('-'))
                 {
                     command = command.Substring(0, command.Length - 1);
                     command += ReadCommand(ReadLine());

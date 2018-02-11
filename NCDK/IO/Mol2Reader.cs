@@ -224,7 +224,7 @@ namespace NCDK.IO
                     if (line == null) return null;
                     if (line.StartsWith("@<TRIPOS>MOLECULE", StringComparison.Ordinal))
                         break;
-                    if (!line.StartsWith("#", StringComparison.Ordinal) && line.Trim().Length > 0)
+                    if (!line.StartsWithChar('#') && line.Trim().Length > 0)
                         break;
                 }
 

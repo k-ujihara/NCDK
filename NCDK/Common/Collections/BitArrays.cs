@@ -1,4 +1,5 @@
 ﻿using NCDK.Common.Base;
+using NCDK.Common.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace NCDK.Common.Collections
         public static BitArray FromString(string str)
         {
             str = str.Trim();
-            if (str.StartsWith("{", StringComparison.Ordinal) && str.EndsWith("}", StringComparison.Ordinal))
+            if (str.StartsWithChar('{') && str.EndsWithChar('}'))
             {
                 var ret = new BitArray(0);
                 str = str.Substring(1, str.Length - 2);

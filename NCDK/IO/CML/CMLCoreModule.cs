@@ -1051,7 +1051,7 @@ namespace NCDK.IO.CML
                     Trace.TraceWarning("formalCharge BUILTIN accepted but violating CML DTD");
                     Debug.WriteLine("Charge: ", cData.Trim());
                     string charge = cData.Trim();
-                    if (charge.StartsWith("+", StringComparison.Ordinal) && charge.Length > 1)
+                    if (charge.StartsWithChar('+') && charge.Length > 1)
                     {
                         charge = charge.Substring(1);
                     }

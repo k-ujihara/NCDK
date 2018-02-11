@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using NCDK.Numerics;
+using NCDK.Common.Primitives;
 
 namespace NCDK.IO
 {
@@ -148,7 +149,7 @@ namespace NCDK.IO
                 while (true)
                 {
                     if (line == null) break; // end of file
-                    if (line.StartsWith(";", StringComparison.Ordinal)) continue; // comment line
+                    if (line.StartsWithChar(';')) continue; // comment line
 
                     if (line.StartsWith("mol", StringComparison.Ordinal))
                     {
@@ -172,7 +173,7 @@ namespace NCDK.IO
                         {
                             break;
                         }
-                        if (line.StartsWith(";", StringComparison.Ordinal)) continue; // comment line
+                        if (line.StartsWithChar(';')) continue; // comment line
 
                         string[] toks = line.Split(' ');
 

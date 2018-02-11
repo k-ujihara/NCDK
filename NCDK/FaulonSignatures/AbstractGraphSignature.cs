@@ -1,4 +1,4 @@
-using NCDK.Common.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -180,7 +180,7 @@ namespace NCDK.FaulonSignatures
             }
             List<string> keyList = new List<string>();
             keyList.AddRange(sigmap.Keys);
-            keyList.Sort(Strings.OrdinalComparer.Instance);
+            keyList.Sort(StringComparer.Ordinal);
             StringBuilder buffer = new StringBuilder();
             for (int i = 0; i < keyList.Count - 1; i++)
             {
@@ -209,7 +209,7 @@ namespace NCDK.FaulonSignatures
         public List<string> GetSortedSignatures()
         {
             var vertexSignatures = this.GetVertexSignatureStrings();
-            vertexSignatures.Sort(Strings.OrdinalComparer.Instance);
+            vertexSignatures.Sort(StringComparer.Ordinal);
             return vertexSignatures;
         }
 

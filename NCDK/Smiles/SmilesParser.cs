@@ -23,6 +23,7 @@
  */
 
 using NCDK.Common.Collections;
+using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Sgroups;
@@ -265,7 +266,7 @@ namespace NCDK.Smiles
         {
             CxSmilesState cxstate;
             int pos;
-            if (title != null && title.StartsWith("|", StringComparison.Ordinal))
+            if (title != null && title.StartsWithChar('|'))
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
@@ -296,7 +297,7 @@ namespace NCDK.Smiles
         {
             CxSmilesState cxstate;
             int pos;
-            if (title != null && title.StartsWith("|", StringComparison.Ordinal))
+            if (title != null && title.StartsWithChar('|'))
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {

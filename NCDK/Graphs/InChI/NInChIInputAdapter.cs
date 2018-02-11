@@ -83,7 +83,7 @@ namespace NCDK.Graphs.InChI
             string options = string.Join(" ", tok.Select(n =>
                 {
                     string op = n;
-                    if (op.StartsWith("-", StringComparison.Ordinal) || op.StartsWith("/", StringComparison.Ordinal))
+                    if (op.StartsWithChar('-') || op.StartsWithChar('/'))
                     {
                         op = op.Substring(1);
                     }

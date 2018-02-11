@@ -281,7 +281,7 @@ namespace NCDK.IO
             if (line != null)
             {
                 fieldVal = st.Current;
-                if (fieldVal.StartsWith("#", StringComparison.Ordinal))
+                if (fieldVal.StartsWithChar('#'))
                 {
                     NextVASPToken(true);
                 }

@@ -928,7 +928,7 @@ namespace NCDK.Modelings.Builder3D
                     }
                     var e_st = Strings.Tokenize(s, '\t', ' ', ';'); st = e_st.GetEnumerator(); st.MoveNext();
                     int nt = e_st.Count;
-                    if (s.StartsWith(">", StringComparison.Ordinal) & nt > 1)
+                    if (s.StartsWithChar('>') & nt > 1)
                     {
                         SetForceFieldDefinitions();
                         a[0]++;

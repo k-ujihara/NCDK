@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using NCDK.Numerics;
 using System.Text.RegularExpressions;
+using NCDK.Common.Primitives;
 
 namespace NCDK.Isomorphisms.Matchers
 {
@@ -110,7 +111,7 @@ namespace NCDK.Isomorphisms.Matchers
                     {
                         if (!rGroup.Label.Equals("R")
                                 && // just "R" is not a proper query atom
-                                rGroup.Label.StartsWith("R", StringComparison.Ordinal)
+                                rGroup.Label.StartsWithChar('R')
                                 && (rgroupNumber == null || int.Parse(rGroup.Label.Substring(1)).Equals(
                                         rgroupNumber))) rGroupQueryAtoms.Add(atom);
                     }
@@ -179,7 +180,7 @@ namespace NCDK.Isomorphisms.Matchers
                 bool represented = false;
                 foreach (var rootAtom in this.RootStructure.Atoms)
                 {
-                    if (rootAtom is IPseudoAtom && rootAtom.Symbol.StartsWith("R", StringComparison.Ordinal))
+                    if (rootAtom is IPseudoAtom && rootAtom.Symbol.StartsWithChar('R'))
                     {
                         IPseudoAtom pseudo = (IPseudoAtom)rootAtom;
                         if (pseudo.Label.Length > 1)

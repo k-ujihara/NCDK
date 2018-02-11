@@ -182,7 +182,7 @@ namespace NCDK.IO
                         // skip command
                         Trace.TraceWarning("Skipping command: ", command);
                         line = input.ReadLine();
-                        if (line.StartsWith(";", StringComparison.Ordinal))
+                        if (line.StartsWithChar(';'))
                         {
                             Debug.WriteLine("Skipping block content");
                             line = input.ReadLine();

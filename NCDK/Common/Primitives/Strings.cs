@@ -2,22 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace NCDK.Common.Primitives
 {
     public static class Strings
     {
-        public sealed class OrdinalComparer : IComparer<string>
-        {
-            public static readonly OrdinalComparer Instance = new OrdinalComparer();
-
-            public int Compare(string strA, string strB)
-            {
-                return string.CompareOrdinal(strA, strB);
-            }
-        }
-
         public static StringBuilder Append(StringBuilder sb, string str)
         {
             if (str == null)
@@ -49,22 +40,28 @@ namespace NCDK.Common.Primitives
             var s = value.ToString("F" + (numberOfDecimalPlaces == 0 ? "" : numberOfDecimalPlaces.ToString()));
             if (!isZeroLeading)
             {
-                if (s.StartsWith("0", StringComparison.Ordinal))
+                if (s.StartsWithChar('0'))
                     s = s.Substring(1);
                 else if (s.StartsWith("-0", StringComparison.Ordinal))
                     s = "-" + s.Substring(2);
             }
             if (!s.Contains("."))
                 return s;
-            while (s.EndsWith("0", StringComparison.Ordinal))
+            while (s.EndsWithChar('0'))
                 s = s.Substring(0, s.Length - 1);
-            if (s.EndsWith(".", StringComparison.Ordinal))
+            if (s.EndsWithChar('.'))
                 s = s.Substring(0, s.Length - 1);
             if (s == "" || s == "-")
                 s = "0";
             return s;
         }
 
+        /// <summary>
+        /// Java compatible Substring
+        /// </summary>
+        /// <param name="str">The string to extract</param>
+        /// <param name="start">The starting character position</param>
+        /// <returns>The extracted string</returns>
         public static string Substring(string str, int start)
         {
             if (str.Length < start)
@@ -72,6 +69,13 @@ namespace NCDK.Common.Primitives
             return str.Substring(start);
         }
 
+        /// <summary>
+        /// Java compatible Substring
+        /// </summary>
+        /// <param name="str">The string to extract</param>
+        /// <param name="start">The starting character position</param>
+        /// <param name="length">The number of character</param>
+        /// <returns>The extracted string</returns>
         public static string Substring(string str, int start, int length)
         {
             if (str.Length < start)
@@ -141,7 +145,7 @@ namespace NCDK.Common.Primitives
                     }
                 }
             }
-            if (v.EndsWith(".", StringComparison.Ordinal))
+            if (v.EndsWithChar('.'))
                 v = v.Substring(0, v.Length - 1);
             switch (v)
             {
@@ -195,6 +199,18 @@ namespace NCDK.Common.Primitives
             }
             sb.Append("}");
             return sb.ToString();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool StartsWithChar(this string str,  char c)
+        {
+            return str.Length >= 1 && str[0] == c;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EndsWithChar(this string str, char c)
+        {
+            return str.Length >= 1 && str[str.Length - 1] == c;
         }
     }
 }

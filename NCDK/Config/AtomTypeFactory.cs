@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -156,7 +157,7 @@ namespace NCDK.Config
 
         private IAtomTypeConfigurator ConstructConfigurator(string format)
         {
-            if (!format.StartsWith(".", StringComparison.Ordinal))
+            if (!format.StartsWithChar('.'))
                 format = "." + format;
             switch (format)
             {
