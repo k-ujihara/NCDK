@@ -16,15 +16,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Dict;
-using NCDK.Tools.Diff;
 using NCDK.Common.Base;
-using NCDK.QSAR.Results;
-using NCDK.Tools.Manipulator;
 using NCDK.Default;
+using NCDK.Dict;
 using NCDK.Numerics;
+using NCDK.QSAR.Results;
+using NCDK.Templates;
+using NCDK.Tools.Diff;
+using NCDK.Tools.Manipulator;
+using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -40,7 +42,96 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public MolecularDescriptorTest() { }
 
+        private static uint FlagsToInt(IAtomContainer mol)
+        {
+            uint f = 0;
+            if (mol.IsPlaced) f++;
+            f <<= 1;
+            if (mol.IsVisited) f++;
+            f <<= 1;
+            if (mol.IsAromatic) f++;
+            f <<= 1;
+            if (mol.IsSingleOrDouble) f++;
+            return f;
+        }
+
+        private static uint FlagsToInt(IAtom atom)
+        {
+            uint f = 0;
+            if (atom.IsPlaced) f++;
+            f <<= 1;
+            if (atom.IsVisited) f++;
+            f <<= 1;
+            if (atom.IsAromatic) f++;
+            f <<= 1;
+            if (atom.IsAliphatic) f++;
+            f <<= 1;
+            if (atom.IsInRing) f++;
+            f <<= 1;
+            if (atom.IsSingleOrDouble) f++;
+            f <<= 1;
+            if (atom.IsHydrogenBondAcceptor) f++;
+            f <<= 1;
+            if (atom.IsHydrogenBondDonor) f++;
+            f <<= 1;
+            if (atom.IsReactiveCenter) f++;
+            return f;
+        }
+
+        private static uint FlagsToInt(IBond bond)
+        {
+            uint f = 0;
+            if (bond.IsPlaced) f++;
+            f <<= 1;
+            if (bond.IsVisited) f++;
+            f <<= 1;
+            if (bond.IsAromatic) f++;
+            f <<= 1;
+            if (bond.IsAliphatic) f++;
+            f <<= 1;
+            if (bond.IsInRing) f++;
+            f <<= 1;
+            if (bond.IsSingleOrDouble) f++;
+            f <<= 1;
+            if (bond.IsReactiveCenter) f++;
+            return f;
+        }
+
+        private uint[] GetAtomFlags(IAtomContainer mol)
+        {
+            uint[] flags = new uint[mol.Atoms.Count];
+            for (int i = 0; i < mol.Atoms.Count; i++)
+            {
+                flags[i] = FlagsToInt(mol.Atoms[i]);
+            }
+            return flags;
+        }
+
+        private uint[] GetBondFlags(IAtomContainer mol)
+        {
+            uint[] flags = new uint[mol.Bonds.Count];
+            for (int i = 0; i < mol.Bonds.Count; i++)
+            {
+                flags[i] = FlagsToInt(mol.Bonds[i]);
+            }
+            return flags;
+        }
+
         [TestMethod()]
+        public void DescriptorDoesNotChangeFlags()
+        {
+            IAtomContainer mol = TestMoleculeFactory.MakeBenzene();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            uint mflags = FlagsToInt(mol);
+            uint[] aflags = GetAtomFlags(mol);
+            uint[] bflags = GetBondFlags(mol);
+            Descriptor.Calculate(mol);
+            Assert.AreEqual(mflags, FlagsToInt(mol), "Molecule flags were modified by descriptor!");
+            Assert.IsTrue(Compares.AreDeepEqual(aflags, GetAtomFlags(mol)), "Molecule's Atom flags were modified by descriptor!");
+            Assert.IsTrue(Compares.AreDeepEqual(bflags, GetBondFlags(mol)), "Molecule's Bond flags were modified by descriptor!");
+        }
+
+    [TestMethod()]
         public void TestDescriptorIdentifierExistsInOntology()
         {
             Entry ontologyEntry = dict[Descriptor.Specification.SpecificationReference.Substring(dict.NS.ToString().Length).ToLowerInvariant()];
@@ -307,7 +398,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IAtomContainer water1 = SomeoneBringMeSomeWater(Default.ChemObjectBuilder.Instance);
             // creates an AtomContainer with the atoms / bonds from water1
-            IAtomContainer water2 = new AtomContainer(water1);
+            IAtomContainer water2 = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            water2.Add(water1);
 
             IDescriptorResult v1 = Descriptor.Calculate(water1).Value;
             IDescriptorResult v2 = Descriptor.Calculate(water2).Value;
@@ -324,12 +416,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestDisconnectedStructureHandling()
         {
-            IAtomContainer disconnected = new AtomContainer();
-            IAtom chloride = new Atom("Cl");
-            chloride.FormalCharge = -1;
+            IAtomContainer disconnected = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
+            IAtom chloride = new Atom("Cl")
+            {
+                FormalCharge = -1
+            };
             disconnected.Atoms.Add(chloride);
-            IAtom sodium = new Atom("Na");
-            sodium.FormalCharge = +1;
+            IAtom sodium = new Atom("Na")
+            {
+                FormalCharge = +1
+            };
             disconnected.Atoms.Add(sodium);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(disconnected);

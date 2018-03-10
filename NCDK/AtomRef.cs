@@ -195,10 +195,10 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public IAtomContainer Container => atom.Container;
+        public virtual IAtomContainer Container => atom.Container;
 
         /// <inheritdoc/>
-        public int Index => atom.Index;
+        public virtual int Index => atom.Index;
 
         /// <inheritdoc/>
         public int? Valency
@@ -207,8 +207,16 @@ namespace NCDK
             set { atom.Valency = value; }
         }
 
-        public IEnumerable<IBond> Bonds => atom.Bonds;
+        /// <inheritdoc/>
+        public virtual IReadOnlyList<IBond> Bonds => atom.Bonds;
 
+        /// <inheritdoc/>
+        public virtual IBond GetBond(IAtom atom)
+        {
+            return this.atom.GetBond(atom);
+        }
+
+        /// <inheritdoc/>
         public bool IsAliphatic
         {
             get { return atom.IsAliphatic; }
@@ -229,34 +237,41 @@ namespace NCDK
             set { atom.IsInRing = value; }
         }
 
+        /// <inheritdoc/>
         public bool IsSingleOrDouble
         {
             get { return atom.IsSingleOrDouble; }
             set { atom.IsSingleOrDouble = value; }
         }
 
+        /// <inheritdoc/>
         public bool IsHydrogenBondDonor
         {
             get { return atom.IsHydrogenBondDonor; }
             set { atom.IsHydrogenBondDonor = value; }
         }
 
+        /// <inheritdoc/>
         public bool IsHydrogenBondAcceptor
         {
             get { return atom.IsHydrogenBondAcceptor; }
             set { atom.IsHydrogenBondAcceptor = value; }
         }
+
+        /// <inheritdoc/>
         public bool IsReactiveCenter
         {
             get { return atom.IsReactiveCenter; }
             set { atom.IsReactiveCenter = value; }
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return atom.GetHashCode();
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return atom.Equals(obj);
@@ -265,7 +280,19 @@ namespace NCDK
         /// <inheritdoc/>
         public override object Clone()
         {
-            return atom.Clone();
+            return atom.Clone(new CDKObjectMap());
+        }
+
+        /// <inheritdoc/>
+        public override ICDKObject Clone(CDKObjectMap map)
+        {
+            return atom.Clone(map);
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return "AtomRef{" + atom + "}";
         }
     }
 }

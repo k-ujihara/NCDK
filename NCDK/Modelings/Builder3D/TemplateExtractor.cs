@@ -377,14 +377,14 @@ namespace NCDK.Modelings.Builder3D
             List<IBitFingerprint> data = new List<IBitFingerprint>();
             try
             {
-                Console.Out.Write("Read data file in ...");
+                Trace.TraceInformation("Read data file in ...");
                 using (var imdl = new EnumerableSDFReader(fin, builder))
                 {
-                    Console.Out.WriteLine("ready");
+                    Trace.TraceInformation("ready");
 
                     int moleculeCounter = 0;
                     int fingerprintCounter = 0;
-                    Console.Out.Write("Generated Fingerprints: " + fingerprintCounter + "    ");
+                    Trace.TraceInformation("Generated Fingerprints: " + fingerprintCounter + "    ");
                     foreach (var m in imdl)
                     {
                         if (!(moleculeCounter < limit || limit == -1))
@@ -425,7 +425,7 @@ namespace NCDK.Modelings.Builder3D
                         }
                         catch (Exception exc1)
                         {
-                            Console.Out.WriteLine($"QueryFingerprintError: from molecule:{moleculeCounter} due to:{exc1.Message}");
+                            Trace.TraceInformation($"QueryFingerprintError: from molecule:{moleculeCounter} due to:{exc1.Message}");
 
                             // OK, just adds a fingerprint with all ones, so that any
                             // structure will match this template, and leave it up
@@ -440,16 +440,16 @@ namespace NCDK.Modelings.Builder3D
                         }
 
                         if (fingerprintCounter % 2 == 0)
-                            Console.Out.Write("\b" + "/");
+                            Trace.TraceInformation("\b" + "/");
                         else
-                            Console.Out.Write("\b" + "\\");
+                            Trace.TraceInformation("\b" + "\\");
 
                         if (fingerprintCounter % 100 == 0)
-                            Console.Out.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
+                            Trace.TraceInformation("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
                                     + "Generated Fingerprints: " + fingerprintCounter + "   \n");
 
                     }// while
-                    Console.Out.Write($"...ready with:{moleculeCounter} molecules\nWrite data...of data vector:{data.Count} fingerprintCounter:{fingerprintCounter}");
+                    Trace.TraceInformation($"...ready with:{moleculeCounter} molecules\nWrite data...of data vector:{data.Count} fingerprintCounter:{fingerprintCounter}");
                 }
             }
             catch (Exception exc)

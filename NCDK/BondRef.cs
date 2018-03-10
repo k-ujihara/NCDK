@@ -76,27 +76,27 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public IEnumerable<IAtom> Atoms
+        public virtual IList<IAtom> Atoms
         {
             get { return bond.Atoms; }
         }
 
-        public void SetAtoms(IEnumerable<IAtom> atoms)
+        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
             bond.SetAtoms(atoms);
         }
 
         /// <inheritdoc/>
-        public IAtom Begin => bond.Begin;
+        public virtual IAtom Begin => bond.Begin;
 
         /// <inheritdoc/>
-        public IAtom End => bond.End;
+        public virtual IAtom End => bond.End;
 
         /// <inheritdoc/>
-        public int Index => bond.Index;
+        public virtual int Index => bond.Index;
 
         /// <inheritdoc/>
-        public IAtomContainer Container => bond.Container;
+        public virtual IAtomContainer Container => bond.Container;
 
         /// <inheritdoc/>
         public IAtom GetConnectedAtom(IAtom atom)
@@ -105,7 +105,7 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public IAtom GetOther(IAtom atom)
+        public virtual IAtom GetOther(IAtom atom)
         {
             return bond.GetOther(atom);
         }
@@ -175,8 +175,6 @@ namespace NCDK
             set { bond.IsInRing = value; }
         }
 
-        IList<IAtom> IBond.Atoms => throw new System.NotImplementedException();
-
         /// <inheritdoc/>
         public bool IsSingleOrDouble
         {
@@ -191,11 +189,13 @@ namespace NCDK
             set { bond.IsReactiveCenter = value; }
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return bond.GetHashCode();
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return bond.Equals(obj);
@@ -205,6 +205,12 @@ namespace NCDK
         public override object Clone()
         {
             return bond.Clone();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return "BondRef{" + bond + "}";
         }
     }
 }

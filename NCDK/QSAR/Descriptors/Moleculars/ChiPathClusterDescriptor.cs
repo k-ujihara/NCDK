@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPathCluster
     // @cdk.keyword chi path cluster index
     // @cdk.keyword descriptor
-    public class ChiPathClusterDescriptor : IMolecularDescriptor
+    public class ChiPathClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -69,17 +69,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiPathClusterDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
                 typeof(ChiPathClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public IReadOnlyList<string> ParameterNames => null;
-        public object GetParameterType(string name) => null;
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-        public object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<string> ParameterNames => null;
+        public override object GetParameterType(string name) => null;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public override object[] Parameters { get { return null; } set { } }
 
         public DescriptorValue<ArrayResult<double>> Calculate(IAtomContainer container)
         {
@@ -154,7 +154,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
         private IList<IList<int>> Order4(IAtomContainer atomContainer)
         {

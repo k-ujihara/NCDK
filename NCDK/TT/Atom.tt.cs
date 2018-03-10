@@ -198,10 +198,16 @@ namespace NCDK.Default
 		public virtual int Index => -1;
 
 		/// <inheritdoc/>
-		public virtual IEnumerable<IBond> Bonds 
+		public virtual IReadOnlyList<IBond> Bonds
 		{ 
 			get { throw new NotSupportedException(); } 
 		}
+
+		/// <inheritdoc/>
+		public IBond GetBond(IAtom atom) 
+		{
+			throw new InvalidOperationException();
+	    }
 		
         /// <summary>
         /// The partial charge of this atom.
@@ -661,10 +667,16 @@ namespace NCDK.Silent
 		public virtual int Index => -1;
 
 		/// <inheritdoc/>
-		public virtual IEnumerable<IBond> Bonds 
+		public virtual IReadOnlyList<IBond> Bonds
 		{ 
 			get { throw new NotSupportedException(); } 
 		}
+
+		/// <inheritdoc/>
+		public IBond GetBond(IAtom atom) 
+		{
+			throw new InvalidOperationException();
+	    }
 		
         /// <summary>
         /// The partial charge of this atom.

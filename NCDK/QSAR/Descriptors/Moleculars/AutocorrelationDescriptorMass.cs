@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
@@ -33,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-02-08
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    public class AutocorrelationDescriptorMass : IMolecularDescriptor
+    public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };
         private readonly static double CARBON_MASS = 12.010735896788;
@@ -113,25 +114,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
-        public object GetParameterType(string name) => null;
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public override object GetParameterType(string name) => null;
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
                 typeof(AutocorrelationDescriptorMass).FullName,
                 "The Chemistry Development Kit");
 
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

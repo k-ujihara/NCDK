@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
-    public class WienerNumbersDescriptor : IMolecularDescriptor
+    public class WienerNumbersDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WPATH", "WPOL" };
 
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers",
@@ -85,9 +85,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the WienerNumbersDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the Wiener numbers.
@@ -134,20 +134,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
         /// <summary>
         /// The parameterNames attribute of the WienerNumbersDescriptor object.
         /// This descriptor does not return any parameters
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the WienerNumbersDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

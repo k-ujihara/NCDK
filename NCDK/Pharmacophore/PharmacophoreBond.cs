@@ -43,6 +43,15 @@ namespace NCDK.Pharmacophore
         {
         }
 
+        public static PharmacophoreBond Get(IBond bond)
+        {
+            if (bond is PharmacophoreBond)
+                return (PharmacophoreBond)bond;
+            if (bond is BondRef)
+                return Get(((BondRef)bond).Deref());
+            return null;
+        }
+
         /// <summary>
         /// The distance between the two pharmacophore groups that make up the constraint.
         /// </summary>
@@ -51,10 +60,11 @@ namespace NCDK.Pharmacophore
         {
             get
             {
-                PharmacophoreAtom atom1 = (PharmacophoreAtom)Atoms[0];
-                PharmacophoreAtom atom2 = (PharmacophoreAtom)Atoms[1];
+                PharmacophoreAtom atom1 = PharmacophoreAtom.Get(Atoms[0]);
+                PharmacophoreAtom atom2 = PharmacophoreAtom.Get(Atoms[1]);
                 return Vector3.Distance(atom1.Point3D.Value, atom2.Point3D.Value);
             }
         }
     }
 }
+

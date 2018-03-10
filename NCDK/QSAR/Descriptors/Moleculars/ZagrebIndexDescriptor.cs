@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:zagrebIndex
     // @cdk.keyword Zagreb index
     // @cdk.keyword descriptor
-    public class ZagrebIndexDescriptor : IMolecularDescriptor
+    public class ZagrebIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Zagreb" };
 
@@ -43,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
@@ -53,9 +54,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  Evaluate the Zagreb Index for a molecule.
@@ -83,19 +84,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the ZagrebIndexDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// The parameterType attribute of the ZagrebIndexDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

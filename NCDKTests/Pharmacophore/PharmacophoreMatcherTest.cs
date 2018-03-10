@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
 using System.IO;
@@ -162,16 +163,18 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(2, bMatches.Count); // 2 since we haven't gotten a unique set
             Assert.AreEqual(3, bMatches[0].Count);
 
-            PharmacophoreBond pbond = (PharmacophoreBond)bMatches[0][0];
-            PharmacophoreAtom patom1 = (PharmacophoreAtom)pbond.Begin;
-            PharmacophoreAtom patom2 = (PharmacophoreAtom)pbond.End;
+            PharmacophoreBond pbond = (PharmacophoreBond)BondRef.Deref(bMatches[0][0]);
+            PharmacophoreAtom patom1 = (PharmacophoreAtom)AtomRef.Deref(pbond.Begin);
+            PharmacophoreAtom patom2 = (PharmacophoreAtom)AtomRef.Deref(pbond.End);
             Assert.AreEqual("D", patom1.Symbol);
             Assert.AreEqual("A", patom2.Symbol);
 
             var bondMap = matcher.GetTargetQueryBondMappings();
             Assert.AreEqual(2, bondMap.Count);
             var mapping = bondMap[0];
-            IBond value = mapping[pbond];
+
+            // get the 'BondRef' for lookup
+            IBond value = mapping[bMatches[0][0]];
             Assert.AreEqual(b1, value);
         }
 

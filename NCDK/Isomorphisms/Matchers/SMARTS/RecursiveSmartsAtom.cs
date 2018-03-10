@@ -18,8 +18,6 @@
  */
 
 using NCDK.Common.Collections;
-
-using NCDK.Isomorphisms.Matchers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +62,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             if (!cache.TryGetValue(target, out BitArray v))
             {
                 BitArray hits = new BitArray(0);
-                foreach (var mapping in Ullmann.FindSubstructure(query).MatchAll(target)
+                foreach (var mapping in Pattern.FindSubstructure(query).MatchAll(target)
                     .Where(n => new SmartsStereoMatch(query, target).Apply(n))
                     .Where(n => new ComponentGrouping(query, target).Apply(n)))
                 {

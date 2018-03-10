@@ -104,17 +104,24 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void SkipCIsTrans()
+        public void SkipCisTrans()
         {
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|c:2,6,8,t:1,4,5|", state));
         }
 
         [TestMethod()]
-        public void SkipCIsTransUnspec()
+        public void SkipCisTransUnspec()
         {
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|c:2,6,8,ctu:10,t:1,4,5|", state));
+        }
+
+        [TestMethod()]
+        public void SkipLonePairDefinitions()
+        {
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|c:6,8,t:4,lp:2:2,4:1,11:1,m:1:8.9|", state));
         }
 
         [TestMethod()]
@@ -224,6 +231,22 @@ namespace NCDK.Smiles
             Assert.AreEqual("$", CxSmilesParser.Unescape("&#36;"));
             Assert.AreEqual("\u007F", CxSmilesParser.Unescape("&#127;")); // DEL
             Assert.AreEqual("\t", CxSmilesParser.Unescape("&#9;")); // TAB
+        }
+
+        [TestMethod()]
+        public void RelativeStereoMolecule()
+        {
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|r|", state));
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|r,$_R1$|", state));
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|$_R1$,r|", state));
+        }
+
+        [TestMethod()]
+        public void RelativeStereoReaction()
+        {
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|r:2,4,5|", state));
         }
 
         /// <summary>

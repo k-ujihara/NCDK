@@ -34,7 +34,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void Empty()
         {
-            string empty = new SvgDrawVisitor(50, 50).ToString();
+            string empty = new SvgDrawVisitor(50, 50, Depiction.UnitsMM).ToString();
             Assert.AreEqual(
                 "<?xml version='1.0' encoding='UTF-8'?>\n"
                 + "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
@@ -47,7 +47,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void MarkedElementTest()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(MarkedElement.Markup(new LineElement(new WPF.Point(0, 0), new WPF.Point(1, 1), 0.5, Colors.Red), "test-class"));
             Assert.AreEqual(
                 "<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -64,7 +64,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void TranslatedLine()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(new LineElement(new WPF::Point(0, 0), new WPF::Point(1, 1), 0.5, Colors.Red));
             visitor.Transform = new TranslateTransform(10, 10);
             visitor.Visit(new LineElement(new WPF::Point(0, 0), new WPF::Point(1, 1), 0.5, Colors.Red));
@@ -84,7 +84,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void ScaledStroke()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(new LineElement(new WPF::Point(0, 0), new WPF::Point(1, 1), 0.5, Colors.Red));
             visitor.Transform = new ScaleTransform(2, 2);
             visitor.Visit(new LineElement(new WPF::Point(0, 0), new WPF::Point(1, 1), 0.5, Colors.Red));
@@ -104,7 +104,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void FilledPath()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(GeneralPath.ShapeOf(CreateRoundRectangle(new WPF::Rect(0, 0, 10, 10), 2, 2), Colors.Blue));
             var str = visitor.ToString();
             Assert.AreEqual(
@@ -172,7 +172,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void TransformedPath()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50)
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM)
             {
                 Transform = new TranslateTransform(15, 15)
             };
@@ -193,7 +193,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void TextElements()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UnitsMM);
             visitor.Visit(new TextElement(new WPF::Point(50, 50), "PNG < EPS < SVG", Colors.Red));
             Assert.AreEqual(
                 "<?xml version='1.0' encoding='UTF-8'?>\n"
@@ -210,7 +210,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void RectElements()
         {
-            SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(100, 100, Depiction.UnitsMM);
             visitor.Visit(new RectangleElement(new WPF::Rect(0, 0, 100, 100), Colors.White));
             Assert.AreEqual(
                 "<?xml version='1.0' encoding='UTF-8'?>\n"

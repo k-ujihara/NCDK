@@ -21,8 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.Numerics;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP
@@ -84,18 +86,26 @@ namespace NCDK.Geometries.CIP
         public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { }
 
         private ICollection<IChemObjectListener> listeners;
+
+        class ImmutableCollection : ICollection<IChemObjectListener>
+        {
+            private static EmptyEnumerable<IChemObjectListener> empty = new EmptyEnumerable<IChemObjectListener>();
+
+            public int Count => 0;
+            public bool IsReadOnly => false;
+            public void Add(IChemObjectListener item) { }
+            public void Clear() { }
+            public bool Contains(IChemObjectListener item) => false;
+            public void CopyTo(IChemObjectListener[] array, int arrayIndex) { }
+            public IEnumerator<IChemObjectListener> GetEnumerator() => empty.GetEnumerator();
+            public bool Remove(IChemObjectListener item) => false;
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         /// <summary>
         /// List for listener administration.
         /// </summary>
-        public ICollection<IChemObjectListener> Listeners
-        {
-            get
-            {
-                if (listeners == null)
-                    listeners = new HashSet<IChemObjectListener>();
-                return listeners;
-            }
-        }
+        public ICollection<IChemObjectListener> Listeners { get; } = new ImmutableCollection();
 
         public void NotifyChanged() { }
 
@@ -106,19 +116,23 @@ namespace NCDK.Geometries.CIP
 
         public object Clone() => this;
         public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
-
         public IChemObjectBuilder Builder => null;
-
         public IAtomContainer Container => null;
-
         public int Index => 0;
 
-        public IEnumerable<IBond> Bonds
+        private class DummyBonds : IReadOnlyList<IBond>
         {
-            get
-            {
-                throw new NotSupportedException();
-            }
+            public IBond this[int index] => throw new InvalidOperationException();
+            public int Count => 1;
+            public IEnumerator<IBond> GetEnumerator() => throw new InvalidOperationException();
+            IEnumerator IEnumerable.GetEnumerator() => throw new InvalidOperationException();
+        }
+
+        public IReadOnlyList<IBond> Bonds { get; } = new DummyBonds();
+
+        public IBond GetBond(IAtom atom)
+        {
+            throw new InvalidOperationException();
         }
     }
 }

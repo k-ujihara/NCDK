@@ -51,7 +51,7 @@ namespace NCDK.IO.RDF
             IAtomContainer mol;
             using (var reader = new CDKOWLReader(new StreamReader(ins)))
             {
-                mol = (IAtomContainer)reader.Read(new AtomContainer());
+                mol = reader.Read(new AtomContainer());
             }
             Assert.IsNotNull(mol);
             Assert.AreEqual(2, mol.Atoms.Count);

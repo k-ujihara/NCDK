@@ -138,6 +138,7 @@ namespace NCDK.Renderers
 		P("DefaultBondColor", "WPF.Media.Color", "WPF.Media.Colors.Black", "the color to draw bonds if not other color is given");
 		P("WedgeWidth", "double", "2", "the width on screen of the fat end of a wedge bond");
 		P("TowardsRingCenterProportion", "double", "0.15", "the proportion to move in towards the ring center");
+		P("ForceDelocalisedBondDisplay", "bool", "false", "Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>");
 
 		// Ring
 

@@ -189,7 +189,7 @@ namespace NCDK.IO
                     // no header
                     return line1;
                 }
-                readData.SetProperty(CDKPropertyName.Title, line1);
+                readData.Title = line1;
             }
             ReadLine();
             string line3 = ReadLine();

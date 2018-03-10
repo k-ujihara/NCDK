@@ -46,6 +46,16 @@ namespace NCDK.Sgroups
         }
 
         /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="org">original sgroup bracket</param>
+        public SgroupBracket(SgroupBracket org)
+            : this(org.p1.X, org.p1.Y,
+                 org.p2.X, org.p2.Y)
+        {
+        }
+
+        /// <summary>
         /// First point of the bracket (x1,y1).
         /// </summary>
         /// <returns>first point</returns>

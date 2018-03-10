@@ -18,4 +18,4 @@ Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test proje
 MolViewer is 2D-molecular/reaction viewer using WPF. It includes WPF control to show molecular/reaction.
 
 ## Contribute
-The current release is based on [cdk-2.1](https://github.com/cdk/cdk/tree/8781a09925eace145d5c0133ebcdddbefafebb48) snapshot except AtomContainer2.
+The current release is based on [cdk-2.1](https://github.com/cdk/cdk/tree/8781a09925eace145d5c0133ebcdddbefafebb48) snapshot.

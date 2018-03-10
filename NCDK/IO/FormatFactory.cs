@@ -151,7 +151,7 @@ namespace NCDK.IO
                     else if (tokenCount == 2)
                     {
                         int.Parse(tokens[0]);
-                        if ("bohr".Equals(tokens[1].ToLowerInvariant()))
+                        if ("bohr".Equals(tokens[1].ToLowerInvariant(), StringComparison.Ordinal))
                         {
                             return (IChemFormat)XYZFormat.Instance;
                         }

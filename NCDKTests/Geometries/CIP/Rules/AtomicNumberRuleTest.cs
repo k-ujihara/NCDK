@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System.Collections.Generic;
@@ -59,11 +60,13 @@ namespace NCDK.Geometries.CIP.Rules
             ILigand ligand2 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[3]);
             ILigand ligand3 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[2]);
             ILigand ligand4 = new Ligand(molecule, visitedAtoms, molecule.Atoms[1], molecule.Atoms[0]);
-            List<ILigand> ligands = new List<ILigand>();
-            ligands.Add(ligand1);
-            ligands.Add(ligand2);
-            ligands.Add(ligand3);
-            ligands.Add(ligand4);
+            List<ILigand> ligands = new List<ILigand>
+            {
+                ligand1,
+                ligand2,
+                ligand3,
+                ligand4
+            };
 
             ligands.Sort(new AtomicNumberRule());
             Assert.AreEqual("H", ligands[0].GetLigandAtom().Symbol);

@@ -16,8 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
 
+using NCDK.AtomTypes;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
@@ -63,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiCluster
     // @cdk.keyword chi cluster index
     // @cdk.keyword descriptor
-    public class ChiClusterDescriptor : IMolecularDescriptor
+    public class ChiClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -71,17 +71,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiClusterDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
                 typeof(ChiClusterDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public IReadOnlyList<string> ParameterNames => null;
-        public object GetParameterType(string name) => null;
-        public IReadOnlyList<string> DescriptorNames => NAMES;
-        public object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<string> ParameterNames => null;
+        public override object GetParameterType(string name) => null;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
+        public override object[] Parameters { get { return null; } set { } }
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -161,7 +161,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(8);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(8);
 
         private IList<IList<int>> Order3(IAtomContainer atomContainer)
         {

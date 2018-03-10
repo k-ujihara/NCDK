@@ -111,6 +111,9 @@ namespace NCDK.Smiles
                 atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
             }
             ac.SetAtoms(atoms);
+            // get the atom-refs
+            for (int i = 0; i < g.Order; i++)
+                atoms[i] = ac.Atoms[i];
             foreach (Edge edge in g.Edges)
             {
                 int u = edge.Either();
@@ -225,7 +228,7 @@ namespace NCDK.Smiles
             }
 
             // title suffix
-            ac.SetProperty(CDKPropertyName.Title, g.Title);
+            ac.Title = g.Title;
 
             return ac;
         }

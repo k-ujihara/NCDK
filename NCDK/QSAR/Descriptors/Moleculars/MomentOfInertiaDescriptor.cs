@@ -17,15 +17,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using MathNet.Numerics.LinearAlgebra;
+using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -75,11 +76,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    public class MomentOfInertiaDescriptor : IMolecularDescriptor
+    public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
@@ -88,21 +89,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -218,7 +219,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(7);
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

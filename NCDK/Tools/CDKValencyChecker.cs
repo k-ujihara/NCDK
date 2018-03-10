@@ -22,7 +22,6 @@
  */
 
 using NCDK.Config;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Tools
@@ -53,7 +52,6 @@ namespace NCDK.Tools
             return tables[builder.GetType().Name];
         }
 
-
         public bool IsSaturated(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
@@ -65,19 +63,15 @@ namespace NCDK.Tools
 
         public bool IsSaturated(IAtom atom, IAtomContainer container)
         {
-            Console.Out.WriteLine(atom.AtomTypeName);
             IAtomType type = atomTypeList.GetAtomType(atom.AtomTypeName);
             if (type == null)
-                throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.AtomTypeName);
+                throw new CDKException($"Atom type is not a recognized CDK atom type: {atom.AtomTypeName}");
 
             if (type.FormalNeighbourCount == null)
-                throw new CDKException(
-                        "Atom type  is too general; cannot decide the number of implicit hydrogen to add for: "
-                                + atom.AtomTypeName);
+                throw new CDKException($"Atom type is too general; cannot decide the number of implicit hydrogen to add for: {atom.AtomTypeName}");
 
             if (type.GetProperty<object>(CDKPropertyName.PiBondCount) == null)
-                throw new CDKException("Atom type is too general; cannot determine the number of pi bonds for: "
-                        + atom.AtomTypeName);
+                throw new CDKException($"Atom type is too general; cannot determine the number of pi bonds for: {atom.AtomTypeName}");
 
             double bondOrderSum = container.GetBondOrderSum(atom);
             BondOrder maxBondOrder = container.GetMaximumBondOrder(atom);

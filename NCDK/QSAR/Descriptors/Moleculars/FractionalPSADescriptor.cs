@@ -48,18 +48,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    public class FractionalPSADescriptor : IMolecularDescriptor
+    public class FractionalPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         public FractionalPSADescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", 
                 typeof(FractionalPSADescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -74,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "tpsaEfficiency" };
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -125,9 +125,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     weight == 0 ? 0 : polar / weight), DescriptorNames);
         }
 
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
-        public IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
-        public object GetParameterType(string name) => null;
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
+        public override IReadOnlyList<string> ParameterNames { get; } = Array.Empty<string>();
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

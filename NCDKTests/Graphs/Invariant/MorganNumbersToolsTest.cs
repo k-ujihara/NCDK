@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Graphs.Canon;
@@ -46,7 +46,7 @@ namespace NCDK.Graphs.Invariant
             long[] reference = { 28776, 17899, 23549, 34598, 31846, 36393, 9847, 45904, 15669, 15669 };
 
             IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-            long[] morganNumbers = MorganNumbersTools.GetMorganNumbers((AtomContainer)mol);
+            long[] morganNumbers = MorganNumbersTools.GetMorganNumbers(mol);
             Assert.AreEqual(reference.Length, morganNumbers.Length);
             for (int f = 0; f < morganNumbers.Length; f++)
             {
@@ -62,7 +62,7 @@ namespace NCDK.Graphs.Invariant
             string[] reference = { "C-457", "C-428", "C-325", "C-354", "C-325", "C-428", "N-251" };
 
             IAtomContainer mol = TestMoleculeFactory.MakePhenylAmine();
-            string[] morganNumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol((AtomContainer)mol);
+            string[] morganNumbers = MorganNumbersTools.GetMorganNumbersWithElementSymbol(mol);
             Assert.AreEqual(reference.Length, morganNumbers.Length);
             for (int f = 0; f < morganNumbers.Length; f++)
             {

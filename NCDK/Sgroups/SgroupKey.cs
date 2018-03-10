@@ -21,6 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using System.Collections.Generic;
+using System.Linq;
+using static NCDK.Sgroups.SgroupKey;
+
 namespace NCDK.Sgroups
 {
     /// <summary>
@@ -48,4 +52,10 @@ namespace NCDK.Sgroups
         CtabParentAtomList,
         CtabComponentNumber,
     }
+
+    public static class SgroupKeyTools
+    {
+        public static IReadOnlyList<SgroupKey> Values { get; } = System.Enum.GetValues(typeof(SgroupKey)).Cast<SgroupKey>().ToArray();
+    }
 }
+

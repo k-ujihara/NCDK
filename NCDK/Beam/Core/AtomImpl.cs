@@ -68,7 +68,7 @@ namespace NCDK.Beam
             };
 
             private Element element;
-            private Generator.IAtomToken token;
+            private Generator.AtomToken token;
 
             private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
@@ -116,7 +116,7 @@ namespace NCDK.Beam
                 return Element.NumOfImplicitHydrogens(element, g.BondedValence(u));
             }
 
-            public Generator.IAtomToken Token => token;
+            public Generator.AtomToken Token => token;
 
             public static IAtom OfElement(Element e)
             {
@@ -141,7 +141,7 @@ namespace NCDK.Beam
             };
 
             private Element element;
-            private readonly Generator.IAtomToken token;
+            private readonly Generator.AtomToken token;
 
             private static readonly IDictionary<Element, IAtom> atoms = new Dictionary<Element, IAtom>();
 
@@ -173,7 +173,7 @@ namespace NCDK.Beam
 
             public int AtomClass => 0;
 
-            public Generator.IAtomToken Token => token;
+            public Generator.AtomToken Token => token;
 
             public bool Subset => true;
 
@@ -246,7 +246,7 @@ namespace NCDK.Beam
 
             public int AtomClass => atomClass;
 
-            public Generator.IAtomToken Token => new Generator.BracketToken(this);
+            public Generator.AtomToken Token => new Generator.BracketToken(this);
 
             public bool Subset => false;
 

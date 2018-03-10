@@ -16,13 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Smiles.SMARTS;
+using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using NCDK.Aromaticities;
-using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
     public class AcidicGroupCountDescriptor 
-        : IMolecularDescriptor
+        : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] SMARTS_STRINGS =
         {
@@ -70,14 +70,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
              new DescriptorSpecification(
                     "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount",
                      typeof(AcidicGroupCountDescriptor).FullName,
                     "The Chemistry Development Kit");
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -99,10 +99,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
+            atomContainer = Clone(atomContainer); // don't mod original
+
             // do aromaticity detection
             if (this.checkAromaticity)
             {
@@ -132,11 +134,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IDescriptorResult DescriptorResultType => Result<int>.Instance;
-        public IReadOnlyList<string> ParameterNames { get; } 
+        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
+        public override IReadOnlyList<string> ParameterNames { get; } 
             = new string[] { "checkAromaticity" };
 
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             object obj = null;
             if (name.Equals("checkAromaticity")) 

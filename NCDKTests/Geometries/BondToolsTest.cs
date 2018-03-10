@@ -50,7 +50,7 @@ namespace NCDK.Geometries
         }
 
         [TestMethod()]
-        public void TestIsCIsTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer()
+        public void TestIsCisTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
             var ins = ResourceLoader.GetAsStream(filename);

@@ -515,6 +515,7 @@ namespace NCDK.Tautomers
             {
                 if (bond.Order.Equals(BondOrder.Double))
                 {
+                    bond.Order = BondOrder.Single;
                     doubleBondCount++;
                 }
             }
@@ -523,14 +524,6 @@ namespace NCDK.Tautomers
             {
                 IAtom atom = FindAtomByPosition(skeleton, hPosition);
                 atom.ImplicitHydrogenCount = 0;
-            }
-
-            foreach (var bond in skeleton.Bonds)
-            {
-                if (bond.Order.Equals(BondOrder.Double))
-                {
-                    bond.Order = BondOrder.Single;
-                }
             }
 
             // Make combinations for mobile Hydrogen attachments

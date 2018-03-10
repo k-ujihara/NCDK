@@ -32,9 +32,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             ArrayResult<double> result = (ArrayResult<double>)Descriptor.Calculate(ac).Value;
 
-            for (int i = 0; i < 19; i++)
-                Console.Out.WriteLine(result[i]);
-
             Assert.AreEqual(0.0000, result[MDEDescriptor.MDEO11], 0.0001);
             Assert.AreEqual(1.1547, result[MDEDescriptor.MDEO12], 0.0001);
             Assert.AreEqual(2.9416, result[MDEDescriptor.MDEO22], 0.0001);

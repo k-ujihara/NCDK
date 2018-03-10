@@ -55,7 +55,7 @@ namespace NCDK.Isomorphisms
         /// </example>
         /// <param name="target">the container to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>
-        public bool Matches(IAtomContainer target)
+        public virtual bool Matches(IAtomContainer target)
         {
             return Match(target).Length > 0;
         }

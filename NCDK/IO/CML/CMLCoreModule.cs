@@ -1496,7 +1496,7 @@ namespace NCDK.IO.CML
                     else
                     {
                         //                    cdo.SetObjectProperty("Molecule", "Name", cData);
-                        CurrentMolecule.SetProperty(CDKPropertyName.Title, cData);
+                        CurrentMolecule.Title = cData;
                     }
                 }
             }
@@ -1787,7 +1787,8 @@ namespace NCDK.IO.CML
                     {
                         //                    cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                         // FIXME: huh?
-                        if (ElTitles[i] != null) CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
+                        if (ElTitles[i] != null)
+                            CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
                     }
                 }
 

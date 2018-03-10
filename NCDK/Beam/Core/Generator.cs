@@ -54,7 +54,7 @@ namespace NCDK.Beam
         private readonly int[] visitedAt;
         private readonly int[] tmp;
         private int nVisit;
-        private readonly IAtomToken[] tokens;
+        private readonly AtomToken[] tokens;
         private readonly IDictionary<int, IList<RingClosure>> rings;
         private readonly IRingNumbering rnums;
 
@@ -81,7 +81,7 @@ namespace NCDK.Beam
             this.sb = new StringBuilder(g.Order * 2);
             this.visitedAt = visitedAt;
             this.tmp = new int[4];
-            this.tokens = new IAtomToken[g.Order];
+            this.tokens = new AtomToken[g.Order];
             this.rings = new Dictionary<int, IList<RingClosure>>();
 
             // prepare ring closures and topologies
@@ -183,6 +183,8 @@ namespace NCDK.Beam
         {
             visitedAt[u] = nVisit++;
             tokens[u] = g.GetAtom(u).Token;
+            tokens[u].Graph = g;
+            tokens[u].Index = u;
 
             int d = g.Degree(u);
             for (int j = 0; j < d; ++j)
@@ -420,14 +422,15 @@ namespace NCDK.Beam
             }
         }
 
-        public interface IAtomToken
+        public abstract class AtomToken
         {
-            void Configure(Configuration c);
-
-            void Append(StringBuilder sb);
+            public Graph Graph { get; set; }
+            public int Index { get; set; }
+            public abstract void Configure(Configuration c);
+            public abstract void Append(StringBuilder sb);
         }
 
-        public sealed class SubsetToken : IAtomToken
+        public sealed class SubsetToken : AtomToken
         {
             private readonly string str;
 
@@ -436,18 +439,18 @@ namespace NCDK.Beam
                 this.str = str;
             }
 
-            public void Configure(Configuration c)
+            public override void Configure(Configuration c)
             {
                 // do nothing
             }
 
-            public void Append(StringBuilder sb)
+            public override void Append(StringBuilder sb)
             {
                 sb.Append(str);
             }
         }
 
-        public sealed class BracketToken : IAtomToken
+        public sealed class BracketToken : AtomToken
         {
             private IAtom atom;
             private Configuration c = Configuration.Unknown;
@@ -457,25 +460,28 @@ namespace NCDK.Beam
                 this.atom = a;
             }
 
-            public void Configure(Configuration c)
+            public override void Configure(Configuration c)
             {
                 this.c = c;
             }
 
-            public void Append(StringBuilder sb)
+            public override void Append(StringBuilder sb)
             {
+                bool hExpand = atom.Element == Element.Hydrogen &&
+                  Graph.Degree(Index) == 0;
+
                 sb.Append('[');
                 if (atom.Isotope >= 0)
                     sb.Append(atom.Isotope);
-                sb.Append(atom.IsAromatic() ? atom.Element
-                                                .Symbol.ToLowerInvariant()
-                                          : atom.Element
-                                                .Symbol);
+                sb.Append(
+                    atom.IsAromatic() ? 
+                        atom.Element.Symbol.ToLowerInvariant() : 
+                        atom.Element.Symbol);
                 if (c != Configuration.Unknown)
                     sb.Append(c.Shorthand.Symbol);
-                if (atom.NumOfHydrogens > 0)
+                if (atom.NumOfHydrogens > 0 && !hExpand)
                     sb.Append(Element.Hydrogen.Symbol);
-                if (atom.NumOfHydrogens > 1)
+                if (atom.NumOfHydrogens > 1 && !hExpand)
                     sb.Append(atom.NumOfHydrogens);
                 if (atom.Charge != 0)
                 {
@@ -487,24 +493,35 @@ namespace NCDK.Beam
                 if (atom.AtomClass != 0)
                     sb.Append(':').Append(atom.AtomClass);
                 sb.Append(']');
+                if (hExpand)
+                {
+                    int h = atom.NumOfHydrogens;
+                    while (h > 1)
+                    {
+                        sb.Append("([H])");
+                        h--;
+                    }
+                    if (h > 0)
+                        sb.Append("[H]");
+                }
             }
         }
 
-        abstract class TokenAdapter : IAtomToken
+        abstract class TokenAdapter : AtomToken
         {
-            private IAtomToken parent;
+            private AtomToken parent;
 
-            public TokenAdapter(IAtomToken parent)
+            public TokenAdapter(AtomToken parent)
             {
                 this.parent = parent;
             }
 
-            public virtual void Configure(Configuration c)
+            public override void Configure(Configuration c)
             {
                 this.parent.Configure(c);
             }
 
-            public virtual void Append(StringBuilder sb)
+            public override void Append(StringBuilder sb)
             {
                 parent.Append(sb);
             }
@@ -514,7 +531,7 @@ namespace NCDK.Beam
         {
             int rnum;
 
-            public RingNumberToken(IAtomToken p, int rnum)
+            public RingNumberToken(AtomToken p, int rnum)
                 : base(p)
             {
                 this.rnum = rnum;
@@ -533,7 +550,7 @@ namespace NCDK.Beam
         {
             Bond bond;
 
-            public RingBondToken(IAtomToken p, Bond bond)
+            public RingBondToken(AtomToken p, Bond bond)
             : base(p)
             {
                 this.bond = bond;

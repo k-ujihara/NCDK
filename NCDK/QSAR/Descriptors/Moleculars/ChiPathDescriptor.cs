@@ -56,23 +56,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPath
     // @cdk.keyword chi path index
     // @cdk.keyword descriptor
-    public class ChiPathDescriptor : IMolecularDescriptor
+    public class ChiPathDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
 
         public ChiPathDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath",
                 typeof(ChiPathDescriptor).FullName, "The Chemistry Development Kit");
 
-        public IReadOnlyList<string> ParameterNames => null;
-        public object GetParameterType(string name) => null;
-        public object[] Parameters { get { return null; } set { } }
+        public override IReadOnlyList<string> ParameterNames => null;
+        public override object GetParameterType(string name) => null;
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = _DescriptorNames();
+        public override IReadOnlyList<string> DescriptorNames { get; } = _DescriptorNames();
         private static string[] _DescriptorNames()
         {
             string[] names = new string[16];
@@ -190,7 +190,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
         ///         the actual type of values returned by the descriptor in the <see cref="IDescriptorValue"/> object
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(16);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(16);
 
         private List<IList<int>> Order0(IAtomContainer atomContainer)
         {

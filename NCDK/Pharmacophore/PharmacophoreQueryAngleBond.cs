@@ -97,6 +97,7 @@ namespace NCDK.Pharmacophore
         /// <returns>true if the target angle lies within the range of the query constraint</returns>
         public bool Matches(IBond bond)
         {
+            bond = BondRef.Deref(bond);
             if (bond is PharmacophoreAngleBond pbond)
             {
                 double bondLength = Round(pbond.BondLength, 2);

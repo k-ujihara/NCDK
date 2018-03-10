@@ -296,7 +296,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:kierHallSmarts
-    public class KierHallSmartsDescriptor : IMolecularDescriptor
+    public class KierHallSmartsDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static string[] names;
         private static readonly string[] SMARTS = EStateFragments.Smarts;
@@ -322,7 +322,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <item>Implementation-Vendor: CDK, JOELib, or anything else</item>
         /// </list></para>
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
@@ -333,7 +333,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the descriptor.
         /// </summary>
         /// <exception cref="CDKException">if any parameters are specified</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             get
             {
@@ -345,7 +345,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => names;
+        public override IReadOnlyList<string> DescriptorNames => names;
 
         private DescriptorValue<ArrayResult<int>> GetDummyDescriptorValue(Exception e)
         {
@@ -399,20 +399,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Length);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(SMARTS.Length);
 
         /// <summary>
         /// Gets the parameterNames attribute of the descriptor.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the descriptor.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

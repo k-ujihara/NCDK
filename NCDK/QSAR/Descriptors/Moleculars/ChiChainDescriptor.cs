@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
@@ -65,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiChain
     // @cdk.keyword chi chain index
     // @cdk.keyword descriptor
-    public class ChiChainDescriptor : IMolecularDescriptor
+    public class ChiChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
 
@@ -73,21 +74,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public ChiChainDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain",
                 typeof(ChiChainDescriptor).FullName,
                 "The Chemistry Development Kit");
 
-        public IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
+        public override IReadOnlyList<string> ParameterNames => null; //To change body of implemented methods use File | Settings | File Templates.
 
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             return null; //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -99,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -185,7 +186,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(10);
 
         private IList<IList<int>> Order3(IAtomContainer container)
         {

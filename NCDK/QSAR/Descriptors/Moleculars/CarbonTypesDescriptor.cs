@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -52,13 +53,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:carbonTypes
     // @cdk.keyword topological bond order ctypes
     // @cdk.keyword descriptor
-    public class CarbonTypesDescriptor : IMolecularDescriptor
+    public class CarbonTypesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3" };
 
         public CarbonTypesDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
@@ -69,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Sets the parameters attribute of the GravitationalIndexDescriptor object.
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -82,19 +83,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// The parameterNames attribute of the GravitationalIndexDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null; // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the GravitationalIndexDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         /// <summary>
         /// Calculates the 9 carbon types descriptors
@@ -173,7 +174,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(9);
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

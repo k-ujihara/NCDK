@@ -18,8 +18,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using NCDK.Aromaticities;
+using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
@@ -102,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:xlogP
     // @cdk.keyword XLogP
     // @cdk.keyword descriptor
-    public class XLogPDescriptor : IMolecularDescriptor
+    public class XLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private bool salicylFlag = false;
@@ -116,7 +117,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the XLogPDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
@@ -127,7 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the XLogPDescriptor object.
         /// </summary>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -154,7 +155,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -1220,7 +1221,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Method initialise the HydrogenpairCheck with a value
@@ -1775,14 +1776,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the XLogPDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "salicylFlag" };
 
         /// <summary>
         /// Gets the parameterType attribute of the XLogPDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => true;
+        public override object GetParameterType(string name) => true;
 
         private IAtomContainer CreatePaba(IChemObjectBuilder builder)
         {

@@ -100,7 +100,7 @@ namespace NCDK.IO.Iterator
                 {
                     string suffix = Suffix(line);
                     nextMolecule = ReadSmiles(line);
-                    nextMolecule.SetProperty(CDKPropertyName.Title, suffix);
+                    nextMolecule.Title = suffix;
                 }
                 catch (Exception exception)
                 {

@@ -41,7 +41,7 @@ namespace NCDK.Config.Isotope
         [TestMethod()]
         public void TestReadIsotopes()
         {
-            IsotopeReader reader = new IsotopeReader(new MemoryStream(new byte[0]), new ChemObject().Builder);
+            IsotopeReader reader = new IsotopeReader(new MemoryStream(Encoding.UTF8.GetBytes("<?xml version=\"1.0\"?><list></list>")), new ChemObject().Builder);
             Assert.IsNotNull(reader);
             var isotopes = reader.ReadIsotopes();
             Assert.IsNotNull(isotopes);

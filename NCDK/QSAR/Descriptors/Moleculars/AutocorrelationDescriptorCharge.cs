@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-02-27
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    public class AutocorrelationDescriptorCharge : IMolecularDescriptor
+    public class AutocorrelationDescriptorCharge : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5" };
 
@@ -109,25 +109,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> ParameterNames { get; } = new string[0];
-        public object GetParameterType(string name) => null;
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[0];
+        public override object GetParameterType(string name) => null;
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
              new DescriptorSpecification(
                     "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
                     typeof(AutocorrelationDescriptorCharge).FullName,
                     "The Chemistry Development Kit");
 
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

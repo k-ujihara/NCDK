@@ -22,7 +22,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <see href="http://dx.doi.org/10.1021/ci034207y">here</see>.
+    /// See <see href="https://dx.doi.org/10.1021/ci034207y">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

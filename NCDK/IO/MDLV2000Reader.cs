@@ -404,7 +404,7 @@ namespace NCDK.IO
                     outputContainer = new QueryAtomContainer(molecule.Builder);
 
                 if (title != null)
-                    outputContainer.SetProperty(CDKPropertyName.Title, title);
+                    outputContainer.Title = title;
                 if (remark != null)
                     outputContainer.SetProperty(CDKPropertyName.Remark, remark);
 

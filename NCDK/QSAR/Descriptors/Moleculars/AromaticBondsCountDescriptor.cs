@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:aromaticBondsCount
-    public class AromaticBondsCountDescriptor : IMolecularDescriptor
+    public class AromaticBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nAromBond" };
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public AromaticBondsCountDescriptor() { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount",
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// aromaticity has been checked (TRUE) or not (FALSE).
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -95,7 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the count of aromatic atoms in the supplied <see cref="IAtomContainer"/>.
@@ -144,19 +144,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         ///  The parameterNames attribute of the AromaticBondsCountDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the AromaticBondsCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => true;
+        public override object GetParameterType(string name) => true;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

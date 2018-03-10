@@ -71,6 +71,16 @@ namespace NCDK.Depict
         public const string GifFormatKey = "gif";
 
         /// <summary>
+        /// Units in MM (specific to SVG).
+        /// </summary>
+        public const string UnitsMM = "mm";
+
+         /// <summary>
+         /// Units in PX (specific to SVG).
+         /// </summary>
+        public const string UnitsPixel = "px";
+
+        /// <summary>
         /// Bond length in mm recommended by ACS at 1996.
         /// </summary>
         internal const double ACS1996BondLength = 5.08;
@@ -96,7 +106,19 @@ namespace NCDK.Depict
         /// <returns>svg XML content</returns>
         public string ToSvgString()
         {
-            return ToVectorString(SvgFormatKey);
+            return ToSvgString(UnitsMM);
+        }
+
+     /// <summary>
+     /// Render the image to an SVG image.
+     /// </summary>
+     /// <param name="units">the units for SVG - 'px' or 'mm'</param>
+     /// <returns>svg XML content</returns>
+        public string ToSvgString(string units)
+        {
+            if (!units.Equals(UnitsMM) && !units.Equals(UnitsPixel))
+                throw new ArgumentException("Units must be 'px' or 'mm'!");
+            return ToVectorString(SvgFormatKey, units);
         }
 
         /// <summary>
@@ -132,8 +154,9 @@ namespace NCDK.Depict
         /// rendering.
         /// </summary>
         /// <param name="format">the vector graphics format</param>
+        /// <param name="units">the units to use (px or mm)</param>
         /// <returns>the vector graphics format string</returns>
-        internal abstract string ToVectorString(string format);
+        internal abstract string ToVectorString(string format, string units);
 
         /// <summary>
         /// List the available formats that can be rendered.

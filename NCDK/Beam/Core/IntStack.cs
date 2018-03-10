@@ -28,9 +28,6 @@
  */
 
 using NCDK.Common.Collections;
-using System;
-using System.Collections.Generic;
-using static NCDK.Beam.Configuration;
 
 namespace NCDK.Beam
 {
@@ -58,9 +55,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Push the value <paramref name="x"/> on to the stack.
-        ///
-        /// <param name="x">value to push</param>
         /// </summary>
+        /// <param name="x">value to push</param>
         public void Push(int x)
         {
             if (n == xs.Length)
@@ -71,9 +67,8 @@ namespace NCDK.Beam
         /// <summary>
         /// Access and remove the value on the top of the stack. No check is made as
         /// to whether the stack is empty.
-        ///
-        /// <returns>value on top of the stack</returns>
         /// </summary>
+        /// <returns>value on top of the stack</returns>
         public int Pop()
         {
             return xs[--n];
@@ -82,9 +77,8 @@ namespace NCDK.Beam
         /// <summary>
         /// Access the value on top of the stack without removing it. No check is
         /// made as to whether the stack is empty.
-        ///
-        /// <returns>the last value added</returns>
         /// </summary>
+        /// <returns>the last value added</returns>
         public int Peek()
         {
             return xs[n - 1];
@@ -92,16 +86,14 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Determine if there are any items on the stack.
-        ///
-        /// <returns>whether the stack is empty</returns>
         /// </summary>
+        /// <returns>whether the stack is empty</returns>
         public bool IsEmpty => n == 0;
 
         /// <summary>
         /// Number of items on the stack.
-        ///
-        /// <returns>size</returns>
         /// </summary>
+        /// <returns>size</returns>
         public int Count => n;
 
         /// <summary>Remove all values from the stack.</summary>

@@ -32,7 +32,7 @@ using System;
 
 namespace NCDK.Beam
 {
-   /// <summary> <author>John May </author></summary>
+    /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class ParserTest
     {
@@ -317,7 +317,7 @@ namespace NCDK.Beam
             int[] order = new int[4];
             topology.Copy(order);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 8, 4 }, order));
-            Console.Out.WriteLine (g.ToSmiles());
+            Console.Out.WriteLine(g.ToSmiles());
         }
 
         [TestMethod()]
@@ -325,6 +325,13 @@ namespace NCDK.Beam
         public void OpenBracketIsInvalid()
         {
             Parser.Parse("[");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidSmilesException))]
+        public void NonSmiles()
+        {
+            Graph.FromSmiles("50-00-0");
         }
     }
 }

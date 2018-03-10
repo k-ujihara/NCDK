@@ -1,1 +1,1 @@
-﻿Based on snap shot of cdk-beam on 2017-11-29
+﻿Based on snap shot of cdk-beam on 2017-12-29 (1.1-SNAPSHOT)

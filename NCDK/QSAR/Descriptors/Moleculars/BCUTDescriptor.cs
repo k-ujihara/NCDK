@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Aromaticities;
@@ -113,7 +114,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:BCUT
     // @cdk.keyword BCUT
     // @cdk.keyword descriptor
-    public class BCUTDescriptor : IMolecularDescriptor
+    public class BCUTDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         // the number of negative & positive eigenvalues
         // to return for each class of BCUT descriptor
@@ -129,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.checkAromaticity = true;
         }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                typeof(BCUTDescriptor).FullName, "The Chemistry Development Kit");
@@ -145,7 +146,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
         /// <seealso cref="Parameters"/>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -184,7 +185,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -210,14 +211,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the BCUTDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "nhigh", "nlow", "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the BCUTDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter (can be either 'nhigh' or 'nlow' or checkAromaticity)</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             switch (name)
             {
@@ -519,7 +520,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(6);
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {

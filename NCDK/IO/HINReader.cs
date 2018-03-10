@@ -157,7 +157,7 @@ namespace NCDK.IO
                         line = input.ReadLine();
                     }
                     IAtomContainer m = file.Builder.NewAtomContainer();
-                    m.SetProperty(CDKPropertyName.Title, info);
+                    m.Title = info;
 
                     // Each element of cons is an List of length 3 which stores
                     // the start and end indices and bond order of each bond

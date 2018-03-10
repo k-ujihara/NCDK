@@ -21,12 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using NCDK.Numerics;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
+using NCDK.Numerics;
 using System;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Templates
 {
@@ -38,6 +39,11 @@ namespace NCDK.Templates
     [TestClass()]
     public class TestMoleculeFactory
     {
+        private static IAtomContainer NewAtomContainer()
+        {
+            return Default.ChemObjectBuilder.Instance.NewAtomContainer();
+        }
+
         [TestMethod()]
         public void Test()
         {
@@ -54,7 +60,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeEthanol()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -65,7 +71,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeAlphaPinene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -101,7 +107,7 @@ namespace NCDK.Templates
         // @cdk.created 2003-08-15
         public static IAtomContainer MakeAlkane(int chainLength)
         {
-            IAtomContainer currentChain = new AtomContainer();
+            IAtomContainer currentChain = NewAtomContainer();
 
             //Add the initial atom
             currentChain.Atoms.Add(new Atom("C"));
@@ -118,7 +124,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeEthylCyclohexane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -145,7 +151,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
         public static IAtomContainer MakeCyclohexene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -168,7 +174,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
         public static IAtomContainer MakeCyclohexane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -191,7 +197,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
         public static IAtomContainer MakeCyclopentane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -212,7 +218,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
         public static IAtomContainer MakeCyclobutane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -231,7 +237,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
         public static IAtomContainer MakeCyclobutadiene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -246,7 +252,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakePropylCycloPropane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -269,7 +275,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
         public static IAtomContainer MakeBiphenyl()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -302,7 +308,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakePhenylEthylBenzene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -339,7 +345,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakePhenylAmine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -362,7 +368,7 @@ namespace NCDK.Templates
         /* build a molecule from 4 condensed triangles */
         public static IAtomContainer Make4x3CondensedRings()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
             mol.Atoms.Add(new Atom("C")); // 3
@@ -385,7 +391,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeSpiroRings()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -413,7 +419,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeBicycloRings()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -437,7 +443,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeFusedRings()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -466,7 +472,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeMethylDecaline()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -497,7 +503,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeEthylPropylPhenantren()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -545,7 +551,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeSteran()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -595,7 +601,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
         public static IAtomContainer MakeAzulene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -628,7 +634,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
         public static IAtomContainer MakeIndole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -659,7 +665,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
         public static IAtomContainer MakePyrrole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -681,7 +687,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
         public static IAtomContainer MakePyrroleAnion()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             IAtom nitrogenAnion = new Atom("N")
             {
                 FormalCharge = -1
@@ -707,7 +713,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
         public static IAtomContainer MakeImidazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -729,7 +735,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
         public static IAtomContainer MakePyrazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -751,7 +757,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
         public static IAtomContainer Make124Triazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -773,7 +779,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
         public static IAtomContainer Make123Triazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -795,7 +801,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
         public static IAtomContainer MakeTetrazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("N")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -817,7 +823,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
         public static IAtomContainer MakeOxazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("O")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -839,7 +845,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
         public static IAtomContainer MakeIsoxazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("O")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -861,7 +867,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
         public static IAtomContainer MakeIsothiazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("S")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -883,7 +889,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
         public static IAtomContainer MakeThiadiazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("S")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -905,7 +911,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
         public static IAtomContainer MakeOxadiazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("O")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -927,7 +933,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
         public static IAtomContainer MakePyridine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -951,7 +957,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
         public static IAtomContainer MakePyridineOxide()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms[1].FormalCharge = 1;
@@ -979,7 +985,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
         public static IAtomContainer MakePyrimidine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1003,7 +1009,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
         public static IAtomContainer MakePyridazine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("N")); // 2
@@ -1027,7 +1033,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
         public static IAtomContainer MakeTriazine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1051,7 +1057,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
         public static IAtomContainer MakeThiazole()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1069,7 +1075,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeSingleRing()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1098,7 +1104,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeDiamantane()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1138,7 +1144,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeBranchedAliphatic()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1183,7 +1189,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeBenzene()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("C")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1202,7 +1208,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeQuinone()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("O")); // 0
             mol.Atoms.Add(new Atom("C")); // 1
             mol.Atoms.Add(new Atom("C")); // 2
@@ -1225,7 +1231,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakePiperidine()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("N"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -1249,7 +1255,7 @@ namespace NCDK.Templates
 
         public static IAtomContainer MakeTetrahydropyran()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = NewAtomContainer();
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms.Add(new Atom("C"));
@@ -1271,7 +1277,7 @@ namespace NCDK.Templates
         // @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
         public static IAtomContainer MakeAdenine()
         {
-            IAtomContainer mol = new AtomContainer(); // Adenine
+            IAtomContainer mol = NewAtomContainer(); // Adenine
             IAtom a1 = mol.Builder.NewAtom("C");
             a1.Point2D = new Vector2(21.0223, -17.2946);
             mol.Atoms.Add(a1);

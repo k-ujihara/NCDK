@@ -18,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.AtomTypes;
 using NCDK.QSAR.Results;
 using NCDK.RingSearches;
@@ -70,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
     // @see org.openscience.cdk.tools.CDKHydrogenAdder
-    public class ALOGPDescriptor : IMolecularDescriptor
+    public class ALOGPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         IAtomContainer atomContainer;
         IRingSet rs;
@@ -2353,25 +2354,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
+        public override IDescriptorResult DescriptorResultType => new ArrayResult<double>(3);
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         protected static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 typeof(ALOGPDescriptor).FullName, "The Chemistry Development Kit");
 
-        public IReadOnlyList<string> ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => new string[0];
 
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public IReadOnlyList<string> DescriptorNames => STRINGS;
+        public override IReadOnlyList<string> DescriptorNames => STRINGS;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }// end class

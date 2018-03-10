@@ -272,7 +272,7 @@ namespace NCDK.Smiles
                 {
 
                     // set the correct title
-                    mol.SetProperty(CDKPropertyName.Title, title.Substring(pos));
+                    mol.Title = title.Substring(pos);
 
                     IDictionary<IAtom, IAtomContainer> atomToMol = new Dictionary<IAtom, IAtomContainer>(mol.Atoms.Count);
                     IList<IAtom> atoms = new List<IAtom>(mol.Atoms.Count);

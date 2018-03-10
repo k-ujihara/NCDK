@@ -116,6 +116,7 @@
     <Compile Include="BondRefTest.cs" />
     <Compile Include="CDKTest.cs" />
     <Compile Include="Config\BODRIsotopeTest.cs" />
+    <Compile Include="Default\AtomContainer2Test.cs" />
     <Compile Include="Default\AtomContainerTest.cs" />
     <Compile Include="Default\BondTest.cs" />
     <Compile Include="Config\AtomTypeFactoryTest.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="FaulonSignatures\Simple\ReconstructionTest.cs" />
     <Compile Include="FaulonSignatures\Simple\SimpleGraphTest.cs" />
     <Compile Include="FaulonSignatures\Simple\SimpleQuotientGraphTest.cs" />
+    <Compile Include="Fingerprints\AtomPairs2DFingerprintTest.cs" />
     <Compile Include="Fingerprints\CircularFingerprintSmartsTest.cs" />
     <Compile Include="Graphs\AllCyclesTest.cs" />
     <Compile Include="Graphs\GraphUtilTest.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Tools\Diff\Tree\Point2dDifferenceTest.cs" />
     <Compile Include="Tools\Diff\Tree\Point3dDifferenceTest.cs" />
     <Compile Include="Tools\Diff\Tree\StringDifferenceTest.cs" />
+    <Compile Include="Tools\Manipulator\SgroupManipulatorTest.cs" />
     <Compile Include="Tools\PeriodicTable\PeriodicTableTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1781,6 +1784,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FaulonSignatures\SignatureTests.csproj" />
+    <Compile Include="Geometries\CIP\CIPSMILESTest.cs" />
+    <Compile Include="Geometries\CIP\CIPToolTest.cs" />
+    <Compile Include="Geometries\CIP\ImmutableHydrogenTest.cs" />
+    <Compile Include="Geometries\CIP\ImplicitHydrogenLigandTest.cs" />
+    <Compile Include="Geometries\CIP\LigancyFourChiralityTest.cs" />
+    <Compile Include="Geometries\CIP\LigandTest.cs" />
+    <Compile Include="Geometries\CIP\TerminalLigandTest.cs" />
+    <Compile Include="Geometries\CIP\VisitedAtomsTest.cs" />
     <Content Include="TT\ReactionChainTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionChainTest.tt.cs</LastGenOutput>

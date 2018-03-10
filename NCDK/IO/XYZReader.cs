@@ -108,7 +108,7 @@ namespace NCDK.IO
                     var setOfMolecules = file.Builder.NewAtomContainerSet();
 
                     IAtomContainer m = file.Builder.NewAtomContainer();
-                    m.SetProperty(CDKPropertyName.Title, info);
+                    m.Title = info;
 
                     for (int i = 0; i < number_of_atoms; i++)
                     {

@@ -17,6 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -65,13 +66,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:weightedPath
-    public class WeightedPathDescriptor : IMolecularDescriptor
+    public class WeightedPathDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5" };
 
         public WeightedPathDescriptor() { }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
@@ -81,21 +82,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the WeightedPathDescriptor object.
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// The parameterNames attribute of the WeightedPathDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the WeightedPathDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         /// <summary>
         /// Calculates the weighted path descriptors.
@@ -200,7 +201,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(5);
 
         private double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)
         {

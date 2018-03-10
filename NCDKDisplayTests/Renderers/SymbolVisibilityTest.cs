@@ -220,13 +220,36 @@ namespace NCDK.Renderers
 
             a1.Point2D = new Vector2(0, 0);
             a2.Point2D = new Vector2(0.5, -0.5);
-            a2.Point2D = new Vector2(1, 0);
+            a3.Point2D = new Vector2(1, 0);
 
             IBond bond1 = new Bond(a1, a2, BondOrder.Double);
             IBond bond2 = new Bond(a2, a3, BondOrder.Single);
 
             Assert.IsTrue(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon
-                                       .Visible(a1, new[] { bond1, bond2 }, new RendererModel()));
+                                       .Visible(a1, new[] { bond1 }, new RendererModel()));
+        }
+
+        [TestMethod()]
+        public void DelocalisedCarbons()
+        {
+            IAtom a1 = new Atom("CH");
+            IAtom a2 = new Atom("CH");
+            IAtom a3 = new Atom("CH");
+
+            a1.Point2D = new Vector2(0, 0);
+            a2.Point2D = new Vector2(0.5, -0.5);
+            a3.Point2D = new Vector2(1, 0);
+
+            IBond bond1 = new Bond(a1, a2, BondOrder.Unset);
+            IBond bond2 = new Bond(a2, a3, BondOrder.Unset);
+            bond1.IsAromatic = true;
+            bond2.IsAromatic = true;
+            a1.IsAromatic = true;
+            a2.IsAromatic = true;
+            a3.IsAromatic = true;
+
+            Assert.IsFalse(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon
+                .Visible(a2, new[] { bond1, bond2 }, new RendererModel()));
         }
     }
 }

@@ -20,16 +20,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
-using NCDK.Default;
+using NCDK.Common.Collections;
 using NCDK.IO;
-using NCDK.Sgroups;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections;
-using NCDK.Smiles;
 
 namespace NCDK.Fingerprints
 {
@@ -71,15 +69,16 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug853254()
         {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug853254-2.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer superstructure = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer superstructure = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug853254-1.mol";
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer substructure = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer substructure = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             // these molecules are different resonance forms of the same molecule
             // make sure aromaticity is detected. although some fingerprinters do this
@@ -127,15 +126,16 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug771485()
         {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug771485-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer structure1 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug771485-2.mol";
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer structure2 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             // these molecules are different resonance forms of the same molecule
             // make sure aromaticity is detected. although some fingerprinters do this
@@ -171,15 +171,16 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestBug931608()
         {
+            IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
             string filename = "NCDK.Data.MDL.bug931608-1.mol";
             var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer structure1 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             filename = "NCDK.Data.MDL.bug931608-2.mol";
             ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
+            IAtomContainer structure2 = (IAtomContainer)reader.Read(builder.NewAtomContainer());
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(structure1);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(structure2);

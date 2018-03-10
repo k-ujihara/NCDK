@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -41,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:NilaComplexity
-    public class FragmentComplexityDescriptor : IMolecularDescriptor
+    public class FragmentComplexityDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "fragC" };
 
@@ -51,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public FragmentComplexityDescriptor() { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
@@ -62,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the FragmentComplexityDescriptor object.
         /// This descriptor takes no parameter.
         /// </summary>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -78,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the complexity in the supplied <see cref="IAtomContainer"/>.
@@ -107,19 +108,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the FragmentComplexityDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the FragmentComplexityDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

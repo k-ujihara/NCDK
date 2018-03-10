@@ -25,9 +25,10 @@
  */
 
 using NCDK.Formula;
-using NCDK.Stereo;
-using System.Collections.Generic;
 using NCDK.Numerics;
+using NCDK.Stereo;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Default
 {
@@ -51,6 +52,41 @@ namespace NCDK.Default
         : IChemObjectBuilder
     {
         public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
+
+        private static bool? legacyAtomContainer = null;
+        private static bool LegacyAtomContainer
+        {
+            get
+            {
+                if (!legacyAtomContainer.HasValue)
+                {
+                    var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
+                    if (string.IsNullOrWhiteSpace(val))
+                        legacyAtomContainer = true;
+                    else
+                    {
+                        val = val.Trim();
+                        switch (val.ToLowerInvariant())
+                        {
+                            case "t":
+                            case "true":
+                            case "1":
+                                legacyAtomContainer = true;
+                                break;
+                            case "f":
+                            case "false":
+                            case "0":
+                                legacyAtomContainer = false;
+                                break;
+                            default:
+                                throw new InvalidOperationException("Invalid value, expected true/false: " + val);
+                        }
+                    }
+                }
+                return legacyAtomContainer.Value;
+            }
+        }
+
 
         public T New<T>() where T : IAtomContainer, new() => new T();
 
@@ -100,9 +136,9 @@ namespace NCDK.Default
         public ILonePair NewLonePair(IAtom atom) => new LonePair(atom);
         
         // atom containers
-        public IAtomContainer NewAtomContainer() => new AtomContainer();
-        public IAtomContainer NewAtomContainer(IAtomContainer container) => new AtomContainer(container);
-        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
+        public IAtomContainer NewAtomContainer() => LegacyAtomContainer ? (IAtomContainer)new AtomContainer() : (IAtomContainer)new AtomContainer2();
+        public IAtomContainer NewAtomContainer(IAtomContainer container) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(container) : (IAtomContainer)new AtomContainer2(container);
+        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(atoms, bonds) : (IAtomContainer)new AtomContainer2(atoms, bonds);
         public IRing NewRing() => new Ring();
         public IRing NewRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
         public IRing NewRing(IAtomContainer atomContainer) => new Ring(atomContainer);
@@ -187,6 +223,41 @@ namespace NCDK.Silent
     {
         public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
 
+        private static bool? legacyAtomContainer = null;
+        private static bool LegacyAtomContainer
+        {
+            get
+            {
+                if (!legacyAtomContainer.HasValue)
+                {
+                    var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
+                    if (string.IsNullOrWhiteSpace(val))
+                        legacyAtomContainer = true;
+                    else
+                    {
+                        val = val.Trim();
+                        switch (val.ToLowerInvariant())
+                        {
+                            case "t":
+                            case "true":
+                            case "1":
+                                legacyAtomContainer = true;
+                                break;
+                            case "f":
+                            case "false":
+                            case "0":
+                                legacyAtomContainer = false;
+                                break;
+                            default:
+                                throw new InvalidOperationException("Invalid value, expected true/false: " + val);
+                        }
+                    }
+                }
+                return legacyAtomContainer.Value;
+            }
+        }
+
+
         public T New<T>() where T : IAtomContainer, new() => new T();
 
         // elements
@@ -235,9 +306,9 @@ namespace NCDK.Silent
         public ILonePair NewLonePair(IAtom atom) => new LonePair(atom);
         
         // atom containers
-        public IAtomContainer NewAtomContainer() => new AtomContainer();
-        public IAtomContainer NewAtomContainer(IAtomContainer container) => new AtomContainer(container);
-        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new AtomContainer(atoms, bonds);
+        public IAtomContainer NewAtomContainer() => LegacyAtomContainer ? (IAtomContainer)new AtomContainer() : (IAtomContainer)new AtomContainer2();
+        public IAtomContainer NewAtomContainer(IAtomContainer container) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(container) : (IAtomContainer)new AtomContainer2(container);
+        public IAtomContainer NewAtomContainer(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => LegacyAtomContainer ? (IAtomContainer) new AtomContainer(atoms, bonds) : (IAtomContainer)new AtomContainer2(atoms, bonds);
         public IRing NewRing() => new Ring();
         public IRing NewRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
         public IRing NewRing(IAtomContainer atomContainer) => new Ring(atomContainer);

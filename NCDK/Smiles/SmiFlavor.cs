@@ -133,7 +133,9 @@ namespace NCDK.Smiles
         CxAtomLabel = 0x008000,
 
         /// <summary>
-        /// Output atom values, atom values are specified by <see cref="IPseudoAtom.Label"/>.
+        /// Output atom values, atom values are specified by the property 
+        /// <see cref="CDKPropertyName.Comment"/> using
+        /// <see cref="IChemObject.SetProperty(object, object)"/>
         /// </summary>
         CxAtomValue = 0x010000,
 

@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:acidicGroupCount
     public class BasicGroupCountDescriptor 
-        : IMolecularDescriptor
+        : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] SMARTS_STRINGS = 
         {
@@ -72,23 +72,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
                 typeof(BasicGroupCountDescriptor).FullName, 
                 "The Chemistry Development Kit");
 
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set { }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         public DescriptorValue<Result<int>> Calculate(IAtomContainer atomContainer)
         {
+            atomContainer = Clone(atomContainer);
+
             try
             {
                 int count = 0;
@@ -104,11 +106,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IDescriptorResult DescriptorResultType => Result<int>.Instance;
-        public IReadOnlyList<string> ParameterNames { get; } 
+        public override IDescriptorResult DescriptorResultType => Result<int>.Instance;
+        public override IReadOnlyList<string> ParameterNames { get; } 
             = new string[] { };
 
-        public object GetParameterType(string name) 
+        public override object GetParameterType(string name) 
         {
             object obj = null;
             return obj;

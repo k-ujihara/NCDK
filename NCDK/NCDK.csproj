@@ -72,6 +72,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fingerprints\AtomPairs2DFingerprinter.cs" />
+    <Compile Include="QSAR\AbstractMolecularDescriptor.cs" />
+    <Compile Include="Tools\Manipulator\SgroupManipulator.cs" />
+    <Compile Include="QSAR\AbstractDescriptor.cs" />
+    <Content Include="TT\AtomContainer2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainer2.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="AtomRef.cs" />
     <Compile Include="Beam\Core\AllCycles.cs" />
     <Compile Include="Beam\Core\ArbitraryMatching.cs" />
@@ -475,6 +483,11 @@
       <DependentUpon>Association.tt</DependentUpon>
     </Compile>
     <Compile Include="ResourceLoader.cs" />
+    <Compile Include="TT\AtomContainer2.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainer2.tt</DependentUpon>
+    </Compile>
     <Compile Include="TT\ChemObject.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

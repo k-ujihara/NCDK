@@ -16,8 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using MathNet.Numerics.LinearAlgebra;
+using NCDK.Common.Collections;
 using NCDK.Geometries;
 using NCDK.QSAR.Results;
 using System;
@@ -25,7 +26,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace NCDK.QSAR.Descriptors.Moleculars {
+namespace NCDK.QSAR.Descriptors.Moleculars
+{
     /// <summary>
     /// Holistic descriptors described by Todeschini et al <token>cdk-cite-TOD98</token>.
     /// </summary>
@@ -108,7 +110,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     // @cdk.dictref qsar-descriptors:WHIM
     // @cdk.keyword WHIM
     // @cdk.keyword descriptor
-    public class WHIMDescriptor : IMolecularDescriptor
+    public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         string type = "";
         IDictionary<string, double> hashatwt, hashvdw, hasheneg, hashpol;
@@ -205,7 +207,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             this.hashpol["I"] = 3.040;
         }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
@@ -219,7 +221,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         ///               mass, volume, eneg, polar</para>
         /// </summary>
         /// <exception cref="CDKException">if the parameters are of the wrong type</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -242,7 +244,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -257,14 +259,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         /// <summary>
         /// The parameterNames attribute of the WHIMDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "type" };
 
         /// <summary>
         /// Gets the parameterType attribute of the WHIMDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => "";
+        public override object GetParameterType(string name) => "";
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -442,7 +444,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(17);
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
 

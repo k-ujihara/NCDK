@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
@@ -307,7 +308,6 @@ namespace NCDK.IO
 
                 // OK, now test that the residue identifier is properly read
                 Assert.AreEqual("ALAA116", container.Id);
-                Console.Out.WriteLine("" + container);
             }
             finally
             {

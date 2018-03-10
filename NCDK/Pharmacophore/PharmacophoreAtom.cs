@@ -79,6 +79,15 @@ namespace NCDK.Pharmacophore
             }
         }
 
+        public static PharmacophoreAtom Get(IAtom atom)
+        {
+            if (atom is PharmacophoreAtom)
+                return (PharmacophoreAtom)atom;
+            if (atom is AtomRef)
+                return Get(((AtomRef)atom).Deref());
+            return null;
+        }
+
         /// <summary>
         /// The SMARTS for the group.
         /// </summary>

@@ -58,9 +58,7 @@ namespace NCDK.IO.CML
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, molecule);
 
             Assert.AreEqual(1, roundTrippedMol.GetProperties().Count);
-            Console.Out.WriteLine("" + roundTrippedMol.GetProperties().Keys);
             var obj = roundTrippedMol.GetProperties().Keys.ToArray()[0];
-            Console.Out.WriteLine("" + obj);
             Assert.IsTrue(obj is DescriptorSpecification);
             DescriptorSpecification spec = (DescriptorSpecification)obj;
             Assert.AreEqual(descriptor.Specification.SpecificationReference, spec.SpecificationReference);

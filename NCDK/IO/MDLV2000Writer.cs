@@ -243,10 +243,9 @@ namespace NCDK.IO
                 if (container.Title != null)
                 {
                     if (bigPile.Title != null)
-                        bigPile.SetProperty(CDKPropertyName.Title,
-                                            bigPile.Title + "; " + container.Title);
+                        bigPile.Title = bigPile.Title + "; " + container.Title;
                     else
-                        bigPile.SetProperty(CDKPropertyName.Title, container.Title);
+                        bigPile.Title = container.Title;
                 }
                 if (container.GetProperty<string>(CDKPropertyName.Remark) != null)
                 {

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Templates;
 using NCDK.QSAR.Results;
 using NCDK.Isomorphisms;
@@ -43,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarprotein
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:aminoAcidsCount
-    public class AminoAcidCountDescriptor : IMolecularDescriptor
+    public class AminoAcidCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private IChemObjectSet<IAtomContainer> substructureSet;
 
@@ -67,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         public DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
@@ -78,13 +79,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set { } // no parameters exist
         }
 
-        public IReadOnlyList<string> DescriptorNames => names;
+        public override IReadOnlyList<string> DescriptorNames => names;
 
         /// <summary>
         /// Determine the number of amino acids groups the supplied <see cref="IAtomContainer"/>.
@@ -94,6 +95,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <seealso cref="Parameters"/>
         public DescriptorValue<ArrayResult<int>> Calculate(IAtomContainer ac)
         {
+            ac = Clone(ac); // don't modify input
             int resultLength = substructureSet.Count;
             ArrayResult<int> results = new ArrayResult<int>(resultLength);
 
@@ -131,19 +133,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// allows you to do the same thing, without actually calculating the descriptor.
         /// </para>
         /// </summary>
-        public IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
+        public override IDescriptorResult DescriptorResultType => new ArrayResult<int>(20);
 
         /// <summary>
         /// Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => new string[0];
+        public override IReadOnlyList<string> ParameterNames => new string[0];
 
         /// <summary>
         /// Gets the parameterType attribute of the AromaticAtomsCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             return null;
         }

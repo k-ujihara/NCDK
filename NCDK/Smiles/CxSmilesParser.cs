@@ -459,7 +459,7 @@ namespace NCDK.Smiles
                         if (!ProcessCoords(iter, state))
                             return -1;
                         break;
-                    case 'c': // Skip cis/trans/unspec
+                    case 'c': // cis/trans/unspec ignored
                     case 't':
                         // c/t:
                         if (iter.NextIf(':'))
@@ -474,10 +474,22 @@ namespace NCDK.Smiles
                                 return -1;
                         }
                         break;
-                    case 'r': // Skip relative stereochemistry
-                        if (!iter.NextIf(':'))
+                    case 'r': // relative stereochemistry ignored
+                        if (iter.NextIf(':'))
+                        {
+                            if (!SkipIntList(iter, CommaSeparatorChar))
+                                return -1;
+                        }
+                        else
+                        {
+                            if (!iter.NextIf(',') && iter.Curr() != '|')
+                                return -1;
+                        }
+                        break;
+                    case 'l': // lone pairs ignored
+                        if (!iter.NextIf("p:"))
                             return -1;
-                        if (!SkipIntList(iter, CommaSeparatorChar))
+                        if (!SkipIntMap(iter))
                             return -1;
                         break;
                     case 'f': // fragment grouping
@@ -513,7 +525,7 @@ namespace NCDK.Smiles
                             return -1;
                         break;
                     case 'C':
-                    case 'H': // skip coordination and hydrogen bonding
+                    case 'H': // coordination and hydrogen bonding ignored
                         if (!iter.NextIf(':'))
                             return -1;
                         while (iter.HasNext() && IsDigit(iter.Curr()))
@@ -551,6 +563,20 @@ namespace NCDK.Smiles
                     return true;
             }
             // ran off end
+            return false;
+        }
+
+        private static bool SkipIntMap(CharIter iter)
+        {
+            while (iter.HasNext())
+            {
+                char c = iter.Curr();
+                if (Char.IsDigit(c) || c == ',' || c == ':')
+                    iter.Next();
+                else
+                    return true;
+            }
+            // ran of end
             return false;
         }
 

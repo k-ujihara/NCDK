@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -47,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:kierValues
     // @cdk.keyword Kappe shape index
     // @cdk.keyword descriptor
-    public class KappaShapeIndicesDescriptor : IMolecularDescriptor
+    public class KappaShapeIndicesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };
 
@@ -59,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the KappaShapeIndicesDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
@@ -69,9 +70,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the
         /// KappaShapeIndicesDescriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculates the kier shape indices for an atom container
@@ -210,13 +211,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(3);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(3);
 
         /// <summary>
         /// The parameterNames attribute of the
         /// KappaShapeIndicesDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null; // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the
@@ -224,7 +225,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

@@ -37,7 +37,7 @@ namespace NCDK.Fragments
         static ExhaustiveFragmenterTest()
         {
             fragmenter = new ExhaustiveFragmenter();
-            smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
+            smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         }
 
         [TestMethod()]
@@ -101,7 +101,6 @@ namespace NCDK.Fragments
 
             Assert.IsNotNull(fragmenter.GetFragmentsAsContainers());
             Assert.AreEqual(1, fragmenter.GetFragmentsAsContainers().Count());
-
         }
 
         [TestMethod()]

@@ -9,7 +9,7 @@ namespace NCDK.Depict
         {
             IRenderingElement renderingElements = null;
             #region
-            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(renderingElements);
             string svg = visitor.ToString();
             #endregion

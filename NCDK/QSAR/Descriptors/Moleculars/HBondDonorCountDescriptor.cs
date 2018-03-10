@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondDonors
-    public class HBondDonorCountDescriptor : IMolecularDescriptor
+    public class HBondDonorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "nHBDon" };
 
@@ -76,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the HBondDonorCountDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors",
@@ -86,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameter of this HBondDonorCountDescriptor instance.
         /// </summary>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -99,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -152,20 +153,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames of the HBondDonorCountDescriptor.
         /// <see langword="null"/> as this descriptor does not have any parameters.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
+        public override IReadOnlyList<string> ParameterNames => null; // no parameters; thus we return null
 
         /// <summary>
         /// Gets the parameterType of the HBondDonorCountDescriptor.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns><see langword="null"/> as this descriptor does not have any parameters</returns>
-        public object GetParameterType(string name) => null; // no parameters; thus we return null
+        public override object GetParameterType(string name) => null; // no parameters; thus we return null
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

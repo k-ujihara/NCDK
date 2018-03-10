@@ -63,7 +63,6 @@ namespace NCDK.IO.CML
             cmlWriter.Write(polymer1);
             cmlWriter.Close();
             string cmlContent1 = writer.ToString();
-            Console.Out.WriteLine(cmlContent1.Substring(0, 500));
 
             CMLReader reader2 = new CMLReader(new MemoryStream(Encoding.UTF8.GetBytes(cmlContent1)));
             IChemFile chemFil2 = (IChemFile)reader2.Read(new ChemFile());
@@ -86,7 +85,6 @@ namespace NCDK.IO.CML
             cmlWriter.Write(polymer2);
             cmlWriter.Close();
             string cmlContent2 = writer.ToString();
-            Console.Out.WriteLine(cmlContent2.Substring(0, 500));
 
             string conte1 = cmlContent1.Substring(0, 1000);
             string conte2 = cmlContent2.Substring(0, 1000);

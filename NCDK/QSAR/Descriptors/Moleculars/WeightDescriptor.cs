@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -57,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:weight
-    public class WeightDescriptor : IMolecularDescriptor
+    public class WeightDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private string elementName = "*";
 
@@ -67,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public WeightDescriptor() { }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
                 typeof(WeightDescriptor).FullName,
@@ -77,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the WeightDescriptor object.
         /// </summary>
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -99,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -189,19 +190,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the WeightDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "elementSymbol" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the WeightDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public object GetParameterType(string name) => "";
+        public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

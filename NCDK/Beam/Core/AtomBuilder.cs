@@ -264,7 +264,7 @@ namespace NCDK.Beam
         /// Assign the isotope number to the atom which will be created. An isotope
         /// number of '-1' means unspecified (default).
         /// </summary>
-        /// <param name="isotope">isotope number >= 0.</param>
+        /// <param name="isotope">isotope number ÅÜ 0.</param>
         /// <returns>an atom builder to configure additional properties</returns>
         public AtomBuilder Isotope(int isotope)
         {

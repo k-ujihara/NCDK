@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -45,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bpol
-    public class BPolDescriptor : IMolecularDescriptor
+    public class BPolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
         private static double[] polarizabilities;
@@ -69,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
              "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol",
@@ -80,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BPolDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -93,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         ///  This method calculate the sum of the absolute value of
@@ -161,19 +162,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// can be achieved by interrogating the <see cref="IDescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.</para>
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         ///  The parameterNames attribute of the BPolDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null; // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null; // no param names to return
 
         /// <summary>
         ///  Gets the parameterType attribute of the BPolDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

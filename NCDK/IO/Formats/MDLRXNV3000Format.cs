@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,7 +28,7 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    public class MDLRXNV3000Format : AbstractResourceFormat, IChemFormatMatcher
+    public class MDLRXNV3000Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;
 
@@ -56,34 +56,28 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions { get; } = new string[] { "rxn" };
 
         /// <inheritdoc/>
-        public string ReaderClassName { get; } = typeof(MDLRXNV3000Reader).FullName;
+        public override string ReaderClassName { get; } = typeof(MDLRXNV3000Reader).FullName;
 
         /// <inheritdoc/>
-        public string WriterClassName => null;
+        public override string WriterClassName => null;
 
         /// <inheritdoc/>
-        public MatchResult Matches(IList<string> lines)
+        public override bool Matches(int lineNumber, string line)
         {
-            // if the first line doesn't have '$RXN' then it can't match
-            if (lines.Count < 1 || !lines[0].StartsWith("$RXN V3000", StringComparison.Ordinal))
-                return MatchResult.NO_MATCH;
-
-            // check the header (fifth line)
-            string header = lines.Count > 4 ? lines[4] : "";
-
-            if (!header.StartsWith("M  V30 ", StringComparison.Ordinal))
-                return MatchResult.NO_MATCH;
-
-            return new MatchResult(true, this, 0);
+            if (line.StartsWith("$RXN V3000"))
+            {
+                return true;
+            }
+            return false;
         }
 
         /// <inheritdoc/>
         public override bool IsXmlBased => false;
 
         /// <inheritdoc/>
-        public DataFeatures SupportedDataFeatures => DataFeatures.None;
+        public override DataFeatures SupportedDataFeatures => DataFeatures.None;
 
         /// <inheritdoc/>
-        public DataFeatures RequiredDataFeatures => DataFeatures.None;
+        public override DataFeatures RequiredDataFeatures => DataFeatures.None;
     }
 }

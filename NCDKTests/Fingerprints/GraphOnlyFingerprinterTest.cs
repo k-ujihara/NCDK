@@ -20,12 +20,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Isomorphisms;
 using NCDK.Smiles;
-using System;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
@@ -48,7 +48,6 @@ namespace NCDK.Fingerprints
             IFingerprinter printer = new GraphOnlyFingerprinter();
 
             IBitFingerprint bs1 = printer.GetBitFingerprint(parser.ParseSmiles("C=C-C#N"));
-            Console.Out.WriteLine("----");
             IBitFingerprint bs2 = printer.GetBitFingerprint(parser.ParseSmiles("CCCN"));
 
             Assert.AreEqual(bs1, bs2);

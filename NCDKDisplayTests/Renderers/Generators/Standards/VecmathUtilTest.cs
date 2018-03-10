@@ -204,7 +204,6 @@ namespace NCDK.Renderers.Generators.Standards
         public void Intersection2()
         {
             var intersect = VecmathUtil.Intersection(new Vector2(6, 1), new Vector2(-4, -2), new Vector2(1, 6), new Vector2(2, 4));
-            Console.Out.WriteLine(intersect);
             Assert.AreEqual(-4, intersect.X, 0.01);
             Assert.AreEqual(-4, intersect.Y, 0.01);
         }
@@ -218,25 +217,25 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void sweepEast()
+        public void SweepEast()
         {
             Assert.AreEqual(Vectors.DegreeToRadian(0), VecmathUtil.Extent(new Vector2(1, 0)), 0.01);
         }
 
         [TestMethod()]
-        public void sweepNorth()
+        public void SweepNorth()
         {
             Assert.AreEqual(Vectors.DegreeToRadian(90), VecmathUtil.Extent(new Vector2(0, 1)), 0.01);
         }
 
         [TestMethod()]
-        public void sweepWest()
+        public void SweepWest()
         {
             Assert.AreEqual(Vectors.DegreeToRadian(180), VecmathUtil.Extent(new Vector2(-1, 0)), 0.01);
         }
 
         [TestMethod()]
-        public void sweepSouth()
+        public void SweepSouth()
         {
             Assert.AreEqual(Vectors.DegreeToRadian(270), VecmathUtil.Extent(new Vector2(0, -1)), 0.01);
         }

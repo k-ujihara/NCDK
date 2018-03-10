@@ -316,9 +316,9 @@ namespace NCDK.IO
         public void TestTwoFragmentsWithTitle()
         {
             IAtomContainer mol1 = TestMoleculeFactory.MakeAlphaPinene();
-            mol1.SetProperty(CDKPropertyName.Title, "title1");
+            mol1.Title = "title1";
             IAtomContainer mol2 = TestMoleculeFactory.MakeAlphaPinene();
-            mol2.SetProperty(CDKPropertyName.Title, "title2");
+            mol2.Title = "title2";
             IChemModel model = mol1.Builder.NewChemModel();
             model.MoleculeSet = mol1.Builder.NewAtomContainerSet();
             model.MoleculeSet.Add(mol1);

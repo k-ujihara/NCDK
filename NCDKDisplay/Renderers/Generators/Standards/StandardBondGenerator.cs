@@ -91,6 +91,7 @@ namespace NCDK.Renderers.Generators.Standards
         private readonly Typeface font;
         private readonly double emSize;
         private readonly ElementGroup annotations;
+        private readonly bool forceDelocalised;
 
         /// <summary>
         /// Create a new standard bond generator for the provided structure (container) with the laid out
@@ -127,6 +128,7 @@ namespace NCDK.Renderers.Generators.Standards
             this.annotationDistance = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
             this.annotationScale = (1 / scale) * parameters.GetAnnotationFontScale();
             this.annotationColor = parameters.GetAnnotationColor();
+            this.forceDelocalised = parameters.GetForceDelocalisedBondDisplay();
             this.font = font;
             this.emSize = emSize;
 
@@ -175,17 +177,27 @@ namespace NCDK.Renderers.Generators.Standards
             switch (order)
             {
                 case BondOrder.Single:
-                    elem = GenerateSingleBond(bond, atom1, atom2);
+                    if (bond.IsAromatic && forceDelocalised)
+                        elem = GenerateDoubleBond(bond, true);
+                    else
+                        elem = GenerateSingleBond(bond, atom1, atom2);
                     break;
                 case BondOrder.Double:
-                    elem = GenerateDoubleBond(bond);
+                    elem = GenerateDoubleBond(bond, bond.IsAromatic && forceDelocalised);
                     break;
                 case BondOrder.Triple:
                     elem = GenerateTripleBond(bond, atom1, atom2);
                     break;
                 default:
-                    // bond orders > 3 not supported
-                    elem = GenerateDashedBond(atom1, atom2);
+                    if (bond.IsAromatic && order == BondOrder.Unset)
+                    {
+                        elem = GenerateDoubleBond(bond, true);
+                    }
+                    else
+                    {
+                        // bond orders > 3 not supported
+                        elem = GenerateDashedBond(atom1, atom2);
+                    }
                     break;
             }
 
@@ -600,7 +612,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="bond">the bond to render</param>
         /// <returns>rendering element</returns>
-        private IRenderingElement GenerateDoubleBond(IBond bond)
+        private IRenderingElement GenerateDoubleBond(IBond bond, bool dashed)
         {
             bool cyclic = ringMap.ContainsKey(bond);
 
@@ -629,50 +641,55 @@ namespace NCDK.Renderers.Generators.Standards
 
             if (cyclic)
             {
+                // get the winding relative to the ring
                 int wind1 = Winding(atom1Bonds[0], bond);
                 int wind2 = Winding(bond, atom2Bonds[0]);
-                if (wind1 > 0 && !HasDisplayedSymbol(atom1))
+                if (wind1 > 0)
                 {
-                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds);
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, dashed);
                 }
-                else if (wind2 > 0 && !HasDisplayedSymbol(atom2))
+                else if (wind2 > 0)
                 {
-                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds);
+                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, dashed);
                 }
-                else if (!HasDisplayedSymbol(atom1))
+                else
                 {
-                    // special case, offset line is drawn on the opposite side
-                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, true);
+                    // special case, offset line is drawn on the opposite side for
+                    // when concave in macro cycle
+                    //
+                    //           ---
+                    //         a --- b
+                    //        /       \
+                    //    -- x         x --
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, true, dashed);
                 }
-                else if (!HasDisplayedSymbol(atom2))
+            }
+            else if (atom1Bonds.Count == 1 && !HasDisplayedSymbol(atom1) && (!HasDisplayedSymbol(atom2) || !atom2Bonds.Any()))
+            {
+                return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, dashed);
+            }
+            else if (atom2Bonds.Count == 1 && !HasDisplayedSymbol(atom2) && (!HasDisplayedSymbol(atom1) || !atom1Bonds.Any()))
+            {
+                return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, dashed);
+            }
+            else if (SpecialOffsetBondNextToWedge(atom1, atom1Bonds) && !HasDisplayedSymbol(atom1))
+            {
+                return GenerateOffsetDoubleBond(bond, atom1, atom2, SelectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
+            }
+            else if (SpecialOffsetBondNextToWedge(atom2, atom2Bonds) && !HasDisplayedSymbol(atom2))
+            {
+                return GenerateOffsetDoubleBond(bond, atom2, atom1, SelectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+            }
+            else
+            {
+                if (dashed)
                 {
-                    // special case, offset line is drawn on the opposite side
-                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, true);
+                    return GenerateDashedBond(atom1, atom2);
                 }
                 else
                 {
                     return GenerateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
                 }
-            }
-            else if (atom1Bonds.Count == 1 && !HasDisplayedSymbol(atom1) && (!HasDisplayedSymbol(atom2) || !atom2Bonds.Any()))
-            {
-                return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds);
-            }
-            else if (atom2Bonds.Count == 1 && !HasDisplayedSymbol(atom2) && (!HasDisplayedSymbol(atom1) || !atom1Bonds.Any()))
-            {
-                return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds);
-            }
-            else if (SpecialOffsetBondNextToWedge(atom1, atom1Bonds) && !HasDisplayedSymbol(atom1))
-            {
-                return GenerateOffsetDoubleBond(bond, atom1, atom2, SelectPlainSingleBond(atom1Bonds), atom2Bonds);
-            }
-            else if (SpecialOffsetBondNextToWedge(atom2, atom2Bonds) && !HasDisplayedSymbol(atom2))
-            {
-                return GenerateOffsetDoubleBond(bond, atom2, atom1, SelectPlainSingleBond(atom2Bonds), atom1Bonds);
-            }
-            else
-            {
-                return GenerateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
         }
 
@@ -755,9 +772,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="atom1Bond">the reference bond used to decide which side the bond is offset</param>
         /// <param name="atom2Bonds">the bonds connected to atom 2</param>
         /// <returns>the rendered bond element</returns>
-        private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds)
+        private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool dashed)
         {
-            return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false);
+            return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false, dashed);
         }
 
         /// <summary>
@@ -772,7 +789,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="atom2Bonds">the bonds connected to atom 2</param>
         /// <param name="invert">invert the offset (i.e. opposite to reference bond)</param>
         /// <returns>the rendered bond element</returns>
-        private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool invert)
+        private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool invert, bool dashed)
         {
             Debug.Assert(!HasDisplayedSymbol(atom1));
             Debug.Assert(atom1Bond != null);
@@ -780,6 +797,7 @@ namespace NCDK.Renderers.Generators.Standards
             Vector2 atom1Point = atom1.Point2D.Value;
             Vector2 atom2Point = atom2.Point2D.Value;
 
+            Vector2 atom1BackOffPoint = BackOffPoint(atom1, atom2);
             Vector2 atom2BackOffPoint = BackOffPoint(atom2, atom1);
 
             Vector2 unit = NewUnitVector(atom1Point, atom2Point);
@@ -803,15 +821,20 @@ namespace NCDK.Renderers.Generators.Standards
 
             // the offset line isn't drawn the full length and is backed off more depending on the
             // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
-            double atom1Offset = AdjacentLength(Sum(reference, unit), perpendicular, separation);
+            double atom1Offset = 0;
             double atom2Offset = 0;
 
-            // reference bond may be on the other side (invert specified) -     the offset needs negating
+            if (dashed || !HasDisplayedSymbol(atom1))
+            {
+                atom1Offset = AdjacentLength(Sum(reference, unit), perpendicular, separation);
+            }
+
+            // reference bond may be on the other side (invert specified) - the offset needs negating
             if (Vector2.Dot(reference, perpendicular) < 0) atom1Offset = -atom1Offset;
 
             // the second atom may have zero or more bonds which we can use to get the offset
             // we find the one which is closest to the perpendicular vector
-            if (atom2Bonds.Any() && !HasDisplayedSymbol(atom2))
+            if (atom2Bonds.Any() && (dashed || !HasDisplayedSymbol(atom2)))
             {
                 Vector2 closest = GetNearestVector(perpendicular, atom2, atom2Bonds);
                 atom2Offset = AdjacentLength(Sum(closest, Negate(unit)), perpendicular, separation);
@@ -827,10 +850,23 @@ namespace NCDK.Renderers.Generators.Standards
 
             ElementGroup group = new ElementGroup
             {
-                NewLineElement(atom1Point, atom2BackOffPoint),
-                NewLineElement(Sum(Sum(atom1Point, Scale(perpendicular, separation)), Scale(unit, atom1Offset)),
-                    Sum(Sum(atom2BackOffPoint, Scale(perpendicular, separation)), Scale(unit, -atom2Offset)))
+                NewLineElement(atom1BackOffPoint, atom2BackOffPoint)
             };
+            if (dashed)
+            {
+                Vector2 beg = atom1Point + perpendicular * separation;
+                Vector2 end = atom2Point + perpendicular * separation;
+                group.Add(GenerateDashedBond(beg, end,
+                                             atom1Offset,
+                                             Vector2.Distance(beg, end) - atom2Offset));
+            }
+            else
+            {
+                Vector2 beg = atom1BackOffPoint + perpendicular * separation;
+                Vector2 end = atom2BackOffPoint + perpendicular * separation;
+                group.Add(NewLineElement(beg + unit * atom1Offset,
+                                         end + unit * -atom2Offset));
+            }
 
             // add annotation label on the opposite side
             string label = StandardGenerator.GetAnnotationLabel(bond);
@@ -1124,22 +1160,18 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Generates a rendering element for displaying an 'unknown' bond type.
         /// </summary>
-        /// <param name="from">drawn from this atom</param>
-        /// <param name="to">drawn to this atom</param>
+        /// <param name="fromPoint">drawn from this point</param>
+        /// <param name="toPoint">drawn to this point</param>
+        /// <param name="start">only start drawing dashes after this point</param>
+        /// <param name="end">stop drawing dashes after this point</param>
         /// <returns>rendering of unknown bond</returns>
-        internal IRenderingElement GenerateDashedBond(IAtom from, IAtom to)
+        internal IRenderingElement GenerateDashedBond(Vector2 fromPoint, Vector2 toPoint, double start, double end)
         {
-            Vector2 fromPoint = from.Point2D.Value;
-            Vector2 toPoint = to.Point2D.Value;
-
             Vector2 unit = NewUnitVector(fromPoint, toPoint);
 
             int nDashes = parameters.GetDashSection();
 
             double step = Vector2.Distance(fromPoint, toPoint) / ((3 * nDashes) - 2);
-
-            double start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, BackOffPoint(from, to)) : double.NegativeInfinity;
-            double end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, BackOffPoint(to, from)) : double.PositiveInfinity;
 
             ElementGroup group = new ElementGroup();
 
@@ -1172,6 +1204,15 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             return group;
+        }
+
+        IRenderingElement GenerateDashedBond(IAtom from, IAtom to)
+        {
+            Vector2 fromPoint = from.Point2D.Value;
+            Vector2 toPoint = to.Point2D.Value;
+            double start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, BackOffPoint(from, to)) : double.NegativeInfinity;
+            double end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, BackOffPoint(to, from)) : double.PositiveInfinity;
+            return GenerateDashedBond(fromPoint, toPoint, start, end);
         }
 
         /// <summary>

@@ -24,8 +24,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { false };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("c1ccccc1"); // benzol
-                                                             //Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).GetValue()).Value);
-            Console.Out.WriteLine("test1>:" + ((Result<int>)Descriptor.Calculate(mol).Value).Value);
+            Assert.AreEqual(6, ((Result<int>)Descriptor.Calculate(mol).Value).Value);
         }
 
         [TestMethod()]

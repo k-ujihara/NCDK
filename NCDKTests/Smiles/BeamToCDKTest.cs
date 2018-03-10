@@ -22,12 +22,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Beam;
 using NCDK.Common.Base;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using NCDK.Stereo;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -503,22 +501,19 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TitleWithTab()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").Title,
-                         "caffeine");
+            Assert.AreEqual("caffeine", Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").Title);
         }
 
         [TestMethod()]
         public void TitleWithSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").Title,
-                 "caffeine");
+            Assert.AreEqual("caffeine", Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").Title);
         }
 
         [TestMethod()]
         public void TitleWithMultipleSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").Title,
-                 "caffeine compound");
+            Assert.AreEqual("caffeine compound", Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").Title);
         }
 
         IAtomContainer Convert(string smi)

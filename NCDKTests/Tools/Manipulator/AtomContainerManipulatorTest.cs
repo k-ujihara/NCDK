@@ -16,15 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Isomorphisms;
+using NCDK.Sgroups;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using NCDK.Templates;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -248,7 +249,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveNonChiralHydrogens_StereoElement()
         {
-
             IAtomContainer molecule = GetChiralMolTemplate();
             IAtom[] ligands = new IAtom[]{molecule.Atoms[4], molecule.Atoms[3], molecule.Atoms[2],
                 molecule.Atoms[0]};
@@ -265,7 +265,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveNonChiralHydrogens_StereoParity()
         {
-
             IAtomContainer molecule = GetChiralMolTemplate();
             molecule.Atoms[1].StereoParity = StereoAtomParities.Minus;
 
@@ -277,7 +276,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveNonChiralHydrogens_StereoBond()
         {
-
             IAtomContainer molecule = GetChiralMolTemplate();
             molecule.Bonds[2].Stereo = BondStereo.Up;
 
@@ -289,7 +287,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestRemoveNonChiralHydrogens_StereoBondHeteroAtom()
         {
-
             IAtomContainer molecule = GetChiralMolTemplate();
             molecule.Bonds[3].Stereo = BondStereo.Up;
 
@@ -556,7 +553,6 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetTotalExactMass_IAtomContainer()
         {
-
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = parser.ParseSmiles("CCl");
             mol.Atoms[0].ExactMass = 12.00;
@@ -1292,7 +1288,38 @@ namespace NCDK.Tools.Manipulator
         public void RemoveHydrogens_molecularH()
         {
             AssertRemoveH("[H][H]", "[H][H]");
-            AssertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
+            AssertRemoveH("[HH]", "[H][H]");
+        }
+
+        [TestMethod()]
+        public void TestSgroupSuppressionSRU()
+        {
+            AssertRemoveH("CCC([H])CC |Sg:n:1,2,3,4:n:ht|", "CCCCC |Sg:n:1,2,3:n:ht|");
+        }
+
+        [TestMethod()]
+        public void TestSgroupSuppressionSRUUpdated()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("CCC([H])CC |Sg:n:1,2,3,4:n:ht|");
+            AtomContainerManipulator.SuppressHydrogens(mol);
+            ICollection<Sgroup> sgroups = mol.GetProperty<ICollection<Sgroup>>(CDKPropertyName.CtabSgroups);
+            Assert.IsNotNull(sgroups);
+            Assert.AreEqual(1, sgroups.Count);
+            Sgroup sgroup = sgroups.First();
+            Assert.AreEqual(3, sgroup.Atoms.Count);
+        }
+
+        [TestMethod()]
+        public void TestSgroupSuppressionPositionalVariation()
+        {
+            AssertRemoveH("*[H].C1=CC=CC=C1 |m:0:2.3.4|", "*[H].C1=CC=CC=C1 |m:0:2.3.4|");
+        }
+
+        [TestMethod()]
+        public void TestSgroupSuppressionSRUCrossingBond()
+        {
+            AssertRemoveH("CCC[H] |Sg:n:2:n:ht|", "CCC[H] |Sg:n:2:n:ht|");
         }
 
         [TestMethod()]
@@ -1341,7 +1368,7 @@ namespace NCDK.Tools.Manipulator
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer m = smipar.ParseSmiles(smiIn);
 
-            string smiAct = SmilesGenerator.Isomeric().Create(AtomContainerManipulator.RemoveHydrogens(m));
+            string smiAct = new SmilesGenerator().Create(AtomContainerManipulator.RemoveHydrogens(m));
 
             Assert.AreEqual(smiExp, smiAct);
         }

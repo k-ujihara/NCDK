@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
 using NCDK.QSAR.Results;
 using System;
@@ -54,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestChain
-    public class LargestChainDescriptor : IMolecularDescriptor
+    public class LargestChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private bool checkRingSystem = false;
@@ -66,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LargestChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
@@ -82,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -105,7 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -150,20 +151,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// Gets the parameterNames attribute of the LargestPiSystemDescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "checkRingSystem" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity", "checkRingSystem" };
 
         /// <summary>
         /// Gets the parameterType attribute of the LargestChainDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => true;
+        public override object GetParameterType(string name) => true;
 
         private static IAtomContainer SubsetMol(IAtomContainer mol, ISet<IAtom> include)
         {

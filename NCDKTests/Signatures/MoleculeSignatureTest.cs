@@ -26,7 +26,6 @@ using NCDK.FaulonSignatures;
 using NCDK.Graphs;
 using NCDK.Smiles;
 using NCDK.Templates;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Signatures
@@ -331,7 +330,6 @@ namespace NCDK.Signatures
             }
 
             MoleculeSignature molSignature = new MoleculeSignature(benzeneRing);
-            Console.Out.WriteLine("" + molSignature.ToFullString());
             List<AbstractVertexSignature> signatures = molSignature.GetVertexSignatures();
             foreach (var signature in signatures)
             {

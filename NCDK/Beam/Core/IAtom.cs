@@ -124,6 +124,6 @@ namespace NCDK.Beam
         /// string.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        Generator.IAtomToken Token { get; }
+        Generator.AtomToken Token { get; }
     }
 }

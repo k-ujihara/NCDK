@@ -105,7 +105,6 @@ namespace NCDK.IO.CML
                 // the copy the parsed content into a new MDMolecule
                 if (element.Attribute(Attribute_convention) != null && element.Attribute(Attribute_convention).Value.Equals("md:mdMolecule"))
                 {
-                    //                Console.Out.WriteLine("creating a MDMolecule");
                     base.StartElement(xpath, element);
                     CurrentMolecule = new MDMolecule(CurrentMolecule);
                 }
@@ -115,12 +114,10 @@ namespace NCDK.IO.CML
                     //If residue or chargeGroup, set up a new one
                     if (DICTREF.Equals("md:chargeGroup"))
                     {
-                        //                    Console.Out.WriteLine("Creating a new charge group...");
                         currentChargeGroup = new ChargeGroup();
                     }
                     else if (DICTREF.Equals("md:residue"))
                     {
-                        //                    Console.Out.WriteLine("Creating a new residue group...");
                         currentResidue = new Residue();
                         if (element.Attribute(Attribute_title) != null) currentResidue.Name = element.Attribute(Attribute_title).Value;
                     }
@@ -135,7 +132,6 @@ namespace NCDK.IO.CML
                 if ("md:switchingAtom".Equals(DICTREF))
                 {
                     //Set current atom as switching atom
-                    Console.Out.WriteLine("Adding Switching atom: " + CurrentAtom);
                     currentChargeGroup.SetSwitchingAtom(CurrentAtom);
                 }
                 else
@@ -152,7 +148,6 @@ namespace NCDK.IO.CML
                     {
                         // ok, an atom is referenced; look it up
                         CurrentAtom = null;
-                        //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
                         foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
@@ -177,7 +172,6 @@ namespace NCDK.IO.CML
                     {
                         // ok, an atom is referenced; look it up
                         IAtom referencedAtom = null;
-                        //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
                         foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
@@ -216,7 +210,6 @@ namespace NCDK.IO.CML
         {
             if (element.Name.Equals(XName_CML_molecule))
             {
-                //            Console.Out.WriteLine("Ending element mdmolecule");
                 // add chargeGroup, and then delete them
                 if (currentChargeGroup != null)
                 {
@@ -247,7 +240,6 @@ namespace NCDK.IO.CML
                 }
                 else
                 {
-                    //                Console.Out.WriteLine("OK, that was the last end mdmolecule");
                     base.EndElement(xpath, element);
                 }
             }

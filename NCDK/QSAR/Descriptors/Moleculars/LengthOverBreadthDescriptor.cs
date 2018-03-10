@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Common.Collections;
 using NCDK.Numerics;
 using MathNet.Numerics.LinearAlgebra;
@@ -53,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:lengthOverBreadth
-    public class LengthOverBreadthDescriptor : IMolecularDescriptor
+    public class LengthOverBreadthDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };
 
@@ -65,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The specification attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
@@ -75,9 +76,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Sets the parameters attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public object[] Parameters { get { return null; } set { } }
+        public override object[] Parameters { get { return null; } set { } }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<ArrayResult<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -169,7 +170,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<double>(2);
 
         private void RotateZ(double[][] coords, double theta)
         {
@@ -249,14 +250,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameterNames attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;
+        public override IReadOnlyList<string> ParameterNames => null;
 
         /// <summary>
         /// Gets the parameterType attribute of the PetitjeanNumberDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

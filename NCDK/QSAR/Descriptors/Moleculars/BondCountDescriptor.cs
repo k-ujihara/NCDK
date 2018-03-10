@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using System.Collections.Generic;
 
@@ -56,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondCount
-    public class BondCountDescriptor : IMolecularDescriptor
+    public class BondCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /// <summary>defaults to UNSET, which means: count all bonds </summary>
         private string order = "";
@@ -69,7 +70,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  The specification attribute of the BondCountDescriptor object
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
@@ -80,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BondCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -107,7 +108,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames
+        public override IReadOnlyList<string> DescriptorNames
         {
             get
             {
@@ -170,19 +171,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the BondCountDescriptor object
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "order" };
 
         /// <summary>
         ///  Gets the parameterType attribute of the BondCountDescriptor object
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             if ("order".Equals(name)) return "";
             return null;

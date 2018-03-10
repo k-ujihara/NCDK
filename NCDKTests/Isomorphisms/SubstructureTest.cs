@@ -394,21 +394,21 @@ namespace NCDK.Isomorphisms
         void AssertMatch(IAtomContainer query, IAtomContainer target, int count)
         {
             Assert.AreEqual(count, Create(query).MatchAll(target).GetStereochemistry().Count(),
-                query.GetProperty<string>(Title) + " should match " + target.GetProperty<string>(Title) + " " + count + " times");
+                query.Title + " should match " + target.Title + " " + count + " times");
         }
 
         void AssertMatch(IAtomContainer query, IAtomContainer target)
         {
             Assert.IsTrue(
                     Create(query).Matches(target),
-                    query.GetProperty<string>(Title) + " should match " + target.GetProperty<string>(Title));
+                    query.Title + " should match " + target.Title);
         }
 
         void AssertMismatch(IAtomContainer query, IAtomContainer target)
         {
             Assert.IsFalse(
                 Create(query).Matches(target),
-                query.GetProperty<string>(Title) + " should not matched " + target.GetProperty<string>(Title));
+                query.Title + " should not matched " + target.Title);
         }
 
         private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
@@ -417,7 +417,7 @@ namespace NCDK.Isomorphisms
         IAtomContainer Smi(string smi)
         {
             IAtomContainer container = sp.ParseSmiles(smi);
-            container.SetProperty(Title, smi);
+            container.Title = smi;
             return container;
         }
 
@@ -427,7 +427,7 @@ namespace NCDK.Isomorphisms
         IAtomContainer Sma(string sma)
         {
             IAtomContainer container = SMARTSParser.Parse(sma, Silent.ChemObjectBuilder.Instance);
-            container.SetProperty(Title, sma);
+            container.Title = sma;
             return container;
         }
     }

@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.RingSearches;
@@ -62,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword TPSA
     // @cdk.keyword total polar surface area
     // @cdk.keyword descriptor
-    public class TPSADescriptor : IMolecularDescriptor
+    public class TPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
         private static Dictionary<string, double> map;
@@ -134,7 +135,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Gets the specification attribute of the TPSADescriptor object.
         /// </summary>
         /// <returns>The specification value</returns>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
@@ -148,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// the descriptor routine should check for aromaticity (<see langword="true"/>) or
         /// not (<see langword="false"/>).</para>
         /// </summary>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -170,7 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<Result<double>> GetDummyDescriptorValue(Exception e)
         {
@@ -308,20 +309,20 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// Gets the parameterNames attribute of the TPSADescriptor object.
         /// </summary>
         /// <returns>The parameterNames value</returns>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the TPSADescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => true;
+        public override object GetParameterType(string name) => true;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

@@ -221,7 +221,7 @@ namespace NCDK.Pharmacophore
         {
             PharmacophoreQuery ret = new PharmacophoreQuery();
             ret.SetProperty("description", e.Attribute("description")?.Value);
-            ret.SetProperty(CDKPropertyName.Title, e.Attribute("name")?.Value);
+            ret.Title = e.Attribute("name")?.Value;
 
             // first get any local group definitions
             Dictionary<string, string> local = GetGroupDefinitions(e);

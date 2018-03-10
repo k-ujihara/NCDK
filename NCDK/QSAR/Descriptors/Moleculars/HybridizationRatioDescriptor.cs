@@ -1,6 +1,4 @@
 /*
- *
- *
  *  Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
@@ -19,6 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
 using System;
@@ -40,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hybratio
-    public class HybridizationRatioDescriptor : IMolecularDescriptor
+    public class HybridizationRatioDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /// <summary>
         /// Constructor for the HybridizationRatioDescriptor object.
@@ -50,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// A <see cref="DescriptorSpecification"/> which specifies which descriptor is implemented by this class.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio",
@@ -61,9 +60,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the HybridizationRatioDescriptor object.
         /// This descriptor takes no parameters
         /// </summary>
-        public object[] Parameters { get { return Array.Empty<object>(); } set { } }
+        public override object[] Parameters { get { return Array.Empty<object>(); } set { } }
 
-        public IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
+        public override IReadOnlyList<string> DescriptorNames { get; } = new string[] { "HybRatio" };
 
         /// <summary>
         /// </summary>
@@ -105,13 +104,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the HybridizationRatioDescriptor object.
         /// This descriptor takes no parameters
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute of the HybridizationRatioDescriptor object.
@@ -119,7 +118,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">the parameter name</param>
         /// <returns>An Object whose class is that of the parameter requested</returns>
-        public object GetParameterType(string name) => "";
+        public override object GetParameterType(string name) => "";
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

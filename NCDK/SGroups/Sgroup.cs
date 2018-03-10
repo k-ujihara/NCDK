@@ -99,12 +99,21 @@ namespace NCDK.Sgroups
         }
 
         /// <summary>
-        /// Add a bond to this Sgroup.
+        /// Add an atom to this Sgroup.
         /// </summary>
         /// <param name="atom">the atom</param>
         public void Add(IAtom atom)
         {
-            Atoms.Add(atom);
+            this.Atoms.Add(atom);
+        }
+
+        /// <summary>
+        /// Remove an atom from this Sgroup.
+        /// </summary>
+        /// <param name="atom">the atom</param>
+        public void Remove(IAtom atom)
+        {
+            this.Atoms.Remove(atom);
         }
 
         /// <summary>
@@ -114,6 +123,15 @@ namespace NCDK.Sgroups
         public void Add(IBond bond)
         {
             Bonds.Add(bond);
+        }
+
+        /// <summary>
+        /// Remove a bond from this Sgroup.
+        /// </summary>
+        /// <param name="bond">the bond</param>
+        public void Remove(IBond bond)
+        {
+            this.Bonds.Remove(bond);
         }
 
         /// <summary>

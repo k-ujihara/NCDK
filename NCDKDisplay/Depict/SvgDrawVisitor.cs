@@ -65,12 +65,12 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="w">width of canvas in mm</param>
         /// <param name="h">height of canvas in mm</param>
-        public SvgDrawVisitor(double w, double h)
+        public SvgDrawVisitor(double w, double h, string units)
         {
-            WriteHeader(w, h);
+            WriteHeader(w, h, units);
         }
 
-        private void WriteHeader(double w, double h)
+        private void WriteHeader(double w, double h, string units)
         {
             sb.Append("<?xml version='1.0' encoding='UTF-8'?>\n")
               .Append("<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n");
@@ -78,8 +78,8 @@ namespace NCDK.Depict
               .Append(" version='1.2'")
               .Append(" xmlns='http://www.w3.org/2000/svg'")
               .Append(" xmlns:xlink='http://www.w3.org/1999/xlink'")
-              .Append(" width='").Append(ToString(w)).Append("mm'")
-              .Append(" height='").Append(ToString(h)).Append("mm'")
+              .Append(" width='").Append(ToString(w)).Append(units).Append('\'')
+              .Append(" height='").Append(ToString(h)).Append(units).Append('\'')
               .Append(" viewBox='0 0 ").Append(ToString(w)).Append(" ").Append(ToString(h)).Append("'")
               .Append(">\n");
             indentLvl += 2;

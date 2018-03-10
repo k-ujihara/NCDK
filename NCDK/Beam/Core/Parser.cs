@@ -800,7 +800,12 @@ namespace NCDK.Beam
             if (bond == Bond.Dot)
                 throw new InvalidSmilesException("a ring bond can not be a 'dot':",
                                                  buffer,
-                                                 -1);
+                                                 buffer.Position);
+            if (stack.IsEmpty)
+                throw new InvalidSmilesException("No previous atom for ring open!",
+                                                 buffer,
+                                                 buffer.Position);
+
             if (rings.Length <= rnum || rings[rnum] == null)
             {
                 OpenRing(rnum);

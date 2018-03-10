@@ -230,11 +230,11 @@ namespace NCDK.IO
 
                 // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
                 if (firstLineisMolecule)
-                    molecule.SetProperty(CDKPropertyName.Title, line);
+                    molecule.Title = line;
                 else
                 {
                     line = input.ReadLine();
-                    molecule.SetProperty(CDKPropertyName.Title, line);
+                    molecule.Title = line;
                 }
 
                 // get atom and bond counts

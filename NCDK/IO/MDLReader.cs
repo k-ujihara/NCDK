@@ -331,7 +331,7 @@ namespace NCDK.IO
                 }
                 if (line.Length > 0)
                 {
-                    molecule.SetProperty(CDKPropertyName.Title, line);
+                    molecule.Title = line;
                 }
                 line = input.ReadLine();
                 linecount++;
@@ -670,7 +670,6 @@ namespace NCDK.IO
                     | exception is CDKException
                     | exception is ArgumentException))
                     throw;
-                Console.Error.WriteLine(exception.StackTrace);
                 string error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.Message;
                 Trace.TraceError(error);
                 Debug.WriteLine(exception);

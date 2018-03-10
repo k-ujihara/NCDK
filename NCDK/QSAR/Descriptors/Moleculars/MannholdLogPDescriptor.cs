@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -32,14 +33,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref    qsar-descriptors:mannholdLogP
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    public class MannholdLogPDescriptor : IMolecularDescriptor
+    public class MannholdLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MLogP" };
 
         /// <summary>
         /// The specification attribute of the MannholdLogPDescriptor object.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/" + "chemoinformatics-algorithms/#mannholdLogP",
@@ -51,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// would have been the method to set them.
         /// </summary>
         /// <exception cref="CDKException">Exception throw when invalid parameter values are passed</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -66,7 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private IDescriptorValue GetDummyDescriptorValue(Exception e)
         {
@@ -106,13 +107,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// A type of return value calculated by this descriptor.
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>();
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>();
 
         /// <summary>
         /// The parameterNames attribute for this descriptor.
         /// A zero-length string array.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Gets the parameterType attribute for a given parameter name. It
@@ -120,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="name">Name of the parameter for which the type is requested.</param>
         /// <returns>The parameterType of the given parameter.</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

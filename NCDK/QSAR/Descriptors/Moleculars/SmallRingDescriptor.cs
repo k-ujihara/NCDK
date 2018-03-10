@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:smallrings
     // @cdk.keyword smallrings
     // @cdk.keyword descriptor
-    public class SmallRingDescriptor : IMolecularDescriptor
+    public class SmallRingDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
             "nAromRings", // total number of small aromatic rings
@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Fetch descriptor specification.
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings",
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// parameters: empty array, there are none.
         /// </summary>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set { }
             get { return Array.Empty<object>(); }
@@ -84,22 +84,22 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The names of the descriptors made available by this class.
         /// </summary>
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// A placeholder with the descriptor size and type.
         /// </summary>
-        public IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(NAMES.Length);
+        public override IDescriptorResult DescriptorResultType { get; } = new ArrayResult<int>(NAMES.Length);
 
         /// <summary>
         /// parameters: empty, there are none.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => Array.Empty<string>();
+        public override IReadOnlyList<string> ParameterNames => Array.Empty<string>();
 
         /// <summary>
         /// Parameter types: there aren't any.
         /// </summary>
-        public object GetParameterType(string name) => true;
+        public override object GetParameterType(string name) => true;
 
         /// <summary>
         /// Performs the calculation: the graph will be analyzed and ring information will be determined and wrapped

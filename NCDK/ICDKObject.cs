@@ -50,7 +50,7 @@ namespace NCDK
     /// </summary>
     public class CDKObjectMap
     {
-        Dictionary<IChemObject, IChemObject> map = null;
+        internal Dictionary<IChemObject, IChemObject> map = null;
 
         Dictionary<IChemObject, IChemObject> Map
         {

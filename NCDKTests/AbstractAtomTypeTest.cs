@@ -393,7 +393,6 @@ namespace NCDK
             IAtomType at = (IAtomType)NewChemObject();
             at.AtomTypeName = "N.sp2.3";
             string description = at.ToString();
-            Console.Out.WriteLine(description);
             Assert.IsTrue(description.Contains("N.sp2.3"));
         }
 

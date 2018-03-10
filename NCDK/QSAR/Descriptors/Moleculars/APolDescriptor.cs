@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 using NCDK.QSAR.Results;
 using System;
@@ -50,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:apol
     // @cdk.keyword polarizability, atomic
-    public class APolDescriptor : IMolecularDescriptor
+    public class APolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
         private static double[] polarizabilities;
@@ -74,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                typeof(APolDescriptor).FullName, "The Chemistry Development Kit");
@@ -82,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the APolDescriptor object.
         /// </summary>
-        public object[] Parameters
+        public override object[] Parameters
         {
             get { return null; }
             set
@@ -91,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         /// <summary>
         /// Calculate the sum of atomic polarizabilities in an <see cref="IAtomContainer"/>.
@@ -129,19 +130,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<double>(0.0);
 
         /// <summary>
         /// The parameterNames attribute of the APolDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames => null;  // no param names to return
+        public override IReadOnlyList<string> ParameterNames => null;  // no param names to return
 
         /// <summary>
         /// Gets the parameterType attribute of the APolDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name) => null;
+        public override object GetParameterType(string name) => null;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

@@ -284,12 +284,13 @@ namespace NCDK.Graphs
                 var bonds = atomContainer.GetConnectedBonds(atom);
                 foreach (var bond in bonds)
                 {
+                    nextAtom = bond.GetOther(atom);
                     if (!bond.IsVisited)
                     {
+                        molecule.Atoms.Add(nextAtom);
                         molecule.Bonds.Add(bond);
                         bond.IsVisited = true;
                     }
-                    nextAtom = bond.GetOther(atom);
                     if (!nextAtom.IsVisited)
                     {
                         //                    Debug.WriteLine("wie oft???");

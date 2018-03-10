@@ -16,13 +16,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Graphs;
-using NCDK.Graphs.Matrix;
 using NCDK.QSAR.Results;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -52,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    public class LongestAliphaticChainDescriptor : IMolecularDescriptor
+    public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         public const string CHECK_RING_SYSTEM = "checkRingSystem";
         private bool checkRingSystem = false;
@@ -64,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public LongestAliphaticChainDescriptor() { }
 
         /// <inheritdoc/> 
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
@@ -77,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// aromaticity has been checked (TRUE) or not (FALSE).</para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -99,7 +97,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
@@ -188,19 +186,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { CHECK_RING_SYSTEM };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { CHECK_RING_SYSTEM };
 
         /// <summary>
         ///  Gets the parameterType attribute of the LongestAliphaticChainDescriptor object.
         /// </summary>
         /// <param name="name"></param>
         /// <returns>An Object of class equal to that of the parameter being requested</returns>
-        public object GetParameterType(string name)
+        public override object GetParameterType(string name)
         {
             if (name.Equals(CHECK_RING_SYSTEM))
                 return true;

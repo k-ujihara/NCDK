@@ -206,7 +206,7 @@ namespace NCDK.Default
         /// </summary>
 		/// <param name="atoms">An array of atoms that forms this bond</param>
 		/// <seealso cref="Atoms"/>
-       public virtual void SetAtoms(IEnumerable<IAtom> atoms)
+        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
             foreach (var atom in atoms)
@@ -586,7 +586,7 @@ namespace NCDK.Silent
         /// </summary>
 		/// <param name="atoms">An array of atoms that forms this bond</param>
 		/// <seealso cref="Atoms"/>
-       public virtual void SetAtoms(IEnumerable<IAtom> atoms)
+        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
             foreach (var atom in atoms)

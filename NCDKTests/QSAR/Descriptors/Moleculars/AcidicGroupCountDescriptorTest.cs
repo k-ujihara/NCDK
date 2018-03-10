@@ -16,13 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Numerics;
 using NCDK.QSAR.Results;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
-using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -92,7 +91,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestTwoGroup()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("O");
             a1.FormalCharge = 0;
             a1.Point2D = new Vector2(5.9019, 0.5282);
@@ -165,7 +164,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestCID()
         {
-            IAtomContainer mol = new AtomContainer();
+            IAtomContainer mol = Silent.ChemObjectBuilder.Instance.NewAtomContainer();
             IAtom a1 = mol.Builder.NewAtom("S");
             a1.FormalCharge = 0;
             a1.Point2D = new Vector2(9.4651, 0.25);

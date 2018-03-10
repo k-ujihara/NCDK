@@ -62,8 +62,6 @@ namespace NCDK.Common.Base
             {
                 return AreEqual((BitArray)expected, (BitArray)actual);
             }
-            else if (expected.GetType() != actual.GetType())
-                return false;
             else
             {
                 return expected.Equals(actual);

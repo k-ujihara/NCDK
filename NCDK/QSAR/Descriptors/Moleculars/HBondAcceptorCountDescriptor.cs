@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
 using NCDK.QSAR.Results;
 using NCDK.Tools.Manipulator;
@@ -70,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    public class HBondAcceptorCountDescriptor : IMolecularDescriptor
+    public class HBondAcceptorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
         private bool checkAromaticity = false;
@@ -86,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         /// <returns>   The specification value</returns>
         /// </summary>
-        public IImplementationSpecification Specification => _Specification;
+        public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
@@ -98,7 +99,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <value>a <see langword="true"/> means that aromaticity has to be checked</value>
         /// <exception cref="CDKException"></exception>
-        public object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -120,7 +121,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        public IReadOnlyList<string> DescriptorNames => NAMES;
+        public override IReadOnlyList<string> DescriptorNames => NAMES;
 
         private DescriptorValue<Result<int>> GetDummyDescriptorValue(Exception e)
         {
@@ -194,19 +195,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <inheritdoc/>
-        public IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
+        public override IDescriptorResult DescriptorResultType { get; } = new Result<int>(1);
 
         /// <summary>
         /// The parameterNames attribute of the HBondAcceptorCountDescriptor object.
         /// </summary>
-        public IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
+        public override IReadOnlyList<string> ParameterNames { get; } = new string[] { "checkAromaticity" };
 
         /// <summary>
         /// Gets the parameterType attribute of the HBondAcceptorCountDescriptor object.
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public object GetParameterType(string name) => false;
+        public override object GetParameterType(string name) => false;
 
         IDescriptorValue IMolecularDescriptor.Calculate(IAtomContainer container) => Calculate(container);
     }

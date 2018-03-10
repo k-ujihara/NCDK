@@ -136,7 +136,7 @@ namespace NCDK
 
         public virtual ICDKObject Clone(CDKObjectMap map)
         {
-            return new ChemObjectRef((IChemObject)chemobj.Clone());
+            return new ChemObjectRef((IChemObject)chemobj.Clone(map));
         }
     }
 }

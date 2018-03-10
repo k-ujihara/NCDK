@@ -20,6 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Numerics;
+using NCDK.Sgroups;
 using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
@@ -506,7 +507,6 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_IStereoElement_AtomParity()
         {
-
             IAtomContainer container = (IAtomContainer)NewChemObject();
 
             IChemObjectBuilder builder = container.Builder;
@@ -3005,8 +3005,8 @@ namespace NCDK
             Assert.IsFalse(container.IsEmpty(), "atom container Contains 2 atoms and 1 bond but was empty");
             container.Atoms.Remove(c1);
             container.Atoms.Remove(c2);
-            Assert.AreEqual(1, container.Bonds.Count, "atom Contains Contains no bonds");
-            Assert.IsTrue(container.IsEmpty(), "atom Contains Contains no atoms but was not empty");
+            Assert.AreEqual(1, container.Bonds.Count, "atom contains no bonds");
+            Assert.IsTrue(container.IsEmpty(), "atom contains no atoms but was not empty");
         }
 
         [TestMethod()]
@@ -3095,6 +3095,128 @@ namespace NCDK
             IChemObjectBuilder builder = container.Builder;
             IAtom atom = builder.NewAtom();
             container.GetConnectedSingleElectrons(atom);
+        }
+
+        [TestMethod()]
+        public void AddSameAtomTwice()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom atom = mol.Builder.NewAtom();
+            mol.Atoms.Add(atom);
+            mol.Atoms.Add(atom);
+            Assert.AreEqual(1, mol.Atoms.Count);
+        }
+
+        [TestMethod()]
+        public void PreserveAdjacencyOnSetAtoms()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom a1 = mol.Builder.NewAtom();
+            IAtom a2 = mol.Builder.NewAtom();
+            IAtom a3 = mol.Builder.NewAtom();
+            IAtom a4 = mol.Builder.NewAtom();
+            IBond b1 = mol.Builder.NewBond();
+            IBond b2 = mol.Builder.NewBond();
+            IBond b3 = mol.Builder.NewBond();
+            b1.SetAtoms(new IAtom[] { a1, a2 });
+            b2.SetAtoms(new IAtom[] { a2, a3 });
+            b3.SetAtoms(new IAtom[] { a3, a4 });
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Atoms.Add(a3);
+            mol.Atoms.Add(a4);
+            mol.Bonds.Add(b1);
+            mol.Bonds.Add(b2);
+            mol.Bonds.Add(b3);
+            Assert.AreEqual(1, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(a2).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(a3).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a4).Count());
+            mol.SetAtoms(new IAtom[] { a3, a4, a2, a1 });
+            Assert.AreEqual(1, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(a2).Count());
+            Assert.AreEqual(2, mol.GetConnectedBonds(a3).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a4).Count());
+        }
+
+        [TestMethod()]
+        public void SetConnectedAtomsAfterAddBond()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom a1 = mol.Builder.NewAtom();
+            IAtom a2 = mol.Builder.NewAtom();
+            IBond b1 = mol.Builder.NewBond();
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Bonds.Add(b1);
+            // can't call on b1!
+            mol.Bonds[0].SetAtoms(new IAtom[] { a1, a2 });
+            Assert.AreEqual(1, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a2).Count());
+        }
+
+        [TestMethod()]
+        public void ChangeConnectedAtomsAfterAddBond()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom a1 = mol.Builder.NewAtom();
+            IAtom a2 = mol.Builder.NewAtom();
+            IAtom a3 = mol.Builder.NewAtom();
+            IBond b1 = mol.Builder.NewBond();
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Atoms.Add(a3);
+            b1.SetAtoms(new IAtom[] { a1, a2 });
+            mol.Bonds.Add(b1);
+            Assert.AreEqual(1, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a2).Count());
+            Assert.AreEqual(0, mol.GetConnectedBonds(a3).Count());
+            mol.Bonds[0].Atoms[0] = a3;
+            Assert.AreEqual(0, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a2).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a3).Count());
+            mol.Bonds[0].Atoms[1] = a1;
+            Assert.AreEqual(1, mol.GetConnectedBonds(a1).Count());
+            Assert.AreEqual(0, mol.GetConnectedBonds(a2).Count());
+            Assert.AreEqual(1, mol.GetConnectedBonds(a3).Count());
+        }
+
+        [TestMethod()]
+        public void CloneSgroups()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom a1 = mol.Builder.NewAtom();
+            IAtom a2 = mol.Builder.NewAtom();
+            IAtom a3 = mol.Builder.NewAtom();
+            IBond b1 = mol.Builder.NewBond(a1, a2);
+            IBond b2 = mol.Builder.NewBond(a2, a3);
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Atoms.Add(a3);
+            mol.Bonds.Add(b1);
+            mol.Bonds.Add(b2);
+            Sgroup sgroup = new Sgroup
+            {
+                Type = SgroupType.CtabStructureRepeatUnit,
+                Subscript = "n"
+            };
+            sgroup.Atoms.Add(a2);
+            sgroup.Bonds.Add(b1);
+            sgroup.Bonds.Add(b2);
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
+            IAtomContainer clone = (IAtomContainer)mol.Clone();
+            ICollection<Sgroup> sgroups = clone.GetProperty<ICollection<Sgroup>>(CDKPropertyName.CtabSgroups);
+            Assert.IsNotNull(sgroups);
+            Assert.AreEqual(1, sgroups.Count);
+            Sgroup clonedSgroup = sgroups.First();
+            Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, clonedSgroup.Type);
+            Assert.AreEqual("n", clonedSgroup.Subscript);
+            Assert.IsFalse(clonedSgroup.Atoms.Contains(a2));
+            Assert.IsFalse(clonedSgroup.Bonds.Contains(b1));
+            Assert.IsFalse(clonedSgroup.Bonds.Contains(b2));
+            Assert.IsTrue(clonedSgroup.Atoms.Contains(clone.Atoms[1]));
+            Assert.IsTrue(clonedSgroup.Bonds.Contains(clone.Bonds[0]));
+            Assert.IsTrue(clonedSgroup.Bonds.Contains(clone.Bonds[1]));
         }
     }
 }

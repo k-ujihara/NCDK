@@ -22,6 +22,7 @@ using NCDK.Geometries;
 using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
+using System.Diagnostics;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -367,8 +368,7 @@ namespace NCDK.Modelings.Builder3D
             }
             else
             {
-                Console.Out.WriteLine("KEYError: Unknown distance key in pSet: " + id2 + ";" + id1
-                        + " take default bond length: " + DefaultBondLength);
+                Trace.TraceWarning($"KEYError: Unknown distance key in pSet: {id2};{id1} take default bond length: {DefaultBondLength}");
                 return DefaultBondLength;
             }
             return ((IList<double>)pSet[dkey])[0];

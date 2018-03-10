@@ -31,6 +31,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using NCDK.Sgroups;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.Default
 {
@@ -130,6 +132,15 @@ namespace NCDK.Default
                 IMonomer cloned = (IMonomer)original.Clone(map);
                 clone.monomers.Add(name, cloned);
             }
+
+			// update sgroups
+			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                clone.SetProperty(CDKPropertyName.CtabSgroups,
+                    SgroupManipulator.Copy(sgroups, map));
+            }
+
             return clone;
         }
     }
@@ -232,6 +243,15 @@ namespace NCDK.Silent
                 IMonomer cloned = (IMonomer)original.Clone(map);
                 clone.monomers.Add(name, cloned);
             }
+
+			// update sgroups
+			var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                clone.SetProperty(CDKPropertyName.CtabSgroups,
+                    SgroupManipulator.Copy(sgroups, map));
+            }
+
             return clone;
         }
     }

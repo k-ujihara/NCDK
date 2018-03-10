@@ -28,6 +28,7 @@ using NCDK.Isomorphisms.Matchers.SMARTS;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using NCDK.Common.Base;
 
 namespace NCDK.Pharmacophore
 {
@@ -168,7 +169,7 @@ namespace NCDK.Pharmacophore
                 // sure we get the latest set of effective coordinates
                 foreach (var iAtom in pharmacophoreMolecule.Atoms)
                 {
-                    PharmacophoreAtom patom = (PharmacophoreAtom)iAtom;
+                    PharmacophoreAtom patom = PharmacophoreAtom.Get(iAtom);
                     var tmpList = new List<int>();
                     foreach (var idx in patom.GetMatchingAtoms())
                         tmpList.Add(idx);
@@ -292,7 +293,7 @@ namespace NCDK.Pharmacophore
             {
                 var pcoreatoms = new List<PharmacophoreAtom>();
                 foreach (var atom in map.Values)
-                    pcoreatoms.Add((PharmacophoreAtom)atom);
+                    pcoreatoms.Add((PharmacophoreAtom)AtomRef.Deref(atom));
                 atoms.Add(pcoreatoms);
             }
             return atoms;
@@ -440,7 +441,7 @@ namespace NCDK.Pharmacophore
                         {
                             if (i == j) continue;
                             IAtom[] seq2 = unique[j];
-                            if (seq1[1] == seq2[1] && seq1[0] == seq2[2] && seq1[2] == seq2[0])
+                            if (Compares.AreDeepEqual(seq1[1], seq2[1]) && Compares.AreDeepEqual(seq1[0], seq2[2]) && Compares.AreDeepEqual(seq1[2], seq2[0]))
                             {
                                 isRepeat = true;
                             }
@@ -451,8 +452,8 @@ namespace NCDK.Pharmacophore
                     // finally we can add the unique angle to the target
                     foreach (var seq in unique)
                     {
-                        PharmacophoreAngleBond pbond = new PharmacophoreAngleBond((PharmacophoreAtom)seq[0],
-                                (PharmacophoreAtom)seq[1], (PharmacophoreAtom)seq[2]);
+                        PharmacophoreAngleBond pbond = new PharmacophoreAngleBond(PharmacophoreAtom.Get(seq[0]),
+                                PharmacophoreAtom.Get(seq[1]), PharmacophoreAtom.Get(seq[2]));
                         pharmacophoreMolecule.Bonds.Add(pbond);
                         nangleDefs++;
                     }

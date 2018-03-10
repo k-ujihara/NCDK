@@ -210,7 +210,7 @@
                 if (doi != null)
                 {
                     externalLink = new XElement("a");
-                    externalLink.SetAttributeValue("href", "http://dx.doi.org/" + doi);
+                    externalLink.SetAttributeValue("href", "https://dx.doi.org/" + doi);
                     item.Add(externalLink);
                 }
             }

@@ -170,17 +170,23 @@ namespace NCDK.Depict
             }
         }
 
-        internal override string ToVectorString(string fmt)
+        internal override string ToVectorString(string fmt, string units)
         {
             // format margins and padding for raster images
-            double margin = GetMarginValue(DepictionGenerator.DefaultMillimeterMargin);
+            double margin = GetMarginValue(
+                units.Equals(Depiction.UnitsMM) ? 
+                    DepictionGenerator.DefaultMillimeterMargin : 
+                    DepictionGenerator.DefaultPixelMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
             double scale = model.GetScale();
+
+            double zoom = model.GetZoomFactor();
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS1996BondLength);
+            if (units.Equals(Depiction.UnitsMM))
+                zoom *= RescaleForBondLength(Depiction.ACS1996BondLength);
 
             // row and col offsets for alignment
             double[] yOffset = new double[nRow + 1];
@@ -192,7 +198,7 @@ namespace NCDK.Depict
             double fitting = CalcFitting(margin, padding, required, fmt);
 
             // create the image for rendering
-            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height);
+            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, units);
 
             if (fmt.Equals(SvgFormatKey))
             {
@@ -200,6 +206,9 @@ namespace NCDK.Depict
             }
             else
             {
+                // TODO: handle rounding
+                // pdf can handle fraction coordinations just fine
+                // ((AWTDrawVisitor)visitor).setRounding(false);
             }
 
             visitor.Visit(new RectangleElement(new Point(0, -total.height), total.width, total.height, true, model.GetBackgroundColor()), new ScaleTransform(1, -1));

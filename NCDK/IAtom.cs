@@ -123,11 +123,20 @@ namespace NCDK
         /// </code>
         /// </example>
         /// <exception cref="System.InvalidOperationException">thrown if the bonds are not known</exception>
-        IEnumerable<IBond> Bonds { get; }
+        IReadOnlyList<IBond> Bonds { get; }
 
         /// <summary>
         /// A way for the Smiles parser to indicate that this atom was written with a lower case letter, e.g. 'c' rather than 'C'.
         /// </summary>
         bool IsSingleOrDouble { get; set; }
+
+        /// <summary>
+        /// Returns the bond connecting 'this' atom to the provided atom. If the
+        /// atoms are not bonded, null is returned.
+        /// </summary>
+        /// <param name="atom">the other atom</param>
+        /// <returns>the bond connecting the atoms</returns>
+        /// <exception cref="InvalidOperationException">thrown if the bonds are not known</exception>
+        IBond GetBond(IAtom atom);
     }
 }

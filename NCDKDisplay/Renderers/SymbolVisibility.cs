@@ -149,10 +149,32 @@ namespace NCDK.Renderers
             private static bool IsFourValent(IAtom atom, List<IBond> bonds)
             {
                 var valence = atom.ImplicitHydrogenCount;
-                if (valence == null) return true;
-                foreach (var bond in bonds)
+                if (valence == null)
+                    return true;
+                if (atom.IsAromatic)
                 {
-                    valence += bond.Order.Numeric();
+                    bool hasUnsetArom = false;
+                    foreach (IBond bond in bonds)
+                    {
+                        if (bond.Order == BondOrder.Unset && bond.IsAromatic)
+                        {
+                            hasUnsetArom = true;
+                            valence++;
+                        }
+                        else
+                        {
+                            valence += bond.Order.Numeric();
+                        }
+                    }
+                    // valence nudge, we're only dealing with neutral carbons here
+                    // and if
+                    if (hasUnsetArom)
+                        valence++;
+                }
+                else
+                {
+                    foreach (IBond bond in bonds)
+                        valence += bond.Order.Numeric();
                 }
                 return valence == 4;
             }

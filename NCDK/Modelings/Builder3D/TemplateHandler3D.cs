@@ -30,6 +30,7 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -224,7 +225,7 @@ namespace NCDK.Modelings.Builder3D
                 AssignCoords(secondBest, secondBestMap);
             }
 
-            Console.Error.WriteLine("WARNING: Maybe RingTemplateError!");
+            Trace.TraceWarning("Maybe RingTemplateError!");
         }
 
         private void AssignCoords(IAtomContainer template,

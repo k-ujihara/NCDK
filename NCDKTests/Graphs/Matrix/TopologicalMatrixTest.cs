@@ -9,6 +9,7 @@ namespace NCDK.Graphs.Matrix
     [TestClass()]
     public class TopologicalMatrixTest : CDKTestCase
     {
+        [Ignore()] // not actually asserting anything
         [TestMethod()]
         public void TestTopologicalMatrix_IAtomContainer()
         {

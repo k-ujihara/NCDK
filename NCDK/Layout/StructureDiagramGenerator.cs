@@ -2471,8 +2471,28 @@ namespace NCDK.Layout
                         Vector2 bndXVec = new Vector2(-bndVec.Y, bndVec.X);
 
                         // ensure vector is pointing out of rings
-                        Vector2 centerVec = new Vector2(center.X - ((newBegP.X + newEndP.X) / 2), center.Y - ((newBegP.Y + newEndP.Y) / 2));
-                        if (Vector2.Dot(bndXVec, centerVec) > 0)
+                        Vector2 centerVec = new Vector2(center.X - ((newBegP.X+ newEndP.X) / 2),
+                                                      center.Y - ((newBegP.Y + newEndP.Y) / 2));
+
+                        double dot = Vector2.Dot(bndXVec, centerVec);
+                        if (Math.Abs(dot) < 0.01)
+                        {
+                            // close to zero... grab adjacent bonds and use those as
+                            // well to choose the side we point the bond
+                            var adj = new HashSet<IAtom>();
+                            foreach (var a in mol.GetConnectedAtoms(bond.Begin))
+                                adj.Add(a);
+                            foreach (var a in mol.GetConnectedAtoms(bond.End))
+                                adj.Add(a);
+                            adj.Remove(bond.Begin);
+                            adj.Remove(bond.End);
+                            var newCenter = GeometryUtil.Get2DCenter(adj);
+                            centerVec = new Vector2(newCenter.X - ((newBegP.X + newEndP.X) / 2),
+                                                     newCenter.Y - ((newBegP.Y + newEndP.Y) / 2));
+                            if (Vector2.Dot(bndXVec, centerVec) > 0.01)
+                                bndXVec = Vector2.Negate(bndXVec);
+                        }
+                        else if (dot > 0)
                         {
                             bndXVec = Vector2.Negate(bndXVec);
                         }
@@ -2546,7 +2566,7 @@ namespace NCDK.Layout
                         Vector2 orgVec = new Vector2(endP.X - begP.X, endP.Y - begP.Y);
                         Vector2 newVec = new Vector2(newEndP.X - newBegP.X, newEndP.Y - newBegP.Y);
 
-                        // need perpendiculat dot product to get signed angle
+                        // need perpendicular dot product to get signed angle
                         double pDot = orgVec.X * newVec.Y - orgVec.Y * newVec.X;
                         double theta = Math.Atan2(pDot, Vector2.Dot(newVec, orgVec));
 

@@ -338,18 +338,22 @@ namespace NCDK.Depict
             return new Size(total.width, total.height);
         }
 
-        internal override string ToVectorString(string fmt)
+        internal override string ToVectorString(string fmt, string units)
         {
             // format margins and padding for raster images
             double scale = model.GetScale();
 
-            double margin = GetMarginValue(DepictionGenerator.DefaultMillimeterMargin);
+            double margin = GetMarginValue(units.Equals(Depiction.UnitsMM) ? 
+                DepictionGenerator.DefaultMillimeterMargin :
+                DepictionGenerator.DefaultPixelMargin);
             double padding = GetPaddingValue(DefaultPaddingFactor * margin);
 
             // All vector graphics will be written in mm not px to we need to
             // adjust the size of the molecules accordingly. For now the rescaling
             // is fixed to the bond length proposed by ACS 1996 guidelines (~5mm)
-            double zoom = model.GetZoomFactor() * RescaleForBondLength(Depiction.ACS1996BondLength);
+            double zoom = model.GetZoomFactor();
+            if (units.Equals(Depiction.UnitsMM))
+                zoom *= RescaleForBondLength(Depiction.ACS1996BondLength);
 
             // work out the required space of the main and side components separately
             // will draw these in two passes (main then side) hence want different offsets for each
@@ -366,13 +370,14 @@ namespace NCDK.Depict
             Dimensions total = CalcTotalDimensions(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
             double fitting = CalcFitting(margin, padding, mainRequired, sideRequired, titleRequired, firstRowHeight, fmt);
 
-            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height);
+            IDrawVisitor visitor = new SvgDrawVisitor(total.width, total.height, "mm");
             if (fmt.Equals(SvgFormatKey))
             {
                 SvgPrevisit(fmt, scale * zoom * fitting, (SvgDrawVisitor)visitor, mainComp);
             }
             else
             {
+                // TODO: handle reounding
                 // pdf can handle fraction coordinates just fine
                 //((WPFDrawVisitor) visitor).SetRounding(false);
             }

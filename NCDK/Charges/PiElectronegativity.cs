@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.Charges
@@ -121,7 +122,7 @@ namespace NCDK.Charges
             }
             catch (Exception e)
             {
-                Console.Out.WriteLine(e.StackTrace);
+                Trace.TraceError(e.StackTrace);
             }
 
             return electronegativity;

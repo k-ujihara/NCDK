@@ -140,7 +140,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestCIsResorcinol()
+        public void TestCisResorcinol()
         {
             IAtomContainer mol1 = Default.ChemObjectBuilder.Instance.NewAtomContainer();
             SmilesGenerator sg = SmilesGenerator.Isomeric();
@@ -222,7 +222,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void TestCIsTransDecalin()
+        public void TestCisTransDecalin()
         {
             IAtomContainer mol1 = new AtomContainer();
             SmilesGenerator sg = SmilesGenerator.Isomeric();
@@ -923,8 +923,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, containersList.Count);
             IAtomContainer container = containersList[0];
             SmilesGenerator smilesGenerator = new SmilesGenerator();
-            string genSmiles = smilesGenerator.Create(container);
-            Console.Out.WriteLine(genSmiles);
+            Assert.IsNotNull(smilesGenerator.Create(container));
         }
 
         // @cdk.bug 2051597

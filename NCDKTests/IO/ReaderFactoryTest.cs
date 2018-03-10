@@ -1,4 +1,4 @@
-/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2018  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -115,7 +115,8 @@ namespace NCDK.IO
             ExpectReader("NCDK.Data.MDL.reaction_v3.rxn", MDLRXNV3000Format.Instance, -1, -1);
         }
 
-        [TestMethod(), Ignore()] // test moved to cdk-test-pdb/PDBReaderFactoryTest
+        [Ignore()] // test moved to cdk-test-pdb/PDBReaderFactoryTest
+        [TestMethod()]
         public void TestPDB()
         {
             ExpectReader("NCDK.Data.PDB.coffeine.pdb", PDBFormat.Instance, -1, -1);

@@ -27,6 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using NCDK.Sgroups;
+using NCDK.Tools.Manipulator;
 
 namespace NCDK.Default
 {
@@ -630,6 +632,14 @@ namespace NCDK.Default
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
             clone.stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IReadOnlyStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+
+            // update sgroups
+            var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                clone.SetProperty(CDKPropertyName.CtabSgroups,
+                    SgroupManipulator.Copy(sgroups, map));
+            }
 
             return clone;
         }
@@ -1265,6 +1275,14 @@ namespace NCDK.Silent
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
             clone.stereoElements = new List<IReadOnlyStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IReadOnlyStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+
+            // update sgroups
+            var sgroups = GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                clone.SetProperty(CDKPropertyName.CtabSgroups,
+                    SgroupManipulator.Copy(sgroups, map));
+            }
 
             return clone;
         }

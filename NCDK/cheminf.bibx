@@ -569,22 +569,8 @@
       <bibtex:volume>3</bibtex:volume>
       <bibtex:pages>1-14</bibtex:pages>
       <bibtex:number>1</bibtex:number>
-      <bibtex:url>http://dx.doi.org/10.1186/1758-2946-3-3</bibtex:url>
+      <bibtex:url>https://dx.doi.org/10.1186/1758-2946-3-3</bibtex:url>
       <bibtex:doi>10.1186/1758-2946-3-3</bibtex:doi>
-    </bibtex:article>
-  </bibtex:entry>
-
-  <bibtex:entry id="Hinselmann2011">
-    <bibtex:article>
-      <bibtex:author>Hinselmann, and Georg and Rosenbaum, and Lars and Jahn, and Andreas and Fechner, and Nikolas and Zell, and Andreas</bibtex:author>
-      <bibtex:title>jCompoundMapper: An open source Java library and command&#45;line tool for chemical fingerprints</bibtex:title>
-      <bibtex:journal>Journal of Cheminformatics</bibtex:journal>
-      <bibtex:year>2011</bibtex:year>
-      <bibtex:volume>3</bibtex:volume>
-      <bibtex:pages>1‒14</bibtex:pages>
-      <bibtex:number>1</bibtex:number>
-      <bibtex:url>http://dx.doi.org/10.1186/1758&#45;2946&#45;3&#45;3</bibtex:url>
-      <bibtex:doi>10.1186/1758&#45;2946&#45;3&#45;3</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
   

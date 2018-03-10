@@ -709,7 +709,24 @@ namespace NCDK.Tools.Manipulator
                 }
             }
 
-            if (!anyHydrogenPresent) return org;
+            if (!anyHydrogenPresent)
+                return org;
+
+            // crossing atoms, positional variation atoms etc
+            ISet<IAtom> xatoms = new NCDK.Common.Collections.EmptySet<IAtom>();
+            ICollection<Sgroup> sgroups = org.GetProperty<ICollection<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                xatoms = new HashSet<IAtom>();
+                foreach (Sgroup sgroup in sgroups)
+                {
+                    foreach (IBond bond in sgroup.Bonds)
+                    {
+                        xatoms.Add(bond.Begin);
+                        xatoms.Add(bond.End);
+                    }
+                }
+            }
 
             // we need fast adjacency checks (to check for suppression and
             // update hydrogen counts)
@@ -723,6 +740,7 @@ namespace NCDK.Tools.Manipulator
             int nCpyBonds = 0;
 
             ISet<IAtom> hydrogens = new HashSet<IAtom>();
+            ISet<IBond> bondsToHydrogens = new HashSet<IBond>();
             IAtom[] cpyAtoms = new IAtom[nOrgAtoms];
 
             // filter the original container atoms for those that can/can't
@@ -730,7 +748,8 @@ namespace NCDK.Tools.Manipulator
             for (int v = 0; v < nOrgAtoms; v++)
             {
                 IAtom atom = org.Atoms[v];
-                if (SuppressibleHydrogen(org, graph, bondmap, v))
+                if (SuppressibleHydrogen(org, graph, bondmap, v) &&
+                    !xatoms.Contains(atom))
                 {
                     hydrogens.Add(atom);
                     IncrementImplHydrogenCount(org.Atoms[graph[v][0]]);
@@ -892,6 +911,23 @@ namespace NCDK.Tools.Manipulator
                 foreach (var lp in remove)
                 {
                     org.LonePairs.Remove(lp);
+                }
+            }
+
+            if (sgroups != null)
+            {
+                foreach (Sgroup sgroup in sgroups)
+                {
+                    if (sgroup.GetValue(SgroupKey.CtabParentAtomList) != null)
+                    {
+                        ICollection<IAtom> pal = (ICollection<IAtom>)sgroup.GetValue(SgroupKey.CtabParentAtomList);
+                        foreach (var hydrogen in hydrogens)
+                            pal.Remove(hydrogen);
+                    }
+                    foreach (IAtom hydrogen in hydrogens)
+                        sgroup.Remove(hydrogen);
+                    foreach (IBond bondToHydrogen in bondsToHydrogens)
+                        sgroup.Remove(bondToHydrogen);
                 }
             }
 

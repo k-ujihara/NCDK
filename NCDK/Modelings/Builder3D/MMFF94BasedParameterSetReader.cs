@@ -160,7 +160,7 @@ namespace NCDK.Modelings.Builder3D
                 }
                 catch (FormatException nfe3)
                 {
-                    Console.Error.WriteLine("Charge: Malformed Number due to:" + nfe3);
+                    Console.Error.WriteLine($"Charge: Malformed Number due to: {nfe3}");
                 }
                 parameterSet[key] = data;
             }

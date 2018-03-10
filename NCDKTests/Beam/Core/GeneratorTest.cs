@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NCDK.Beam
 {
-   /// <summary> <author>John May </author></summary>
+    /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class GeneratorTest
     {
@@ -375,6 +375,14 @@ namespace NCDK.Beam
         internal static void RoundTrip(string smi, int[] p, string res)
         {
             Assert.AreEqual(Generator.Generate(Parser.Parse(smi).Permute(p)), res);
+        }
+
+        [TestMethod()]
+        public void HExpand()
+        {
+            Assert.AreEqual("[H][H]", Graph.FromSmiles("[HH]").ToSmiles());
+            Assert.AreEqual("[H]([H])[H]", Graph.FromSmiles("[HH2]").ToSmiles());
+            Assert.AreEqual("[2H][H]", Graph.FromSmiles("[2HH]").ToSmiles());
         }
 
         /// <summary>

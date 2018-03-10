@@ -1989,6 +1989,39 @@ namespace NCDK.Renderers
 			return model.Parameters.ContainsKey(key);
 		}
 
+		public static readonly bool DefaultForceDelocalisedBondDisplay = false;
+
+        /// <summary>
+        /// Get Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>. Default value is false.
+        /// </summary>
+        /// <returns>Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para></returns>
+        public static bool GetForceDelocalisedBondDisplay(this RendererModel model)
+        {
+            const string key = "ForceDelocalisedBondDisplay";
+            bool value;
+            if (model.Parameters.TryGetValue(key, out object v))
+                value = (bool)v;
+            else
+                model.Parameters[key] = value = DefaultForceDelocalisedBondDisplay;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Set Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>.
+        /// </summary>
+		public static void SetForceDelocalisedBondDisplay(this RendererModel model, bool value)
+        {
+            const string key = "ForceDelocalisedBondDisplay";
+            model.Parameters[key] = value;
+        }
+
+		public static bool HasForceDelocalisedBondDisplay(this RendererModel model)
+		{
+            const string key = "ForceDelocalisedBondDisplay";
+			return model.Parameters.ContainsKey(key);
+		}
+
 		public static readonly bool DefaultShowAromaticity = true;
 
         /// <summary>
