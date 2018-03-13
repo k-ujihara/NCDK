@@ -224,8 +224,10 @@ namespace NCDK.Modelings.Builder3D
             {
                 AssignCoords(secondBest, secondBestMap);
             }
-
-            Trace.TraceWarning("Maybe RingTemplateError!");
+            else
+            {
+                Trace.TraceWarning("Maybe RingTemplateError!");
+            }
         }
 
         private void AssignCoords(IAtomContainer template,

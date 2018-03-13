@@ -791,7 +791,6 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendered bond element</returns>
         private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool invert, bool dashed)
         {
-            Debug.Assert(!HasDisplayedSymbol(atom1));
             Debug.Assert(atom1Bond != null);
 
             Vector2 atom1Point = atom1.Point2D.Value;
@@ -1241,10 +1240,9 @@ namespace NCDK.Renderers.Generators.Standards
 
         /// <summary>
         /// Check if an atom has a displayed symbol.
-        ///
+        /// </summary>
         /// <param name="atom">the atom to check</param>
         /// <returns>the atom has a displayed symbol</returns>
-        /// </summary>
         internal bool HasDisplayedSymbol(IAtom atom)
         {
             return symbols[atomIndexMap[atom]] != null;
@@ -1253,13 +1251,12 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Determine the backed off (start) point of the 'from' atom for the line between 'from' and
         /// 'to' given the symbol present at the 'from' point and the back off amount.
-        ///
+        /// </summary>
         /// <param name="symbol">the symbol present at the 'fromPoint' atom, may be null</param>
         /// <param name="fromPoint">the location of the from atom</param>
         /// <param name="toPoint">the location of the to atom</param>
         /// <param name="backOff">the amount to back off from the symbol</param>
         /// <returns>the backed off (start) from point</returns>
-        /// </summary>
         internal static Vector2 BackOffPointOf(AtomSymbol symbol, Vector2 fromPoint, Vector2 toPoint, double backOff)
         {
             // no symbol
