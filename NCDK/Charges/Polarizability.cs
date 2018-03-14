@@ -68,7 +68,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  Gets the polarizabilitiyFactorForAtom.
+        /// Gets the polarizabilitiyFactorForAtom.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <param name="atom">atom for which the factor should become known</param>
@@ -81,7 +81,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  calculates the mean molecular polarizability as described in paper of Kang and Jhorn.
+        /// Calculates the mean molecular polarizability as described in paper of Kang and Jhorn.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>polarizabilitiy</returns>
@@ -98,7 +98,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  calculate effective atom polarizability.
+        /// Calculate effective atom polarizability.
         /// </summary>
         /// <param name="atomContainer">IAtomContainer</param>
         /// <param name="atom">atom for which effective atom polarizability should be calculated</param>
@@ -129,7 +129,7 @@ namespace NCDK.Charges
             polarizabilitiy += GetKJPolarizabilityFactor(acH, atom);
             for (int i = 0; i < acH.Atoms.Count; i++)
             {
-                if (acH.Atoms[i] != atom)
+                if (!acH.Atoms[i].Equals(atom))
                 {
                     bond = PathTools.BreadthFirstTargetSearch(acH, startAtom, acH.Atoms[i], 0, influenceSphereCutOff);
                     if (bond == 1)
@@ -146,7 +146,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        /// calculate effective atom polarizability.
+        /// Calculate effective atom polarizability.
         /// </summary>
         /// <param name="atomContainer">IAtomContainer</param>
         /// <param name="atom">atom for which effective atom polarizability should be calculated</param>
@@ -197,7 +197,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  calculate bond polarizability.
+        /// Calculate bond polarizability.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <param name="bond">Bond bond for which the polarizabilitiy should be calculated</param>
@@ -216,7 +216,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  Method which assigns the polarizabilitiyFactors.
+        /// Method which assigns the polarizabilitiyFactors.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <param name="atom">Atom</param>
@@ -349,7 +349,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  Gets the numberOfHydrogen attribute of the Polarizability object.
+        /// Gets the numberOfHydrogen attribute of the Polarizability object.
         /// </summary>
         /// <param name="atomContainer">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>

@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
@@ -59,7 +60,6 @@ namespace NCDK.SMSD
             sbf.Init(Benzene, Benzene, true, true);
             sbf.SetChemFilters(true, true, true);
             Assert.IsTrue(sbf.IsSubgraph());
-
         }
 
         [TestMethod()]
@@ -188,7 +188,6 @@ namespace NCDK.SMSD
 
             Assert.IsTrue(comparison.IsSubgraph());
             Assert.AreEqual(7, comparison.GetAllMapping().Count);
-
         }
 
         /// <summary>

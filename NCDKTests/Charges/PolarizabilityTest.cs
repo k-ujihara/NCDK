@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 
@@ -23,16 +24,13 @@ namespace NCDK.Charges
 {
     /// <summary>
     ///  Description of the Class
-    ///
-    // @cdk.module test-charges
-    ///
-    ///@author     chhoppe
-    ///@cdk.created    2004-11-04
     /// </summary>
+    // @cdk.module test-charges
+    // @author     chhoppe
+    // @cdk.created    2004-11-04
     [TestClass()]
     public class PolarizabilityTest : CDKTestCase
     {
-
         /// <summary>
         ///  A unit test for JUnit
         /// </summary>
@@ -102,7 +100,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Ethyl chloride
+        /// A unit test for JUnit with Ethyl chloride
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethyl_chloride()
@@ -116,7 +114,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Allyl bromide
+        /// A unit test for JUnit with Allyl bromide
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_bromide()
@@ -130,7 +128,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Isopentyl iodide
+        /// A unit test for JUnit with Isopentyl iodide
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Isopentyl_iodide()
@@ -144,7 +142,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Ethoxy ethane
+        /// A unit test for JUnit with Ethoxy ethane
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethoxy_ethane()
@@ -158,7 +156,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Ethanolamine
+        /// A unit test for JUnit with Ethanolamine
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethanolamine()

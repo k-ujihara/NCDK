@@ -56,40 +56,38 @@ namespace <#= ns.NS #>
     {
         public static IChemObjectBuilder Instance { get; } = new ChemObjectBuilder();
 
-        private static bool? legacyAtomContainer = null;
-        private static bool LegacyAtomContainer
-        {
-            get
-            {
-                if (!legacyAtomContainer.HasValue)
-                {
-                    var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
-                    if (string.IsNullOrWhiteSpace(val))
-                        legacyAtomContainer = true;
-                    else
-                    {
-                        val = val.Trim();
-                        switch (val.ToLowerInvariant())
-                        {
-                            case "t":
-                            case "true":
-                            case "1":
-                                legacyAtomContainer = true;
-                                break;
-                            case "f":
-                            case "false":
-                            case "0":
-                                legacyAtomContainer = false;
-                                break;
-                            default:
-                                throw new InvalidOperationException("Invalid value, expected true/false: " + val);
-                        }
-                    }
-                }
-                return legacyAtomContainer.Value;
-            }
-        }
+        private bool LegacyAtomContainer { get; set; }
 
+		internal ChemObjectBuilder()
+		{
+            var val = System.Environment.GetEnvironmentVariable("NCDKUseLegacyAtomContainer");
+            if (string.IsNullOrWhiteSpace(val))
+                LegacyAtomContainer = false;
+            else
+            {
+                val = val.Trim();
+                switch (val.ToLowerInvariant())
+                {
+                    case "t":
+                    case "true":
+                    case "1":
+                        LegacyAtomContainer = true;
+                        break;
+                    case "f":
+                    case "false":
+                    case "0":
+                        LegacyAtomContainer = false;
+                        break;
+                    default:
+                        throw new InvalidOperationException("Invalid value, expected true/false: " + val);
+                }
+            }
+		}
+
+		internal ChemObjectBuilder(bool legacyAtomContainer)
+		{
+			this.LegacyAtomContainer = legacyAtomContainer;
+		}
 
         public T New<T>() where T : IAtomContainer, new() => new T();
 

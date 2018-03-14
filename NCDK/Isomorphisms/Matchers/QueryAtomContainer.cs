@@ -34,6 +34,10 @@ namespace NCDK.Isomorphisms.Matchers
             return sb.ToString();
         }
 
+        private IChemObjectBuilder builder;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
+
         /// <summary>
         /// Constructs an AtomContainer with a copy of the atoms and electronContainers
         /// of another AtomContainer (A shallow copy, i.e., with the same objects as in
@@ -44,7 +48,7 @@ namespace NCDK.Isomorphisms.Matchers
         public QueryAtomContainer(IAtomContainer container, IChemObjectBuilder builder)
             : base(container)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
 
         /// <summary>
@@ -55,7 +59,7 @@ namespace NCDK.Isomorphisms.Matchers
         public QueryAtomContainer(IChemObjectBuilder builder)
             : base()
         {
-            Builder = builder;
+            this.builder = builder;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace NCDK.Similarity
     /// is desired!</para>
     /// <para>Note that the continuous Tanimoto coefficient does not lead to a metric space</para>
     /// </remarks>
-    ///@author steinbeck
+    // @author steinbeck
     // @cdk.githash
     // @cdk.created    2005-10-19
     // @cdk.keyword    jaccard

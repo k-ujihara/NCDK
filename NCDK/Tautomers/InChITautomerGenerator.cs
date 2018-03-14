@@ -110,8 +110,7 @@ namespace NCDK.Tautomers
             InChINumbersTools.ParseAuxInfo(aux, amap);
 
             if (inchi == null)
-                throw new CDKException(typeof(InChIGenerator)
-                        + " failed to create an InChI for the provided molecule, InChI -> null.");
+                throw new CDKException($"{typeof(InChIGenerator)} failed to create an InChI for the provided molecule, InChI -> null.");
             return GetTautomers(mol, inchi, amap);
         }
 
@@ -162,8 +161,7 @@ namespace NCDK.Tautomers
             {
                 for (int i = 0; i < amap.Length; i++)
                 {
-                    mol.Atoms[i]
-                       .Id = amap[i].ToString();
+                    mol.Atoms[i].Id = amap[i].ToString();
                 }
                 mol = AtomContainerManipulator.SuppressHydrogens(mol);
             }
@@ -473,8 +471,8 @@ namespace NCDK.Tautomers
                 }
             break_ATOMS:
                 if (!atomRemoved) atomsToRemove = false;
-
             }
+
             bool bondsToRemove = true;
             bool bondRemoved = false;
             while (bondsToRemove)
@@ -507,8 +505,8 @@ namespace NCDK.Tautomers
                     }
                 }
                 break_BONDS:
-                if (!bondRemoved) bondsToRemove = false;
-
+                if (!bondRemoved)
+                    bondsToRemove = false;
             }
             int doubleBondCount = 0;
             foreach (var bond in skeleton.Bonds)

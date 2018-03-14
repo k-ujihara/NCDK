@@ -51,8 +51,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestReverse_IReaction()
         {
-            Reaction reaction = new Reaction();
-            reaction.Direction = ReactionDirection.Backward;
+            Reaction reaction = new Reaction { Direction = ReactionDirection.Backward };
             IAtomContainer water = new AtomContainer();
             reaction.Reactants.Add(water, 3.0);
             reaction.Reactants.Add(new AtomContainer());
@@ -68,12 +67,9 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetAllIDs_IReaction()
         {
-            Reaction reaction = new Reaction();
-            reaction.Id = "r1";
-            IAtomContainer water = new AtomContainer();
-            water.Id = "m1";
-            Atom oxygen = new Atom("O");
-            oxygen.Id = "a1";
+            Reaction reaction = new Reaction() { Id = "r1" };
+            IAtomContainer water = new AtomContainer { Id = "m1" };
+            Atom oxygen = new Atom("O") { Id = "a1" };
             water.Atoms.Add(oxygen);
             reaction.Reactants.Add(water);
             reaction.Products.Add(water);

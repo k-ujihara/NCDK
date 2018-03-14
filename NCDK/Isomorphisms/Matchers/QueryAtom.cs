@@ -35,9 +35,13 @@ namespace NCDK.Isomorphisms.Matchers
             this.atomicNumber = PeriodicTable.GetAtomicNumber(symbol);
         }
 
+        private IChemObjectBuilder builder;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
+
         public QueryAtom(IChemObjectBuilder builder)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
     }
 }

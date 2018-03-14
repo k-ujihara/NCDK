@@ -278,12 +278,6 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public override object Clone()
-        {
-            return atom.Clone(new CDKObjectMap());
-        }
-
-        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             return atom.Clone(map);

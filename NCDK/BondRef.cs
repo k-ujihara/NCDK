@@ -202,9 +202,9 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public override ICDKObject Clone(CDKObjectMap map)
         {
-            return bond.Clone();
+            return bond.Clone(map);
         }
 
         /// <inheritdoc/>

@@ -60,7 +60,7 @@ namespace NCDK.Default
             }
         }
         public bool Notification { get; set; } = true;
-        public IChemObjectBuilder Builder { get; protected set; } = ChemObjectBuilder.Instance;
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
         private bool isPlaced;
         public bool IsPlaced
@@ -313,7 +313,7 @@ namespace NCDK.Silent
             }
         }
         public bool Notification { get; set; } = true;
-        public IChemObjectBuilder Builder { get; protected set; } = ChemObjectBuilder.Instance;
+        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
 
         private bool isPlaced;
         public bool IsPlaced

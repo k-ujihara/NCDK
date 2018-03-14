@@ -70,9 +70,12 @@ namespace NCDK.IO
         {
             if (obj is IChemFile)
             {
+#if !DEBUG
                 try
                 {
+#endif
                     return (T)ReadChemFile((IChemFile)obj);
+#if !DEBUG
                 }
                 catch (IOException e)
                 {
@@ -86,6 +89,7 @@ namespace NCDK.IO
                 {
                     throw new CDKException("An error occurred.", e);
                 }
+#endif
             }
             else
             {
@@ -93,7 +97,7 @@ namespace NCDK.IO
             }
         }
 
-        #region IDisposable Support
+#region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         protected override void Dispose(bool disposing)
@@ -111,7 +115,7 @@ namespace NCDK.IO
                 base.Dispose(disposing);
             }
         }
-        #endregion
+#endregion
 
         // private procedures
 
@@ -290,21 +294,26 @@ namespace NCDK.IO
         private void ProcessBondBlock()
         {
             string line = input.ReadLine();
+            var newBondInfo = new NewBondInfo();
             while (line != null)
             {
                 if (line.IndexOf('{') != -1)
                 {
-                    ProcessBondBlockBlock(line);
+                    ProcessBondBlockBlock(line, newBondInfo);
                 }
                 else if (line.IndexOf('}') != -1)
                 {
-                    return;
+                    break;
                 }
                 else
                 {
                     Trace.TraceWarning("Skipping non-block: " + line);
                 }
                 line = input.ReadLine();
+            }
+            foreach (var info in newBondInfo.IndexToAtoms)
+            {
+                SetBondAtoms(info.Key, info.Value[0], info.Value[1]);
             }
         }
 
@@ -317,13 +326,17 @@ namespace NCDK.IO
             return molecule.Atoms[i];
         }
 
-        private IBond GetBond(int i)
+        private void SetBondAtoms(int i, IAtom atom1, IAtom atom2)
         {
             if (molecule.Bonds.Count <= i)
             {
-                molecule.Bonds.Add(molecule.Builder.NewBond(null, null));
+                molecule.Bonds.Add(molecule.Builder.NewBond(atom1, atom2));
             }
-            return molecule.Bonds[i];
+            else
+            {
+                molecule.Bonds[i].Atoms[0] = atom1;
+                molecule.Bonds[i].Atoms[1] = atom2;
+            }
         }
 
         private void ProcessAtomBlockBlock(string line)
@@ -348,20 +361,20 @@ namespace NCDK.IO
             }
         }
 
-        private void ProcessBondBlockBlock(string line)
+        private void ProcessBondBlockBlock(string line, NewBondInfo newBondInfo)
         {
             string command = GetCommand(line);
             if (command.Equals("aid1"))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN bonds aid1 found");
-                ProcessBondAtomIDs(0);
+                ProcessBondAtomIDs(0, newBondInfo);
             }
             else if (command.Equals("aid2"))
             {
                 // assume this is the first block in the atom block
                 Debug.WriteLine("ASN bonds aid2 found");
-                ProcessBondAtomIDs(1);
+                ProcessBondAtomIDs(1, newBondInfo);
             }
             else
             {
@@ -383,8 +396,6 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //                Debug.WriteLine("Found an atom ID: " + line);
-                    //                Debug.WriteLine("  index: " + atomIndex);
                     IAtom atom = GetAtom(atomIndex);
                     string id = GetValue(line);
                     atom.Id = id;
@@ -395,7 +406,7 @@ namespace NCDK.IO
             }
         }
 
-        private void ProcessBondAtomIDs(int pos)
+        private void ProcessBondAtomIDs(int pos, NewBondInfo newBondInfo)
         {
             string line = input.ReadLine();
             int bondIndex = 0;
@@ -410,13 +421,30 @@ namespace NCDK.IO
                 {
                     //                Debug.WriteLine("Found an atom ID: " + line);
                     //                Debug.WriteLine("  index: " + atomIndex);
-                    IBond bond = GetBond(bondIndex);
+                    //                    IBond bond = GetBond(bondIndex);
+                    //string id = GetValue(line);
+                    //IAtom atom = (IAtom)atomIDs[id];
+                    //bond.Atoms[pos] = atom ??
                     string id = GetValue(line);
                     IAtom atom = (IAtom)atomIDs[id];
-                    bond.Atoms[pos] = atom ?? throw new CDKException("File is corrupt: atom ID does not exist " + id);
+                    if (atom == null)
+                        throw new CDKException($"File is corrupt: atom ID does not exist {id}");
+                    newBondInfo.Set(bondIndex, pos, atom);
                     bondIndex++;
                 }
                 line = input.ReadLine();
+            }
+        }
+
+        class NewBondInfo
+        {
+            public Dictionary<int, IAtom[]> IndexToAtoms = new Dictionary<int, IAtom[]>();
+
+            public void Set(int bondIndex, int position, IAtom atom)
+            {
+                if (!IndexToAtoms.ContainsKey(bondIndex))
+                    IndexToAtoms.Add(bondIndex, new IAtom[2]);
+                IndexToAtoms[bondIndex][position] = atom;
             }
         }
 

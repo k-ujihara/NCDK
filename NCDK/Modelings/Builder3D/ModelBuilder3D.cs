@@ -158,7 +158,8 @@ namespace NCDK.Modelings.Builder3D
             ap3d.Initilize(parameterSet);
             atlp3d.SetParameterSet(parameterSet);
 
-            if (clone) molecule = (IAtomContainer)molecule.Clone();
+            if (clone)
+                molecule = (IAtomContainer)molecule.Clone();
             atomPlacer.Molecule = molecule;
 
             if (ap3d.NumberOfUnplacedHeavyAtoms(molecule) == 1)
@@ -188,8 +189,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 if (templateHandler == null)
                 {
-                    throw new CDKException(
-                            "You are trying to generate coordinates for a molecule with rings, but you have no template handler set. Please do SetTemplateHandler() before generation!");
+                    throw new CDKException("You are trying to generate coordinates for a molecule with rings, but you have no template handler set. Please do SetTemplateHandler() before generation!");
                 }
                 ringSystems = RingPartitioner.PartitionRings(ringSetMolecule);
                 largestRingSet = RingSetManipulator.GetLargestRingSet(ringSystems);
@@ -283,8 +283,7 @@ namespace NCDK.Modelings.Builder3D
                     }
                     else
                     {
-                        throw new IOException(
-                                "RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.Sorry");
+                        throw new IOException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout. Sorry");
                     }
 
                     Vector3 firstAtomOriginalCoord = unplacedAtom.Point3D.Value;
@@ -327,15 +326,12 @@ namespace NCDK.Modelings.Builder3D
             //Debug.WriteLine("****** Layout ring System ******");Console.Out.WriteLine(">around atom:"+molecule.Atoms.IndexOf(placedRingAtom));
             IAtomContainer ac = RingSetManipulator.GetAllInOneContainer(ringSet);
             Vector3 newCoord = placedRingAtom.Point3D.Value;
-            Vector3 axis = new Vector3(atomB.Point3D.Value.X - newCoord.X, atomB.Point3D.Value.Y - newCoord.Y,
-                    atomB.Point3D.Value.Z - newCoord.Z);
+            Vector3 axis = new Vector3(atomB.Point3D.Value.X - newCoord.X, atomB.Point3D.Value.Y - newCoord.Y, atomB.Point3D.Value.Z - newCoord.Z);
             TranslateStructure(originalCoord, newCoord, ac);
             //Rotate Ringsystem to farthest possible point
-            Vector3 startAtomVector = new Vector3(newCoord.X - atomB.Point3D.Value.X, newCoord.Y - atomB.Point3D.Value.Y,
-                    newCoord.Z - atomB.Point3D.Value.Z);
+            Vector3 startAtomVector = new Vector3(newCoord.X - atomB.Point3D.Value.X, newCoord.Y - atomB.Point3D.Value.Y, newCoord.Z - atomB.Point3D.Value.Z);
             IAtom farthestAtom = ap3d.GetFarthestAtom(placedRingAtom.Point3D.Value, ac);
-            Vector3 farthestAtomVector = new Vector3(farthestAtom.Point3D.Value.X - newCoord.X,
-                    farthestAtom.Point3D.Value.Y - newCoord.Y, farthestAtom.Point3D.Value.Z - newCoord.Z);
+            Vector3 farthestAtomVector = new Vector3(farthestAtom.Point3D.Value.X - newCoord.X, farthestAtom.Point3D.Value.Y - newCoord.Y, farthestAtom.Point3D.Value.Z - newCoord.Z);
             Vector3 n1 = Vector3.Cross(axis, farthestAtomVector);
             n1 = Vector3.Normalize(n1);
             double lengthFarthestAtomVector = farthestAtomVector.Length();
@@ -477,8 +473,7 @@ namespace NCDK.Modelings.Builder3D
                 var atoms = molecule.GetConnectedAtoms(chain.Atoms[i]);
                 foreach (var atom in atoms)
                 {
-                    if (!(atom.Symbol).Equals("H") & !(atom.IsPlaced)
-                            & !(atom.IsInRing))
+                    if (!atom.Symbol.Equals("H") & !atom.IsPlaced & !atom.IsInRing)
                     {
                         //Debug.WriteLine("SEARCH PLACE AND FOUND Branch Atom "+molecule.Atoms.IndexOf(chain.GetAtomAt(i))+
                         //        " New Atom:"+molecule.Atoms.IndexOf(atoms[j])+" -> STORE");
@@ -491,10 +486,8 @@ namespace NCDK.Modelings.Builder3D
                         }
                         catch (CDKException ex2)
                         {
-                            Trace.TraceError("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to"
-                                    + ex2.ToString());
-                            throw new CDKException("SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms: "
-                                    + ex2.Message, ex2);
+                            Trace.TraceError($"SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms due to {ex2.ToString()}");
+                            throw new CDKException($"SearchAndPlaceBranchERROR: Cannot find enough neighbour atoms: {ex2.Message}", ex2);
                         }
                         branchAtoms.Atoms.Add(atom);
                         connectedAtoms.RemoveAllElements();

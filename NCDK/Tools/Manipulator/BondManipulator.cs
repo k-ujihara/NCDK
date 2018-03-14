@@ -82,7 +82,8 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="IsLowerOrder(BondOrder, BondOrder)"/>
         public static bool IsHigherOrder(BondOrder first, BondOrder second)
         {
-            if (first == BondOrder.Unset || second == BondOrder.Unset) return false;
+            if (first == BondOrder.Unset || second == BondOrder.Unset)
+                return false;
             return first.CompareTo(second) > 0;
         }
 

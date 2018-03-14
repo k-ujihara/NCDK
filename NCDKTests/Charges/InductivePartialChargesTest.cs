@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
@@ -23,13 +24,11 @@ using NCDK.Default;
 namespace NCDK.Charges
 {
     /// <summary>
-    ///  TestSuite that runs a test for the MMFF94PartialCharges.
-    ///
-    // @cdk.module test-charges
-    ///
-    ///@author        mfe4
-    ///@cdk.created       2004-11-04
+    /// TestSuite that runs a test for the MMFF94PartialCharges.
     /// </summary>
+    // @cdk.module test-charges
+    // @author        mfe4
+    // @cdk.created       2004-11-04
     [TestClass()]
     public class InductivePartialChargesTest : CDKTestCase
     {

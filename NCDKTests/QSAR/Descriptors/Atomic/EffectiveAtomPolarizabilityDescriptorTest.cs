@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with 2-(dimethylamino)ethyl)amino
+        /// A unit test with 2-(dimethylamino)ethyl)amino
         /// </summary>
         [TestMethod()]
         public void TestEffectivePolarizabilityDescriptor()
@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Ethyl chloride
+        /// A unit test with Ethyl chloride
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethyl_chloride()
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Allyl bromide
+        /// A unit test with Allyl bromide
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Allyl_bromide()
@@ -93,7 +93,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Isopentyl iodide
+        /// A unit test with Isopentyl iodide
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Isopentyl_iodide()
@@ -113,7 +113,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Ethoxy ethane
+        /// A unit test with Ethoxy ethane
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethoxy_ethane()
@@ -130,7 +130,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Ethanolamine
+        /// A unit test with Ethanolamine
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethanolamine()
@@ -149,7 +149,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Allyl mercaptan
+        /// A unit test with Allyl mercaptan
         /// </summary>
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Allyl_mercaptan()

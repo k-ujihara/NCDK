@@ -624,7 +624,6 @@ namespace NCDK.SMSD
 
         public override void SetChemFilters(bool stereoFilter, bool fragmentFilter, bool energyFilter)
         {
-
             if (firstAtomMCS != null)
             {
                 ChemicalFilters chemFilter = new ChemicalFilters(allMCS, allAtomMCS, firstSolution, firstAtomMCS,

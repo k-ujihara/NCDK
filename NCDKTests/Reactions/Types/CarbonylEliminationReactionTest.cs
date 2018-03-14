@@ -67,8 +67,10 @@ namespace NCDK.Reactions.Types
 
             /* initiate */
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -83,7 +85,6 @@ namespace NCDK.Reactions.Types
             IAtomContainer product2 = setOfReactions[0].Products[1];
             IAtomContainer molecule2 = GetExpectedProducts()[1];//CreateFromSmiles("[C-]#[O+]");
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, product2));
-
         }
 
         /// <summary>
@@ -108,8 +109,10 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[4].IsReactiveCenter = true;
 
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = true
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -142,8 +145,10 @@ namespace NCDK.Reactions.Types
 
             /* initiate */
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = false;
+            IParameterReaction param = new SetReactionCenter
+            {
+                IsSetParameter = false
+            };
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);

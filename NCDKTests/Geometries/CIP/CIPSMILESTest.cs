@@ -49,7 +49,7 @@ namespace NCDK.Geometries.CIP
         /// Test case that tests sequence recursing of the atomic number rule.
         /// </summary>
         /// <seealso cref="Test2methylbutanol_S"/>
-        //@cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m1/s1
+        // @cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m1/s1
         [TestMethod()]
         public void Test2methylbutanol_R()
         {
@@ -62,7 +62,7 @@ namespace NCDK.Geometries.CIP
         /// Test case that tests sequence recursing of the atomic number rule.
         /// </summary>
         /// <seealso cref="Test2methylbutanol_R"/>
-        //@cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m0/s1
+        // @cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m0/s1
         [TestMethod()]
         public void Test2methylbutanol_S()
         {
@@ -148,7 +148,7 @@ namespace NCDK.Geometries.CIP
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(mol, (ITetrahedralChirality)stereo));
         }
 
-        //@cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17+/m1/s1
+        // @cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17+/m1/s1
         [TestMethod()]
         public void TestCID42475007_S()
         {
@@ -160,7 +160,7 @@ namespace NCDK.Geometries.CIP
             Assert.AreEqual(CIPTool.CIPChirality.S, CIPTool.GetCIPChirality(mol, (ITetrahedralChirality)stereo));
         }
 
-        //@cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6+/s2
+        // @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6+/s2
         [TestMethod()]
         public void R_sulfinyl()
         {
@@ -172,7 +172,7 @@ namespace NCDK.Geometries.CIP
             Assert.AreEqual(CIPTool.CIPChirality.R, CIPTool.GetCIPChirality(mol, (ITetrahedralChirality)stereo));
         }
 
-        //@cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6-/s2
+        // @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6-/s2
         [TestMethod()]
         public void S_sulfinyl()
         {

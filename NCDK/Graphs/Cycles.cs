@@ -573,7 +573,7 @@ namespace NCDK.Graphs
                         throw new IntractableException("A large number of cycles were being generated and the"
                                 + " computation was aborted. Please use AllCycles/AllRingsFinder with"
                                 + " and specify a larger threshold or use a " + nameof(ICycleFinder) + " with a fall-back"
-                                + " to a set unique cycles: e.g. " + nameof(Cycles) + "."  + nameof(Cycles.AllOrVertexShortFinder) +".");
+                                + " to a set unique cycles: e.g. " + nameof(Cycles) + "." + nameof(Cycles.AllOrVertexShortFinder) + ".");
                     return ac.GetPaths();
                 }
             }
@@ -681,14 +681,14 @@ namespace NCDK.Graphs
                 // the vertices in the subset 'isolated'
                 foreach (var isolated in ringSearch.Isolated())
                 {
-                    if (isolated.Length <= length) walks.Add(GraphUtil.Cycle(graph, isolated));
+                    if (isolated.Length <= length)
+                        walks.Add(GraphUtil.Cycle(graph, isolated));
                 }
 
                 // each biconnected component which isn't an isolated cycle is processed
                 // separately as a subgraph.
                 foreach (var fused in ringSearch.Fused())
                 {
-
                     // make a subgraph and 'apply' the cycle computation - the walk
                     // (path) is then lifted to the original graph
                     foreach (var cycle in Apply(GraphUtil.Subgraph(graph, fused), length))
@@ -805,7 +805,8 @@ namespace NCDK.Graphs
         /// <returns>the bond between u and v</returns>
         private static IBond GetBond(IAtomContainer container, EdgeToBondMap bondMap, int u, int v)
         {
-            if (bondMap != null) return bondMap[u, v];
+            if (bondMap != null)
+                return bondMap[u, v];
             return container.GetBond(container.Atoms[u], container.Atoms[v]);
         }
 
@@ -844,7 +845,8 @@ namespace NCDK.Graphs
             {
                 RingSearch ringSearch = new RingSearch(molecule, graph);
 
-                if (this.predefinedLength < length) length = this.predefinedLength;
+                if (this.predefinedLength < length)
+                    length = this.predefinedLength;
 
                 IList<int[]> walks = new List<int[]>(6);
 
@@ -852,14 +854,14 @@ namespace NCDK.Graphs
                 // the vertices in the subset 'isolated'
                 foreach (var isolated in ringSearch.Isolated())
                 {
-                    if (isolated.Length <= length) walks.Add(GraphUtil.Cycle(graph, isolated));
+                    if (isolated.Length <= length)
+                        walks.Add(GraphUtil.Cycle(graph, isolated));
                 }
 
                 // each biconnected component which isn't an isolated cycle is processed
                 // separately as a subgraph.
                 foreach (var fused in ringSearch.Fused())
                 {
-
                     // make a subgraph and 'apply' the cycle computation - the walk
                     // (path) is then lifted to the original graph
                     foreach (var cycle in FindInFused(GraphUtil.Subgraph(graph, fused), length))
@@ -972,8 +974,10 @@ namespace NCDK.Graphs
                 int[][] filtered = new int[inital.GetNumberOfCycles()][];
                 int n = 0;
 
-                foreach (var path in inital.paths) {
-                    if (Accept(path, graph)) filtered[n++] = path;
+                foreach (var path in inital.paths)
+                {
+                    if (Accept(path, graph))
+                        filtered[n++] = path;
                 }
 
                 return new Cycles(Arrays.CopyOf(filtered, n), inital.container, inital.bondMap);
@@ -991,7 +995,7 @@ namespace NCDK.Graphs
 
                 foreach (var v in path)
                     BitArrays.SetValue(vertices, v, true);
-                
+
                 for (int j = 1; j < path.Length; j++)
                 {
                     int v = path[j];

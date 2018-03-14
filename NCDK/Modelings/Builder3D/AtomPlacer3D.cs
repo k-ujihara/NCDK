@@ -607,7 +607,7 @@ namespace NCDK.Modelings.Builder3D
             foreach (var bond in bonds)
             {
                 IAtom connectedAtom = bond.GetOther(atomA);
-                if (IsPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB)
+                if (IsPlacedHeavyAtom(connectedAtom) && !connectedAtom.Equals(atomB))
                 {
                     return connectedAtom;
                 }

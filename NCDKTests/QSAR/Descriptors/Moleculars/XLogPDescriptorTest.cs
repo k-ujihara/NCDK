@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Graphs;
@@ -206,8 +207,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("O=C1NC(=O)C=CN1C1OC(CO)C(O)C1O"); // xlogp training set molecule no454
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            //Debug.WriteLine("no454:"+((Result<double>)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-2.11, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
+            var value = (Result<double>)Descriptor.Calculate(mol).Value;
+            Assert.AreEqual(-2.11, value.Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -219,8 +220,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("O=C1N(C)C=CC(=O)N1C"); // xlogp training set molecule no498
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            //Debug.WriteLine("no498:"+((Result<double>)Descriptor.Calculate(mol).GetValue()).Value+"\n");
-            Assert.AreEqual(-0.59, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.1); //at:  16
+            var value = (Result<double>)Descriptor.Calculate(mol).Value;
+            Assert.AreEqual(-0.59, value.Value, 0.1); //at:  16
         }
 
         [TestMethod()]
@@ -297,7 +298,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(2.08, ((Result<double>)Descriptor.Calculate(mol).Value).Value, 0.01);
+            var value = (Result<double>)Descriptor.Calculate(mol).Value;
+            Assert.AreEqual(2.08, value.Value, 0.01);
         }
 
         [TestMethod()]

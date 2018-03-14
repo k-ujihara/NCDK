@@ -186,7 +186,8 @@ namespace NCDK.Graphs
             for (int a = 0; a < totalVertexCount; a++)
                 container.Atoms.Add(molecule.Atoms[a]);
             for (int b = 0; b < totalEdgeCount; b++)
-                if (bondsInTree[b]) container.Bonds.Add(molecule.Bonds[b]);
+                if (bondsInTree[b])
+                    container.Bonds.Add(molecule.Bonds[b]);
             return container;
         }
 
@@ -240,7 +241,8 @@ namespace NCDK.Graphs
             IRingSet ringset = molecule.Builder.NewRingSet();
             IAtomContainer spt = GetSpanningTree();
             for (int i = 0; i < totalEdgeCount; i++)
-                if (!bondsInTree[i]) ringset.Add(GetRing(spt, molecule.Bonds[i]));
+                if (!bondsInTree[i])
+                    ringset.Add(GetRing(spt, molecule.Bonds[i]));
             return ringset;
         }
 

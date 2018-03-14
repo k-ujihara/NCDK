@@ -321,8 +321,7 @@ namespace NCDK.Smiles
             try
             {
                 if (order.Length != molecule.Atoms.Count)
-                    throw new ArgumentException("the array for storing output order should be"
-                            + "the same length as the number of atoms");
+                    throw new ArgumentException("the array for storing output order should be the same length as the number of atoms");
 
                 Graph g = CDKToBeam.ToBeamGraph(molecule, flavour);
 
@@ -659,12 +658,6 @@ namespace NCDK.Smiles
             return idxs;
         }
 
-        private class Comp<T> : IEqualityComparer<T>
-        {
-            public bool Equals(T x, T y) => object.ReferenceEquals(x, y);
-            public int GetHashCode(T obj) => 0;
-        }
-
         // Creates a CxSmilesState from a molecule with atom labels, repeat units, multi-center bonds etc
         private static CxSmilesState GetCxSmilesState(SmiFlavor flavour, IAtomContainer mol)
         {
@@ -676,13 +669,12 @@ namespace NCDK.Smiles
 
             // set the atom labels, values, and coordinates,
             // and build the atom->idx map required by other parts
-            IDictionary<IAtom, int> atomidx = new Dictionary<IAtom, int>(new Comp<IAtom>());
+            IDictionary<IAtom, int> atomidx = new Dictionary<IAtom, int>();
             for (int idx = 0; idx < mol.Atoms.Count; idx++)
             {
                 IAtom atom = mol.Atoms[idx];
                 if (atom is IPseudoAtom)
                 {
-
                     if (state.atomLabels == null)
                         state.atomLabels = new Dictionary<int, string>();
 

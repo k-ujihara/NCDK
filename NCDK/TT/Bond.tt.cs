@@ -140,13 +140,11 @@ namespace NCDK.Default
         {
             if (atoms == null)
             {
-                this.atoms = 
-                    new List<IAtom>(2);
+				this.atoms = new ObservableChemObjectCollection<IAtom>(2, this);
             }
             else
             {
-                    this.atoms = 
-                    new List<IAtom>(atoms);
+				this.atoms = new ObservableChemObjectCollection<IAtom>(this, atoms);
             }
         }
 
@@ -520,13 +518,14 @@ namespace NCDK.Silent
         {
             if (atoms == null)
             {
-                this.atoms = 
-                    new ObservableChemObjectCollection<IAtom>(2, this);
+				this.atoms = new List<IAtom>(2);
             }
             else
             {
-                    this.atoms = 
-                new ObservableChemObjectCollection<IAtom>(this, atoms);
+				int n = Math.Min(atoms.Count(), 2);
+				var list = new List<IAtom>(n);
+				list.AddRange(atoms);
+				this.atoms = list;
             }
         }
 

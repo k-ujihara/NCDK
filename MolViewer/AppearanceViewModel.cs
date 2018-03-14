@@ -43,7 +43,7 @@ namespace NCDK.MolViewer
         private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
         private static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
         private static SmilesParser parser = new SmilesParser(builder);
-        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Generic);
+        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavor.Default);
         private static InChIGeneratorFactory inChIGeneratorFactory = InChIGeneratorFactory.Instance;
 
         private string _Smiles = null;

@@ -47,8 +47,6 @@ namespace NCDK.SMSD
             Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
             sbf.Init(Benzene, Napthalene, true, true);
             sbf.SetChemFilters(false, false, false);
-            Console.Out.WriteLine("Match " + sbf.GetTanimotoSimilarity());
-            Console.Out.WriteLine("Match count: " + sbf.GetAllAtomMapping().Count);
             Assert.IsTrue(sbf.IsSubgraph());
             Assert.AreEqual(24, sbf.GetAllAtomMapping().Count);
         }

@@ -264,7 +264,7 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(1, bmatches.Count);
             var bmatch = bmatches[0];
             Assert.AreEqual(1, bmatch.Count);
-            PharmacophoreBond pbond = (PharmacophoreBond)bmatch[0];
+            PharmacophoreBond pbond = (PharmacophoreBond)BondRef.Deref(bmatch[0]);
             Assert.AreEqual(5.63, pbond.BondLength, 0.01);
         }
 

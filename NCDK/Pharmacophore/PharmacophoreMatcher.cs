@@ -380,8 +380,8 @@ namespace NCDK.Pharmacophore
                 {
                     for (int j = i + 1; j < npatom; j++)
                     {
-                        PharmacophoreAtom atom1 = (PharmacophoreAtom)pharmacophoreMolecule.Atoms[i];
-                        PharmacophoreAtom atom2 = (PharmacophoreAtom)pharmacophoreMolecule.Atoms[j];
+                        PharmacophoreAtom atom1 = PharmacophoreAtom.Get(pharmacophoreMolecule.Atoms[i]);
+                        PharmacophoreAtom atom2 = PharmacophoreAtom.Get(pharmacophoreMolecule.Atoms[j]);
                         PharmacophoreBond bond = new PharmacophoreBond(atom1, atom2);
                         pharmacophoreMolecule.Bonds.Add(bond);
                     }

@@ -791,6 +791,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendered bond element</returns>
         private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool invert, bool dashed)
         {
+            if (HasDisplayedSymbol(atom1))
+            {
+
+            }
             Debug.Assert(atom1Bond != null);
 
             Vector2 atom1Point = atom1.Point2D.Value;

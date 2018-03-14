@@ -360,7 +360,6 @@ namespace NCDK.ForceField.MMFF
         /// <param name="x">connectivity</param>
         /// <param name="v">bonded valence</param>
         /// <returns>p electrons</returns>
-        //@SuppressWarnings("PMD.CyclomaticComplexity")
         // high complexity but clean
         public static int Contribution(int elem, int x, int v)
         {
@@ -480,7 +479,6 @@ namespace NCDK.ForceField.MMFF
                         { "NPD+", N5B_PLUS }, { "N=C", N5B }, { "N=N", N5B },
                             });
 
-        //@SuppressWarnings("PMD.ShortVariable")
         // C5 is intended
         private const string C5 = "C5";
         private const string C5A = "C5A";

@@ -18,13 +18,13 @@ namespace NCDK.Fingerprints
     /// Generates an atom pair 2D fingerprint as implemented in PaDEL given an <see cref="IAtomContainer"/>, that
     /// extends the <see cref="Fingerprinter"/>.
     /// </summary>
-    //@author Lyle Burgoon (lyle.d.burgoon@usace.army.mil)
-    //@cdk.created 2018-02-05
-    //@cdk.keyword fingerprint
-    //@cdk.keyword similarity
-    //@cdk.module fingerprint
-    //@cdk.githash
-    //@see org.openscience.cdk.fingerprint.Fingerprinter
+    /// <seealso cref="Fingerprinter"/>
+    // @author Lyle Burgoon (lyle.d.burgoon@usace.army.mil)
+    // @cdk.created 2018-02-05
+    // @cdk.keyword fingerprint
+    // @cdk.keyword similarity
+    // @cdk.module fingerprint
+    // @cdk.githash
     public class AtomPairs2DFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private const int MAX_DISTANCE = 10;

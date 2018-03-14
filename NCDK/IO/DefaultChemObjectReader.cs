@@ -91,6 +91,6 @@ namespace NCDK.IO
             }
         }
 
-        public abstract T Read<T>(T obj) where T : IChemObject;
+        public abstract T Read<T>(T obj) where T: IChemObject;
     }
 }

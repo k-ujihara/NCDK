@@ -28,15 +28,19 @@ namespace NCDK.Isomorphisms.Matchers
     // @cdk.created 2010-12-16
     public abstract class QueryBond : Silent.Bond, IQueryBond
     {
+        private IChemObjectBuilder builder;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
+
         public QueryBond(IChemObjectBuilder builder)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
 
         public QueryBond(IAtom atom1, IAtom atom2, BondOrder order, IChemObjectBuilder builder)
             : base(atom1, atom2, order)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
 
         public abstract bool Matches(IBond bond);

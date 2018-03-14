@@ -390,9 +390,8 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="input">input SMILES</param>
         /// <param name="n">number of generations (how many molecules to produce)</param>
-        /// <returns>a single SMILES string of disconnected molecules (input) randomly</returns>
-        ///        permuted
-        ///@ the input SMILES was invalid
+        /// <returns>a single SMILES string of disconnected molecules (input) randomly permuted</returns>
+        /// <exception cref="Exception">the input SMILES was invalid</exception>       
         private static string RandomPermutations(string input, int n)
         {
             Graph g = Parser.Parse(input);

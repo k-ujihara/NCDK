@@ -192,13 +192,14 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void R_penta_2_3_diene()
         {
-            InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1",
-                    Silent.ChemObjectBuilder.Instance);
+            InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1", Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
 
+            bool f;
             var ses = container.StereoElements.GetEnumerator();
             Assert.IsInstanceOfType(container, Silent.ChemObjectBuilder.Instance.NewAtomContainer().GetType());
-            Assert.IsTrue(ses.MoveNext());
+            f = ses.MoveNext();
+            Assert.IsTrue(f);
             var se = ses.Current;
             Assert.IsInstanceOfType(se, typeof(ExtendedTetrahedral));
             ExtendedTetrahedral element = (ExtendedTetrahedral)se;

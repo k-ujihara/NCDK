@@ -16,22 +16,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
-using System.Collections.Generic;
 using NCDK.Default;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace NCDK.AtomTypes
 {
     /// <summary>
     /// This class tests the matching of atom types defined in the
     /// structgen atom type list.
-    ///
-    // @cdk.module test-structgen
     /// </summary>
-    //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+    // @cdk.module test-structgen
     [TestClass()]
     public class StructGenMatcherTest : AbstractAtomTypeTest
     {
@@ -75,8 +72,7 @@ namespace NCDK.AtomTypes
         public void TestN3()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("N");
-            atom.ImplicitHydrogenCount = 3;
+            Atom atom = new Atom("N") { ImplicitHydrogenCount = 3 };
             mol.Atoms.Add(atom);
 
             StructGenMatcher atm = new StructGenMatcher();

@@ -311,10 +311,7 @@ namespace NCDK.Modelings.Builder3D
             List<IAtomContainer> resultList = new List<IAtomContainer>();
             foreach (var molecule in inputList)
             {
-                str = new StructureDiagramGenerator()
-                {
-                    Molecule = molecule
-                };
+                str = new StructureDiagramGenerator() { Molecule = molecule };
                 str.GenerateCoordinates();
                 resultList.Add(str.Molecule);
             }
@@ -342,16 +339,14 @@ namespace NCDK.Modelings.Builder3D
                     {
                         mol = mb3d.Generate3DCoordinates(mol, false);
                         foreach (var a in mol.Atoms)
-                            Assert.IsNotNull(a.Point3D, smiles[0] + " has unplaced atom");
+                            Assert.IsNotNull(a.Point3D, $"{smiles[0]} has unplaced atom");
                         CheckAverageBondLength(mol);
                     }
                     catch (Exception e)
                     {
                         if (e is CDKException || e is IOException)
                         {
-                            StringWriter stackTrace = new StringWriter();
-                            Console.Error.WriteLine(e.StackTrace);
-                            Assert.Fail("3D coordinated could not be generator for " + smiles[i] + ": " + stackTrace);
+                            Assert.Fail($"3D coordinated could not be generator for {smiles[i]}: {e.StackTrace}");
                         }
                         else
                             throw;

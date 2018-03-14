@@ -144,10 +144,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
 
-            SmilesGenerator sg = new SmilesGenerator();
-            string oldSmiles = sg.Create(result);
-            Console.Out.WriteLine("Propane " + oldSmiles);
-
             return result;
         }
 
@@ -191,10 +187,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
-
-            SmilesGenerator sg = new SmilesGenerator();
-            string oldSmiles = sg.Create(result);
-            Console.Out.WriteLine("Hexane " + oldSmiles);
 
             return result;
         }
@@ -241,10 +233,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
-
-            SmilesGenerator sg = new SmilesGenerator();
-            string oldSmiles = sg.Create(result);
-            Console.Out.WriteLine("Benzene " + oldSmiles);
 
             return result;
         }
@@ -313,10 +301,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
-
-            SmilesGenerator sg = new SmilesGenerator();
-            string oldSmiles = sg.Create(result);
-            Console.Out.WriteLine("Naphthalene " + oldSmiles);
 
             return result;
         }
@@ -865,10 +849,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(result.Builder);
             adder.AddImplicitHydrogens(result);
             Aromaticity.CDKLegacy.Apply(result);
-
-            SmilesGenerator sg = new SmilesGenerator();
-            string oldSmiles = sg.Create(result);
-            Console.Out.WriteLine("SimpleAmine " + oldSmiles);
 
             return result;
         }

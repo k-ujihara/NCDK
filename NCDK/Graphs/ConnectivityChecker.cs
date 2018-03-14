@@ -48,7 +48,8 @@ namespace NCDK.Graphs
         {
             // with one atom or less, we define it to be connected, as there is no
             // partitioning needed
-            if (atomContainer.Atoms.Count < 2) return true;
+            if (atomContainer.Atoms.Count < 2)
+                return true;
 
             ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(atomContainer));
             return cc.NComponents == 1;

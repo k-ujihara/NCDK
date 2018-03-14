@@ -52,6 +52,11 @@ namespace NCDK.Default
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
+		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
+
+		/// <inheritdoc/>
+		public override IChemObjectBuilder Builder => builder;
+
         internal class ObservableChemObjectCollection_IAtom
             : ObservableChemObjectCollection<IAtom>
         {
@@ -702,6 +707,11 @@ namespace NCDK.Silent
     public partial class AtomContainer
         : ChemObject, IAtomContainer, IChemObjectListener
     {
+		private static readonly IChemObjectBuilder builder = new ChemObjectBuilder(true);
+
+		/// <inheritdoc/>
+		public override IChemObjectBuilder Builder => builder;
+
         internal class ObservableChemObjectCollection_IAtom
             : ObservableChemObjectCollection<IAtom>
         {

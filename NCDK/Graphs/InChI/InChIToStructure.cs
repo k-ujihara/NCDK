@@ -184,60 +184,53 @@ namespace NCDK.Graphs.InChI
                 IBond cBo = builder.NewBond(atO, atT);
 
                 INCHI_BOND_TYPE type = iBo.BondType;
-                if (type == INCHI_BOND_TYPE.Single)
+                switch (type)
                 {
-                    cBo.Order = BondOrder.Single;
-                }
-                else if (type == INCHI_BOND_TYPE.Double)
-                {
-                    cBo.Order = BondOrder.Double;
-                }
-                else if (type == INCHI_BOND_TYPE.Triple)
-                {
-                    cBo.Order = BondOrder.Triple;
-                }
-                else if (type == INCHI_BOND_TYPE.Altern)
-                {
-                    cBo.IsAromatic = true;
-                }
-                else
-                {
-                    throw new CDKException("Unknown bond type: " + type);
+                    case INCHI_BOND_TYPE.Single:
+                        cBo.Order = BondOrder.Single;
+                        break;
+                    case INCHI_BOND_TYPE.Double:
+                        cBo.Order = BondOrder.Double;
+                        break;
+                    case INCHI_BOND_TYPE.Triple:
+                        cBo.Order = BondOrder.Triple;
+                        break;
+                    case INCHI_BOND_TYPE.Altern:
+                        cBo.IsAromatic = true;
+                        break;
+                    default:
+                        throw new CDKException("Unknown bond type: " + type);
                 }
 
                 INCHI_BOND_STEREO stereo = iBo.BondStereo;
-
-                // No stereo definition
-                if (stereo == INCHI_BOND_STEREO.None)
+                switch (stereo)
                 {
-                    cBo.Stereo = BondStereo.None;
+                    // No stereo definition
+                    case INCHI_BOND_STEREO.None:
+                        cBo.Stereo = BondStereo.None;
+                        break;
+                    // Bond ending (fat end of wedge) below the plane
+                    case INCHI_BOND_STEREO.Single1Down:
+                        cBo.Stereo = BondStereo.Down;
+                        break;
+                    // Bond ending (fat end of wedge) above the plane
+                    case INCHI_BOND_STEREO.Single1Up:
+                        cBo.Stereo = BondStereo.Up;
+                        break;
+                    // Bond starting (pointy end of wedge) below the plane
+                    case INCHI_BOND_STEREO.Single2Down:
+                        cBo.Stereo = BondStereo.DownInverted;
+                        break;
+                    // Bond starting (pointy end of wedge) above the plane
+                    case INCHI_BOND_STEREO.Single2Up:
+                        cBo.Stereo = BondStereo.UpInverted;
+                        break;
+                    // Bond with undefined stereochemistry
+                    case INCHI_BOND_STEREO.Single1Either:
+                    case INCHI_BOND_STEREO.DoubleEither:
+                        cBo.Stereo = BondStereo.None;
+                        break;
                 }
-                // Bond ending (fat end of wedge) below the plane
-                else if (stereo == INCHI_BOND_STEREO.Single1Down)
-                {
-                    cBo.Stereo = BondStereo.Down;
-                }
-                // Bond ending (fat end of wedge) above the plane
-                else if (stereo == INCHI_BOND_STEREO.Single1Up)
-                {
-                    cBo.Stereo = BondStereo.Up;
-                }
-                // Bond starting (pointy end of wedge) below the plane
-                else if (stereo == INCHI_BOND_STEREO.Single2Down)
-                {
-                    cBo.Stereo = BondStereo.DownInverted;
-                }
-                // Bond starting (pointy end of wedge) above the plane
-                else if (stereo == INCHI_BOND_STEREO.Single2Up)
-                {
-                    cBo.Stereo = BondStereo.UpInverted;
-                }
-                // Bond with undefined stereochemistry
-                else if (stereo == INCHI_BOND_STEREO.Single1Either || stereo == INCHI_BOND_STEREO.DoubleEither)
-                {
-                    cBo.Stereo = BondStereo.None;
-                }
-
                 molecule.Bonds.Add(cBo);
             }
 
@@ -257,72 +250,73 @@ namespace NCDK.Graphs.InChI
 
                     // as per JNI InChI doc even is clockwise and odd is
                     // anti-clockwise
-                    if (stereo0d.Parity == INCHI_PARITY.Odd)
+                    switch (stereo0d.Parity)
                     {
-                        stereo = TetrahedralStereo.AntiClockwise;
-                    }
-                    else if (stereo0d.Parity == INCHI_PARITY.Even)
-                    {
-                        stereo = TetrahedralStereo.Clockwise;
-                    }
-                    else
-                    {
-                        // CDK Only supports parities of + or -
-                        continue;
+                        case INCHI_PARITY.Odd:
+                            stereo = TetrahedralStereo.AntiClockwise;
+                            break;
+                        case INCHI_PARITY.Even:
+                            stereo = TetrahedralStereo.Clockwise;
+                            break;
+                        default:
+                            // CDK Only supports parities of + or -
+                            continue;
                     }
 
                     IReadOnlyStereoElement<IChemObject, IChemObject> stereoElement = null;
 
-                    if (stereo0d.StereoType == INCHI_STEREOTYPE.Tetrahedral)
+                    switch (stereo0d.StereoType)
                     {
-                        stereoElement = builder.NewTetrahedralChirality(focus, neighbors, stereo);
-                    }
-                    else if (stereo0d.StereoType == INCHI_STEREOTYPE.Allene)
-                    {
-
-                        // The periphals (p<i>) and terminals (t<i>) are refering to
-                        // the following atoms. The focus (f) is also shown.
-                        //
-                        //   p0          p2
-                        //    \          /
-                        //     t0 = f = t1
-                        //    /         \
-                        //   p1         p3
-                        IAtom[] peripherals = neighbors;
-                        IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(molecule, focus);
-
-                        // InChI always provides the terminal atoms t0 and t1 as
-                        // periphals, here we find where they are and then add in
-                        // the other explicit atom. As the InChI create hydrogens
-                        // for stereo elements, there will always we an explicit
-                        // atom that can be found - it may be optionally suppressed
-                        // later.
-
-                        // not much documentation on this (at all) but they appear
-                        // to always be the middle two atoms (index 1, 2) we therefore
-                        // test these first - but handle the other indices just in
-                        // case
-                        foreach (var terminal in terminals)
-                        {
-                            if (peripherals[1] == terminal)
+                        case INCHI_STEREOTYPE.Tetrahedral:
+                            stereoElement = builder.NewTetrahedralChirality(focus, neighbors, stereo);
+                            break;
+                        case INCHI_STEREOTYPE.Allene:
                             {
-                                peripherals[1] = FindOtherSinglyBonded(molecule, terminal, peripherals[0]);
-                            }
-                            else if (peripherals[2] == terminal)
-                            {
-                                peripherals[2] = FindOtherSinglyBonded(molecule, terminal, peripherals[3]);
-                            }
-                            else if (peripherals[0] == terminal)
-                            {
-                                peripherals[0] = FindOtherSinglyBonded(molecule, terminal, peripherals[1]);
-                            }
-                            else if (peripherals[3] == terminal)
-                            {
-                                peripherals[3] = FindOtherSinglyBonded(molecule, terminal, peripherals[2]);
-                            }
-                        }
+                                // The periphals (p<i>) and terminals (t<i>) are refering to
+                                // the following atoms. The focus (f) is also shown.
+                                //
+                                //   p0          p2
+                                //    \          /
+                                //     t0 = f = t1
+                                //    /         \
+                                //   p1         p3
+                                IAtom[] peripherals = neighbors;
+                                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(molecule, focus);
 
-                        stereoElement = new ExtendedTetrahedral(focus, peripherals, stereo);
+                                // InChI always provides the terminal atoms t0 and t1 as
+                                // periphals, here we find where they are and then add in
+                                // the other explicit atom. As the InChI create hydrogens
+                                // for stereo elements, there will always we an explicit
+                                // atom that can be found - it may be optionally suppressed
+                                // later.
+
+                                // not much documentation on this (at all) but they appear
+                                // to always be the middle two atoms (index 1, 2) we therefore
+                                // test these first - but handle the other indices just in
+                                // case
+                                foreach (var terminal in terminals)
+                                {
+                                    if (peripherals[1].Equals(terminal))
+                                    {
+                                        peripherals[1] = FindOtherSinglyBonded(molecule, terminal, peripherals[0]);
+                                    }
+                                    else if (peripherals[2].Equals(terminal))
+                                    {
+                                        peripherals[2] = FindOtherSinglyBonded(molecule, terminal, peripherals[3]);
+                                    }
+                                    else if (peripherals[0].Equals(terminal))
+                                    {
+                                        peripherals[0] = FindOtherSinglyBonded(molecule, terminal, peripherals[1]);
+                                    }
+                                    else if (peripherals[3].Equals(terminal))
+                                    {
+                                        peripherals[3] = FindOtherSinglyBonded(molecule, terminal, peripherals[2]);
+                                    }
+                                }
+
+                                stereoElement = new ExtendedTetrahedral(focus, peripherals, stereo);
+                            }
+                            break;
                     }
 
                     Trace.Assert(stereoElement != null);

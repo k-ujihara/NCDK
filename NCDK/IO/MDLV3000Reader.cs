@@ -85,7 +85,7 @@ namespace NCDK.IO
             return false;
         }
 
-        public override T Read<T>(T obj)
+        public override T Read<T>(T obj) 
         {
             if (obj is IAtomContainer)
             {

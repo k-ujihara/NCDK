@@ -138,11 +138,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 if (!(value[0] is bool))
                 {
-                    throw new CDKException("The first parameter must be of type bool");
+                    throw new CDKException($"The first parameter must be of type {typeof(bool)}");
                 }
                 else if (!(value[1] is bool))
                 {
-                    throw new CDKException("The second parameter must be of type bool");
+                    throw new CDKException($"The second parameter must be of type {typeof(bool)}");
                 }
                 // ok, all should be fine
                 checkAromaticity = (bool)value[0];
@@ -275,550 +275,381 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 bondCount = ac.GetConnectedBonds(atomi).Count();
                 hsCount = GetHydrogenCount(ac, atomi);
                 maxBondOrder = ac.GetMaximumBondOrder(atomi);
+#if DEBUG
                 if (!symbol.Equals("H"))
                 {
                     //Debug.WriteLine("i:"+i+" Symbol:"+symbol+" "+" bondC:"+bondCount+" Charge:"+atoms[i].FormalCharge+" hsC:"+hsCount+" maxBO:"+maxBondOrder+" Arom:"+atoms[i].IsAromatic+" AtomTypeX:"+GetAtomTypeXCount(ac, atoms[i])+" PiSys:"+GetPiSystemsCount(ac, atoms[i])+" C=:"+GetDoubleBondedCarbonsCount(ac, atoms[i])+" AromCc:"+GetAromaticCarbonsCount(ac,atoms[i])+" RS:"+((int)atoms[i].GetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE)).IntValue()+"\t");
                 }
-                if (symbol.Equals("C"))
+#endif
+                switch (symbol)
                 {
-                    if (bondCount == 2)
-                    {
-                        // C sp
-                        if (hsCount >= 1)
+                    case "C":
+                        switch (bondCount)
                         {
-                            xlogP += 0.209;
-                            //Debug.WriteLine("XLOGP: 38         0.209");
-                        }
-                        else
-                        {
-                            if (maxBondOrder == BondOrder.Double)
-                            {
-                                xlogP += 2.073;
-                                //Debug.WriteLine("XLOGP: 40         2.037");
-                            }
-                            else if (maxBondOrder == BondOrder.Triple)
-                            {
-                                xlogP += 0.33;
-                                //Debug.WriteLine("XLOGP: 39         0.33");
-                            }
-                        }
-                    }
-                    if (bondCount == 3)
-                    {
-                        // C sp2
-                        if (atomi.GetProperty<bool>("IS_IN_AROMATIC_RING"))
-                        {
-                            if (GetAromaticCarbonsCount(ac, atomi) >= 2 && GetAromaticNitrogensCount(ac, atomi) == 0)
-                            {
-                                if (hsCount == 0)
+                            case 2:
+                                // C sp
+                                if (hsCount >= 1)
                                 {
-                                    if (GetAtomTypeXCount(ac, atomi) == 0)
-                                    {
-                                        xlogP += 0.296;
-                                        //Debug.WriteLine("XLOGP: 34         0.296");
-                                    }
-                                    else
-                                    {
-                                        xlogP -= 0.151;
-                                        //Debug.WriteLine("XLOGP: 35    C.ar.X    -0.151");
-                                    }
+                                    xlogP += 0.209;
+                                    //Debug.WriteLine("XLOGP: 38         0.209");
                                 }
                                 else
                                 {
-                                    xlogP += 0.337;
-                                    //Debug.WriteLine("XLOGP: 32         0.337");
-                                }
-                                //} else if (GetAromaticCarbonsCount(ac, atoms[i]) < 2 && GetAromaticNitrogensCount(ac, atoms[i]) > 1) {
-                            }
-                            else if (GetAromaticNitrogensCount(ac, atomi) >= 1)
-                            {
-                                if (hsCount == 0)
-                                {
-                                    if (GetAtomTypeXCount(ac, atomi) == 0)
+                                    switch (maxBondOrder)
                                     {
-                                        xlogP += 0.174;
-                                        //Debug.WriteLine("XLOGP: 36    C.ar.(X)     0.174");
-                                    }
-                                    else
-                                    {
-                                        xlogP += 0.366;
-                                        //Debug.WriteLine("XLOGP: 37         0.366");
+                                        case BondOrder.Double:
+                                            xlogP += 2.073;
+                                            //Debug.WriteLine("XLOGP: 40         2.037");
+                                            break;
+                                        case BondOrder.Triple:
+                                            xlogP += 0.33;
+                                            //Debug.WriteLine("XLOGP: 39         0.33");
+                                            break;
                                     }
                                 }
-                                else if (GetHydrogenCount(ac, atomi) == 1)
-                                {
-                                    xlogP += 0.126;
-                                    //Debug.WriteLine("XLOGP: 33         0.126");
-                                }
-                            }
-                            //NOT aromatic, but sp2
-                        }
-                        else
-                        {
-                            if (hsCount == 0)
-                            {
-                                if (GetAtomTypeXCount(ac, atomi) == 0)
-                                {
-                                    if (GetPiSystemsCount(ac, atomi) <= 1)
-                                    {
-                                        xlogP += 0.05;
-                                        //Debug.WriteLine("XLOGP: 26         0.05");
-                                    }
-                                    else
-                                    {
-                                        xlogP += 0.013;
-                                        //Debug.WriteLine("XLOGP: 27         0.013");
-                                    }
-                                }
-                                else if (GetAtomTypeXCount(ac, atomi) == 1)
-                                {
-                                    if (GetPiSystemsCount(ac, atomi) == 0)
-                                    {
-                                        xlogP -= 0.03;
-                                        //Debug.WriteLine("XLOGP: 28        -0.03");
-                                    }
-                                    else
-                                    {
-                                        xlogP -= 0.027;
-                                        //Debug.WriteLine("XLOGP: 29        -0.027");
-                                    }
-                                }
-                                else if (GetAtomTypeXCount(ac, atomi) == 2)
-                                {
-                                    if (GetPiSystemsCount(ac, atomi) == 0)
-                                    {
-                                        xlogP += 0.005;
-                                        //Debug.WriteLine("XLOGP: 30         0.005");
-                                    }
-                                    else
-                                    {
-                                        xlogP -= 0.315;
-                                        //Debug.WriteLine("XLOGP: 31        -0.315");
-                                    }
-                                }
-                            }
-                            if (hsCount == 1)
-                            {
-                                if (GetAtomTypeXCount(ac, atomi) == 0)
-                                {
-                                    if (GetPiSystemsCount(ac, atomi) == 0)
-                                    {
-                                        xlogP += 0.466;
-                                        //Debug.WriteLine("XLOGP: 22         0.466");
-                                    }
-                                    if (GetPiSystemsCount(ac, atomi) == 1)
-                                    {
-                                        xlogP += 0.136;
-                                        //Debug.WriteLine("XLOGP: 23         0.136");
-                                    }
-                                }
-                                else
-                                {
-                                    if (GetPiSystemsCount(ac, atomi) == 0)
-                                    {
-                                        xlogP += 0.001;
-                                        //Debug.WriteLine("XLOGP: 24         0.001");
-                                    }
-                                    if (GetPiSystemsCount(ac, atomi) == 1)
-                                    {
-                                        xlogP -= 0.31;
-                                        //Debug.WriteLine("XLOGP: 25        -0.31");
-                                    }
-                                }
-                            }
-                            if (hsCount == 2)
-                            {
-                                xlogP += 0.42;
-                                //Debug.WriteLine("XLOGP: 21         0.42");
-                            }
-                            if (GetIfCarbonIsHydrophobic(ac, atomi))
-                            {
-                                xlogP += 0.211;
-                                //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
-                            }
-                        }//sp2 NOT aromatic
-                    }
-
-                    if (bondCount == 4)
-                    {
-                        // C sp3
-                        if (hsCount == 0)
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.006;
-                                    //Debug.WriteLine("XLOGP: 16        -0.006");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.57;
-                                    //Debug.WriteLine("XLOGP: 17        -0.57");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) >= 2)
-                                {
-                                    xlogP -= 0.317;
-                                    //Debug.WriteLine("XLOGP: 18        -0.317");
-                                }
-                            }
-                            else
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.316;
-                                    //Debug.WriteLine("XLOGP: 19        -0.316");
-                                }
-                                else
-                                {
-                                    xlogP -= 0.723;
-                                    //Debug.WriteLine("XLOGP: 20        -0.723");
-                                }
-                            }
-                        }
-                        if (hsCount == 1)
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP += 0.127;
-                                    //Debug.WriteLine("XLOGP: 10         0.127");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.243;
-                                    //Debug.WriteLine("XLOGP: 11        -0.243");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) >= 2)
-                                {
-                                    xlogP -= 0.499;
-                                    //Debug.WriteLine("XLOGP: 12        -0.499");
-                                }
-                            }
-                            else
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.205;
-                                    //Debug.WriteLine("XLOGP: 13        -0.205");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.305;
-                                    //Debug.WriteLine("XLOGP: 14        -0.305");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) >= 2)
-                                {
-                                    xlogP -= 0.709;
-                                    //Debug.WriteLine("XLOGP: 15        -0.709");
-                                }
-                            }
-                        }
-                        if (hsCount == 2)
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP += 0.358;
-                                    //Debug.WriteLine("XLOGP:  4         0.358");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.008;
-                                    //Debug.WriteLine("XLOGP:  5        -0.008");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 2)
-                                {
-                                    xlogP -= 0.185;
-                                    //Debug.WriteLine("XLOGP:  6        -0.185");
-                                }
-                            }
-                            else
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.137;
-                                    //Debug.WriteLine("XLOGP:  7        -0.137");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.303;
-                                    //Debug.WriteLine("XLOGP:  8        -0.303");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 2)
-                                {
-                                    xlogP -= 0.815;
-                                    //Debug.WriteLine("XLOGP:  9        -0.815");
-                                }
-                            }
-                        }
-                        if (hsCount > 2)
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP += 0.528;
-                                    //Debug.WriteLine("XLOGP:  1         0.528");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP += 0.267;
-                                    //Debug.WriteLine("XLOGP:  2         0.267");
-                                }
-                            }
-                            else
-                            {
-                                //if (GetNitrogenOrOxygenCount(ac, atomi) == 1) {
-                                xlogP -= 0.032;
-                                //Debug.WriteLine("XLOGP:  3        -0.032");
-                            }
-                        }
-                        if (GetIfCarbonIsHydrophobic(ac, atomi))
-                        {
-                            xlogP += 0.211;
-                            //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
-                        }
-                    }//csp3
-
-                }//C
-
-                if (symbol.Equals("N"))
-                {
-                    //NO2
-                    if (ac.GetBondOrderSum(atomi) >= 3.0 && GetOxygenCount(ac, atomi) >= 2
-                            && maxBondOrder == BondOrder.Double)
-                    {
-                        xlogP += 1.178;
-                        //Debug.WriteLine("XLOGP: 66         1.178");
-                    }
-                    else
-                    {
-                        if (GetPresenceOfCarbonil(ac, atomi) >= 1)
-                        {
-                            // amidic nitrogen
-                            if (hsCount == 0)
-                            {
-                                if (GetAtomTypeXCount(ac, atomi) == 0)
-                                {
-                                    xlogP += 0.078;
-                                    //Debug.WriteLine("XLOGP: 57         0.078");
-                                }
-                                if (GetAtomTypeXCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.118;
-                                    //Debug.WriteLine("XLOGP: 58        -0.118");
-                                }
-                            }
-                            if (hsCount == 1)
-                            {
-                                if (GetAtomTypeXCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.096;
-                                    hBondDonors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 55        -0.096");
-                                }
-                                else
-                                {
-                                    xlogP -= 0.044;
-                                    hBondDonors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 56        -0.044");
-                                }
-                            }
-                            if (hsCount == 2)
-                            {
-                                xlogP -= 0.646;
-                                hBondDonors.Add(i);
-                                //Debug.WriteLine("XLOGP: 54        -0.646");
-                            }
-                        }
-                        else
-                        {//NO amidic nitrogen
-                            if (bondCount == 1)
-                            {
-                                // -C#N
-                                if (GetCarbonsCount(ac, atomi) == 1)
-                                {
-                                    xlogP -= 0.566;
-                                    //Debug.WriteLine("XLOGP: 68        -0.566");
-                                }
-                            }
-                            else if (bondCount == 2)
-                            {
-                                // N sp2
+                                break;
+                            case 3:
+                                // C sp2
                                 if (atomi.GetProperty<bool>("IS_IN_AROMATIC_RING"))
                                 {
-                                    xlogP -= 0.493;
-                                    //Debug.WriteLine("XLOGP: 67        -0.493");
-                                    if (checkAminoAcid != 0)
+                                    if (GetAromaticCarbonsCount(ac, atomi) >= 2 && GetAromaticNitrogensCount(ac, atomi) == 0)
                                     {
-                                        checkAminoAcid += 1;
-                                    }
-                                }
-                                else
-                                {
-                                    if (GetDoubleBondedCarbonsCount(ac, atomi) == 0)
-                                    {
-                                        if (GetDoubleBondedNitrogenCount(ac, atomi) == 0)
-                                        {
-                                            if (GetDoubleBondedOxygenCount(ac, atomi) == 1)
-                                            {
-                                                xlogP += 0.427;
-                                                //Debug.WriteLine("XLOGP: 65         0.427");
-                                            }
-                                        }
-                                        if (GetDoubleBondedNitrogenCount(ac, atomi) == 1)
+                                        if (hsCount == 0)
                                         {
                                             if (GetAtomTypeXCount(ac, atomi) == 0)
                                             {
-                                                xlogP += 0.536;
-                                                //Debug.WriteLine("XLOGP: 63         0.536");
+                                                xlogP += 0.296;
+                                                //Debug.WriteLine("XLOGP: 34         0.296");
                                             }
-                                            if (GetAtomTypeXCount(ac, atomi) == 1)
+                                            else
                                             {
-                                                xlogP -= 0.597;
-                                                //Debug.WriteLine("XLOGP: 64        -0.597");
+                                                xlogP -= 0.151;
+                                                //Debug.WriteLine("XLOGP: 35    C.ar.X    -0.151");
                                             }
+                                        }
+                                        else
+                                        {
+                                            xlogP += 0.337;
+                                            //Debug.WriteLine("XLOGP: 32         0.337");
                                         }
                                     }
-                                    else if (GetDoubleBondedCarbonsCount(ac, atomi) == 1)
+                                    else if (GetAromaticNitrogensCount(ac, atomi) >= 1)
                                     {
-                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        if (hsCount == 0)
                                         {
-                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
                                             {
-                                                xlogP += 0.007;
-                                                //Debug.WriteLine("XLOGP: 59         0.007");
+                                                xlogP += 0.174;
+                                                //Debug.WriteLine("XLOGP: 36    C.ar.(X)     0.174");
                                             }
-                                            if (GetPiSystemsCount(ac, atomi) == 1)
-                                            {
-                                                xlogP -= 0.275;
-                                                //Debug.WriteLine("XLOGP: 60        -0.275");
-                                            }
-                                        }
-                                        else if (GetAtomTypeXCount(ac, atomi) == 1)
-                                        {
-                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            else
                                             {
                                                 xlogP += 0.366;
-                                                //Debug.WriteLine("XLOGP: 61         0.366");
+                                                //Debug.WriteLine("XLOGP: 37         0.366");
+                                            }
+                                        }
+                                        else if (GetHydrogenCount(ac, atomi) == 1)
+                                        {
+                                            xlogP += 0.126;
+                                            //Debug.WriteLine("XLOGP: 33         0.126");
+                                        }
+                                    }
+                                    //NOT aromatic, but sp2
+                                }
+                                else
+                                {
+                                    switch (hsCount)
+                                    {
+                                        case 0:
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) <= 1)
+                                                {
+                                                    xlogP += 0.05;
+                                                    //Debug.WriteLine("XLOGP: 26         0.05");
+                                                }
+                                                else
+                                                {
+                                                    xlogP += 0.013;
+                                                    //Debug.WriteLine("XLOGP: 27         0.013");
+                                                }
+                                            }
+                                            else if (GetAtomTypeXCount(ac, atomi) == 1)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP -= 0.03;
+                                                    //Debug.WriteLine("XLOGP: 28        -0.03");
+                                                }
+                                                else
+                                                {
+                                                    xlogP -= 0.027;
+                                                    //Debug.WriteLine("XLOGP: 29        -0.027");
+                                                }
+                                            }
+                                            else if (GetAtomTypeXCount(ac, atomi) == 2)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.005;
+                                                    //Debug.WriteLine("XLOGP: 30         0.005");
+                                                }
+                                                else
+                                                {
+                                                    xlogP -= 0.315;
+                                                    //Debug.WriteLine("XLOGP: 31        -0.315");
+                                                }
+                                            }
+                                            break;
+                                        case 1:
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.466;
+                                                    //Debug.WriteLine("XLOGP: 22         0.466");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP += 0.136;
+                                                    //Debug.WriteLine("XLOGP: 23         0.136");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.001;
+                                                    //Debug.WriteLine("XLOGP: 24         0.001");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP -= 0.31;
+                                                    //Debug.WriteLine("XLOGP: 25        -0.31");
+                                                }
+                                            }
+                                            break;
+                                        case 2:
+                                            xlogP += 0.42;
+                                            //Debug.WriteLine("XLOGP: 21         0.42");
+                                            break;
+                                    }
+                                    if (GetIfCarbonIsHydrophobic(ac, atomi))
+                                    {
+                                        xlogP += 0.211;
+                                        //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
+                                    }
+                                }//sp2 NOT aromatic
+                                break;
+                            case 4:
+                                // C sp3
+                                switch (hsCount)
+                                {
+                                    case 0:
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP -= 0.006;
+                                                //Debug.WriteLine("XLOGP: 16        -0.006");
                                             }
                                             if (GetPiSystemsCount(ac, atomi) == 1)
                                             {
-                                                xlogP += 0.251;
-                                                //Debug.WriteLine("XLOGP: 62         0.251");
+                                                xlogP -= 0.57;
+                                                //Debug.WriteLine("XLOGP: 17        -0.57");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) >= 2)
+                                            {
+                                                xlogP -= 0.317;
+                                                //Debug.WriteLine("XLOGP: 18        -0.317");
                                             }
                                         }
-                                    }
+                                        else
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP -= 0.316;
+                                                //Debug.WriteLine("XLOGP: 19        -0.316");
+                                            }
+                                            else
+                                            {
+                                                xlogP -= 0.723;
+                                                //Debug.WriteLine("XLOGP: 20        -0.723");
+                                            }
+                                        }
+                                        break;
+                                    case 1:
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP += 0.127;
+                                                //Debug.WriteLine("XLOGP: 10         0.127");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP -= 0.243;
+                                                //Debug.WriteLine("XLOGP: 11        -0.243");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) >= 2)
+                                            {
+                                                xlogP -= 0.499;
+                                                //Debug.WriteLine("XLOGP: 12        -0.499");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP -= 0.205;
+                                                //Debug.WriteLine("XLOGP: 13        -0.205");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP -= 0.305;
+                                                //Debug.WriteLine("XLOGP: 14        -0.305");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) >= 2)
+                                            {
+                                                xlogP -= 0.709;
+                                                //Debug.WriteLine("XLOGP: 15        -0.709");
+                                            }
+                                        }
+                                        break;
+                                    case 2:
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP += 0.358;
+                                                //Debug.WriteLine("XLOGP:  4         0.358");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP -= 0.008;
+                                                //Debug.WriteLine("XLOGP:  5        -0.008");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 2)
+                                            {
+                                                xlogP -= 0.185;
+                                                //Debug.WriteLine("XLOGP:  6        -0.185");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP -= 0.137;
+                                                //Debug.WriteLine("XLOGP:  7        -0.137");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP -= 0.303;
+                                                //Debug.WriteLine("XLOGP:  8        -0.303");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 2)
+                                            {
+                                                xlogP -= 0.815;
+                                                //Debug.WriteLine("XLOGP:  9        -0.815");
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP += 0.528;
+                                                //Debug.WriteLine("XLOGP:  1         0.528");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP += 0.267;
+                                                //Debug.WriteLine("XLOGP:  2         0.267");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //if (GetNitrogenOrOxygenCount(ac, atomi) == 1) {
+                                            xlogP -= 0.032;
+                                            //Debug.WriteLine("XLOGP:  3        -0.032");
+                                        }
+                                        break;
                                 }
-                            }
-                            else if (bondCount == 3)
+                                if (GetIfCarbonIsHydrophobic(ac, atomi))
+                                {
+                                    xlogP += 0.211;
+                                    //Debug.WriteLine("XLOGP: Hydrophobic Carbon    0.211");
+                                }
+                                break;
+                        }
+                        break;//C
+                    case "N":
+                        //NO2
+                        if (ac.GetBondOrderSum(atomi) >= 3.0 && GetOxygenCount(ac, atomi) >= 2
+                                && maxBondOrder == BondOrder.Double)
+                        {
+                            xlogP += 1.178;
+                            //Debug.WriteLine("XLOGP: 66         1.178");
+                        }
+                        else
+                        {
+                            if (GetPresenceOfCarbonil(ac, atomi) >= 1)
                             {
-                                // N sp3
+                                // amidic nitrogen
                                 if (hsCount == 0)
                                 {
-                                    //if (rs.Contains(atomi)&&ringSize>3) {
-                                    if (atomi.IsAromatic
-                                            || (rs.Contains(atomi)
-                                                    && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 1))
+                                    if (GetAtomTypeXCount(ac, atomi) == 0)
                                     {
-                                        if (GetAtomTypeXCount(ac, atomi) == 0)
-                                        {
-                                            xlogP += 0.881;
-                                            //Debug.WriteLine("XLOGP: 51         0.881");
-                                        }
-                                        else
-                                        {
-                                            xlogP -= 0.01;
-                                            //Debug.WriteLine("XLOGP: 53        -0.01");
-                                        }
+                                        xlogP += 0.078;
+                                        //Debug.WriteLine("XLOGP: 57         0.078");
                                     }
-                                    else
+                                    if (GetAtomTypeXCount(ac, atomi) == 1)
                                     {
-                                        if (GetAtomTypeXCount(ac, atomi) == 0)
-                                        {
-                                            if (GetPiSystemsCount(ac, atomi) == 0)
-                                            {
-                                                xlogP += 0.159;
-                                                //Debug.WriteLine("XLOGP: 49         0.159");
-                                            }
-                                            if (GetPiSystemsCount(ac, atomi) > 0)
-                                            {
-                                                xlogP += 0.761;
-                                                //Debug.WriteLine("XLOGP: 50         0.761");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            xlogP -= 0.239;
-                                            //Debug.WriteLine("XLOGP: 52        -0.239");
-                                        }
+                                        xlogP -= 0.118;
+                                        //Debug.WriteLine("XLOGP: 58        -0.118");
                                     }
                                 }
-                                else if (hsCount == 1)
+                                if (hsCount == 1)
                                 {
                                     if (GetAtomTypeXCount(ac, atomi) == 0)
                                     {
-                                        //                                    like pyrrole
-                                        if (atomi.IsAromatic
-                                                || (rs.Contains(atomi)
-                                                        && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 2))
-                                        {
-                                            xlogP += 0.545;
-                                            hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 46         0.545");
-                                        }
-                                        else
-                                        {
-                                            if (GetPiSystemsCount(ac, atomi) == 0)
-                                            {
-                                                xlogP -= 0.112;
-                                                hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 44        -0.112");
-                                            }
-                                            if (GetPiSystemsCount(ac, atomi) > 0)
-                                            {
-                                                xlogP += 0.166;
-                                                hBondDonors.Add(i);
-                                                //Debug.WriteLine("XLOGP: 45         0.166");
-                                            }
-                                        }
+                                        xlogP -= 0.096;
+                                        hBondDonors.Add(i);
+                                        //Debug.WriteLine("XLOGP: 55        -0.096");
                                     }
                                     else
                                     {
-                                        if (rs.Contains(atomi))
-                                        {
-                                            xlogP += 0.153;
-                                            hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 48         0.153");
-                                        }
-                                        else
-                                        {
-                                            xlogP += 0.324;
-                                            hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 47         0.324");
-                                        }
+                                        xlogP -= 0.044;
+                                        hBondDonors.Add(i);
+                                        //Debug.WriteLine("XLOGP: 56        -0.044");
                                     }
                                 }
-                                else if (hsCount == 2)
+                                if (hsCount == 2)
                                 {
-                                    if (GetAtomTypeXCount(ac, atomi) == 0)
+                                    xlogP -= 0.646;
+                                    hBondDonors.Add(i);
+                                    //Debug.WriteLine("XLOGP: 54        -0.646");
+                                }
+                            }
+                            else
+                            {//NO amidic nitrogen
+                                if (bondCount == 1)
+                                {
+                                    // -C#N
+                                    if (GetCarbonsCount(ac, atomi) == 1)
                                     {
-                                        if (GetPiSystemsCount(ac, atomi) == 0)
-                                        {
-                                            xlogP -= 0.534;
-                                            hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 41        -0.534");
-                                        }
-                                        if (GetPiSystemsCount(ac, atomi) == 1)
-                                        {
-                                            xlogP -= 0.329;
-                                            hBondDonors.Add(i);
-                                            //Debug.WriteLine("XLOGP: 42        -0.329");
-                                        }
-
+                                        xlogP -= 0.566;
+                                        //Debug.WriteLine("XLOGP: 68        -0.566");
+                                    }
+                                }
+                                else if (bondCount == 2)
+                                {
+                                    // N sp2
+                                    if (atomi.GetProperty<bool>("IS_IN_AROMATIC_RING"))
+                                    {
+                                        xlogP -= 0.493;
+                                        //Debug.WriteLine("XLOGP: 67        -0.493");
                                         if (checkAminoAcid != 0)
                                         {
                                             checkAminoAcid += 1;
@@ -826,210 +657,371 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     }
                                     else
                                     {
-                                        xlogP -= 1.082;
-                                        hBondDonors.Add(i);
-                                        //Debug.WriteLine("XLOGP: 43        -1.082");
+                                        if (GetDoubleBondedCarbonsCount(ac, atomi) == 0)
+                                        {
+                                            if (GetDoubleBondedNitrogenCount(ac, atomi) == 0)
+                                            {
+                                                if (GetDoubleBondedOxygenCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP += 0.427;
+                                                    //Debug.WriteLine("XLOGP: 65         0.427");
+                                                }
+                                            }
+                                            if (GetDoubleBondedNitrogenCount(ac, atomi) == 1)
+                                            {
+                                                if (GetAtomTypeXCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.536;
+                                                    //Debug.WriteLine("XLOGP: 63         0.536");
+                                                }
+                                                if (GetAtomTypeXCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP -= 0.597;
+                                                    //Debug.WriteLine("XLOGP: 64        -0.597");
+                                                }
+                                            }
+                                        }
+                                        else if (GetDoubleBondedCarbonsCount(ac, atomi) == 1)
+                                        {
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.007;
+                                                    //Debug.WriteLine("XLOGP: 59         0.007");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP -= 0.275;
+                                                    //Debug.WriteLine("XLOGP: 60        -0.275");
+                                                }
+                                            }
+                                            else if (GetAtomTypeXCount(ac, atomi) == 1)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.366;
+                                                    //Debug.WriteLine("XLOGP: 61         0.366");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) == 1)
+                                                {
+                                                    xlogP += 0.251;
+                                                    //Debug.WriteLine("XLOGP: 62         0.251");
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (bondCount == 3)
+                                {
+                                    // N sp3
+                                    if (hsCount == 0)
+                                    {
+                                        //if (rs.Contains(atomi)&&ringSize>3) {
+                                        if (atomi.IsAromatic
+                                                || (rs.Contains(atomi)
+                                                        && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 1))
+                                        {
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                                            {
+                                                xlogP += 0.881;
+                                                //Debug.WriteLine("XLOGP: 51         0.881");
+                                            }
+                                            else
+                                            {
+                                                xlogP -= 0.01;
+                                                //Debug.WriteLine("XLOGP: 53        -0.01");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP += 0.159;
+                                                    //Debug.WriteLine("XLOGP: 49         0.159");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) > 0)
+                                                {
+                                                    xlogP += 0.761;
+                                                    //Debug.WriteLine("XLOGP: 50         0.761");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                xlogP -= 0.239;
+                                                //Debug.WriteLine("XLOGP: 52        -0.239");
+                                            }
+                                        }
+                                    }
+                                    else if (hsCount == 1)
+                                    {
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            //                                    like pyrrole
+                                            if (atomi.IsAromatic
+                                                    || (rs.Contains(atomi)
+                                                            && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 2))
+                                            {
+                                                xlogP += 0.545;
+                                                hBondDonors.Add(i);
+                                                //Debug.WriteLine("XLOGP: 46         0.545");
+                                            }
+                                            else
+                                            {
+                                                if (GetPiSystemsCount(ac, atomi) == 0)
+                                                {
+                                                    xlogP -= 0.112;
+                                                    hBondDonors.Add(i);
+                                                    //Debug.WriteLine("XLOGP: 44        -0.112");
+                                                }
+                                                if (GetPiSystemsCount(ac, atomi) > 0)
+                                                {
+                                                    xlogP += 0.166;
+                                                    hBondDonors.Add(i);
+                                                    //Debug.WriteLine("XLOGP: 45         0.166");
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (rs.Contains(atomi))
+                                            {
+                                                xlogP += 0.153;
+                                                hBondDonors.Add(i);
+                                                //Debug.WriteLine("XLOGP: 48         0.153");
+                                            }
+                                            else
+                                            {
+                                                xlogP += 0.324;
+                                                hBondDonors.Add(i);
+                                                //Debug.WriteLine("XLOGP: 47         0.324");
+                                            }
+                                        }
+                                    }
+                                    else if (hsCount == 2)
+                                    {
+                                        if (GetAtomTypeXCount(ac, atomi) == 0)
+                                        {
+                                            if (GetPiSystemsCount(ac, atomi) == 0)
+                                            {
+                                                xlogP -= 0.534;
+                                                hBondDonors.Add(i);
+                                                //Debug.WriteLine("XLOGP: 41        -0.534");
+                                            }
+                                            if (GetPiSystemsCount(ac, atomi) == 1)
+                                            {
+                                                xlogP -= 0.329;
+                                                hBondDonors.Add(i);
+                                                //Debug.WriteLine("XLOGP: 42        -0.329");
+                                            }
+
+                                            if (checkAminoAcid != 0)
+                                            {
+                                                checkAminoAcid += 1;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            xlogP -= 1.082;
+                                            hBondDonors.Add(i);
+                                            //Debug.WriteLine("XLOGP: 43        -1.082");
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                }
-                if (symbol.Equals("O"))
-                {
-                    if (bondCount == 1 && maxBondOrder == BondOrder.Double)
-                    {
-                        xlogP -= 0.399;
-                        if (!GetPresenceOfHydroxy(ac, atomi))
+                        break;
+                    case "O":
+                        if (bondCount == 1 && maxBondOrder == BondOrder.Double)
                         {
-                            hBondAcceptors.Add(i);
-                        }
-                        //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
-                    }
-                    else if (bondCount == 1 && hsCount == 0
-                          && (GetPresenceOfNitro(ac, atomi) || GetPresenceOfCarbonil(ac, atomi) == 1)
-                          || GetPresenceOfSulfat(ac, atomi))
-                    {
-                        xlogP -= 0.399;
-                        if (!GetPresenceOfHydroxy(ac, atomi))
-                        {
-                            hBondAcceptors.Add(i);
-                        }
-                        //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
-                    }
-                    else if (bondCount >= 1)
-                    {
-                        if (hsCount == 0 && bondCount == 2)
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
+                            xlogP -= 0.399;
+                            if (!GetPresenceOfHydroxy(ac, atomi))
                             {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP += 0.084;
-                                    //Debug.WriteLine("XLOGP: 72    R-O-R     0.084");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) > 0)
-                                {
-                                    xlogP += 0.435;
-                                    //Debug.WriteLine("XLOGP: 73    R-O-R.1     0.435");
-                                }
-                            }
-                            else if (GetAtomTypeXCount(ac, atomi) == 1)
-                            {
-                                xlogP += 0.105;
-                                //Debug.WriteLine("XLOGP: 74    R-O-X     0.105");
-                            }
-                        }
-                        else
-                        {
-                            if (GetAtomTypeXCount(ac, atomi) == 0)
-                            {
-                                if (GetPiSystemsCount(ac, atomi) == 0)
-                                {
-                                    xlogP -= 0.467;
-                                    hBondDonors.Add(i);
-                                    hBondAcceptors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 69    R-OH    -0.467");
-                                }
-                                if (GetPiSystemsCount(ac, atomi) == 1)
-                                {
-                                    xlogP += 0.082;
-                                    hBondDonors.Add(i);
-                                    hBondAcceptors.Add(i);
-                                    //Debug.WriteLine("XLOGP: 70    R-OH.1     0.082");
-                                }
-                            }
-                            else if (GetAtomTypeXCount(ac, atomi) == 1)
-                            {
-                                xlogP -= 0.522;
-                                hBondDonors.Add(i);
                                 hBondAcceptors.Add(i);
-                                //Debug.WriteLine("XLOGP: 71    X-OH    -0.522");
+                            }
+                            //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
+                        }
+                        else if (bondCount == 1 && hsCount == 0
+                              && (GetPresenceOfNitro(ac, atomi) || GetPresenceOfCarbonil(ac, atomi) == 1)
+                              || GetPresenceOfSulfat(ac, atomi))
+                        {
+                            xlogP -= 0.399;
+                            if (!GetPresenceOfHydroxy(ac, atomi))
+                            {
+                                hBondAcceptors.Add(i);
+                            }
+                            //Debug.WriteLine("XLOGP: 75    A=O    -0.399");
+                        }
+                        else if (bondCount >= 1)
+                        {
+                            if (hsCount == 0 && bondCount == 2)
+                            {
+                                if (GetAtomTypeXCount(ac, atomi) == 0)
+                                {
+                                    if (GetPiSystemsCount(ac, atomi) == 0)
+                                    {
+                                        xlogP += 0.084;
+                                        //Debug.WriteLine("XLOGP: 72    R-O-R     0.084");
+                                    }
+                                    if (GetPiSystemsCount(ac, atomi) > 0)
+                                    {
+                                        xlogP += 0.435;
+                                        //Debug.WriteLine("XLOGP: 73    R-O-R.1     0.435");
+                                    }
+                                }
+                                else if (GetAtomTypeXCount(ac, atomi) == 1)
+                                {
+                                    xlogP += 0.105;
+                                    //Debug.WriteLine("XLOGP: 74    R-O-X     0.105");
+                                }
+                            }
+                            else
+                            {
+                                if (GetAtomTypeXCount(ac, atomi) == 0)
+                                {
+                                    if (GetPiSystemsCount(ac, atomi) == 0)
+                                    {
+                                        xlogP -= 0.467;
+                                        hBondDonors.Add(i);
+                                        hBondAcceptors.Add(i);
+                                        //Debug.WriteLine("XLOGP: 69    R-OH    -0.467");
+                                    }
+                                    if (GetPiSystemsCount(ac, atomi) == 1)
+                                    {
+                                        xlogP += 0.082;
+                                        hBondDonors.Add(i);
+                                        hBondAcceptors.Add(i);
+                                        //Debug.WriteLine("XLOGP: 70    R-OH.1     0.082");
+                                    }
+                                }
+                                else if (GetAtomTypeXCount(ac, atomi) == 1)
+                                {
+                                    xlogP -= 0.522;
+                                    hBondDonors.Add(i);
+                                    hBondAcceptors.Add(i);
+                                    //Debug.WriteLine("XLOGP: 71    X-OH    -0.522");
+                                }
                             }
                         }
-                    }
-                }
-                if (symbol.Equals("S"))
-                {
-                    if ((bondCount == 1 && maxBondOrder == BondOrder.Double)
-                            || (bondCount == 1 && atomi.FormalCharge == -1))
-                    {
-                        xlogP -= 0.148;
-                        //Debug.WriteLine("XLOGP: 78    A=S    -0.148");
-                    }
-                    else if (bondCount == 2)
-                    {
-                        if (hsCount == 0)
+                        break;
+                    case "S":
+                        if ((bondCount == 1 && maxBondOrder == BondOrder.Double)
+                                || (bondCount == 1 && atomi.FormalCharge == -1))
                         {
-                            xlogP += 0.255;
-                            //Debug.WriteLine("XLOGP: 77    A-S-A     0.255");
+                            xlogP -= 0.148;
+                            //Debug.WriteLine("XLOGP: 78    A=S    -0.148");
                         }
-                        else
+                        else if (bondCount == 2)
                         {
-                            xlogP += 0.419;
-                            //Debug.WriteLine("XLOGP: 76    A-SH     0.419");
+                            if (hsCount == 0)
+                            {
+                                xlogP += 0.255;
+                                //Debug.WriteLine("XLOGP: 77    A-S-A     0.255");
+                            }
+                            else
+                            {
+                                xlogP += 0.419;
+                                //Debug.WriteLine("XLOGP: 76    A-SH     0.419");
+                            }
                         }
-                    }
-                    else if (bondCount == 3)
-                    {
-                        if (GetOxygenCount(ac, atomi) >= 1)
+                        else if (bondCount == 3)
                         {
-                            xlogP -= 1.375;
-                            //Debug.WriteLine("XLOGP: 79    A-SO-A    -1.375");
+                            if (GetOxygenCount(ac, atomi) >= 1)
+                            {
+                                xlogP -= 1.375;
+                                //Debug.WriteLine("XLOGP: 79    A-SO-A    -1.375");
+                            }
                         }
-                    }
-                    else if (bondCount == 4)
-                    {
-                        if (GetDoubleBondedOxygenCount(ac, atomi) >= 2)
+                        else if (bondCount == 4)
                         {
-                            xlogP -= 0.168;
-                            //Debug.WriteLine("XLOGP: 80    A-SO2-A    -0.168");
+                            if (GetDoubleBondedOxygenCount(ac, atomi) >= 2)
+                            {
+                                xlogP -= 0.168;
+                                //Debug.WriteLine("XLOGP: 80    A-SO2-A    -0.168");
+                            }
                         }
-                    }
-                }
-                if (symbol.Equals("P"))
-                {
-                    if (GetDoubleBondedSulfurCount(ac, atomi) >= 1 && bondCount >= 4)
-                    {
-                        xlogP += 1.253;
-                        //Debug.WriteLine("XLOGP: 82    S=PA3     1.253");
-                    }
-                    else if (GetOxygenCount(ac, atomi) >= 1 || GetDoubleBondedOxygenCount(ac, atomi) == 1
-                          && bondCount >= 4)
-                    {
-                        xlogP -= 0.447;
-                        //Debug.WriteLine("XLOGP: 81    O=PA3    -0.447");
-                    }
-                }
-                if (symbol.Equals("F"))
-                {
-                    if (GetPiSystemsCount(ac, atomi) == 0)
-                    {
-                        xlogP += 0.375;
-                        //Debug.WriteLine("XLOGP: 83    F.0     0.512");
-                    }
-                    else if (GetPiSystemsCount(ac, atomi) == 1)
-                    {
-                        xlogP += 0.202;
-                        //Debug.WriteLine("XLOGP: 84    F.1     0.202");
-                    }
-                }
-                if (symbol.Equals("Cl"))
-                {
-                    if (GetPiSystemsCount(ac, atomi) == 0)
-                    {
-                        xlogP += 0.512;
-                        //Debug.WriteLine("XLOGP: 85    Cl.0     0.512");
-                    }
-                    else if (GetPiSystemsCount(ac, atomi) >= 1)
-                    {
-                        xlogP += 0.663;
-                        //Debug.WriteLine("XLOGP: 86    Cl.1     0.663");
-                    }
-                }
-                if (symbol.Equals("Br"))
-                {
-                    if (GetPiSystemsCount(ac, atomi) == 0)
-                    {
-                        xlogP += 0.85;
-                        //Debug.WriteLine("XLOGP: 87    Br.0     0.85");
-                    }
-                    else if (GetPiSystemsCount(ac, atomi) == 1)
-                    {
-                        xlogP += 0.839;
-                        //Debug.WriteLine("XLOGP: 88    Br.1     0.839");
-                    }
-                }
-                if (symbol.Equals("I"))
-                {
-                    if (GetPiSystemsCount(ac, atomi) == 0)
-                    {
-                        xlogP += 1.05;
-                        //Debug.WriteLine("XLOGP: 89    I.0     1.05");
-                    }
-                    else if (GetPiSystemsCount(ac, atomi) == 1)
-                    {
-                        xlogP += 1.109;
-                        //Debug.WriteLine("XLOGP: 90    I.1     1.109");
-                    }
+                        break;
+                    case "P":
+                        if (GetDoubleBondedSulfurCount(ac, atomi) >= 1 && bondCount >= 4)
+                        {
+                            xlogP += 1.253;
+                            //Debug.WriteLine("XLOGP: 82    S=PA3     1.253");
+                        }
+                        else if (GetOxygenCount(ac, atomi) >= 1 || GetDoubleBondedOxygenCount(ac, atomi) == 1
+                              && bondCount >= 4)
+                        {
+                            xlogP -= 0.447;
+                            //Debug.WriteLine("XLOGP: 81    O=PA3    -0.447");
+                        }
+                        break;
+                    case "F":
+                        if (GetPiSystemsCount(ac, atomi) == 0)
+                        {
+                            xlogP += 0.375;
+                            //Debug.WriteLine("XLOGP: 83    F.0     0.512");
+                        }
+                        else if (GetPiSystemsCount(ac, atomi) == 1)
+                        {
+                            xlogP += 0.202;
+                            //Debug.WriteLine("XLOGP: 84    F.1     0.202");
+                        }
+                        break;
+                    case "Cl":
+                        if (GetPiSystemsCount(ac, atomi) == 0)
+                        {
+                            xlogP += 0.512;
+                            //Debug.WriteLine("XLOGP: 85    Cl.0     0.512");
+                        }
+                        else if (GetPiSystemsCount(ac, atomi) >= 1)
+                        {
+                            xlogP += 0.663;
+                            //Debug.WriteLine("XLOGP: 86    Cl.1     0.663");
+                        }
+                        break;
+                    case "Br":
+                        if (GetPiSystemsCount(ac, atomi) == 0)
+                        {
+                            xlogP += 0.85;
+                            //Debug.WriteLine("XLOGP: 87    Br.0     0.85");
+                        }
+                        else if (GetPiSystemsCount(ac, atomi) == 1)
+                        {
+                            xlogP += 0.839;
+                            //Debug.WriteLine("XLOGP: 88    Br.1     0.839");
+                        }
+                        break;
+                    case "I":
+                        if (GetPiSystemsCount(ac, atomi) == 0)
+                        {
+                            xlogP += 1.05;
+                            //Debug.WriteLine("XLOGP: 89    I.0     1.05");
+                        }
+                        else if (GetPiSystemsCount(ac, atomi) == 1)
+                        {
+                            xlogP += 1.109;
+                            //Debug.WriteLine("XLOGP: 90    I.1     1.109");
+                        }
+                        break;
                 }
 
                 //            Halogen pair 1-3
                 int halcount = GetHalogenCount(ac, atomi);
-                if (halcount == 2)
+                switch (halcount)
                 {
-                    xlogP += 0.137;
-                    //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.137");
-                }
-                else if (halcount == 3)
-                {
-                    xlogP += (3 * 0.137);
-                    //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.411");
-                }
-                else if (halcount == 4)
-                {
-                    xlogP += (6 * 0.137);
-                    //Debug.WriteLine("XLOGP: Halogen 1-3 pair     1.902");
+                    case 2:
+                        xlogP += 0.137;
+                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.137");
+                        break;
+                    case 3:
+                        xlogP += (3 * 0.137);
+                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     0.411");
+                        break;
+                    case 4:
+                        xlogP += (6 * 0.137);
+                        //Debug.WriteLine("XLOGP: Halogen 1-3 pair     1.902");
+                        break;
                 }
 
                 //            sp2 Oxygen 1-5 pair
@@ -1209,8 +1201,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(xlogP),
-                    DescriptorNames);
+            return new DescriptorValue<Result<double>>(_Specification, ParameterNames, Parameters, new Result<double>(xlogP), DescriptorNames);
         }
 
         /// <summary>
@@ -1558,7 +1549,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var bonds = ac.GetConnectedBonds(neighbour);
                 foreach (var bond in bonds)
                 {
-                    if (bond.Order != BondOrder.Single && bond.GetConnectedAtom(neighbour) != atom
+                    if (bond.Order != BondOrder.Single && !bond.GetConnectedAtom(neighbour).Equals(atom)
                             && !neighbour.Symbol.Equals("P") && !neighbour.Symbol.Equals("S"))
                     {
                         picounter += 1;

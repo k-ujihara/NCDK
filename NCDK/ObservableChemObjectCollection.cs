@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK
 {
@@ -32,7 +33,9 @@ namespace NCDK
         public ObservableChemObjectCollection(IChemObjectListener listener, IEnumerable<T> objects)
         {
             Listener = listener;
-            list = new List<T>(objects);
+            var n = objects.Count();
+            list = new List<T>(n);
+            list.AddRange(objects);
         }
 
         public virtual T this[int index]

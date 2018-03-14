@@ -85,8 +85,6 @@ namespace NCDK.Geometries.CIP
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties) { }
         public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { }
 
-        private ICollection<IChemObjectListener> listeners;
-
         class ImmutableCollection : ICollection<IChemObjectListener>
         {
             private static EmptyEnumerable<IChemObjectListener> empty = new EmptyEnumerable<IChemObjectListener>();

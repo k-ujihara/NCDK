@@ -176,7 +176,7 @@ namespace NCDK.Graphs
                 {
                     path.Atoms.Add(nextAtom);
                     path.Bonds.Add(bond);
-                    if (nextAtom == target)
+                    if (nextAtom.Equals(target))
                     {
                         if (first)
                             path.Atoms.Remove(root);
@@ -237,10 +237,16 @@ namespace NCDK.Graphs
             IAtomContainer mol = atomContainer.Builder.NewAtomContainer();
             BreadthFirstSearch(atomContainer, new[] { atom }, mol, max);
             IAtom[] returnValue = new IAtom[mol.Atoms.Count - 1];
+            int k = 0;
             for (int i = 0; i < mol.Atoms.Count; i++)
-                if (mol.Atoms[i] != atom)
-                    yield return mol.Atoms[i];
-            yield break;
+            {
+                if (!mol.Atoms[i].Equals(atom))
+                {
+                    returnValue[k] = mol.Atoms[i];
+                    k++;
+                }
+            }
+            return returnValue;
         }
 
         /// <summary>

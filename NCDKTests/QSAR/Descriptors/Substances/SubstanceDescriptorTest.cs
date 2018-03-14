@@ -26,7 +26,6 @@ namespace NCDK.QSAR.Descriptors.Substances
     {
         protected ISubstanceDescriptor descriptor;
 
-        //@SuppressWarnings("rawtypes")
         public void SetDescriptor(Type descriptorClass)
         {
             if (descriptor == null)

@@ -97,11 +97,7 @@ namespace NCDK.SMSD.Tools
 
         public void MyMethod(long timeMillis)
         {
-            Console.Out.WriteLine("Starting......");
-
-            // pause for a while
             Thread.Sleep((int)timeMillis);
-            Console.Out.WriteLine("Ending......");
         }
     }
 }

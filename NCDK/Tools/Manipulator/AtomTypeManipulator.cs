@@ -90,8 +90,10 @@ namespace NCDK.Tools.Manipulator
                 {
                     atom.SetProperty(CDKPropertyName.Color, color);
                 }
-                if (atomType.AtomicNumber != null) atom.AtomicNumber = atomType.AtomicNumber;
-                if (atomType.ExactMass != null) atom.ExactMass = atomType.ExactMass;
+                if (atomType.AtomicNumber != null)
+                    atom.AtomicNumber = atomType.AtomicNumber;
+                if (atomType.ExactMass != null)
+                    atom.ExactMass = atomType.ExactMass;
             }
         }
 

@@ -19,9 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
@@ -41,12 +41,14 @@ namespace NCDK.IO
     {
         protected override string TestFile => "NCDK.Data.MDL.molV3000.mol";
         protected override Type ChemObjectIOToTestType => typeof(MDLV3000Reader);
+        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        private static readonly Type typeOfAtomContainer = builder.NewAtomContainer().GetType();
 
         [TestMethod()]
         public void TestAccepts()
         {
             MDLV3000Reader reader = new MDLV3000Reader(new StringReader(""));
-            Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
+            Assert.IsTrue(reader.Accepts(typeOfAtomContainer));
         }
 
         // @cdk.bug 1571207
@@ -58,7 +60,7 @@ namespace NCDK.IO
             using (var ins = ResourceLoader.GetAsStream(filename))
             {
                 MDLV3000Reader reader = new MDLV3000Reader(ins);
-                IAtomContainer m = reader.Read(new AtomContainer());
+                IAtomContainer m = reader.Read(builder.NewAtomContainer());
                 reader.Close();
                 Assert.IsNotNull(m);
                 Assert.AreEqual(31, m.Atoms.Count);
@@ -80,7 +82,7 @@ namespace NCDK.IO
             {
                 using (MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString)))
                 {
-                    reader.Read(new AtomContainer());
+                    reader.Read(builder.NewAtomContainer());
                     reader.Close();
                     Assert.Fail("Should have received a CDK Exception");
                 }
@@ -112,7 +114,7 @@ namespace NCDK.IO
         {
             using (MDLV3000Reader reader = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "pseudoAtomReplacement.mol")))
             {
-                IAtomContainer container = reader.Read(new AtomContainer());
+                IAtomContainer container = reader.Read(builder.NewAtomContainer());
                 foreach (var atom in container.Bonds[9].Atoms)
                 {
                     Assert.IsTrue(container.Contains(atom));
@@ -125,7 +127,7 @@ namespace NCDK.IO
         {
             using (MDLV3000Reader reader = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "multicenterBond.mol")))
             {
-                IAtomContainer container = reader.Read(new AtomContainer());
+                IAtomContainer container = reader.Read(builder.NewAtomContainer());
                 Assert.AreEqual(8, container.Bonds.Count);
                 var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
@@ -139,7 +141,7 @@ namespace NCDK.IO
         {
             using (MDLV3000Reader reader = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CH3.mol")))
             {
-                IAtomContainer container = reader.Read(new AtomContainer());
+                IAtomContainer container = reader.Read(builder.NewAtomContainer());
                 Assert.AreEqual(1, container.SingleElectrons.Count);
                 Assert.AreEqual(3, container.Atoms[0].ImplicitHydrogenCount);
             }

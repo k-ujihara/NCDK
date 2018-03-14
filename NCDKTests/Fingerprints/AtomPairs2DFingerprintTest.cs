@@ -10,7 +10,7 @@ using NCDK.Smiles;
 
 namespace NCDK.Fingerprints
 {
-    //@cdk.module test-fingerprint
+    // @cdk.module test-fingerprint
     [TestClass()]
     public class AtomPairs2DFingerprintTest
     {

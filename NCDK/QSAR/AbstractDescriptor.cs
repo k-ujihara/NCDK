@@ -29,8 +29,8 @@ namespace NCDK.QSAR
     /// A super class for molecular descriptors allowing default implementations for
     /// interface methods.
     /// </summary>
-    //@author John May
-    //@cdk.module qsar
+    // @author John May
+    // @cdk.module qsar
     public abstract class AbstractDescriptor : IDescriptor
     {
         /// <summary>

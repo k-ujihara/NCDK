@@ -761,7 +761,8 @@ namespace NCDK.Tools.Manipulator
             }
 
             // none of the hydrogens could be suppressed - no changes need to be made
-            if (hydrogens.Count == 0) return org;
+            if (hydrogens.Count == 0)
+                return org;
 
             org.SetAtoms(cpyAtoms.Take(nCpyAtoms));
 
@@ -1285,7 +1286,8 @@ namespace NCDK.Tools.Manipulator
             foreach (var atom in container.Atoms)
             {
                 IAtomType matched = matcher.FindMatchingAtomType(container, atom);
-                if (matched != null) AtomTypeManipulator.Configure(atom, matched);
+                if (matched != null)
+                    AtomTypeManipulator.Configure(atom, matched);
             }
         }
 

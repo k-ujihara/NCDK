@@ -48,9 +48,13 @@ namespace NCDK.Isomorphisms.Matchers
             Any = 8,
         }
 
+        private IChemObjectBuilder builder;
+        /// <inheritdoc/>
+        public override IChemObjectBuilder Builder => builder;
+
         public CTFileQueryBond(IChemObjectBuilder builder)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
 
         /// <summary>

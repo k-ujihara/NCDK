@@ -143,20 +143,21 @@ namespace <#= ns.NS #>
         {
             if (atoms == null)
             {
-                this.atoms = 
-<# if (!ns.IsSilent) { #>
-                    new List<IAtom>(2);
+<# if (ns.IsSilent) { #>
+				this.atoms = new List<IAtom>(2);
 <# } else { #>
-                    new ObservableChemObjectCollection<IAtom>(2, this);
+				this.atoms = new ObservableChemObjectCollection<IAtom>(2, this);
 <# } #>
             }
             else
             {
-                    this.atoms = 
-<# if (!ns.IsSilent) { #>
-                    new List<IAtom>(atoms);
+<# if (ns.IsSilent) { #>
+				int n = Math.Min(atoms.Count(), 2);
+				var list = new List<IAtom>(n);
+				list.AddRange(atoms);
+				this.atoms = list;
 <# } else { #>
-                new ObservableChemObjectCollection<IAtom>(this, atoms);
+				this.atoms = new ObservableChemObjectCollection<IAtom>(this, atoms);
 <# } #>
             }
         }
