@@ -41,8 +41,7 @@ namespace NCDK.Depict
         public void PotassiumCarbonate()
         {
             IAtomContainer mol = Smi("[K+].[O-]C(=O)[O-].[K+]");
-            Abbreviations factory = new Abbreviations();
-            factory.Add("[K+].[O-]C(=O)[O-].[K+] K2CO3");
+            Abbreviations factory = new Abbreviations { "[K+].[O-]C(=O)[O-].[K+] K2CO3" };
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual("K2CO3", sgroups[0].Subscript);
@@ -52,9 +51,8 @@ namespace NCDK.Depict
         [TestMethod()]
         public void Phenyl()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("CCCCCCC(c1ccccc1)(c1ccccc1)c1ccccc1");
-            factory.Add("*c1ccccc1 Ph");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(3, sgroups.Count);
             Assert.AreEqual("Ph", sgroups[0].Subscript);
@@ -71,9 +69,8 @@ namespace NCDK.Depict
         [TestMethod()]
         public void PhenylShouldNotMatchBenzene()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("c1ccccc1");
-            factory.Add("*c1ccccc1 Ph");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(0, sgroups.Count);
         }
@@ -81,18 +78,16 @@ namespace NCDK.Depict
         [TestMethod()]
         public void AvoidOverZealousAbbreviations()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("Clc1ccccc1");
-            factory.Add("*c1ccccc1 Ph");
             Assert.AreEqual(0, factory.Apply(mol));
         }
 
         [TestMethod()]
         public void PhenylShouldNotMatchC4H6()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("Oc1ccc(O)cc1");
-            factory.Add("*c1ccccc1 Ph");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(0, sgroups.Count);
         }
@@ -100,9 +95,8 @@ namespace NCDK.Depict
         [TestMethod()]
         public void PhenylShouldAbbreviateExplicitHydrogens()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("CCCCc1ccc([H])cc1");
-            factory.Add("*c1ccccc1 Ph");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual("Ph", sgroups[0].Subscript);
@@ -114,9 +108,8 @@ namespace NCDK.Depict
         [TestMethod()]
         public void PhenylShouldMatchKekuleForm()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations { "*c1ccccc1 Ph" };
             IAtomContainer mol = Smi("CCCCC1=CC=CC=C1");
-            factory.Add("*c1ccccc1 Ph");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual("Ph", sgroups[0].Subscript);
@@ -128,10 +121,12 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NitroGroups()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations
+            {
+                "*N(=O)(=O) NO2",
+                "*[N+]([O-])(=O) NO2"
+            };
             IAtomContainer mol = Smi("O=N(=O)CCCC[N+]([O-])=O");
-            factory.Add("*N(=O)(=O) NO2");
-            factory.Add("*[N+]([O-])(=O) NO2");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(2, sgroups.Count);
             Assert.AreEqual("NO2", sgroups[0].Subscript);
@@ -145,10 +140,12 @@ namespace NCDK.Depict
         [TestMethod()]
         public void AbbreviationsHavePriority()
         {
-            Abbreviations factory = new Abbreviations();
+            Abbreviations factory = new Abbreviations
+            {
+                "*CCC Pr",
+                "*CC Et"
+            };
             IAtomContainer mol = Smi("c1ccccc1CCC");
-            factory.Add("*CCC Pr");
-            factory.Add("*CC Et");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual("Pr", sgroups[0].Subscript);
@@ -157,8 +154,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void DontOverwriteExistingSgroups()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*CCC Bu");
+            Abbreviations factory = new Abbreviations { "*CCC Bu" };
             IAtomContainer mol = Smi("c1ccccc1CCC");
             Sgroup sgroup = new Sgroup();
             sgroup.Atoms.Add(mol.Atoms[6]);
@@ -173,8 +169,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NHBocFromHeteroCollapse()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(=O)OC(C)(C)C Boc");
+            Abbreviations factory = new Abbreviations { "*C(=O)OC(C)(C)C Boc" };
             IAtomContainer mol = Smi("c1ccccc1NC(=O)OC(C)(C)C");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -186,8 +181,8 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NHBocFromHeteroCollapseExplicitH()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(=O)OC(C)(C)C Boc");
+            Abbreviations factory = new Abbreviations
+            { "*C(=O)OC(C)(C)C Boc" };
             IAtomContainer mol = Smi("c1ccccc1N([H])C(=O)OC(C)(C)C");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -199,8 +194,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NBocClFromHeteroCollapseExplicit()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(=O)OC(C)(C)C Boc");
+            Abbreviations factory = new Abbreviations { "*C(=O)OC(C)(C)C Boc" };
             IAtomContainer mol = Smi("c1ccccc1N(Cl)C(=O)OC(C)(C)C");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -212,8 +206,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NBoc2FromHeteroCollapse()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(=O)OC(C)(C)C Boc");
+            Abbreviations factory = new Abbreviations { "*C(=O)OC(C)(C)C Boc" };
             IAtomContainer mol = Smi("c1cc2ccccc2cc1N(C(=O)OC(C)(C)C)C(=O)OC(C)(C)C");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -225,8 +218,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void IPrFromHeteroCollapse()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(C)C iPr");
+            Abbreviations factory = new Abbreviations { "*C(C)C iPr" };
             IAtomContainer mol = Smi("[CH3:27][CH:19]([CH3:28])[C:20]1=[N:26][C:23](=[CH:22][S:21]1)[C:24](=[O:25])O");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -238,8 +230,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void NBocFromHeteroCollapseExplicitH()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*C(=O)OC(C)(C)C Boc");
+            Abbreviations factory = new Abbreviations { "*C(=O)OC(C)(C)C Boc" };
             IAtomContainer mol = Smi("c1cc2ccccc2ccn1C(=O)OC(C)(C)C");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -251,8 +242,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void SO3minusFromHeteroCollapseNone()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("*S(=O)(=O)[O-] SO3-");
+            Abbreviations factory = new Abbreviations { "*S(=O)(=O)[O-] SO3-" };
             IAtomContainer mol = Smi("c1ccccc1N(S(=O)(=O)[O-])S(=O)(=O)[O-]");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(2, sgroups.Count);
@@ -263,8 +253,7 @@ namespace NCDK.Depict
         [TestMethod()]
         public void HclSaltOfEdci()
         {
-            Abbreviations factory = new Abbreviations();
-            factory.Add("CCN=C=NCCCN(C)C EDCI");
+            Abbreviations factory = new Abbreviations { "CCN=C=NCCCN(C)C EDCI" };
             IAtomContainer mol = Smi("CCN=C=NCCCN(C)C.Cl");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);

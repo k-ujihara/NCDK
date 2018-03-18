@@ -55,9 +55,9 @@ namespace NCDK.Renderers.Generators.Standards
     ///         <item><see cref="GenerateWavyBond(IAtom, IAtom)"/> - up or down bond </item>
     ///     </list> 
     /// </item>
-    /// <item><see cref="GenerateDoubleBond(IBond)"/> - delegates to one of the following types: 
+    /// <item><see cref="GenerateDoubleBond(IBond, bool)"/> - delegates to one of the following types: 
     ///     <list type="bullet"> 
-    ///         <item><see cref="GenerateOffsetDoubleBond(IBond, IAtom, IAtom, IBond, List{IBond})"/> - one line rests on the center between the atoms</item>
+    ///         <item><see cref="GenerateOffsetDoubleBond(IBond, IAtom, IAtom, IBond, List{IBond}, bool)"/> - one line rests on the center between the atoms</item>
     ///         <item><see cref="GenerateCenteredDoubleBond(IBond, IAtom, IAtom, List{IBond}, List{IBond})"/>- both lines rest equidistant from the center between the atoms</item>
     ///         <item><see cref="GenerateCrossedDoubleBond(IAtom, IAtom)"/> - unknown double stereochemistry </item> 
     ///     </list> 

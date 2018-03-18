@@ -420,9 +420,9 @@ namespace NCDK.Depict
                         IAtom atom = frag.Atoms[i];
                         usedAtoms.Add(atom);
                         sgroup.Atoms.Add(atom);
-                        if (attachBond.Begin == atom)
+                        if (attachBond.Begin.Equals(atom))
                             attachAtom = attachBond.End;
-                        else if (attachBond.End == atom)
+                        else if (attachBond.End.Equals(atom))
                             attachAtom = attachBond.Begin;
                     }
 
@@ -516,7 +516,8 @@ namespace NCDK.Depict
                 nbrSymbols.Sort((o1, o2) =>
                     {
                         int cmp = o1.Length.CompareTo(o2.Length);
-                        if (cmp != 0) return cmp;
+                        if (cmp != 0)
+                            return cmp;
                         return o1.CompareTo(o2);
                     });
                 foreach (string nbrSymbol in nbrSymbols)
@@ -624,7 +625,8 @@ namespace NCDK.Depict
 
         private void AppendGroup(StringBuilder sb, String group, int coef, bool useParen)
         {
-            if (coef <= 0 || group == null || !group.Any()) return;
+            if (coef <= 0 || group == null || !group.Any())
+                return;
             if (!useParen)
                 useParen = coef > 1 && (CountUpper(group) > 1 || DigitAtEnd(group));
             if (useParen)
@@ -847,7 +849,8 @@ namespace NCDK.Depict
             if (atom.AtomicNumber == null || atom.AtomicNumber.Value < 1)
                 return null;
             var hcnt = atom.ImplicitHydrogenCount;
-            if (hcnt == null) return null;
+            if (hcnt == null)
+                return null;
             var elem = ChemicalElement.OfNumber(atom.AtomicNumber.Value);
             string hsym = (hcnt > 0) ? ((hcnt > 1) ? ("H" + hcnt) : "H") : "";
             // see HydrogenPosition for canonical list
