@@ -16,12 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Sgroups;
+using NCDK.Config;
+using NCDK.Default;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
-using NCDK.Default;
-using NCDK.Config;
 
 namespace NCDK.Smiles
 {
@@ -124,7 +124,6 @@ namespace NCDK.Smiles
             }
             Assert.AreEqual(13, doubleBondCount);
         }
-
 
         // @cdk.bug 3506770
         [TestMethod(), Ignore()] // This is an example structure where this class fails

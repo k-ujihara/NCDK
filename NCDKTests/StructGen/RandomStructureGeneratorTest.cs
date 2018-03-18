@@ -16,10 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
 using NCDK.Layout;
+using NCDK.Numerics;
 using NCDK.Templates;
 using System;
 using System.Collections.Generic;
@@ -59,8 +60,7 @@ namespace NCDK.StructGen
             if (debug) Console.Out.WriteLine("number of structures in vector: " + structures.Count());
             foreach (var mol in structures)
             {
-                sdg = new StructureDiagramGenerator();
-                sdg.Molecule = mol;
+                sdg = new StructureDiagramGenerator { Molecule = mol };
                 sdg.GenerateCoordinates(new Vector2(0, 1));
             }
             return true;

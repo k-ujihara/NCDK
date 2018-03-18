@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
@@ -145,7 +146,7 @@ namespace NCDK.Tools
 
         //
         //    /// <summary>
-        //    /// <p>A unit test suite for JUnit: Resonance - CC(=[O*+])C=O</p>
+        //    /// <p>A unit test suite: Resonance - CC(=[O*+])C=O</p>
         //    /// <p>CC(=[O*+])C=O &lt;=&gt; C[C+]([O*])C=O &lt;=&gt; CC([O*])=CO &lt;=&gt; CC(=O)[C*][O+] &lt;=&gt; CC(=O)C=[O*+]</p>
         //    ///
         //    /// <returns>The test suite</returns>
@@ -226,7 +227,7 @@ namespace NCDK.Tools
         //        }
         //    }
         //    /// <summary>
-        //    /// A unit test suite for JUnit: Resonance CC(=[O*+])C=O &lt;=&gt; CC(=O)C=[O*+]
+        //    /// A unit test suite: Resonance CC(=[O*+])C=O &lt;=&gt; CC(=O)C=[O*+]
         //    ///
         //    /// <returns>The test suite</returns>
         //    /// </summary>
@@ -264,7 +265,7 @@ namespace NCDK.Tools
         //
         //    }
         //    /// <summary>
-        //    /// A unit test suite for JUnit: Resonance CCC(=[O*+])C(C)=O &lt;=&gt; CCC(=O)C(C)=[O*+]
+        //    /// A unit test suite: Resonance CCC(=[O*+])C(C)=O &lt;=&gt; CCC(=O)C(C)=[O*+]
         //    ///
         //    /// <returns>The test suite</returns>
         //    /// </summary>
@@ -303,7 +304,7 @@ namespace NCDK.Tools
         //    }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+] +
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+] +
         /// C-C=C-[C+]-C-[C+]-C=C + C-[C+]-C=C-C-[C+]-C=C
         /// </summary>
         [TestMethod()]
@@ -337,7 +338,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
         [TestCategory("SlowTest")]
@@ -370,8 +371,7 @@ namespace NCDK.Tools
             molecule.Atoms[3].IsReactiveCenter = true;
 
             List<IParameterReaction> paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter();
-            param.IsSetParameter = true;
+            IParameterReaction param = new SetReactionCenter { IsSetParameter = true };
             paramList.Add(param);
 
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
@@ -409,7 +409,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C-] &lt;=&gt; C=C-[C-]-C
+        /// A unit test suite: Resonance C-C=C-[C-] &lt;=&gt; C=C-[C-]-C
         /// </summary>
         [TestMethod()]
         public void TesttestGetStructures2()
@@ -448,7 +448,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Formic acid  C(=O)O &lt;=&gt; [C+](-[O-])O &lt;=&gt; C([O-])=[O+]
+        /// A unit test suite: Resonance Formic acid  C(=O)O &lt;=&gt; [C+](-[O-])O &lt;=&gt; C([O-])=[O+]
         /// </summary>
         //  @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
         [TestMethod()]
@@ -489,7 +489,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Formic acid  F-C=C &lt;=&gt; [F+]=C-[C-]
+        /// A unit test suite: Resonance Formic acid  F-C=C &lt;=&gt; [F+]=C-[C-]
         /// </summary>
         //  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         [TestMethod()]
@@ -527,7 +527,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
@@ -610,7 +610,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
@@ -644,7 +644,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
@@ -728,7 +728,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance   n1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance   n1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
         [TestMethod()]
@@ -761,7 +761,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance   n1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance   n1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
         [TestMethod()]
@@ -952,7 +952,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// A unit test suite: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
@@ -1076,7 +1076,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
         public void TestGetContainers2Groups()
@@ -1123,7 +1123,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
         [TestCategory("SlowTest")]
@@ -1170,7 +1170,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
         [TestCategory("SlowTest")]
@@ -1217,7 +1217,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// A unit test suite: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
         [TestCategory("SlowTest")]
@@ -1274,7 +1274,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
+        /// A unit test suite: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
         /// </summary>
         // @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
         [TestMethod()]
@@ -1318,7 +1318,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance 1-fluoro-benzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
+        /// A unit test suite: Resonance 1-fluoro-benzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
@@ -1360,7 +1360,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: Resonance Formic acid  C-C(C)=C &lt;=&gt; [Cl+]=C(C)-[C-]
+        /// A unit test suite: Resonance Formic acid  C-C(C)=C &lt;=&gt; [Cl+]=C(C)-[C-]
         /// </summary>
         // @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
         [TestMethod()]
@@ -1387,7 +1387,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+        /// A unit test suite: COC1=CC=C(C=C1)Br
         /// </summary>
         // @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
         [TestMethod()]
@@ -1424,7 +1424,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+        /// A unit test suite: COC1=CC=C(C=C1)Br
         /// </summary>
         // @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
         [TestMethod()]
@@ -1480,7 +1480,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: c1ccccc1CN
+        /// A unit test suite: c1ccccc1CN
         /// </summary>
         // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
         [TestMethod()]
@@ -1516,7 +1516,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: c1ccccc1CN
+        /// A unit test suite: c1ccccc1CN
         /// </summary>
         // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
         // @cdk.bug 2014515
@@ -1556,7 +1556,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// A unit test suite for JUnit: c1ccccc1CN
+        /// A unit test suite: c1ccccc1CN
         /// </summary>
         // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
         [TestMethod()]

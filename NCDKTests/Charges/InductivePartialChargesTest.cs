@@ -180,7 +180,6 @@ namespace NCDK.Charges
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestGetAtomicSoftness()
         {
             InductivePartialCharges ipc = new InductivePartialCharges();

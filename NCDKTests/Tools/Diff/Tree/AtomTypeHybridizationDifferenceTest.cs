@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Tools.Diff.Tree
@@ -26,16 +27,14 @@ namespace NCDK.Tools.Diff.Tree
         [TestMethod()]
         public void TestDiff()
         {
-            IDifference result = AtomTypeHybridizationDifference.Construct("Foo", Hybridization.SP1,
-                    Hybridization.SP2);
+            IDifference result = AtomTypeHybridizationDifference.Construct("Foo", Hybridization.SP1, Hybridization.SP2);
             Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void TestSame()
         {
-            IDifference result = AtomTypeHybridizationDifference.Construct("Foo", Hybridization.SP1,
-                    Hybridization.SP1);
+            IDifference result = AtomTypeHybridizationDifference.Construct("Foo", Hybridization.SP1, Hybridization.SP1);
             Assert.IsNull(result);
         }
 

@@ -21,8 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Tools.Diff;
 using System;
 using System.Collections.Generic;
@@ -55,8 +55,10 @@ namespace NCDK
         {
             IChemObject chemObject = NewChemObject();
             chemObject.SetProperty("remove", "me");
-            var props = new Dictionary<object, object>();
-            props.Add("keep", "me");
+            var props = new Dictionary<object, object>
+            {
+                { "keep", "me" }
+            };
             chemObject.SetProperties(props);
             Assert.AreEqual("me", chemObject.GetProperty<string>("keep"));
             Assert.IsNull(chemObject.GetProperty<string>("remove"));
@@ -282,8 +284,10 @@ namespace NCDK
             IChemObject chemObject2 = (IChemObject)chemObject1.Clone();
 
             // test cloning of properties field
-            var props2 = new Dictionary<object, object>();
-            props2.Add("key", "value");
+            var props2 = new Dictionary<object, object>
+            {
+                { "key", "value" }
+            };
             chemObject2.AddProperties(props2);
             Assert.IsTrue(Compares.AreDeepEqual(props1, chemObject1.GetProperties()));
             Assert.AreEqual(1, chemObject2.GetProperties().Count());

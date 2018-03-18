@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -386,18 +386,13 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestIsEmpty()
+        public override void TestIsEmpty()
         {
             IRingSet ringSet = (IRingSet)NewChemObject();
-
             Assert.IsTrue(ringSet.IsEmpty(), "new ringset should be empty");
-
             ringSet.Add(ringSet.Builder.NewRing());    // NCDK does not suppor to add AtomContainer object to RingSet object
-
             Assert.IsFalse(ringSet.IsEmpty(), "ringset with an atom container should not be empty");
-
-            ringSet.Clear();
-            
+            ringSet.Clear();            
             Assert.IsTrue(ringSet.IsEmpty(), "ringset with removed atom containers should be empty");
         }
     }

@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -51,7 +50,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestGetFormalCharge()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();
@@ -145,9 +143,8 @@ namespace NCDK
         /// <summary>
         /// Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
         /// We decided to let the pseudo atoms have a default label of '*'.
-        ///
-        /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
         /// </summary>
+        // @author Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
         // @cdk.bug 1778479
         [TestMethod()]
         public virtual void TestBug1778479DefaultLabel()

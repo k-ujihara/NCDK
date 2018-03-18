@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Tools;
@@ -107,7 +108,6 @@ namespace NCDK.Modelings.Builder3D
         }
 
         // @cdk.bug  #3515122:  N atom type instead of NC=O
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestConfigureMMFF94BasedAtom_IAtom_String_boolean_hydroxyurea()
         {
@@ -156,7 +156,6 @@ namespace NCDK.Modelings.Builder3D
         }
 
         // @cdk.bug : bad atom types
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_test4_hydroxyurea()
         {
@@ -189,7 +188,6 @@ namespace NCDK.Modelings.Builder3D
         }
 
         // @cdk.bug #3523240
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug()
         {
@@ -199,14 +197,11 @@ namespace NCDK.Modelings.Builder3D
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = bugmol.Atoms[11];
-            forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3),
-                    false);
-            //        Console.Error.WriteLine(amideN.AtomTypeName);
+            forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3), false);
             Assert.AreEqual("NC=O", amideN.AtomTypeName);
         }
 
         // @cdk.bug #3524734
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug_no2()
         {
@@ -216,9 +211,7 @@ namespace NCDK.Modelings.Builder3D
             IAtomContainer bugmol = parser.ParseSmiles(smiles);
             forceFieldConfigurator.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = bugmol.Atoms[2];
-            forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3),
-                    false);
-            //        Console.Error.WriteLine(amideN.AtomTypeName);
+            forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3), false);
             Assert.AreEqual("NO3", amideN.AtomTypeName);
         }
 
@@ -238,7 +231,6 @@ namespace NCDK.Modelings.Builder3D
         }
 
         // @cdk.bug #3525144
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Old atom typing method - see new Mmff class
         public void TestAssignAtomTyps_bug_nitrogenatomType()
         {

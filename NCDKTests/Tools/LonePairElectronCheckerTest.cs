@@ -17,6 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Smiles;
@@ -67,10 +68,8 @@ namespace NCDK.Tools
         public void TestAllSaturated_Methanethiol()
         {
             // test Methanethiol, CH4S
-            Atom c = new Atom("C");
-            c.ImplicitHydrogenCount = 3;
-            Atom s = new Atom("S");
-            s.ImplicitHydrogenCount = 1;
+            Atom c = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom s = new Atom("S") { ImplicitHydrogenCount = 1 };
 
             Bond b1 = new Bond(c, s, BondOrder.Single);
 
@@ -92,8 +91,7 @@ namespace NCDK.Tools
         public void TestNewSaturate_Methyl_chloride()
         {
             // test Methyl chloride, CH3Cl
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 3;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 3 };
             Atom cl = new Atom("Cl");
             Bond b1 = new Bond(c1, cl, BondOrder.Single);
 
@@ -112,10 +110,8 @@ namespace NCDK.Tools
         public void TestNewSaturate_Methyl_alcohol()
         {
             // test Methyl chloride, CH3OH
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 3;
-            Atom o = new Atom("O");
-            o.ImplicitHydrogenCount = 1;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom o = new Atom("O") { ImplicitHydrogenCount = 1 };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
             IAtomContainer m = new AtomContainer();
@@ -155,11 +151,12 @@ namespace NCDK.Tools
         public void TestNewSaturate_Methyl_alcohol_protonated()
         {
             // test Methyl alcohol protonated, CH3OH2+
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 3;
-            Atom o = new Atom("O");
-            o.FormalCharge = +1;
-            o.ImplicitHydrogenCount = 2;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom o = new Atom("O")
+            {
+                FormalCharge = +1,
+                ImplicitHydrogenCount = 2
+            };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
             IAtomContainer m = new AtomContainer();
@@ -177,10 +174,8 @@ namespace NCDK.Tools
         public void TestNewSaturate_methoxide_anion()
         {
             // test methoxide anion, CH3O-
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 3;
-            Atom o = new Atom("O");
-            o.FormalCharge = -1;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom o = new Atom("O") { FormalCharge = -1 };
             Bond b1 = new Bond(c1, o, BondOrder.Single);
 
             IAtomContainer m = new AtomContainer();
@@ -198,8 +193,7 @@ namespace NCDK.Tools
         public void TestNewSaturate_Ammonia()
         {
             // test Ammonia, H3N
-            Atom n = new Atom("N");
-            n.ImplicitHydrogenCount = 3;
+            Atom n = new Atom("N") { ImplicitHydrogenCount = 3 };
 
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(n);
@@ -214,11 +208,12 @@ namespace NCDK.Tools
         public void TestNewSaturate_methylamine_radical_cation()
         {
             // test Ammonia, CH3NH3+
-            Atom c = new Atom("C");
-            c.ImplicitHydrogenCount = 3;
-            Atom n = new Atom("N");
-            n.ImplicitHydrogenCount = 3;
-            n.FormalCharge = +1;
+            Atom c = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom n = new Atom("N")
+            {
+                ImplicitHydrogenCount = 3,
+                FormalCharge = +1
+            };
             Bond b1 = new Bond(c, n, BondOrder.Single);
 
             IAtomContainer m = new AtomContainer();
@@ -233,7 +228,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        ///  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
+        /// A unit test O=C([H])[C+]([H])[C-]([H])[H]
         /// </summary>
         [TestMethod()]
         public void TestNewSaturate_withHAdded()

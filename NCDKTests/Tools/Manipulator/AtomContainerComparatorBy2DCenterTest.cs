@@ -17,9 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using NCDK.Numerics;
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -55,8 +56,10 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare_self_valid_2DCoordinates()
         {
             IAtomContainer atomContainer = new AtomContainer();
-            IAtom atom = new Atom("N");
-            atom.Point2D = new Vector2(10, 10);
+            IAtom atom = new Atom("N")
+            {
+                Point2D = new Vector2(10, 10)
+            };
             atomContainer.Atoms.Add(atom);
 
             IComparer<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter<IAtomContainer>();
@@ -67,13 +70,17 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare_minusOne()
         {
             IAtomContainer atomContainer = new AtomContainer();
-            IAtom atom = new Atom("N");
-            atom.Point2D = new Vector2(10, 10);
+            IAtom atom = new Atom("N")
+            {
+                Point2D = new Vector2(10, 10)
+            };
             atomContainer.Atoms.Add(atom);
 
             IAtomContainer atomContainer2 = new AtomContainer();
-            IAtom atom2 = new Atom("P");
-            atom2.Point2D = new Vector2(20, 10);
+            IAtom atom2 = new Atom("P")
+            {
+                Point2D = new Vector2(20, 10)
+            };
             atomContainer2.Atoms.Add(atom2);
 
             IComparer<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter<IAtomContainer>();
@@ -84,13 +91,17 @@ namespace NCDK.Tools.Manipulator
         public void TestCompare_plusOne()
         {
             IAtomContainer atomContainer = new AtomContainer();
-            IAtom atom = new Atom("N");
-            atom.Point2D = new Vector2(20, 10);
+            IAtom atom = new Atom("N")
+            {
+                Point2D = new Vector2(20, 10)
+            };
             atomContainer.Atoms.Add(atom);
 
             IAtomContainer atomContainer2 = new AtomContainer();
-            IAtom atom2 = new Atom("P");
-            atom2.Point2D = new Vector2(20, 5);
+            IAtom atom2 = new Atom("P")
+            {
+                Point2D = new Vector2(20, 5)
+            };
             atomContainer2.Atoms.Add(atom2);
 
             IComparer<IAtomContainer> comparator = new AtomContainerComparatorBy2DCenter<IAtomContainer>();

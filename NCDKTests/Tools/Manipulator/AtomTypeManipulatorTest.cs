@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
@@ -35,10 +36,7 @@ namespace NCDK.Tools.Manipulator
         public void TestConfigure_IAtom_IAtomType()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
-            {
-                IsHydrogenBondAcceptor = true
-            };
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement()) { IsHydrogenBondAcceptor = true };
             AtomTypeManipulator.Configure(atom, atomType);
             Assert.AreEqual(atomType.IsHydrogenBondAcceptor, atom.IsHydrogenBondAcceptor);
         }
@@ -46,14 +44,8 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestConfigureUnSetProperties_DontOverwriterSetProperties()
         {
-            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement())
-            {
-                ExactMass = 13.0
-            };
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
-            {
-                ExactMass = 12.0
-            };
+            IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement()) { ExactMass = 13.0 };
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement()) { ExactMass = 12.0 };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(13.0, atom.ExactMass.Value, 0.1);
         }
@@ -62,10 +54,7 @@ namespace NCDK.Tools.Manipulator
         public void TestConfigureUnSetProperties()
         {
             IAtom atom = new Atom(ChemicalElements.Carbon.ToIElement());
-            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement())
-            {
-                ExactMass = 12.0
-            };
+            IAtomType atomType = new AtomType(ChemicalElements.Carbon.ToIElement()) { ExactMass = 12.0 };
             AtomTypeManipulator.ConfigureUnsetProperties(atom, atomType);
             Assert.AreEqual(12.0, atom.ExactMass.Value, 0.1);
         }

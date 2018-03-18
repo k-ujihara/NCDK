@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -212,9 +212,11 @@ namespace NCDK
             IAtom oAtom2 = oBioPolymer.Builder.NewAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono2, oStrand2);
-            IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();
-            strands.Add("A", oStrand1);
-            strands.Add("B", oStrand2);
+            IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>
+            {
+                { "A", oStrand1 },
+                { "B", oStrand2 }
+            };
 
             Assert.IsTrue(Compares.AreDeepEqual(strands.Keys, oBioPolymer.GetStrandNames()));
         }
@@ -253,9 +255,11 @@ namespace NCDK
             IAtom oAtom2 = oBioPolymer.Builder.NewAtom("C");
             oBioPolymer.AddAtom(oAtom1, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom2, oMono2, oStrand2);
-            IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>();
-            strands.Add("A", oStrand1);
-            strands.Add("B", oStrand2);
+            IDictionary<string, IStrand> strands = new Dictionary<string, IStrand>
+            {
+                { "A", oStrand1 },
+                { "B", oStrand2 }
+            };
 
             Assert.IsTrue(Compares.AreDeepEqual(strands, oBioPolymer.GetStrandMap()));
         }

@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.RingSearches;
@@ -238,8 +239,7 @@ namespace NCDK.Tools.Manipulator
         [TestMethod()]
         public void TestGetLargestRingSet_List_IRingSet()
         {
-            IList<IRingSet> list = new List<IRingSet>();
-            list.Add(ringset);
+            IList<IRingSet> list = new List<IRingSet> { ringset };
             IAtomContainer mol = TestMoleculeFactory.MakeBiphenyl();
 
             AllRingsFinder arf = new AllRingsFinder();

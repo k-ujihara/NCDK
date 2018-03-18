@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
@@ -48,29 +49,41 @@ namespace NCDK.Tools
             IAtomContainer mol = new AtomContainer();
             IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
-            IAtom a0 = new Atom("C");
-            a0.Hybridization = Hybridization.SP2;
-            a0.ImplicitHydrogenCount = 1;
+            IAtom a0 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a0, carbon);
-            IAtom a1 = new Atom("C");
-            a1.Hybridization = Hybridization.SP2;
-            a1.ImplicitHydrogenCount = 1;
+            IAtom a1 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a1, carbon);
-            IAtom a2 = new Atom("C");
-            a2.Hybridization = Hybridization.SP2;
-            a2.ImplicitHydrogenCount = 1;
+            IAtom a2 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a2, carbon);
-            IAtom a3 = new Atom("C");
-            a3.Hybridization = Hybridization.SP2;
-            a3.ImplicitHydrogenCount = 1;
+            IAtom a3 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a3, carbon);
-            IAtom a4 = new Atom("C");
-            a4.Hybridization = Hybridization.SP2;
-            a4.ImplicitHydrogenCount = 1;
+            IAtom a4 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a4, carbon);
-            IAtom a5 = new Atom("C");
-            a5.Hybridization = Hybridization.SP2;
-            a5.ImplicitHydrogenCount = 1;
+            IAtom a5 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a5, carbon);
 
             mol.Atoms.Add(a0);
@@ -80,23 +93,35 @@ namespace NCDK.Tools
             mol.Atoms.Add(a4);
             mol.Atoms.Add(a5);
 
-            IBond b0 = new Bond(a0, a1);
-            b0.IsSingleOrDouble = true;
+            IBond b0 = new Bond(a0, a1)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b0);
-            IBond b1 = new Bond(a1, a2);
-            b1.IsSingleOrDouble = true;
+            IBond b1 = new Bond(a1, a2)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b1);
-            IBond b2 = new Bond(a2, a3);
-            b2.IsSingleOrDouble = true;
+            IBond b2 = new Bond(a2, a3)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b2);
-            IBond b3 = new Bond(a3, a4);
-            b3.IsSingleOrDouble = true;
+            IBond b3 = new Bond(a3, a4)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b3);
-            IBond b4 = new Bond(a4, a5);
-            b4.IsSingleOrDouble = true;
+            IBond b4 = new Bond(a4, a5)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b4);
-            IBond b5 = new Bond(a5, a0);
-            b5.IsSingleOrDouble = true;
+            IBond b5 = new Bond(a5, a0)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b5);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -616,21 +641,29 @@ namespace NCDK.Tools
             IAtomContainer mol = new AtomContainer();
             IAtomType carbon = new AtomType(ChemicalElements.Carbon.ToIElement());
 
-            IAtom a0 = new Atom("C");
-            a0.Hybridization = Hybridization.SP2;
-            a0.ImplicitHydrogenCount = 2;
+            IAtom a0 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 2
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a0, carbon);
-            IAtom a1 = new Atom("C");
-            a1.Hybridization = Hybridization.SP2;
-            a1.ImplicitHydrogenCount = 1;
+            IAtom a1 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a1, carbon);
-            IAtom a2 = new Atom("C");
-            a2.Hybridization = Hybridization.SP2;
-            a2.ImplicitHydrogenCount = 1;
+            IAtom a2 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 1
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a2, carbon);
-            IAtom a3 = new Atom("C");
-            a3.Hybridization = Hybridization.SP2;
-            a3.ImplicitHydrogenCount = 2;
+            IAtom a3 = new Atom("C")
+            {
+                Hybridization = Hybridization.SP2,
+                ImplicitHydrogenCount = 2
+            };
             AtomTypeManipulator.ConfigureUnsetProperties(a3, carbon);
 
             mol.Atoms.Add(a0);
@@ -638,14 +671,20 @@ namespace NCDK.Tools
             mol.Atoms.Add(a2);
             mol.Atoms.Add(a3);
 
-            IBond b0 = new Bond(a0, a1);
-            b0.IsSingleOrDouble = true;
+            IBond b0 = new Bond(a0, a1)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b0);
-            IBond b1 = new Bond(a1, a2);
-            b1.IsSingleOrDouble = true;
+            IBond b1 = new Bond(a1, a2)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b1);
-            IBond b2 = new Bond(a2, a3);
-            b2.IsSingleOrDouble = true;
+            IBond b2 = new Bond(a2, a3)
+            {
+                IsSingleOrDouble = true
+            };
             mol.Bonds.Add(b2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

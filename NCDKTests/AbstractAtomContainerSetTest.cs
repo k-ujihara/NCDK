@@ -16,9 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NCDK.Common.Base;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace NCDK
         public virtual void TestSort_Coefficients()
         {
             IChemObjectSet<T> set = (IChemObjectSet<T>)NewChemObject();
-            
+
             IChemObjectBuilder builder = set.Builder;
 
             T a = NewContainerObject();
@@ -93,7 +94,7 @@ namespace NCDK
             var orderedSet = set.OrderBy(n => n, new ComparerByCoefficients());
 
             AssertAreOrderLessEqual(
-                new[] { a, b }.Cast<IChemObject>(), 
+                new[] { a, b }.Cast<IChemObject>(),
                 set.Cast<IChemObject>());
             Assert.IsTrue(Compares.AreDeepEqual(
                 new[] { 1D, 2D },
@@ -113,18 +114,16 @@ namespace NCDK
         }
 
         /// <summary>
-         /// Ensures that sort method of the AtomContainerSet does not include nulls
+        /// Ensures that sort method of the AtomContainerSet does not include nulls
         /// in the comparator. This is tested using a comparator which sorts null
         /// values as low and thus to the start of an array. By adding two (non-null)
         /// values and sorting we should see that the first two values are not null
         /// despite giving a comparator which sorts null as low.
-        ///
-        // @cdk.bug 1291
         /// </summary>
+        // @cdk.bug 1291
         [TestMethod()]
         public virtual void TestSort_BrokenComparator()
         {
-
             IChemObjectSet<T> set = (IChemObjectSet<T>)NewChemObject();
 
             IChemObjectBuilder builder = set.Builder;
@@ -565,23 +564,15 @@ namespace NCDK
             }
         }
 
-
-    //            [TestMethod()]
-    //public virtual void TestIsEmpty()
-    //{
-
-    //    IChemObjectSet<IAtomContainer> set = (IChemObjectSet<IAtomContainer>)NewChemObject();
-
-    //    Assert.IsTrue(set.IsEmpty, "new container set should be empty");
-
-    //    set.Add(set.Builder.NewAtomContainer());
-
-    //    Assert.IsFalse(set.IsEmpty, "container set with a single container should not be empty");
-
-    //    set.RemoveAll();
-
-    //    Assert.IsTrue(set.IsEmpty, "container set with all containers removed should be empty");
-
-    //}
-}
+        [TestMethod()]
+        public virtual void TestIsEmpty()
+        {
+            IChemObjectSet<IAtomContainer> set = (IChemObjectSet<IAtomContainer>)NewChemObject();
+            Assert.IsTrue(set.IsEmpty(), "new container set should be empty");
+            set.Add(set.Builder.NewAtomContainer());
+            Assert.IsFalse(set.IsEmpty(), "container set with a single container should not be empty");
+            set.Clear();
+            Assert.IsTrue(set.IsEmpty(), "container set with all containers removed should be empty");
+        }
+    }
 }

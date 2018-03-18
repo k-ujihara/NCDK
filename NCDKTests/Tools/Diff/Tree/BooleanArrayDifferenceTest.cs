@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Tools.Diff.Tree
@@ -26,16 +27,14 @@ namespace NCDK.Tools.Diff.Tree
         [TestMethod()]
         public void TestDiff()
         {
-            IDifference result = BooleanArrayDifference.Construct("Foo", new bool[] { true, true }, new bool[]{false,
-                false});
+            IDifference result = BooleanArrayDifference.Construct("Foo", new bool[] { true, true }, new bool[]{false, false});
             Assert.IsNotNull(result);
         }
 
         [TestMethod()]
         public void TestSame()
         {
-            IDifference result = BooleanArrayDifference.Construct("Foo", new bool[] { false, false }, new bool[]{false,
-                false});
+            IDifference result = BooleanArrayDifference.Construct("Foo", new bool[] { false, false }, new bool[]{false, false});
             Assert.IsNull(result);
         }
 

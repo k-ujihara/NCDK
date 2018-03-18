@@ -19,7 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
+
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -137,10 +138,12 @@ namespace NCDK
             oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
-            IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
-            //IMonomer oMon = Builder.NewMonomer();
-            monomers.Add("TRP279", oMono1);
-            monomers.Add("HOH", oMono2);
+            IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>
+            {
+                //IMonomer oMon = Builder.NewMonomer();
+                { "TRP279", oMono1 },
+                { "HOH", oMono2 }
+            };
 
             Assert.AreEqual(2, oPolymer.GetMonomerNames().Count());
             Assert.IsTrue(oPolymer.GetMonomerNames().Contains(oMono1.MonomerName));
@@ -179,9 +182,11 @@ namespace NCDK
             IAtom oAtom3 = polymer.Builder.NewAtom("C");
             polymer.AddAtom(oAtom2, oMono1);
             polymer.AddAtom(oAtom3, oMono2);
-            IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
-            monomers.Add("TRP279", oMono1);
-            monomers.Add("HOH", oMono2);
+            IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>
+            {
+                { "TRP279", oMono1 },
+                { "HOH", oMono2 }
+            };
             string description = polymer.ToString();
             for (int i = 0; i < description.Length; i++)
             {

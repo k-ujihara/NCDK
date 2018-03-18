@@ -16,9 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using NCDK.Default;
 using NCDK.Layout;
+using NCDK.Numerics;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System;
@@ -45,8 +46,7 @@ namespace NCDK.StructGen
 
         private bool ShowIt(IAtomContainer molecule, string name)
         {
-            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            sdg.Molecule = (IAtomContainer)molecule.Clone();
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator { Molecule = (IAtomContainer)molecule.Clone() };
             sdg.GenerateCoordinates(new Vector2(0, 1));
             return true;
         }

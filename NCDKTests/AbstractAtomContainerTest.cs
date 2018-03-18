@@ -131,8 +131,7 @@ namespace NCDK
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             molecule.Atoms.Add(molecule.Builder.NewAtom());
             molecule.Atoms.Add(molecule.Builder.NewAtom());
-            IBond bond = molecule.Builder.NewBond(molecule.Atoms[0], molecule.Atoms[1],
-                    BondOrder.Single);
+            IBond bond = molecule.Builder.NewBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.Bonds.Add(bond);
             Assert.AreEqual(bond, molecule.Bonds[0]);
             object clone = molecule.Clone();
@@ -405,8 +404,7 @@ namespace NCDK
             container.Bonds.Add(c1c4);
             container.Bonds.Add(c1h5);
 
-            ITetrahedralChirality chirality = builder.NewTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
-                h5}, TetrahedralStereo.Clockwise);
+            ITetrahedralChirality chirality = builder.NewTetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, TetrahedralStereo.Clockwise);
 
             container.StereoElements.Add(chirality);
 
@@ -535,8 +533,7 @@ namespace NCDK
             container.Bonds.Add(c1c4);
             container.Bonds.Add(c1h5);
 
-            ITetrahedralChirality chirality = builder.NewTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
-                h5}, TetrahedralStereo.Clockwise);
+            ITetrahedralChirality chirality = builder.NewTetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, TetrahedralStereo.Clockwise);
 
             container.StereoElements.Add(chirality);
 
@@ -709,7 +706,6 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestRemoveAtomAndConnectedElectronContainers_stereoElement()
         {
-
             // acetone molecule
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
 
@@ -728,8 +724,7 @@ namespace NCDK
             acetone.Bonds.Add(b2);
             acetone.Bonds.Add(b3);
 
-            acetone.StereoElements.Add(new TetrahedralChirality(c1, new IAtom[] { c2, o, c3, c1 },
-                    TetrahedralStereo.Clockwise));
+            acetone.StereoElements.Add(new TetrahedralChirality(c1, new IAtom[] { c2, o, c3, c1 }, TetrahedralStereo.Clockwise));
 
             // Remove the oxygen
             acetone.RemoveAtom(o);
@@ -894,6 +889,7 @@ namespace NCDK
             Assert.AreEqual(0, container.Atoms.Count);
             Assert.AreEqual(0, container.Bonds.Count);
         }
+
         /// <summary>
         /// Unit test ensures that stereo-elements are removed from a container
         /// when <see cref="IAtomContainer.RemoveAllElements()"/> is invoked.
@@ -909,9 +905,7 @@ namespace NCDK
             IAtom a2 = builder.NewAtom();
             IAtom a3 = builder.NewAtom();
             IAtom a4 = builder.NewAtom();
-            container.StereoElements.Add(new TetrahedralChirality(focus,
-                                                                new IAtom[] { a1, a2, a3, a4 },
-                                                                TetrahedralStereo.Clockwise));
+            container.StereoElements.Add(new TetrahedralChirality(focus, new IAtom[] { a1, a2, a3, a4 }, TetrahedralStereo.Clockwise));
 
             int count = 0;
             foreach (var element in container.StereoElements)
@@ -1088,13 +1082,7 @@ namespace NCDK
             container.AddBond(container.Atoms[0], container.Atoms[2], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[3], BondOrder.Single);
             container.AddBond(container.Atoms[0], container.Atoms[4], BondOrder.Single);
-            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0],
-                                                                new IAtom[]{
-                                                                container.Atoms[1],
-                                                                container.Atoms[2],
-                                                                container.Atoms[3],
-                                                                container.Atoms[4]},
-                                                                TetrahedralStereo.Clockwise));
+            container.StereoElements.Add(new TetrahedralChirality(container.Atoms[0], container.Atoms.Skip(1).Take(4), TetrahedralStereo.Clockwise));
 
             IAtom aNew = bldr.NewAtom();
             container.Atoms[2] = aNew;
@@ -1133,9 +1121,7 @@ namespace NCDK
             IBond b2 = container.Bonds[1];
             IBond b3 = container.Bonds[2];
 
-            container.StereoElements.Add(new DoubleBondStereochemistry(b2,
-                                                                     new IBond[] { b1, b3 },
-                                                                     DoubleBondConformation.Together));
+            container.StereoElements.Add(new DoubleBondStereochemistry(b2, new IBond[] { b1, b3 }, DoubleBondConformation.Together));
 
             IAtom aNew = bldr.NewAtom();
             container.Atoms[2] = aNew;

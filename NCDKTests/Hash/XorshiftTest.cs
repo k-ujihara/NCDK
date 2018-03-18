@@ -41,10 +41,10 @@ namespace NCDK.Hash
             Assert.AreEqual(2104002940825447L, generator.Next(146455018630021125L));
         }
 
+        [TestCategory("RandomFailure")]
         [TestMethod()]
         public void TestDistribution()
         {
-
             int[] values = new int[10];
 
             long x = System.DateTime.Now.Ticks;

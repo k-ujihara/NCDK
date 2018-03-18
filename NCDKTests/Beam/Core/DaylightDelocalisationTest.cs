@@ -719,13 +719,15 @@ namespace NCDK.Beam
              "O=C1C=Cc2c3c1ccc4C(=O)c5ccccc5c(cc2)c34");
         }
 
-        [TestMethod()] public void Bo_21963()
+        [TestMethod()]
+        public void Bo_21963()
         {
             Test("O=C1C2=CC=CC3=C2C2=C(C=CC=C12)C=C3",
              "O=c1c2cccc3c2c4c(cccc14)cc3");
         }
 
-        [TestMethod()] public void Bo_25756()
+        [TestMethod()]
+        public void Bo_25756()
         {
             Test("NC1=C2C3=CC=CC=C3C3=CC=CC(C=C1)=C23",
              "Nc1c2c3ccccc3c4cccc(cc1)c24");
@@ -737,7 +739,8 @@ namespace NCDK.Beam
              "O=c1c(=O)c2cc3ccccc3c4c2c5c(cccc15)cc4");
         }
 
-        [TestMethod()] public void Bo_75696()
+        [TestMethod()]
+        public void Bo_75696()
         {
             Test("O=C1NC(=O)C2=CC3=C(C=C12)C(=O)NC3=O",
              "O=c1[nH]c(=O)c2cc3c(cc12)c(=O)[nH]c3=O");
@@ -750,7 +753,8 @@ namespace NCDK.Beam
              "[O-]S(=O)(=O)Oc1c2ccc3c([nH]c4ccc5c6ccccc6c(=O)c7c5c4c3cc7)c2c(OS([O-])(=O)=O)c8ccccc18");
         }
 
-        [TestMethod()] public void Bo_83217()
+        [TestMethod()]
+        public void Bo_83217()
         {
             Test("CN(C)C1=CC=[C-]C=C1",
              "CN(C)c1cc[c-]cc1");
@@ -784,13 +788,15 @@ namespace NCDK.Beam
             Test("C/C(=C\\CO)/C=C/C=C(/C)\\C=C\\C1=C(C)CCCC1(C)C", "C/C(=C\\CO)/C=C/C=C(/C)\\C=C\\C1=C(C)CCCC1(C)C");
         }
 
-        [TestMethod()] public void Non_daylight_aromatic_element()
+        [TestMethod()]
+        public void Non_daylight_aromatic_element()
         {
             Test("CC1=CC=C2[Bi](Cl)C3=CC=CC=C3S(=O)(=O)C2=C1",
              "Cc1ccc2[Bi](Cl)c3ccccc3S(=O)(=O)c2c1");
         }
 
-        [TestMethod()] public void Acyclic_charge()
+        [TestMethod()]
+        public void Acyclic_charge()
         {
             Test("[Na+].[Na+].[S-2]",
              "[Na+].[Na+].[S-2]");

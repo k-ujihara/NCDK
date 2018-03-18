@@ -96,8 +96,8 @@ namespace NCDK.Smiles
                     "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C", "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
         }
 
-        //[TestMethod()]
-        [TestMethod(), Ignore()] // Random failure: to be resolved https://github.com/cdk/cdk/issues/336
+        [TestCategory("RandomFailure")] // Random failure: to be resolved https://github.com/cdk/cdk/issues/336
+        [TestMethod()]
         public void Test_DbStereoCanonGeneration()
         {
             string ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";

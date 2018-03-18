@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 
@@ -53,8 +54,7 @@ namespace NCDK.Tools
 
             // test methane with implicit hydrogen
             m = new AtomContainer();
-            c = new Atom("C");
-            c.ImplicitHydrogenCount = 4;
+            c = new Atom("C") { ImplicitHydrogenCount = 4 };
             m.Atoms.Add(c);
             Assert.IsTrue(satcheck.AllSaturated(m));
         }
@@ -97,8 +97,7 @@ namespace NCDK.Tools
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
             Atom h3 = new Atom("H");
-            Atom o = new Atom("O");
-            o.FormalCharge = -1;
+            Atom o = new Atom("O") { FormalCharge = -1 };
             m.Atoms.Add(c);
             m.Atoms.Add(h1);
             m.Atoms.Add(h2);
@@ -149,10 +148,8 @@ namespace NCDK.Tools
         public void TestSaturate()
         {
             // test ethene
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 2;
-            Atom c2 = new Atom("C");
-            c2.ImplicitHydrogenCount = 2;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 2 };
+            Atom c2 = new Atom("C") { ImplicitHydrogenCount = 2 };
             Bond b = new Bond(c1, c2, BondOrder.Single);
             // force single bond, Saturate() must fix that
             IAtomContainer m = new AtomContainer();
@@ -167,14 +164,10 @@ namespace NCDK.Tools
         public void TestSaturate_Butene()
         {
             // test ethene
-            Atom c1 = new Atom("C");
-            c1.ImplicitHydrogenCount = 2;
-            Atom c2 = new Atom("C");
-            c2.ImplicitHydrogenCount = 1;
-            Atom c3 = new Atom("C");
-            c3.ImplicitHydrogenCount = 1;
-            Atom c4 = new Atom("C");
-            c4.ImplicitHydrogenCount = 2;
+            Atom c1 = new Atom("C") { ImplicitHydrogenCount = 2 };
+            Atom c2 = new Atom("C") { ImplicitHydrogenCount = 1 };
+            Atom c3 = new Atom("C") { ImplicitHydrogenCount = 1 };
+            Atom c4 = new Atom("C") { ImplicitHydrogenCount = 2 };
             Bond b1 = new Bond(c1, c2, BondOrder.Single);
             Bond b2 = new Bond(c3, c2, BondOrder.Single);
             Bond b3 = new Bond(c3, c4, BondOrder.Single);

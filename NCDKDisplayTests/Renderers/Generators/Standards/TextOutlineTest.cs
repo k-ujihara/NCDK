@@ -53,7 +53,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void boundsTransformedWithXTranslation()
+        public void BoundsTransformedWithXTranslation()
         {
             TextOutline original = new TextOutline("Cl", font, emSize);
             TextOutline transformed = original.Translate(5, 0);
@@ -66,7 +66,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void boundsTransformedWithYTranslation()
+        public void BoundsTransformedWithYTranslation()
         {
             TextOutline original = new TextOutline("Cl", font, emSize);
             TextOutline transformed = original.Translate(0, -5);
@@ -78,7 +78,8 @@ namespace NCDK.Renderers.Generators.Standards
             Assert.AreEqual(oBounds.Height, tBounds.Height, 0.01);
         }
 
-        [TestMethod(), Ignore()]  // Font bounds vary between systems
+        [TestCategory("DependOnSystem"), Ignore()]
+        [TestMethod()]  // Font bounds vary between systems
         public void UntransformedCenter()
         {
             TextOutline clOutline = new TextOutline("Cl", font, emSize);

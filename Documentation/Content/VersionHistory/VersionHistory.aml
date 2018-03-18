@@ -13,47 +13,18 @@
         <para>Select a version below to see a description of its changes.</para>
 
         <list class="bullet">
-          <listItem>
-            <para>
-              <link xlink:href="545F92A8-BC20-45AA-BAC2-7A0C2632C469" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="630E3988-7515-480E-813A-44427F76EFC1" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="397d8d08-1732-4fcb-a0cf-90852c3d3b79" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="3463f77d-eb02-4dd3-bc62-96cd86c87cfd" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="5c1f7bab-480e-41fb-b16b-aab842a90ef8" />
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              <link xlink:href="ce71932b-728b-4efb-b633-b2576df0de36" />
-            </para>
-          </listItem>
-
+          <listItem><para><link xlink:href="4DE10F64-7087-4EDD-9982-F0FC13F66841" /></para></listItem>
+          <listItem><para><link xlink:href="545F92A8-BC20-45AA-BAC2-7A0C2632C469" /></para></listItem>
+          <listItem><para><link xlink:href="630E3988-7515-480E-813A-44427F76EFC1" /></para></listItem>
+          <listItem><para><link xlink:href="397d8d08-1732-4fcb-a0cf-90852c3d3b79" /></para></listItem>
+          <listItem><para><link xlink:href="3463f77d-eb02-4dd3-bc62-96cd86c87cfd" /></para></listItem>
+          <listItem><para><link xlink:href="2dc66a5d-2e85-4907-b32e-c005ed6a3c62" /></para></listItem>
+          <listItem><para><link xlink:href="5c1f7bab-480e-41fb-b16b-aab842a90ef8" /></para></listItem>
+          <listItem><para><link xlink:href="ce71932b-728b-4efb-b633-b2576df0de36" /></para></listItem>
         </list>
-
       </content>
     </section>
-
+    
     <relatedTopics>
       <link xlink:href="e2ff06cc-99b7-4f8b-95c5-53965548639f" />
     </relatedTopics>

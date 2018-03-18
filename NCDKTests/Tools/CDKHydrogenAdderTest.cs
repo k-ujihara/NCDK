@@ -16,12 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Numerics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
+using NCDK.Numerics;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +39,8 @@ namespace NCDK.Tools
     [TestClass()]
     public class CDKHydrogenAdderTest : CDKTestCase
     {
-        private readonly static CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder
-                                                                .Instance);
-        private readonly static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder
-                                                                .Instance);
+        private readonly static CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance);
+        private readonly static CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
 
         [TestMethod()]
         public void TestInstance()
@@ -206,8 +205,7 @@ namespace NCDK.Tools
         public void TestProton()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom proton = new Atom("H");
-            proton.FormalCharge = +1;
+            Atom proton = new Atom("H") { FormalCharge = +1 };
             mol.Atoms.Add(proton);
             IAtomType type = matcher.FindMatchingAtomType(mol, proton);
             Assert.IsNotNull(type);
@@ -238,8 +236,7 @@ namespace NCDK.Tools
 
             Assert.AreEqual(1, mol.Atoms.Count);
             IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(mol);
-            Assert.AreEqual(2,
-                    MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
+            Assert.AreEqual(2, MolecularFormulaManipulator.GetElementCount(formula, mol.Builder.NewElement("H")));
             Assert.AreEqual(0, mol.GetConnectedBonds(proton).Count());
             Assert.IsNotNull(proton.ImplicitHydrogenCount);
             Assert.AreEqual(1, proton.ImplicitHydrogenCount.Value);
@@ -264,8 +261,7 @@ namespace NCDK.Tools
         public void TestAmmonium()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom nitrogen = new Atom("N");
-            nitrogen.FormalCharge = +1;
+            Atom nitrogen = new Atom("N") { FormalCharge = +1 };
             mol.Atoms.Add(nitrogen);
             IAtomType type = matcher.FindMatchingAtomType(mol, nitrogen);
             Assert.IsNotNull(type);
@@ -295,8 +291,7 @@ namespace NCDK.Tools
         public void TestHydroxonium()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom oxygen = new Atom("O");
-            oxygen.FormalCharge = +1;
+            Atom oxygen = new Atom("O") { FormalCharge = +1 };
             mol.Atoms.Add(oxygen);
             IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
             Assert.IsNotNull(type);
@@ -311,8 +306,7 @@ namespace NCDK.Tools
         public void TestHydroxyl()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom oxygen = new Atom("O");
-            oxygen.FormalCharge = -1;
+            Atom oxygen = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(oxygen);
             IAtomType type = matcher.FindMatchingAtomType(mol, oxygen);
             Assert.IsNotNull(type);
@@ -359,8 +353,7 @@ namespace NCDK.Tools
         private void NegativeHalogenTest(string halogen)
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom(halogen);
-            atom.FormalCharge = -1;
+            Atom atom = new Atom(halogen) { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             IAtomType type = matcher.FindMatchingAtomType(mol, atom);
             Assert.IsNotNull(type);
@@ -704,11 +697,9 @@ namespace NCDK.Tools
         public void TestNaCl()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom cl = new Atom("Cl");
-            cl.FormalCharge = -1;
+            Atom cl = new Atom("Cl") { FormalCharge = -1 };
             mol.Atoms.Add(cl);
-            Atom na = new Atom("Na");
-            na.FormalCharge = +1;
+            Atom na = new Atom("Na") { FormalCharge = +1 };
             mol.Atoms.Add(na);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             adder.AddImplicitHydrogens(mol);
@@ -721,9 +712,7 @@ namespace NCDK.Tools
             Assert.AreEqual(0, na.ImplicitHydrogenCount.Value);
         }
 
-        /// <summary>
         // @cdk.bug 1244612
-        /// </summary>
         [TestMethod()]
         public void TestSulfurCompound_ImplicitHydrogens()
         {
@@ -758,8 +747,7 @@ namespace NCDK.Tools
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("O"));
-            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1],
-                    BondOrder.Single));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single));
             AddExplicitHydrogens(mol);
             int hCount = 0;
             IEnumerator<IAtom> neighbors = mol.GetConnectedAtoms(mol.Atoms[0]).GetEnumerator();
@@ -785,12 +773,9 @@ namespace NCDK.Tools
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("C"));
             mol.Atoms.Add(mol.Builder.NewAtom("S"));
-            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1],
-                    BondOrder.Double));
-            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[1], mol.Atoms[2],
-                    BondOrder.Single));
-            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[2], mol.Atoms[3],
-                    BondOrder.Single));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single));
+            mol.Bonds.Add(mol.Builder.NewBond(mol.Atoms[2], mol.Atoms[3], BondOrder.Single));
             AddExplicitHydrogens(mol);
             int hCount = 0;
             IEnumerator<IAtom> neighbors = mol.GetConnectedAtoms(mol.Atoms[0]).GetEnumerator();

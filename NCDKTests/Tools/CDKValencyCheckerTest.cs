@@ -21,7 +21,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
@@ -66,10 +65,7 @@ namespace NCDK.Tools
 
             // test methane with implicit hydrogen
             mol = new AtomContainer();
-            c = new Atom("C")
-            {
-                ImplicitHydrogenCount = 4
-            };
+            c = new Atom("C") { ImplicitHydrogenCount = 4 };
             mol.Atoms.Add(c);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             Assert.IsTrue(checker.IsSaturated(mol));
@@ -100,10 +96,7 @@ namespace NCDK.Tools
 
             // test methane with implicit hydrogen
             mol = new AtomContainer();
-            c = new Atom("C")
-            {
-                ImplicitHydrogenCount = 4
-            };
+            c = new Atom("C") { ImplicitHydrogenCount = 4 };
             mol.Atoms.Add(c);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             foreach (var atom in mol.Atoms)
@@ -138,10 +131,7 @@ namespace NCDK.Tools
             Atom h1 = new Atom("H");
             Atom h2 = new Atom("H");
             Atom h3 = new Atom("H");
-            Atom o = new Atom("O")
-            {
-                FormalCharge = -1
-            };
+            Atom o = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(c);
             mol.Atoms.Add(h1);
             mol.Atoms.Add(h2);
@@ -226,10 +216,7 @@ namespace NCDK.Tools
             // test H+
             IAtomContainer mol = new AtomContainer();
             CDKValencyChecker checker = CDKValencyChecker.GetInstance(mol.Builder);
-            Atom hydrogen = new Atom("H")
-            {
-                FormalCharge = +1
-            };
+            Atom hydrogen = new Atom("H") { FormalCharge = +1 };
             mol.Atoms.Add(hydrogen);
             FindAndConfigureAtomTypesForAllAtoms(mol);
             Assert.IsTrue(checker.IsSaturated(mol));

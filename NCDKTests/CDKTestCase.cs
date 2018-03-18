@@ -19,12 +19,12 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
+using NCDK.Numerics;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using NCDK.Numerics;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System;
 
 namespace NCDK
 {

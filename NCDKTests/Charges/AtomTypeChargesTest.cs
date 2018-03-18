@@ -16,19 +16,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Charges
 {
-    /// <summary>
     // @cdk.module  test-charges
     // @author      egonw
     // @cdk.created 2008-01-04
-    /// </summary>
     [TestClass()]
     public class AtomTypeChargesTest : CDKTestCase
     {
-
         /// <summary>
         /// Tests the initial assignment of partial charges of
         /// atom types matching the HOSE code for pOC atom types.

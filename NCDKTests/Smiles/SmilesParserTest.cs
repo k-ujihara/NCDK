@@ -477,7 +477,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// A unit test for JUnit. It is currently ignored because the SMILES
+        /// It is currently ignored because the SMILES
         /// given is invalid: the negative has an implied zero hydrogen count,
         /// making it have an unfilled valency.
         /// </summary>

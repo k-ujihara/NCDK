@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Linq;
@@ -43,17 +44,21 @@ namespace NCDK.Tools.Manipulator
         public void SetUp()
         {
             mol1 = new AtomContainer();
-            atomInMol1 = new Atom("Cl");
-            atomInMol1.Charge = -1.0;
-            atomInMol1.FormalCharge = -1;
-            atomInMol1.ImplicitHydrogenCount = 1;
+            atomInMol1 = new Atom("Cl")
+            {
+                Charge = -1.0,
+                FormalCharge = -1,
+                ImplicitHydrogenCount = 1
+            };
             mol1.Atoms.Add(atomInMol1);
             mol1.Atoms.Add(new Atom("Cl"));
             bondInMol1 = new Bond(atomInMol1, mol1.Atoms[1]);
             mol1.Bonds.Add(bondInMol1);
             mol2 = new AtomContainer();
-            atomInMol2 = new Atom("O");
-            atomInMol2.ImplicitHydrogenCount = 2;
+            atomInMol2 = new Atom("O")
+            {
+                ImplicitHydrogenCount = 2
+            };
             mol2.Atoms.Add(atomInMol2);
             som.Add(mol1);
             som.Add(mol2);

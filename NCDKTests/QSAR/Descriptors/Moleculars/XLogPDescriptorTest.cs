@@ -38,7 +38,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void Testno688()
         {
             Descriptor.Parameters = new object[] { true, false };
@@ -124,7 +123,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void Testno937()
         {
             Descriptor.Parameters = new object[] { true, false };

@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK;
 using NCDK.Tools.Diff.Tree;
 
 namespace NCDK

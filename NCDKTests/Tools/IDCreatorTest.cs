@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
@@ -53,8 +54,7 @@ namespace NCDK.Tools
         public void TestKeepingIDs()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.Id = "atom1";
+            Atom atom = new Atom("C") { Id = "atom1" };
             mol.Atoms.Add(atom);
 
             IDCreator.CreateIDs(mol);
@@ -69,9 +69,8 @@ namespace NCDK.Tools
         public void TestNoDuplicateCreation()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom1 = new Atom("C");
+            Atom atom1 = new Atom("C") { Id = "a1" };
             Atom atom2 = new Atom("C");
-            atom1.Id = "a1";
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom1);
 
@@ -87,9 +86,8 @@ namespace NCDK.Tools
         {
             var molSet = new ChemObjectSet<IAtomContainer>();
             IAtomContainer mol = new AtomContainer();
-            Atom atom0 = new Atom("C");
+            Atom atom0 = new Atom("C") { Id = "a1" };
             Atom atom2 = new Atom("C");
-            atom0.Id = "a1";
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom0);
             molSet.Add(mol);
@@ -99,9 +97,8 @@ namespace NCDK.Tools
             Assert.AreEqual(4, ids.Count());
 
             mol = new AtomContainer();
-            Atom atom1 = new Atom("C");
+            Atom atom1 = new Atom("C") { Id = "a2" };
             atom2 = new Atom("C");
-            atom1.Id = "a2";
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom1);
             molSet.Add(mol);

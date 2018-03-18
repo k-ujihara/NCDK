@@ -53,8 +53,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.Charge = -1;
             input.Atoms[0].Radical = INCHI_RADICAL.Singlet;
 
@@ -71,8 +70,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.ImplicitH = 1;
 
             return input;
@@ -83,14 +81,12 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput GetHydrogenChlorideImplicitP(
-                 string options)
+        private static NInchiInput GetHydrogenChlorideImplicitP(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.ImplicitProtium = 1;
 
             return input;
@@ -101,8 +97,7 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput GetHydrogenChlorideImplicitD(
-                 string options)
+        private static NInchiInput GetHydrogenChlorideImplicitD(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -151,14 +146,12 @@ namespace NCDK.Graphs.InChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput GetChlorine37ByIsotopicMassShiftAtom(
-                 string options)
+        private static NInchiInput GetChlorine37ByIsotopicMassShiftAtom(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.SetIsotopicMassShift(+2);
             input.Atoms[0].ImplicitH = 0;
 
@@ -175,14 +168,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
             a1.ImplicitH = 3;
             a1.Radical = INCHI_RADICAL.Doublet;
 
             return input;
         }
-
 
         private static NInchiInput GetSodiumHydroxide(string options)
         {
@@ -211,10 +202,8 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
             a1.ImplicitH = 3;
             a2.ImplicitH = 3;
 
@@ -235,10 +224,8 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
             a1.ImplicitH = 2;
             a2.ImplicitH = 2;
 
@@ -259,10 +246,8 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -283,14 +268,10 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(2.866, -0.250, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(3.732, 0.250, 0.000,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(2.000, 2.500, 0.000,
-                    "Cl"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(4.598, -0.250, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(2.866, -0.250, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(3.732, 0.250, 0.000, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(2.000, 2.500, 0.000, "Cl"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(4.598, -0.250, 0.000, "Cl"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -312,14 +293,10 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(2.866, -0.440, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(3.732, 0.060, 0.000,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(2.000, 0.060, 0.000,
-                    "Cl"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(3.732, 1.060, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(2.866, -0.440, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(3.732, 0.060, 0.000, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(2.000, 0.060, 0.000, "Cl"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(3.732, 1.060, 0.000, "Cl"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -342,14 +319,10 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -372,14 +345,10 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -406,14 +375,10 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000,
-                    "Cl"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(0.000, 0.000, 0.000, "Cl"));
             a1.ImplicitH = 1;
             a2.ImplicitH = 1;
 
@@ -440,18 +405,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(-0.358, 0.819, 20.655,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(-1.598, -0.032,
-                    20.905, "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(-0.275, 2.014, 21.574,
-                    "N"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(0.952, 0.043, 20.838,
-                    "C"));
-            NInchiAtom a5 = input.Add(new NInchiAtom(-2.678, 0.479, 21.093,
-                    "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(-1.596, -1.239,
-                    20.958, "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(-0.358, 0.819, 20.655, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(-1.598, -0.032, 20.905, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(-0.275, 2.014, 21.574, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(0.952, 0.043, 20.838, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(-2.678, 0.479, 21.093, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(-1.596, -1.239, 20.958, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -479,18 +438,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input.Add(new NInchiAtom(0.358, 0.819, 20.655,
-                    "C"));
-            NInchiAtom a2 = input.Add(new NInchiAtom(1.598, -0.032, 20.905,
-                    "C"));
-            NInchiAtom a3 = input.Add(new NInchiAtom(0.275, 2.014, 21.574,
-                    "N"));
-            NInchiAtom a4 = input.Add(new NInchiAtom(-0.952, 0.043, 20.838,
-                    "C"));
-            NInchiAtom a5 = input.Add(new NInchiAtom(2.678, 0.479, 21.093,
-                    "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(1.596, -1.239, 20.958,
-                    "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(0.358, 0.819, 20.655, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(1.598, -0.032, 20.905, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(0.275, 2.014, 21.574, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(-0.952, 0.043, 20.838, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(2.678, 0.479, 21.093, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(1.596, -1.239, 20.958, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -517,18 +470,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input
-                    .Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
-            NInchiAtom a2 = input
-                    .Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
-            NInchiAtom a3 = input
-                    .Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
-            NInchiAtom a4 = input
-                    .Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
-            NInchiAtom a5 = input
-                    .Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0,
-                    "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -556,18 +503,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input
-                    .Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
-            NInchiAtom a2 = input
-                    .Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
-            NInchiAtom a3 = input
-                    .Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
-            NInchiAtom a4 = input
-                    .Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
-            NInchiAtom a5 = input
-                    .Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0,
-                    "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -591,18 +532,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input
-                    .Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
-            NInchiAtom a2 = input
-                    .Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
-            NInchiAtom a3 = input
-                    .Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
-            NInchiAtom a4 = input
-                    .Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
-            NInchiAtom a5 = input
-                    .Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0,
-                    "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -631,18 +566,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
-            NInchiAtom a1 = input
-                    .Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
-            NInchiAtom a2 = input
-                    .Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
-            NInchiAtom a3 = input
-                    .Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
-            NInchiAtom a4 = input
-                    .Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
-            NInchiAtom a5 = input
-                    .Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
-            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0,
-                    "O"));
+            NInchiAtom a1 = input.Add(new NInchiAtom(264.0, 968.0, 0.0, "C"));
+            NInchiAtom a2 = input.Add(new NInchiAtom(295.0, 985.0, 0.0, "C"));
+            NInchiAtom a3 = input.Add(new NInchiAtom(233.0, 986.0, 0.0, "N"));
+            NInchiAtom a4 = input.Add(new NInchiAtom(264.0, 932.0, 0.0, "C"));
+            NInchiAtom a5 = input.Add(new NInchiAtom(326.0, 967.0, 0.0, "O"));
+            NInchiAtom a6 = input.Add(new NInchiAtom(295.0, 1021.0, 0.0, "O"));
 
             a1.ImplicitH = 1;
             a3.ImplicitH = 2;
@@ -723,8 +652,7 @@ namespace NCDK.Graphs.InChI
             input.Bonds.Add(new NInchiBond(a1, a7, INCHI_BOND_TYPE.Single));
 
             // Add stereo parities
-            input.Stereos.Add(NInchiStereo0D.CreateNewTetrahedralStereo0D(a1, a3,
-                    a4, a7, a2, INCHI_PARITY.Odd));
+            input.Stereos.Add(NInchiStereo0D.CreateNewTetrahedralStereo0D(a1, a3, a4, a7, a2, INCHI_PARITY.Odd));
 
             return input;
         }
@@ -760,11 +688,9 @@ namespace NCDK.Graphs.InChI
             input.Bonds.Add(new NInchiBond(a1, a7, INCHI_BOND_TYPE.Single));
 
             // Add stereo parities
-            input.Stereos.Add(NInchiStereo0D.CreateNewTetrahedralStereo0D(a1, a3,
-                    a4, a7, a2, INCHI_PARITY.Even));
+            input.Stereos.Add(NInchiStereo0D.CreateNewTetrahedralStereo0D(a1, a3, a4, a7, a2, INCHI_PARITY.Even));
             return input;
         }
-
 
         private NInchiInput GetNSC7414a(string options)
         {
@@ -812,34 +738,34 @@ namespace NCDK.Graphs.InChI
             return input;
         }
 
-    //  -ClnMol-06180618052D
+        //  -ClnMol-06180618052D
 
-    //11 11  0  0  0  0  0  0  0  0999 V2000
-    //   -1.1292   -0.5292    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    1
-    //   -1.1333   -1.5917    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    2
-    //   -1.1333    0.5333    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    3
-    //   -1.1375   -2.6542    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    4
-    //    0.8375    0.5625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    5
-    //    0.9917   -2.4667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    6
-    //    2.2417   -0.6542    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0    7
-    //    4.3000   -0.5000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0    8
-    //    5.8583    0.9667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    9
-    //    6.0167   -1.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    10
-    //    6.2042   -3.3417    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    11
-    //  6  4  1  0  0  0  0
-    //  1  2  2  0  0  0  0
-    //  7  5  1  1  0  0  0
-    //  7  6  1  1  0  0  0
-    //  2  4  1  0  0  0  0
-    //  8  7  1  0  0  0  0
-    //  9  8  1  1  0  0  0
-    //  5  3  1  0  0  0  0
-    //  8 10  1  1  0  0  0
-    //  1  3  1  0  0  0  0
-    //11 10  1  0  0  0  0
-    //M  END
-    //>  <ID>
-    //NSC-7414a
+        //11 11  0  0  0  0  0  0  0  0999 V2000
+        //   -1.1292   -0.5292    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    1
+        //   -1.1333   -1.5917    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    2
+        //   -1.1333    0.5333    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    3
+        //   -1.1375   -2.6542    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    4
+        //    0.8375    0.5625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    5
+        //    0.9917   -2.4667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    6
+        //    2.2417   -0.6542    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0    7
+        //    4.3000   -0.5000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0    8
+        //    5.8583    0.9667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    9
+        //    6.0167   -1.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    10
+        //    6.2042   -3.3417    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    11
+        //  6  4  1  0  0  0  0
+        //  1  2  2  0  0  0  0
+        //  7  5  1  1  0  0  0
+        //  7  6  1  1  0  0  0
+        //  2  4  1  0  0  0  0
+        //  8  7  1  0  0  0  0
+        //  9  8  1  1  0  0  0
+        //  5  3  1  0  0  0  0
+        //  8 10  1  1  0  0  0
+        //  1  3  1  0  0  0  0
+        //11 10  1  0  0  0  0
+        //M  END
+        //>  <ID>
+        //NSC-7414a
 
 
         // Test atom handling
@@ -891,7 +817,6 @@ namespace NCDK.Graphs.InChI
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/i1+2", output.InChI);
         }
-
 
         [TestMethod()]
         public void TestGetInchiFromSodiumHydroxide()
@@ -1012,14 +937,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput inputE = GetE12dichloroethene2D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
             Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
-            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
-                    .InChI);
+            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE.InChI);
 
             NInchiInput inputZ = GetZ12dichloroethene2D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
             Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
-            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
-                    .InChI);
+            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ.InChI);
         }
 
         // Test 3D coordinate handling
@@ -1034,16 +957,12 @@ namespace NCDK.Graphs.InChI
             NInchiInput inputL = GetLAlanine3D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    outputL.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", outputL.InChI);
 
             NInchiInput inputD = GetDAlanine3D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
-                    outputD.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", outputD.InChI);
         }
 
         // Test handling of 2D coordinates with bond stereo types
@@ -1059,8 +978,7 @@ namespace NCDK.Graphs.InChI
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
-            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)",
-                    output.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)", output.InChI);
         }
 
         [TestMethod()]
@@ -1069,9 +987,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput inputL = GetLAlanine2Da("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    outputL.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", outputL.InChI);
         }
 
         [TestMethod()]
@@ -1080,11 +996,8 @@ namespace NCDK.Graphs.InChI
             NInchiInput inputD = GetDAlanine2D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
-                    outputD.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", outputD.InChI);
         }
-
 
         /// <summary>
         /// Tests InChI generation from L-Alanine molecules, with 2D coordinates
@@ -1096,9 +1009,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = GetLAlanine2Da("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", output.InChI);
         }
 
         [TestMethod()]
@@ -1107,9 +1018,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput inputL = GetLAlanine2Db("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    outputL.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", outputL.InChI);
         }
 
         // Test handling of no coordinates, with stereo parities
@@ -1125,22 +1034,17 @@ namespace NCDK.Graphs.InChI
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
-            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)",
-                    output.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)", output.InChI);
 
             NInchiInput inputL = GetLAlanine0D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    outputL.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", outputL.InChI);
 
             NInchiInput inputD = GetDAlanine0D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1",
-                    outputD.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1", outputD.InChI);
         }
 
         /// <summary>
@@ -1154,23 +1058,18 @@ namespace NCDK.Graphs.InChI
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
-            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H", output
-                            .InChI);
+            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H", output.InChI);
 
             NInchiInput inputE = GetE12dichloroethene0D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
             Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
-            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
-                    .InChI);
+            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE.InChI);
 
             NInchiInput inputZ = GetZ12dichloroethene0D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
             Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
-            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
-                    .InChI);
+            Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ.InChI);
         }
-
-
 
         [TestMethod()]
         public void TestGetInchiFromNSC7414a()
@@ -1179,12 +1078,8 @@ namespace NCDK.Graphs.InChI
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Warning, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
-            Assert.AreEqual(
-                    "InChI=1S/C11H20/c1-3-10(2)11-8-6-4-5-7-9-11/h4-5,10-11H,3,6-9H2,1-2H3",
-                    output.InChI);
+            Assert.AreEqual("InChI=1S/C11H20/c1-3-10(2)11-8-6-4-5-7-9-11/h4-5,10-11H,3,6-9H2,1-2H3", output.InChI);
         }
-
-
 
         // Test option checking
 
@@ -1221,30 +1116,25 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = GetLAlanine3D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", output.InChI);
 
             input = GetLAlanine3D("-compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1", output.InChI);
 
             input = GetLAlanine3D("/compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1", output.InChI);
 
             input = GetLAlanine3D("-cOMprEsS");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1", output.InChI);
         }
 
         // Test structure generation from InChI strings
@@ -1256,15 +1146,12 @@ namespace NCDK.Graphs.InChI
         public void TestGetChlorineAtomFromInchi()
         {
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/Cl");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1296,9 +1183,7 @@ namespace NCDK.Graphs.InChI
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:10002 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:10002 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1308,15 +1193,12 @@ namespace NCDK.Graphs.InChI
         public void TestGetHydrogenChlorideImplicitHFromInchi()
         {
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/ClH/h1H");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1325,17 +1207,13 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetHydrogenChlorideImplicitPFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/ClH/h1H/i/hH");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/ClH/h1H/i/hH");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:1 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:1 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1344,17 +1222,13 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetHydrogenChlorideImplicitDFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/ClH/h1H/i/hD");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/ClH/h1H/i/hD");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:1 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:1 T:0 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1363,17 +1237,13 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetHydrogenChlorideImplicitTFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/ClH/h1H/i/hT");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/ClH/h1H/i/hT");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(1, output.Atoms.Count);
             Assert.AreEqual(0, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:1 // Radical: None",
-                            output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:1 // Radical: None", output.Atoms[0].ToDebugString());
         }
 
         /// <summary>
@@ -1383,7 +1253,6 @@ namespace NCDK.Graphs.InChI
         // Test fails due to problem with InChI library
         public void TestGetMethylRadicalFromInchi()
         {
-
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/CH3/h1H3");
             NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
@@ -1393,8 +1262,6 @@ namespace NCDK.Graphs.InChI
             Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: Doublet", output.Atoms[0].ToDebugString());
         }
 
-
-
         // Test bond handling
 
         /// <summary>
@@ -1403,22 +1270,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetEthaneFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/C2H6/c1-2/h1-2H3");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/C2H6/c1-2/h1-2H3");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    output.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", output.Bonds[0].ToDebugString());
         }
 
         /// <summary>
@@ -1427,22 +1287,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetEtheneFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/C2H4/c1-2/h1-2H2");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/C2H4/c1-2/h1-2H2");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None",
-                    output.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None", output.Bonds[0].ToDebugString());
         }
 
         /// <summary>
@@ -1451,22 +1304,15 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetEthyneFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/C2H2/c1-2/h1-2H");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/C2H2/c1-2/h1-2H");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(2, output.Atoms.Count);
             Assert.AreEqual(1, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Triple // Stereo: None",
-                    output.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Triple // Stereo: None", output.Bonds[0].ToDebugString());
         }
 
         // Test handling of no coordinates, with stereo parities
@@ -1478,122 +1324,61 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetLandDAlanine0DFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(6, output.Atoms.Count);
             Assert.AreEqual(5, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[3].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[4].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[5].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    output.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    output.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None",
-                    output.Bonds[2].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None",
-                    output.Bonds[3].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None",
-                    output.Bonds[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None", output.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[5].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", output.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", output.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None", output.Bonds[2].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None", output.Bonds[3].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None", output.Bonds[4].ToDebugString());
 
-            NInchiInputInchi inputL = new NInchiInputInchi(
-                    "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
-            NInchiOutputStructure outputL = NInchiWrapper
-                    .GetStructureFromInchi(inputL);
+            NInchiInputInchi inputL = new NInchiInputInchi("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1");
+            NInchiOutputStructure outputL = NInchiWrapper.GetStructureFromInchi(inputL);
             Assert.AreEqual(InChIReturnCode.Ok, outputL.ReturnStatus);
             Assert.AreEqual(7, outputL.Atoms.Count);
             Assert.AreEqual(6, outputL.Bonds.Count);
             Assert.AreEqual(1, outputL.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[3].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[4].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            outputL.Atoms[5].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    outputL.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    outputL.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None",
-                    outputL.Bonds[2].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None",
-                    outputL.Bonds[3].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None",
-                    outputL.Bonds[4].ToDebugString());
-            Assert.AreEqual(
-                    "InChI Stereo0D: C [H,C,C,N] Type::Tetrahedral // Parity:Odd",
-                    outputL.Stereos[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None", outputL.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputL.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputL.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None", outputL.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputL.Atoms[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", outputL.Atoms[5].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", outputL.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", outputL.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None", outputL.Bonds[2].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None", outputL.Bonds[3].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None", outputL.Bonds[4].ToDebugString());
+            Assert.AreEqual("InChI Stereo0D: C [H,C,C,N] Type::Tetrahedral // Parity:Odd", outputL.Stereos[0].ToDebugString());
 
-            NInchiInputInchi inputD = new NInchiInputInchi(
-                    "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
-            NInchiOutputStructure outputD = NInchiWrapper
-                    .GetStructureFromInchi(inputD);
+            NInchiInputInchi inputD = new NInchiInputInchi("InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m1/s1");
+            NInchiOutputStructure outputD = NInchiWrapper.GetStructureFromInchi(inputD);
             Assert.AreEqual(InChIReturnCode.Ok, outputD.ReturnStatus);
             Assert.AreEqual(7, outputD.Atoms.Count);
             Assert.AreEqual(6, outputD.Bonds.Count);
             Assert.AreEqual(1, outputD.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[3].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[4].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            outputD.Atoms[5].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    outputD.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None",
-                    outputD.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None",
-                    outputD.Bonds[2].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None",
-                    outputD.Bonds[3].ToDebugString());
-            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None",
-                    outputD.Bonds[4].ToDebugString());
-            Assert.AreEqual(
-                    "InChI Stereo0D: C [H,C,C,N] Type::Tetrahedral // Parity:Even",
-                    outputD.Stereos[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:3 P:0 D:0 T:0 // Radical: None", outputD.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputD.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputD.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: N [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:2 P:0 D:0 T:0 // Radical: None", outputD.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputD.Atoms[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: O [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", outputD.Atoms[5].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", outputD.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Single // Stereo: None", outputD.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: N-C // Type: Single // Stereo: None", outputD.Bonds[2].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Double // Stereo: None", outputD.Bonds[3].ToDebugString());
+            Assert.AreEqual("InChI Bond: O-C // Type: Single // Stereo: None", outputD.Bonds[4].ToDebugString());
+            Assert.AreEqual("InChI Stereo0D: C [H,C,C,N] Type::Tetrahedral // Parity:Even", outputD.Stereos[0].ToDebugString());
         }
 
         /// <summary>
@@ -1603,106 +1388,54 @@ namespace NCDK.Graphs.InChI
         [TestMethod()]
         public void TestGetEandZ12Dichloroethene0DFromInchi()
         {
-            NInchiInputInchi input = new NInchiInputInchi(
-                    "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiInputInchi input = new NInchiInputInchi("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H");
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
             Assert.AreEqual(4, output.Atoms.Count);
             Assert.AreEqual(3, output.Bonds.Count);
             Assert.AreEqual(0, output.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            output.Atoms[3].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None",
-                    output.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    output.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    output.Bonds[2].ToDebugString());
-
-            NInchiInputInchi inputE = new NInchiInputInchi(
-                    "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
-            NInchiOutputStructure outputE = NInchiWrapper
-                    .GetStructureFromInchi(inputE);
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:1 P:0 D:0 T:0 // Radical: None", output.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", output.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None", output.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", output.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", output.Bonds[2].ToDebugString());
+ 
+            NInchiInputInchi inputE = new NInchiInputInchi("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+");
+            NInchiOutputStructure outputE = NInchiWrapper.GetStructureFromInchi(inputE);
             Assert.AreEqual(InChIReturnCode.Ok, outputE.ReturnStatus);
             Assert.AreEqual(6, outputE.Atoms.Count);
             Assert.AreEqual(5, outputE.Bonds.Count);
             Assert.AreEqual(1, outputE.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[3].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[4].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputE.Atoms[5].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None",
-                    outputE.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    outputE.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    outputE.Bonds[2].ToDebugString());
-            Assert.AreEqual(
-                    "InChI Stereo0D: - [H,C,C,H] Type::DoubleBond // Parity:Even",
-                    outputE.Stereos[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputE.Atoms[5].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None", outputE.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", outputE.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", outputE.Bonds[2].ToDebugString());
+            Assert.AreEqual("InChI Stereo0D: - [H,C,C,H] Type::DoubleBond // Parity:Even", outputE.Stereos[0].ToDebugString());
 
-            NInchiInputInchi inputZ = new NInchiInputInchi(
-                    "InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
-            NInchiOutputStructure outputZ = NInchiWrapper
-                    .GetStructureFromInchi(inputZ);
+            NInchiInputInchi inputZ = new NInchiInputInchi("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-");
+            NInchiOutputStructure outputZ = NInchiWrapper.GetStructureFromInchi(inputZ);
             Assert.AreEqual(InChIReturnCode.Ok, outputZ.ReturnStatus);
             Assert.AreEqual(6, outputZ.Atoms.Count);
             Assert.AreEqual(5, outputZ.Bonds.Count);
             Assert.AreEqual(1, outputZ.Stereos.Count);
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[0].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[1].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[2].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[3].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[4].ToDebugString());
-            Assert.AreEqual(
-                            "InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None",
-                            outputZ.Atoms[5].ToDebugString());
-            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None",
-                    outputZ.Bonds[0].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    outputZ.Bonds[1].ToDebugString());
-            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None",
-                    outputZ.Bonds[2].ToDebugString());
-            Assert.AreEqual(
-                    "InChI Stereo0D: - [H,C,C,H] Type::DoubleBond // Parity:Odd",
-                    outputZ.Stereos[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[0].ToDebugString());
+            Assert.AreEqual("InChI Atom: C [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[1].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[2].ToDebugString());
+            Assert.AreEqual("InChI Atom: Cl [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[3].ToDebugString());
+            Assert.AreEqual("InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[4].ToDebugString());
+            Assert.AreEqual("InChI Atom: H [0.0,0.0,0.0] Charge:0 // Iso Mass:0 // Implicit H:0 P:0 D:0 T:0 // Radical: None", outputZ.Atoms[5].ToDebugString());
+            Assert.AreEqual("InChI Bond: C-C // Type: Double // Stereo: None", outputZ.Bonds[0].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", outputZ.Bonds[1].ToDebugString());
+            Assert.AreEqual("InChI Bond: Cl-C // Type: Single // Stereo: None", outputZ.Bonds[2].ToDebugString());
+            Assert.AreEqual("InChI Stereo0D: - [H,C,C,H] Type::DoubleBond // Parity:Odd", outputZ.Stereos[0].ToDebugString());
         }
-
 
         /// <summary>
         /// Tests InchiKey generation.
@@ -1823,7 +1556,7 @@ namespace NCDK.Graphs.InChI
         {
             string[] ELS = { "H", "He", "Li", "Be", "B", "C", "N", "O",
                 "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar" };
-            
+
             bool stop = false;
 
             int failCount = 0;
@@ -1856,8 +1589,7 @@ namespace NCDK.Graphs.InChI
                                         failCount++;
                                     }
                                 }
-                                else if (!("InChI=1S/" + element)
-                                        .Equals(output.InChI))
+                                else if (!("InChI=1S/" + element).Equals(output.InChI))
                                 {
                                     failCount++;
                                 }
@@ -1911,8 +1643,7 @@ namespace NCDK.Graphs.InChI
         public void TestStructureToInchiBug2085031a()
         {
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/C24H33N3O5/c1-23(2,3)26-21(29)20(17-11-8-7-9-12-17)27(16-18-13-10-14-31-18)19(28)15-25-22(30)32-24(4,5)6/h7-14,20H,15-16H2,1-6H3,(H,25,30)(H,26,29)");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
         }
 
@@ -1920,11 +1651,9 @@ namespace NCDK.Graphs.InChI
         public void TestStructureToInchiBug2085031b()
         {
             NInchiInputInchi input = new NInchiInputInchi("InChI=1/C24H33N3O5/c1-23(2,3)26-21(29)20(17-11-8-7-9-12-17)27(16-18-13-10-14-31-18)19(28)15-25-22(30)32-24(4,5)6/h7-14,20H,15-16H2,1-6H3,(H,25,30)(H,26,29) ");
-            NInchiOutputStructure output = NInchiWrapper
-                    .GetStructureFromInchi(input);
+            NInchiOutputStructure output = NInchiWrapper.GetStructureFromInchi(input);
             Assert.AreEqual(InChIReturnCode.EOF, output.ReturnStatus);
         }
-
 
         [TestMethod()]
         public void TestGetStdInchi()
@@ -1932,9 +1661,7 @@ namespace NCDK.Graphs.InChI
             NInchiInput input = GetLAlanine0D("");
             NInchiOutput output = NInchiWrapper.GetStdInchi(input);
             Assert.AreEqual(InChIReturnCode.Ok, output.ReturnStatus);
-            Assert.AreEqual(
-                    "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
-                    output.InChI);
+            Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1", output.InChI);
         }
 
         // Test null inputs
@@ -2097,7 +1824,6 @@ namespace NCDK.Graphs.InChI
             INCHI_STATUS ret = NInchiWrapper.CheckInchi(inchi, false);
             Assert.AreEqual(INCHI_STATUS.INCHI_INVALID_PREFIX, ret);
         }
-
 
         [TestMethod()]
         public void TestGetInchiFromInchi()

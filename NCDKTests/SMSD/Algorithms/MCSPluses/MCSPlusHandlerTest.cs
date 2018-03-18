@@ -131,7 +131,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// <summary>
         /// Test of getAllAtomMapping method, of class MCSPlusHandler.
         /// </summary>
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Failing but not going to be fixed
         public void TestGetAllAtomMapping()
         {
@@ -155,7 +154,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         /// <summary>
         /// Test of getAllMapping method, of class MCSPlusHandler.
         /// </summary>
-        //[TestMethod()]
         [TestMethod(), Ignore()] // Failing but not going to be fixed
         public void TestGetAllMapping()
         {

@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 
@@ -30,23 +30,6 @@ namespace NCDK
     public abstract class AbstractChemObjectBuilderTest : CDKTestCase
     {
         public virtual IChemObject RootObject { get; }
-
-        //[TestMethod()]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestNewInstance_Class_arrayObject()
-        //{
-        //    // throw random stuff; it should fail
-        //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.NewAtom(new object[2]);
-        //}
-
-        //[TestMethod()]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestIncorrectNumberOf()
-        //{
-        //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.NewAtom(builder.NewAtomContainer());
-        //}
 
         [TestMethod()]
         public void TestNewAtom()
@@ -113,14 +96,6 @@ namespace NCDK
             Assert.IsNotNull(container);
         }
 
-        //[TestMethod()]
-        //public void TestNewAtomContainer_int_int_int_int()
-        //{
-        //    IChemObjectBuilder builder = RootObject.Builder;
-        //    IAtomContainer container = builder.NewAtomContainer(1, 2, 3, 4);
-        //    Assert.IsNotNull(container);
-        //}
-
         [TestMethod()]
         public void TestNewAtomContainer_IAtomContainer()
         {
@@ -179,17 +154,6 @@ namespace NCDK
                     builder.NewAtom());
             Assert.IsNotNull(bond);
         }
-
-        ///**
-        // * @cdk.bug 3526870
-        // */
-        //[TestMethod()]
-        //[ExpectedException(typeof(ArgumentException))]
-        //public void TestNewBond_IAtom_IAtomContainer()
-        //{
-        //    IChemObjectBuilder builder = RootObject.Builder;
-        //    builder.NewBond(builder.NewAtom(), builder.NewAtomContainer());
-        //}
 
         [TestMethod()]
         public void TestNewBond_IAtom_IAtom_BondOrder()
@@ -680,22 +644,6 @@ namespace NCDK
             Assert.IsNotNull(chirality);
             Assert.AreEqual(builder, chirality.Builder);
         }
-
-        //[TestMethod()]
-        //public void TestSugggestion()
-        //{
-        //    IChemObjectBuilder builder = RootObject.Builder;
-        //    try
-        //    {
-        //        builder.NewAtom(true);
-        //        Assert.Fail("I expected an exception, because this constructor does not exist.");
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        string message = exception.Message;
-        //        Assert.IsTrue("But got this message instead: " + message, message.Contains("candidates are"));
-        //    }
-        //}
 
         [TestMethod()]
         public void TestSubstance()

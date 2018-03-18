@@ -17,10 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Tools.Diff;
 using NCDK.Numerics;
+using NCDK.Tools.Diff;
 
 namespace NCDK
 {

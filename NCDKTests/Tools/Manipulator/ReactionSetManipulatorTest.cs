@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
@@ -71,7 +72,6 @@ namespace NCDK.Tools.Manipulator
             reactionSet.Add(reaction2);
 
             Assert.AreEqual(3, ReactionSetManipulator.GetAllMolecules(reactionSet).Count);
-
         }
 
         [TestMethod()]
@@ -210,10 +210,8 @@ namespace NCDK.Tools.Manipulator
             IReaction reaction1 = builder.NewReaction();
             set.Add(reaction1);
             reaction1.Id = "r1";
-            IAtomContainer water = new AtomContainer();
-            water.Id = "m1";
-            Atom oxygen = new Atom("O");
-            oxygen.Id = "a1";
+            IAtomContainer water = new AtomContainer { Id = "m1" };
+            Atom oxygen = new Atom("O") { Id = "a1" };
             water.Atoms.Add(oxygen);
             reaction1.Reactants.Add(water);
             reaction1.Products.Add(water);

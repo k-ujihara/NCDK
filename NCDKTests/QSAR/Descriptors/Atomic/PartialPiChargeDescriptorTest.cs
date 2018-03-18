@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Ethyl Fluoride
+        /// A unit test with Ethyl Fluoride
         /// </summary>
         // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Fluoroethylene
+        /// A unit test with Fluoroethylene
         /// </summary>
         // @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         // @cdk.bug   1959099
@@ -119,7 +119,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with Formic Acid
+        /// A unit test with Formic Acid
         /// </summary>
         // @cdk.inchi  InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
         [TestMethod()]
@@ -158,9 +158,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Fluorobenzene
+        /// A unit test with Fluorobenzene
         /// </summary>
-        //  @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Fluorobenzene()
@@ -206,10 +206,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with Methoxyethylene
+        /// A unit test with Methoxyethylene
         /// </summary>
-        //  @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
-        //  @cdk.bug   1959099
+        // @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
+        // @cdk.bug   1959099
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Methoxyethylene()
@@ -248,7 +248,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with 1-Methoxybutadiene
+        /// A unit test with 1-Methoxybutadiene
         /// </summary>
         // @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
         // @cdk.bug   1959099
@@ -307,7 +307,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit
+        /// A unit test for JUnit
         /// </summary>
         // @cdk.bug   1959099
         [TestMethod()]
@@ -340,10 +340,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit : n1ccccc1
+        /// A unit test : n1ccccc1
         /// </summary>
-        //  @cdk.inchi InChI: InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
-        //  @cdk.bug   1959099
+        // @cdk.inchi InChI: InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
+        // @cdk.bug   1959099
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptoCharge_2()
@@ -387,9 +387,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit. This molecule breaks with PETRA as well.
+        /// This molecule breaks with PETRA as well.
         /// </summary>
-        //  @cdk.bug   1959099
+        // @cdk.bug   1959099
         [TestMethod(), Ignore()] // Bug was always present - and is not a regression. The non-charge seperated form of molecule produces the correct result.
         public void TestPartialPiChargeDescriptoCharge_3()
         {
@@ -418,9 +418,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit. This molecule breaks with PETRA as well.
+        /// This molecule breaks with PETRA as well.
         /// </summary>
-        ///  @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
+        /// @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescripto4()
@@ -475,9 +475,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with [H]C1=C([H])C([H])=C(C(=C1(F))C([H])([H])[H])C([H])([H])C([H])([H])C(F)=O
+        /// A unit test with [H]C1=C([H])C([H])=C(C(=C1(F))C([H])([H])[H])C([H])([H])C([H])([H])C(F)=O
         /// </summary>
-        //  @cdk.bug   1959099
+        // @cdk.bug   1959099
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestSousa()
@@ -539,10 +539,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
+        /// A unit test with [H]C([H])=C([H])C([H])([H])C([H])=O
         /// </summary>
-        //  @cdk.inchi  InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
-        //  @cdk.bug   1959099
+        // @cdk.inchi  InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
+        // @cdk.bug   1959099
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestBondNotConjugated()
@@ -574,9 +574,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])C([H])=O
+        /// A unit test with [H]C([H])=C([H])C([H])([H])C([H])=O
         /// </summary>
-        //  @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
+        // @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestDifferentStarts()
@@ -607,9 +607,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with [H]C([H])=C([H])C([H])([H])[H]
+        /// A unit test with [H]C([H])=C([H])C([H])([H])[H]
         /// </summary>
-        //  @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+        // @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestBondNotConjugated1()
@@ -639,9 +639,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
+        /// A unit test with [H]C([H])=C([H])[C+]([H])[H]
         /// </summary>
-        //  @cdk.bug   1959099
+        // @cdk.bug   1959099
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestBondNotConjugated2()
@@ -672,10 +672,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        ///  A unit test for JUnit with  c1ccc(cc1)N3c4ccccc4(c2ccccc23)
+        /// A unit test with  c1ccc(cc1)N3c4ccccc4(c2ccccc23)
         /// </summary>
-        //  @cdk.bug   1959099
-        //  @cdk.inchi
+        // @cdk.bug   1959099
+        // @cdk.inchi
         [TestMethod()]
         [TestCategory("SlowTest")]
         public void TestLangCalculation()

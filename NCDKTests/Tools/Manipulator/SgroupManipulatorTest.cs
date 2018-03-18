@@ -22,10 +22,10 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Sgroups;
-using System.Collections.Generic;
 using Moq;
 using NCDK.Common.Base;
+using NCDK.Sgroups;
+using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {

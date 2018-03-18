@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
@@ -343,7 +343,6 @@ namespace NCDK
 
         private class ChemObjectListenerImpl : IChemObjectListener
         {
-
             public bool Changed { get; private set; }
 
             public ChemObjectListenerImpl()
@@ -374,7 +373,6 @@ namespace NCDK
         [TestMethod()]
         public void TestIsEmpty_MoleculeSet()
         {
-
             IChemModel chemModel = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = chemModel.Builder;
 
@@ -398,7 +396,6 @@ namespace NCDK
         [TestMethod()]
         public void TestIsEmpty_ReactionSet()
         {
-
             IChemModel model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
@@ -414,13 +411,11 @@ namespace NCDK
             Assert.IsFalse(model.IsEmpty(), "model has a reaction set and should not be empty");
             model.ReactionSet = null;
             Assert.IsTrue(model.IsEmpty(), "model has no reaction set");
-
         }
 
         [TestMethod()]
         public void TestIsEmpty_RingSet()
         {
-
             IChemModel model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
@@ -434,13 +429,11 @@ namespace NCDK
             Assert.IsFalse(model.IsEmpty());
             model.RingSet = null;
             Assert.IsTrue(model.IsEmpty());
-
         }
 
         [TestMethod()]
         public void TestIsEmpty_Crystal()
         {
-
             IChemModel model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
@@ -451,7 +444,6 @@ namespace NCDK
             Assert.IsFalse(model.IsEmpty());
             model.Crystal = null;
             Assert.IsTrue(model.IsEmpty());
-
         }
     }
 }

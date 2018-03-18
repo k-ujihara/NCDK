@@ -18,9 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK;
 using NCDK.Tools.Diff;
-using System;
 
 namespace NCDK
 {
@@ -375,7 +373,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IAtomType at = (IAtomType)NewChemObject();

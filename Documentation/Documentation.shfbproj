@@ -33,7 +33,7 @@
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <HelpFileVersion>2.1.0.1</HelpFileVersion>
+    <HelpFileVersion>2.1.1.0</HelpFileVersion>
     <MaximumGroupParts>200</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
@@ -126,6 +126,7 @@
     <None Include="Content\VersionHistory\v1.0.2.0.aml" />
     <None Include="Content\VersionHistory\v1.0.3.0.aml" />
     <None Include="Content\VersionHistory\v1.1.2.0.aml" />
+    <None Include="Content\VersionHistory\v1.3.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\VersionHistory\v1.1.1.0.aml" />
     <None Include="Content\Welcome.aml" />

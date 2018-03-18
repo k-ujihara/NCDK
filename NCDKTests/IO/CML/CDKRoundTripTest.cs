@@ -61,7 +61,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIIsotope_NaturalAbundance()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -75,7 +74,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()] // exact mass not currently supported in CML implmenetation
-        //[TestMethod()]
         public void TestIIsotope_ExactMass()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -102,7 +100,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_Name()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -116,7 +113,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_MaxBondOrder()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -130,7 +126,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_BondOrderSum()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -157,7 +152,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_FormalNeighborCount()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -171,7 +165,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_Hybridization()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -185,7 +178,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_CovalentRadius()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -199,7 +191,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtomType_Valency()
         {
             IAtomContainer mol = builder.NewAtomContainer();
@@ -293,7 +284,6 @@ namespace NCDK.IO.CML
         }
 
         [TestMethod(), Ignore()]
-        //[TestMethod()]
         public void TestIAtom_StereoParity()
         {
             IAtomContainer mol = builder.NewAtomContainer();
