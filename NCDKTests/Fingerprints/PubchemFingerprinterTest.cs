@@ -22,6 +22,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Common.Base;
@@ -309,9 +310,11 @@ namespace NCDK.Fingerprints
             BitArray bs2 = fp.GetBitFingerprint(mol2).AsBitSet();
 
             // now lets run some threads
-            var objs = new List<FpRunner>();
-            objs.Add(new FpRunner(mol1));
-            objs.Add(new FpRunner(mol2));
+            var objs = new List<FpRunner>
+            {
+                new FpRunner(mol1),
+                new FpRunner(mol2)
+            };
             var ret = Parallel.ForEach(objs, o => o.Call());
             Assert.IsTrue(ret.IsCompleted);
             BitArray fb1 = objs[0].Result;

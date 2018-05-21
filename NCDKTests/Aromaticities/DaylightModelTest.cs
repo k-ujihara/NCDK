@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.RingSearches;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -226,9 +226,8 @@ namespace NCDK.Aromaticities
         /// <summary>
         /// A 3 valent nitrogen cation should be aromatic, otherwise when we make it
         /// lower case we can not convert it back.
-        ///
-        // @cdk.bug 1332
         /// </summary>
+        // @cdk.bug 1332
         [TestMethod()]
         public void AbnormalValence_nitrogenCation()
         {

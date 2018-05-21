@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.IO;
@@ -23,11 +24,7 @@ using System.Linq;
 
 namespace NCDK.Config.AtomType
 {
-    /// <summary>
-    /// Checks the functionality of the AtomTypeReader.
-    ///
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class AtomTypeReaderTest : CDKTestCase
     {
@@ -42,21 +39,21 @@ namespace NCDK.Config.AtomType
         public void TestReadAtomTypes_IChemObjectBuilder()
         {
             AtomTypeReader reader = new AtomTypeReader(
-                    new StringReader(
-                            "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
-                                    + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
-                                    + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
-                                    + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      "
-                                    + "                                                                                             "
-                                    + "  <atomType id=\"C.3\" title=\"1\">                                                          "
-                                    + "    <atom elementType=\"C\"/>                                                                "
-                                    + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>               "
-                                    + "  </atomType>                                                                                "
-                                    + "  <atomType id=\"C.2\" title=\"2\">                                                          "
-                                    + "    <atom elementType=\"C\"/>                                                                "
-                                    + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp2</scalar>               "
-                                    + "  </atomType>                                                                                "
-                                    + "</atomTypeList>"));
+                new StringReader(
+                    "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
+                            + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
+                            + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
+                            + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      "
+                            + "                                                                                             "
+                            + "  <atomType id=\"C.3\" title=\"1\">                                                          "
+                            + "    <atom elementType=\"C\"/>                                                                "
+                            + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>               "
+                            + "  </atomType>                                                                                "
+                            + "  <atomType id=\"C.2\" title=\"2\">                                                          "
+                            + "    <atom elementType=\"C\"/>                                                                "
+                            + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp2</scalar>               "
+                            + "  </atomType>                                                                                "
+                            + "</atomTypeList>"));
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes(new ChemObject().Builder);
             Assert.IsNotNull(types);
@@ -67,19 +64,19 @@ namespace NCDK.Config.AtomType
         public void TestReadAtomTypes2()
         {
             string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
-                    + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
-                    + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
-                    + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      "
-                    + "                                                                                             "
-                    + "  <atomType id=\"C.3\" title=\"1\">                                                          "
-                    + "    <atom elementType=\"C\"/>                                                                "
-                    + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>               "
-                    + "  </atomType>                                                                                "
-                    + "  <atomType id=\"C.2\" title=\"2\">                                                          "
-                    + "    <atom elementType=\"C\"/>                                                                "
-                    + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp2</scalar>               "
-                    + "  </atomType>                                                                                "
-                    + "</atomTypeList>";
+                + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
+                + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
+                + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      "
+                + "                                                                                             "
+                + "  <atomType id=\"C.3\" title=\"1\">                                                          "
+                + "    <atom elementType=\"C\"/>                                                                "
+                + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>               "
+                + "  </atomType>                                                                                "
+                + "  <atomType id=\"C.2\" title=\"2\">                                                          "
+                + "    <atom elementType=\"C\"/>                                                                "
+                + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp2</scalar>               "
+                + "  </atomType>                                                                                "
+                + "</atomTypeList>";
 
             AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
@@ -92,17 +89,17 @@ namespace NCDK.Config.AtomType
         public void TestReadAtomTypes_CDK()
         {
             string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
-                    + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
-                    + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
-                    + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
-                    + "                                                                                             \n"
-                    + "  <atomType id=\"C.sp\">\n" + "    <atom elementType=\"C\" formalCharge=\"0\">\n"
-                    + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">2</scalar>\n"
-                    + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:lonePairCount\">0</scalar>\n"
-                    + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:piBondCount\">2</scalar>\n" + "    </atom>\n"
-                    + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp1</scalar>\n"
-                    + "  </atomType>                                                                                "
-                    + "</atomTypeList>";
+                + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
+                + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
+                + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
+                + "                                                                                             \n"
+                + "  <atomType id=\"C.sp\">\n" + "    <atom elementType=\"C\" formalCharge=\"0\">\n"
+                + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">2</scalar>\n"
+                + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:lonePairCount\">0</scalar>\n"
+                + "      <scalar dataType=\"xsd:integer\" dictRef=\"cdk:piBondCount\">2</scalar>\n" + "    </atom>\n"
+                + "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp1</scalar>\n"
+                + "  </atomType>                                                                                "
+                + "</atomTypeList>";
 
             AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
@@ -125,22 +122,22 @@ namespace NCDK.Config.AtomType
         public void TestReadAtomTypes_FF()
         {
             string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
-                    + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
-                    + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
-                    + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
-                    + "                                                                                             \n"
-                    + " <atomType id=\"C\">\n" + "    <!-- for example in CC-->\n"
-                    + "   <atom elementType=\"C\" formalCharge=\"0\">\n"
-                    + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:maxBondOrder\">1.0</scalar>\n"
-                    + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:bondOrderSum\">4.0</scalar>\n"
-                    + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">4</scalar>\n"
-                    + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:valency\">4</scalar>\n"
-                    + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>\n"
-                    + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:DA\">-</scalar>\n"
-                    + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:sphericalMatcher\">[CSP]-[0-4][-]?+;</scalar>\n"
-                    + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringSize\">3</scalar>\n"
-                    + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>\n" + "   </atom>\n"
-                    + " </atomType>\n" + "</atomTypeList>\n";
+                + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
+                + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
+                + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
+                + "                                                                                             \n"
+                + " <atomType id=\"C\">\n" + "    <!-- for example in CC-->\n"
+                + "   <atom elementType=\"C\" formalCharge=\"0\">\n"
+                + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:maxBondOrder\">1.0</scalar>\n"
+                + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:bondOrderSum\">4.0</scalar>\n"
+                + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:formalNeighbourCount\">4</scalar>\n"
+                + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:valency\">4</scalar>\n"
+                + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp3</scalar>\n"
+                + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:DA\">-</scalar>\n"
+                + "     <scalar dataType=\"xsd:string\" dictRef=\"cdk:sphericalMatcher\">[CSP]-[0-4][-]?+;</scalar>\n"
+                + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringSize\">3</scalar>\n"
+                + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>\n" + "   </atom>\n"
+                + " </atomType>\n" + "</atomTypeList>\n";
 
             AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);

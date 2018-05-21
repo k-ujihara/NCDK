@@ -22,10 +22,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using System;
-using System.Collections.Generic;
-using System.Collections;
 using NCDK.Common.Collections;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {

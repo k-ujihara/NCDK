@@ -17,19 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Config.AtomType
 {
     /// <summary>
-    /// Checks the functionality of the {@link OWLAtomTypeMappingHandler}.
-    ///
-    // @cdk.module test-atomtype
+    /// Checks the functionality of the <see cref="OWLAtomTypeMappingHandler"/>.
     /// </summary>
+    // @cdk.module test-atomtype
     [TestClass()]
     public class OWLAtomTypeMappingHandlerTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestOWLAtomTypeMappingHandler()
         {

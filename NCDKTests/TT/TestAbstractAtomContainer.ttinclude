@@ -1,0 +1,6 @@
+﻿
+        [TestMethod()]
+        public override void TestSetAtoms_RemoveListener()
+        {
+            ChemObjectTestHelper.TestSetAtoms_RemoveListener(NewChemObject());
+        }

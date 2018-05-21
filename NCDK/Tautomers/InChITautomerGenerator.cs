@@ -181,7 +181,7 @@ namespace NCDK.Tautomers
 
         /// <summary>
         /// Parses the InChI's formula (ignoring hydrogen) and returns a map
-        /// with with a position for each atom, increasing in the order
+        /// with a position for each atom, increasing in the order
         /// of the elements as listed in the formula.
         /// </summary>
         /// <param name="inputInchi">user input InChI</param>
@@ -558,7 +558,7 @@ namespace NCDK.Tautomers
             Debug.WriteLine($"#possible solutions : {solutions.Count}");
             if (solutions.Count == 0)
             {
-                Trace.TraceError("Could not generate any tautomers for the input. Is input in Kekule form? ");
+                Trace.TraceError("Could not generate any tautomers for the input. Is input in Kekulé form? ");
                 tautomers.Add(inputMolecule);
             }
             else
@@ -615,7 +615,7 @@ namespace NCDK.Tautomers
         /// <summary>
         /// Removes duplicates from a molecule set. Uses canonical SMILES to detect identical molecules.
         /// An example of pruning can be a case where double bonds are placed in different positions in
-        /// an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
+        /// an aromatic (Kekulé) ring, which all amounts to one same aromatic ring.
         /// </summary>
         /// <param name="tautomers">molecule set of tautomers with possible duplicates</param>
         /// <returns>tautomers same set with duplicates removed</returns>

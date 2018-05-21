@@ -13,7 +13,6 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestCompare_NullHybridization()
         {
-
             SimpleAtomComparator comparator = new SimpleAtomComparator();
 
             IAtom a1 = builder.NewAtom("C");

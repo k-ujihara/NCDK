@@ -21,21 +21,17 @@ using System;
 
 namespace NCDK.Graphs.InChI
 {
-
     /// <summary>
     /// Exception thrown by JniInchi.
     /// </summary>
     // @author Sam Adams
     internal class NInchiException : Exception
     {
-
-
         /// <summary>
         /// Constructor.
         /// </summary>
         public NInchiException()
-
-                : base()
+            : base()
         { }
 
         /// <summary>
@@ -44,7 +40,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="message">the detail message.</param>
         /// </summary>
         public NInchiException(string message)
-                : base(message)
+            : base(message)
         { }
 
         /// <summary>
@@ -53,7 +49,7 @@ namespace NCDK.Graphs.InChI
         /// <param name="ex">the cause.</param>
         /// </summary>
         public NInchiException(Exception ex)
-                : base(ex.Message, ex)
+            : base(ex.Message, ex)
         { }
     }
 }

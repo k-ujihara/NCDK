@@ -60,16 +60,14 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSetMass_Double()
         {
-            IsotopeContainer isoC = new IsotopeContainer();
-            isoC.Mass = 130.00;
+            IsotopeContainer isoC = new IsotopeContainer { Mass = 130.00 };
             Assert.IsNotNull(isoC);
         }
 
         [TestMethod()]
         public void TestSetIntensity_Double()
         {
-            IsotopeContainer isoC = new IsotopeContainer();
-            isoC.Intensity = 5000000.0;
+            IsotopeContainer isoC = new IsotopeContainer { Intensity = 5000000.0 };
             Assert.IsNotNull(isoC);
         }
 

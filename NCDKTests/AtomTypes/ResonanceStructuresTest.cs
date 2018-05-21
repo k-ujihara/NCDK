@@ -16,18 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 
 namespace NCDK.AtomTypes
 {
-    /// <summary>
     // @cdk.module test-reaction
-    /// </summary>
     [TestClass()]
     public class ResonanceStructuresTest : CDKTestCase
     {
-
         private readonly static IChemObjectBuilder builder;
         private readonly static CDKAtomTypeMatcher matcher;
 
@@ -44,18 +42,14 @@ namespace NCDK.AtomTypes
             : base()
         { }
 
-
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       StructureResonanceGeneratorTest#TestGetAllStructures_IAtomContainer()
-        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Tools.StructureResonanceGeneratorTest.TestGetAllStructures_IAtomContainer"/>
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
         [TestMethod()]
         public void TestGetAllStructures_IAtomContainer()
         {
-
             //COMPOUND
             //O=C([H])C(=[O+])C([H])([H])[H]
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -131,16 +125,13 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       StructureResonanceGeneratorTest#Test12DimethylBenzene()
-        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Tools.StructureResonanceGeneratorTest.Test12DimethylBenzene"/>
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
         [TestMethod()]
         public void Test12DimethylBenzene()
         {
-
             //COMPOUND
             //[H]C1=C([H])C([H])=C(C(=C1([H]))C([H])([H])[H])C([H])([H])[H]
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -162,8 +153,7 @@ namespace NCDK.AtomTypes
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[7], BondOrder.Single);
             AddExplicitHydrogens(molecule);
 
-            string[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp3", "C.sp3", "H", "H",
-                "H", "H", "H", "H", "H", "H", "H", "H"};
+            string[] expectedTypes = { "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H" };
             Assert.AreEqual(expectedTypes.Length, molecule.Atoms.Count);
             for (int i = 0; i < expectedTypes.Length; i++)
             {
@@ -194,8 +184,7 @@ namespace NCDK.AtomTypes
             expectedStructure.AddBond(expectedStructure.Atoms[1], expectedStructure.Atoms[7], BondOrder.Single);
             AddExplicitHydrogens(expectedStructure);
 
-            string[] expectedTypes1 = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp3", "C.sp3", "H", "H",
-                "H", "H", "H", "H", "H", "H", "H", "H"};
+            string[] expectedTypes1 = { "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H", "H", "H", "H"};
             Assert.AreEqual(expectedTypes.Length, expectedStructure.Atoms.Count);
             for (int i = 0; i < expectedTypes1.Length; i++)
             {

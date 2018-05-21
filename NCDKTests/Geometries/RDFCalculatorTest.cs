@@ -16,8 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
+using NCDK.Silent;
 using NCDK.Numerics;
 
 namespace NCDK.Geometries
@@ -54,10 +55,8 @@ namespace NCDK.Geometries
         {
             RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
             AtomContainer h2mol = new AtomContainer();
-            Atom h1 = new Atom("H");
-            h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
-            Atom h2 = new Atom("H");
-            h2.Point3D = new Vector3(0.5, 0.0, 0.0);
+            Atom h1 = new Atom("H") { Point3D = new Vector3(-0.5, 0.0, 0.0) };
+            Atom h2 = new Atom("H") { Point3D = new Vector3(0.5, 0.0, 0.0) };
             h2mol.Atoms.Add(h1);
             h2mol.Atoms.Add(h2);
 
@@ -112,12 +111,16 @@ namespace NCDK.Geometries
         {
             RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, ReturnsMul);
             AtomContainer h2mol = new AtomContainer();
-            Atom h1 = new Atom("H");
-            h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
-            h1.Charge = +1.0;
-            Atom h2 = new Atom("H");
-            h2.Point3D = new Vector3(0.5, 0.0, 0.0);
-            h2.Charge = -1.0;
+            Atom h1 = new Atom("H")
+            {
+                Point3D = new Vector3(-0.5, 0.0, 0.0),
+                Charge = +1.0
+            };
+            Atom h2 = new Atom("H")
+            {
+                Point3D = new Vector3(0.5, 0.0, 0.0),
+                Charge = -1.0
+            };
             h2mol.Atoms.Add(h1);
             h2mol.Atoms.Add(h2);
 
@@ -140,12 +143,16 @@ namespace NCDK.Geometries
         {
             RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3, ReturnsMul);
             AtomContainer h2mol = new AtomContainer();
-            Atom h1 = new Atom("H");
-            h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
-            h1.Charge = +1.0;
-            Atom h2 = new Atom("H");
-            h2.Point3D = new Vector3(0.5, 0.0, 0.0);
-            h2.Charge = -1.0;
+            Atom h1 = new Atom("H")
+            {
+                Point3D = new Vector3(-0.5, 0.0, 0.0),
+                Charge = +1.0
+            };
+            Atom h2 = new Atom("H")
+            {
+                Point3D = new Vector3(0.5, 0.0, 0.0),
+                Charge = -1.0
+            };
             h2mol.Atoms.Add(h1);
             h2mol.Atoms.Add(h2);
 

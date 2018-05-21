@@ -17,19 +17,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Linq;
 
 namespace NCDK.Config
 {
+    /// <summary>
+    /// Checks the functionality of the <see cref="NaturalElement"/>.
+    /// </summary>
+    // @cdk.module test-core
     [TestClass()]
     public class OWLBasedAtomTypeConfiguratorTest
     {
-        /// <summary>
-        /// Checks the functionality of the <see cref="OWLBasedAtomTypeConfigurator"/>.
-        /// </summary>
-        // @cdk.module test-core
         [TestMethod()]
         public virtual void TestCDKBasedAtomTypeConfigurator()
         {

@@ -16,16 +16,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Default
 {
     /// <summary>
-    /// Checks the propagation of ChangeEvents through a
+    /// Checks the propagation of <see cref="ChemObjectChangeEventArgs"/> through a
     /// nested set of objects.
     /// </summary>
     /// <seealso cref="ChemFile"/>
-    // @cdk.module test-data
     [TestClass()]
     public class ChangeEventPropagationTest : CDKTestCase
     {
@@ -50,19 +50,18 @@ namespace NCDK.Default
             TestListener ts = new TestListener();
             cf.Listeners.Add(ts);
             a2.Symbol = "N";
-            Assert.IsInstanceOfType(ts.changedObject, typeof(Atom));
-            Assert.AreEqual("N", ((Atom)ts.changedObject).Symbol);
+            Assert.IsInstanceOfType(ts.ChangedObject, typeof(Atom));
+            Assert.AreEqual("N", ((Atom)ts.ChangedObject).Symbol);
         }
 
         class TestListener : IChemObjectListener
         {
-            public ChemObject changedObject { get; set; }
+            public ChemObject ChangedObject { get; set; }
 
             public virtual void OnStateChanged(ChemObjectChangeEventArgs evt)
             {
-                changedObject = (ChemObject)evt.Source;
+                ChangedObject = (ChemObject)evt.Source;
             }
         }
     }
 }
-

@@ -22,10 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 namespace NCDK.Graphs
 {
     /// <summary>
@@ -69,4 +65,3 @@ namespace NCDK.Graphs
         Cycles Find(IAtomContainer molecule, int[][] graph, int length);
     }
 }
-

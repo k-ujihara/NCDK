@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Manipulator;
 
@@ -52,9 +53,7 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestSetParameters()
         {
-            IRule rule = new NitrogenRule();
-            rule.Parameters = null;
-
+            IRule rule = new NitrogenRule { Parameters = null };
             var objects = rule.Parameters;
             Assert.IsNull(objects);
         }
@@ -63,9 +62,7 @@ namespace NCDK.Formula.Rules
         public void TestDefaultValidFalse()
         {
             IRule rule = new NitrogenRule();
-
             IMolecularFormula formula = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C2H4", builder);
-
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 

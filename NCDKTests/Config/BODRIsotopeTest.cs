@@ -21,6 +21,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Config
 {
+    /// <summary>
+    /// Checks the functionality of the <see cref="BODRIsotope"/>.
+    /// </summary>
     [TestClass()]
     public class BODRIsotopeTest
     {
@@ -46,13 +49,15 @@ namespace NCDK.Config
         [TestMethod()]
         public void TestImmutable()
         {
-            IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0);
-            // try mutations
-            isotope.Symbol = "N";
-            isotope.AtomicNumber = 5;
-            isotope.MassNumber = 15;
-            isotope.ExactMass = 15.000;
-            isotope.NaturalAbundance = 0.364;
+            IIsotope isotope = new BODRIsotope("C", 6, 12, 12.0, 99.0)
+            {
+                // try mutations
+                Symbol = "N",
+                AtomicNumber = 5,
+                MassNumber = 15,
+                ExactMass = 15.000,
+                NaturalAbundance = 0.364
+            };
             // check if original
             Assert.AreEqual(6, isotope.AtomicNumber.Value);
             Assert.AreEqual(12, isotope.MassNumber.Value);

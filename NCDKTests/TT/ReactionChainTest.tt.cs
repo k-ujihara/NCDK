@@ -27,11 +27,10 @@ namespace NCDK.Default
     /// <summary>
     /// Tests for IReactionChain implementations.
     /// </summary>
-    // @cdk.module test-extra
     [TestClass()]
     public class ReactionChainTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         public ReactionChainTest() : base() { }
 
@@ -101,11 +100,10 @@ namespace NCDK.Silent
     /// <summary>
     /// Tests for IReactionChain implementations.
     /// </summary>
-    // @cdk.module test-extra
     [TestClass()]
     public class ReactionChainTest : CDKTestCase
     {
-        private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+        private readonly static IChemObjectBuilder builder = ChemObjectBuilder.Instance;
 
         public ReactionChainTest() : base() { }
 

@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Default;
@@ -26,25 +27,19 @@ using System.Collections.Generic;
 
 namespace NCDK.Charges
 {
-    /// <summary>
-    /// Description of the Class
-    ///
     // @author Miguel Rojas
     // @cdk.module test-charges
     // @cdk.created 2008-18-05
-    /// </summary>
     [TestClass()]
     public class GasteigerPEPEPartialChargesTest : CDKTestCase
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
         /// <summary>
         /// A unit test for JUnit with methylenfluoride
-        ///
-        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         /// </summary>
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestCalculateCharges_IAtomContainer()
         {
@@ -69,10 +64,7 @@ namespace NCDK.Charges
             }
         }
 
-        /// <summary>
         // @cdk.bug 2013689
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestAromaticBondOrders()
         {
@@ -133,12 +125,8 @@ namespace NCDK.Charges
             {
                 Assert.AreEqual(mol1.Atoms[i].Charge.Value, mol2.Atoms[i].Charge.Value, 0.01, "charge on atom " + i + " does not match");
             }
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestAssignGasteigerPiPartialCharges_IAtomContainer_Boolean()
         {
@@ -161,92 +149,58 @@ namespace NCDK.Charges
                 //Debug.WriteLine("Charge for atom:"+i+" S:"+mol.GetAtomAt(i).Symbol+" Charge:"+mol.GetAtomAt(i).Charge);
                 Assert.AreEqual(testResult[i], molecule.Atoms[i].Charge.Value, 0.01);
             }
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxGasteigerIters()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             Assert.AreEqual(8, peoe.MaxGasteigerIterations);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxResoStruc()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
 
             Assert.AreEqual(50, peoe.MaxResonanceStructures);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestGetStepSize()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
             Assert.AreEqual(5, peoe.StepSize);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxGasteigerIters_Double()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
             int MX_ITERATIONS = 10;
             peoe.MaxGasteigerIterations = MX_ITERATIONS;
             Assert.AreEqual(MX_ITERATIONS, peoe.MaxGasteigerIterations);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxResoStruc_Int()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
             int MX_RESON = 1;
             peoe.MaxResonanceStructures = MX_RESON;
             Assert.AreEqual(MX_RESON, peoe.MaxResonanceStructures);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestSetStepSize()
         {
-
             GasteigerPEPEPartialCharges peoe = new GasteigerPEPEPartialCharges();
             int StepSize = 22;
             peoe.StepSize = StepSize;
             Assert.AreEqual(StepSize, peoe.StepSize);
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         [TestMethod()]
         public void TestAssignrPiMarsilliFactors_IAtomContainerSet()
         {
@@ -272,7 +226,6 @@ namespace NCDK.Charges
             lpcheck.Saturate(molecule);
 
             Assert.IsNotNull(peoe.AssignrPiMarsilliFactors(set));
-
         }
     }
 }

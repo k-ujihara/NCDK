@@ -21,10 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
 using NCDK.Common.Collections;
 using NCDK.Graphs.Matrix;
+using System;
+using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
@@ -272,13 +272,10 @@ namespace NCDK.Graphs
             List<IAtom> newSphere = new List<IAtom>();
             foreach (var atom in sphere)
             {
-                //Debug.WriteLine("atoms  "+ atom + f);
-                //Debug.WriteLine("sphere size  "+ sphere.Count);
                 molecule.Atoms.Add(atom);
                 // first copy LonePair's and SingleElectron's of this Atom as they need
                 // to be copied too
                 var lonePairs = atomContainer.GetConnectedLonePairs(atom);
-                //Debug.WriteLine("found #ec's: " + lonePairs.Length);
                 foreach (var lonePair in lonePairs)
                     molecule.LonePairs.Add(lonePair);
 
@@ -299,7 +296,6 @@ namespace NCDK.Graphs
                     }
                     if (!nextAtom.IsVisited)
                     {
-                        //                    Debug.WriteLine("wie oft???");
                         newSphere.Add(nextAtom);
                         nextAtom.IsVisited = true;
                     }
@@ -516,7 +512,7 @@ namespace NCDK.Graphs
                         index = ttmp;
                     }
                 }
-                qList.Remove(index); // it meams 'qList.RemoveAt(qList.IndexOf(index))'
+                qList.Remove(index); // it means 'qList.RemoveAt(qList.IndexOf(index))'
                 sList.Add(atomContainer.Atoms[index]);
                 if (index == endNumber) break;
 
@@ -620,7 +616,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Get all the paths starting from an atom of length 0 upto the specified length.
+        /// Get all the paths starting from an atom of length 0 up to the specified length.
         /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> of atoms that make up the path (ie they are sequentially connected).</para>
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>
@@ -660,7 +656,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Get all the paths starting from an atom of length 0 up to the specified
-        /// length. If the number of paths exceeds the the set <paramref name="limit"/> then an
+        /// length. If the number of paths exceeds the set <paramref name="limit"/> then an
         /// exception is thrown. <p/> This method returns a set of paths. Each path
         /// is a <see cref="IList{T}"/> of <see cref="IAtom"/> that make up the path (ie they are
         /// sequentially connected).

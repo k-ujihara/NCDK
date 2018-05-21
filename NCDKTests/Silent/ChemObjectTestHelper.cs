@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Helper class to test the functionality of the NNChemObject.
+    /// Helper class to test the functionality of the <see cref="IChemObject"/>s.
     /// </summary>
     // @cdk.module test-silent
     public class ChemObjectTestHelper
@@ -149,7 +149,7 @@ namespace NCDK.Silent
             Assert.IsFalse(listener.Changed);
         }
 
-        public static void TestSetAtoms_removeListener(IChemObject newChemObject)
+        public static void TestSetAtoms_RemoveListener(IChemObject newChemObject)
         {
             IAtomContainer container = (IAtomContainer)newChemObject;
 

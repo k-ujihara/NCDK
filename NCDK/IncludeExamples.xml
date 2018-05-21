@@ -172,7 +172,7 @@
 </code>
   </Codes>
   <Codes id="NCDK.Depict.SvgDrawVisitor_Example.cs">
-    <code>            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50);
+    <code>            SvgDrawVisitor visitor = new SvgDrawVisitor(50, 50, Depiction.UnitsMM);
             visitor.Visit(renderingElements);
             string svg = visitor.ToString();
 </code>
@@ -1810,8 +1810,7 @@ namespace NCDK.Smiles
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic |
-                                                                 SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
                     smi = sg.Create(benzene); // C1=CC=CC=C1 flags not set!
 
                     // Note, in practice we'd use an aromaticity algorithm
@@ -1824,8 +1823,7 @@ namespace NCDK.Smiles
                     sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = new SmilesGenerator(SmiFlavor.Generic |
-                                                                 SmiFlavor.UseAromaticSymbols);
+                    sg = new SmilesGenerator(SmiFlavor.Generic | SmiFlavor.UseAromaticSymbols);
                     smi = sg.Create(benzene); // c1ccccc1
 </code>
   </Codes>
@@ -1847,6 +1845,15 @@ namespace NCDK.Smiles
 
                 // SMILES string suffixed by the coordinates
                 string smi2d = smi + " " + Arrays.ToJavaString(coords);
+</code>
+  </Codes>
+  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+Aromatic">
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+</code>
+  </Codes>
+  <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses">
+    <code>                SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.AtomAtomMap);
+                smigen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
 </code>
   </Codes>
   <Codes id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses">

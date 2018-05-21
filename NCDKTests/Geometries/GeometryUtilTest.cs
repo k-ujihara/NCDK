@@ -20,15 +20,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Isomorphisms;
+using NCDK.Numerics;
 using NCDK.Tools.Diff;
 using System;
 using System.Collections.Generic;
-using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {

@@ -16,15 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     [TestClass()]
     public class StructGenAtomTypeGuesserTest : CDKTestCase
     {
@@ -32,10 +31,8 @@ namespace NCDK.AtomTypes
         public void TestPossibleAtomTypes_IAtomContainer_IAtom()
         {
             IAtomContainer mol = new AtomContainer();
-            Atom atom = new Atom("C");
-            atom.ImplicitHydrogenCount = 3;
-            Atom atom2 = new Atom("N");
-            atom2.ImplicitHydrogenCount = 2;
+            Atom atom = new Atom("C") { ImplicitHydrogenCount = 3 };
+            Atom atom2 = new Atom("N") { ImplicitHydrogenCount = 2 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Bonds.Add(new Bond(atom, atom2, BondOrder.Single));

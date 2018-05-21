@@ -16,10 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using NCDK.Common.Mathematics;
 using NCDK.Numerics;
+using System;
 
 namespace NCDK.Geometries
 {

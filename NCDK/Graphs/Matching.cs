@@ -34,13 +34,13 @@ namespace NCDK.Graphs
     /// A matching is an independent edge set of a graph. This is a set of edges that
     /// share no common vertices. A matching is perfect if every vertex in the graph
     /// is matched. Each vertex can be matched with exactly one other vertex.
-    /// <para>
+    /// </summary>
+    /// <remarks>
     /// This class provides storage and manipulation of a matching. A new match is
     /// added with <see cref="Match(int, int)"/>, any existing match for the newly matched
     /// vertices is no-longer available. The status of a vertex can be queried with
     /// <see cref="Matched(int)"/>  and the matched vertex obtained with <see cref="Other(int)"/>.
-    /// </para>
-    /// </summary>
+    /// </remarks>
     /// <seealso href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory), Wikipedia</seealso>
     // @author John May
     // @cdk.module standard

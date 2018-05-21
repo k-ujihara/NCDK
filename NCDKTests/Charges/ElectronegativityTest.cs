@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
@@ -23,57 +24,30 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Charges
 {
-    /// <summary>
-    /// TestSuite that runs all tests.
-    ///
     // @cdk.module test-charges
-    /// </summary>
     [TestClass()]
     public class ElectronegativityTest : CDKTestCase
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /// <summary>
-        /// Constructor of the ElectronegativityTest.
-        /// </summary>
         public ElectronegativityTest()
             : base()
         { }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestElectronegativity()
         {
-
             Assert.IsNotNull(new Electronegativity());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestElectronegativity_Int_Int()
         {
-
             Assert.IsNotNull(new Electronegativity(6, 50));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        ///  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestCalculateSigmaElectronegativity_IAtomContainer_IAtom()
         {
@@ -91,17 +65,9 @@ namespace NCDK.Charges
 
             for (int i = 0; i < molecule.Atoms.Count; i++)
                 Assert.AreEqual(testResult[i], pe.CalculateSigmaElectronegativity(molecule, molecule.Atoms[i]), 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        ///  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int()
         {
@@ -121,16 +87,9 @@ namespace NCDK.Charges
             {
                 Assert.AreEqual(testResult[i],
                         pe.CalculateSigmaElectronegativity(molecule, molecule.Atoms[i], 6, 50), 0.001);
-
             }
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxIterations()
         {
@@ -138,26 +97,13 @@ namespace NCDK.Charges
             Assert.AreEqual(6, pe.MaxIterations);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxResonStruc()
         {
-
             Electronegativity pe = new Electronegativity();
             Assert.AreEqual(50, pe.MaxResonanceStructures);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxIterations_Int()
         {
@@ -167,12 +113,6 @@ namespace NCDK.Charges
             Assert.AreEqual(maxIter, pe.MaxIterations);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxResonStruc_Int()
         {

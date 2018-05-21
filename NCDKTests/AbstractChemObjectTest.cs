@@ -314,9 +314,7 @@ namespace NCDK
             Assert.IsTrue(atom.Compare(chemObject2.GetProperties().First(pair => pair.Key.Equals("atom")).Value));
         }
 
-        /// <summary>
         // @cdk.bug 2975800
-        /// </summary>
         [TestMethod()]
         public virtual void TestClone_PropertyNull()
         {
@@ -339,7 +337,7 @@ namespace NCDK
             Assert.AreEqual(0, chemObject2.Listeners.Count);
         }
 
-        /// <summary>@cdk.bug 1838820</summary>
+        // @cdk.bug 1838820
         [TestMethod()]
         [Timeout(100)]
         public virtual void TestDontCloneIChemObjectProperties()
@@ -508,16 +506,13 @@ namespace NCDK
             Assert.IsNotNull(listener.Event);
         }
 
-        ///**
-        // * @cdk.bug 2992921
-        // */
+        //// @cdk.bug 2992921
         //[TestMethod()]
         //public virtual void TestNotifyChanged_SetFlags()
         //{
         //    ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         //    IChemObject chemObject = NewChemObject();
         //    chemObject.Listeners.Add(listener);
-
         //    Assert.IsNull(listener.Event);
         //    chemObject.Flags = new bool[chemObject.GetFlags().Length];
         //    Assert.IsNotNull(listener.Event);

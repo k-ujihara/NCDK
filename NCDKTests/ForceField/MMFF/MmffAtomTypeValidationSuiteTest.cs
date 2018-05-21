@@ -22,9 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using System;
 

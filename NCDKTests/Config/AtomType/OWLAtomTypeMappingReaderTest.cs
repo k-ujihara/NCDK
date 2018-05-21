@@ -17,40 +17,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 
 namespace NCDK.Config.AtomType
 {
     /// <summary>
-    /// Checks the functionality of the {@link OWLAtomTypeMappingReader}.
-    ///
-    // @cdk.module test-atomtype
+    /// Checks the functionality of the <see cref="OWLAtomTypeMappingReader"/>.
     /// </summary>
+    // @cdk.module test-atomtype
     [TestClass()]
     public class OWLAtomTypeMappingReaderTest : CDKTestCase
     {
         private const string OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
-                                                 + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
-                                                 + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
-                                                 + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
-                                                 + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
-                                                 + "  <!ENTITY sybylat \"http://cdk.sf.net/ontologies/atomtypes/sybyl#\" >"
-                                                 + "  <!ENTITY atm  \"http://cdk.sf.net/ontologies/atomtypemappings#\" >"
-                                                 + "  <!ENTITY owl  \"http://www.w3.org/2002/07/owl#\" >" + "]>"
-                                                 + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
-                                                 + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
-                                                 + "         xmlns:rdf=\"&rdf;\"" + "         xmlns:atm=\"&atm;\""
-                                                 + "         xmlns:owl=\"&owl;\"" + ">"
-                                                 + "  <owl:ObjectProperty rdf:about=\"&atm;mapsToType\"/>"
-                                                 + "  <owl:ObjectProperty rdf:about=\"&atm;equivalentAsType\"/>"
-                                                 + "  <owl:Thing rdf:about=\"&sybylat;X\"/>"
-                                                 + "  <owl:Thing rdf:about=\"&sybylat;C.3\"/>"
-                                                 + "  <owl:Thing rdf:about=\"&cdkat;X\">"
-                                                 + "    <atm:mapsToType rdf:resource=\"&sybylat;X\"/>" + "  </owl:Thing>"
-                                                 + "  <owl:Thing rdf:about=\"&cdkat;C.sp3\">"
-                                                 + "    <atm:equivalentAsType rdf:resource=\"&sybylat;C.3\"/>"
-                                                 + "  </owl:Thing>" + "</rdf:RDF>";
+            + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
+            + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
+            + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
+            + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
+            + "  <!ENTITY sybylat \"http://cdk.sf.net/ontologies/atomtypes/sybyl#\" >"
+            + "  <!ENTITY atm  \"http://cdk.sf.net/ontologies/atomtypemappings#\" >"
+            + "  <!ENTITY owl  \"http://www.w3.org/2002/07/owl#\" >" + "]>"
+            + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
+            + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
+            + "         xmlns:rdf=\"&rdf;\"" + "         xmlns:atm=\"&atm;\""
+            + "         xmlns:owl=\"&owl;\"" + ">"
+            + "  <owl:ObjectProperty rdf:about=\"&atm;mapsToType\"/>"
+            + "  <owl:ObjectProperty rdf:about=\"&atm;equivalentAsType\"/>"
+            + "  <owl:Thing rdf:about=\"&sybylat;X\"/>"
+            + "  <owl:Thing rdf:about=\"&sybylat;C.3\"/>"
+            + "  <owl:Thing rdf:about=\"&cdkat;X\">"
+            + "    <atm:mapsToType rdf:resource=\"&sybylat;X\"/>" + "  </owl:Thing>"
+            + "  <owl:Thing rdf:about=\"&cdkat;C.sp3\">"
+            + "    <atm:equivalentAsType rdf:resource=\"&sybylat;C.3\"/>"
+            + "  </owl:Thing>" + "</rdf:RDF>";
 
         [TestMethod()]
         public void TestOWLAtomTypeMappingReader_Reader()

@@ -186,7 +186,7 @@ namespace NCDK.Graphs.InChI
                 }
 
                 // Check for implicit hydrogens
-                // atom.HydrogenCount returns number of implict hydrogens, not
+                // atom.HydrogenCount returns number of implicit hydrogens, not
                 // total number
                 // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
                 int? implicitH = atom.ImplicitHydrogenCount;
@@ -394,7 +394,7 @@ namespace NCDK.Graphs.InChI
                 {
                     TetrahedralStereo winding = extendedTetrahedral.Winding;
 
-                    // The periphals (p<i>) and terminals (t<i>) are refering to
+                    // The peripherals (p<i>) and terminals (t<i>) are referring to
                     // the following atoms. The focus (f) is also shown.
                     //
                     //   p0          p2
@@ -405,11 +405,11 @@ namespace NCDK.Graphs.InChI
                     IAtom[] terminals = extendedTetrahedral.FindTerminalAtoms(atomContainer);
                     IAtom[] peripherals = extendedTetrahedral.Peripherals;
 
-                    // InChI API is particualar about the input, each terminal atom
+                    // InChI API is particular about the input, each terminal atom
                     // needs to be present in the list of neighbors and they must
                     // be at index 1 and 2 (i.e. in the middle). This is true even
-                    // of explict atoms. For the implicit atoms, the terminals may
-                    // be in the peripherals allready and so we correct the winding
+                    // of explicit atoms. For the implicit atoms, the terminals may
+                    // be in the peripherals already and so we correct the winding
                     // and reposition as needed.
 
                     IList<IBond> t0Bonds = OnlySingleBonded(atomContainer.GetConnectedBonds(terminals[0]));
@@ -545,7 +545,7 @@ namespace NCDK.Graphs.InChI
         }
 
         /// <summary>
-        /// Gets auxillary information.
+        /// Gets auxiliary information.
         /// </summary>
         public string AuxInfo
         {

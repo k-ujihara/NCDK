@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
@@ -25,9 +26,8 @@ namespace NCDK.AtomTypes
     /// <summary>
     /// This class tests the matching of atom types defined in the
     /// CDK atom type list, starting from SMILES strings.
-    ///
-    // @cdk.module test-core
     /// </summary>
+    // @cdk.module test-core
     [TestClass()]
     public class CDKAtomTypeMatcherSMILESTest : AbstractCDKAtomTypeTest
     {
@@ -90,9 +90,7 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /// <summary>
         // @cdk.bug 2976054
-        /// </summary>
         [TestMethod()]
         public void TestAnotherNitrogen_SP2()
         {
@@ -107,9 +105,7 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /// <summary>
         // @cdk.bug 1294
-        /// </summary>
         [TestMethod()]
         public void TestBug1294()
         {
@@ -130,9 +126,7 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /// <summary>
         // @cdk.bug 3093644
-        /// </summary>
         [TestMethod()]
         public void TestBug3093644()
         {

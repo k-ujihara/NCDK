@@ -112,7 +112,6 @@ namespace NCDK.Formula
             Assert.AreEqual(abundResults[0], isoPattern.Isotopes[0].Intensity, 0.01);
             Assert.AreEqual(abundResults[1], isoPattern.Isotopes[1].Intensity, 0.01);
             Assert.AreEqual(abundResults[2], isoPattern.Isotopes[2].Intensity, 0.01);
-
         }
 
         /// <summary>
@@ -141,7 +140,6 @@ namespace NCDK.Formula
 
             Assert.AreEqual(abundResults[0], isoPattern.Isotopes[0].Intensity, 0.01);
             Assert.AreEqual(abundResults[1], isoPattern.Isotopes[1].Intensity, 0.01);
-
         }
 
         /// <summary>
@@ -169,7 +167,6 @@ namespace NCDK.Formula
             Assert.AreEqual(abundResults[0], isoPattern.Isotopes[0].Intensity, 0.01);
             Assert.AreEqual(abundResults[1], isoPattern.Isotopes[1].Intensity, 0.01);
             Assert.AreEqual(abundResults[2], isoPattern.Isotopes[2].Intensity, 0.01);
-
         }
 
         [TestMethod()]
@@ -203,7 +200,6 @@ namespace NCDK.Formula
             Assert.AreEqual(abundResults[3], isoPattern.Isotopes[3].Intensity, 0.01);
             Assert.AreEqual(abundResults[4], isoPattern.Isotopes[4].Intensity, 0.01);
             Assert.AreEqual(abundResults[5], isoPattern.Isotopes[5].Intensity, 0.01);
-
         }
 
         // @cdk.bug 3273205

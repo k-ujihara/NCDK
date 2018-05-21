@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
@@ -421,8 +422,7 @@ namespace NCDK.AtomTypes
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("O");
             IAtom atom2 = new Atom("C");
-            IAtom atom3 = new Atom("O");
-            atom3.FormalCharge = -1;
+            IAtom atom3 = new Atom("O") { FormalCharge = -1 };
             mol.Atoms.Add(atom);
             mol.Atoms.Add(atom2);
             mol.Atoms.Add(atom3);
@@ -555,8 +555,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             IAtom atom = new Atom("H");
-            IAtom atom2 = new Atom("C");
-            atom2.FormalCharge = +1;
+            IAtom atom2 = new Atom("C") { FormalCharge = +1 };
             IAtom atom3 = new Atom("H");
             IAtom atom4 = new Atom("H");
             mol.Atoms.Add(atom);
@@ -669,43 +668,37 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
 
-            IAtom atom = new Atom("Na");
-            atom.FormalCharge = +1;
+            IAtom atom = new Atom("Na") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             string[] expectedTypes = new string[] { "Na" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("K");
-            atom.FormalCharge = +1;
+            atom = new Atom("K") { FormalCharge = +1 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "K" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Ca");
-            atom.FormalCharge = +2;
+            atom = new Atom("Ca") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Ca" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Mg");
-            atom.FormalCharge = +2;
+            atom = new Atom("Mg") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Mg" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Cu");
-            atom.FormalCharge = +2;
+            atom = new Atom("Cu") { FormalCharge = +2 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Cu" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
 
             mol = new AtomContainer();
-            atom = new Atom("Al");
-            atom.FormalCharge = +3;
+            atom = new Atom("Al") { FormalCharge = +3 };
             mol.Atoms.Add(atom);
             expectedTypes = new string[] { "Al" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);

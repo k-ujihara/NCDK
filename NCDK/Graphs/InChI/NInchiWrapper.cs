@@ -207,7 +207,7 @@ namespace NCDK.Graphs.InChI
             public fixed SByte/*char*/ szErrMsg[STR_ERR_LEN];
         }
 
-        [SuppressUnmanagedCodeSecurityAttribute]
+        [SuppressUnmanagedCodeSecurity]
         internal static class SafeNativeMethods
         {
             [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]

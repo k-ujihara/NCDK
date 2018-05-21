@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 
@@ -25,20 +26,15 @@ namespace NCDK.AtomTypes
     /// Helper class that all atom type matcher test classes must implement.
     /// It keeps track of the atom types which have been tested, to ensure
     /// that all atom types are tested.
-    ///
+    /// </summary>
     // @cdk.module test-core
     // @cdk.bug    1890702
-    /// </summary>
     [TestClass()]
     abstract public class AbstractCDKAtomTypeTest : AbstractAtomTypeTest
     {
-
         private const string ATOMTYPE_LIST = "cdk-atom-types.owl";
 
-        protected readonly static AtomTypeFactory factory = AtomTypeFactory
-                                                                     .GetInstance("NCDK.Dict.Data."
-                                                                             + ATOMTYPE_LIST,
-                                                                             Silent.ChemObjectBuilder.Instance);
+        protected readonly static AtomTypeFactory factory = AtomTypeFactory.GetInstance("NCDK.Dict.Data." + ATOMTYPE_LIST, Silent.ChemObjectBuilder.Instance);
 
         public override string AtomTypeListName => ATOMTYPE_LIST;
 

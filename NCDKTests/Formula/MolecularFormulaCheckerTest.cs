@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Formula.Rules;
@@ -69,8 +70,10 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
@@ -84,8 +87,10 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
@@ -102,9 +107,11 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("H"), 100);
             formula.Charge = 0;
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
-            rules.Add(new ChargeRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule(),
+                new ChargeRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
@@ -119,9 +126,11 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("H"), 100);
             formula.Charge = 0;
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
-            rules.Add(new ChargeRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule(),
+                new ChargeRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
@@ -139,9 +148,11 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("H"), 4);
             formula.Charge = 0;
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
-            rules.Add(new ChargeRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule(),
+                new ChargeRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
@@ -156,9 +167,11 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("H"), 4);
             formula.Charge = 0;
 
-            List<IRule> rules = new List<IRule>();
-            rules.Add(new MMElementRule());
-            rules.Add(new ChargeRule());
+            List<IRule> rules = new List<IRule>
+            {
+                new MMElementRule(),
+                new ChargeRule()
+            };
 
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 

@@ -19,11 +19,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
-using NCDK.Numerics;
+ */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Geometries;
+using NCDK.Numerics;
 using System.Diagnostics;
 
 namespace NCDK.IO.CML

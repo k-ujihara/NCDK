@@ -17,40 +17,35 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.Config.AtomType
 {
-    /// <summary>
-    /// Checks the functionality of the AtomTypeReader.
-    ///
     // @cdk.module test-core
-    /// </summary>
     [TestClass()]
     public class OWLAtomTypeReaderTest : CDKTestCase
     {
-
         private const string OWL_CONTENT = "<?xml version=\"1.0\"?>" + "<!DOCTYPE rdf:RDF ["
-                                                 + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
-                                                 + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
-                                                 + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
-                                                 + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
-                                                 + "]>" + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
-                                                 + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
-                                                 + "         xmlns:rdf=\"&rdf;\"" + ">"
-                                                 + "  <at:AtomType rdf:ID=\"C.sp3.0\">"
-                                                 + "    <at:categorizedAs rdf:resource=\"&cdkat;C.sp3\"/>"
-                                                 + "    <at:hasElement rdf:resource=\"&elem;C\"/>"
-                                                 + "    <at:hybridization rdf:resource=\"&at;sp3\"/>"
-                                                 + "    <at:formalCharge>0</at:formalCharge>"
-                                                 + "    <at:lonePairCount>0</at:lonePairCount>"
-                                                 + "    <at:formalNeighbourCount>4</at:formalNeighbourCount>"
-                                                 + "    <at:piBondCount>0</at:piBondCount>"
-                                                 + "    <at:singleElectronCount>0</at:singleElectronCount>"
-                                                 + "  </at:AtomType>" + "</rdf:RDF>";
+            + "  <!ENTITY rdf  \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" >"
+            + "  <!ENTITY elem \"http://cdk.sf.net/ontologies/elements#\" >"
+            + "  <!ENTITY at   \"http://cdk.sf.net/ontologies/atomtypes#\" >"
+            + "  <!ENTITY cdkat \"http://cdk.sf.net/ontologies/atomtypes/cdk#\" >"
+            + "]>" + "<rdf:RDF xmlns=\"&cdkat;\" xml:base=\"&cdkat;\""
+            + "         xmlns:at=\"&at;\"" + "         xmlns:elem=\"&elem;\""
+            + "         xmlns:rdf=\"&rdf;\"" + ">"
+            + "  <at:AtomType rdf:ID=\"C.sp3.0\">"
+            + "    <at:categorizedAs rdf:resource=\"&cdkat;C.sp3\"/>"
+            + "    <at:hasElement rdf:resource=\"&elem;C\"/>"
+            + "    <at:hybridization rdf:resource=\"&at;sp3\"/>"
+            + "    <at:formalCharge>0</at:formalCharge>"
+            + "    <at:lonePairCount>0</at:lonePairCount>"
+            + "    <at:formalNeighbourCount>4</at:formalNeighbourCount>"
+            + "    <at:piBondCount>0</at:piBondCount>"
+            + "    <at:singleElectronCount>0</at:singleElectronCount>"
+            + "  </at:AtomType>" + "</rdf:RDF>";
 
         [TestMethod()]
         public void TestAtomTypeReader_Reader()

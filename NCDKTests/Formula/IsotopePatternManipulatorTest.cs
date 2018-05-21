@@ -38,7 +38,6 @@ namespace NCDK.Formula
             Assert.AreEqual(158.08135, listISO[3].Mass, 0.00001);
 
             Assert.AreEqual(1, isoNorma.Charge, 0.00001);
-
         }
 
         [TestMethod()]

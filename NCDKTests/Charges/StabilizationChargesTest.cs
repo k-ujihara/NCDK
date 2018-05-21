@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
@@ -23,9 +24,6 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Charges
 {
-    /// <summary>
-    /// TestSuite that runs all tests.
-    /// </summary>
     // @cdk.module test-charges
     [TestClass()]
     public class StabilizationChargesTest : CDKTestCase
@@ -33,27 +31,16 @@ namespace NCDK.Charges
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /// <summary>
-        /// Constructor of the StabilizationChargesTest.
-        /// </summary>
         public StabilizationChargesTest()
                 : base()
         { }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        /// </summary>
-        /// <returns>The test suite</returns>
         [TestMethod()]
         public void TestStabilizationCharges()
         {
             Assert.IsNotNull(new StabilizationCharges());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        /// </summary>
-        /// <returns>The test suite</returns>
         //  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
         [TestCategory("SlowTest")]

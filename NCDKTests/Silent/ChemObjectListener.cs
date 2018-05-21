@@ -15,14 +15,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
-using System;
 
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Helper class to test the functionality of the <see cref="ChemObjectListener"/>.
+    /// Helper class to test the functionality of the <see cref="ChemObjectTestHelper"/>.
     /// </summary>
     // @cdk.module test-silent
     public class ChemObjectListener : IChemObjectListener

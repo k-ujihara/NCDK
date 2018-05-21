@@ -22,166 +22,194 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 0-1110-1301 U
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.RingSearches;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 
-namespace NCDK.Aromaticities {
+namespace NCDK.Aromaticities
+{
     /// <summary>
     /// Test the electron contribution using the pi bond only model.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
-    public class PiBondModelTest {
-
+    public class PiBondModelTest
+    {
         private static ElectronDonation model = ElectronDonation.PiBondsModel;
 
         [TestMethod()]
-        public void Benzene() {
+        public void Benzene()
+        {
             Test(TestMoleculeFactory.MakeBenzene(), 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Triazole() {
+        public void Triazole()
+        {
             Test(TestMoleculeFactory.Make123Triazole(), 1, -1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Furan() {
+        public void Furan()
+        {
             Test(CreateFromSmiles("O1C=CC=C1"), -1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Pyrrole() {
+        public void Pyrrole()
+        {
             Test(CreateFromSmiles("N1C=CC=C1"), -1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Methylpyrrole() {
+        public void Methylpyrrole()
+        {
             Test(CreateFromSmiles("CN1C=CC=C1"), -1, -1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Pyridine() {
+        public void Pyridine()
+        {
             Test(CreateFromSmiles("C1=CC=NC=C1"), 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Hexamethylidenecyclohexane() {
+        public void Hexamethylidenecyclohexane()
+        {
             Test(CreateFromSmiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"), -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
         }
 
         [TestMethod()]
-        public void Cyclopentadienyl() {
+        public void Cyclopentadienyl()
+        {
             Test(CreateFromSmiles("[CH-]1C=CC=C1"), -1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void PyridineOxide() {
+        public void PyridineOxide()
+        {
             Test(TestMoleculeFactory.MakePyridineOxide(), 1, 1, 1, 1, 1, 1, -1);
         }
 
         [TestMethod()]
-        public void Isoindole() {
+        public void Isoindole()
+        {
             Test(CreateFromSmiles("C2=C1C=CC=CC1=CN2"), 1, 1, 1, 1, 1, 1, 1, 1, -1);
         }
 
         [TestMethod()]
-        public void Azulene() {
+        public void Azulene()
+        {
             Test(TestMoleculeFactory.MakeAzulene(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Indole() {
+        public void Indole()
+        {
             Test(TestMoleculeFactory.MakeIndole(), 1, 1, 1, 1, 1, 1, 1, 1, -1);
         }
 
         [TestMethod()]
-        public void Thiazole() {
+        public void Thiazole()
+        {
             Test(TestMoleculeFactory.MakeThiazole(), 1, 1, 1, -1, 1);
         }
 
         [TestMethod()]
-        public void Tetradehydrodecaline() {
+        public void Tetradehydrodecaline()
+        {
             Test(CreateFromSmiles("C1CCC2=CC=CC=C2C1"), -1, -1, -1, 1, 1, 1, 1, 1, 1, -1);
         }
 
         [TestMethod()]
-        public void Tropyliumcation() {
+        public void Tropyliumcation()
+        {
             Test(CreateFromSmiles("[CH+]1C=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Tropone() {
+        public void Tropone()
+        {
             Test(CreateFromSmiles("O=C1C=CC=CC=C1"), -1, -1, 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Porphyrine() {
+        public void Porphyrine()
+        {
             Test(CreateFromSmiles("N1C2=CC=C1C=C1C=CC(C=C3NC(C=C3)=CC3=NC(C=C3)=C2)=N1"), -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1,
                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Quinone() {
+        public void Quinone()
+        {
             Test(CreateFromSmiles("O=C1C=CC(=O)C=C1"), -1, -1, 1, 1, -1, -1, 1, 1);
         }
 
         [TestMethod()]
-        public void Cyclobutadiene() {
+        public void Cyclobutadiene()
+        {
             Test(CreateFromSmiles("C1=CC=C1"), 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Aminomethylpyridine() {
+        public void Aminomethylpyridine()
+        {
             Test(CreateFromSmiles("CC1=NC=CC=C1N"), -1, 1, 1, 1, 1, 1, 1, -1);
         }
 
         [TestMethod()]
-        public void Indolizine() {
+        public void Indolizine()
+        {
             Test(CreateFromSmiles("C1=CN2C=CC=CC2=C1"), 1, 1, -1, 1, 1, 1, 1, 1, 1);
         }
 
         [TestMethod()]
-        public void Imidazothiazole() {
+        public void Imidazothiazole()
+        {
             Test(CreateFromSmiles("S1C=CN2C=CN=C12"), -1, 1, 1, -1, 1, 1, 1, 1);
         }
 
         // 1-oxide pyridine
         [TestMethod()]
-        public void Oxidepyridine() {
+        public void Oxidepyridine()
+        {
             Test(CreateFromSmiles("O=N1=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
         }
 
         // 2-Pyridone
         [TestMethod()]
-        public void Pyridinone() {
+        public void Pyridinone()
+        {
             Test(CreateFromSmiles("O=C1NC=CC=C1"), -1, -1, -1, 1, 1, 1, 1);
         }
 
         // ensures atoms next to 2 cyclic pi bonds aren't allowed
         [TestMethod()]
-        public void Cyclodecahexaene() {
+        public void Cyclodecahexaene()
+        {
             Test(CreateFromSmiles("C1=CC=C=CC=C=CC=C1"), 1, 1, 1, -1, 1, 1, -1, 1, 1, 1);
         }
 
         // similar to cyclodecahexaene but 5 pi bonds instead of 6
         [TestMethod()]
-        public void Cyclodecapentaene() {
+        public void Cyclodecapentaene()
+        {
             Test(CreateFromSmiles("C1=CC=CC=CC=CC=C1"), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         }
 
-        static IAtomContainer CreateFromSmiles(string smi) {
+        static IAtomContainer CreateFromSmiles(string smi)
+        {
             return new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles(smi);
         }
 
         /// <summary>Check the electron contribution is the same as expected.</summary>
-        static void Test(IAtomContainer m, params int[] expected) {
+        static void Test(IAtomContainer m, params int[] expected)
+        {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
             Assert.IsTrue(Compares.AreDeepEqual(expected, model.Contribution(m, new RingSearch(m))));
         }

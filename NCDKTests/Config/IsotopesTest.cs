@@ -26,7 +26,7 @@ using System.Linq;
 namespace NCDK.Config
 {
     /// <summary>
-    /// Checks the functionality of the IsotopeFactory
+    /// Checks the functionality of the <see cref="IsotopeFactory"/>.
     /// </summary>
     // @cdk.module test-core
     [TestClass()]

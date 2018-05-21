@@ -26,16 +26,14 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSeTolerance_Double()
         {
-            IsotopePatternSimilarity is_ = new IsotopePatternSimilarity();
-            is_.Tolerance = 0.001;
+            IsotopePatternSimilarity is_ = new IsotopePatternSimilarity { Tolerance = 0.001 };
             Assert.IsNotNull(is_);
         }
 
         [TestMethod()]
         public void TestGetTolerance()
         {
-            IsotopePatternSimilarity is_ = new IsotopePatternSimilarity();
-            is_.Tolerance = 0.001;
+            IsotopePatternSimilarity is_ = new IsotopePatternSimilarity { Tolerance = 0.001 };
             Assert.AreEqual(0.001, is_.Tolerance, 0.000001);
         }
 
@@ -69,8 +67,7 @@ namespace NCDK.Formula
         {
             var is_ = new IsotopePatternSimilarity();
 
-            IsotopePattern spExp = new IsotopePattern();
-            spExp.Charge = 1;
+            IsotopePattern spExp = new IsotopePattern { Charge = 1 };
             spExp.SetMonoIsotope(new IsotopeContainer(156.07770, 1));
             spExp.Isotopes.Add(new IsotopeContainer(157.07503, 0.0101));
             spExp.Isotopes.Add(new IsotopeContainer(157.08059, 0.074));

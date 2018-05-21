@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
@@ -30,30 +31,16 @@ namespace NCDK.Charges
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /// <summary>
-        /// Constructor of the PiElectronegativityTest.
-        /// </summary>
         public PiElectronegativityTest()
             : base()
         { }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestPiElectronegativity()
         {
-
             Assert.IsNotNull(new PiElectronegativity());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestPiElectronegativity_Int_Int()
         {
@@ -61,18 +48,10 @@ namespace NCDK.Charges
             Assert.IsNotNull(new PiElectronegativity(6, 50));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        ///  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
+        // @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
         public void TestCalculatePiElectronegativity_IAtomContainer_IAtom()
         {
-
             PiElectronegativity pe = new PiElectronegativity();
 
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -90,22 +69,13 @@ namespace NCDK.Charges
                     Assert.AreNotSame(0.0, pe.CalculatePiElectronegativity(molecule, molecule.Atoms[i]));
                 else
                     Assert.AreEqual(0.0, pe.CalculatePiElectronegativity(molecule, molecule.Atoms[i]), 0.001);
-
             }
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        ///  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
+        // @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
         public void TestCalculatePiElectronegativity_IAtomContainer_IAtom_Int_Int()
         {
-
             PiElectronegativity pe = new PiElectronegativity();
 
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -123,16 +93,9 @@ namespace NCDK.Charges
                     Assert.AreNotSame(0.0, pe.CalculatePiElectronegativity(molecule, molecule.Atoms[i], 6, 50));
                 else
                     Assert.AreEqual(0.0, pe.CalculatePiElectronegativity(molecule, molecule.Atoms[i], 6, 50), 0.001);
-
             }
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxIterations()
         {
@@ -140,12 +103,6 @@ namespace NCDK.Charges
             Assert.AreEqual(6, pe.MaxIterations);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestGetMaxResonStruc()
         {
@@ -153,12 +110,6 @@ namespace NCDK.Charges
             Assert.AreEqual(50, pe.MaxResonanceStructures);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxIterations_Int()
         {
@@ -168,12 +119,6 @@ namespace NCDK.Charges
             Assert.AreEqual(maxIter, pe.MaxIterations);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        // @throws Exception
-        /// </summary>
         [TestMethod()]
         public void TestSetMaxResonStruc_Int()
         {

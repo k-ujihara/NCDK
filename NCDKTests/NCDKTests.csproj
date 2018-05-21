@@ -117,15 +117,14 @@
     <Compile Include="BondRefTest.cs" />
     <Compile Include="CDKTest.cs" />
     <Compile Include="Config\BODRIsotopeTest.cs" />
-    <Compile Include="Default\AtomContainer2Test.cs" />
-    <Compile Include="Default\AtomContainerTest.cs" />
-    <Compile Include="Default\BondTest.cs" />
+    <Content Include="TT\AtomContainer2Test.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainer2Test.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="Config\AtomTypeFactoryTest.cs" />
     <Compile Include="Config\CDKBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Config\OWLBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Config\TXTBasedAtomTypeConfiguratorTest.cs" />
-    <Compile Include="Default\ElementTest.cs" />
-    <Compile Include="Default\ReactionTest.cs" />
     <Compile Include="FaulonSignatures\Chemistry\ChiralityTest.cs" />
     <Compile Include="FaulonSignatures\Chemistry\LargeMoleculeTest.cs" />
     <Compile Include="FaulonSignatures\Chemistry\MoleculeSignatureTest.cs" />
@@ -280,45 +279,277 @@
     <Compile Include="Reactions\Types\SharingLonePairReactionTest.cs" />
     <Compile Include="Reactions\Types\TautomerizationReactionTest.cs" />
     <Compile Include="RingSearches\RegularCyclicVertexSearchTest.cs" />
-    <Compile Include="Silent\AdductFormulaTest.cs" />
-    <Compile Include="Silent\AminoAcidTest.cs" />
-    <Compile Include="Silent\AtomContainerSetTest.cs" />
-    <Compile Include="Silent\AtomContainerTest.cs" />
-    <Compile Include="Silent\AtomTest.cs" />
-    <Compile Include="Silent\AtomTypeTest.cs" />
-    <Compile Include="Silent\BioPolymerTest.cs" />
-    <Compile Include="Silent\BondTest.cs" />
-    <Compile Include="Silent\ChemFileTest.cs" />
-    <Compile Include="Silent\ChemModelTest.cs" />
+    <Content Include="TT\AdductFormulaTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AdductFormulaTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AminoAcidTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AminoAcidTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomContainerSetTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainerSetTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomContainerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomTypeTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomTypeTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\BioPolymerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BioPolymerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\BondTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BondTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\AtomContainer2Test.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainer2Test.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\BioPolymerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BioPolymerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ChemFileTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemFileTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ChemFileTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemFileTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ChemModelTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemModelTest.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="Silent\ChemObjectListener.cs" />
-    <Compile Include="Silent\ChemObjectTest.cs" />
     <Compile Include="Silent\ChemObjectTestHelper.cs" />
-    <Compile Include="Silent\ChemSequenceTest.cs" />
-    <Compile Include="Silent\CrystalTest.cs" />
-    <Compile Include="Silent\ElectronContainerTest.cs" />
-    <Compile Include="Silent\ElementTest.cs" />
-    <Compile Include="Silent\FragmentAtomTest.cs" />
-    <Compile Include="Silent\IsotopeTest.cs" />
-    <Compile Include="Silent\LonePairTest.cs" />
-    <Compile Include="Silent\MappingTest.cs" />
-    <Compile Include="Silent\MolecularFormulaSetTest.cs" />
-    <Compile Include="Silent\MolecularFormulaTest.cs" />
-    <Compile Include="Silent\MonomerTest.cs" />
-    <Compile Include="Silent\PDBAtomTest.cs" />
-    <Compile Include="Silent\PDBMonomerTest.cs" />
-    <Compile Include="Silent\PDBPolymerTest.cs" />
-    <Compile Include="Silent\PDBStructureTest.cs" />
-    <Compile Include="Silent\PolymerTest.cs" />
-    <Compile Include="Silent\PseudoAtomTest.cs" />
-    <Compile Include="Silent\ReactionSchemeTest.cs" />
-    <Compile Include="Silent\ReactionSetTest.cs" />
-    <Compile Include="Silent\ReactionTest.cs" />
-    <Compile Include="Silent\RingSetTest.cs" />
-    <Compile Include="Silent\RingTest.cs" />
-    <Compile Include="Silent\ChemObjectBuilderTest.cs" />
-    <Compile Include="Silent\SingleElectronTest.cs" />
-    <Compile Include="Silent\StrandTest.cs" />
-    <Compile Include="Silent\SubstanceTest.cs" />
+    <Compile Include="TT\ChemModelTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemModelTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ChemSequenceTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemSequenceTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ChemSequenceTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemSequenceTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\CrystalTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CrystalTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ConformerContainerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConformerContainerTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\CrystalTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ElectronContainerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElectronContainerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ElementTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElementTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ElectronContainerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectronContainerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\FragmentAtomTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FragmentAtomTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\IsotopeTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IsotopeTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\LonePairTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LonePairTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\FragmentAtomTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FragmentAtomTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\MappingTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MappingTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\MappingTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MappingTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\MolecularFormulaSetTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MolecularFormulaSetTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\MolecularFormulaSetTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MolecularFormulaSetTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\MolecularFormulaTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MolecularFormulaTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\MolecularFormulaTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MolecularFormulaTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\MonomerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MonomerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\MonomerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonomerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PDBAtomTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBAtomTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PDBAtomTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBAtomTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PDBMonomerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBMonomerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PDBMonomerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBMonomerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PDBPolymerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBPolymerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PDBPolymerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBPolymerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PDBStructureTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBStructureTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PDBStructureTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBStructureTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PolymerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PolymerTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PolymerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PolymerTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PseudoAtomTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PseudoAtomTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PseudoAtomTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PseudoAtomTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ReactionSchemeTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionSchemeTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ReactionSchemeTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionSchemeTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ReactionSetTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionSetTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ReactionSetTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionSetTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ReactionTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ReactionTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\RingSetTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RingSetTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\RingSetTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RingSetTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\RingTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RingTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ChemObjectBuilderTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemObjectBuilderTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\RingTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RingTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\SingleElectronTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SingleElectronTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\SingleElectronTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SingleElectronTest.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\StrandTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StrandTest.tt.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\SubstanceTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubstanceTest.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="SMARTS\SmartsFragmentExtractorTest.cs" />
     <Compile Include="Smiles\CxSmilesGeneratorTest.cs" />
     <Compile Include="SMSD\Algorithms\VFLib\Molecules.cs" />
@@ -351,6 +582,12 @@
     <Compile Include="Tools\Diff\Tree\StringDifferenceTest.cs" />
     <Compile Include="Tools\Manipulator\SgroupManipulatorTest.cs" />
     <Compile Include="Tools\PeriodicTable\PeriodicTableTest.cs" />
+    <None Include="TT\TestAbstractAtomContainer.ttinclude">
+      <LastGenOutput>TestNotifyChanged.cs</LastGenOutput>
+    </None>
+    <None Include="TT\TestAbstractChemObjectTest.ttinclude">
+      <LastGenOutput>TestNotifyChanged.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Templates\TestMoleculeFactory.cs" />
@@ -396,8 +633,6 @@
     <Compile Include="AbstractSingleElectronTest.cs" />
     <Compile Include="AbstractStrandTest.cs" />
     <Compile Include="AbstractSubstanceTest.cs" />
-    <Compile Include="Default\AminoAcidTest.cs" />
-    <Compile Include="Default\AtomContainerSetTest.cs" />
     <Compile Include="Aromaticities\AromaticityTest.cs" />
     <Compile Include="Aromaticities\AtomTypeModelTest.cs" />
     <Compile Include="Aromaticities\DaylightModelTest.cs" />
@@ -435,23 +670,90 @@
     <Compile Include="Config\AtomType\OWLAtomTypeReaderTest.cs" />
     <Compile Include="Config\IsotopesTest.cs" />
     <Compile Include="Config\NaturalElementTest.cs" />
-    <Compile Include="Default\AtomTest.cs" />
-    <Compile Include="Default\AtomTypeTest.cs" />
-    <Compile Include="Default\BioPolymerTest.cs" />
     <Compile Include="Default\ChangeEventPropagationTest.cs" />
-    <Compile Include="Default\ChemFileTest.cs" />
-    <Compile Include="Default\ChemModelTest.cs" />
-    <Compile Include="Default\ChemObjectTest.cs" />
-    <Compile Include="Default\ChemSequenceTest.cs" />
     <Compile Include="AssociationTest.cs" />
     <Compile Include="CloneAtomContainerTest.cs" />
     <Compile Include="MockMolecule.cs" />
     <Compile Include="Tools\BremserPredictorTest.cs" />
     <Compile Include="Tools\HOSECodeAnalyserTest.cs" />
+    <Content Include="TT\ChemObjectTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemObjectTest.tt.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\AdductFormulaTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdductFormulaTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AminoAcidTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AminoAcidTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomContainerSetTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainerSetTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomContainerTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainerTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomTypeTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomTypeTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\BondTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BondTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemObjectBuilderTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemObjectBuilderTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemObjectTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemObjectTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ElementTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElementTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\IsotopeTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IsotopeTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\LonePairTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LonePairTest.tt</DependentUpon>
+    </Compile>
     <Compile Include="TT\ReactionChainTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReactionChainTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\StrandTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StrandTest.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\SubstanceTest.tt.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubstanceTest.tt</DependentUpon>
     </Compile>
     <Compile Include="Validate\Geometry3DValidatorTest.cs" />
     <EmbeddedResource Include="Data\MDL\24763.sdf">
@@ -663,25 +965,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Data\PCore\pcore.xml" />
     <EmbeddedResource Include="Data\PCore\pcoreangle.xml" />
-    <Compile Include="Default\ConformerContainerTest.cs" />
-    <Compile Include="Default\CrystalTest.cs" />
-    <Compile Include="Default\ChemObjectBuilderTest.cs" />
-    <Compile Include="Default\ElectronContainerTest.cs" />
-    <Compile Include="Default\FragmentAtomTest.cs" />
-    <Compile Include="Default\IsotopeTest.cs" />
-    <Compile Include="Default\LonePairTest.cs" />
-    <Compile Include="Default\MappingTest.cs" />
-    <Compile Include="Default\MoleculeTest.cs" />
-    <Compile Include="Default\MonomerTest.cs" />
-    <Compile Include="Default\PolymerTest.cs" />
-    <Compile Include="Default\PseudoAtomTest.cs" />
-    <Compile Include="Default\ReactionSchemeTest.cs" />
-    <Compile Include="Default\ReactionSetTest.cs" />
-    <Compile Include="Default\SingleElectronTest.cs" />
-    <Compile Include="Default\StrandTest.cs" />
-    <Compile Include="Default\RingSetTest.cs" />
-    <Compile Include="Default\RingTest.cs" />
-    <Compile Include="Default\SubstanceTest.cs" />
+    <Content Include="TT\ConformerContainerTest.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConformerContainerTest.tt.cs</LastGenOutput>
+    </Content>
     <Compile Include="Dict\DictRefTest.cs" />
     <Compile Include="Dict\AbstractDictionaryTest.cs" />
     <Compile Include="Dict\AbstractEntryTest.cs" />
@@ -1082,10 +1369,6 @@
     <Compile Include="StructGen\MathToolsTest.cs" />
     <Compile Include="Maths\PrimesTest.cs" />
     <Compile Include="Maths\RandomNumbersToolTest.cs" />
-    <Compile Include="Default\PDBAtomTest.cs" />
-    <Compile Include="Default\PDBMonomerTest.cs" />
-    <Compile Include="Default\PDBPolymerTest.cs" />
-    <Compile Include="Default\PDBStructureTest.cs" />
     <Compile Include="Modelings\Builder3D\AtomPlacer3DTest.cs" />
     <Compile Include="Modelings\Builder3D\AtomTetrahedralLigandPlacer3DTest.cs" />
     <Compile Include="Modelings\Builder3D\ForceFieldConfiguratorTest.cs" />

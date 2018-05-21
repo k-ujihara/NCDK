@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using NCDK.Default;
@@ -24,7 +24,7 @@ using NCDK.Default;
 namespace NCDK.Config
 {
     /// <summary>
-    /// Checks the functionality of the TXTBasedAtomTypeConfigurator.
+    /// Checks the functionality of the <see cref="TestTXTBasedAtomTypeConfigurator"/>.
     /// </summary>
     // @cdk.module test-core
     [TestClass()]

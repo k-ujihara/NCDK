@@ -22,18 +22,12 @@ using NCDK.Smiles;
 
 namespace NCDK.Charges
 {
-    /// <summary>
-    ///  Description of the Class
-    /// </summary>
     // @cdk.module test-charges
     // @author     chhoppe
     // @cdk.created    2004-11-04
     [TestClass()]
     public class PolarizabilityTest : CDKTestCase
     {
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom()
         {
@@ -47,7 +41,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test with n,n-dimethyl ethylendiamine
+        /// A unit test with n,n-dimethyl ethylendiamine
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean()
@@ -69,7 +63,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test with n,n-dimethyl ethylendiamine
+        /// A unit test with n,n-dimethyl ethylendiamine
         /// </summary>
         [TestMethod()]
         public void TestCalculateBondPolarizability_IAtomContainer_IBond()
@@ -82,7 +76,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test with methane
+        /// A unit test with methane
         /// </summary>
         [TestMethod()]
         public void TestCalculateKJMeanMolecularPolarizability()
@@ -168,7 +162,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test with Allyl mercaptan
+        /// A unit test with Allyl mercaptan
         /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_mercaptan()

@@ -22,20 +22,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Default;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.Aromaticities
 {
-    /// <summary>
     // @author John May
-    /// </summary>
     [TestClass()]
     public class KekulizationTest
     {
-
         [TestMethod()]
         public void Benzene()
         {
@@ -130,7 +127,7 @@ namespace NCDK.Aromaticities
             AssertBondOrders(m);
         }
 
-        /// <summary>@cdk.inchi InChI=1S/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H</summary>
+        /// @cdk.inchi InChI=1S/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
         [TestMethod()]
         public void Azulene()
         {
@@ -159,7 +156,7 @@ namespace NCDK.Aromaticities
             AssertBondOrders(m, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>@cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H</summary>
+        /// @cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void PyridineOxide()
         {
@@ -183,7 +180,7 @@ namespace NCDK.Aromaticities
             AssertBondOrders(m, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>@cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H</summary>
+        /// @cdk.inchi InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void PyridineOxideNonChargeSeparated()
         {
@@ -224,9 +221,8 @@ namespace NCDK.Aromaticities
 
         /// <summary>
         /// As seen in: CHEBI:30858
-        ///
-        // @cdk.inchi InChI=1S/C4H4Te/c1-2-4-5-3-1/h1-4H
         /// </summary>
+        // @cdk.inchi InChI=1S/C4H4Te/c1-2-4-5-3-1/h1-4H
         [TestMethod()]
         public void Tellurophene()
         {
@@ -244,9 +240,7 @@ namespace NCDK.Aromaticities
             AssertBondOrders(m, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C5H5/c1-2-4-5-3-1/h1-5H/q-1
-        /// </summary>
         [TestMethod()]
         public void CarbonAnion()
         {
@@ -265,9 +259,7 @@ namespace NCDK.Aromaticities
             AssertBondOrders(m, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C7H7/c1-2-4-6-7-5-3-1/h1-7H/q+1
-        /// </summary>
         [TestMethod()]
         public void Tropylium()
         {
@@ -292,9 +284,8 @@ namespace NCDK.Aromaticities
 
         /// <summary>
         /// example seen in: CHEMBL141536
-        ///
-        // @cdk.inchi InChI=1S/C5H5Se/c1-2-4-6-5-3-1/h1-5H/q+1
         /// </summary>
+        // @cdk.inchi InChI=1S/C5H5Se/c1-2-4-6-5-3-1/h1-5H/q+1
         [TestMethod()]
         public void SeleniumCation()
         {
@@ -317,9 +308,8 @@ namespace NCDK.Aromaticities
 
         /// <summary>
         /// example seen in: CHEMBL13520
-        ///
-        // @cdk.inchi InChI=1/C11H9N3O3S/c1-18(17)9-5-3-2-4-8(9)14-6-7(10(15)16)12-11(14)13-18/h2-6H,1H3,(H,15,16)
         /// </summary>
+        // @cdk.inchi InChI=1/C11H9N3O3S/c1-18(17)9-5-3-2-4-8(9)14-6-7(10(15)16)12-11(14)13-18/h2-6H,1H3,(H,15,16)
         [TestMethod()]
         public void SixValentSulphur()
         {
@@ -366,9 +356,7 @@ namespace NCDK.Aromaticities
                     BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Single, BondOrder.Single, BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
-        /// </summary>
         [TestMethod()]
         public void Biphenyl()
         {
@@ -402,9 +390,7 @@ namespace NCDK.Aromaticities
                     BondOrder.Double, BondOrder.Single);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
-        /// </summary>
         [TestMethod()]
         public void Quinone()
         {
@@ -467,7 +453,7 @@ namespace NCDK.Aromaticities
                     BondOrder.Single, BondOrder.Double, BondOrder.Single, BondOrder.Single);
         }
 
-        /// <summary>@cdk.inchi InChI=1S/C5H5B/c1-2-4-6-5-3-1/h1-5H</summary>
+        /// @cdk.inchi InChI=1S/C5H5B/c1-2-4-6-5-3-1/h1-5H
         [TestMethod()]
         public void Borinine()
         {
@@ -518,17 +504,21 @@ namespace NCDK.Aromaticities
 
         static IAtom Atom(string symbol, int h, bool arom)
         {
-            IAtom a = new Atom(symbol);
-            a.ImplicitHydrogenCount = h;
-            a.IsAromatic = arom;
+            IAtom a = new Atom(symbol)
+            {
+                ImplicitHydrogenCount = h,
+                IsAromatic = arom
+            };
             return a;
         }
 
         static IBond Bond(IAtomContainer m, int v, int w, BondOrder ord, bool arom)
         {
-            IBond b = new Bond(m.Atoms[v], m.Atoms[w]);
-            b.Order = ord;
-            b.IsAromatic = arom;
+            IBond b = new Bond(m.Atoms[v], m.Atoms[w])
+            {
+                Order = ord,
+                IsAromatic = arom
+            };
             return b;
         }
     }

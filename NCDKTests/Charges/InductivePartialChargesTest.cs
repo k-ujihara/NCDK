@@ -17,14 +17,14 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using NCDK.Numerics;
 
 namespace NCDK.Charges
 {
     /// <summary>
-    /// TestSuite that runs a test for the MMFF94PartialCharges.
+    /// TestSuite that runs a test for the <see cref="MMFF94PartialCharges"/>.
     /// </summary>
     // @cdk.module test-charges
     // @author        mfe4
@@ -118,7 +118,6 @@ namespace NCDK.Charges
 
         /// <summary>
         ///  A unit test for JUnit with beta-amino-acetic-acid
-        ///
         /// </summary>
         [TestMethod()]
         public void TestInductivePartialCharges()

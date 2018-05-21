@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
@@ -23,13 +24,10 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.AtomTypes
 {
-    /// <summary>
     // @cdk.module test-reaction
-    /// </summary>
     [TestClass()]
     public class ReactionStructuresTest : CDKTestCase
     {
-
         private readonly static IChemObjectBuilder builder;
         private readonly static CDKAtomTypeMatcher matcher;
 
@@ -39,23 +37,17 @@ namespace NCDK.AtomTypes
             matcher = CDKAtomTypeMatcher.GetInstance(builder);
         }
 
-        /// <summary>
-        /// Constructor of the ReactionStructuresTest.
-        /// </summary>
         public ReactionStructuresTest()
             : base()
         { }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       SharingChargeDBReactionTest#TestAtomTypesMolecule1()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.SharingChargeDBReactionTest.TestAtomTypesAtomContainer1"/>
         [TestMethod()]
         public void TestM0()
         {
-
             //COMPOUND
             //[C*]=C-C
             IAtomContainer molecule = builder.NewAtomContainer();
@@ -88,11 +80,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HeterolyticCleavageSBReactionTest#TestCspSingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HeterolyticCleavageSBReactionTest.TestCspSingleB"/>
         [TestMethod()]
         public void TestM4()
         {
@@ -118,11 +108,10 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestCsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestCsp2SingleB"/>
+        /// <summary>
         [TestMethod()]
         public void TestM5()
         {
@@ -148,15 +137,12 @@ namespace NCDK.AtomTypes
                 Assert.IsNotNull(perceivedType, "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i]);
                 Assert.AreEqual(expectedTypes[i], perceivedType.AtomTypeName, "Incorrect atom type perceived for: " + nextAtom);
             }
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestCsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestCsp2SingleB"/>
         [TestMethod()]
         public void TestM6()
         {
@@ -181,11 +167,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestCsp2DoubleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestCsp2DoubleB"/>
         [TestMethod()]
         public void TestM7()
         {
@@ -223,11 +207,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestCspDoubleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestCspDoubleB"/>
         [TestMethod()]
         public void TestM8()
         {
@@ -261,11 +243,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestNsp3SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestNsp3SingleB"/>
         [TestMethod()]
         public void TestM9()
         {
@@ -296,11 +276,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestNsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestNsp2SingleB"/>
         [TestMethod()]
         public void TestM10()
         {
@@ -327,11 +305,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestOsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestOsp2SingleB"/>
         [TestMethod()]
         public void TestM13()
         {
@@ -360,11 +336,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestFspSingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestFspSingleB"/>
         [TestMethod()]
         public void TestM14()
         {
@@ -385,11 +359,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       HomolyticCleavageReactionTest#TestOsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestOsp2SingleB"/>
         [TestMethod()]
         public void TestM15()
         {
@@ -418,11 +390,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       ElectronImpactNBEReaction#TestNsp2SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.ElectronImpactNBEReactionTest.TestNsp2SingleB"/>
         [TestMethod()]
         public void TestM17()
         {
@@ -452,11 +422,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       ElectronImpactNBEReaction#TestNsp3SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.ElectronImpactNBEReactionTest.TestNsp3SingleB"/>
         [TestMethod()]
         public void TestM18()
         {
@@ -490,11 +458,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       ElectronImpactNBEReaction#TestNsp3SingleB()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.ElectronImpactNBEReactionTest.TestNsp3SingleB"/>
         [TestMethod()]
         public void TestM19()
         {
@@ -524,11 +490,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see       RadicalSiteInitiationHReactionTest#TestManuallyCentreActive()
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.RadicalSiteInitiationHReactionTest.TestManuallyCentreActive"/>
         [TestMethod()]
         public void TestM20()
         {
@@ -549,9 +513,7 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
         [TestMethod()]
         public void TestM21()
@@ -574,11 +536,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        /// <seealso cref="AdductionSodiumLPReactionTest"/>
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.AdductionSodiumLPReactionTest"/>
         [TestMethod()]
         public void TestM22()
         {
@@ -612,11 +572,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        /// <seealso cref="AdductionSodiumLPReactionTest"/>
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.AdductionSodiumLPReactionTest"/>
         [TestMethod()]
         public void TestM23()
         {
@@ -673,11 +631,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see HomolyticCleavageReactionTest#testNsp2DoubleB
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestNsp2DoubleB"/>
         [TestMethod()]
         public void TestM24()
         {
@@ -713,11 +669,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see HomolyticCleavageReactionTest#testNsp2DoubleB
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestNsp2DoubleB"/>
         [TestMethod()]
         public void TestM25()
         {
@@ -747,11 +701,9 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Compound and its fragments to be tested
-        // @throws Exception
-        ///
-        // @see HomolyticCleavageReactionTest#testNsp2DoubleB
+        /// A unit test suite. Compound and its fragments to be tested
         /// </summary>
+        /// <seealso cref="Reactions.Types.HomolyticCleavageReactionTest.TestNsp2DoubleB"/>
         [TestMethod()]
         public void TestM26()
         {
@@ -777,10 +729,7 @@ namespace NCDK.AtomTypes
             LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             lpcheck.Saturate(expected1);
 
-            string[] expectedTypes = {"F.plus.sp2", "C.sp2", "C.minus.planar", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "H",
-                "H", "H", "H", "H"
-
-        };
+            string[] expectedTypes = { "F.plus.sp2", "C.sp2", "C.minus.planar", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "H", "H", "H", "H", "H" };
             Assert.AreEqual(expectedTypes.Length, expected1.Atoms.Count);
             for (int i = 0; i < expectedTypes.Length; i++)
             {

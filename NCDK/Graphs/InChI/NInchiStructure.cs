@@ -35,7 +35,7 @@ namespace NCDK.Graphs.InChI
         public IList<NInchiBond> Bonds { get; private set; } = new List<NInchiBond>();
 
         /// <summary>
-        /// List of stero parities.
+        /// List of stereo parities.
         /// </summary>
         public IList<NInchiStereo0D> Stereos { get; private set; } = new List<NInchiStereo0D>();
 

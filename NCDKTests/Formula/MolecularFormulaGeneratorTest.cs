@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
@@ -32,8 +33,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaGeneratorTest : CDKTestCase
     {
-        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder
-                .Instance;
+        private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         /// <summary>
         /// Test the GetNextFormula() method
@@ -56,8 +56,7 @@ namespace NCDK.Formula
             double minMass = 100.0;
             double maxMass = 100.05;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormula f = gen.GetNextFormula();
             Assert.IsNotNull(f);
         }
@@ -83,8 +82,7 @@ namespace NCDK.Formula
             double minMass = 100.0;
             double maxMass = 100.05;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
@@ -112,8 +110,7 @@ namespace NCDK.Formula
             double minMass = 100.0;
             double maxMass = 100.05;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
 
             double finishedPerc, lastFinishedPerc = 0d;
 
@@ -162,8 +159,7 @@ namespace NCDK.Formula
             double minMass = 100000.0;
             double maxMass = 100000.001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(
-                   builder, minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
 
             var cancelThread = new ThreadStart(() => {
                 Thread.Sleep(5);
@@ -188,8 +184,7 @@ namespace NCDK.Formula
         [ExpectedException(typeof(ArgumentException))]
         public void TestEmptyMFRange()
         {
-            new MolecularFormulaGenerator(builder, 0, 100,
-                    new MolecularFormulaRange());
+            new MolecularFormulaGenerator(builder, 0, 100, new MolecularFormulaRange());
         }
 
         /// <summary>
@@ -204,8 +199,7 @@ namespace NCDK.Formula
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
             mfRange.AddIsotope(c, 0, 100);
-            new MolecularFormulaGenerator(builder, -20, -10,
-                    new MolecularFormulaRange());
+            new MolecularFormulaGenerator(builder, -20, -10, new MolecularFormulaRange());
         }
 
         /// <summary>
@@ -230,8 +224,7 @@ namespace NCDK.Formula
             double minMass = 100;
             double maxMass = 250;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             // Check that all element counts in the formula are >= 5
@@ -267,8 +260,7 @@ namespace NCDK.Formula
             double minMass = 250;
             double maxMass = 400;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             // Check that all element counts in the formula are <= 7
@@ -297,8 +289,7 @@ namespace NCDK.Formula
             double minMass = 5;
             double maxMass = 15;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
@@ -321,14 +312,12 @@ namespace NCDK.Formula
             double minMass = 120000.0 - 1;
             double maxMass = 120000.0 + 1;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C10000", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C10000", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -356,8 +345,7 @@ namespace NCDK.Formula
             double minMass = 1;
             double maxMass = 20;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
@@ -484,14 +472,12 @@ namespace NCDK.Formula
             double minMass = 115.08714 - 0.0001;
             double maxMass = 115.08714 + 0.0001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C5H11N2O", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C5H11N2O", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -515,14 +501,12 @@ namespace NCDK.Formula
             double minMass = 698.25879 - 0.0001;
             double maxMass = 698.25879 + 0.0001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C37H38N4O10", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C37H38N4O10", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -548,14 +532,12 @@ namespace NCDK.Formula
             double minMass = 8445.573784 - 0.00001;
             double maxMass = 8445.573784 + 0.00001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C374H623N103O116S", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C374H623N103O116S", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -580,8 +562,7 @@ namespace NCDK.Formula
             double minMass = 137.0;
             double maxMass = 137.2;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.AreEqual(48, mfSet.Count);
@@ -619,8 +600,7 @@ namespace NCDK.Formula
             double minMass = 187;
             double maxMass = 189;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.AreEqual(528, mfSet.Count);
@@ -665,14 +645,12 @@ namespace NCDK.Formula
             double minMass = 318.915719 - 0.0001;
             double maxMass = 318.915719 + 0.0001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C8H9Cl3NO2PS", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C8H9Cl3NO2PS", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -695,8 +673,7 @@ namespace NCDK.Formula
             double minMass = 54.04193 - 0.001;
             double maxMass = 54.04193 + 0.001;
 
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    minMass, maxMass, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
@@ -707,12 +684,9 @@ namespace NCDK.Formula
             trueFormula.Add(c13, 1);
             trueFormula.Add(h, 5);
 
-            Assert.AreEqual(trueFormula.Count, mfSet
-                    [0].Count);
-            Assert.AreEqual(trueFormula.GetCount(c), mfSet
-                    [0].GetCount(c));
-            Assert.AreEqual(trueFormula.GetCount(c13), mfSet
-                    [0].GetCount(c13));
+            Assert.AreEqual(trueFormula.Count, mfSet[0].Count);
+            Assert.AreEqual(trueFormula.GetCount(c), mfSet[0].GetCount(c));
+            Assert.AreEqual(trueFormula.GetCount(c13), mfSet[0].GetCount(c13));
         }
 
         /// <summary>
@@ -736,15 +710,13 @@ namespace NCDK.Formula
 
             double massMin = 10d;
             double massMax = 1000d;
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    massMin, massMax, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, massMin, massMax, mfRange);
 
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(1, mfSet.Count);
-            Assert.AreEqual("C7H15N2O4", MolecularFormulaManipulator
-                    .GetString(mfSet[0]));
+            Assert.AreEqual("C7H15N2O4", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
         /// <summary>
@@ -768,8 +740,7 @@ namespace NCDK.Formula
 
             double massMin = 1000d;
             double massMax = 2000d;
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    massMin, massMax, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, massMin, massMax, mfRange);
 
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
 
@@ -798,8 +769,7 @@ namespace NCDK.Formula
 
             double massMin = 50d;
             double massMax = 100d;
-            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder,
-                    massMin, massMax, mfRange);
+            MolecularFormulaGenerator gen = new MolecularFormulaGenerator(builder, massMin, massMax, mfRange);
 
             IMolecularFormulaSet mfSet = gen.GetAllFormulas();
             Assert.IsNotNull(mfSet);

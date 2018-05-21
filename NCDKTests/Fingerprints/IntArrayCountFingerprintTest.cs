@@ -30,8 +30,7 @@ namespace NCDK.Fingerprints
             for (int i = 0; i < fp2.GetNumberOfPopulatedBins(); i++)
             {
                 int hash = fp2.GetHash(i);
-                int count;
-                if (!hashCounts.TryGetValue(hash, out count))
+                if (!hashCounts.TryGetValue(hash, out int count))
                 {
                     count = 0;
                 }

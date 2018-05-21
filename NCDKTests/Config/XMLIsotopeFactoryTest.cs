@@ -30,7 +30,7 @@ using System.Xml.Linq;
 namespace NCDK.Config
 {
     /// <summary>
-    /// Checks the functionality of the <see cref="IsotopeFactory"/>
+    /// Checks the functionality of the <see cref="XMLIsotopeFactory"/>
     /// </summary>
     // @cdk.module test-extra
     [TestClass()]
@@ -222,7 +222,7 @@ namespace NCDK.Config
             }
         }
 
-        [TestCategory("Failed"), Ignore()]
+        [TestCategory("XMLValidity"), Ignore()]
         [TestMethod()]
         public void TestXMLValidityHybrid()
         {

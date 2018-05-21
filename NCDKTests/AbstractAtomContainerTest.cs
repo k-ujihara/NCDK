@@ -58,7 +58,7 @@ namespace NCDK
 
         // @cdk.bug 2993609
         [TestMethod()]
-        public virtual void TestSetAtoms_removeListener()
+        public virtual void TestSetAtoms_RemoveListener()
         {
             IAtomContainer ac = (IAtomContainer)NewChemObject();
             IAtom[] atoms = MakeTestAtomsArray(ac);

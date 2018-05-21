@@ -22,9 +22,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Collections;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
+using NCDK.Common.Collections;
 using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.Smiles;
@@ -404,20 +405,16 @@ namespace NCDK.Fingerprints
         public static IAtomContainer MakeButane()
         {
             IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            Atom atom = new Atom("C");
-            atom.Id = "0";
+            Atom atom = new Atom("C") { Id = "0" };
             mol.Atoms.Add(atom); // 0
 
-            atom = new Atom("C");
-            atom.Id = "1";
+            atom = new Atom("C") { Id = "1" };
             mol.Atoms.Add(atom); // 1
 
-            atom = new Atom("C");
-            atom.Id = "2";
+            atom = new Atom("C") { Id = "2" };
             mol.Atoms.Add(atom); // 2
 
-            atom = new Atom("C");
-            atom.Id = "3";
+            atom = new Atom("C") { Id = "3" };
             mol.Atoms.Add(atom); // 3
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1
@@ -430,20 +427,16 @@ namespace NCDK.Fingerprints
         public static IAtomContainer MakePropylAmine()
         {
             IAtomContainer mol = Default.ChemObjectBuilder.Instance.NewAtomContainer();
-            Atom atom = new Atom("C");
-            atom.Id = "0";
+            Atom atom = new Atom("C") { Id = "0" };
             mol.Atoms.Add(atom); // 0
 
-            atom = new Atom("C");
-            atom.Id = "1";
+            atom = new Atom("C") { Id = "1" };
             mol.Atoms.Add(atom); // 1
 
-            atom = new Atom("C");
-            atom.Id = "2";
+            atom = new Atom("C") { Id = "2" };
             mol.Atoms.Add(atom); // 2
 
-            atom = new Atom("N");
-            atom.Id = "3";
+            atom = new Atom("N") { Id = "3" };
             mol.Atoms.Add(atom); // 3
 
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single); // 1

@@ -51,16 +51,20 @@ namespace NCDK.Geometries.Alignments
                 for (int i = 0; i < 10; i++)
                 {
                     a1[i] = new Atom("C");
-                    Vector3 newCoord = new Vector3();
-                    newCoord.X = p1[i][0];
-                    newCoord.Y = p1[i][1];
-                    newCoord.Z = p1[i][2];
+                    Vector3 newCoord = new Vector3
+                    {
+                        X = p1[i][0],
+                        Y = p1[i][1],
+                        Z = p1[i][2]
+                    };
                     a1[i].Point3D = newCoord;
                     a2[i] = new Atom("C");
-                    newCoord = new Vector3();
-                    newCoord.X = p2[i][0];
-                    newCoord.Y = p2[i][1];
-                    newCoord.Z = p2[i][2];
+                    newCoord = new Vector3
+                    {
+                        X = p2[i][0],
+                        Y = p2[i][1],
+                        Z = p2[i][2]
+                    };
                     a2[i].Point3D = newCoord;
                 }
                 var ka = new KabschAlignment(a1, a2);

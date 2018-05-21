@@ -16,42 +16,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Config;
 
 namespace NCDK.AtomTypes
 {
     /// <summary>
-    /// Interface for {@link IAtomTypeMatcher} unit tests. It provides various methods
-    /// to allow such unit test classes to extend {@link AbstractAtomTypeTest} and
+    /// Interface for <see cref="IAtomTypeMatcher"/> unit tests. It provides various methods
+    /// to allow such unit test classes to extend <see cref="AbstractAtomTypeTest"/> and
     /// take advantage of the functionality that abstract class provides.
-    ///
+    /// </summary>
     // @cdk.githash
     // @cdk.module test-core
-    /// </summary>
     public interface IAtomTypeTest
     {
         /// <summary>
         /// Returns a name for the atom type scheme being tested.
-        ///
-        /// <returns>a string of the name.</returns>
         /// </summary>
+        /// <returns>a string of the name.</returns>
         string AtomTypeListName { get; }
 
         /// <summary>
-        /// Returns an {@link AtomTypeFactory} instance for the atom type scheme
+        /// Returns an <see cref="AtomTypeFactory"/> instance for the atom type scheme
         /// being tested. It is used to provide a list of atom types the scheme
         /// defines.
-        ///
-        /// <returns>an {@link AtomTypeFactory} instance</returns>
         /// </summary>
+        /// <returns><see cref="AtomTypeFactory"/> instance</returns>
         AtomTypeFactory GetFactory();
 
         /// <summary>
-        /// The {@link IAtomTypeMatcher} being tested.
-        ///
-        /// <param name="builder">the <see cref="IChemObjectBuilder"/> used to create atom types.</param>
-        /// <returns>return an {@link IAtomTypeMatcher} instance</returns>
+        /// The <see cref="IAtomTypeMatcher"/> being tested.
         /// </summary>
+        /// <param name="builder">the <see cref="IChemObjectBuilder"/> used to create atom types.</param>
+        /// <returns><see cref="IAtomTypeMatcher"/> instance</returns>
         IAtomTypeMatcher GetAtomTypeMatcher(IChemObjectBuilder builder);
     }
 }

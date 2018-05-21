@@ -43,29 +43,29 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Benzene()
         {
-            Assert.AreEqual(6, cdk.FindBonds(type(CreateFromSmiles("C1=CC=CC=C1"))).Count());
+            Assert.AreEqual(6, cdk.FindBonds(Percieve(CreateFromSmiles("C1=CC=CC=C1"))).Count());
             Assert.AreEqual(6, daylight.FindBonds(CreateFromSmiles("C1=CC=CC=C1")).Count());
         }
 
         [TestMethod()]
         public void Furan()
         {
-            Assert.AreEqual(5, cdk.FindBonds(type(CreateFromSmiles("C1=CC=CO1"))).Count());
+            Assert.AreEqual(5, cdk.FindBonds(Percieve(CreateFromSmiles("C1=CC=CO1"))).Count());
             Assert.AreEqual(5, daylight.FindBonds(CreateFromSmiles("C1=CC=CO1")).Count());
         }
 
         [TestMethod()]
         public void Quinone()
         {
-            Assert.AreEqual(0, cdk.FindBonds(type(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count());
-            Assert.AreEqual(6, cdkExo.FindBonds(type(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count());
+            Assert.AreEqual(0, cdk.FindBonds(Percieve(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count());
+            Assert.AreEqual(6, cdkExo.FindBonds(Percieve(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count());
             Assert.AreEqual(0, daylight.FindBonds(CreateFromSmiles("O=C1C=CC(=O)C=C1")).Count());
         }
 
         [TestMethod()]
         public void Azulene()
         {
-            Assert.AreEqual(10, cdk.FindBonds(type(CreateFromSmiles("C1=CC2=CC=CC=CC2=C1"))).Count());
+            Assert.AreEqual(10, cdk.FindBonds(Percieve(CreateFromSmiles("C1=CC2=CC=CC=CC2=C1"))).Count());
             Assert.AreEqual(10, daylight.FindBonds(CreateFromSmiles("C1=CC2=CC=CC=CC2=C1")).Count());
         }
 
@@ -73,8 +73,8 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Oxypyridinide()
         {
-            Assert.AreEqual(0, cdk.FindBonds(type(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
-            Assert.AreEqual(0, cdkExo.FindBonds(type(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
+            Assert.AreEqual(0, cdk.FindBonds(Percieve(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
+            Assert.AreEqual(0, cdkExo.FindBonds(Percieve(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
             Assert.AreEqual(6, daylight.FindBonds(CreateFromSmiles("O=C1C=C[N-]C=C1")).Count());
         }
 
@@ -82,8 +82,8 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void Pyridinone()
         {
-            Assert.AreEqual(0, cdk.FindBonds(type(CreateFromSmiles("O=C1NC=CC=C1"))).Count());
-            Assert.AreEqual(0, cdkExo.FindBonds(type(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
+            Assert.AreEqual(0, cdk.FindBonds(Percieve(CreateFromSmiles("O=C1NC=CC=C1"))).Count());
+            Assert.AreEqual(0, cdkExo.FindBonds(Percieve(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count());
             Assert.AreEqual(6, daylight.FindBonds(CreateFromSmiles("O=C1NC=CC=C1")).Count());
         }
 
@@ -167,7 +167,7 @@ namespace NCDK.Aromaticities
             return new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles(smi);
         }
 
-        static IAtomContainer type(IAtomContainer molecule)
+        static IAtomContainer Percieve(IAtomContainer molecule)
         {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             return molecule;

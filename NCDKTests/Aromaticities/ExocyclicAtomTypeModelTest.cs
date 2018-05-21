@@ -22,8 +22,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.RingSearches;
 using NCDK.Smiles;
 using NCDK.Templates;
@@ -34,10 +34,9 @@ namespace NCDK.Aromaticities
     /// <summary>
     /// Test the electron contribution using the CDK atom types - exocyclic double
     /// bonds are considered.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class ExocyclicAtomTypeModelTest
     {

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -25,7 +26,6 @@ namespace NCDK.Dict
     [TestClass()]
     public class OWLFileTest : AbstractDictionaryTest
     {
-
         [TestInitialize()]
         public void SetTestClass()
         {

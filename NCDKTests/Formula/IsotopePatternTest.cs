@@ -83,8 +83,7 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestSetCharge_Double()
         {
-            IsotopePattern isoP = new IsotopePattern();
-            isoP.Charge = 1.0;
+            IsotopePattern isoP = new IsotopePattern { Charge = 1.0 };
             Assert.AreEqual(1.0, isoP.Charge, 0.000001);
         }
 
