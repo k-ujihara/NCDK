@@ -40,43 +40,6 @@ namespace NCDK.Templates
     // @cdk.created 2005-02-08
     public static class AminoAcids
     {
-        /// <summary>
-        /// Creates matrix with info about the bonds in the amino acids.
-        /// 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
-        /// </summary>
-        /// <returns>info</returns>
-        public static int[][] CreateAABondInfo()
-        {
-            int[][] info = Arrays.CreateJagged<int>(153, 4);
-
-            int counter = 0;
-            int total = 0;
-            for (int aa = 0; aa < proteinogenics.Length; aa++)
-            {
-                AminoAcid acid = proteinogenics[aa];
-
-                total += acid.Bonds.Count;
-                Debug.WriteLine("total #bonds: ", total);
-
-                foreach (var bond in acid.Bonds)
-                {
-                    info[counter][0] = counter;
-                    info[counter][1] = acid.Atoms.IndexOf(bond.Begin);
-                    info[counter][2] = acid.Atoms.IndexOf(bond.End);
-                    info[counter][3] = bond.Order.Numeric();
-                    counter++;
-                }
-            }
-
-            if (counter > 153)
-            {
-                Trace.TraceError("Error while creating AA info! Bond count is too large: ", counter);
-                return null;
-            }
-
-            return info;
-        }
-
         public const string ResidueNameKey = "residueName";
         public const string ResidueNameShortKey = "residueNameShort";
         public const string NoAtomsKey = "noOfAtoms";

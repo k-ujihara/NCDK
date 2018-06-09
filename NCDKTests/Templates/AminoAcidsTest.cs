@@ -26,13 +26,6 @@ namespace NCDK.Templates
     public class AminoAcidsTest : CDKTestCase
     {
         [TestMethod()]
-        public void TestCreateBondMatrix()
-        {
-            int[][] bonds = AminoAcids.CreateAABondInfo();
-            Assert.IsNotNull(bonds);
-        }
-
-        [TestMethod()]
         public void TestCreateAAs()
         {
             var aas = AminoAcids.Proteinogenics;
