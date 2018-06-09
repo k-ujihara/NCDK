@@ -18,8 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System.Collections.Generic;
 
 namespace NCDK.Templates
 {
@@ -37,31 +35,31 @@ namespace NCDK.Templates
         [TestMethod()]
         public void TestCreateAAs()
         {
-            IAminoAcid[] aas = AminoAcids.CreateAAs();
+            var aas = AminoAcids.Proteinogenics;
             Assert.IsNotNull(aas);
-            Assert.AreEqual(20, aas.Length);
+            Assert.AreEqual(20, aas.Count);
             for (int i = 0; i < 20; i++)
             {
                 Assert.IsNotNull(aas[i]);
                 Assert.IsFalse(0 == aas[i].Atoms.Count);
                 Assert.IsFalse(0 == aas[i].Bonds.Count);
                 Assert.IsNotNull(aas[i].MonomerName);
-                Assert.IsNotNull(aas[i].GetProperty<string>(AminoAcids.RESIDUE_NAME_SHORT));
-                Assert.IsNotNull(aas[i].GetProperty<string>(AminoAcids.RESIDUE_NAME));
+                Assert.IsNotNull(aas[i].GetProperty<string>(AminoAcids.ResidueNameShortKey));
+                Assert.IsNotNull(aas[i].GetProperty<string>(AminoAcids.ResidueNameKey));
             }
         }
 
         [TestMethod()]
         public void TestGetHashMapBySingleCharCode()
         {
-            IDictionary<string, IAminoAcid> map = AminoAcids.GetHashMapBySingleCharCode();
+            var map = AminoAcids.MapBySingleCharCode;
             Assert.IsNotNull(map);
             Assert.AreEqual(20, map.Count);
 
             string[] aas = { "G", "A", "V", "L" };
             foreach (var aa1 in aas)
             {
-                AminoAcid aa = (AminoAcid)map[aa1];
+                var aa = map[aa1];
                 Assert.IsNotNull(aa, "Did not find AA for: " + aa1);
             }
         }
@@ -69,15 +67,30 @@ namespace NCDK.Templates
         [TestMethod()]
         public void TestGetHashMapByThreeLetterCode()
         {
-            IDictionary<string, IAminoAcid> map = AminoAcids.GetHashMapByThreeLetterCode();
+            var map = AminoAcids.MapByThreeLetterCode;
             Assert.IsNotNull(map);
             Assert.AreEqual(20, map.Count);
 
             string[] aas = { "GLY", "ALA" };
             foreach (var aa1 in aas)
             {
-                AminoAcid aa = (AminoAcid)map[aa1];
+                var aa = map[aa1];
                 Assert.IsNotNull(aa, "Did not find AA for: " + aa1);
+            }
+        }
+
+        [TestMethod()]
+        public void TestFromString()
+        {
+            foreach (var code in AminoAcids.MapBySingleCharCode.Keys)
+            {
+                var aa = AminoAcids.FromString(code);
+                Assert.AreEqual(code, aa.GetProperty<string>(AminoAcids.ResidueNameShortKey));
+            }
+            foreach (var code in AminoAcids.MapByThreeLetterCode.Keys)
+            {
+                var aa = AminoAcids.FromString(code);
+                Assert.AreEqual(code, aa.GetProperty<string>(AminoAcids.ResidueNameKey));
             }
         }
     }

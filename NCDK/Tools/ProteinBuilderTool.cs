@@ -119,7 +119,7 @@ namespace NCDK.Tools
         /// <seealso cref="CreateProtein(string)"/>
         public static IBioPolymer CreateProtein(string sequence, IChemObjectBuilder builder)
         {
-            IDictionary < string, IAminoAcid> templates = AminoAcids.GetHashMapBySingleCharCode();
+            var templates = AminoAcids.MapBySingleCharCode;
             IBioPolymer protein = builder.NewBioPolymer();
             IStrand strand = builder.NewStrand();
             IAminoAcid previousAA = null;
@@ -133,7 +133,7 @@ namespace NCDK.Tools
                 }
                 else
                 {
-                    IAminoAcid aminoAcid = (IAminoAcid)templates[aminoAcidCode];
+                    IAminoAcid aminoAcid = templates[aminoAcidCode];
                     if (aminoAcid == null)
                     {
                         throw new CDKException("Cannot build sequence! Unknown amino acid: " + aminoAcidCode);

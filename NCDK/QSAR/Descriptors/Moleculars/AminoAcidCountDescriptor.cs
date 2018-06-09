@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public AminoAcidCountDescriptor()
         {
-            IAminoAcid[] aas = AminoAcids.CreateAAs();
+            var aas = AminoAcids.Proteinogenics;
             substructureSet = aas[0].Builder.NewAtomContainerSet();
             foreach (var aa in aas)
             {
@@ -63,8 +63,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             names = new string[substructureSet.Count];
-            for (int i = 0; i < aas.Length; i++)
-                names[i] = "n" + aas[i].GetProperty<string>(AminoAcids.RESIDUE_NAME_SHORT);
+            for (int i = 0; i < aas.Count; i++)
+                names[i] = "n" + aas[i].GetProperty<string>(AminoAcids.ResidueNameShortKey);
         }
 
         /// <inheritdoc/>

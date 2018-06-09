@@ -18,9 +18,9 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Default;
 using NCDK.Dict;
 using NCDK.IO;
+using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -40,8 +40,6 @@ namespace NCDK.Templates
     // @cdk.created 2005-02-08
     public static class AminoAcids
     {
-        private static object syncLock = new object();
-
         /// <summary>
         /// Creates matrix with info about the bonds in the amino acids.
         /// 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
@@ -49,18 +47,13 @@ namespace NCDK.Templates
         /// <returns>info</returns>
         public static int[][] CreateAABondInfo()
         {
-            if (aminoAcids == null)
-            {
-                CreateAAs();
-            }
-
             int[][] info = Arrays.CreateJagged<int>(153, 4);
 
             int counter = 0;
             int total = 0;
-            for (int aa = 0; aa < aminoAcids.Length; aa++)
+            for (int aa = 0; aa < proteinogenics.Length; aa++)
             {
-                AminoAcid acid = aminoAcids[aa];
+                AminoAcid acid = proteinogenics[aa];
 
                 total += acid.Bonds.Count;
                 Debug.WriteLine("total #bonds: ", total);
@@ -84,34 +77,25 @@ namespace NCDK.Templates
             return info;
         }
 
-        private static AminoAcid[] aminoAcids = null;
+        public const string ResidueNameKey = "residueName";
+        public const string ResidueNameShortKey = "residueNameShort";
+        public const string NoAtomsKey = "noOfAtoms";
+        public const string NoBoundsKey = "noOfBonds";
+        public const string IdKey = "id";
 
-        public const string RESIDUE_NAME = "residueName";
-        public const string RESIDUE_NAME_SHORT = "residueNameShort";
-        public const string NO_ATOMS = "noOfAtoms";
-        public const string NO_BONDS = "noOfBonds";
-        public const string ID = "id";
+        private static readonly AminoAcid[] proteinogenics;
+        private static readonly Dictionary<string, IAminoAcid> singleLetterCodeMap;
+        private static readonly Dictionary<string, IAminoAcid> threeLetterCodeMap;
+        private static readonly Dictionary<string, string> singleLetterToThreeLetter;
+        private static readonly Dictionary<string, string> threeLetterToSingleLetter;
 
-        /// <summary>
-        /// Creates amino acid AminoAcid objects.
-        /// </summary>
-        /// <returns>aminoAcids, a Dictionary containing the amino acids as AminoAcids.</returns>
-        public static AminoAcid[] CreateAAs()
+        static AminoAcids()
         {
-            if (aminoAcids != null)
-            {
-                return aminoAcids;
-            }
-            lock (syncLock)
-            {
-                if (aminoAcids != null)
-                {
-                    return aminoAcids;
-                }
+            // Create set of AtomContainers
+            proteinogenics = new AminoAcid[20];
 
-                // Create set of AtomContainers
-                aminoAcids = new AminoAcid[20];
-
+            #region Create proteinogenics
+            {
                 IChemFile list = new ChemFile();
                 CMLReader reader = new CMLReader(ResourceLoader.GetAsStream("NCDK.Templates.Data.list_aminoacids.cml"));
                 try
@@ -132,16 +116,16 @@ namespace NCDK.Templates
                                 // Debug.WriteLine("DictRef type: " + dictRef.Type);
                                 if (dictRef.Type.Equals("pdb:residueName"))
                                 {
-                                    aminoAcid.SetProperty(RESIDUE_NAME, ac.GetProperty<string>(next).ToUpperInvariant());
+                                    aminoAcid.SetProperty(ResidueNameKey, ac.GetProperty<string>(next).ToUpperInvariant());
                                     aminoAcid.MonomerName = ac.GetProperty<string>(next);
                                 }
                                 else if (dictRef.Type.Equals("pdb:oneLetterCode"))
                                 {
-                                    aminoAcid.SetProperty(RESIDUE_NAME_SHORT, ac.GetProperty<string>(next));
+                                    aminoAcid.SetProperty(ResidueNameShortKey, ac.GetProperty<string>(next));
                                 }
                                 else if (dictRef.Type.Equals("pdb:id"))
                                 {
-                                    aminoAcid.SetProperty(ID, ac.GetProperty<string>(next));
+                                    aminoAcid.SetProperty(IdKey, ac.GetProperty<string>(next));
                                     Debug.WriteLine("Set AA ID to: ", ac.GetProperty<string>(next));
                                 }
                                 else
@@ -171,11 +155,11 @@ namespace NCDK.Templates
                             aminoAcid.Bonds.Add(bond);
                         }
                         AminoAcidManipulator.RemoveAcidicOxygen(aminoAcid);
-                        aminoAcid.SetProperty(NO_ATOMS, "" + aminoAcid.Atoms.Count);
-                        aminoAcid.SetProperty(NO_BONDS, "" + aminoAcid.Bonds.Count);
-                        if (counter < aminoAcids.Length)
+                        aminoAcid.SetProperty(NoAtomsKey, "" + aminoAcid.Atoms.Count);
+                        aminoAcid.SetProperty(NoBoundsKey, "" + aminoAcid.Bonds.Count);
+                        if (counter < proteinogenics.Length)
                         {
-                            aminoAcids[counter] = aminoAcid;
+                            proteinogenics[counter] = aminoAcid;
                         }
                         else
                         {
@@ -195,39 +179,69 @@ namespace NCDK.Templates
                     else
                         throw;
                 }
+            }
+            #endregion
 
-                return aminoAcids;
+            int count = proteinogenics.Length;
+            singleLetterCodeMap = new Dictionary<string, IAminoAcid>(count);
+            threeLetterCodeMap = new Dictionary<string, IAminoAcid>(count);
+            singleLetterToThreeLetter = new Dictionary<string, string>(count);
+            threeLetterToSingleLetter = new Dictionary<string, string>(count);
+
+            foreach (IAminoAcid aa in proteinogenics)
+            {
+                var single = aa.GetProperty<string>(ResidueNameShortKey);
+                var three = aa.GetProperty<string>(ResidueNameKey);
+                singleLetterCodeMap[single] = aa;
+                threeLetterCodeMap[three] = aa;
+                singleLetterToThreeLetter[single] = three;
+                threeLetterToSingleLetter[three] = single;
             }
         }
 
         /// <summary>
-        /// Returns a Dictionary where the key is one of G, A, V, L, I, S, T, C, M, D,
+        /// Proteinogenic amino acid list.
+        /// </summary>
+        public static IReadOnlyList<AminoAcid> Proteinogenics => proteinogenics;
+
+        /// <summary>
+        /// Map where the key is one of G, A, V, L, I, S, T, C, M, D,
         /// N, E, Q, R, K, H, F, Y, W and P.
         /// </summary>
-        public static IDictionary<string, IAminoAcid> GetHashMapBySingleCharCode()
-        {
-            IAminoAcid[] monomers = CreateAAs();
-            Dictionary<string, IAminoAcid> map = new Dictionary<string, IAminoAcid>();
-            for (int i = 0; i < monomers.Length; i++)
-            {
-                map[monomers[i].GetProperty<string>(RESIDUE_NAME_SHORT)] = monomers[i];
-            }
-            return map;
-        }
+        public static IReadOnlyDictionary<string, IAminoAcid> MapBySingleCharCode => singleLetterCodeMap;
 
         /// <summary>
-        /// Returns a Dictionary where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
+        /// Map where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
         /// THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
         /// </summary>
-        public static IDictionary<string, IAminoAcid> GetHashMapByThreeLetterCode()
+        public static IReadOnlyDictionary<string, IAminoAcid> MapByThreeLetterCode => threeLetterCodeMap;
+
+        /// <summary>
+        /// Get amino acid from string.
+        /// </summary>
+        /// <param name="code">Single or three letter code</param>
+        /// <returns>The amino acid</returns>
+        public static IAminoAcid FromString(string code)
         {
-            AminoAcid[] monomers = CreateAAs();
-            IDictionary<string, IAminoAcid> map = new Dictionary<string, IAminoAcid>();
-            for (int i = 0; i < monomers.Length; i++)
+            if (code == null)
+                throw new ArgumentNullException(nameof(code));
+
+            IAminoAcid aminoAcid;
+            switch (code.Length)
             {
-                map[monomers[i].GetProperty<string>(RESIDUE_NAME)] = monomers[i];
+                case 1:
+                    if (MapBySingleCharCode.TryGetValue(code, out aminoAcid))
+                        return aminoAcid;
+                    break;
+                case 3:
+                    if (MapByThreeLetterCode.TryGetValue(code, out aminoAcid))
+                        return aminoAcid;
+                    break;
+                default:
+                    break;
             }
-            return map;
+
+            throw new ArgumentException($"Unknown code {code}.", nameof(code));
         }
 
         /// <summary>
@@ -236,15 +250,9 @@ namespace NCDK.Templates
         /// </summary>
         public static string ConvertThreeLetterCodeToOneLetterCode(string threeLetterCode)
         {
-            AminoAcid[] monomers = CreateAAs();
-            for (int i = 0; i < monomers.Length; i++)
-            {
-                if (monomers[i].GetProperty<string>(RESIDUE_NAME).Equals(threeLetterCode))
-                {
-                    return monomers[i].GetProperty<string>(RESIDUE_NAME_SHORT);
-                }
-            }
-            return null;
+            if (!threeLetterToSingleLetter.TryGetValue(threeLetterCode, out string single))
+                return null;
+            return single;
         }
 
         /// <summary>
@@ -253,15 +261,9 @@ namespace NCDK.Templates
         /// </summary>
         public static string ConvertOneLetterCodeToThreeLetterCode(string oneLetterCode)
         {
-            AminoAcid[] monomers = CreateAAs();
-            for (int i = 0; i < monomers.Length; i++)
-            {
-                if (monomers[i].GetProperty<string>(RESIDUE_NAME_SHORT).Equals(oneLetterCode))
-                {
-                    return monomers[i].GetProperty<string>(RESIDUE_NAME);
-                }
-            }
-            return null;
+            if (!singleLetterToThreeLetter.TryGetValue(oneLetterCode, out string three))
+                return null;
+            return three;
         }
     }
 }
