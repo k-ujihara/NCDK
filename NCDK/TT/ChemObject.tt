@@ -184,8 +184,7 @@ namespace <#= ns.NS #>
         /// <returns><see langword="true"/> if the atom types are equal</returns>
         public virtual bool Compare(object obj)
         {
-            var o = obj as IChemObject;
-            return o == null ? false : Id == o.Id;
+            return !(obj is IChemObject o) ? false : Id == o.Id;
         }
 
         private string id;

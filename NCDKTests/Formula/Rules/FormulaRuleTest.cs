@@ -30,19 +30,16 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public abstract class FormulaRuleTest : CDKTestCase
     {
-        protected static IRule rule;
+        protected abstract Type RuleClass { get; }
 
-        public static void SetRule(Type ruleClass)
+        protected virtual IRule GetRule()
         {
-            if (FormulaRuleTest.rule == null)
+            object rule = (object)RuleClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+            if (!(rule is IRule))
             {
-                object rule = (object)ruleClass.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-                if (!(rule is IRule))
-                {
-                    throw new CDKException("The passed rule class must be a IRule");
-                }
-                FormulaRuleTest.rule = (IRule)rule;
+                throw new CDKException("The passed rule class must be a IRule");
             }
+            return (IRule)rule;
         }
 
         /// <summary>
@@ -64,14 +61,13 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestHasSetSuperDotRule()
         {
-            Assert.IsNotNull(rule, "The extending class must set the super.rule in its SetUp() method.");
+            Assert.IsNotNull(GetRule());
         }
 
         [TestMethod()]
         public void TestGetParameters()
         {
-            TestValidate_IMolecularFormula();
-
+            var rule = GetRule();
             object[] params_ = rule.Parameters;
             //        FIXME: the next would be nice, but not currently agreed-upon policy
             //        Assert.IsNotNull(
@@ -79,7 +75,8 @@ namespace NCDK.Formula.Rules
             //            "The method Parameters must return a non-null value, possible a zero length Object[] array"
             //        );
             //        FIXME: so instead:
-            if (params_ == null) params_ = new object[0];
+            if (params_ == null)
+                params_ = new object[0];
             for (int i = 0; i < params_.Length; i++)
             {
                 Assert.IsNotNull(params_[i], "A parameter default must not be null.");
@@ -89,8 +86,7 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestSetParameters_arrayObject()
         {
-            TestValidate_IMolecularFormula();
-
+            var rule = GetRule();
             object[] defaultParams = rule.Parameters;
             rule.Parameters = defaultParams;
         }
@@ -98,6 +94,7 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestValidate_IMolecularFormula()
         {
+            var rule = GetRule();
             IMolecularFormula mf = new MolecularFormula();
             mf.Add(new Isotope("C", 13));
             mf.Add(new Isotope("H", 2), 4);

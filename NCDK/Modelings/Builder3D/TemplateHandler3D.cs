@@ -54,26 +54,13 @@ namespace NCDK.Modelings.Builder3D
         private readonly List<IAtomContainer> templates = new List<IAtomContainer>();
         private readonly List<IQueryAtomContainer> queries = new List<IQueryAtomContainer>();
         private readonly List<Pattern> patterns  = new List<Pattern>();
-
-        private static TemplateHandler3D self = null;
-
-        private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+        private readonly UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
         private TemplateHandler3D()
         {
         }
 
-        public static TemplateHandler3D Instance
-        {
-            get
-            {
-                if (self == null)
-                {
-                    self = new TemplateHandler3D();
-                }
-                return self;
-            }
-        }
+        public static TemplateHandler3D Instance { get; } = new TemplateHandler3D();
 
         private void AddTemplateMol(IAtomContainer mol)
         {

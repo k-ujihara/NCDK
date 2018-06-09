@@ -70,7 +70,8 @@ namespace NCDK.Formula.Rules
 
             set
             {
-                if (value.Length != 1) throw new CDKException("ElementRule expects one parameters");
+                if (value.Length != 1)
+                    throw new CDKException("ElementRule expects one parameters");
 
                 if (!(value[0] is null || value[0] is MolecularFormulaRange))
                     throw new CDKException("The parameter must be of type MolecularFormulaExpand");

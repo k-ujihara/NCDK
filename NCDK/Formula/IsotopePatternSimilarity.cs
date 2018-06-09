@@ -11,7 +11,7 @@ namespace NCDK.Formula
     public class IsotopePatternSimilarity
     {
         private double chargeToAdd;
-        private static double massE = 0.0005485;
+        private const double massE = 0.0005485;
 
         public IsotopePatternSimilarity() { }
 

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
@@ -25,21 +26,14 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class ChargeRuleTest : FormulaRuleTest
     {
-        private static IChemObjectBuilder builder;
-
-        [TestInitialize()]
-        public void SetUp()
-        {
-            builder = Default.ChemObjectBuilder.Instance;
-            SetRule(typeof(ChargeRule));
-        }
+        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        protected override Type RuleClass => typeof(ChargeRule);
 
         [TestMethod()]
         public void TestChargeRule()
         {
             IRule rule = new ChargeRule();
             Assert.IsNotNull(rule);
-
         }
 
         [TestMethod()]
@@ -56,8 +50,7 @@ namespace NCDK.Formula.Rules
         [TestMethod()]
         public void TestSetParameters()
         {
-            IRule rule = new ChargeRule();
-            rule.Parameters = new object[] { -1.0 };
+            IRule rule = new ChargeRule { Parameters = new object[] { -1.0 } };
 
             object[] objects = rule.Parameters;
             Assert.AreEqual(1, objects.Length);

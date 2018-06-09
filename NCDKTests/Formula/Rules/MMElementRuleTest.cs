@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace NCDK.Formula.Rules
 {
@@ -25,14 +26,8 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class MMElementRuleTest : FormulaRuleTest
     {
-        private static IChemObjectBuilder builder;
-
-        [TestInitialize()]
-        public void SetUp()
-        {
-            builder = Default.ChemObjectBuilder.Instance;
-            SetRule(typeof(MMElementRule));
-        }
+        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        protected override Type RuleClass => typeof(MMElementRule);
 
         [TestMethod()]
         public void TestMMElementRule()

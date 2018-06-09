@@ -145,7 +145,7 @@ namespace NCDK.Default
             typeof(string),
             typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
-			typeof(Guid),
+			typeof(System.Guid),
         };
 #endif
 
@@ -266,8 +266,7 @@ namespace NCDK.Default
         /// <returns><see langword="true"/> if the atom types are equal</returns>
         public virtual bool Compare(object obj)
         {
-            var o = obj as IChemObject;
-            return o == null ? false : Id == o.Id;
+            return !(obj is IChemObject o) ? false : Id == o.Id;
         }
 
         private string id;
@@ -387,7 +386,7 @@ namespace NCDK.Silent
             typeof(string),
             typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
-			typeof(Guid),
+			typeof(System.Guid),
         };
 #endif
 
@@ -504,8 +503,7 @@ namespace NCDK.Silent
         /// <returns><see langword="true"/> if the atom types are equal</returns>
         public virtual bool Compare(object obj)
         {
-            var o = obj as IChemObject;
-            return o == null ? false : Id == o.Id;
+            return !(obj is IChemObject o) ? false : Id == o.Id;
         }
 
         private string id;

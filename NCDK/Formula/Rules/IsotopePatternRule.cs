@@ -47,10 +47,10 @@ namespace NCDK.Formula.Rules
     public class IsotopePatternRule : IRule
     {
         /// <summary>Accuracy on the mass measuring isotope pattern</summary>
-        private double toleranceMass = 0.001;
+        private const double toleranceMass = 0.001;
         private IsotopePattern pattern;
-        IsotopePatternGenerator isotopeGe;
-        private IsotopePatternSimilarity isotopePatternSimilarity;
+        private readonly IsotopePatternGenerator isotopeGe;
+        private readonly IsotopePatternSimilarity isotopePatternSimilarity;
 
         /// <summary>
         /// Constructor for the <see cref="IsotopePatternRule"/> object.
@@ -58,10 +58,7 @@ namespace NCDK.Formula.Rules
         public IsotopePatternRule()
         {
             isotopeGe = new IsotopePatternGenerator(0.01);
-            isotopePatternSimilarity = new IsotopePatternSimilarity
-            {
-                Tolerance = toleranceMass
-            };
+            isotopePatternSimilarity = new IsotopePatternSimilarity { Tolerance = toleranceMass };
         }
 
         /// <summary>
@@ -114,7 +111,7 @@ namespace NCDK.Formula.Rules
         /// you have to add with the <see cref="Parameters"/> a <see cref="IMolecularFormulaSet"/>
         /// which represents the isotope pattern to compare.
         /// </summary>
-        /// <param name="formula">arameter is the <see cref="IMolecularFormula"/></param>
+        /// <param name="formula">Parameter is the <see cref="IMolecularFormula"/></param>
         /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public double Validate(IMolecularFormula formula)
         {

@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Tools.Manipulator;
+using System;
 
 namespace NCDK.Formula.Rules
 {
@@ -26,14 +27,8 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class RDBERuleTest : FormulaRuleTest
     {
-        private static IChemObjectBuilder builder;
-
-        [TestInitialize()]
-        public void SetUp()
-        {
-            builder = Default.ChemObjectBuilder.Instance;
-            SetRule(typeof(ChargeRule));
-        }
+        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        protected override Type RuleClass => typeof(RDBERule);
 
         [TestMethod()]
         public void TestRDBERule()

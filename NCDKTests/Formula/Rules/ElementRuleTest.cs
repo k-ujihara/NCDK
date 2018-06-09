@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+using System;
 
 namespace NCDK.Formula.Rules
 {
@@ -26,13 +27,8 @@ namespace NCDK.Formula.Rules
     [TestClass()]
     public class ElementRuleTest : FormulaRuleTest
     {
-        private static IChemObjectBuilder builder;
-
-        static ElementRuleTest()
-        {
-            builder = Default.ChemObjectBuilder.Instance;
-            SetRule(typeof(ElementRule));
-        }
+        private static readonly IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+        protected override Type RuleClass => typeof(ElementRule);
 
         [TestMethod()]
         public void TestElementRule()

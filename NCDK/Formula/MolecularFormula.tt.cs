@@ -13,7 +13,7 @@ namespace NCDK.Formula
             typeof(string),
             typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
-			typeof(Guid),
+			typeof(System.Guid),
         };
 #endif
 
