@@ -59,10 +59,10 @@
     </Compile>
     <Compile Include="Depict\Dimension.cs" />
     <Compile Include="Renderers\Elements\TextGroupElement.cs" />
-    <Content Include="Renderers\RendererModelTools.tt">
+    <None Include="Renderers\RendererModelTools.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RendererModelTools.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Renderers\Generators\AtomShapeType.cs" />
     <Compile Include="Renderers\Generators\BasicGenerator.cs" />
     <Compile Include="Renderers\Generators\BasicSceneGenerator.cs" />
@@ -122,15 +122,15 @@
     <Compile Include="Renderers\Elements\WedgeLineElement.cs" />
     <Compile Include="Renderers\Fonts\AbstractFontManager.cs" />
     <Compile Include="Renderers\Fonts\WPFFontManager.cs" />
-    <Content Include="IncludeExamples.tt">
+    <None Include="IncludeExamples.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IncludeExamples.xml</LastGenOutput>
-    </Content>
-    <Content Include="IncludeExamples.xml">
+    </None>
+    <None Include="IncludeExamples.xml">
       <DependentUpon>IncludeExamples.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Content>
+    </None>
     <Compile Include="Renderers\Generators\AtomContainerBoundsGenerator.cs" />
     <Compile Include="Renderers\Generators\AtomMassGenerator.cs" />
     <Compile Include="Renderers\Generators\AtomNumberGenerator.cs" />

@@ -50,8 +50,8 @@
     <Reference Include="dotNetRDF, Version=2.1.0.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
       <HintPath>..\packages\dotNetRDF.2.1.0\lib\net40\dotNetRDF.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.8.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.8.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.8.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=4.5.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.Signed.4.5.0\lib\net461\MathNet.Numerics.dll</HintPath>
@@ -76,13 +76,23 @@
     <Compile Include="Properties\AssemblyProductInfo.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Fingerprints\AtomPairs2DFingerprinter.cs" />
+    <Compile Include="Properties\InternalVisibles..cs" />
     <Compile Include="QSAR\AbstractMolecularDescriptor.cs" />
     <Compile Include="Tools\Manipulator\SgroupManipulator.cs" />
     <Compile Include="QSAR\AbstractDescriptor.cs" />
-    <Content Include="TT\AtomContainer2.tt">
+    <Content Include="x64\libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="TT\AtomContainer2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainer2.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="AtomRef.cs" />
     <Compile Include="Beam\Core\AllCycles.cs" />
     <Compile Include="Beam\Core\ArbitraryMatching.cs" />
@@ -290,20 +300,14 @@
     <Compile Include="LibIO\CML\CMLFormula.cs" />
     <Compile Include="Config\ChemicalElement.cs" />
     <Compile Include="Events\ICDKChangeListener.cs" />
-    <EmbeddedResource Include="Beam\Core\Configuration.tt">
+    <None Include="Beam\Core\Configuration.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Configuration.tt.cs</LastGenOutput>
-    </EmbeddedResource>
-    <Content Include="Hash\BasicAtomEncoder.tt">
+    </None>
+    <None Include="Hash\BasicAtomEncoder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BasicAtomEncoder.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="x64\ncdk_libinchi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="x86\ncdk_libinchi.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -315,59 +319,59 @@
       <DependentUpon>cheminf.tt</DependentUpon>
     </None>
     <None Include="FaulonSignatures\Snap.txt" />
-    <Content Include="cheminf.tt">
+    <None Include="cheminf.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>cheminf.tokens</LastGenOutput>
-    </Content>
-    <Content Include="Common\Collections\EmptyCollections.tt">
+    </None>
+    <None Include="Common\Collections\EmptyCollections.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EmptyCollections.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="Config\ChemicalElement.tt">
+    </None>
+    <None Include="Config\ChemicalElement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemicalElement.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <None Include="Config\Element.txt" />
-    <Content Include="Formula\MolecularFormula.tt">
+    <None Include="Formula\MolecularFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MolecularFormula.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="IHasProperties.tt">
+    </None>
+    <None Include="IHasProperties.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IHasProperties.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="IncludeExamples.tt">
+    </None>
+    <None Include="IncludeExamples.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IncludeExamples.xml</LastGenOutput>
-    </Content>
-    <Content Include="IncludeExamples.xml">
+    </None>
+    <None Include="IncludeExamples.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IncludeExamples.tt</DependentUpon>
-    </Content>
-    <Content Include="LibIO\CML\CMLElementDefines.tt">
+    </None>
+    <None Include="LibIO\CML\CMLElementDefines.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementDefines.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
     <None Include="ncdk.snk" />
     <None Include="Numerics\LICENSE.txt" />
-    <Content Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt">
+    <None Include="QSAR\Descriptors\Atomic\%24AtomicDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24AtomicDescriptor.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt">
+    </None>
+    <None Include="QSAR\Descriptors\Atomic\%24ProtonDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ProtonDescriptor.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt">
+    </None>
+    <None Include="QSAR\Descriptors\Bonds\%24BondDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24BondDescriptor.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="Reactions\Types\%24ExampleCodes.tt">
+    </None>
+    <None Include="Reactions\Types\%24ExampleCodes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Sgroups\SgroupKey.cs" />
     <Compile Include="Sgroups\SgroupType.cs" />
     <Compile Include="NCDKUtil.cs" />
@@ -404,27 +408,27 @@
     <Compile Include="Graphs\Invariant\GIMatrix.cs" />
     <Compile Include="Graphs\Invariant\HuLuIndexTool.cs" />
     <Compile Include="Indexes\CASNumber.cs" />
-    <Content Include="Numerics\ConstantHelper.tt">
+    <None Include="Numerics\ConstantHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConstantHelper.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="Numerics\Register.tt">
+    </None>
+    <None Include="Numerics\Register.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Register.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="Numerics\Vector.tt">
+    </None>
+    <None Include="Numerics\Vector.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Vector.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="LibIO\CML\CMLMolecule.cs" />
     <Compile Include="LibIO\CML\CMLScalar.cs" />
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
     <Compile Include="ReactionRole.cs" />
-    <Content Include="TT\ReactionChain.tt">
+    <None Include="TT\ReactionChain.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionChain.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteReaction.cs" />
     <Compile Include="Reactions\Types\AbstractAdductionLPReaction.cs" />
@@ -633,27 +637,27 @@
     <Compile Include="Validate\ValidatorEngine.cs" />
     <Compile Include="Vibration.cs" />
     <EmbeddedResource Include="QSAR\Descriptors\Data\taepeptides.txt" />
-    <Content Include="TT\Association.tt">
+    <None Include="TT\Association.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Association.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="LibIO\CML\CMLElementBodies.tt">
+    </None>
+    <None Include="LibIO\CML\CMLElementBodies.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementBodies.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="PhysicalConstants.cs" />
-    <Content Include="TT\Atom.tt">
+    <None Include="TT\Atom.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Atom.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ChemObject.tt">
+    </None>
+    <None Include="TT\ChemObject.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemObject.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomType.tt">
+    </None>
+    <None Include="TT\AtomType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomType.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Isomorphisms\Matchers\QueryAtom.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryAtomContainer.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryChemObject.cs" />
@@ -685,10 +689,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AtomType.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\Bond.tt">
+    <None Include="TT\Bond.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Bond.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\BioPolymer.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -710,14 +714,14 @@
       <DependentUpon>ChemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ConformerContainer.cs" />
-    <Content Include="TT\Element.tt">
+    <None Include="TT\Element.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Element.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ElectronContainer.tt">
+    </None>
+    <None Include="TT\ElectronContainer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElectronContainer.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ChemObjectBuilder.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -728,102 +732,102 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemSequence.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\Isotope.tt">
+    <None Include="TT\Isotope.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Isotope.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AminoAcid.tt">
+    </None>
+    <None Include="TT\AminoAcid.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AminoAcid.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomContainer.tt">
+    </None>
+    <None Include="TT\AtomContainer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomContainerSet.tt">
+    </None>
+    <None Include="TT\AtomContainerSet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainerSet.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\BioPolymer.tt">
+    </None>
+    <None Include="TT\BioPolymer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BioPolymer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ChemFile.tt">
+    </None>
+    <None Include="TT\ChemFile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemFile.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ChemModel.tt">
+    </None>
+    <None Include="TT\ChemModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemModel.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ChemSequence.tt">
+    </None>
+    <None Include="TT\ChemSequence.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemSequence.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Crystal.tt">
+    </None>
+    <None Include="TT\Crystal.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Crystal.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\EnzymeResidueLocator.tt">
+    </None>
+    <None Include="TT\EnzymeResidueLocator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnzymeResidueLocator.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\FragmentAtom.tt">
+    </None>
+    <None Include="TT\FragmentAtom.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FragmentAtom.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\LonePair.tt">
+    </None>
+    <None Include="TT\LonePair.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LonePair.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Mapping.tt">
+    </None>
+    <None Include="TT\Mapping.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Mapping.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Monomer.tt">
+    </None>
+    <None Include="TT\Monomer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Monomer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Polymer.tt">
+    </None>
+    <None Include="TT\Polymer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Polymer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\PseudoAtom.tt">
+    </None>
+    <None Include="TT\PseudoAtom.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PseudoAtom.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Reaction.tt">
+    </None>
+    <None Include="TT\Reaction.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Reaction.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ReactionScheme.tt">
+    </None>
+    <None Include="TT\ReactionScheme.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionScheme.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ReactionSet.tt">
+    </None>
+    <None Include="TT\ReactionSet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionSet.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Ring.tt">
+    </None>
+    <None Include="TT\Ring.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Ring.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\RingSet.tt">
+    </None>
+    <None Include="TT\RingSet.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RingSet.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\SingleElectron.tt">
+    </None>
+    <None Include="TT\SingleElectron.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SingleElectron.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Strand.tt">
+    </None>
+    <None Include="TT\Strand.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Strand.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\Substance.tt">
+    </None>
+    <None Include="TT\Substance.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Substance.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="ServiceLoader.cs" />
     <Compile Include="Utils\Xml\XReader.cs" />
     <Compile Include="BondOrder.cs" />
@@ -938,10 +942,10 @@
     <Compile Include="SMSD\IMCSBase.cs" />
     <Compile Include="SMSD\Tools\TimeManager.cs" />
     <Compile Include="Graphs\JumboPathGraph.cs" />
-    <Content Include="TT\ChemObjectBuilder.tt">
+    <None Include="TT\ChemObjectBuilder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemObjectBuilder.tt.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAtom.cs" />
@@ -1193,10 +1197,10 @@
     <Compile Include="Fingerprints\SimpleAtomComparator.cs" />
     <Compile Include="Fingerprints\StandardSubstructureSets.cs" />
     <Compile Include="Fingerprints\SubstructureFingerprinter.cs" />
-    <Content Include="TT\AdductFormula.tt">
+    <None Include="TT\AdductFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AdductFormula.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Formula\MolecularFormula.cs" />
     <Compile Include="Formula\MolecularFormulaSet.cs" />
     <Compile Include="Fingerprints\SignatureFingerprinter.cs" />
@@ -1617,22 +1621,22 @@
     <Compile Include="Modelings\Builder3D\TemplateExtractor.cs" />
     <Compile Include="Modelings\Builder3D\TemplateHandler3D.cs" />
     <Compile Include="Normalizers\Normalizer.cs" />
-    <Content Include="TT\PDBAtom.tt">
+    <None Include="TT\PDBAtom.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBAtom.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\PDBMonomer.tt">
+    </None>
+    <None Include="TT\PDBMonomer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBMonomer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\PDBPolymer.tt">
+    </None>
+    <None Include="TT\PDBPolymer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBPolymer.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\PDBStructure.tt">
+    </None>
+    <None Include="TT\PDBStructure.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBStructure.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Normalizers\SMSDNormalizer.cs" />
     <Compile Include="Pharmacophore\PharmacophoreAngleBond.cs" />
     <Compile Include="Pharmacophore\PharmacophoreAtom.cs" />
@@ -1643,10 +1647,10 @@
     <Compile Include="Pharmacophore\PharmacophoreQueryAtom.cs" />
     <Compile Include="Pharmacophore\PharmacophoreQueryBond.cs" />
     <Compile Include="Pharmacophore\PharmacophoreUtils.cs" />
-    <Content Include="TT\PDBStrand.tt">
+    <None Include="TT\PDBStrand.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBStrand.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="QSAR\AtomValenceTool.cs" />
     <Compile Include="QSAR\DescriptorSpecification.cs" />
     <Compile Include="QSAR\DescriptorValue.cs" />
@@ -1981,7 +1985,6 @@
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE.db" />
     <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE_S.db" />
     <None Include="Numerics\GenerationConfig.ttinclude" />
-    <None Include="packages.config" />
     <None Include="reaction-types.set" />
   </ItemGroup>
   <ItemGroup>

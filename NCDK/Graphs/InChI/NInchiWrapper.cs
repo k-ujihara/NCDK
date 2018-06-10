@@ -48,7 +48,7 @@ namespace NCDK.Graphs.InChI
     // @author Kazuya Ujihara
     unsafe internal class NInchiWrapper
     {
-        private const string DllName_libinchi = "ncdk_libinchi.dll";
+        private const string Name_libinchi = "libinchi";
 
         [SuppressUnmanagedCodeSecurity]
         internal static class UnsafeNativeMethods
@@ -59,31 +59,35 @@ namespace NCDK.Graphs.InChI
 
         static NInchiWrapper()
         {
-            string currPath = Path.GetDirectoryName(
-                System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-            string subdir = null;
-            switch (IntPtr.Size)
+            OperatingSystem os = Environment.OSVersion;
+            switch (os.Platform)
             {
-                case 8:
-                    subdir = "x64";
-                    break;
-                case 4:
-                    subdir = "x86";
+                case PlatformID.Win32NT:
+                    const string DllName_libinchi = Name_libinchi + ".dll";
+                    string currPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    string subdir = null;
+                    if (Environment.Is64BitProcess)
+                    {
+                        subdir = "x64";
+                    }
+                    else
+                    {
+                        subdir = "x86";
+                    }
+
+                    if (subdir != null)
+                    {
+                        var path = Path.Combine(currPath, subdir);
+                        var dllpath = Path.Combine(path, DllName_libinchi);
+                        if (File.Exists(dllpath))
+                        {
+                            UnsafeNativeMethods.SetDllDirectory(null);
+                            UnsafeNativeMethods.SetDllDirectory(path);
+                        }
+                    }
                     break;
                 default:
                     break;
-            }
-
-            if (subdir != null)
-            {
-                var path = Path.Combine(currPath, subdir);
-                var dllpath = Path.Combine(path, DllName_libinchi);
-                if (File.Exists(dllpath))
-                {
-                    UnsafeNativeMethods.SetDllDirectory(null);
-                    UnsafeNativeMethods.SetDllDirectory(path);
-                }
             }
         }
 
@@ -107,12 +111,12 @@ namespace NCDK.Graphs.InChI
             public fixed Int16/*AT_NUM*/ neighbor[MAXVAL];     /* adjacency list: ordering numbers of  the adjacent atoms, >= 0 */
             public fixed SByte/*S_CHAR*/ bond_type[MAXVAL];    /* inchi_BondType 2D stereo */
             public fixed SByte/*S_CHAR*/ bond_stereo[MAXVAL];  /* inchi_BondStereo2D; negative if the sharp end points to opposite atom other atom properties */
-            public fixed sbyte/*char*/ elname[ATOM_EL_LEN];  /* zero-terminated chemical element name: "H", "Si", etc. */
-            public Int16/*AT_NUM*/ num_bonds;            /* number of neighbors, bond types and bond stereo in the adjacency list */
+            public fixed sbyte/*char*/ elname[ATOM_EL_LEN];    /* zero-terminated chemical element name: "H", "Si", etc. */
+            public Int16/*AT_NUM*/ num_bonds;                  /* number of neighbors, bond types and bond stereo in the adjacency list */
             public fixed SByte/*S_CHAR*/ num_iso_H[NUM_H_ISOTOPES + 1]; /* implicit hydrogen atoms */
                                                                         /* [0]: number of implicit non-isotopic H
-                                                                             (exception: num_iso_H[0]=-1 means INCHI
-                                                                             adds implicit H automatically),
+                                                                                (exception: num_iso_H[0]=-1 means INCHI
+                                                                                adds implicit H automatically),
                                                                            [1]: number of implicit isotopic 1H (protium),
                                                                            [2]: number of implicit 2H (deuterium),
                                                                            [3]: number of implicit 3H (tritium) */
@@ -126,10 +130,10 @@ namespace NCDK.Graphs.InChI
         [StructLayout(LayoutKind.Sequential)]
         public struct Inchi_Stereo0D
         {
-            public fixed Int16/*AT_NUM*/  neighbor[4];    /* 4 atoms always */
-            public Int16/*AT_NUM*/  central_atom;   /* central tetrahedral atom or a central atom of allene; otherwise NO_ATOM */
-            public SByte/*S_CHAR*/  type;           /* inchi_StereoType0D */
-            public SByte/*S_CHAR*/  parity;         /* inchi_StereoParity0D: may be a combination of two parities: ParityOfConnected | (ParityOfDisconnected << 3), see Note above */
+            public fixed Int16/*AT_NUM*/ neighbor[4]; /* 4 atoms always */
+            public Int16/*AT_NUM*/ central_atom;      /* central tetrahedral atom or a central atom of allene; otherwise NO_ATOM */
+            public SByte/*S_CHAR*/ type;              /* inchi_StereoType0D */
+            public SByte/*S_CHAR*/ parity;            /* inchi_StereoParity0D: may be a combination of two parities: ParityOfConnected | (ParityOfDisconnected << 3), see Note above */
         }
 
         /* Structure -> InChI, GetINCHI() / GetStdINCHI() */
@@ -137,11 +141,11 @@ namespace NCDK.Graphs.InChI
         public struct Inchi_Input
         {
             /* the caller is responsible for the data allocation and deallocation */
-            public IntPtr/*inchi_Atom**/ atom;            /* array of num_atoms elements */
-            public IntPtr/*inchi_Stereo0D**/ stereo0D;    /* array of num_stereo0D 0D stereo elements or NULL */
-            public IntPtr/*char**/ szOptions;    /* InChI options: space-delimited; each is preceded by '/' or '-' depending on OS and compiler */
-            public Int16/*AT_NUM*/ num_atoms;    /* number of atoms in the structure < 1024 */
-            public Int16/*AT_NUM*/ num_stereo0D; /* number of 0D stereo elements */
+            public IntPtr/*inchi_Atom**/ atom;         /* array of num_atoms elements */
+            public IntPtr/*inchi_Stereo0D**/ stereo0D; /* array of num_stereo0D 0D stereo elements or NULL */
+            public IntPtr/*char**/ szOptions;          /* InChI options: space-delimited; each is preceded by '/' or '-' depending on OS and compiler */
+            public Int16/*AT_NUM*/ num_atoms;          /* number of atoms in the structure < 1024 */
+            public Int16/*AT_NUM*/ num_stereo0D;       /* number of 0D stereo elements */
         }
 
         /* InChI -> Structure, GetStructFromINCHI()/GetStructFromStdINCHI() */
@@ -183,15 +187,15 @@ namespace NCDK.Graphs.InChI
             /// array of <see cref="Inchi_Stereo0D"/> num_stereo0D 0D stereo elements or NULL 
             /// </summary>
             public IntPtr stereo0D;
-            public Int16/*AT_NUM*/          num_atoms;    /* number of atoms in the structure < 1024 */
-            public Int16/*AT_NUM*/          num_stereo0D; /* number of 0D stereo elements */
+            public Int16/*AT_NUM*/ num_atoms;    /* number of atoms in the structure < 1024 */
+            public Int16/*AT_NUM*/ num_stereo0D; /* number of 0D stereo elements */
             public IntPtr/*char**/ szMessage;    /* Error/warning ASCIIZ message */
             public IntPtr/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list  of recognized options and possibly an Error/warning message */
-            public fixed ulong/*unsigned long[2][2]*/ WarningFlags[4]; /* warnings, see INCHIDIFF in inchicmp.h */
-                                                                       /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-                                                                                  x=1 => Disconnected layer if Reconnected layer is present
-                                                                                  y=1 => Main layer or Mobile-H
-                                                                                  y=0 => Fixed-H layer */
+            public fixed UInt64 WarningFlags[4]; /* warnings, see INCHIDIFF in inchicmp.h */
+                                                 /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
+                                                            x=1 => Disconnected layer if Reconnected layer is present
+                                                            y=1 => Main layer or Mobile-H
+                                                            y=0 => Fixed-H layer */
         }
 
         public const int STR_ERR_LEN = 256;
@@ -210,58 +214,58 @@ namespace NCDK.Graphs.InChI
         [SuppressUnmanagedCodeSecurity]
         internal static class SafeNativeMethods
         {
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int GetINCHI([In] ref Inchi_Input inp, [Out] out Inchi_Output outp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern int GetStdINCHI([In] ref Inchi_Input pIn, [Out] out Inchi_Output pOut);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void FreeINCHI([In] ref Inchi_Output pOut);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void FreeStdINCHI([In] ref Inchi_Output pOut);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern int GetStringLength(char* p);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern int GetStructFromINCHI([In] ref Inchi_InputINCHI pinpInChI, [Out] out Inchi_OutputStruct pOutStruct);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern int GetStructFromStdINCHI([In] ref Inchi_InputINCHI pinpInChI, [Out] out Inchi_OutputStruct pOutStruct);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void FreeStructFromINCHI([In] ref Inchi_OutputStruct pOut);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void FreeStructFromStdINCHI([In] ref Inchi_OutputStruct pOut);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern int GetINCHIfromINCHI([In] ref Inchi_InputINCHI pinpInChI, [Out] out Inchi_Output pOut);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int Get_inchi_Input_FromAuxInfo([MarshalAs(UnmanagedType.LPStr)] string szInchiAuxInfo,
                                                       int bDoNotAddH,
                                                       int bDiffUnkUndfStereo,
                                                       [Out] out InchiInpData pInchiInp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int Get_std_inchi_Input_FromAuxInfo(char* szInchiAuxInfo,
                                                           int bDoNotAddH,
                                                           InchiInpData* pInchiInp);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void Free_inchi_Input([In] ref Inchi_Input pInp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void Free_inchi_Input(Inchi_Input* pInp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
             internal static extern void Free_std_inchi_Input([In] ref Inchi_Input pInp);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int CheckINCHI([MarshalAs(UnmanagedType.LPStr)] [In] string szINCHI, int strict);
 
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int GetINCHIKeyFromINCHI([MarshalAs(UnmanagedType.LPStr)][In] string szINCHISource,
                                                int xtra1,
                                                int xtra2,
                                                IntPtr szINCHIKey,
                                                IntPtr szXtra1,
                                                IntPtr szXtra2);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int GetStdINCHIKeyFromStdINCHI([MarshalAs(UnmanagedType.LPStr)] string szINCHISource,
                                                      [MarshalAs(UnmanagedType.LPStr)] string szINCHIKey);
-            [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(Name_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int CheckINCHIKey([MarshalAs(UnmanagedType.LPStr)] string szINCHIKey);
         }
 

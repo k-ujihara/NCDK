@@ -36,7 +36,6 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void AdenineRingPreference()
         {
-
             IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
             var ringMap = StandardBondGenerator.RingPreferenceMap(adenine);
 

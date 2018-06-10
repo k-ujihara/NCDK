@@ -39,7 +39,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="molecule">a molecule, can be disconnected.</param>
         /// <returns>an instance for querying the cycles (rings) in the molecule</returns>
-        /// <exception cref="Exception">if problem could not be solved within some predefined bounds.</exception>
+        /// <exception cref="System.Exception">if problem could not be solved within some predefined bounds.</exception>
         Cycles Find(IAtomContainer molecule);
 
         /// <summary>

@@ -127,6 +127,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="ncdk.snk" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -134,9 +135,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj">
@@ -149,14 +147,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ChemObjectBox_Prop.tt">
+    <None Include="ChemObjectBox_Prop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemObjectBox_Prop.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="AppearanceViewModel.tt">
+    </None>
+    <None Include="AppearanceViewModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppearanceViewModel.tt.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

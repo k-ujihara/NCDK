@@ -117,10 +117,10 @@
     <Compile Include="BondRefTest.cs" />
     <Compile Include="CDKTest.cs" />
     <Compile Include="Config\BODRIsotopeTest.cs" />
-    <Content Include="TT\AtomContainer2Test.tt">
+    <None Include="TT\AtomContainer2Test.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainer2Test.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Config\AtomTypeFactoryTest.cs" />
     <Compile Include="Config\CDKBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Config\OWLBasedAtomTypeConfiguratorTest.cs" />
@@ -279,38 +279,39 @@
     <Compile Include="Reactions\Types\SharingLonePairReactionTest.cs" />
     <Compile Include="Reactions\Types\TautomerizationReactionTest.cs" />
     <Compile Include="RingSearches\RegularCyclicVertexSearchTest.cs" />
-    <Content Include="TT\AdductFormulaTest.tt">
+    <None Include="TT\AdductFormulaTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AdductFormulaTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AminoAcidTest.tt">
+    </None>
+    <None Include="TT\AminoAcidTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AminoAcidTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomContainerSetTest.tt">
+    </None>
+    <None Include="TT\AtomContainerSetTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainerSetTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomContainerTest.tt">
+    </None>
+    <None Include="TT\AtomContainerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomContainerTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomTest.tt">
+    </None>
+    <None Include="TT\AtomTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\AtomTypeTest.tt">
+    </None>
+    <None Include="TT\AtomTypeTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AtomTypeTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\BioPolymerTest.tt">
+    </None>
+    <None Include="TT\BioPolymerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BioPolymerTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\BondTest.tt">
+    </None>
+    <None Include="TT\BondTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BondTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
+    <Compile Include="Templates\TestMoleculeFactoryTest.cs" />
     <Compile Include="TT\AtomContainer2Test.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -321,19 +322,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BioPolymerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ChemFileTest.tt">
+    <None Include="TT\ChemFileTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemFileTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ChemFileTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemFileTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ChemModelTest.tt">
+    <None Include="TT\ChemModelTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemModelTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Silent\ChemObjectListener.cs" />
     <Compile Include="Silent\ChemObjectTestHelper.cs" />
     <Compile Include="TT\ChemModelTest.tt.cs">
@@ -341,19 +342,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemModelTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ChemSequenceTest.tt">
+    <None Include="TT\ChemSequenceTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemSequenceTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ChemSequenceTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemSequenceTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\CrystalTest.tt">
+    <None Include="TT\CrystalTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CrystalTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ConformerContainerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -364,192 +365,192 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CrystalTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ElectronContainerTest.tt">
+    <None Include="TT\ElectronContainerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElectronContainerTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ElementTest.tt">
+    </None>
+    <None Include="TT\ElementTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ElementTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ElectronContainerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ElectronContainerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\FragmentAtomTest.tt">
+    <None Include="TT\FragmentAtomTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FragmentAtomTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\IsotopeTest.tt">
+    </None>
+    <None Include="TT\IsotopeTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IsotopeTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\LonePairTest.tt">
+    </None>
+    <None Include="TT\LonePairTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LonePairTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\FragmentAtomTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FragmentAtomTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\MappingTest.tt">
+    <None Include="TT\MappingTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MappingTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\MappingTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MappingTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\MolecularFormulaSetTest.tt">
+    <None Include="TT\MolecularFormulaSetTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MolecularFormulaSetTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\MolecularFormulaSetTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MolecularFormulaSetTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\MolecularFormulaTest.tt">
+    <None Include="TT\MolecularFormulaTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MolecularFormulaTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\MolecularFormulaTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MolecularFormulaTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\MonomerTest.tt">
+    <None Include="TT\MonomerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MonomerTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\MonomerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MonomerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PDBAtomTest.tt">
+    <None Include="TT\PDBAtomTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBAtomTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PDBAtomTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PDBAtomTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PDBMonomerTest.tt">
+    <None Include="TT\PDBMonomerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBMonomerTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PDBMonomerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PDBMonomerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PDBPolymerTest.tt">
+    <None Include="TT\PDBPolymerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBPolymerTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PDBPolymerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PDBPolymerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PDBStructureTest.tt">
+    <None Include="TT\PDBStructureTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PDBStructureTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PDBStructureTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PDBStructureTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PolymerTest.tt">
+    <None Include="TT\PolymerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PolymerTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PolymerTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PolymerTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\PseudoAtomTest.tt">
+    <None Include="TT\PseudoAtomTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PseudoAtomTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\PseudoAtomTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PseudoAtomTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ReactionSchemeTest.tt">
+    <None Include="TT\ReactionSchemeTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionSchemeTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ReactionSchemeTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReactionSchemeTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ReactionSetTest.tt">
+    <None Include="TT\ReactionSetTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionSetTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ReactionSetTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReactionSetTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\ReactionTest.tt">
+    <None Include="TT\ReactionTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\ReactionTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReactionTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\RingSetTest.tt">
+    <None Include="TT\RingSetTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RingSetTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\RingSetTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RingSetTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\RingTest.tt">
+    <None Include="TT\RingTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RingTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\ChemObjectBuilderTest.tt">
+    </None>
+    <None Include="TT\ChemObjectBuilderTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemObjectBuilderTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\RingTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RingTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\SingleElectronTest.tt">
+    <None Include="TT\SingleElectronTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SingleElectronTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\SingleElectronTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SingleElectronTest.tt</DependentUpon>
     </Compile>
-    <Content Include="TT\StrandTest.tt">
+    <None Include="TT\StrandTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StrandTest.tt.cs</LastGenOutput>
-    </Content>
-    <Content Include="TT\SubstanceTest.tt">
+    </None>
+    <None Include="TT\SubstanceTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SubstanceTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="SMARTS\SmartsFragmentExtractorTest.cs" />
     <Compile Include="Smiles\CxSmilesGeneratorTest.cs" />
     <Compile Include="SMSD\Algorithms\VFLib\Molecules.cs" />
@@ -676,10 +677,10 @@
     <Compile Include="MockMolecule.cs" />
     <Compile Include="Tools\BremserPredictorTest.cs" />
     <Compile Include="Tools\HOSECodeAnalyserTest.cs" />
-    <Content Include="TT\ChemObjectTest.tt">
+    <None Include="TT\ChemObjectTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChemObjectTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="TT\AdductFormulaTest.tt.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -756,144 +757,52 @@
       <DependentUpon>SubstanceTest.tt</DependentUpon>
     </Compile>
     <Compile Include="Validate\Geometry3DValidatorTest.cs" />
-    <EmbeddedResource Include="Data\MDL\24763.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\AliasPropertyRGroup.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\bug1356.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\bug2911300.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\bug3488307.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\burden_undefined.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\cnssmarts.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\cpsa-charged.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\cpsa-uncharged.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\emptyStructure.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\emptyStructures.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\error.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\fingerprints_from_modelbuilder3d.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\iterconftest.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\ligand-1a0i.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\lobtest.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\lobtest2.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\mdeotest.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\molecules_exception.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\multiplenewline-property.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\no3dStructures.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\noxide.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\noxide2.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\noxide3.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\nozcoord.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\pcoretest1.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\petitejean.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\pseudoatoms.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\qsar-test.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\SARGROUPTEST.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\sim3d1.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\sim3d2.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\singleMol.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test2.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test3.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test4.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test5.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\test6.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\UITTimeout.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\weirdprops.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\wpn.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\wpo.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\writetest.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\MDL\zinc_1309609.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\24763.sdf" />
+    <EmbeddedResource Include="Data\MDL\AliasPropertyRGroup.sdf" />
+    <EmbeddedResource Include="Data\MDL\bug1356.sdf" />
+    <EmbeddedResource Include="Data\MDL\bug2911300.sdf" />
+    <EmbeddedResource Include="Data\MDL\bug3488307.sdf" />
+    <EmbeddedResource Include="Data\MDL\burden_undefined.sdf" />
+    <EmbeddedResource Include="Data\MDL\cnssmarts.sdf" />
+    <EmbeddedResource Include="Data\MDL\cpsa-charged.sdf" />
+    <EmbeddedResource Include="Data\MDL\cpsa-uncharged.sdf" />
+    <EmbeddedResource Include="Data\MDL\emptyStructure.sdf" />
+    <EmbeddedResource Include="Data\MDL\emptyStructures.sdf" />
+    <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf" />
+    <EmbeddedResource Include="Data\MDL\error.sdf" />
+    <EmbeddedResource Include="Data\MDL\fingerprints_from_modelbuilder3d.sdf" />
+    <EmbeddedResource Include="Data\MDL\iterconftest.sdf" />
+    <EmbeddedResource Include="Data\MDL\ligand-1a0i.sdf" />
+    <EmbeddedResource Include="Data\MDL\lobtest.sdf" />
+    <EmbeddedResource Include="Data\MDL\lobtest2.sdf" />
+    <EmbeddedResource Include="Data\MDL\mdeotest.sdf" />
+    <EmbeddedResource Include="Data\MDL\molecules_exception.sdf" />
+    <EmbeddedResource Include="Data\MDL\multiplenewline-property.sdf" />
+    <EmbeddedResource Include="Data\MDL\no3dStructures.sdf" />
+    <EmbeddedResource Include="Data\MDL\noxide.sdf" />
+    <EmbeddedResource Include="Data\MDL\noxide2.sdf" />
+    <EmbeddedResource Include="Data\MDL\noxide3.sdf" />
+    <EmbeddedResource Include="Data\MDL\nozcoord.sdf" />
+    <EmbeddedResource Include="Data\MDL\pcoretest1.sdf" />
+    <EmbeddedResource Include="Data\MDL\petitejean.sdf" />
+    <EmbeddedResource Include="Data\MDL\pseudoatoms.sdf" />
+    <EmbeddedResource Include="Data\MDL\qsar-test.sdf" />
+    <EmbeddedResource Include="Data\MDL\SARGROUPTEST.sdf" />
+    <EmbeddedResource Include="Data\MDL\sim3d1.sdf" />
+    <EmbeddedResource Include="Data\MDL\sim3d2.sdf" />
+    <EmbeddedResource Include="Data\MDL\singleMol.sdf" />
+    <EmbeddedResource Include="Data\MDL\test.sdf" />
+    <EmbeddedResource Include="Data\MDL\test2.sdf" />
+    <EmbeddedResource Include="Data\MDL\test3.sdf" />
+    <EmbeddedResource Include="Data\MDL\test4.sdf" />
+    <EmbeddedResource Include="Data\MDL\test5.sdf" />
+    <EmbeddedResource Include="Data\MDL\test6.sdf" />
+    <EmbeddedResource Include="Data\MDL\UITTimeout.sdf" />
+    <EmbeddedResource Include="Data\MDL\weirdprops.sdf" />
+    <EmbeddedResource Include="Data\MDL\wpn.sdf" />
+    <EmbeddedResource Include="Data\MDL\wpo.sdf" />
+    <EmbeddedResource Include="Data\MDL\writetest.sdf" />
+    <EmbeddedResource Include="Data\MDL\zinc_1309609.sdf" />
     <EmbeddedResource Include="Data\CML\AZD5423.xml" />
     <EmbeddedResource Include="Data\CML\ceph-ns.xml" />
     <EmbeddedResource Include="Data\CML\curan.xml" />
@@ -902,21 +811,11 @@
     <EmbeddedResource Include="Data\CML\nucleustest.xml" />
     <EmbeddedResource Include="Data\InChI\benzoicacid.mol.txt" />
     <EmbeddedResource Include="Data\InChI\guanine.inchi.xml" />
-    <EmbeddedResource Include="Data\CDD\Binders.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\CDD\FoldedProbes.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\CDD\MLProbes.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\CDD\Small.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\CDD\Tiny.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CDD\Binders.sdf" />
+    <EmbeddedResource Include="Data\CDD\FoldedProbes.sdf" />
+    <EmbeddedResource Include="Data\CDD\MLProbes.sdf" />
+    <EmbeddedResource Include="Data\CDD\Small.sdf" />
+    <EmbeddedResource Include="Data\CDD\Tiny.sdf" />
     <EmbeddedResource Include="Data\Smiles\smiles.txt" />
     <EmbeddedResource Include="Data\ASN\PubChem\aceticAcids38.xml" />
     <EmbeddedResource Include="Data\ASN\PubChem\cid1145.xml" />
@@ -960,15 +859,13 @@
     <EmbeddedResource Include="Data\PDB\unk.pdb" />
     <EmbeddedResource Include="Data\PDB\viagra.pdb" />
     <EmbeddedResource Include="Data\PCore\invalid1.xml" />
-    <EmbeddedResource Include="Data\PCore\multismartpcore.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Data\PCore\multismartpcore.sdf" />
     <EmbeddedResource Include="Data\PCore\pcore.xml" />
     <EmbeddedResource Include="Data\PCore\pcoreangle.xml" />
-    <Content Include="TT\ConformerContainerTest.tt">
+    <None Include="TT\ConformerContainerTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConformerContainerTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
     <Compile Include="Dict\DictRefTest.cs" />
     <Compile Include="Dict\AbstractDictionaryTest.cs" />
     <Compile Include="Dict\AbstractEntryTest.cs" />
@@ -1068,84 +965,32 @@
     <Compile Include="Groups\PartitionTest.cs" />
     <Compile Include="Groups\PermutationGroupTest.cs" />
     <Compile Include="Groups\PermutationTest.cs" />
-    <EmbeddedResource Include="Hash\allene-explicit-3d-h.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\allene-explicit-h.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\allene-implicit-h.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\allene-unspecified.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\aminotetracosanones.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\butan-2-ols-explicit-hydrogens.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\butan-2-ols.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\cumulenes.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\dichloroethenes-explicit-hydrogens.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\dichloroethenes.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-10.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-11.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-12.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13a.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13b.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-14.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-15.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16a.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16b.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2a.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2b.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2c.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-3.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-7.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\inositols-explicit-hydrogens.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Hash\inositols.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\allene-explicit-3d-h.sdf" />
+    <EmbeddedResource Include="Hash\allene-explicit-h.sdf" />
+    <EmbeddedResource Include="Hash\allene-implicit-h.sdf" />
+    <EmbeddedResource Include="Hash\allene-unspecified.sdf" />
+    <EmbeddedResource Include="Hash\aminotetracosanones.sdf" />
+    <EmbeddedResource Include="Hash\butan-2-ols-explicit-hydrogens.sdf" />
+    <EmbeddedResource Include="Hash\butan-2-ols.sdf" />
+    <EmbeddedResource Include="Hash\cumulenes.sdf" />
+    <EmbeddedResource Include="Hash\dichloroethenes-explicit-hydrogens.sdf" />
+    <EmbeddedResource Include="Hash\dichloroethenes.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-10.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-11.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-12.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13a.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13b.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-14.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-15.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16a.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16b.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2a.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2b.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2c.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-3.sdf" />
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-7.sdf" />
+    <EmbeddedResource Include="Hash\inositols-explicit-hydrogens.sdf" />
+    <EmbeddedResource Include="Hash\inositols.sdf" />
     <Compile Include="IO\AbstractReaderFactoryTest.cs" />
     <Compile Include="IO\NCDKSourceCodeWriterTest.cs" />
     <Compile Include="IO\ChemObjectIOInstantionTests.cs" />
@@ -1598,9 +1443,7 @@
     <Compile Include="Tautomers\InChITautomerGeneratorTest.cs" />
     <Compile Include="Templates\AminoAcidsTest.cs" />
     <Compile Include="Smiles\SMARTS\Parser\ParserTest.cs" />
-    <EmbeddedResource Include="Smiles\SMARTS\Parser\cnssmarts.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Smiles\SMARTS\Parser\cnssmarts.sdf" />
     <Compile Include="Smiles\SMARTS\Parser\RecursiveTest.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SmartsDumpVisitorTest.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitorTest.cs" />
@@ -2047,24 +1890,16 @@
     <EmbeddedResource Include="FaulonSignatures\Data\buckysigs3.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FaulonSignatures\Data\large_example.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="FaulonSignatures\Data\large_example.sdf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FaulonSignatures\Data\multCycle.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="FaulonSignatures\Data\multCycle.sdf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FaulonSignatures\Data\multCycleCanLabel.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="FaulonSignatures\Data\multCycleCanLabel.sdf" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FaulonSignatures\Data\test.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="FaulonSignatures\Data\test.sdf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FaulonSignatures\SignatureTests.csproj" />
@@ -2076,10 +1911,10 @@
     <Compile Include="Geometries\CIP\LigandTest.cs" />
     <Compile Include="Geometries\CIP\TerminalLigandTest.cs" />
     <Compile Include="Geometries\CIP\VisitedAtomsTest.cs" />
-    <Content Include="TT\ReactionChainTest.tt">
+    <None Include="TT\ReactionChainTest.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReactionChainTest.tt.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

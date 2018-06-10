@@ -45,7 +45,6 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -152,9 +151,7 @@
     <Compile Include="TT\Element_Example.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
     <None Include="ncdk.snk" />
   </ItemGroup>
   <ItemGroup>
@@ -162,10 +159,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Graphs\Cycles_Example.tt">
+    <None Include="Graphs\Cycles_Example.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Cycles_Example.tt.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj">

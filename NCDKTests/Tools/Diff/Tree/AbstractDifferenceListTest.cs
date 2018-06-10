@@ -47,9 +47,11 @@ namespace NCDK.Tools.Diff.Tree
         public void TestChildDiffs()
         {
             DifferenceClass diffClass = new DifferenceClass();
-            List<IDifference> diffs = new List<IDifference>();
-            diffs.Add(StringDifference.Construct("Foo", "Bar1", "Bar2"));
-            diffs.Add(IntegerDifference.Construct("Foo", 1, 2));
+            List<IDifference> diffs = new List<IDifference>
+            {
+                StringDifference.Construct("Foo", "Bar1", "Bar2"),
+                IntegerDifference.Construct("Foo", 1, 2)
+            };
             diffClass.AddChildren(diffs);
             Assert.AreEqual(2, diffClass.ChildCount());
             var diffs2 = diffClass.GetChildren().GetEnumerator();

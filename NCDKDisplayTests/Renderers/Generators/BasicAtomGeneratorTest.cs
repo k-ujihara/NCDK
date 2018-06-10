@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Numerics;
 using NCDK.Renderers.Colors;
@@ -27,7 +28,6 @@ using NCDK.Validate;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
-using static NCDK.Renderers.Generators.BasicAtomGenerator;
 using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators

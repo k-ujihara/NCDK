@@ -70,16 +70,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\NCDKTests\Templates\TestMoleculeFactory.cs">
+      <Link>Templete\TestMoleculeFactory.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj">
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
       <Name>NCDKDisplay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDKTests\NCDKTests.csproj">
-      <Project>{20cde36f-227d-4181-9d49-538581a3adf0}</Project>
-      <Name>NCDKTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>

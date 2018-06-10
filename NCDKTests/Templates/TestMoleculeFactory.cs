@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Config;
 using NCDK.Default;
 using NCDK.Numerics;
@@ -36,21 +35,11 @@ namespace NCDK.Templates
     /// copy of <see cref="FaulonSignatures.Chemistry.MoleculeFactory"/> for use in tests.
     /// </summary>
     // @cdk.module test-data
-    [TestClass()]
     public class TestMoleculeFactory
     {
         private static IAtomContainer NewAtomContainer()
         {
             return Default.ChemObjectBuilder.Instance.NewAtomContainer();
-        }
-
-        [TestMethod()]
-        public void Test()
-        {
-            MakeNaphthalene();
-            MakeAnthracene();
-            MakeCyclophaneLike();
-            MakeGappedCyclophaneLike();
         }
 
         private static void MolAddBond(IAtomContainer mol, int a, int b, BondOrder order)
@@ -1082,10 +1071,10 @@ namespace NCDK.Templates
             mol.Atoms.Add(new Atom("C")); // 3
             mol.Atoms.Add(new Atom("C")); // 4
             mol.Atoms.Add(new Atom("C")); // 5
-                                    //        mol.Add(new Atom("C")); // 6
-                                    //        mol.Add(new Atom("C")); // 7
-                                    //        mol.Add(new Atom("C")); // 8
-                                    //        mol.Add(new Atom("C")); // 9
+            //        mol.Add(new Atom("C")); // 6
+            //        mol.Add(new Atom("C")); // 7
+            //        mol.Add(new Atom("C")); // 8
+            //        mol.Add(new Atom("C")); // 9
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1093,11 +1082,11 @@ namespace NCDK.Templates
             MolAddBond(mol, 3, 4, BondOrder.Single); // 4
             MolAddBond(mol, 4, 5, BondOrder.Single); // 5
             MolAddBond(mol, 5, 0, BondOrder.Single); // 6
-                                                     //        MolAddBond(mol, 5, 6, BondOrder.Single); // 7
-                                                     //        MolAddBond(mol, 6, 7, BondOrder.Single); // 8
-                                                     //        MolAddBond(mol, 7, 4, BondOrder.Single); // 9
-                                                     //        MolAddBond(mol, 8, 0, BondOrder.Single); // 10
-                                                     //        MolAddBond(mol, 9, 1, BondOrder.Single); // 11
+            //        MolAddBond(mol, 5, 6, BondOrder.Single); // 7
+            //        MolAddBond(mol, 6, 7, BondOrder.Single); // 8
+            //        MolAddBond(mol, 7, 4, BondOrder.Single); // 9
+            //        MolAddBond(mol, 8, 0, BondOrder.Single); // 10
+            //        MolAddBond(mol, 9, 1, BondOrder.Single); // 11
 
             return mol;
         }

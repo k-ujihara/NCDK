@@ -19,6 +19,7 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Layout;
 using NCDK.Renderers.Fonts;
@@ -26,7 +27,6 @@ using NCDK.Renderers.Generators;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using static NCDK.Renderers.Generators.BasicAtomGenerator;
 
 namespace NCDK.Renderers
 {
