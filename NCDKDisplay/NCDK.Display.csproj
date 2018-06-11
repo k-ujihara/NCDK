@@ -57,6 +57,9 @@
     <Compile Include="..\NCDK\Properties\AssemblyVersionInfo.cs">
       <Link>Properties\AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="..\NCDK\Properties\InternalVisibles..cs">
+      <Link>Properties\InternalVisibles..cs</Link>
+    </Compile>
     <Compile Include="Depict\Dimension.cs" />
     <Compile Include="Renderers\Elements\TextGroupElement.cs" />
     <None Include="Renderers\RendererModelTools.tt">

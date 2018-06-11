@@ -76,9 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NCDKDisplay\NCDKDisplay.csproj">
+    <ProjectReference Include="..\NCDKDisplay\NCDK.Display.csproj">
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
-      <Name>NCDKDisplay</Name>
+      <Name>NCDK.Display</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>

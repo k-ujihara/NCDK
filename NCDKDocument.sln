@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		IncludeExamples.ttinclude = IncludeExamples.ttinclude
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCDKDisplay", "NCDKDisplay\NCDKDisplay.csproj", "{60B8BEBC-9968-44A7-AB0B-11C03116579D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCDK.Display", "NCDKDisplay\NCDK.Display.csproj", "{60B8BEBC-9968-44A7-AB0B-11C03116579D}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation", "Documentation\Documentation.shfbproj", "{AC088342-626A-4091-AAA4-90E391265E99}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleCodes", "ExampleCode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCDKTests", "NCDKTests\NCDKTests.csproj", "{20CDE36F-227D-4181-9D49-538581A3ADF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCDKDisplayTests", "NCDKDisplayTests\NCDKDisplayTests.csproj", "{5C750906-0264-482A-8E7D-6C5EB123F53C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCDK.DisplayTests", "NCDKDisplayTests\NCDK.DisplayTests.csproj", "{5C750906-0264-482A-8E7D-6C5EB123F53C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MolViewer", "MolViewer\MolViewer.csproj", "{D7CA78A9-2F56-4FDD-883B-37C237569FAA}"
 EndProject

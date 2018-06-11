@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("NCDK Core")]
-[assembly: AssemblyDescription("Core module of NCDK: Chemistry Development Kit for .NET Framework")]
+[assembly: AssemblyTitle("NCDK: library of algorithms for structural cheminformatics")]
+[assembly: AssemblyDescription("NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
