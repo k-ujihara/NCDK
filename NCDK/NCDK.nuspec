@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
-<package >
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NCDK</id>
-    <version>1.3.0-alpha</version>
+    <version>1.3.0-beta</version>
     <title>NCDK: library of algorithms for structural cheminformatics</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -14,4 +14,9 @@
     <copyright>Copyright © 2016-2018 Kazuya Ujihara</copyright>
     <tags>cdk cheminformatics</tags>
   </metadata>
+  <files>
+    <file src="NCDK.targets" target="build/" />
+    <file src="x64/libinchi.dll" target="runtimes/win-x64/native" />
+    <file src="x86/libinchi.dll" target="runtimes/win-x86/native" />
+  </files>
 </package>
