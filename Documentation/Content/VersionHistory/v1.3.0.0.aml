@@ -3,26 +3,37 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        Version 1.3.0 was released on 2018-03-19.
+        Version 1.3.0 was released on 2018-06-14.
       </para>
     </introduction>
 
     <section>
       <title>Changes in This Release</title>
       <content>
-
         <list class="bullet">
           <listItem>
             <para>
-              This release is based on 
+              This release is based on This release is based on
               <externalLink>
-                <linkText>cdk-2.1.1 snapshot</linkText>
-                <linkUri>https://github.com/cdk/cdk/tree/68c81f2c027a4b1e91a335b5b0bacaaa831eba76</linkUri>
-              </externalLink>.
+                <linkText>cdk 2018-03-06  snapshot</linkText>
+                <linkUri>https://github.com/cdk/cdk/tree/6fade7b5470669955835046d9fb09c48f658efde</linkUri>
+              </externalLink> and contains most of features including AtomContainer2.
             </para>
-            <para>
-              AtomContainer2 class works on this release.
-            </para>
+          </listItem>
+          <listItem>
+            <para>NuGet package is released. </para>
+            <listItem>
+              <para>
+                <externalLink>NCDK</externalLink>
+                <linkUri>https://www.nuget.org/packages/NCDK/1.3.0</linkUri>
+              </para>
+            </listItem>
+            <listItem>
+              <para>
+                <externalLink>NCDK.Display</externalLink>
+                <linkUri>https://www.nuget.org/packages/NCDK.Display/1.3.0</linkUri>
+              </para>
+            </listItem>
           </listItem>
         </list>
       </content>

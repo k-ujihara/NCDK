@@ -13,12 +13,10 @@
 
         <list class="bullet">
           <listItem>
-            <para>
-              This release is based on cdk-2.1 except AtomContainer2.
-            </para>
-            <para>
-              NCDKDisplay works on this release.
-            </para>
+            <para>This release is based on cdk-2.1 and contains most of features except AtomContainer2.</para>
+          </listItem>
+          <listItem>
+            <para>NCDKDisplay works from this release.</para>
           </listItem>
         </list>
       </content>
