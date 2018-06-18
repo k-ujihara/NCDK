@@ -14,6 +14,10 @@ Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTest
 ## Build and Test
 Open NCDK.sln or NCDKDisplay.sln. These creates the libraries and its test project.
 
+## NuGet Packages
+- [NCDK: Core Module of NCDK](https://www.nuget.org/packages/NCDK/)
+- [NCDK.Display: Depiction module of NCDK](https://www.nuget.org/packages/NCDK.Display/)
+
 ## 2D-molecular/reaction viewer  
 MolViewer is 2D-molecular/reaction viewer using WPF. It includes WPF control to show molecular/reaction.
 

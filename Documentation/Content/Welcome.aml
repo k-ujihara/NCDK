@@ -2,12 +2,6 @@
 <topic id="e2ff06cc-99b7-4f8b-95c5-53965548639f" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
-      <para></para>
-    </introduction>
-
-    <section>
-      <title>Getting Started</title>
-      <content>
         <para>
           The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is .NET Framework port of
           <externalLink>
@@ -59,8 +53,34 @@
         <mediaLink>
           <image xlink:href="top_compound_image"/>
         </mediaLink>
+    </introduction>
+
+    <section>
+      <title>NuGet Packages</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+             <para>
+              NCDK: Core Module of NCDK - 
+              <externalLink>
+                <linkText>https://www.nuget.org/packages/NCDK/</linkText>
+                <linkUri>https://www.nuget.org/packages/NCDK/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+             <para>
+              NCDK.Display: Depiction module of NCDK - 
+              <externalLink>
+                <linkText>https://www.nuget.org/packages/NCDK.Display/</linkText>
+                <linkUri>https://www.nuget.org/packages/NCDK.Display/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
       </content>
     </section>
+    
     <section>
       <title>Learn</title>
       <content>
