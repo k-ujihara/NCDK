@@ -13,7 +13,7 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <FrameworkVersion>.NET Framework 4.5</FrameworkVersion>
+    <FrameworkVersion>.NET Framework 4.6.1</FrameworkVersion>
     <OutputPath>Help\</OutputPath>
     <HtmlHelpName>NCDK</HtmlHelpName>
     <Language>en-US</Language>
@@ -27,7 +27,7 @@
       <Argument Key="maxVersionParts" Value="2" />
       <Argument Key="defaultLanguage" Value="cs" />
       <Argument Key="includeEnumValues" Value="true" />
-      <Argument Key="baseSourceCodeUrl" Value="https://github.com/kazuyaujihara/NCDK/" />
+      <Argument Key="baseSourceCodeUrl" Value="https://github.com/kazuyaujihara/NCDK/blob/master/" />
       <Argument Key="requestExampleUrl" Value="https://github.com/kazuyaujihara/NCDK/issues/new" />
     </TransformComponentArguments>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
@@ -37,7 +37,7 @@
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <HelpFileVersion>2.1.1.1</HelpFileVersion>
+    <HelpFileVersion>2.1.1.2</HelpFileVersion>
     <MaximumGroupParts>200</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
@@ -65,7 +65,7 @@
       </ComponentConfig>
     </ComponentConfigurations>
     <WarnOnMissingSourceContext>False</WarnOnMissingSourceContext>
-    <SourceCodeBasePath>..\NCDK\</SourceCodeBasePath>
+    <SourceCodeBasePath>C:\Users\ujiha\source\repos\NCDK\</SourceCodeBasePath>
     <ApiFilter>
       <Filter entryType="Namespace" fullName="NCDK.Beam" isExposed="False" />
       <Filter entryType="Namespace" fullName="NCDK.Common.Base" isExposed="False" />

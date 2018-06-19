@@ -28,7 +28,7 @@ using NCDK.Templates;
 namespace NCDK.Modelings.Builder3D
 {
     /// <summary>
-    /// Tests not-yet-tested functionalities of {@link AtomPlacer3D}.
+    /// Tests not-yet-tested functionalities of <see cref="AtomPlacer3D"/>.
     /// </summary>
     // @author danielszisz
     // @cdk.module test-builder3d

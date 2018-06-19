@@ -25,10 +25,9 @@ using System.Linq;
 namespace NCDK.Graphs.InChI
 {
     /// <summary>
-    /// TestCase for the {@link InChIToStructure} class.
-    ///
-    // @cdk.module test-inchi
+    /// TestCase for the <see cref="InChIToStructure"/> class.
     /// </summary>
+    // @cdk.module test-inchi
     [TestClass()]
     public class InChIToStructureTest : CDKTestCase
     {

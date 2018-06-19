@@ -95,11 +95,11 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Create an adjacent list representation of the {@literal container} that only
+        /// Create an adjacent list representation of the <paramref name="container"/> that only
         /// includes bonds that are in the set provided as an argument.
         /// </summary>
         /// <param name="container">the molecule</param>
-        /// <returns>adjacency list representation stored as an {@literal int[][]}.</returns>
+        /// <returns>adjacency list representation.</returns>
         /// <exception cref="ArgumentNullException">the container was null</exception>
         /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjListSubgraph(IAtomContainer container, ISet<IBond> include)

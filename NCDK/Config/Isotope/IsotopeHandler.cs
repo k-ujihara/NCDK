@@ -158,7 +158,7 @@ namespace NCDK.Config.Isotope
             }
             catch (FormatException exception)
             {
-                Trace.TraceError($"Value of isotope@{att.Name} is not as expected.");
+                Trace.TraceError($"Value of isotope {att.Name} is not as expected.");
                 Debug.WriteLine(exception);
             }
 

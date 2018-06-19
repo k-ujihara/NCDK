@@ -71,7 +71,7 @@ namespace NCDK.Hash
         /// <summary>
         /// Test the method at perturbing the 2D representations of CID 44333798 and
         /// CID 57170558. These molecules are similar but distinct. To tell these
-        /// apart we must use {@link org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnion} opposed to the
+        /// apart we must use <see cref="MinimumEquivalentCyclicSetUnion"/> opposed to the
         /// faster method. This test serves to demonstrates the basic equivalent set
         /// finder does not tell them apart but that a more comprehensive set finder
         /// does.

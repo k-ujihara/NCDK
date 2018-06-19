@@ -35,7 +35,7 @@ using System.IO;
 namespace NCDK.Hash
 {
     /// <summary>
-    /// This test class provides several scenario tests for the {@literal cdk-hash}
+    /// This test class provides several scenario tests for the <see cref="NCDK.Hash"/>
     /// module.
     /// </summary>
     // @author John May

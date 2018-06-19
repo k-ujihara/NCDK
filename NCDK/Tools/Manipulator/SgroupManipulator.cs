@@ -42,7 +42,7 @@ namespace NCDK.Tools.Manipulator
         }
         
         /// <summary>
-        /// Copy a collection of Sgroups, replacing any {@link IAtom}/{@link IBond}
+        /// Copy a collection of Sgroups, replacing any <see cref="IAtom"/>/<see cref="IBond"/>
         /// references with those present in the provided 'replace' map. If an empty
         /// replace map is provided (null or empty) the sgroups are simply
         /// duplicated. If an item is not present in the replacement map the original

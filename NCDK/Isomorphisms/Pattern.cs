@@ -101,7 +101,7 @@ namespace NCDK.Isomorphisms
         public abstract Mappings MatchAll(IAtomContainer target);
 
         /// <summary>
-        /// Find all mappings of this pattern in the <code>target</code> reaction.
+        /// Find all mappings of this pattern in the <paramref name="target"/> reaction.
         /// </summary>
         /// <example>
         /// <code>

@@ -189,7 +189,7 @@ namespace NCDK.Default
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
         /// <summary>
-        /// Returns the multiplier for the AtomContainer at position <code>number</code> in the
+        /// Returns the multiplier for the AtomContainer at position <paramref name="number"/> in the
         /// container.
         /// </summary>
         /// <param name="number">The position of the multiplier of the AtomContainer to be returned.</param>
@@ -475,7 +475,7 @@ namespace NCDK.Silent
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
         /// <summary>
-        /// Returns the multiplier for the AtomContainer at position <code>number</code> in the
+        /// Returns the multiplier for the AtomContainer at position <paramref name="number"/> in the
         /// container.
         /// </summary>
         /// <param name="number">The position of the multiplier of the AtomContainer to be returned.</param>

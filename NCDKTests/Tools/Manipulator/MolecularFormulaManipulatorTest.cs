@@ -232,7 +232,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Test setOne parameter for {@link MolecularFormulaManipulator#GetString(IMolecularFormula, bool)}
+        /// Test setOne parameter for <see cref="MolecularFormulaManipulator.GetString(IMolecularFormula, bool)"/>
         /// </summary>
         [TestMethod()]
         public void TestGetString_IMolecularFormula_boolean()
@@ -297,7 +297,7 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(totalMass, MolecularFormulaManipulator.GetTotalExactMass(mf2), 0.0000001);
         }
 
-        /// <summary>test @link {@link MolecularFormulaManipulator#RemoveElement(IMolecularFormula, IElement)}</summary>
+        /// <summary>test <see cref="MolecularFormulaManipulator.RemoveElement(IMolecularFormula, IElement)"/></summary>
         [TestMethod()]
         public void TestRemoveElement_IMolecularFormula_IElement()
         {

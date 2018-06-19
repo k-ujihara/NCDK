@@ -146,9 +146,8 @@ namespace NCDK.Numerics
 
         #region Constructors
         /// <summary>
-        /// Constructs a vector whose components are all <code>value</code>
+        /// Constructs a vector whose components are all <paramref name="value"/>
         /// </summary>
-        
         public unsafe Vector(T value)
             : this()
         {

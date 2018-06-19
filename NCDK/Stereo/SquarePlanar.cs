@@ -62,7 +62,7 @@ namespace NCDK.Stereo
     /// </remarks>
     /// The normalize function (<see cref="Normalize()"/>) create a new
     /// <pre>IStereoElement</pre> where the carriers have been reorder such that the
-    /// configuration is in a <code>U</code> shape (order=1).
+    /// configuration is in a "U" shape (order=1).
     /// <seealso href="http://opensmiles.org/opensmiles.html#_octahedral_centers">Octahedral Centers, OpenSMILES</seealso>
     /// <seealso cref="TrigonalBipyramidal"/>
     /// <seealso cref="Octahedral"/>

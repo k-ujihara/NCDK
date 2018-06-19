@@ -88,7 +88,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Benzene()
@@ -104,7 +104,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Benzene()
@@ -164,7 +164,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Norbornane()
@@ -176,7 +176,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Norbornane()
@@ -188,7 +188,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Spiroundecane()
@@ -200,7 +200,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Spiroundecane()
@@ -212,7 +212,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Pentadecaspiro()
@@ -240,7 +240,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Pentadecaspiro()
@@ -633,7 +633,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestAtomsTo_Atom_Benzene()
@@ -654,7 +654,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// ensures that when multiple paths are available, one path is still
-        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// returned via <see cref="ShortestPaths.GetPathTo(IAtom)"/>
         /// </summary>
         [TestMethod()]
         public virtual void TestAtomsTo_Int_Benzene()

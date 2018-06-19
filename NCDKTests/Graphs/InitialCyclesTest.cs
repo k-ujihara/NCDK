@@ -425,8 +425,7 @@ namespace NCDK.Graphs
             => new int[][] { new[] { 1, 5, 10 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4, 6 }, new[] { 3, 5 }, new[] { 0, 4 }, new[] { 3, 7 }, new[] { 6, 8 }, new[] { 7, 9 }, new[] { 8, 10 }, new[] { 0, 9 }, };
 
         /// <summary>
-        /// Same as above but generate an even cycle so we can also test {@link
-        /// org.openscience.cdk.graph.InitialCycles.Cycle#Family()} method.
+        /// Same as above but generate an even cycle so we can also test <see cref="InitialCycles.Cycle.GetFamily()"/> method.
         /// </summary>
         internal static int[][] CyclophaneEven
             => new int[][] { new int[] { 1, 5, 11 }, new int[] { 0, 2 }, new int[] { 1, 3 }, new int[] { 2, 4, 6 }, new int[] { 3, 5 }, new int[] { 0, 4 }, new int[] { 3, 7 }, new int[] { 6, 8 }, new int[] { 7, 9 }, new int[] { 8, 10 }, new int[] { 9, 11 }, new int[] { 0, 10 } };

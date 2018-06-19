@@ -72,7 +72,7 @@ namespace NCDK.Hash
         /// <summary>
         /// Test the method at perturbing the 2D representations of CID 138898 and
         /// CID 241107. These molecules are very similar but distinct. To tell these
-        /// apart we must use {@link AllEquivalentCyclicSet} opposed to the faster
+        /// apart we must use <see cref="AllEquivalentCyclicSet"/> opposed to the faster
         /// methods. This test also serves to demonstrates the basic equivalent set
         /// finder does not tell them apart but that this more complex finder does.
         /// </summary>

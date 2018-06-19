@@ -32,7 +32,7 @@ using System.IO.Compression;
 namespace NCDK.IO
 {
     /// <summary>
-    /// TestCase for the instantiation and functionality of the {@link ReaderFactory}.
+    /// TestCase for the instantiation and functionality of the <see cref="ReaderFactory"/>.
     /// </summary>
     // @cdk.module test-io
     [TestClass()]

@@ -67,7 +67,7 @@ namespace NCDK.IO
         /// <summary>
         /// Unit tests that iterates over all common objects that can be
         /// serialized and tests that if it is marked as accepted with
-        /// <code>accepts</code>, that it can actually be written too.
+        /// <see cref="IChemObjectIO.Accepts(Type)"/>, that it can actually be written too.
         /// </summary>
         [TestMethod()]
         public void TestAcceptsWriteConsistency()

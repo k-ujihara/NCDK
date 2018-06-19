@@ -28,9 +28,8 @@ using NCDK.Default;
 namespace NCDK.Hash.Stereo
 {
     /// <summary>
-    /// Some isolated test of the cumulative encoder factory, check out {@link
-    /// org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
-    /// allene and cumulene.
+    /// Some isolated test of the cumulative encoder factory, check out <see cref="HashCodeScenariosTest"/>
+    /// for actual examples encoding allene and cumulene.
     /// </summary>
     // @author John May
     // @cdk.module test-hash

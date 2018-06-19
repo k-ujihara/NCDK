@@ -44,12 +44,11 @@ namespace NCDK.AtomTypes
         /// Helper method to test if atom types are correctly perceived. Meanwhile, it maintains a list
         /// of atom types that have been tested so far, which allows testing afterwards that all atom
         /// types are at least tested once.
-        ///
-        /// <param name="testedAtomTypes">List of atom types tested so far.</param>
-        /// <param name="expectedTypes">Expected atom types for the atoms given in <code>mol</code>.</param>
-        /// <param name="mol">The <see cref="IAtomContainer"/> with <see cref="IAtom"/>s for which atom types should be perceived.</param>
-        // @     Thrown if something went wrong during the atom type perception.
         /// </summary>
+        /// <param name="testedAtomTypes">List of atom types tested so far.</param>
+        /// <param name="expectedTypes">Expected atom types for the atoms given in <paramref name="mol"/>.</param>
+        /// <param name="mol">The <see cref="IAtomContainer"/> with <see cref="IAtom"/>s for which atom types should be perceived.</param>
+        /// <exception cref="System.Exception">Thrown if something went wrong during the atom type perception.</exception>
         public virtual void AssertAtomTypes(IDictionary<string, int> testedAtomTypes, string[] expectedTypes, IAtomContainer mol)
         {
             Assert.AreEqual(expectedTypes.Length, mol.Atoms.Count,

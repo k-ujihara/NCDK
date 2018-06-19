@@ -30,7 +30,7 @@ using System;
 namespace NCDK.IO
 {
     /// <summary>
-    /// JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.
+    /// JUnit tests for <see cref="RGroupQueryWriter"/>.
     /// Idea: read the test RGfiles into an object model, then writes the
     /// same model out as an RGfile again without changing anything. Then
     /// check that the original inputfile and the outputfile have the same content.
