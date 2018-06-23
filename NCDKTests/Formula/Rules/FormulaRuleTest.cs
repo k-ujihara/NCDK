@@ -65,34 +65,7 @@ namespace NCDK.Formula.Rules
         }
 
         [TestMethod()]
-        public void TestGetParameters()
-        {
-            var rule = GetRule();
-            object[] params_ = rule.Parameters;
-            //        FIXME: the next would be nice, but not currently agreed-upon policy
-            //        Assert.IsNotNull(
-            //          paramNames,
-            //            "The method Parameters must return a non-null value, possible a zero length Object[] array"
-            //        );
-            //        FIXME: so instead:
-            if (params_ == null)
-                params_ = new object[0];
-            for (int i = 0; i < params_.Length; i++)
-            {
-                Assert.IsNotNull(params_[i], "A parameter default must not be null.");
-            }
-        }
-
-        [TestMethod()]
-        public void TestSetParameters_arrayObject()
-        {
-            var rule = GetRule();
-            object[] defaultParams = rule.Parameters;
-            rule.Parameters = defaultParams;
-        }
-
-        [TestMethod()]
-        public void TestValidate_IMolecularFormula()
+        public virtual void TestValidate_IMolecularFormula()
         {
             var rule = GetRule();
             IMolecularFormula mf = new MolecularFormula();

@@ -445,23 +445,6 @@ namespace NCDK.Fingerprints
 
             return mol;
         }
-
-        //public static void Main(string[] args) {
-        //    BigInteger bi = new BigInteger("0");
-        //    bi = bi.Add(BigInteger.ValueOf((long) Math.Pow(2, 63)));
-        //    Console.Error.WriteLine(bi.ToString());
-        //    bi = bi.Add(BigInteger.ValueOf((long) Math.Pow(2, 0)));
-        //    Console.Error.WriteLine(bi.ToString());
-        //        ShortestPathFingerprinter fpt = new ShortestPathFingerprinter();
-        //        fpt.standAlone = true;
-        //        fpt.TestFingerprinter();
-        //        fpt.TestFingerprinterArguments();
-        //        fpt.TestBug706786();
-        //        fpt.TestBug771485();
-        //        fpt.TestBug853254();
-        //        fpt.TestBug931608();
-        //        fpt.TestBug934819();
-        //}
     }
 }
 

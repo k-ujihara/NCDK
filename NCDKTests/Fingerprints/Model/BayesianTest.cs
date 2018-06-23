@@ -104,43 +104,6 @@ namespace NCDK.Fingerprints.Model
 
         // ----------------- public methods -----------------
 
-        // temporary: standalone test public static void Main(string[] argv) {new
-        // BayesianTest().Run();} public void Run() {
-        // WriteLine("Beginning Bayesian model test..."); try {
-        // CheckFP(REF_MOLECULE,CircularFingerprinter.Classes.ECFP6,0,REF_ECFP6_0);
-        // checkFP
-        // (REF_MOLECULE,CircularFingerprinter.Classes.ECFP6,1024,REF_ECFP6_1024);
-        // CheckTextFields(); ConfirmPredictions("Tiny.sdf",8,8,0,0);
-        // ConfirmPredictions("Small.sdf",6,12,0,6);
-        // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/0",CircularFingerprinter.Classes.ECFP6,0);
-        // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/1024",CircularFingerprinter.Classes.ECFP6,1024);
-        // CompareFolding("FoldedProbes.sdf"
-        // ,"ECFP6/32768",CircularFingerprinter.Classes.ECFP6,32768);
-        // CompareFolding("FoldedProbes.sdf"
-        // ,"FCFP6/0",CircularFingerprinter.Classes.FCFP6,0);
-        // RunTest("Binders.sdf","active"
-        // ,CircularFingerprinter.Classes.ECFP6,1024,0,"Binders-ECFP6-1024-loo.bayesian"
-        // );
-        // RunTest("Binders.sdf","active",CircularFingerprinter.Classes.ECFP6,32768,
-        // 5,"Binders-ECFP6-32768-xv5.bayesian");
-        // RunTest("Binders.sdf","active",CircularFingerprinter
-        // .Classes.FCFP6,0,0,"Binders-FCFP6-0-loo.bayesian");
-        // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.Classes.ECFP6,
-        // 1024,0,"MLProbes-ECFP6-1024-loo.bayesian");
-        // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.Classes.ECFP6,
-        // 32768,5,"MLProbes-ECFP6-32768-xv5.bayesian");
-        // RunTest("MLProbes.sdf","Lipinski score"
-        // ,CircularFingerprinter.Classes.FCFP6,0,0,"MLProbes-FCFP6-0-loo.bayesian");
-        // runTest
-        // ("MLProbes.sdf","Lipinski score",CircularFingerprinter.Classes.FCFP6,
-        // 256,3,"MLProbes-FCFP6-256-xv3.bayesian"); } catch (CDKException ex) {
-        // WriteLine("** Test failed **"); Console.Out.WriteLine(ex.StackTrace); return; }
-        // WriteLine("Model test complete."); }
-
         [TestMethod()]
         public void TestFingerprints()
         {

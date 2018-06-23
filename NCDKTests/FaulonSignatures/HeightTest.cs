@@ -116,10 +116,5 @@ namespace NCDK.FaulonSignatures
             Assert.AreEqual(expectedEdgeCount, kN.edges.Count);
             RegularGraphTest(kN, n - 1);
         }
-
-        public static void Main(string[] args)
-        {
-            new HeightTest().TorusTest();
-        }
     }
 }

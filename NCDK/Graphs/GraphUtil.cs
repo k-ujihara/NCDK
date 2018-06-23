@@ -236,7 +236,7 @@ namespace NCDK.Graphs
         /// <param name="xs">array of values</param>
         /// <param name="marked">marked values</param>
         /// <returns>first marked value, -1 if none found</returns>
-        static int FirstMarked(int[] xs, bool[] marked)
+        internal static int FirstMarked(int[] xs, bool[] marked)
         {
             foreach (int x in xs)
                 if (marked[x])

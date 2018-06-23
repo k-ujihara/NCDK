@@ -258,11 +258,5 @@ namespace NCDK.FaulonSignatures.Chemistry
                 return sigs;
             }
         }
-
-        public static void Main(string[] args)
-        {
-            new LargeMoleculeTest().TestMinimalMol();
-            //        new LargeMoleculeTest().TtprTest();
-        }
     }
 }

@@ -105,7 +105,7 @@ namespace NCDK.Formula.Rules
         }
 
         [TestMethod()]
-        public void TestDefaultValidTrue()
+        public override void TestValidate_IMolecularFormula()
         {
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 5);

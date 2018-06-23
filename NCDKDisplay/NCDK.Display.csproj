@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\NCDK.Display.xml</DocumentationFile>
@@ -51,12 +51,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NCDK\Properties\AssemblyProductInfo.cs">
-      <Link>Properties\AssemblyProductInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\NCDK\Properties\AssemblyVersionInfo.cs">
-      <Link>Properties\AssemblyVersionInfo.cs</Link>
-    </Compile>
     <Compile Include="..\NCDK\Properties\InternalVisibles..cs">
       <Link>Properties\InternalVisibles..cs</Link>
     </Compile>
