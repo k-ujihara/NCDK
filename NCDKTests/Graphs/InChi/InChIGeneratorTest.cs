@@ -52,7 +52,7 @@ namespace NCDK.Graphs.InChI
         /// Tests element name is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromChlorineAtom()
+        public void TestGetInChIFromChlorineAtom()
         {
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
@@ -113,7 +113,7 @@ namespace NCDK.Graphs.InChI
         /// Tests charge is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromLithiumIon()
+        public void TestGetInChIFromLithiumIon()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("Li");
@@ -128,7 +128,7 @@ namespace NCDK.Graphs.InChI
        /// Tests isotopic mass is correctly passed to InChI.
        /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromChlorine37Atom()
+        public void TestGetInChIFromChlorine37Atom()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("ClH");
@@ -143,7 +143,7 @@ namespace NCDK.Graphs.InChI
         /// Tests implicit hydrogen count is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromHydrogenChlorideImplicitH()
+        public void TestGetInChIFromHydrogenChlorideImplicitH()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("Cl");
@@ -158,7 +158,7 @@ namespace NCDK.Graphs.InChI
         /// Tests radical state is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromMethylRadical()
+        public void TestGetInChIFromMethylRadical()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("C");
@@ -174,7 +174,7 @@ namespace NCDK.Graphs.InChI
         /// Tests single bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromEthane()
+        public void TestGetInChIFromEthane()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -224,7 +224,7 @@ namespace NCDK.Graphs.InChI
         /// Tests double bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromEthene()
+        public void TestGetInChIFromEthene()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -243,7 +243,7 @@ namespace NCDK.Graphs.InChI
         /// Tests triple bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromEthyne()
+        public void TestGetInChIFromEthyne()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -262,7 +262,7 @@ namespace NCDK.Graphs.InChI
         /// Tests 2D coordinates are correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiEandZ12Dichloroethene2D()
+        public void TestGetInChIEandZ12Dichloroethene2D()
         {
             // (E)-1,2-dichloroethene
             IAtomContainer acE = new AtomContainer();
@@ -313,7 +313,7 @@ namespace NCDK.Graphs.InChI
         /// Tests 3D coordinates are correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetInchiFromLandDAlanine3D()
+        public void TestGetInChIFromLandDAlanine3D()
         {
             // L-Alanine
             IAtomContainer acL = new AtomContainer();
@@ -390,7 +390,7 @@ namespace NCDK.Graphs.InChI
         /// Tests element name is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromChlorineAtom()
+        public void TestGetStandardInChIFromChlorineAtom()
         {
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("ClH"));
@@ -403,7 +403,7 @@ namespace NCDK.Graphs.InChI
         /// Tests charge is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromLithiumIon()
+        public void TestGetStandardInChIFromLithiumIon()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("Li");
@@ -418,7 +418,7 @@ namespace NCDK.Graphs.InChI
        /// Tests isotopic mass is correctly passed to InChI.
        /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromChlorine37Atom()
+        public void TestGetStandardInChIFromChlorine37Atom()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("ClH");
@@ -433,7 +433,7 @@ namespace NCDK.Graphs.InChI
         /// Tests implicit hydrogen count is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromHydrogenChlorideImplicitH()
+        public void TestGetStandardInChIFromHydrogenChlorideImplicitH()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("Cl");
@@ -448,7 +448,7 @@ namespace NCDK.Graphs.InChI
         /// Tests radical state is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromMethylRadical()
+        public void TestGetStandardInChIFromMethylRadical()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a = new Atom("C");
@@ -464,7 +464,7 @@ namespace NCDK.Graphs.InChI
         /// Tests single bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromEthane()
+        public void TestGetStandardInChIFromEthane()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -484,7 +484,7 @@ namespace NCDK.Graphs.InChI
         /// Tests double bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromEthene()
+        public void TestGetStandardInChIFromEthene()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -503,7 +503,7 @@ namespace NCDK.Graphs.InChI
         /// Tests triple bond is correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromEthyne()
+        public void TestGetStandardInChIFromEthyne()
         {
             IAtomContainer ac = new AtomContainer();
             IAtom a1 = new Atom("C");
@@ -522,7 +522,7 @@ namespace NCDK.Graphs.InChI
         /// Tests 2D coordinates are correctly passed to InChI.
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiEandZ12Dichloroethene2D()
+        public void TestGetStandardInChIEandZ12Dichloroethene2D()
         {
 
             // (E)-1,2-dichloroethene
@@ -576,7 +576,7 @@ namespace NCDK.Graphs.InChI
         // @
         /// </summary>
         [TestMethod()]
-        public void TestGetStandardInchiFromLandDAlanine3D()
+        public void TestGetStandardInChIFromLandDAlanine3D()
         {
 
             // L-Alanine
