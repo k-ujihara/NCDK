@@ -7,13 +7,13 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <Company>Kazuya Ujihara</Company>
     <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
-    <FileVersion>1.4.0.0</FileVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <FileVersion>1.3.1.0</FileVersion>
     <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <Description>NCDK is C# implementation of The Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural chemo- and bioinformatics.</Description>
-    <Version>1.4.0</Version>
+    <Version>1.3.1-alpha</Version>
     <Authors>Kazuya Ujihara</Authors>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -34,6 +34,14 @@
     <NoWarn>1701;1702;0612,0618</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
+    <DocumentationFile>bin\Release\net461\NCDK.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\NCDK.xml</DocumentationFile>
+  </PropertyGroup>
+  
   <ItemGroup>
     <None Remove="Beam\element-defaults.txt" />
     <None Remove="Config\Data\electroneg-pauling.txt" />
