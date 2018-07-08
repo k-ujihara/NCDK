@@ -261,7 +261,7 @@ namespace NCDK.Validate
             ValidationTest maxBO = new ValidationTest(bond, "Bond order exceeds the maximum for one of its atoms.");
             try
             {
-                AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.cdk-atom-types.owl", bond.Builder);
+                AtomTypeFactory structgenATF = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl", bond.Builder);
                 for (int i = 0; i < bond.Atoms.Count; i++)
                 {
                     IAtom atom = bond.Atoms[i];
