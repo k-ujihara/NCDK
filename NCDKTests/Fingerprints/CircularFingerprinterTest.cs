@@ -46,7 +46,8 @@ namespace NCDK.Fingerprints
     [TestClass()]
     public class CircularFingerprinterTest : CDKTestCase
     {
-        private static IAtomContainer trivialMol = null;
+        private static readonly IAtomContainer trivialMol = null;
+
         static CircularFingerprinterTest()
         {
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);

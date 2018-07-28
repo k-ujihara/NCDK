@@ -8,8 +8,6 @@ namespace NCDK.Graphs
     [TestClass()]
     public class AllCyclesTest
     {
-        static PrivateType AllCyclesType = new PrivateType(typeof(AllCycles));
-
         [TestMethod()]
         public virtual void Rank()
         {
@@ -21,14 +19,14 @@ namespace NCDK.Graphs
                     new int [] {0, 0}, // 3rd
                     new int [] {} // 1st
             };
-            var actual = AllCyclesType.InvokeStatic("GetRank", new object[] { g });
+            var actual = AllCycles.GetRank(g);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 4, 5, 3, 1, 2, 0 }, actual));
         }
 
         [TestMethod()]
         public virtual void VerticesInOrder()
         {
-            var vertices = AllCyclesType.InvokeStatic("GetVerticesInOrder", new object[] { new int[] { 4, 3, 1, 2, 0 } });
+            var vertices = AllCycles.GetVerticesInOrder(new int[] { 4, 3, 1, 2, 0 });
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 4, 2, 3, 1, 0 }, vertices));
         }
 
@@ -55,8 +53,13 @@ namespace NCDK.Graphs
             AllCycles ac = new AllCycles(RegularPathGraphTest.CompleteGraphOfSize(4), 4, 1000);
             Assert.IsTrue(Compares.AreDeepEqual(
                 new int[][]{
-                    new[] {2, 1, 0, 2}, new[] {3, 1, 0, 3}, new[] {3, 2, 0, 3}, new[] {3, 2, 1, 3}, new[] {3, 2, 1, 0, 3},
-                    new[] {3, 2, 0, 1, 3}, new[] {3, 0, 2, 1, 3}},
+                    new[] {2, 1, 0, 2},
+                    new[] {3, 1, 0, 3},
+                    new[] {3, 2, 0, 3},
+                    new[] {3, 2, 1, 3},
+                    new[] {3, 2, 1, 0, 3},
+                    new[] {3, 2, 0, 1, 3}, 
+                    new[] {3, 0, 2, 1, 3}},
                 ac.GetPaths()));
         }
 

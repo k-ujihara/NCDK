@@ -2,89 +2,71 @@
 <topic id="e2ff06cc-99b7-4f8b-95c5-53965548639f" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
-        <para>
-          The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is .NET Framework port of
-          <externalLink>
-            <linkText>The Chemistry Development Kit (CDK)</linkText>
-            <linkUri>https://sourceforge.net/projects/cdk/</linkUri>
-          </externalLink>. 
-          This library is collection of modular .NET Framework libraries for processing chemical information (<legacyBold>cheminformatics</legacyBold>). 
-          The modules are <link xlink:href="#license">free and open-source</link> and is easily
-          integrated with other open-source or in-house projects.
-          Functionality is provided for many areas in cheminformatics including:
-        </para>
-        <list class="bullet">
-          <listItem>
-            <para>Molecule and reaction valence bond representation</para>
-          </listItem>
-          <listItem>
-            <para>
-              Read and write file formats: SMILES, SDF, InChI, Mol2, CML, and others
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              Efficient molecule processing algorithms: Ring Finding, Kekulisation, Aromaticity
-              Coordinate generation and rendering
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              Canonical identifiers for fast exact searching
-            </para>
-          </listItem>
-          <listItem>
-            <para>Substructure and SMARTS pattern searching</para>
-          </listItem>
-          <listItem>
-            <para>
-              ECFP, Daylight, MACCS, and other fingerprint methods for similarity searching
-            </para>
-          </listItem>
-          <listItem>
-            <para>
-              QSAR descriptor calculations
-            </para>
-          </listItem>
-          <listItem>
-            <para>...and much more</para>
-          </listItem>
-        </list>
-        <mediaLink>
-          <image xlink:href="top_compound_image"/>
-        </mediaLink>
+      <para>
+        The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is .NET Framework port of
+        <externalLink>
+          <linkText>The Chemistry Development Kit (CDK)</linkText>
+          <linkUri>https://sourceforge.net/projects/cdk/</linkUri>
+        </externalLink>.
+        This library is collection of modular .NET Framework libraries for processing chemical information (<legacyBold>cheminformatics</legacyBold>).
+        The modules are <link xlink:href="#license">free and open-source</link> and is easily
+        integrated with other open-source or in-house projects.
+        Functionality is provided for many areas in cheminformatics including:
+      </para>
+      <list class="bullet">
+        <listItem>
+          <para>Molecule and reaction valence bond representation</para>
+        </listItem>
+        <listItem>
+          <para>
+            Read and write file formats: SMILES, SDF, InChI, Mol2, CML, and others
+          </para>
+        </listItem>
+        <listItem>
+          <para>
+            Efficient molecule processing algorithms: Ring Finding, Kekulisation, Aromaticity
+            Coordinate generation and rendering
+          </para>
+        </listItem>
+        <listItem>
+          <para>
+            Canonical identifiers for fast exact searching
+          </para>
+        </listItem>
+        <listItem>
+          <para>Substructure and SMARTS pattern searching</para>
+        </listItem>
+        <listItem>
+          <para>
+            ECFP, Daylight, MACCS, and other fingerprint methods for similarity searching
+          </para>
+        </listItem>
+        <listItem>
+          <para>
+            QSAR descriptor calculations
+          </para>
+        </listItem>
+        <listItem>
+          <para>...and much more</para>
+        </listItem>
+      </list>
+      <mediaLink>
+        <image xlink:href="top_compound_image"/>
+      </mediaLink>
     </introduction>
 
-    <section>
-      <title>NuGet Packages</title>
-      <content>
-        <list class="bullet">
-          <listItem>
-             <para>
-              NCDK: Core Module of NCDK - 
-              <externalLink>
-                <linkText>https://www.nuget.org/packages/NCDK/</linkText>
-                <linkUri>https://www.nuget.org/packages/NCDK/</linkUri>
-              </externalLink>
-            </para>
-          </listItem>
-          <listItem>
-             <para>
-              NCDK.Display: Depiction module of NCDK - 
-              <externalLink>
-                <linkText>https://www.nuget.org/packages/NCDK.Display/</linkText>
-                <linkUri>https://www.nuget.org/packages/NCDK.Display/</linkUri>
-              </externalLink>
-            </para>
-          </listItem>
-        </list>
-      </content>
-    </section>
-    
     <section>
       <title>Learn</title>
       <content>
         <list class="bullet">
+          <listItem>
+            <para>
+              <externalLink>
+                <linkText>GitHub Project Page</linkText>
+                <linkUri>https://github.com/kazuyaujihara/NCDK/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
           <listItem>
             <para>
               C# API - This Page
@@ -97,7 +79,7 @@
           </listItem>
           <listItem>
             <para>
-              Documents for the original Java versions - 
+              Documents for the original Java versions -
               <externalLink>
                 <linkText>The Chemistry Development Kit (CDK)</linkText>
                 <linkUri>https://cdk.github.io/</linkUri>
@@ -107,6 +89,33 @@
         </list>
       </content>
     </section>
+
+    <section>
+      <title>NuGet Packages</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              NCDK: Core Module of NCDK -
+              <externalLink>
+                <linkText>https://www.nuget.org/packages/NCDK/</linkText>
+                <linkUri>https://www.nuget.org/packages/NCDK/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              NCDK.Display: Depiction module of NCDK -
+              <externalLink>
+                <linkText>https://www.nuget.org/packages/NCDK.Display/</linkText>
+                <linkUri>https://www.nuget.org/packages/NCDK.Display/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
     <section address="license">
       <title>License</title>
       <content>
@@ -121,6 +130,7 @@
         </para>
       </content>
     </section>
+
     <relatedTopics>
       <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
     </relatedTopics>

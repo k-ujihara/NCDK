@@ -111,7 +111,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="rank">see <see cref="GetRank(int[][])"/></param>
         /// <returns>vertices in order</returns>
-        static int[] GetVerticesInOrder(int[] rank)
+        internal static int[] GetVerticesInOrder(int[] rank)
         {
             int[] vs = new int[rank.Length];
             for (int v = 0; v < rank.Length; v++)
@@ -125,7 +125,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="g">a graph in adjacent list representation</param>
         /// <returns>array indicating the rank of each vertex.</returns>
-        static int[] GetRank(int[][] g)
+        internal static int[] GetRank(int[][] g)
         {
             int ord = g.Length;
 

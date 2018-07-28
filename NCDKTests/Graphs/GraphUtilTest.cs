@@ -98,13 +98,12 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void FirstMarked()
         {
-            var type = new PrivateType(typeof(GraphUtil));
             int actual;
-            actual = (int)type.InvokeStatic("FirstMarked", new int[] { 0, 1, 2 }, new bool[] { false, true, false });
+            actual = GraphUtil.FirstMarked(new int[] { 0, 1, 2 }, new bool[] { false, true, false });
             Assert.AreEqual(1, actual);
-            actual = (int)type.InvokeStatic("FirstMarked", new int[] { 0, 1, 2 }, new bool[] { true, false, false });
+            actual = GraphUtil.FirstMarked(new int[] { 0, 1, 2 }, new bool[] { true, false, false });
             Assert.AreEqual(0, actual);
-            actual = (int)type.InvokeStatic("FirstMarked", new int[] { 0, 1, 2 }, new bool[] { false, false, false });
+            actual = GraphUtil.FirstMarked(new int[] { 0, 1, 2 }, new bool[] { false, false, false });
             Assert.AreEqual(-1, actual);
         }
 
