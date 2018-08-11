@@ -1,4 +1,4 @@
-NCDK: The Chemistry Development Kit ported to C
+NCDK: The Chemistry Development Kit ported to C#
 ===============================================
 
 NCDK is .NET port of [the Chemistry Development Project (CDK)](https://github.com/cdk/cdk). Functionality is provided for many areas in cheminformatics.
